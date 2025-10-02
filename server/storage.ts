@@ -21,6 +21,11 @@ export class MemStorage implements IStorage {
       latitude: 33.4942,
       local: true,
       logoUrl: "https://602junk.com/wp-content/uploads/2023/03/cropped-602-Junk-Logos-09.png",
+      reviewSnippets: [
+        "Amazing service! They were on time and very professional.",
+        "Best junk removal in Scottsdale. Highly recommend!",
+        "Quick, efficient, and affordable. Will use again."
+      ],
     },
     {
       id: 2,
@@ -35,6 +40,10 @@ export class MemStorage implements IStorage {
       latitude: 33.61,
       local: true,
       logoUrl: null,
+      reviewSnippets: [
+        "Great experience, friendly crew.",
+        "Fair pricing and excellent work.",
+      ],
     },
     {
       id: 3,
@@ -49,6 +58,10 @@ export class MemStorage implements IStorage {
       latitude: 33.46,
       local: false,
       logoUrl: null,
+      reviewSnippets: [
+        "Decent service but a bit pricey.",
+        "Got the job done.",
+      ],
     },
   ];
 

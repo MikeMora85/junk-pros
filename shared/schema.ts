@@ -15,6 +15,7 @@ export const companies = pgTable("companies", {
   latitude: doublePrecision("latitude").notNull(),
   local: boolean("local").notNull().default(true),
   logoUrl: text("logo_url"),
+  reviewSnippets: text("review_snippets").array(),
 });
 
 export const insertCompanySchema = createInsertSchema(companies);

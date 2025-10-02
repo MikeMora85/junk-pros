@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Globe, Star, Sparkles, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import ImageCarousel from "./components/ImageCarousel";
 
 function App() {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
@@ -300,6 +301,9 @@ function App() {
           </p>
         </div>
 
+        {/* Image Carousel */}
+        <ImageCarousel />
+
         {/* Two Column Layout - Stacks on Mobile */}
         <div style={{
           display: 'grid',
@@ -422,12 +426,35 @@ function App() {
                         )}
                       </div>
                       
-                      <div style={{ fontSize: '14px', color: '#6b7280' }}>
+                      <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '12px' }}>
                         <div style={{ marginBottom: '4px' }}><MapPin size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
                         <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
                     </div>
                   </div>
+                  
+                  {/* Review Snippets */}
+                  {c.reviewSnippets && c.reviewSnippets.length > 0 && (
+                    <div style={{
+                      backgroundColor: '#fdf4ff',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      marginBottom: '12px',
+                      border: '1px solid #f3e8ff',
+                    }}>
+                      {c.reviewSnippets.slice(0, 2).map((review, i) => (
+                        <div key={i} style={{
+                          fontSize: '13px',
+                          color: '#6b7280',
+                          marginBottom: i < c.reviewSnippets!.slice(0, 2).length - 1 ? '8px' : '0',
+                          fontStyle: 'italic',
+                          lineHeight: '1.5',
+                        }}>
+                          "{review}"
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   
                   {/* Call Now Button */}
                   <button 
