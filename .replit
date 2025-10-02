@@ -26,4 +26,4 @@ exposeLocalhost = true
 [deployment]
 run = ["sh", "-c", "npm start"]
 deploymentTarget = "cloudrun"
-build = ["sh", "-c", "npm run build"]
+build = ["sh", "-c", "cd client && vite build --outDir ../dist/client"]
