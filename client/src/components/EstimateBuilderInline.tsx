@@ -17,11 +17,11 @@ export default function EstimateBuilderInline() {
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+      background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 100%)',
       borderRadius: '16px',
       padding: '24px',
       marginBottom: '20px',
-      boxShadow: '0 8px 24px rgba(251,191,36,0.25)',
+      boxShadow: '0 8px 24px rgba(244,114,182,0.3)',
       position: 'relative',
       overflow: 'hidden',
     }}>
@@ -57,7 +57,7 @@ export default function EstimateBuilderInline() {
               fontSize: '14px',
               fontWeight: '700',
               backgroundColor: yards === p.value ? '#fff' : 'rgba(255,255,255,0.2)',
-              color: yards === p.value ? '#f59e0b' : '#fff',
+              color: yards === p.value ? '#a855f7' : '#fff',
               border: 'none',
               cursor: 'pointer',
               transition: 'all 0.2s',
@@ -116,7 +116,7 @@ export default function EstimateBuilderInline() {
         <div style={{
           fontSize: '32px',
           fontWeight: '800',
-          background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+          background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }} data-testid="text-estimated-cost">
@@ -169,7 +169,7 @@ export default function EstimateBuilderInline() {
         style={{
           width: '100%',
           background: 'linear-gradient(135deg, #fff 0%, #f3f4f6 100%)',
-          color: '#f59e0b',
+          color: '#a855f7',
           padding: '14px',
           borderRadius: '12px',
           border: 'none',

@@ -14,12 +14,12 @@ function App() {
   return (
     <div style={{ 
       minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #f0fdfa 100%)',
+      background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     }}>
       {/* Header */}
       <header style={{
-        background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
         boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
         padding: '16px',
         overflow: 'hidden',
@@ -48,7 +48,7 @@ function App() {
             <button
               onClick={() => setShowBusinessForm(true)}
               style={{
-                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
                 color: '#fff',
                 padding: '10px 16px',
                 borderRadius: '8px',
@@ -60,6 +60,7 @@ function App() {
                 alignItems: 'center',
                 gap: '6px',
                 whiteSpace: 'nowrap',
+                boxShadow: '0 4px 12px rgba(244,114,182,0.4)',
               }}
               data-testid="button-add-business"
             >
@@ -110,7 +111,7 @@ function App() {
             overflow: 'auto',
           }} onClick={(e) => e.stopPropagation()}>
             <div style={{
-              background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
               padding: '20px',
               borderRadius: '16px 16px 0 0',
               position: 'relative',
@@ -237,7 +238,7 @@ function App() {
                 type="submit"
                 style={{
                   width: '100%',
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                   color: '#fff',
                   padding: '14px',
                   borderRadius: '8px',
@@ -267,7 +268,7 @@ function App() {
             fontSize: '28px',
             fontWeight: '700',
             margin: '0 0 8px 0',
-            background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }} data-testid="text-page-title">
@@ -306,13 +307,14 @@ function App() {
                   {index === 0 && (
                     <div style={{
                       display: 'inline-block',
-                      background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                      background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
                       color: '#fff',
                       padding: '4px 10px',
                       borderRadius: '6px',
                       fontSize: '11px',
                       fontWeight: '700',
                       marginBottom: '12px',
+                      boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
                     }}>
                       ⭐ TOP RATED
                     </div>
@@ -323,7 +325,7 @@ function App() {
                       width: '60px',
                       height: '60px',
                       borderRadius: '10px',
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                      background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -331,6 +333,7 @@ function App() {
                       fontWeight: '800',
                       color: '#fff',
                       flexShrink: 0,
+                      boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
                     }}>
                       {c.name.charAt(0)}
                     </div>
@@ -351,8 +354,8 @@ function App() {
                             <Star
                               key={i}
                               size={14}
-                              fill={i < Math.floor(parseFloat(c.rating)) ? "#fbbf24" : "none"}
-                              stroke="#fbbf24"
+                              fill={i < Math.floor(parseFloat(c.rating)) ? "#f472b6" : "none"}
+                              stroke="#f472b6"
                             />
                           ))}
                         </div>
@@ -360,7 +363,7 @@ function App() {
                         <span style={{ color: '#9ca3af', fontSize: '13px' }}>({c.reviews})</span>
                         {c.local && (
                           <span style={{
-                            background: '#10b981',
+                            background: '#a855f7',
                             color: '#fff',
                             padding: '2px 8px',
                             borderRadius: '4px',
@@ -382,7 +385,7 @@ function App() {
                   {/* Call Now Button */}
                   <button 
                     style={{
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                      background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                       color: 'white',
                       padding: '12px 20px',
                       borderRadius: '8px',
@@ -396,6 +399,7 @@ function App() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
+                      boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
                     }}
                     onClick={() => window.open(`tel:${c.phone}`, '_self')}
                     data-testid={`button-call-${c.id}`}
@@ -406,10 +410,10 @@ function App() {
 
                   {/* Quote Section */}
                   <div style={{
-                    backgroundColor: '#f9fafb',
+                    backgroundColor: '#fdf4ff',
                     borderRadius: '8px',
                     padding: '16px',
-                    border: '1px solid #e5e7eb',
+                    border: '2px solid #f3e8ff',
                   }}>
                     <h4 style={{
                       fontSize: '14px',
@@ -449,7 +453,7 @@ function App() {
                         style={{
                           flex: '1',
                           minWidth: '140px',
-                          background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                          background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
                           color: '#fff',
                           padding: '10px 16px',
                           borderRadius: '8px',
@@ -461,6 +465,7 @@ function App() {
                           alignItems: 'center',
                           justifyContent: 'center',
                           gap: '6px',
+                          boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
                         }}
                         onClick={() => {
                           setExpandedQuote(expandedQuote === c.id ? null : c.id);
@@ -479,13 +484,13 @@ function App() {
                         padding: '16px',
                         backgroundColor: '#fff',
                         borderRadius: '8px',
-                        border: '2px solid #10b981',
+                        border: '2px solid #a855f7',
                       }}>
                         <h5 style={{
                           fontSize: '14px',
                           fontWeight: '700',
                           margin: '0 0 12px 0',
-                          color: '#059669',
+                          color: '#a855f7',
                         }}>
                           📅 Available Times
                         </h5>
@@ -496,13 +501,13 @@ function App() {
                               key={i}
                               style={{
                                 padding: '10px 16px',
-                                backgroundColor: '#f0fdf4',
-                                border: '2px solid #d1fae5',
+                                backgroundColor: '#fdf4ff',
+                                border: '2px solid #f3e8ff',
                                 borderRadius: '6px',
                                 cursor: 'pointer',
                                 fontSize: '14px',
                                 fontWeight: '600',
-                                color: '#059669',
+                                color: '#a855f7',
                                 textAlign: 'left',
                               }}
                               onClick={() => alert(`Appointment scheduled for ${time}`)}
