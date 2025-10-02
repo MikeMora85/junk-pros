@@ -1,19 +1,12 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Globe } from "lucide-react";
-import Map, { Marker, Popup } from "react-map-gl";
 import type { Company } from "@shared/schema";
-import "mapbox-gl/dist/mapbox-gl.css";
 import EstimateBuilder from "./components/EstimateBuilder";
 
 function App() {
-  const [popup, setPopup] = useState<Company | null>(null);
-  
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies?local=true"],
   });
-
-  const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || "YOUR_MAPBOX_TOKEN";
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -49,8 +42,7 @@ function App() {
             companies.map((c) => (
               <div
                 key={c.id}
-                className="bg-white shadow rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow"
-                onClick={() => setPopup(c)}
+                className="bg-white shadow rounded-lg p-4 hover:shadow-md transition-shadow"
                 data-testid={`card-company-${c.id}`}
               >
                 <h3 className="text-xl font-semibold" data-testid={`text-company-name-${c.id}`}>
