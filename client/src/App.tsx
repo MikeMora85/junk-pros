@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Phone, Globe, Star, Sparkles, Plus, X, Camera, Calendar } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -338,13 +338,10 @@ function App() {
       )}
 
       {/* Main Content */}
-      <div style={{ padding: '20px 16px 0 16px' }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-        }}>
-          {/* Page Title */}
-          <div style={{ marginBottom: '24px' }}>
+      <div style={{ padding: '20px 0 0 0' }}>
+        {/* Page Title */}
+        <div style={{ marginBottom: '24px', padding: '0 16px' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h2 style={{
               fontSize: '28px',
               fontWeight: '700',
@@ -359,11 +356,14 @@ function App() {
               {companies.length} verified pros
             </p>
           </div>
+        </div>
 
-          {/* Two Column Layout - Stacks on Mobile */}
-          <div className="main-grid">
-            {/* Left - Company Listings */}
-            <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
+        {/* Two Column Layout - Stacks on Mobile */}
+        <div style={{ padding: '0 16px' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div className="main-grid">
+              {/* Left - Company Listings */}
+              <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             {isLoading ? (
               <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280' }} data-testid="text-loading">
                 Loading...
@@ -765,10 +765,10 @@ function App() {
                   Get Dumpster Quote
                 </button>
               </div>
+              </div>
             </div>
           </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
