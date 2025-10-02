@@ -48,6 +48,14 @@ function App() {
         .breathing-button {
           animation: breatheGlow 2s ease-in-out infinite;
         }
+        .header-title-responsive {
+          font-size: 20px;
+        }
+        @media (max-width: 768px) {
+          .header-title-responsive {
+            font-size: 16px;
+          }
+        }
       `}} />
       {/* Header */}
       <header style={{
@@ -66,8 +74,7 @@ function App() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <div>
-              <h1 style={{
-                fontSize: '20px',
+              <h1 className="header-title-responsive" style={{
                 fontWeight: '800',
                 color: '#fff',
                 margin: 0,
