@@ -40,6 +40,15 @@ function App() {
       background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes breatheGlow {
+          0%, 100% { box-shadow: 0 6px 20px rgba(255,255,255,0.4), 0 0 20px rgba(251,113,133,0.6); }
+          50% { box-shadow: 0 8px 30px rgba(255,255,255,0.6), 0 0 40px rgba(251,113,133,0.8); }
+        }
+        .breathing-button {
+          animation: breatheGlow 2s ease-in-out infinite;
+        }
+      `}} />
       {/* Header */}
       <header style={{
         background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
@@ -80,8 +89,9 @@ function App() {
             </div>
             <button
               onClick={() => setShowBusinessForm(true)}
+              className="breathing-button"
               style={{
-                background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
+                background: 'linear-gradient(135deg, #fda4af 0%, #fbbf24 100%)',
                 color: '#fff',
                 padding: '10px 16px',
                 borderRadius: '8px',
@@ -93,7 +103,6 @@ function App() {
                 alignItems: 'center',
                 gap: '6px',
                 whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(244,114,182,0.4)',
               }}
               data-testid="button-add-business"
             >
