@@ -464,7 +464,7 @@ function App() {
                         data-testid={`button-in-person-${c.id}`}
                       >
                         <Calendar size={16} />
-                        In-Person Estimate
+                        In Person Estimate
                       </button>
                     </div>
 
