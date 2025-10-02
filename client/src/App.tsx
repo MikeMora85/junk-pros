@@ -43,7 +43,7 @@ function App() {
       {/* Header */}
       <header style={{
         background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+        boxShadow: '0 8px 30px rgba(168,85,247,0.6), 0 0 60px rgba(236,72,153,0.4)',
         padding: '16px',
         overflow: 'hidden',
       }}>
