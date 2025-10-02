@@ -655,13 +655,15 @@ function App() {
           {/* Estimator and Ads Section - Full Width */}
           <div style={{
             gridColumn: 'span 2',
-            display: 'grid',
-            gridTemplateColumns: '2fr 1fr',
-            gap: '16px',
           }}>
-            <EstimateBuilderInline />
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="estimator-grid" style={{
+              display: 'grid',
+              gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)',
+              gap: '16px',
+            }}>
+              <EstimateBuilderInline />
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {/* JunkIQ Ad */}
               <div style={{
                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
@@ -727,6 +729,14 @@ function App() {
                 </button>
               </div>
             </div>
+
+            <style>{`
+              @media (max-width: 768px) {
+                .estimator-grid {
+                  grid-template-columns: 1fr !important;
+                }
+              }
+            `}</style>
           </div>
         </div>
       </div>
