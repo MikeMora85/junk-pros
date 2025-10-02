@@ -2,3 +2,14 @@ modules = ["nodejs-20"]
 
 [nix]
 channel = "stable-25_05"
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Run"
+mode = "sequential"
+author = 45909031
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
