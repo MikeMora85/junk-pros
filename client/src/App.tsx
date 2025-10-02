@@ -652,8 +652,9 @@ function App() {
             )}
           </div>
 
-          {/* Right - Sidebar */}
+          {/* Estimator and Ads Section - Full Width */}
           <div style={{
+            gridColumn: 'span 2',
             display: 'grid',
             gridTemplateColumns: '2fr 1fr',
             gap: '16px',
