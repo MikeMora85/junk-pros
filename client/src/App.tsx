@@ -86,17 +86,10 @@ function App() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <div>
-              <h1 className="header-title-responsive" style={{
-                fontWeight: '800',
-                color: '#fff',
-                margin: 0,
-              }} data-testid="header-title">
-                BestJunkRemovalCompanies ⚡
-              </h1>
               <p style={{
                 fontSize: '16px',
                 color: '#fff',
-                margin: '8px 0 0 0',
+                margin: '0',
                 fontWeight: '700',
                 letterSpacing: '0.5px',
                 textShadow: '0 2px 4px rgba(0,0,0,0.2)',
@@ -340,28 +333,25 @@ function App() {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '24px', padding: '0' }}>
-          <div style={{ maxWidth: '100%', margin: '0 auto' }}>
-            <h2 style={{
-              fontSize: '28px',
-              fontWeight: '700',
-              margin: '0 0 8px 0',
-              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }} data-testid="text-page-title">
-              Scottsdale Junk Removal
-            </h2>
-            <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
-              {companies.length} verified pros
-            </p>
-          </div>
+        <div style={{ marginBottom: '24px', padding: '0 16px' }}>
+          <h2 style={{
+            fontSize: '28px',
+            fontWeight: '700',
+            margin: '0 0 8px 0',
+            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }} data-testid="text-page-title">
+            Scottsdale Junk Removal
+          </h2>
+          <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
+            {companies.length} verified pros
+          </p>
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0' }}>
-          <div style={{ maxWidth: '100%', margin: '0 auto' }}>
-            <div className="main-grid">
+        <div style={{ padding: '0 16px' }}>
+          <div className="main-grid">
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
                 {isLoading ? (
@@ -768,7 +758,6 @@ function App() {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
