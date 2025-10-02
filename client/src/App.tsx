@@ -56,18 +56,28 @@ function App() {
           width: '100%',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <h1 style={{
-              fontSize: '20px',
-              fontWeight: '800',
-              color: '#fff',
-              margin: 0,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-            }} data-testid="header-title">
-              <Sparkles size={20} color="#fbbf24" fill="#fbbf24" />
-              Junk Removal Pros
-            </h1>
+            <div>
+              <h1 style={{
+                fontSize: '20px',
+                fontWeight: '800',
+                color: '#fff',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }} data-testid="header-title">
+                <Sparkles size={20} color="#fbbf24" fill="#fbbf24" />
+                BestJunkRemovalCompanies.com
+              </h1>
+              <p style={{
+                fontSize: '13px',
+                color: 'rgba(255,255,255,0.95)',
+                margin: '4px 0 0 28px',
+                fontWeight: '500',
+              }}>
+                Find Trusted Local Pros, Get Instant Quotes
+              </p>
+            </div>
             <button
               onClick={() => setShowBusinessForm(true)}
               style={{
