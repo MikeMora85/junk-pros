@@ -656,9 +656,9 @@ function App() {
           <div style={{
             gridColumn: 'span 2',
           }}>
-            <div className="estimator-grid" style={{
+            <div style={{
               display: 'grid',
-              gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)',
+              gridTemplateColumns: window.innerWidth > 768 ? 'minmax(0, 2fr) minmax(0, 1fr)' : '1fr',
               gap: '16px',
             }}>
               <EstimateBuilderInline />
@@ -729,14 +729,6 @@ function App() {
                 </button>
               </div>
             </div>
-
-            <style>{`
-              @media (max-width: 768px) {
-                .estimator-grid {
-                  grid-template-columns: 1fr !important;
-                }
-              }
-            `}</style>
           </div>
         </div>
       </div>
