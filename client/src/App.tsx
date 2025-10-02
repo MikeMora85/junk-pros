@@ -658,7 +658,7 @@ function App() {
           }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: '2fr 1fr',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
               gap: '16px',
             }}>
               <EstimateBuilderInline />
