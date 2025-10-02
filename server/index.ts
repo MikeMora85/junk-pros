@@ -51,6 +51,7 @@ app.use((req, res, next) => {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
+      root: "client",
     });
     app.use(vite.middlewares);
   }
