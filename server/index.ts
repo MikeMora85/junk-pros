@@ -49,15 +49,25 @@ app.use((req, res, next) => {
     });
   } else {
     const vite = await createViteServer({
+      configFile: false,
       server: { 
         middlewareMode: true,
         hmr: {
           host: "localhost",
         },
-        allowedHosts: 'all',
       },
       appType: "spa",
       root: "client",
+      resolve: {
+        alias: {
+          "@": path.resolve(process.cwd(), "./client/src"),
+          "@shared": path.resolve(process.cwd(), "./shared"),
+          "@assets": path.resolve(process.cwd(), "./attached_assets"),
+        },
+      },
+      plugins: [
+        (await import("@vitejs/plugin-react")).default(),
+      ],
     });
     app.use(vite.middlewares);
   }
