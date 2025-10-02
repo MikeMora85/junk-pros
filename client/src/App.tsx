@@ -91,7 +91,7 @@ function App() {
               onClick={() => setShowBusinessForm(true)}
               className="breathing-button"
               style={{
-                background: 'linear-gradient(135deg, #fda4af 0%, #fbbf24 100%)',
+                background: 'linear-gradient(135deg, #f9a8d4 0%, #fda4af 100%)',
                 color: '#fff',
                 padding: '10px 16px',
                 borderRadius: '8px',
