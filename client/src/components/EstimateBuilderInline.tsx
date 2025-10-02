@@ -1,72 +1,52 @@
 import { useState } from "react";
-
-const WasherIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    style={{ width: '24px', height: '24px', color: '#3b82f6' }}
-    fill="currentColor"
-  >
-    <rect
-      x="4"
-      y="2"
-      width="16"
-      height="20"
-      rx="2"
-      ry="2"
-      fill="#bfdbfe"
-      stroke="#1d4ed8"
-      strokeWidth="2"
-    />
-    <circle
-      cx="12"
-      cy="12"
-      r="5"
-      fill="white"
-      stroke="#1e40af"
-      strokeWidth="2"
-    />
-  </svg>
-);
+import { Calculator } from "lucide-react";
 
 export default function EstimateBuilderInline() {
   const [yards, setYards] = useState(7);
   const truckCapacity = 14;
   const low = yards * 45;
   const high = yards * 60;
-  const loadFraction = yards / truckCapacity;
-
-  const washers = Array.from({ length: yards }, (_, i) => i);
+  const percentage = (yards / truckCapacity) * 100;
 
   const presets = [
-    { label: "¼ Truck", value: Math.round(truckCapacity * 0.25) },
-    { label: "½ Truck", value: Math.round(truckCapacity * 0.5) },
-    { label: "¾ Truck", value: Math.round(truckCapacity * 0.75) },
-    { label: "Full Truck", value: truckCapacity },
+    { label: "¼ Load", value: Math.round(truckCapacity * 0.25) },
+    { label: "½ Load", value: Math.round(truckCapacity * 0.5) },
+    { label: "¾ Load", value: Math.round(truckCapacity * 0.75) },
+    { label: "Full", value: truckCapacity },
   ];
 
   return (
-    <div style={{ backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '8px', padding: '24px', marginBottom: '16px' }}>
-      <h3 style={{ fontWeight: 'bold', fontSize: '18px', marginBottom: '12px' }}>Estimate Builder</h3>
-      <p style={{ fontSize: '14px', marginBottom: '16px', color: '#374151' }}>
-        Junk removal is usually priced by cubic yard (about the size of a washing
-        machine). Most trucks hold 12–15 cubic yards — about 14 washing machines.
+    <div style={{ 
+      backgroundColor: '#fff',
+      border: '1px solid #e5e7eb',
+      borderRadius: '12px',
+      padding: '24px',
+      marginBottom: '16px',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+        <Calculator size={20} color="#059669" />
+        <h3 style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#111827' }}>Price Estimator</h3>
+      </div>
+      
+      <p style={{ fontSize: '14px', marginBottom: '20px', color: '#6b7280', lineHeight: '1.5' }}>
+        Get an instant estimate based on your junk volume. Most trucks hold 12-15 cubic yards.
       </p>
 
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '24px' }}>
         {presets.map((p) => (
           <button
             key={p.label}
             onClick={() => setYards(p.value)}
             style={{
-              padding: '8px 12px',
-              borderRadius: '6px',
-              fontSize: '14px',
-              fontWeight: '500',
-              backgroundColor: yards === p.value ? 'hsl(142 72% 20%)' : '#e5e7eb',
+              padding: '8px 4px',
+              borderRadius: '8px',
+              fontSize: '13px',
+              fontWeight: '600',
+              backgroundColor: yards === p.value ? '#059669' : '#f9fafb',
               color: yards === p.value ? 'white' : '#374151',
-              border: 'none',
+              border: yards === p.value ? 'none' : '1px solid #e5e7eb',
               cursor: 'pointer',
+              transition: 'all 0.2s',
             }}
             data-testid={`button-preset-${p.label.replace(/\s/g, '-')}`}
           >
@@ -75,73 +55,79 @@ export default function EstimateBuilderInline() {
         ))}
       </div>
 
-      <div style={{ position: 'relative', width: '100%', height: '160px', marginBottom: '16px', display: 'flex', alignItems: 'flex-end' }}>
-        <div style={{ width: '80px', height: '80px', backgroundColor: '#374151', borderRadius: '6px', position: 'relative' }}>
-          <div style={{ position: 'absolute', bottom: 0, left: '8px', width: '32px', height: '32px', backgroundColor: '#111827', borderRadius: '50%' }} />
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <label style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}>
+            Load Size
+          </label>
+          <span style={{ fontSize: '14px', fontWeight: '600', color: '#059669' }}>
+            {yards} cubic yards
+          </span>
         </div>
-
-        <div style={{ flex: 1, height: '112px', border: '4px solid #9ca3af', backgroundColor: '#f3f4f6', borderRadius: '6px', display: 'flex', flexWrap: 'wrap', padding: '8px', position: 'relative' }}>
-          {washers.map((_, i) => (
-            <div
-              key={i}
-              style={{ width: '16.666%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            >
-              <WasherIcon />
-            </div>
-          ))}
-          <div style={{ position: 'absolute', bottom: '-24px', left: '25%', width: '40px', height: '40px', backgroundColor: '#111827', borderRadius: '50%' }} />
-          <div style={{ position: 'absolute', bottom: '-24px', right: '25%', width: '40px', height: '40px', backgroundColor: '#111827', borderRadius: '50%' }} />
+        
+        <input
+          type="range"
+          min="1"
+          max={truckCapacity}
+          value={yards}
+          onChange={(e) => setYards(parseInt(e.target.value))}
+          style={{ 
+            width: '100%',
+            height: '6px',
+            borderRadius: '3px',
+            outline: 'none',
+            background: `linear-gradient(to right, #059669 0%, #059669 ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`,
+          }}
+          data-testid="input-load-size"
+        />
+        
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
+          <span style={{ fontSize: '12px', color: '#9ca3af' }}>Empty</span>
+          <span style={{ fontSize: '12px', color: '#9ca3af' }}>Full ({truckCapacity} yd³)</span>
         </div>
       </div>
 
-      <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '4px' }}>
-        Select load size ({yards} cubic yards)
-      </label>
-      <input
-        type="range"
-        min="1"
-        max={truckCapacity}
-        value={yards}
-        onChange={(e) => setYards(parseInt(e.target.value))}
-        style={{ width: '100%', marginBottom: '12px' }}
-        data-testid="input-load-size"
-      />
-
-      <p style={{ fontSize: '14px' }} data-testid="text-estimated-cost">
-        Estimated Cost:{" "}
-        <span style={{ fontWeight: 'bold' }}>
-          ${low.toLocaleString()} – ${high.toLocaleString()}
-        </span>
-      </p>
-
-      <p style={{ fontSize: '12px', color: '#6b7280' }}>
-        That's about{" "}
-        {loadFraction <= 0.25
-          ? "¼ load"
-          : loadFraction <= 0.5
-          ? "½ load"
-          : loadFraction < 1
-          ? "¾ load"
-          : "a full truck"}
-        .
-      </p>
+      <div style={{ 
+        backgroundColor: '#f0fdf4',
+        border: '1px solid #bbf7d0',
+        borderRadius: '8px',
+        padding: '16px',
+        marginBottom: '16px',
+      }}>
+        <div style={{ fontSize: '13px', color: '#059669', fontWeight: '600', marginBottom: '4px' }}>
+          Estimated Cost
+        </div>
+        <div style={{ fontSize: '28px', fontWeight: '700', color: '#047857' }} data-testid="text-estimated-cost">
+          ${low} - ${high}
+        </div>
+        <div style={{ fontSize: '12px', color: '#059669', marginTop: '4px' }}>
+          Based on {yards} cubic yards
+        </div>
+      </div>
 
       <button 
-        style={{
-          marginTop: '16px',
-          backgroundColor: 'hsl(142 72% 20%)',
+        style={{ 
+          width: '100%',
+          backgroundColor: '#059669',
           color: 'white',
-          padding: '12px 16px',
-          borderRadius: '6px',
+          padding: '12px',
+          borderRadius: '8px',
           border: 'none',
           cursor: 'pointer',
-          width: '100%',
+          fontSize: '15px',
           fontWeight: '600',
+          transition: 'background 0.2s',
         }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#047857'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#059669'}
         data-testid="button-request-quote"
       >
-        Request Real Quote
+        Get Accurate Quote
       </button>
+      
+      <p style={{ fontSize: '12px', color: '#9ca3af', textAlign: 'center', marginTop: '12px', marginBottom: 0 }}>
+        Final price may vary based on items and location
+      </p>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Phone, Globe } from "lucide-react";
+import { MapPin, Phone, Globe, Star, TrendingUp } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 
@@ -8,150 +8,257 @@ function App() {
     queryKey: ["/api/companies?local=true"],
   });
 
+  const headerStyle: React.CSSProperties = {
+    backgroundColor: '#fff',
+    borderBottom: '1px solid #e5e7eb',
+    padding: '16px 32px',
+    position: 'sticky',
+    top: 0,
+    zIndex: 100,
+    boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)',
+  };
+
+  const navStyle: React.CSSProperties = {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '20px',
+    flexWrap: 'wrap',
+  };
+
+  const logoStyle: React.CSSProperties = {
+    fontSize: '20px',
+    fontWeight: '700',
+    color: '#059669',
+    margin: 0,
+  };
+
+  const searchStyle: React.CSSProperties = {
+    flex: '1',
+    maxWidth: '400px',
+    padding: '11px 16px',
+    border: '1px solid #d1d5db',
+    borderRadius: '8px',
+    fontSize: '15px',
+    outline: 'none',
+  };
+
+  const containerStyle: React.CSSProperties = {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '32px',
+    display: 'grid',
+    gridTemplateColumns: '1fr 380px',
+    gap: '32px',
+  };
+
+  const companyCardStyle: React.CSSProperties = {
+    backgroundColor: '#fff',
+    border: '1px solid #e5e7eb',
+    borderRadius: '12px',
+    padding: '24px',
+    marginBottom: '16px',
+    transition: 'all 0.2s',
+    cursor: 'pointer',
+  };
+
+  const avatarStyle: React.CSSProperties = {
+    width: '72px',
+    height: '72px',
+    borderRadius: '8px',
+    backgroundColor: '#f3f4f6',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '28px',
+    fontWeight: '700',
+    color: '#059669',
+    flexShrink: 0,
+  };
+
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb', display: 'flex', flexDirection: 'column', fontFamily: 'Inter, system-ui, sans-serif' }}>
-      <header style={{ backgroundColor: 'hsl(142 72% 20%)', color: 'white', padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: 'bold', margin: 0 }} data-testid="header-title">
-          BestJunkRemovalCompanies.com
-        </h1>
-        <input
-          type="text"
-          placeholder="Enter city or zip..."
-          style={{ borderRadius: '8px', padding: '10px 16px', border: 'none', fontSize: '15px', minWidth: '220px' }}
-          data-testid="input-search-location"
-        />
+    <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+      <header style={headerStyle}>
+        <nav style={navStyle}>
+          <h1 style={logoStyle} data-testid="header-title">
+            Junk Removal Directory
+          </h1>
+          <input
+            type="text"
+            placeholder="Search location..."
+            style={searchStyle}
+            data-testid="input-search-location"
+            onFocus={(e) => e.target.style.borderColor = '#059669'}
+            onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+          />
+        </nav>
       </header>
 
-      <div style={{ backgroundColor: 'hsl(48 96% 53%)', textAlign: 'center', padding: '14px', fontWeight: '600', fontSize: '15px' }}>
-        🔥 Advertisement: Try <span style={{color: '#ea580c'}}>JunkIQ</span> – Smarter Junk Removal Quoting Software
-      </div>
-
-      <main style={{ display: 'flex', flex: 1, flexWrap: 'wrap' }}>
-        <section style={{ flex: '1 1 600px', padding: '28px', overflowY: 'auto' }}>
-          <h2 style={{fontSize: '34px', fontWeight: 'bold', marginBottom: '24px', marginTop: 0}} data-testid="text-page-title">
-            Scottsdale Junk Removal
-          </h2>
+      <div style={containerStyle}>
+        <section>
+          <div style={{ marginBottom: '24px' }}>
+            <h2 style={{ fontSize: '28px', fontWeight: '600', margin: '0 0 8px 0', color: '#111827' }} data-testid="text-page-title">
+              Junk Removal in Scottsdale, AZ
+            </h2>
+            <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
+              {companies.length} results • Sorted by recommended
+            </p>
+          </div>
           
           {isLoading ? (
-            <div style={{textAlign: 'center', padding: '40px', fontSize: '16px'}} data-testid="text-loading">
+            <div style={{ textAlign: 'center', padding: '60px 0', color: '#6b7280' }} data-testid="text-loading">
               Loading companies...
             </div>
           ) : (
             companies.map((c) => (
               <div 
                 key={c.id} 
-                style={{ 
-                  backgroundColor: 'white', 
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)', 
-                  borderRadius: '12px', 
-                  padding: '20px', 
-                  marginBottom: '20px',
-                  transition: 'box-shadow 0.2s'
-                }} 
+                style={companyCardStyle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.borderColor = '#d1d5db';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.borderColor = '#e5e7eb';
+                }}
                 data-testid={`card-company-${c.id}`}
               >
-                <h3 style={{ fontSize: '22px', fontWeight: '600', marginTop: 0, marginBottom: '12px' }} data-testid={`text-company-name-${c.id}`}>
-                  {c.name}
-                </h3>
-                <p style={{ fontSize: '15px', margin: '8px 0', display: 'flex', alignItems: 'center', gap: '6px', color: '#4b5563' }}>
-                  <MapPin size={16} /> {c.address}
-                </p>
-                <p style={{ fontSize: '15px', margin: '8px 0', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Phone size={16} /> {c.phone}
-                </p>
-                <a
-                  href={c.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ fontSize: '15px', color: '#2563eb', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px', margin: '8px 0' }}
-                  data-testid={`link-website-${c.id}`}
-                >
-                  <Globe size={16} /> Website
-                </a>
-                <p style={{ fontSize: '15px', margin: '12px 0' }} data-testid={`text-rating-${c.id}`}>
-                  ⭐ <strong>{c.rating}</strong> ({c.reviews} reviews)
-                </p>
-                <button 
-                  style={{ 
-                    marginTop: '12px', 
-                    backgroundColor: 'hsl(142 72% 20%)', 
-                    color: 'white', 
-                    padding: '10px 18px', 
-                    borderRadius: '8px', 
-                    border: 'none', 
-                    cursor: 'pointer',
-                    fontSize: '15px',
-                    fontWeight: '600'
-                  }} 
-                  data-testid={`button-claim-${c.id}`}
-                >
-                  Claim this business
-                </button>
+                <div style={{ display: 'flex', gap: '20px' }}>
+                  <div style={avatarStyle}>
+                    {c.name.charAt(0)}
+                  </div>
+                  
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ fontSize: '20px', fontWeight: '600', margin: '0 0 8px 0', color: '#111827' }} data-testid={`text-company-name-${c.id}`}>
+                      {c.name}
+                    </h3>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <Star size={16} fill="#fbbf24" stroke="#fbbf24" />
+                        <span style={{ fontWeight: '600', color: '#111827' }}>{c.rating}</span>
+                      </div>
+                      <span style={{ color: '#6b7280', fontSize: '14px' }}>({c.reviews} reviews)</span>
+                      {c.local && (
+                        <span style={{ 
+                          backgroundColor: '#dcfce7', 
+                          color: '#059669', 
+                          padding: '2px 8px', 
+                          borderRadius: '4px', 
+                          fontSize: '12px',
+                          fontWeight: '600',
+                          marginLeft: '4px'
+                        }}>
+                          Local
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#6b7280' }}>
+                        <MapPin size={16} />
+                        <span>{c.address}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', color: '#6b7280' }}>
+                        <Phone size={16} />
+                        <span>{c.phone}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px' }}>
+                        <Globe size={16} color="#2563eb" />
+                        <a
+                          href={c.website}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ color: '#2563eb', textDecoration: 'none' }}
+                          data-testid={`link-website-${c.id}`}
+                        >
+                          Visit website
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                      <button 
+                        style={{ 
+                          backgroundColor: '#059669',
+                          color: 'white',
+                          padding: '10px 20px',
+                          borderRadius: '8px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          transition: 'background 0.2s',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#047857'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#059669'}
+                        data-testid={`button-claim-${c.id}`}
+                      >
+                        Get Quote
+                      </button>
+                      <button 
+                        style={{ 
+                          backgroundColor: '#fff',
+                          color: '#374151',
+                          padding: '10px 20px',
+                          borderRadius: '8px',
+                          border: '1px solid #d1d5db',
+                          cursor: 'pointer',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                        }}
+                      >
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))
           )}
         </section>
 
-        <aside style={{ flex: '0 0 380px', padding: '28px', backgroundColor: '#f9fafb' }}>
-          <div style={{ height: '280px', backgroundColor: '#e5e7eb', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)' }}>
-            <div style={{ textAlign: 'center', padding: '24px' }}>
-              <p style={{ fontWeight: '600', color: '#4b5563', fontSize: '18px', marginBottom: '8px' }}>🗺️ Map Placeholder</p>
-              <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
-                Mapbox token required to display interactive map.
-                <br />
-                <small>Set VITE_MAPBOX_TOKEN environment variable.</small>
-              </p>
-            </div>
-          </div>
-
+        <aside style={{ position: 'sticky', top: '84px', alignSelf: 'flex-start' }}>
           <EstimateBuilderInline />
 
-          <div style={{ backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '20px', marginBottom: '20px' }}>
-            <h3 style={{ fontWeight: 'bold', marginTop: 0, marginBottom: '12px', fontSize: '17px' }}>What is a Cubic Yard?</h3>
-            <p style={{ fontSize: '14px', color: '#374151', lineHeight: '1.6', margin: 0 }}>
-              A cubic yard is 3ft × 3ft × 3ft — about the size of a standard washing machine. Junk removal trucks are usually 12–16 cubic yards (about 14 washing machines).
-            </p>
-          </div>
-
-          <div style={{ backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '20px', marginBottom: '20px' }}>
-            <h3 style={{ fontWeight: 'bold', marginTop: 0, marginBottom: '12px', fontSize: '17px' }}>Latest Articles</h3>
-            <ul style={{ fontSize: '14px', color: '#374151', paddingLeft: '20px', margin: 0, lineHeight: '1.8' }}>
-              <li>5 Questions to Ask Before Hiring a Junk Removal Company</li>
-              <li>How to Save Money on Junk Removal</li>
-              <li>Dumpster Rental vs Junk Removal – Which is Better?</li>
+          <div style={{ 
+            backgroundColor: '#fff',
+            border: '1px solid #e5e7eb',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '16px',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+              <TrendingUp size={20} color="#059669" />
+              <h3 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: '#111827' }}>Popular Articles</h3>
+            </div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {[
+                '5 Questions to Ask Before Hiring',
+                'How to Save Money on Junk Removal',
+                'Dumpster vs Junk Removal Services'
+              ].map((article, i) => (
+                <li key={i} style={{ 
+                  padding: '10px 0',
+                  borderBottom: i < 2 ? '1px solid #f3f4f6' : 'none',
+                }}>
+                  <a href="#" style={{ 
+                    fontSize: '14px',
+                    color: '#374151',
+                    textDecoration: 'none',
+                    display: 'block',
+                  }}>
+                    {article}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
-
-          <div style={{ backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '20px', textAlign: 'center', marginBottom: '20px' }}>
-            <h4 style={{ fontWeight: 'bold', marginTop: 0, marginBottom: '8px', fontSize: '16px' }}>Sponsored: Dumpster Rentals</h4>
-            <p style={{ fontSize: '14px', color: '#374151', marginBottom: '12px' }}>
-              Need a dumpster instead? Book your rental today.
-            </p>
-            <button 
-              style={{ 
-                backgroundColor: '#ea580c', 
-                color: 'white', 
-                padding: '10px 18px', 
-                borderRadius: '8px', 
-                border: 'none', 
-                cursor: 'pointer',
-                fontSize: '15px',
-                fontWeight: '600'
-              }}
-              data-testid="button-book-dumpster"
-            >
-              Book Dumpster
-            </button>
-          </div>
-
-          <div style={{ backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '12px', padding: '20px', textAlign: 'center' }}>
-            <h4 style={{ fontWeight: 'bold', marginTop: 0, marginBottom: '8px', fontSize: '16px' }}>Your Ad Here</h4>
-            <p style={{ fontSize: '14px', color: '#6b7280', margin: 0 }}>
-              Contact us to advertise to Scottsdale homeowners.
-            </p>
-          </div>
         </aside>
-      </main>
+      </div>
     </div>
   );
 }
