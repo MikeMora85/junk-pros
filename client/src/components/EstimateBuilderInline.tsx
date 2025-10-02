@@ -141,14 +141,8 @@ export default function EstimateBuilderInline() {
               What is a Cubic Yard?
             </h4>
             <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', margin: 0, lineHeight: '1.5' }}>
-              A cubic yard is 3ft × 3ft × 3ft. Common examples:
+              A cubic yard is 3ft × 3ft × 3ft - about the size of a standard washing machine or dryer. Use this as your reference point when estimating your load.
             </p>
-            <ul style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', margin: '8px 0 0 16px', padding: 0, lineHeight: '1.6' }}>
-              <li>Washing machine ≈ 3-4 cubic yards</li>
-              <li>Refrigerator ≈ 4-5 cubic yards</li>
-              <li>Sofa ≈ 3-4 cubic yards</li>
-              <li>King mattress ≈ 3 cubic yards</li>
-            </ul>
           </div>
         </div>
       </div>
