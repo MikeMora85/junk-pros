@@ -15,4 +15,9 @@ export default defineConfig({
     outDir: "dist/client",
     emptyOutDir: true,
   },
+  server: {
+    host: true,
+    allowedHosts: ['.replit.dev', '.spock.replit.dev'],
+    strictPort: false,
+  },
 });
