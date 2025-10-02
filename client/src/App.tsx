@@ -67,7 +67,7 @@ function App() {
           </div>
           <input
             type="text"
-            placeholder="Enter your city or zip..."
+            placeholder="City or zip..."
             style={{
               width: '100%',
               padding: '12px 16px',
