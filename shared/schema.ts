@@ -16,9 +16,7 @@ export const companies = pgTable("companies", {
   local: boolean("local").notNull().default(true),
 });
 
-export const insertCompanySchema = createInsertSchema(companies).omit({
-  id: true,
-});
+export const insertCompanySchema = createInsertSchema(companies);
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
 export type Company = typeof companies.$inferSelect;
