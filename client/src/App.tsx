@@ -342,39 +342,48 @@ function App() {
                   )}
                   
                   <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
-                    {c.logoUrl ? (
-                      <img
-                        src={c.logoUrl}
-                        alt={`${c.name} logo`}
-                        style={{
-                          width: '60px',
-                          height: '60px',
-                          borderRadius: '10px',
-                          objectFit: 'contain',
-                          flexShrink: 0,
-                          backgroundColor: '#fff',
-                          padding: '4px',
-                          border: '2px solid #f3e8ff',
-                        }}
-                      />
-                    ) : (
-                      <div style={{
-                        width: '60px',
-                        height: '60px',
-                        borderRadius: '10px',
-                        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '24px',
-                        fontWeight: '800',
-                        color: '#fff',
-                        flexShrink: 0,
-                        boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
-                      }}>
-                        {c.name.charAt(0)}
-                      </div>
-                    )}
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '10px',
+                      background: c.logoUrl ? '#fff' : 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '24px',
+                      fontWeight: '800',
+                      color: '#fff',
+                      flexShrink: 0,
+                      boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
+                      padding: c.logoUrl ? '4px' : '0',
+                      border: c.logoUrl ? '2px solid #f3e8ff' : 'none',
+                      overflow: 'hidden',
+                    }}>
+                      {c.logoUrl ? (
+                        <img
+                          src={c.logoUrl}
+                          alt={`${c.name} logo`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const parent = e.currentTarget.parentElement;
+                            if (parent) {
+                              parent.style.background = 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)';
+                              parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
+                              parent.style.border = 'none';
+                              parent.style.padding = '0';
+                              parent.textContent = c.name.charAt(0);
+                            }
+                          }}
+                        />
+                      ) : (
+                        c.name.charAt(0)
+                      )}
+                    </div>
                     
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <h3 style={{
