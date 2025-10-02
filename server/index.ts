@@ -52,9 +52,15 @@ app.use((req, res, next) => {
       configFile: false,
       server: { 
         middlewareMode: true,
+        host: true,
         hmr: {
           host: "localhost",
         },
+        allowedHosts: [
+          '.replit.dev',
+          '.repl.co',
+          'localhost'
+        ],
       },
       appType: "spa",
       root: "client",
