@@ -23,6 +23,10 @@ localPort = 24678
 externalPort = 80
 exposeLocalhost = true
 
+[[ports]]
+localPort = 38443
+externalPort = 3000
+
 [deployment]
 run = ["sh", "-c", "npm start"]
 deploymentTarget = "cloudrun"
