@@ -24,5 +24,6 @@ externalPort = 80
 exposeLocalhost = true
 
 [deployment]
-run = ["sh", "-c", "npm run dev"]
+run = ["sh", "-c", "npm start"]
 deploymentTarget = "cloudrun"
+build = ["sh", "-c", "npm run build"]
