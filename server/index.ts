@@ -1,7 +1,8 @@
 import express from "express";
+import path from "path";
 import { registerRoutes } from "./routes";
 import { MemStorage } from "./storage";
-import { setupVite, serveStatic } from "./vite";
+import { createServer as createViteServer } from "vite";
 
 const app = express();
 app.use(express.json());
@@ -42,9 +43,16 @@ app.use((req, res, next) => {
   registerRoutes(app, storage);
 
   if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
+    app.use(express.static("dist/client"));
+    app.use("*", (_req, res) => {
+      res.sendFile(path.resolve("dist/client", "index.html"));
+    });
   } else {
-    await setupVite(app);
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: "spa",
+    });
+    app.use(vite.middlewares);
   }
 
   const PORT = 5000;
