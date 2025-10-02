@@ -53,7 +53,9 @@ function App() {
         }
         @media (max-width: 768px) {
           .header-title-responsive {
-            font-size: 16px;
+            font-size: 18px;
+            word-break: break-word;
+            max-width: 100%;
           }
         }
       `}} />
