@@ -71,17 +71,13 @@ function App() {
                 fontWeight: '800',
                 color: '#fff',
                 margin: 0,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
               }} data-testid="header-title">
-                <Sparkles size={20} color="#fbbf24" fill="#fbbf24" />
                 BestJunkRemovalCompanies.com
               </h1>
               <p style={{
                 fontSize: '13px',
                 color: 'rgba(255,255,255,0.95)',
-                margin: '4px 0 0 28px',
+                margin: '4px 0 0 0',
                 fontWeight: '500',
               }}>
                 Find Trusted Local Pros, Get Instant Quotes
