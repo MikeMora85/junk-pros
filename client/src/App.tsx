@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Phone, Globe, Star, Sparkles } from "lucide-react";
+import { MapPin, Phone, Globe, Star, Sparkles, Plus, X } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 
 function App() {
+  const [showBusinessForm, setShowBusinessForm] = useState(false);
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies?local=true"],
   });
@@ -47,33 +49,289 @@ function App() {
             <Sparkles size={24} color="#fbbf24" fill="#fbbf24" />
             Junk Removal Pros
           </h1>
-          <input
-            type="text"
-            placeholder="Enter your city or zip code..."
-            style={{
-              flex: '1',
-              maxWidth: '400px',
-              minWidth: '200px',
-              padding: '12px 18px',
-              border: '2px solid rgba(255,255,255,0.3)',
-              borderRadius: '12px',
-              fontSize: '15px',
-              outline: 'none',
-              backgroundColor: 'rgba(255,255,255,0.95)',
-              transition: 'all 0.2s',
-            }}
-            data-testid="input-search-location"
-            onFocus={(e) => {
-              e.target.style.borderColor = '#fbbf24';
-              e.target.style.boxShadow = '0 0 0 3px rgba(251,191,36,0.1)';
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = 'rgba(255,255,255,0.3)';
-              e.target.style.boxShadow = 'none';
-            }}
-          />
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap', flex: 1, justifyContent: 'flex-end' }}>
+            <input
+              type="text"
+              placeholder="Enter your city or zip..."
+              style={{
+                flex: '1',
+                maxWidth: '300px',
+                minWidth: '150px',
+                padding: '12px 18px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                borderRadius: '12px',
+                fontSize: '15px',
+                outline: 'none',
+                backgroundColor: 'rgba(255,255,255,0.95)',
+                transition: 'all 0.2s',
+              }}
+              data-testid="input-search-location"
+              onFocus={(e) => {
+                e.target.style.borderColor = '#fbbf24';
+                e.target.style.boxShadow = '0 0 0 3px rgba(251,191,36,0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = 'rgba(255,255,255,0.3)';
+                e.target.style.boxShadow = 'none';
+              }}
+            />
+            <button
+              onClick={() => setShowBusinessForm(true)}
+              style={{
+                background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                color: '#fff',
+                padding: '12px 20px',
+                borderRadius: '12px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '15px',
+                fontWeight: '700',
+                boxShadow: '0 4px 12px rgba(251,191,36,0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s',
+                whiteSpace: 'nowrap',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(251,191,36,0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(251,191,36,0.3)';
+              }}
+            >
+              <Plus size={18} />
+              Add Business
+            </button>
+          </div>
         </nav>
       </header>
+
+      {/* Business Form Modal */}
+      {showBusinessForm && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 200,
+          padding: '20px',
+        }} onClick={() => setShowBusinessForm(false)}>
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '20px',
+            maxWidth: '500px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+          }} onClick={(e) => e.stopPropagation()}>
+            <div style={{
+              background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+              padding: '24px',
+              borderRadius: '20px 20px 0 0',
+              position: 'relative',
+            }}>
+              <button
+                onClick={() => setShowBusinessForm(false)}
+                style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '20px',
+                  backgroundColor: 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  width: '36px',
+                  height: '36px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.3)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)'}
+              >
+                <X size={20} color="#fff" />
+              </button>
+              <h2 style={{
+                fontSize: '28px',
+                fontWeight: '800',
+                color: '#fff',
+                margin: '0 0 8px 0',
+              }}>
+                🚀 Add Your Business
+              </h2>
+              <p style={{
+                fontSize: '15px',
+                color: 'rgba(255,255,255,0.9)',
+                margin: 0,
+              }}>
+                Get more customers by listing your junk removal service
+              </p>
+            </div>
+            
+            <form style={{ padding: '28px' }} onSubmit={(e) => {
+              e.preventDefault();
+              alert('Thank you! We will review your submission and contact you within 24 hours.');
+              setShowBusinessForm(false);
+            }}>
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                  Business Name *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g., Quick Junk Removal LLC"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#10b981'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                  Contact Email *
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="your@email.com"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#10b981'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="(555) 123-4567"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#10b981'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                  Service Area (City, State) *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g., Scottsdale, AZ"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#10b981'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                />
+              </div>
+
+              <div style={{ marginBottom: '24px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>
+                  Website (optional)
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://yourwebsite.com"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#10b981'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                />
+              </div>
+
+              <button
+                type="submit"
+                style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: '#fff',
+                  padding: '16px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  boxShadow: '0 4px 12px rgba(5,150,105,0.3)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(5,150,105,0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(5,150,105,0.3)';
+                }}
+              >
+                ✨ Submit for Review
+              </button>
+
+              <p style={{
+                fontSize: '13px',
+                color: '#6b7280',
+                textAlign: 'center',
+                marginTop: '16px',
+                marginBottom: 0,
+              }}>
+                We'll review your submission within 24 hours
+              </p>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div style={{
