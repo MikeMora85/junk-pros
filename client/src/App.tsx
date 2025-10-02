@@ -215,7 +215,7 @@ function App() {
                 />
               </div>
 
-              <div style={{ marginBottom: '20px' }}>
+              <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
                   City, State *
                 </label>
@@ -232,6 +232,27 @@ function App() {
                   }}
                   data-testid="input-business-location"
                 />
+              </div>
+
+              <div style={{ marginBottom: '20px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
+                  Logo URL (optional)
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://yourwebsite.com/logo.png"
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '15px',
+                  }}
+                  data-testid="input-business-logo"
+                />
+                <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px', marginBottom: 0 }}>
+                  Provide a link to your company logo for better visibility
+                </p>
               </div>
 
               <button
@@ -321,22 +342,39 @@ function App() {
                   )}
                   
                   <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
-                    <div style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '10px',
-                      background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '24px',
-                      fontWeight: '800',
-                      color: '#fff',
-                      flexShrink: 0,
-                      boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
-                    }}>
-                      {c.name.charAt(0)}
-                    </div>
+                    {c.logoUrl ? (
+                      <img
+                        src={c.logoUrl}
+                        alt={`${c.name} logo`}
+                        style={{
+                          width: '60px',
+                          height: '60px',
+                          borderRadius: '10px',
+                          objectFit: 'contain',
+                          flexShrink: 0,
+                          backgroundColor: '#fff',
+                          padding: '4px',
+                          border: '2px solid #f3e8ff',
+                        }}
+                      />
+                    ) : (
+                      <div style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '10px',
+                        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px',
+                        fontWeight: '800',
+                        color: '#fff',
+                        flexShrink: 0,
+                        boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
+                      }}>
+                        {c.name.charAt(0)}
+                      </div>
+                    )}
                     
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <h3 style={{
@@ -528,6 +566,72 @@ function App() {
           {/* Right - Sidebar */}
           <div>
             <EstimateBuilderInline />
+            
+            {/* JunkIQ Ad */}
+            <div style={{
+              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+              borderRadius: '12px',
+              padding: '20px',
+              marginBottom: '16px',
+              boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
+              color: '#fff',
+            }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', margin: '0 0 12px 0' }}>
+                JunkIQ - Smart Pricing
+              </h3>
+              <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5' }}>
+                Get instant, accurate pricing with AI-powered load estimation. No surprises, just fair prices.
+              </p>
+              <button style={{
+                width: '100%',
+                backgroundColor: '#fff',
+                color: '#a855f7',
+                padding: '12px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '15px',
+                fontWeight: '700',
+              }}>
+                Try JunkIQ Now
+              </button>
+            </div>
+
+            {/* Dumpster Rental Ad */}
+            <div style={{
+              backgroundColor: '#fff',
+              border: '2px solid #f3e8ff',
+              borderRadius: '12px',
+              padding: '20px',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            }}>
+              <h3 style={{ 
+                fontSize: '18px', 
+                fontWeight: '700', 
+                margin: '0 0 12px 0',
+                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                Need a Dumpster?
+              </h3>
+              <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5', color: '#6b7280' }}>
+                For bigger projects, rent a dumpster. Sizes from 10-40 yards. Starting at $299/week.
+              </p>
+              <button style={{
+                width: '100%',
+                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                color: '#fff',
+                padding: '12px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '15px',
+                fontWeight: '700',
+              }}>
+                Get Dumpster Quote
+              </button>
+            </div>
           </div>
         </div>
       </div>

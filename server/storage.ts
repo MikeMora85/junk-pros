@@ -20,6 +20,7 @@ export class MemStorage implements IStorage {
       longitude: -111.9281,
       latitude: 33.4942,
       local: true,
+      logoUrl: "https://602junk.com/wp-content/uploads/2023/03/cropped-602-Junk-Logos-09.png",
     },
     {
       id: 2,
@@ -33,6 +34,7 @@ export class MemStorage implements IStorage {
       longitude: -111.891,
       latitude: 33.61,
       local: true,
+      logoUrl: null,
     },
     {
       id: 3,
@@ -46,6 +48,7 @@ export class MemStorage implements IStorage {
       longitude: -112.01,
       latitude: 33.46,
       local: false,
+      logoUrl: null,
     },
   ];
 
