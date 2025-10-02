@@ -91,7 +91,7 @@ function App() {
                 color: '#fff',
                 margin: 0,
               }} data-testid="header-title">
-                BestJunkRemovalCompanies.com ⚡
+                BestJunkRemovalCompanies ⚡
               </h1>
               <p style={{
                 fontSize: '16px',
@@ -340,8 +340,8 @@ function App() {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '24px', padding: '0 16px' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ marginBottom: '24px', padding: '0' }}>
+          <div style={{ maxWidth: '100%', margin: '0 auto' }}>
             <h2 style={{
               fontSize: '28px',
               fontWeight: '700',
@@ -359,8 +359,8 @@ function App() {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0 16px' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ padding: '0' }}>
+          <div style={{ maxWidth: '100%', margin: '0 auto' }}>
             <div className="main-grid">
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
