@@ -658,7 +658,7 @@ function App() {
           }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: window.innerWidth > 768 ? 'minmax(0, 2fr) minmax(0, 1fr)' : '1fr',
+              gridTemplateColumns: '2fr 1fr',
               gap: '16px',
             }}>
               <EstimateBuilderInline />
