@@ -26,4 +26,4 @@ exposeLocalhost = true
 [deployment]
 run = ["sh", "-c", "npm start"]
 deploymentTarget = "cloudrun"
-build = ["sh", "-c", "cd client && vite build --outDir ../dist/client"]
+build = ["sh", "-c", "vite build --config vite.config.ts && tsc server/index.ts --outDir dist/server --module ESNext --moduleResolution bundler --skipLibCheck true"]
