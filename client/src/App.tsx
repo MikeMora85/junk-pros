@@ -1,16 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Globe, Star, Sparkles, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
-import ImageCarousel from "./components/ImageCarousel";
+import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
+import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
+import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
+import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
+import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
+import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
+
+const images = [img1, img2, img3, img4, img5, img6];
 
 function App() {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
+  const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies?local=true"],
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselOffsets((prev) => {
+        const next: Record<number, number> = {};
+        companies.forEach((c) => {
+          next[c.id] = ((prev[c.id] || 0) + 1) % images.length;
+        });
+        return next;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [companies]);
 
   return (
     <div style={{ 
@@ -301,9 +323,6 @@ function App() {
           </p>
         </div>
 
-        {/* Image Carousel */}
-        <ImageCarousel />
-
         {/* Two Column Layout - Stacks on Mobile */}
         <div style={{
           display: 'grid',
@@ -344,6 +363,40 @@ function App() {
                       TOP RATED
                     </div>
                   )}
+                  
+                  {/* Image Carousel */}
+                  <div style={{
+                    marginBottom: '16px',
+                    overflow: 'hidden',
+                    borderRadius: '12px',
+                  }}>
+                    <div style={{
+                      display: 'flex',
+                      transition: 'transform 1.5s ease-in-out',
+                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * 50}%)`,
+                    }}>
+                      {[...images, ...images].map((img, i) => (
+                        <div
+                          key={i}
+                          style={{
+                            minWidth: '50%',
+                            padding: '0 4px',
+                          }}
+                        >
+                          <img
+                            src={img}
+                            alt="Service photo"
+                            style={{
+                              width: '100%',
+                              height: '140px',
+                              objectFit: 'cover',
+                              borderRadius: '8px',
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   
                   <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
                     <div style={{
