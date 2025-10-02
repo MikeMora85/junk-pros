@@ -94,11 +94,12 @@ function App() {
                 BestJunkRemovalCompanies.com
               </h1>
               <p style={{
-                fontSize: '15px',
-                color: 'rgba(255,255,255,1)',
-                margin: '4px 0 0 0',
-                fontWeight: '600',
-                letterSpacing: '0.3px',
+                fontSize: '16px',
+                color: '#fff',
+                margin: '8px 0 0 0',
+                fontWeight: '700',
+                letterSpacing: '0.5px',
+                textShadow: '0 2px 4px rgba(0,0,0,0.2)',
               }}>
                 Find Trusted Local Pros, Get Instant Quotes
               </p>
@@ -340,10 +341,10 @@ function App() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '20px 16px',
+        padding: '20px 0',
       }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: '24px', padding: '0 16px' }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
@@ -360,7 +361,7 @@ function App() {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div className="main-grid">
+        <div className="main-grid" style={{ padding: '0 16px' }}>
           {/* Left - Company Listings */}
           <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             {isLoading ? (
