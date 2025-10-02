@@ -1,75 +1,80 @@
 import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Globe } from "lucide-react";
 import type { Company } from "@shared/schema";
-import EstimateBuilder from "./components/EstimateBuilder";
 
 function App() {
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies?local=true"],
   });
 
+  const styles = {
+    container: { minHeight: '100vh', backgroundColor: '#f9fafb', display: 'flex', flexDirection: 'column' as const },
+    header: { backgroundColor: 'hsl(142 72% 20%)', color: 'white', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+    title: { fontSize: '24px', fontWeight: 'bold' },
+    input: { borderRadius: '6px', padding: '8px 12px', border: '1px solid #ccc' },
+    banner: { backgroundColor: 'hsl(48 96% 53%)', textAlign: 'center' as const, padding: '12px', fontWeight: '600' },
+    main: { display: 'flex', flex: 1, flexWrap: 'wrap' as const },
+    section: { width: '66%', padding: '24px', overflowY: 'auto' as const },
+    aside: { width: '34%', padding: '16px' },
+    card: { backgroundColor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '8px', padding: '16px', marginBottom: '16px' },
+    companyName: { fontSize: '20px', fontWeight: '600', marginBottom: '8px' },
+    text: { fontSize: '14px', margin: '4px 0', display: 'flex', alignItems: 'center', gap: '4px' },
+    button: { marginTop: '8px', backgroundColor: 'hsl(142 72% 20%)', color: 'white', padding: '8px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer' },
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-brand-green text-white p-4 flex justify-between items-center">
-        <h1 className="text-2xl font-bold" data-testid="header-title">
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.title} data-testid="header-title">
           BestJunkRemovalCompanies.com
         </h1>
         <input
           type="text"
           placeholder="Enter city or zip..."
-          className="rounded-md px-3 py-1 text-black"
+          style={styles.input}
           data-testid="input-search-location"
         />
       </header>
 
-      <div className="bg-yellow-highlight text-center py-3 font-semibold">
-        🔥 Advertisement: Try{" "}
-        <span className="text-orange-600">JunkIQ</span> – Smarter Junk Removal
-        Quoting Software
+      <div style={styles.banner}>
+        🔥 Advertisement: Try <span style={{color: '#ea580c'}}>JunkIQ</span> – Smarter Junk Removal Quoting Software
       </div>
 
-      <main className="flex flex-1 flex-col md:flex-row">
-        <section className="md:w-2/3 p-6 space-y-4 overflow-y-auto">
-          <h2 className="text-3xl font-bold mb-2" data-testid="text-page-title">
+      <main style={styles.main}>
+        <section style={styles.section}>
+          <h2 style={{fontSize: '30px', fontWeight: 'bold', marginBottom: '16px'}} data-testid="text-page-title">
             Scottsdale Junk Removal
           </h2>
           
           {isLoading ? (
-            <div className="text-center py-8" data-testid="text-loading">
+            <div style={{textAlign: 'center', padding: '32px'}} data-testid="text-loading">
               Loading companies...
             </div>
           ) : (
             companies.map((c) => (
-              <div
-                key={c.id}
-                className="bg-white shadow rounded-lg p-4 hover:shadow-md transition-shadow"
-                data-testid={`card-company-${c.id}`}
-              >
-                <h3 className="text-xl font-semibold" data-testid={`text-company-name-${c.id}`}>
+              <div key={c.id} style={styles.card} data-testid={`card-company-${c.id}`}>
+                <h3 style={styles.companyName} data-testid={`text-company-name-${c.id}`}>
                   {c.name}
                 </h3>
-                <p className="text-sm text-gray-600 flex items-center gap-1">
+                <p style={styles.text}>
                   <MapPin size={14} /> {c.address}
                 </p>
-                <p className="text-sm flex items-center gap-1">
+                <p style={styles.text}>
                   <Phone size={14} /> {c.phone}
                 </p>
                 <a
                   href={c.website}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-blue-600 flex items-center gap-1"
+                  style={{...styles.text, color: '#2563eb', textDecoration: 'none'}}
                   data-testid={`link-website-${c.id}`}
                 >
                   <Globe size={14} /> Website
                 </a>
-                <p className="text-sm" data-testid={`text-rating-${c.id}`}>
+                <p style={styles.text} data-testid={`text-rating-${c.id}`}>
                   ⭐ {c.rating} ({c.reviews} reviews)
                 </p>
-                <button 
-                  className="mt-2 bg-brand-green text-white px-3 py-1 rounded-md hover:bg-deep-forest"
-                  data-testid={`button-claim-${c.id}`}
-                >
+                <button style={styles.button} data-testid={`button-claim-${c.id}`}>
                   Claim this business
                 </button>
               </div>
@@ -77,55 +82,27 @@ function App() {
           )}
         </section>
 
-        <aside className="md:w-1/3 p-4 space-y-4">
-          <div className="h-64 w-full bg-gray-200 rounded-lg flex items-center justify-center">
-            <div className="text-center p-4">
-              <p className="font-semibold text-gray-600">Map Placeholder</p>
-              <p className="text-sm text-gray-500 mt-2">
-                Mapbox token required to display map.
+        <aside style={styles.aside}>
+          <div style={{height: '256px', backgroundColor: '#e5e7eb', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px'}}>
+            <div style={{textAlign: 'center', padding: '16px'}}>
+              <p style={{fontWeight: '600', color: '#4b5563'}}>Map Placeholder</p>
+              <p style={{fontSize: '14px', color: '#6b7280', marginTop: '8px'}}>
+                Mapbox token required.
                 <br />
-                Set VITE_MAPBOX_TOKEN environment variable.
+                Set VITE_MAPBOX_TOKEN.
               </p>
             </div>
           </div>
 
-          <EstimateBuilder />
-
-          <div className="bg-white shadow rounded-lg p-4">
-            <h3 className="font-bold mb-2">What is a Cubic Yard?</h3>
-            <p className="text-sm text-gray-700">
-              A cubic yard is 3ft × 3ft × 3ft — about the size of a standard
-              washing machine. Junk removal trucks are usually 12–16 cubic yards
-              (about 14 washing machines).
-            </p>
+          <div style={{...styles.card, marginBottom: '16px'}}>
+            <h3 style={{fontWeight: 'bold', marginBottom: '8px'}}>Estimate Builder</h3>
+            <p style={{fontSize: '14px'}}>Interactive estimate builder coming soon!</p>
           </div>
 
-          <div className="bg-white shadow rounded-lg p-4">
-            <h3 className="font-bold mb-2">Latest Articles</h3>
-            <ul className="list-disc list-inside text-sm text-gray-700">
-              <li>5 Questions to Ask Before Hiring a Junk Removal Company</li>
-              <li>How to Save Money on Junk Removal</li>
-              <li>Dumpster Rental vs Junk Removal – Which is Better?</li>
-            </ul>
-          </div>
-
-          <div className="bg-white shadow rounded-lg p-4 text-center">
-            <h4 className="font-bold mb-2">Sponsored: Dumpster Rentals</h4>
-            <p className="text-sm text-gray-700">
-              Need a dumpster instead? Book your rental today.
-            </p>
-            <button 
-              className="mt-2 bg-orange-600 text-white px-3 py-1 rounded-md hover:bg-orange-700"
-              data-testid="button-book-dumpster"
-            >
-              Book Dumpster
-            </button>
-          </div>
-
-          <div className="bg-white shadow rounded-lg p-4 text-center">
-            <h4 className="font-bold mb-2">Your Ad Here</h4>
-            <p className="text-sm text-gray-600">
-              Contact us to advertise to Scottsdale homeowners.
+          <div style={styles.card}>
+            <h3 style={{fontWeight: 'bold', marginBottom: '8px'}}>What is a Cubic Yard?</h3>
+            <p style={{fontSize: '14px', color: '#374151'}}>
+              A cubic yard is 3ft × 3ft × 3ft — about the size of a standard washing machine.
             </p>
           </div>
         </aside>
