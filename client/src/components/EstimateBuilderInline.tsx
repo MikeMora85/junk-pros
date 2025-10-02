@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calculator } from "lucide-react";
+import { Calculator, Info } from "lucide-react";
 
 export default function EstimateBuilderInline() {
   const [yards, setYards] = useState(7);
@@ -123,7 +123,51 @@ export default function EstimateBuilderInline() {
           ${low} - ${high}
         </div>
         <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-          Based on {yards} cubic yards • Prices may vary
+          Based on {yards} cubic yards • Industry average
+        </div>
+      </div>
+
+      {/* Education Section */}
+      <div style={{
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderRadius: '10px',
+        padding: '14px',
+        marginBottom: '16px',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '10px' }}>
+          <Info size={16} color="#fff" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <div>
+            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#fff', margin: '0 0 8px 0' }}>
+              What is a Cubic Yard?
+            </h4>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', margin: 0, lineHeight: '1.5' }}>
+              A cubic yard is 3ft × 3ft × 3ft. Common examples:
+            </p>
+            <ul style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', margin: '8px 0 0 16px', padding: 0, lineHeight: '1.6' }}>
+              <li>Washing machine ≈ 3-4 cubic yards</li>
+              <li>Refrigerator ≈ 4-5 cubic yards</li>
+              <li>Sofa ≈ 3-4 cubic yards</li>
+              <li>King mattress ≈ 3 cubic yards</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Industry Pricing Info */}
+      <div style={{
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        borderRadius: '10px',
+        padding: '14px',
+        marginBottom: '16px',
+      }}>
+        <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#fff', margin: '0 0 8px 0' }}>
+          📊 Industry Pricing Guide
+        </h4>
+        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6' }}>
+          <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
+          <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
+          <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
+          <div>• Full truck: $600-$850+</div>
         </div>
       </div>
 
@@ -140,6 +184,7 @@ export default function EstimateBuilderInline() {
           fontWeight: '800',
           boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
           transition: 'all 0.2s',
+          marginBottom: '12px',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-2px)';
@@ -153,6 +198,16 @@ export default function EstimateBuilderInline() {
       >
         🎯 Get Accurate Quote Now
       </button>
+
+      {/* Disclaimer */}
+      <div style={{
+        fontSize: '11px',
+        color: 'rgba(255,255,255,0.8)',
+        textAlign: 'center',
+        lineHeight: '1.5',
+      }}>
+        ⚠️ For education only. Actual pricing varies by company, location, and specific requirements. Contact companies directly for accurate quotes.
+      </div>
     </div>
   );
 }
