@@ -1,0 +1,85 @@
+Got it — thanks for the screenshot 🙏
+
+That **white screen** in Replit usually means the dev server is technically running (no more blocked host error), but the React app isn’t rendering. This can happen for a few reasons:
+
+---
+
+## 🔹 Common Causes of White Screen in Vite + React (on Replit)
+
+1. **Wrong port in preview**
+
+   * By default, Vite runs on **port 5173** (not 5000).
+   * Replit may be trying to show `:5000` but your app is on `:5173`.
+
+2. **Mapbox or API errors**
+
+   * If you left `mapboxAccessToken="YOUR_MAPBOX_TOKEN"` without a real token, the Map component will throw an error → blank screen.
+
+3. **React runtime error**
+
+   * Any small bug in `App.jsx` can break the whole render.
+   * On Replit, the error may not show in Preview, only in the Console tab.
+
+4. **Tailwind not set up**
+
+   * If Tailwind CSS isn’t configured (`index.css`, `tailwind.config.js`), styles break.
+   * This won’t usually cause a white screen, but will make things look wrong.
+
+---
+
+## 🔹 How to Fix
+
+### Step 1. Check console for runtime errors
+
+* In Replit, go to the **Console tab** (not Preview).
+* If you see `ReferenceError` or `Mapbox error`, that’s the cause.
+
+### Step 2. Confirm Vite port
+
+* In `vite.config.js` add:
+
+  ```js
+  server: {
+    port: 5000,
+    host: true,
+    allowedHosts: [".replit.dev", ".repl.co", "localhost"]
+  }
+  ```
+* That forces Vite to run on **5000**, matching Replit Preview.
+
+### Step 3. Remove Mapbox temporarily
+
+* Comment out the `<Map>` block in `App.jsx` and just render `<h2>Map Placeholder</h2>`.
+* If the app loads, you know the blank screen was Mapbox token related.
+
+### Step 4. Tailwind Setup (if not done yet)
+
+Make sure you have:
+
+* `index.css`:
+
+  ```css
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  ```
+* `tailwind.config.js`:
+
+  ```js
+  module.exports = {
+    content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  }
+  ```
+
+---
+
+✅ Quick Test:
+Try setting `vite.config.js` to use port 5000, then reload Preview. If still blank, comment out the Mapbox component and check if everything else loads.
+
+---
+
+Do you want me to give you a **minimal working App.jsx (without Mapbox)** so you can confirm the rest of the site renders first? That way we isolate whether Mapbox is the blocker.

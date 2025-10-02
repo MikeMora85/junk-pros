@@ -87,42 +87,15 @@ function App() {
         </section>
 
         <aside className="w-1/3 p-4 space-y-4">
-          <div className="h-64 w-full">
-            <Map
-              initialViewState={{
-                longitude: -111.9281,
-                latitude: 33.4942,
-                zoom: 11,
-              }}
-              style={{ width: "100%", height: "100%" }}
-              mapStyle="mapbox://styles/mapbox/streets-v11"
-              mapboxAccessToken={MAPBOX_TOKEN}
-            >
-              {companies.map((c) => (
-                <Marker
-                  key={c.id}
-                  longitude={c.longitude}
-                  latitude={c.latitude}
-                  anchor="bottom"
-                  color="green"
-                  onClick={() => setPopup(c)}
-                />
-              ))}
-
-              {popup && (
-                <Popup
-                  longitude={popup.longitude}
-                  latitude={popup.latitude}
-                  onClose={() => setPopup(null)}
-                  anchor="top"
-                >
-                  <div>
-                    <h4 className="font-bold">{popup.name}</h4>
-                    <p>{popup.address}</p>
-                  </div>
-                </Popup>
-              )}
-            </Map>
+          <div className="h-64 w-full bg-gray-200 rounded-lg flex items-center justify-center">
+            <div className="text-center p-4">
+              <p className="font-semibold text-gray-600">Map Placeholder</p>
+              <p className="text-sm text-gray-500 mt-2">
+                Mapbox token required to display map.
+                <br />
+                Set VITE_MAPBOX_TOKEN environment variable.
+              </p>
+            </div>
           </div>
 
           <EstimateBuilder />
