@@ -94,10 +94,11 @@ function App() {
                 BestJunkRemovalCompanies.com
               </h1>
               <p style={{
-                fontSize: '13px',
-                color: 'rgba(255,255,255,0.95)',
+                fontSize: '15px',
+                color: 'rgba(255,255,255,1)',
                 margin: '4px 0 0 0',
-                fontWeight: '500',
+                fontWeight: '600',
+                letterSpacing: '0.3px',
               }}>
                 Find Trusted Local Pros, Get Instant Quotes
               </p>
