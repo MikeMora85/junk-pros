@@ -42,8 +42,8 @@ function App() {
     }}>
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes breatheGlow {
-          0%, 100% { box-shadow: 0 6px 20px rgba(255,255,255,0.4), 0 0 20px rgba(251,113,133,0.6); }
-          50% { box-shadow: 0 8px 30px rgba(255,255,255,0.6), 0 0 40px rgba(251,113,133,0.8); }
+          0%, 100% { box-shadow: 0 6px 20px rgba(0,0,0,0.2), 0 0 15px rgba(0,0,0,0.3); }
+          50% { box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 30px rgba(0,0,0,0.4); }
         }
         .breathing-button {
           animation: breatheGlow 2s ease-in-out infinite;
