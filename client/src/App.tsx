@@ -91,7 +91,7 @@ function App() {
                 color: '#fff',
                 margin: 0,
               }} data-testid="header-title">
-                BestJunkRemovalCompanies.com
+                BestJunkRemovalCompanies.com ⚡
               </h1>
               <p style={{
                 fontSize: '16px',
