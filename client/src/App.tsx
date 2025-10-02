@@ -275,7 +275,7 @@ function App() {
             Scottsdale Junk Removal
           </h2>
           <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
-            ⭐ {companies.length} verified pros
+            {companies.length} verified pros
           </p>
         </div>
 
@@ -316,7 +316,7 @@ function App() {
                       marginBottom: '12px',
                       boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
                     }}>
-                      ⭐ TOP RATED
+                      TOP RATED
                     </div>
                   )}
                   
@@ -492,7 +492,7 @@ function App() {
                           margin: '0 0 12px 0',
                           color: '#a855f7',
                         }}>
-                          📅 Available Times
+                          Available Times
                         </h5>
                         
                         <div style={{ display: 'grid', gap: '8px' }}>
@@ -513,7 +513,7 @@ function App() {
                               onClick={() => alert(`Appointment scheduled for ${time}`)}
                               data-testid={`button-time-slot-${c.id}-${i}`}
                             >
-                              ✓ {time}
+                              {time}
                             </button>
                           ))}
                         </div>

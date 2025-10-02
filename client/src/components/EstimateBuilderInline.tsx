@@ -43,7 +43,7 @@ export default function EstimateBuilderInline() {
       </div>
       
       <p style={{ fontSize: '14px', marginBottom: '20px', color: 'rgba(255,255,255,0.95)', lineHeight: '1.5' }}>
-        🚛 Get your estimate in seconds! Most trucks hold 12-15 cubic yards.
+        Get your estimate in seconds! Most trucks hold 12-15 cubic yards.
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '24px' }}>
@@ -111,7 +111,7 @@ export default function EstimateBuilderInline() {
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
         <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '600', marginBottom: '4px' }}>
-          💰 Estimated Cost
+          Estimated Cost
         </div>
         <div style={{
           fontSize: '32px',
@@ -155,7 +155,7 @@ export default function EstimateBuilderInline() {
         marginBottom: '16px',
       }}>
         <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#fff', margin: '0 0 8px 0' }}>
-          📊 Industry Pricing Guide
+          Industry Pricing Guide
         </h4>
         <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6' }}>
           <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
@@ -190,7 +190,7 @@ export default function EstimateBuilderInline() {
         }}
         data-testid="button-request-quote"
       >
-        🎯 Get Accurate Quote Now
+        Get Accurate Quote Now
       </button>
 
       {/* Disclaimer */}
@@ -200,7 +200,7 @@ export default function EstimateBuilderInline() {
         textAlign: 'center',
         lineHeight: '1.5',
       }}>
-        ⚠️ For education only. Actual pricing varies by company, location, and specific requirements. Contact companies directly for accurate quotes.
+        For education only. Actual pricing varies by company, location, and specific requirements. Contact companies directly for accurate quotes.
       </div>
     </div>
   );
