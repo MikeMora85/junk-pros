@@ -49,7 +49,13 @@ app.use((req, res, next) => {
     });
   } else {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { 
+        middlewareMode: true,
+        hmr: {
+          host: "localhost",
+        },
+        allowedHosts: 'all',
+      },
       appType: "spa",
       root: "client",
     });
