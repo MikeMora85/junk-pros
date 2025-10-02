@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Phone, Globe, Star, Sparkles, Plus, X } from "lucide-react";
+import { MapPin, Phone, Globe, Star, Sparkles, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 
 function App() {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
+  const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies?local=true"],
   });
@@ -58,6 +59,7 @@ function App() {
                 gap: '6px',
                 whiteSpace: 'nowrap',
               }}
+              data-testid="button-add-business"
             >
               <Plus size={16} />
               Add Business
@@ -125,6 +127,7 @@ function App() {
                   justifyContent: 'center',
                   cursor: 'pointer',
                 }}
+                data-testid="button-close-form"
               >
                 <X size={18} color="#fff" />
               </button>
@@ -165,6 +168,7 @@ function App() {
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
+                  data-testid="input-business-name"
                 />
               </div>
 
@@ -183,6 +187,7 @@ function App() {
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
+                  data-testid="input-business-email"
                 />
               </div>
 
@@ -201,6 +206,7 @@ function App() {
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
+                  data-testid="input-business-phone"
                 />
               </div>
 
@@ -219,6 +225,7 @@ function App() {
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
+                  data-testid="input-business-location"
                 />
               </div>
 
@@ -235,6 +242,7 @@ function App() {
                   fontSize: '16px',
                   fontWeight: '700',
                 }}
+                data-testid="button-submit-business"
               >
                 Submit for Review
               </button>
@@ -306,7 +314,7 @@ function App() {
                     </div>
                   )}
                   
-                  <div style={{ display: 'flex', gap: '16px' }}>
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
                     <div style={{
                       width: '60px',
                       height: '60px',
@@ -360,28 +368,148 @@ function App() {
                         )}
                       </div>
                       
-                      <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '12px' }}>
+                      <div style={{ fontSize: '14px', color: '#6b7280' }}>
                         <div style={{ marginBottom: '4px' }}><MapPin size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
-                        <div style={{ marginBottom: '4px' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                        <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
-                      
-                      <button 
+                    </div>
+                  </div>
+                  
+                  {/* Call Now Button */}
+                  <button 
+                    style={{
+                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                      color: 'white',
+                      padding: '12px 20px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      width: '100%',
+                      marginBottom: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                    }}
+                    onClick={() => window.open(`tel:${c.phone}`, '_self')}
+                    data-testid={`button-call-${c.id}`}
+                  >
+                    <Phone size={18} />
+                    Call Now
+                  </button>
+
+                  {/* Quote Section */}
+                  <div style={{
+                    backgroundColor: '#f9fafb',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    border: '1px solid #e5e7eb',
+                  }}>
+                    <h4 style={{
+                      fontSize: '14px',
+                      fontWeight: '700',
+                      margin: '0 0 12px 0',
+                      color: '#374151',
+                    }}>
+                      Get a Quote
+                    </h4>
+                    
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <button
                         style={{
-                          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                          color: 'white',
-                          padding: '10px 20px',
+                          flex: '1',
+                          minWidth: '140px',
+                          backgroundColor: '#fff',
+                          color: '#374151',
+                          padding: '10px 16px',
+                          borderRadius: '8px',
+                          border: '2px solid #e5e7eb',
+                          cursor: 'pointer',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                        }}
+                        onClick={() => alert('Photo upload feature coming soon!')}
+                        data-testid={`button-send-photos-${c.id}`}
+                      >
+                        <Camera size={16} />
+                        Send Photos
+                      </button>
+                      
+                      <button
+                        style={{
+                          flex: '1',
+                          minWidth: '140px',
+                          background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+                          color: '#fff',
+                          padding: '10px 16px',
                           borderRadius: '8px',
                           border: 'none',
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontWeight: '700',
-                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
                         }}
-                        data-testid={`button-claim-${c.id}`}
+                        onClick={() => {
+                          setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                        }}
+                        data-testid={`button-in-person-${c.id}`}
                       >
-                        📞 Get Free Quote
+                        <Calendar size={16} />
+                        In-Person Estimate
                       </button>
                     </div>
+
+                    {/* Calendar/Availability Section */}
+                    {expandedQuote === c.id && (
+                      <div style={{
+                        marginTop: '16px',
+                        padding: '16px',
+                        backgroundColor: '#fff',
+                        borderRadius: '8px',
+                        border: '2px solid #10b981',
+                      }}>
+                        <h5 style={{
+                          fontSize: '14px',
+                          fontWeight: '700',
+                          margin: '0 0 12px 0',
+                          color: '#059669',
+                        }}>
+                          📅 Available Times
+                        </h5>
+                        
+                        <div style={{ display: 'grid', gap: '8px' }}>
+                          {['Today 2:00 PM', 'Tomorrow 10:00 AM', 'Tomorrow 3:00 PM', 'Friday 9:00 AM'].map((time, i) => (
+                            <button
+                              key={i}
+                              style={{
+                                padding: '10px 16px',
+                                backgroundColor: '#f0fdf4',
+                                border: '2px solid #d1fae5',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                color: '#059669',
+                                textAlign: 'left',
+                              }}
+                              onClick={() => alert(`Appointment scheduled for ${time}`)}
+                              data-testid={`button-time-slot-${c.id}-${i}`}
+                            >
+                              ✓ {time}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))
