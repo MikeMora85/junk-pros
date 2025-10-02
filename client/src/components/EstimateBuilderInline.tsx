@@ -21,7 +21,7 @@ export default function EstimateBuilderInline() {
       borderRadius: '16px',
       padding: '24px',
       marginBottom: '20px',
-      boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
       position: 'relative',
       overflow: 'hidden',
     }}>

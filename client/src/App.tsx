@@ -132,7 +132,7 @@ function App() {
             width: '100%',
             maxHeight: '90vh',
             overflow: 'auto',
-            boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+            boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
           }} onClick={(e) => e.stopPropagation()}>
             <div style={{
               background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
@@ -345,7 +345,7 @@ function App() {
                     borderRadius: '12px',
                     padding: '20px',
                     marginBottom: '16px',
-                    boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
@@ -670,7 +670,7 @@ function App() {
                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                 borderRadius: '12px',
                 padding: '20px',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.2)',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
                 color: '#fff',
               }}>
                 <h3 style={{ fontSize: '18px', fontWeight: '700', margin: '0 0 12px 0' }}>
@@ -700,7 +700,7 @@ function App() {
                 border: '2px solid #f3e8ff',
                 borderRadius: '12px',
                 padding: '20px',
-                boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
               }}>
                 <h3 style={{ 
                   fontSize: '18px', 
