@@ -22,6 +22,7 @@ function App() {
         background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
         boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
         padding: '16px',
+        overflow: 'hidden',
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -29,6 +30,7 @@ function App() {
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',
+          width: '100%',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <h1 style={{
@@ -70,12 +72,14 @@ function App() {
             placeholder="City or zip..."
             style={{
               width: '100%',
+              maxWidth: '100%',
               padding: '12px 16px',
               border: '2px solid rgba(255,255,255,0.3)',
               borderRadius: '8px',
               fontSize: '15px',
               outline: 'none',
               backgroundColor: 'rgba(255,255,255,0.95)',
+              boxSizing: 'border-box',
             }}
             data-testid="input-search-location"
           />
