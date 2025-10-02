@@ -653,73 +653,78 @@ function App() {
           </div>
 
           {/* Right - Sidebar */}
-          <div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+          }}>
             <EstimateBuilderInline />
             
-            {/* JunkIQ Ad */}
-            <div style={{
-              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '16px',
-              boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
-              color: '#fff',
-            }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', margin: '0 0 12px 0' }}>
-                JunkIQ - Smart Pricing
-              </h3>
-              <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5' }}>
-                Get instant, accurate pricing with AI-powered load estimation. No surprises, just fair prices.
-              </p>
-              <button style={{
-                width: '100%',
-                backgroundColor: '#fff',
-                color: '#a855f7',
-                padding: '12px',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '15px',
-                fontWeight: '700',
-              }}>
-                Try JunkIQ Now
-              </button>
-            </div>
-
-            {/* Dumpster Rental Ad */}
-            <div style={{
-              backgroundColor: '#fff',
-              border: '2px solid #f3e8ff',
-              borderRadius: '12px',
-              padding: '20px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            }}>
-              <h3 style={{ 
-                fontSize: '18px', 
-                fontWeight: '700', 
-                margin: '0 0 12px 0',
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* JunkIQ Ad */}
+              <div style={{
                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}>
-                Need a Dumpster?
-              </h3>
-              <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5', color: '#6b7280' }}>
-                For bigger projects, rent a dumpster. Sizes from 10-40 yards. Starting at $299/week.
-              </p>
-              <button style={{
-                width: '100%',
-                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                borderRadius: '12px',
+                padding: '20px',
+                boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
                 color: '#fff',
-                padding: '12px',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '15px',
-                fontWeight: '700',
               }}>
-                Get Dumpster Quote
-              </button>
+                <h3 style={{ fontSize: '18px', fontWeight: '700', margin: '0 0 12px 0' }}>
+                  JunkIQ - Smart Pricing
+                </h3>
+                <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5' }}>
+                  Get instant, accurate pricing with AI-powered load estimation. No surprises, just fair prices.
+                </p>
+                <button style={{
+                  width: '100%',
+                  backgroundColor: '#fff',
+                  color: '#a855f7',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  fontWeight: '700',
+                }}>
+                  Try JunkIQ Now
+                </button>
+              </div>
+
+              {/* Dumpster Rental Ad */}
+              <div style={{
+                backgroundColor: '#fff',
+                border: '2px solid #f3e8ff',
+                borderRadius: '12px',
+                padding: '20px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+              }}>
+                <h3 style={{ 
+                  fontSize: '18px', 
+                  fontWeight: '700', 
+                  margin: '0 0 12px 0',
+                  background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
+                  Need a Dumpster?
+                </h3>
+                <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5', color: '#6b7280' }}>
+                  For bigger projects, rent a dumpster. Sizes from 10-40 yards. Starting at $299/week.
+                </p>
+                <button style={{
+                  width: '100%',
+                  background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                  color: '#fff',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  fontWeight: '700',
+                }}>
+                  Get Dumpster Quote
+                </button>
+              </div>
             </div>
           </div>
         </div>
