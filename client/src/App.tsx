@@ -51,6 +51,16 @@ function App() {
         .header-title-responsive {
           font-size: 20px;
         }
+        .main-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        @media (min-width: 1024px) {
+          .main-grid {
+            grid-template-columns: 2fr 1fr;
+          }
+        }
         @media (max-width: 768px) {
           .header-title-responsive {
             font-size: 18px;
@@ -349,13 +359,9 @@ function App() {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '20px',
-        }}>
+        <div className="main-grid">
           {/* Left - Company Listings */}
-          <div style={{ gridColumn: 'span 2' }}>
+          <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
             {isLoading ? (
               <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280' }} data-testid="text-loading">
                 Loading...
@@ -370,6 +376,10 @@ function App() {
                     padding: '20px',
                     marginBottom: '16px',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+                    width: '100%',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box',
+                    overflow: 'hidden',
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
