@@ -84,9 +84,9 @@ function RotatingBanner() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const messages = [
     'All 50 States • Local Independent Companies Only • No Franchises',
-    'Find Trusted Local Pros • Quotes',
-    'Same Day Service Available • Support Local Businesses',
-    'Licensed & Insured Professionals • Free Estimates',
+    'Find Trusted Local Pros',
+    'Same Day Service Available',
+    'Licensed & Insured Professionals',
   ];
 
   useEffect(() => {
