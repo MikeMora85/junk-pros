@@ -262,6 +262,10 @@ function LandingPage() {
             />
             <button
               type="submit"
+              onClick={(e) => {
+                console.log('Homepage button clicked');
+                handleSearch(e as any);
+              }}
               style={{
                 padding: '10px 16px',
                 background: '#fbbf24',
@@ -1018,6 +1022,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             />
             <button
               type="submit"
+              onClick={(e) => {
+                console.log('Button clicked');
+                handleSearch(e as any);
+              }}
               style={{
                 padding: '10px 16px',
                 background: '#fbbf24',
