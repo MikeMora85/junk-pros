@@ -1815,24 +1815,20 @@ function CityPage({ city, state }: { city: string; state: string }) {
           <a
             href="/"
             style={{
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor: 'transparent',
               color: '#000',
-              padding: '10px 16px',
+              padding: '10px',
               borderRadius: '8px',
-              border: 'none',
+              border: '2px solid #000',
               cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '700',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              justifyContent: 'center',
               textDecoration: 'none',
-              whiteSpace: 'nowrap',
             }}
             data-testid="button-home"
           >
-            <Home size={16} />
-            HOME
+            <Home size={20} />
           </a>
           <button
             onClick={() => setShowBusinessForm(true)}

@@ -9,6 +9,8 @@ A full-stack JavaScript application that helps users find local junk removal com
   - Redesigned CompanyDetailInline component with hero section, multiple CTAs, and detailed business information
   - Updated schema and storage to support new lead gen fields
   - Increased red banner font size to 24px for better prominence
+  - Implemented consistent 3D lift effects across UI: state buttons, feature sections, and search bar all have 1px default lift and 2px hover lift with coordinated shadows
+  - Changed home button to icon-only with black outline box (no text)
 - 2025-10-02: Initial project setup with fullstack_js template
 - Created data model for junk removal companies with location coordinates
 - Set up Express backend with in-memory storage
