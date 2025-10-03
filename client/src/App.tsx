@@ -1481,7 +1481,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
-                      border: '2px solid #2563eb',
+                      border: '2px solid #e63946',
                     }}
                   >
                     <h4 style={{
@@ -1825,17 +1825,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
               alignItems: 'center',
               justifyContent: 'center',
               textDecoration: 'none',
-              boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-              transform: 'translateY(-1px)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+              transform: 'translateY(-2px)',
               transition: 'all 0.2s',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+              e.currentTarget.style.transform = 'translateY(-3px)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
-              e.currentTarget.style.transform = 'translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             data-testid="button-home"
           >
@@ -2572,7 +2572,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 1 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #2563eb',
+                      border: '2px solid #e63946',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2610,7 +2610,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 2 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #2563eb',
+                      border: '2px solid #e63946',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
