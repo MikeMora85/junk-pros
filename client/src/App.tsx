@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Book } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -10,6 +10,11 @@ import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
 import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
 import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
 import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
+import arizonaHero from "@assets/stock_images/grand_canyon_arizona_c5218ef2.jpg";
+import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.jpg";
+import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
+import floridaHero from "@assets/stock_images/miami_beach_florida__ef428d6f.jpg";
+import newYorkHero from "@assets/stock_images/statue_of_liberty_ne_70f49b5f.jpg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -334,15 +339,66 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
 
-  const popularCities: Record<string, string[]> = {
-    'arizona': ['Phoenix', 'Tucson', 'Mesa', 'Chandler', 'Scottsdale', 'Glendale', 'Gilbert', 'Tempe', 'Peoria', 'Surprise'],
-    'california': ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento', 'Long Beach', 'Oakland', 'Bakersfield', 'Anaheim'],
-    'texas': ['Houston', 'San Antonio', 'Dallas', 'Austin', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo'],
-    'florida': ['Jacksonville', 'Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Hialeah', 'Port St. Lucie', 'Cape Coral', 'Tallahassee', 'Fort Lauderdale'],
-    'new-york': ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica'],
+  const stateData: Record<string, { 
+    cities: string[];
+    heroImage: string;
+    landmark: string;
+    population: string;
+    fact: string;
+    climate: string;
+  }> = {
+    'arizona': {
+      cities: ['Phoenix', 'Tucson', 'Mesa', 'Chandler', 'Scottsdale', 'Glendale', 'Gilbert', 'Tempe', 'Peoria', 'Surprise', 'Flagstaff', 'Yuma', 'Avondale', 'Goodyear', 'Lake Havasu City'],
+      heroImage: arizonaHero,
+      landmark: 'Grand Canyon',
+      population: '7.3 million',
+      fact: 'Arizona has one of the highest rates of junk removal due to frequent home renovations in the growing Phoenix metro area.',
+      climate: 'Hot desert climate with mild winters - ideal for year-round junk removal services',
+    },
+    'california': {
+      cities: ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento', 'Long Beach', 'Oakland', 'Bakersfield', 'Anaheim', 'Santa Ana', 'Riverside', 'Irvine', 'Stockton', 'Chula Vista'],
+      heroImage: californiaHero,
+      landmark: 'Golden Gate Bridge',
+      population: '39.5 million',
+      fact: 'California leads the nation in eco-friendly junk removal with over 75% of waste diverted from landfills.',
+      climate: 'Mediterranean climate with year-round service availability',
+    },
+    'texas': {
+      cities: ['Houston', 'San Antonio', 'Dallas', 'Austin', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo', 'Lubbock', 'Garland', 'Irving', 'Amarillo', 'Grand Prairie'],
+      heroImage: texasHero,
+      landmark: 'State Capitol',
+      population: '30.3 million',
+      fact: 'Texas has the second-largest junk removal market in the US, driven by rapid population growth.',
+      climate: 'Varied climate from humid subtropical to semi-arid - services available year-round',
+    },
+    'florida': {
+      cities: ['Jacksonville', 'Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Hialeah', 'Port St. Lucie', 'Cape Coral', 'Tallahassee', 'Fort Lauderdale', 'Pembroke Pines', 'Hollywood', 'Gainesville', 'Coral Springs', 'Clearwater'],
+      heroImage: floridaHero,
+      landmark: 'Miami Beach',
+      population: '22.6 million',
+      fact: 'Florida\'s hurricane preparedness drives high demand for debris removal and storm cleanup services.',
+      climate: 'Tropical and subtropical climate with peak service season after hurricane season',
+    },
+    'new-york': {
+      cities: ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica', 'White Plains', 'Hempstead', 'Troy', 'Niagara Falls', 'Binghamton'],
+      heroImage: newYorkHero,
+      landmark: 'Statue of Liberty',
+      population: '19.8 million',
+      fact: 'NYC alone generates over 12,000 tons of residential waste daily, making junk removal essential.',
+      climate: 'Four-season climate with peak demand during spring cleaning and fall preparation',
+    },
   };
 
-  const cities = popularCities[stateSlug] || [];
+  const currentState = stateData[stateSlug] || {
+    cities: [],
+    heroImage: '',
+    landmark: stateName,
+    population: 'N/A',
+    fact: 'Professional junk removal services available throughout the state.',
+    climate: 'Services available year-round',
+  };
+
+  const cities = currentState.cities;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -356,34 +412,87 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f1f5f9 100%)',
     }}>
+      {/* Hero Section with Landmark */}
+      {currentState.heroImage && (
+        <div style={{
+          position: 'relative',
+          height: '400px',
+          backgroundImage: `url(${currentState.heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'linear-gradient(135deg, rgba(59,130,246,0.85) 0%, rgba(16,185,129,0.85) 100%)',
+          }} />
+          <div style={{
+            position: 'relative',
+            zIndex: 1,
+            textAlign: 'center',
+            color: '#fff',
+            maxWidth: '800px',
+            padding: '0 20px',
+          }}>
+            <h1 style={{
+              fontSize: '48px',
+              fontWeight: '800',
+              marginBottom: '16px',
+              textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+            }}>
+              Junk Removal in {stateName}
+            </h1>
+            <p style={{
+              fontSize: '20px',
+              marginBottom: '8px',
+              opacity: 0.95,
+            }}>
+              Featuring the {currentState.landmark}
+            </p>
+            <p style={{
+              fontSize: '16px',
+              opacity: 0.9,
+            }}>
+              Population: {currentState.population} • Professional Services Statewide
+            </p>
+          </div>
+        </div>
+      )}
+
       <header style={{
         background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
-        padding: '24px 16px',
-        boxShadow: '0 8px 30px rgba(59,130,246,0.3)',
+        padding: '12px 16px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}>
           <a href="/" style={{
             color: '#fff',
             textDecoration: 'none',
-            fontSize: '18px',
+            fontSize: '14px',
             fontWeight: '700',
-            display: 'inline-block',
-            marginBottom: '12px',
           }}>
             ← Back to Home
           </a>
-          <h1 style={{
+          <p style={{
+            fontSize: '14px',
             color: '#fff',
-            fontSize: '32px',
-            fontWeight: '800',
             margin: '0',
-            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+            fontWeight: '600',
           }}>
-            {stateName} Junk Removal Guide
-          </h1>
+            Find Trusted Local Pros, Get Instant Quotes
+          </p>
         </div>
       </header>
 
@@ -524,9 +633,49 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontSize: '16px',
                 color: '#6b7280',
                 lineHeight: '1.8',
+                marginBottom: '16px',
               }}>
                 Most {stateName} junk removal companies recycle or donate 60-80% of collected items, helping reduce landfill waste while giving back to local communities.
               </p>
+              <div style={{
+                padding: '20px',
+                backgroundColor: '#dbeafe',
+                borderRadius: '10px',
+                marginTop: '16px',
+              }}>
+                <h4 style={{
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: '#1e40af',
+                  marginBottom: '8px',
+                }}>
+                  {stateName} Junk Removal Facts
+                </h4>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#1e40af',
+                  margin: '0 0 8px 0',
+                  lineHeight: '1.6',
+                }}>
+                  <strong>Population:</strong> {currentState.population}
+                </p>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#1e40af',
+                  margin: '0 0 8px 0',
+                  lineHeight: '1.6',
+                }}>
+                  <strong>Climate:</strong> {currentState.climate}
+                </p>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#1e40af',
+                  margin: '0',
+                  lineHeight: '1.6',
+                }}>
+                  <strong>Local Insight:</strong> {currentState.fact}
+                </p>
+              </div>
             </div>
 
             <div style={{
