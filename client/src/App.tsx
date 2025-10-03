@@ -334,27 +334,28 @@ function App() {
       )}
 
       {/* Main Content */}
-      <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
-        {/* Page Title */}
-        <div style={{ marginBottom: '24px', padding: '0', margin: '0' }}>
-          <h2 style={{
-            fontSize: '28px',
-            fontWeight: '700',
-            margin: '0 0 8px 0',
-            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }} data-testid="text-page-title">
-            Scottsdale Junk Removal
-          </h2>
-          <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
-            {companies.length} verified pros
-          </p>
-        </div>
+      <div style={{ padding: '20px 16px 0 16px', margin: '0', width: '100%' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+          {/* Page Title */}
+          <div style={{ marginBottom: '24px', padding: '0', margin: '0 0 24px 0' }}>
+            <h2 style={{
+              fontSize: '28px',
+              fontWeight: '700',
+              margin: '0 0 8px 0',
+              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }} data-testid="text-page-title">
+              Scottsdale Junk Removal
+            </h2>
+            <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
+              {companies.length} verified pros
+            </p>
+          </div>
 
-        {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0', margin: '0', width: '100%' }}>
-          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%' }}>
+          {/* Two Column Layout - Stacks on Mobile */}
+          <div style={{ padding: '0', margin: '0', width: '100%' }}>
+            <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%' }}>
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0', padding: '0' }}>
                 {isLoading ? (
@@ -764,6 +765,7 @@ function App() {
                 </div>
               </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
