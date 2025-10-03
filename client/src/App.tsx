@@ -36,17 +36,11 @@ const PlaceholderImage = ({ index }: { index: number }) => (
 );
 
 function App() {
-  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
-  const [showBusinessForm, setShowBusinessForm] = useState(false);
-  const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
-  const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  // Extract path components
+  // Extract path components FIRST (before any hooks)
   const path = window.location.pathname;
   const pathParts = path.split('/').filter(p => p);
   
-  // Determine what page to show
+  // Determine what page to show - MUST happen before hooks
   // / -> Landing page
   // /arizona -> State page
   // /arizona/scottsdale -> City page
@@ -70,6 +64,13 @@ function App() {
   // City page (existing functionality)
   const city = pathParts[1];
   const state = pathParts[0];
+  
+  // NOW we can call hooks (only for city pages)
+  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
+  const [showBusinessForm, setShowBusinessForm] = useState(false);
+  const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
+  const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  const [searchQuery, setSearchQuery] = useState('');
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies", { city, state }],
