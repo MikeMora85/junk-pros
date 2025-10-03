@@ -18,6 +18,7 @@ function App() {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  const [searchQuery, setSearchQuery] = useState('');
   
   // Extract city and state from URL path like /arizona/scottsdale or default to Scottsdale
   const path = window.location.pathname;
@@ -174,22 +175,64 @@ function App() {
               Add Business
             </button>
           </div>
-          <input
-            type="text"
-            placeholder="City or zip..."
-            style={{
-              width: '100%',
-              maxWidth: '100%',
-              padding: '12px 16px',
-              border: '2px solid rgba(255,255,255,0.3)',
-              borderRadius: '8px',
-              fontSize: '15px',
-              outline: 'none',
-              backgroundColor: 'rgba(255,255,255,0.95)',
-              boxSizing: 'border-box',
-            }}
-            data-testid="input-search-location"
-          />
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            if (searchQuery.trim()) {
+              // Parse search query - expect format like "Phoenix" or "Phoenix, AZ"
+              const parts = searchQuery.split(',').map(p => p.trim().toLowerCase());
+              const searchCity = parts[0];
+              const searchState = parts[1] || 'arizona'; // default to arizona
+              
+              // Normalize state name (e.g., "AZ" -> "arizona")
+              const stateMap: Record<string, string> = {
+                'az': 'arizona',
+                'ca': 'california',
+                'tx': 'texas',
+                'fl': 'florida',
+                'ny': 'new-york',
+              };
+              const normalizedState = stateMap[searchState] || searchState;
+              
+              // Navigate to city page
+              window.location.href = `/${normalizedState}/${searchCity}`;
+            }
+          }} style={{ display: 'flex', gap: '8px', width: '100%' }}>
+            <input
+              type="text"
+              placeholder="City or zip..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                flex: 1,
+                padding: '12px 16px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                borderRadius: '8px',
+                fontSize: '15px',
+                outline: 'none',
+                backgroundColor: 'rgba(255,255,255,0.95)',
+                boxSizing: 'border-box',
+              }}
+              data-testid="input-search-location"
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '12px 24px',
+                background: 'linear-gradient(135deg, #f9a8d4 0%, #fda4af 100%)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '15px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                boxShadow: '0 4px 12px rgba(249,168,212,0.4)',
+              }}
+              data-testid="button-search"
+            >
+              Search
+            </button>
+          </form>
         </div>
       </header>
 
