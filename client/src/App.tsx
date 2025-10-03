@@ -129,7 +129,7 @@ function LandingPage() {
     e.preventDefault();
     if (searchQuery.trim()) {
       const parts = searchQuery.split(',').map(p => p.trim().toLowerCase());
-      const searchCity = parts[0];
+      const searchCity = parts[0].replace(/\s+/g, '-');
       const searchState = parts[1] || 'arizona';
       
       const stateMap: Record<string, string> = {
@@ -139,7 +139,7 @@ function LandingPage() {
         'fl': 'florida',
         'ny': 'new-york',
       };
-      const normalizedState = stateMap[searchState] || searchState;
+      const normalizedState = stateMap[searchState] || searchState.replace(/\s+/g, '-');
       
       window.location.href = `/${normalizedState}/${searchCity}`;
     }
