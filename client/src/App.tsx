@@ -174,8 +174,9 @@ function LandingPage() {
       {/* Hero Section with Logo */}
       <div style={{
         position: 'relative',
+        height: '450px',
         backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         display: 'flex',
@@ -184,10 +185,6 @@ function LandingPage() {
         borderBottom: '1px solid #fbbf24',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
         filter: 'brightness(1.3)',
-        paddingTop: '0',
-        paddingBottom: '0',
-        aspectRatio: '16 / 9',
-        width: '100%',
       }}>
       </div>
 
