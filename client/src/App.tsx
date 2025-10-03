@@ -157,7 +157,7 @@ function LandingPage() {
         minHeight: '100vh',
       }}>
       <header className="breathing-glow-banner" style={{
-        background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
+        background: 'linear-gradient(135deg, #e63946 0%, #ff7580 100%)',
         padding: '28px 16px',
         position: 'relative',
         zIndex: 2,
@@ -2478,7 +2478,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         padding: '16px',
                         backgroundColor: '#fff',
                         borderRadius: '8px',
-                        border: '2px solid #e63946',
+                        border: '2px solid #166534',
                       }}>
                         <h5 style={{
                           fontSize: '14px',
@@ -2534,7 +2534,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 1 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #e63946',
+                      border: '2px solid #166534',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2572,7 +2572,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 2 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #e63946',
+                      border: '2px solid #166534',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
