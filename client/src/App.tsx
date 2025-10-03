@@ -4,6 +4,8 @@ import { MapPin, Phone, Star, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import LandingPage from "./pages/LandingPage";
+import StatePage from "./pages/StatePage";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -32,9 +34,6 @@ const PlaceholderImage = ({ index }: { index: number }) => (
     </div>
   </div>
 );
-
-import LandingPage from "./pages/LandingPage";
-import StatePage from "./pages/StatePage";
 
 function App() {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
