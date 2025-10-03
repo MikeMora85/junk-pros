@@ -102,7 +102,7 @@ function RotatingBanner() {
         <p
           key={index}
           style={{
-            color: '#fff',
+            color: '#000',
             fontSize: '24px',
             margin: '0',
             fontWeight: '600',
@@ -157,7 +157,7 @@ function LandingPage() {
         minHeight: '100vh',
       }}>
       <header className="breathing-glow-banner" style={{
-        background: 'linear-gradient(135deg, #e63946 0%, #ff7580 100%)',
+        background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
         padding: '28px 16px',
         position: 'relative',
         zIndex: 2,
@@ -250,8 +250,8 @@ function LandingPage() {
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: '#e63946',
-                color: '#fff',
+                background: '#fbbf24',
+                color: '#000',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '14px',
@@ -863,7 +863,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             position: 'relative',
             zIndex: 1,
             textAlign: 'center',
-            color: '#fff',
+            color: '#000',
             maxWidth: '800px',
             padding: '0 20px',
           }}>
@@ -897,7 +897,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       )}
 
       <header style={{
-        background: '#e63946',
+        background: '#fbbf24',
         padding: '12px 16px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
@@ -909,7 +909,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           justifyContent: 'space-between',
         }}>
           <a href="/" style={{
-            color: '#fff',
+            color: '#000',
             textDecoration: 'none',
             fontSize: '14px',
             fontWeight: '700',
@@ -921,7 +921,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           </a>
           <p style={{
             fontSize: '14px',
-            color: '#fff',
+            color: '#000',
             margin: '0',
             fontWeight: '600',
           }}>
@@ -983,8 +983,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: '#e63946',
-                color: '#fff',
+                background: '#fbbf24',
+                color: '#000',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '14px',
@@ -1767,7 +1767,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       `}} />
       {/* Header */}
       <header style={{
-        background: '#e63946',
+        background: '#fbbf24',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         padding: '16px',
         overflow: 'hidden',
@@ -1785,7 +1785,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             href="/"
             style={{
               backgroundColor: 'rgba(255,255,255,0.2)',
-              color: '#fff',
+              color: '#000',
               padding: '10px 16px',
               borderRadius: '8px',
               border: 'none',
@@ -1807,8 +1807,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
             onClick={() => setShowBusinessForm(true)}
             className="breathing-button"
             style={{
-              background: '#e63946',
-              color: '#fff',
+              background: '#fbbf24',
+              color: '#000',
               padding: '10px 16px',
               borderRadius: '8px',
               border: 'none',
@@ -1853,7 +1853,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
           }} onClick={(e) => e.stopPropagation()}>
             <div style={{
-              background: '#e63946',
+              background: '#fbbf24',
               padding: '20px',
               borderRadius: '16px 16px 0 0',
               position: 'relative',
@@ -1881,7 +1881,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
               <h2 style={{
                 fontSize: '24px',
                 fontWeight: '800',
-                color: '#fff',
+                color: '#000',
                 margin: '0 0 8px 0',
               }}>
                 Add Your Business
@@ -2124,8 +2124,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 type="submit"
                 style={{
                   width: '100%',
-                  background: '#e63946',
-                  color: '#fff',
+                  background: '#fbbf24',
+                  color: '#000',
                   padding: '14px',
                   borderRadius: '8px',
                   border: 'none',
@@ -2195,8 +2195,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {index === 0 && (
                     <div style={{
                       display: 'inline-block',
-                      background: '#e63946',
-                      color: '#fff',
+                      background: '#fbbf24',
+                      color: '#000',
                       padding: '4px 10px',
                       borderRadius: '0',
                       fontSize: '11px',
@@ -2266,7 +2266,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       justifyContent: 'center',
                       fontSize: '24px',
                       fontWeight: '800',
-                      color: '#fff',
+                      color: '#000',
                       flexShrink: 0,
                       boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
                       padding: c.logoUrl ? '4px' : '0',
@@ -2325,7 +2325,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         {c.local && (
                           <span style={{
                             background: '#ff6b35',
-                            color: '#fff',
+                            color: '#000',
                             padding: '2px 8px',
                             borderRadius: '4px',
                             fontSize: '11px',
@@ -2373,7 +2373,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Call Now Button */}
                   <button 
                     style={{
-                      background: '#e63946',
+                      background: '#fbbf24',
                       color: 'white',
                       padding: '12px 20px',
                       borderRadius: '0',
@@ -2447,8 +2447,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         style={{
                           flex: '1',
                           minWidth: '140px',
-                          background: '#e63946',
-                          color: '#fff',
+                          background: '#fbbf24',
+                          color: '#000',
                           padding: '10px 16px',
                           borderRadius: '8px',
                           border: 'none',
@@ -2628,7 +2628,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     }}>
       <div style={{
-        background: '#e63946',
+        background: '#fbbf24',
         padding: '32px 24px',
         position: 'relative',
       }}>
@@ -2668,7 +2668,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
         
         <h1 style={{
-          color: '#fff',
+          color: '#000',
           margin: '0',
           fontSize: '36px',
           fontWeight: '800',
@@ -2686,12 +2686,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               color="#fff"
             />
           ))}
-          <span style={{ color: '#fff', marginLeft: '8px', fontSize: '18px', fontWeight: '600' }}>
+          <span style={{ color: '#000', marginLeft: '8px', fontSize: '18px', fontWeight: '600' }}>
             {company.rating} ({company.reviews} reviews)
           </span>
           {company.yearsInBusiness && (
             <span style={{ 
-              color: '#fff', 
+              color: '#000', 
               marginLeft: '16px', 
               fontSize: '16px',
               background: 'rgba(255,255,255,0.2)',
@@ -2727,8 +2727,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           style={{
             width: '100%',
             padding: '20px',
-            background: '#e63946',
-            color: '#fff',
+            background: '#fbbf24',
+            color: '#000',
             border: 'none',
             borderRadius: '8px',
             fontSize: '20px',
@@ -2810,11 +2810,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     minWidth: '24px',
                     height: '24px',
                     borderRadius: '50%',
-                    background: '#e63946',
+                    background: '#fbbf24',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#fff',
+                    color: '#000',
                     fontWeight: '700',
                     fontSize: '14px',
                     marginTop: '2px',
@@ -2980,7 +2980,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 gap: '8px',
                 padding: '12px 20px',
                 background: '#92400e',
-                color: '#fff',
+                color: '#000',
                 textDecoration: 'none',
                 borderRadius: '6px',
                 fontSize: '16px',
@@ -3059,7 +3059,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         }}>
           <h2 style={{ 
             margin: '0 0 20px 0', 
-            color: '#fff', 
+            color: '#000', 
             fontSize: '28px', 
             fontWeight: '700',
             textAlign: 'center',
@@ -3082,8 +3082,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             style={{
               width: '100%',
               padding: '20px',
-              background: '#e63946',
-              color: '#fff',
+              background: '#fbbf24',
+              color: '#000',
               border: 'none',
               borderRadius: '8px',
               fontSize: '20px',
