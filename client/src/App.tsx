@@ -64,7 +64,7 @@ function LandingPage() {
     }}>
       <header style={{
         background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-        padding: '24px 16px',
+        padding: '16px',
         boxShadow: '0 8px 30px rgba(168,85,247,0.6)',
       }}>
         <div style={{
@@ -72,20 +72,11 @@ function LandingPage() {
           margin: '0 auto',
           textAlign: 'center',
         }}>
-          <h1 style={{
-            color: '#fff',
-            fontSize: '36px',
-            fontWeight: '800',
-            margin: '0 0 8px 0',
-            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-          }}>
-            BestJunkRemovalCompanies
-          </h1>
           <p style={{
             color: '#fff',
-            fontSize: '18px',
+            fontSize: '16px',
             margin: '0',
-            opacity: 0.95,
+            fontWeight: '600',
           }}>
             Find Trusted Local Pros, Get Instant Quotes
           </p>
