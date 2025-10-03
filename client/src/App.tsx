@@ -124,7 +124,7 @@ function LandingPage() {
             margin: '0',
             fontWeight: '600',
           }}>
-            All 50 States • Thousands of Local Companies • Instant Price Estimates
+            All 50 States • Local Independent Companies Only • No Franchises
           </p>
         </div>
       </header>
@@ -172,7 +172,7 @@ function LandingPage() {
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            Connect with vetted local junk removal companies in your area. Compare prices, read reviews, and get instant quotes.
+            Find independent, locally-owned junk removal companies based in your city. No franchises - just your neighborhood junk crew.
           </p>
 
           <form onSubmit={handleSearch} style={{
@@ -338,18 +338,18 @@ function LandingPage() {
           {[
             {
               icon: <Star size={32} />,
-              title: 'Verified Reviews',
-              description: 'Read authentic reviews from real customers in your area',
+              title: 'Local & Independent',
+              description: 'Only locally-owned companies based in your city - no franchises',
             },
             {
               icon: <TrendingUp size={32} />,
               title: 'Instant Quotes',
-              description: 'Get free estimates from multiple companies in minutes',
+              description: 'Get free estimates from multiple local companies in minutes',
             },
             {
               icon: <MapPin size={32} />,
-              title: 'Local Experts',
-              description: 'Find trusted professionals serving your neighborhood',
+              title: 'Your Neighborhood Crew',
+              description: 'Support independent businesses located right in your community',
             },
           ].map((feature, i) => (
             <div
@@ -2112,7 +2112,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
           </h2>
           <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
-            {companies.length} verified pro{companies.length !== 1 ? 's' : ''}
+            {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {city.charAt(0).toUpperCase() + city.slice(1)}
           </p>
         </div>
 
