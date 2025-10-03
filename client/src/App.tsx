@@ -412,7 +412,17 @@ function LandingPage() {
                 padding: '32px',
                 borderRadius: '12px',
                 textAlign: 'center',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                transform: 'translateY(-1px)',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
               }}
             >
               <div style={{
