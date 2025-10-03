@@ -331,7 +331,7 @@ function LandingPage() {
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
-                <MapPin size={14} />
+                <MapPin size={14} color="#166534" />
                 {state.name}
               </a>
             ))}
@@ -356,7 +356,7 @@ function LandingPage() {
               description: 'Get free estimates from multiple local companies in minutes',
             },
             {
-              icon: <MapPin size={32} />,
+              icon: <MapPin size={32} color="#166534" />,
               title: 'Your Neighborhood Crew',
               description: 'Support independent businesses located right in your community',
             },
@@ -376,7 +376,7 @@ function LandingPage() {
                 padding: '16px',
                 background: '#f5f5f5',
                 borderRadius: '12px',
-                color: '#217fc4',
+                color: '#166534',
                 marginBottom: '16px',
               }}>
                 {feature.icon}
@@ -1373,7 +1373,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   }}
                   data-testid={`link-city-${city.toLowerCase()}`}
                 >
-                  <MapPin size={14} />
+                  <MapPin size={14} color="#166534" />
                   {city}
                 </a>
               ))}
@@ -2303,7 +2303,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       
                       <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '12px' }}>
-                        <div style={{ marginBottom: '4px' }}><MapPin size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
+                        <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#166534" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
                         <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
                     </div>
@@ -3069,7 +3069,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         </div>
         
         <div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '14px' }}>
-          <MapPin size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+          <MapPin size={16} color="#166534" style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
           {company.address}
           {company.website && (
             <>
