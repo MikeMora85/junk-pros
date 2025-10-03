@@ -141,6 +141,7 @@ function LandingPage() {
       <div style={{
         position: 'relative',
         height: '450px',
+        backgroundColor: '#ffe5e7',
         backgroundImage: `url(${curbsideJunkHero})`,
         backgroundSize: 'contain',
         backgroundPosition: 'center',
