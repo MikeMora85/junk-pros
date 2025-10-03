@@ -115,7 +115,7 @@ function LandingPage() {
         minHeight: '100vh',
       }}>
       <header style={{
-        background: '#e63946',
+        background: 'linear-gradient(135deg, #e63946 0%, #d62839 100%)',
         padding: '28px 16px',
         boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
         position: 'relative',
