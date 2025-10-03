@@ -157,7 +157,7 @@ function LandingPage() {
         minHeight: '100vh',
       }}>
       <header className="breathing-glow-banner" style={{
-        background: 'linear-gradient(135deg, #e63946 0%, #ff7580 100%)',
+        background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
         padding: '28px 16px',
         position: 'relative',
         zIndex: 2,
@@ -2182,7 +2182,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
-                    border: '1px solid #166534',
+                    border: '1px solid #e63946',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
