@@ -16,7 +16,7 @@ import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
 import floridaHero from "@assets/stock_images/miami_beach_florida__ef428d6f.jpg";
 import newYorkHero from "@assets/stock_images/statue_of_liberty_ne_70f49b5f.jpg";
 import washingtonHero from "@assets/stock_images/space_needle_seattle_e0d9ac78.jpg";
-import coloradoHero from "@assets/stock_images/rocky_mountains_colo_a3dbc4bb.jpg";
+import coloradoHero from "@assets/stock_images/rocky_mountains_colo_f5782bd2.jpg";
 import illinoisHero from "@assets/stock_images/willis_tower_chicago_08709be4.jpg";
 import massachusettsHero from "@assets/stock_images/boston_massachusetts_495b1661.jpg";
 import pennsylvaniaHero from "@assets/stock_images/liberty_bell_philade_94af1290.jpg";
