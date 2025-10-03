@@ -18,7 +18,7 @@ export default function EstimateBuilderInline() {
   return (
     <div style={{
       background: '#ffffff',
-      border: '2px solid #e63946',
+      border: '2px solid #166534',
       borderRadius: '0',
       padding: '24px',
       marginBottom: '20px',
@@ -168,8 +168,8 @@ export default function EstimateBuilderInline() {
       <button 
         style={{
           width: '100%',
-          background: '#e63946',
-          color: '#ffffff',
+          background: '#fbbf24',
+          color: '#000',
           padding: '14px',
           borderRadius: '0',
           border: 'none',

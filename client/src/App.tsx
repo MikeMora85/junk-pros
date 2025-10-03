@@ -2959,7 +2959,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
         
         {company.priceSheetUrl && (
-          <div style={{ marginBottom: '32px', background: '#fef3c7', padding: '20px', borderRadius: '8px', border: '2px solid #fbbf24' }}>
+          <div style={{ marginBottom: '32px', background: '#fef3c7', padding: '20px', borderRadius: '8px', border: '2px solid #166534' }}>
             <h3 style={{ 
               margin: '0 0 12px 0', 
               color: '#92400e', 
