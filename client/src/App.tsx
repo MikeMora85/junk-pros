@@ -1743,7 +1743,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       {/* Header */}
       <header style={{
         background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
-        boxShadow: '0 8px 30px rgba(59,130,246,0.3), 0 0 60px rgba(16,185,129,0.2)',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         padding: '16px',
         overflow: 'hidden',
       }}>
@@ -1751,104 +1751,55 @@ function CityPage({ city, state }: { city: string; state: string }) {
           maxWidth: '1200px',
           margin: '0 auto',
           display: 'flex',
-          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           gap: '12px',
           width: '100%',
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <div>
-              <p style={{
-                fontSize: '16px',
-                color: '#fff',
-                margin: '0',
-                fontWeight: '700',
-                letterSpacing: '0.5px',
-                textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-              }}>
-                Find Trusted Local Pros, Get Instant Quotes
-              </p>
-            </div>
-            <button
-              onClick={() => setShowBusinessForm(true)}
-              className="breathing-button"
-              style={{
-                background: 'linear-gradient(135deg, #f9a8d4 0%, #fda4af 100%)',
-                color: '#fff',
-                padding: '10px 16px',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '700',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                whiteSpace: 'nowrap',
-              }}
-              data-testid="button-add-business"
-            >
-              <Plus size={16} />
-              Add Business
-            </button>
-          </div>
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            if (searchQuery.trim()) {
-              // Parse search query - expect format like "Phoenix" or "Phoenix, AZ"
-              const parts = searchQuery.split(',').map(p => p.trim().toLowerCase());
-              const searchCity = parts[0];
-              const searchState = parts[1] || 'arizona'; // default to arizona
-              
-              // Normalize state name (e.g., "AZ" -> "arizona")
-              const stateMap: Record<string, string> = {
-                'az': 'arizona',
-                'ca': 'california',
-                'tx': 'texas',
-                'fl': 'florida',
-                'ny': 'new-york',
-              };
-              const normalizedState = stateMap[searchState] || searchState;
-              
-              // Navigate to city page
-              window.location.href = `/${normalizedState}/${searchCity}`;
-            }
-          }} style={{ display: 'flex', gap: '8px', width: '100%' }}>
-            <input
-              type="text"
-              placeholder="City or zip..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                flex: 1,
-                padding: '12px 16px',
-                border: '2px solid rgba(255,255,255,0.3)',
-                borderRadius: '8px',
-                fontSize: '15px',
-                outline: 'none',
-                backgroundColor: 'rgba(255,255,255,0.95)',
-                boxSizing: 'border-box',
-              }}
-              data-testid="input-search-location"
-            />
-            <button
-              type="submit"
-              style={{
-                padding: '12px 24px',
-                background: 'linear-gradient(135deg, #f9a8d4 0%, #fda4af 100%)',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '15px',
-                fontWeight: '700',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(249,168,212,0.4)',
-              }}
-              data-testid="button-search"
-            >
-              Search
-            </button>
-          </form>
+          <a
+            href="/"
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              color: '#fff',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+            }}
+            data-testid="button-home"
+          >
+            <Home size={16} />
+            Home
+          </a>
+          <button
+            onClick={() => setShowBusinessForm(true)}
+            className="breathing-button"
+            style={{
+              background: 'linear-gradient(135deg, #f9a8d4 0%, #fda4af 100%)',
+              color: '#fff',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              whiteSpace: 'nowrap',
+            }}
+            data-testid="button-add-business"
+          >
+            <Plus size={16} />
+            Add Business
+          </button>
         </div>
       </header>
 
