@@ -442,7 +442,7 @@ function App() {
                 }}
                 data-testid="button-submit-business"
               >
-                Submit for Review
+                Publish My Business
               </button>
             </form>
           </div>
