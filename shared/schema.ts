@@ -18,11 +18,29 @@ export const companies = pgTable("companies", {
   reviewSnippets: text("review_snippets").array(),
   city: text("city").notNull(),
   state: text("state").notNull(),
+  description: text("description"),
+  hours: text("hours"),
+  availability: text("availability"),
+  priceSheetUrl: text("price_sheet_url"),
+  yearsInBusiness: integer("years_in_business"),
+  insuranceInfo: text("insurance_info"),
+  specialties: text("specialties").array(),
+  aboutUs: text("about_us"),
+  whyChooseUs: text("why_choose_us").array(),
 });
 
 export const insertCompanySchema = createInsertSchema(companies, {
   logoUrl: z.string().nullable().optional(),
   reviewSnippets: z.array(z.string()).nullable().optional(),
+  description: z.string().nullable().optional(),
+  hours: z.string().nullable().optional(),
+  availability: z.string().nullable().optional(),
+  priceSheetUrl: z.string().nullable().optional(),
+  yearsInBusiness: z.number().nullable().optional(),
+  insuranceInfo: z.string().nullable().optional(),
+  specialties: z.array(z.string()).nullable().optional(),
+  aboutUs: z.string().nullable().optional(),
+  whyChooseUs: z.array(z.string()).nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
