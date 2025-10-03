@@ -2514,67 +2514,80 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   <EstimateBuilderInline />
                   
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                    {/* JunkIQ Ad */}
+                    {/* Ad Placeholder 1 */}
                     <div style={{
-                      background: '#e63946',
-                      borderRadius: '12px',
-                      padding: '20px',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-                      color: '#fff',
-                    }}>
-                      <h3 style={{ fontSize: '18px', fontWeight: '700', margin: '0 0 12px 0' }}>
-                        JunkIQ - Smart Pricing
-                      </h3>
-                      <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5' }}>
-                        Get instant, accurate pricing with AI-powered load estimation. No surprises, just fair prices.
-                      </p>
-                      <button style={{
-                        width: '100%',
-                        backgroundColor: '#fff',
-                        color: '#a855f7',
-                        padding: '12px',
-                        borderRadius: '8px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '15px',
-                        fontWeight: '700',
-                      }}>
-                        Try JunkIQ Now
-                      </button>
-                    </div>
-
-                    {/* Dumpster Rental Ad */}
-                    <div style={{
-                      backgroundColor: '#fff',
-                      border: '2px solid #f3e8ff',
-                      borderRadius: '12px',
-                      padding: '20px',
-                      boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
+                      backgroundColor: '#f5f5f5',
+                      border: '2px solid #e63946',
+                      borderRadius: '0',
+                      padding: '40px 20px',
+                      textAlign: 'center',
                     }}>
                       <h3 style={{ 
-                        fontSize: '18px', 
+                        fontSize: '24px', 
                         fontWeight: '700', 
-                        margin: '0 0 12px 0',
+                        margin: '0 0 16px 0',
                         color: '#1a1a1a',
+                        letterSpacing: '-0.02em',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}>
-                        Need a Dumpster?
+                        ADVERTISE HERE
                       </h3>
-                      <p style={{ fontSize: '14px', margin: '0 0 16px 0', lineHeight: '1.5', color: '#6b7280' }}>
-                        For bigger projects, rent a dumpster. Sizes from 10-40 yards. Starting at $299/week.
-                      </p>
-                      <button style={{
-                        width: '100%',
-                        background: '#e63946',
-                        color: '#fff',
-                        padding: '12px',
-                        borderRadius: '8px',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '15px',
-                        fontWeight: '700',
+                      <p style={{ 
+                        fontSize: '16px', 
+                        margin: '0 0 12px 0', 
+                        lineHeight: '1.5', 
+                        color: '#333333',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}>
-                        Get Dumpster Quote
-                      </button>
+                        Reach thousands of customers looking for junk removal services
+                      </p>
+                      <p style={{ 
+                        fontSize: '14px', 
+                        margin: 0, 
+                        color: '#e63946',
+                        fontWeight: '700',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        morasjunk@gmail.com
+                      </p>
+                    </div>
+
+                    {/* Ad Placeholder 2 */}
+                    <div style={{
+                      backgroundColor: '#f5f5f5',
+                      border: '2px solid #e63946',
+                      borderRadius: '0',
+                      padding: '40px 20px',
+                      textAlign: 'center',
+                    }}>
+                      <h3 style={{ 
+                        fontSize: '24px', 
+                        fontWeight: '700', 
+                        margin: '0 0 16px 0',
+                        color: '#1a1a1a',
+                        letterSpacing: '-0.02em',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        ADVERTISE HERE
+                      </h3>
+                      <p style={{ 
+                        fontSize: '16px', 
+                        margin: '0 0 12px 0', 
+                        lineHeight: '1.5', 
+                        color: '#333333',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        Promote your business to local customers
+                      </p>
+                      <p style={{ 
+                        fontSize: '14px', 
+                        margin: 0, 
+                        color: '#e63946',
+                        fontWeight: '700',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        morasjunk@gmail.com
+                      </p>
                     </div>
                   </div>
                 </div>
