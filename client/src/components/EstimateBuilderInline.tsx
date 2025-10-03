@@ -18,7 +18,7 @@ export default function EstimateBuilderInline() {
   return (
     <div style={{
       background: '#ffffff',
-      border: '2px solid #166534',
+      border: '2px solid #2563eb',
       borderRadius: '0',
       padding: '24px',
       marginBottom: '20px',

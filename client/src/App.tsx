@@ -365,7 +365,7 @@ function LandingPage() {
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
-                <MapPin size={14} color="#fbbf24" />
+                <MapPin size={14} color="#2563eb" />
                 {state.name}
               </a>
             ))}
@@ -390,7 +390,7 @@ function LandingPage() {
               description: 'Get free estimates from multiple local companies in minutes',
             },
             {
-              icon: <MapPin size={32} color="#fbbf24" />,
+              icon: <MapPin size={32} color="#2563eb" />,
               title: 'Your Neighborhood Crew',
               description: 'Support independent businesses located right in your community',
             },
@@ -1407,7 +1407,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   }}
                   data-testid={`link-city-${city.toLowerCase()}`}
                 >
-                  <MapPin size={14} color="#fbbf24" />
+                  <MapPin size={14} color="#2563eb" />
                   {city}
                 </a>
               ))}
@@ -1450,7 +1450,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
-                      border: '2px solid #166534',
+                      border: '2px solid #2563eb',
                     }}
                   >
                     <h4 style={{
@@ -1937,7 +1937,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1957,7 +1957,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1977,7 +1977,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1997,7 +1997,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2018,7 +2018,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                     backgroundColor: '#fff',
@@ -2093,7 +2093,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2112,7 +2112,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #166534',
+                    border: '2px solid #2563eb',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2337,7 +2337,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       
                       <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '12px' }}>
-                        <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#fbbf24" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
+                        <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#2563eb" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
                         <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
                     </div>
@@ -2427,7 +2427,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           color: '#374151',
                           padding: '10px 16px',
                           borderRadius: '8px',
-                          border: '2px solid #166534',
+                          border: '2px solid #2563eb',
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontWeight: '600',
@@ -2478,7 +2478,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         padding: '16px',
                         backgroundColor: '#fff',
                         borderRadius: '8px',
-                        border: '2px solid #166534',
+                        border: '2px solid #2563eb',
                       }}>
                         <h5 style={{
                           fontSize: '14px',
@@ -2534,7 +2534,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 1 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #166534',
+                      border: '2px solid #2563eb',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2572,7 +2572,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 2 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #166534',
+                      border: '2px solid #2563eb',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2959,7 +2959,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
         
         {company.priceSheetUrl && (
-          <div style={{ marginBottom: '32px', background: '#fef3c7', padding: '20px', borderRadius: '8px', border: '2px solid #166534' }}>
+          <div style={{ marginBottom: '32px', background: '#fef3c7', padding: '20px', borderRadius: '8px', border: '2px solid #2563eb' }}>
             <h3 style={{ 
               margin: '0 0 12px 0', 
               color: '#92400e', 
@@ -3103,7 +3103,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         </div>
         
         <div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '14px' }}>
-          <MapPin size={16} color="#fbbf24" style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+          <MapPin size={16} color="#2563eb" style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
           {company.address}
           {company.website && (
             <>
