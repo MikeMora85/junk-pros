@@ -309,11 +309,17 @@ function App() {
               const businessCity = (formData.get('city') as string).trim();
               const businessState = (formData.get('state') as string).trim();
               
+              let websiteInput = formData.get('website') as string;
+              // Add https:// if not present
+              if (websiteInput && !websiteInput.startsWith('http')) {
+                websiteInput = 'https://' + websiteInput;
+              }
+              
               const data = {
                 name: formData.get('name') as string,
                 address: `${businessCity}, ${businessState}`,
                 phone: formData.get('phone') as string,
-                website: formData.get('website') as string,
+                website: websiteInput,
                 rating: '4.5',
                 reviews: 0,
                 services: ['Junk Removal'],
@@ -486,10 +492,12 @@ function App() {
                   Company Website *
                 </label>
                 <input
-                  type="url"
+                  type="text"
                   name="website"
                   required
-                  placeholder="https://yourcompany.com"
+                  placeholder="yourcompany.com"
+                  pattern="^[a-zA-Z0-9][a-zA-Z0-9-]*\.(com|net|org|biz|info|us|co)"
+                  title="Enter a valid domain (e.g., yourcompany.com)"
                   style={{
                     width: '100%',
                     padding: '10px 14px',
