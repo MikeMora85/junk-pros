@@ -4,6 +4,11 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content.
 
 ## Recent Changes
+- 2025-10-03: Enhanced company profile pages to be comprehensive lead gen landing pages
+  - Added new fields: description, hours, availability, price sheets, years in business, insurance info, specialties, about us, why choose us
+  - Redesigned CompanyDetailInline component with hero section, multiple CTAs, and detailed business information
+  - Updated schema and storage to support new lead gen fields
+  - Increased red banner font size to 24px for better prominence
 - 2025-10-02: Initial project setup with fullstack_js template
 - Created data model for junk removal companies with location coordinates
 - Set up Express backend with in-memory storage
