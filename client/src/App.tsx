@@ -111,7 +111,9 @@ function LandingPage() {
       <header style={{
         background: '#e63946',
         padding: '12px 16px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
+        position: 'relative',
+        zIndex: 2,
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -141,6 +143,7 @@ function LandingPage() {
         alignItems: 'center',
         justifyContent: 'center',
         borderBottom: '1px solid #e63946',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
       </div>
 
