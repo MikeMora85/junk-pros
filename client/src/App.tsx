@@ -79,6 +79,48 @@ const PlaceholderImage = ({ index }: { index: number }) => (
   </div>
 );
 
+// Rotating Banner Component
+function RotatingBanner() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const messages = [
+    'All 50 States • Local Independent Companies Only • No Franchises',
+    'Find Trusted Local Pros • Get Instant Quotes',
+    'Same Day Service Available • Support Local Businesses',
+    'Licensed & Insured Professionals • Free Estimates',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % messages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ position: 'relative', height: '28px', overflow: 'hidden' }}>
+      {messages.map((message, index) => (
+        <p
+          key={index}
+          style={{
+            color: '#fff',
+            fontSize: '24px',
+            margin: '0',
+            fontWeight: '600',
+            position: 'absolute',
+            width: '100%',
+            top: '0',
+            transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out',
+            transform: `translateY(${(index - currentIndex) * 100}%)`,
+            opacity: index === currentIndex ? 1 : 0,
+          }}
+        >
+          {message}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 // Landing Page Component
 function LandingPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -126,14 +168,7 @@ function LandingPage() {
           margin: '0 auto',
           textAlign: 'center',
         }}>
-          <p style={{
-            color: '#fff',
-            fontSize: '24px',
-            margin: '0',
-            fontWeight: '600',
-          }}>
-            All 50 States • Local Independent Companies Only • No Franchises
-          </p>
+          <RotatingBanner />
         </div>
       </header>
 
