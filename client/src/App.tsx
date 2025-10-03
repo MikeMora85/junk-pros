@@ -159,6 +159,7 @@ function LandingPage() {
             color: '#1a1a1a',
             margin: '0 0 16px 0',
             letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Search by State or City
           </h2>
@@ -169,6 +170,7 @@ function LandingPage() {
             maxWidth: '700px',
             marginLeft: 'auto',
             marginRight: 'auto',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Connect with vetted local junk removal companies in your area. Compare prices, read reviews, and get instant quotes.
           </p>
@@ -197,6 +199,7 @@ function LandingPage() {
                 outline: 'none',
                 fontSize: '14px',
                 borderRadius: '8px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="input-homepage-search"
             />
@@ -216,6 +219,7 @@ function LandingPage() {
                 gap: '4px',
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="button-homepage-search"
             >
@@ -234,6 +238,7 @@ function LandingPage() {
             fontWeight: '700',
             color: '#374151',
             marginBottom: '20px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Browse by State
           </h3>
@@ -313,6 +318,7 @@ function LandingPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '6px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
@@ -371,6 +377,7 @@ function LandingPage() {
                 fontWeight: '700',
                 color: '#374151',
                 margin: '0 0 8px 0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.title}
               </h4>
@@ -378,6 +385,7 @@ function LandingPage() {
                 fontSize: '15px',
                 color: '#6b7280',
                 margin: '0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.description}
               </p>
