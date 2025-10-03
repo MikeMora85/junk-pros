@@ -184,6 +184,7 @@ function LandingPage() {
         justifyContent: 'center',
         borderBottom: '1px solid #fbbf24',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+        filter: 'brightness(1.3)',
       }}>
       </div>
 
