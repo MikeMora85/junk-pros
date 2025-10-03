@@ -369,7 +369,7 @@ function App() {
                   style={{
                     backgroundColor: '#fff',
                     borderRadius: '0',
-                    padding: '20px',
+                    padding: '0',
                     marginBottom: '1px',
                     marginLeft: '0',
                     marginRight: '0',
@@ -392,6 +392,8 @@ function App() {
                       fontSize: '11px',
                       fontWeight: '700',
                       marginBottom: '12px',
+                      marginLeft: '20px',
+                      marginTop: '20px',
                       boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
                     }}>
                       TOP RATED
@@ -401,8 +403,9 @@ function App() {
                   {/* Image Carousel */}
                   <div style={{
                     marginBottom: '16px',
+                    marginTop: index === 0 ? '0' : '20px',
                     overflow: 'hidden',
-                    borderRadius: '12px',
+                    borderRadius: '0',
                   }}>
                     <div style={{
                       display: 'flex',
@@ -414,7 +417,7 @@ function App() {
                           key={i}
                           style={{
                             minWidth: '50%',
-                            padding: '0 4px',
+                            padding: '0',
                           }}
                         >
                           <img
@@ -424,7 +427,7 @@ function App() {
                               width: '100%',
                               height: '140px',
                               objectFit: 'cover',
-                              borderRadius: '8px',
+                              borderRadius: '0',
                             }}
                           />
                         </div>
@@ -432,7 +435,7 @@ function App() {
                     </div>
                   </div>
                   
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0 20px' }}>
                     <div style={{
                       width: '60px',
                       height: '60px',
@@ -527,6 +530,8 @@ function App() {
                       borderRadius: '8px',
                       padding: '12px',
                       marginBottom: '12px',
+                      marginLeft: '20px',
+                      marginRight: '20px',
                       border: '1px solid #f3e8ff',
                     }}>
                       {c.reviewSnippets.slice(0, 2).map((review, i) => (
@@ -554,8 +559,10 @@ function App() {
                       cursor: 'pointer',
                       fontSize: '16px',
                       fontWeight: '700',
-                      width: '100%',
+                      width: 'calc(100% - 40px)',
                       marginBottom: '12px',
+                      marginLeft: '20px',
+                      marginRight: '20px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -574,6 +581,9 @@ function App() {
                     backgroundColor: '#fdf4ff',
                     borderRadius: '8px',
                     padding: '16px',
+                    marginLeft: '20px',
+                    marginRight: '20px',
+                    marginBottom: '20px',
                     border: '2px solid #f3e8ff',
                   }}>
                     <h4 style={{
