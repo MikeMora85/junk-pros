@@ -129,8 +129,30 @@ export class MemStorage implements IStorage {
   async createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company> {
     const newId = Math.max(...this.companies.map(c => c.id), 0) + 1;
     const newCompany: Company = {
-      ...data,
       id: newId,
+      name: data.name,
+      address: data.address,
+      phone: data.phone,
+      website: data.website,
+      rating: data.rating,
+      reviews: data.reviews ?? 0,
+      services: data.services,
+      longitude: data.longitude,
+      latitude: data.latitude,
+      local: data.local ?? true,
+      logoUrl: data.logoUrl ?? null,
+      reviewSnippets: data.reviewSnippets ?? null,
+      city: data.city,
+      state: data.state,
+      description: data.description ?? null,
+      hours: data.hours ?? null,
+      availability: data.availability ?? null,
+      priceSheetUrl: data.priceSheetUrl ?? null,
+      yearsInBusiness: data.yearsInBusiness ?? null,
+      insuranceInfo: data.insuranceInfo ?? null,
+      specialties: data.specialties ?? null,
+      aboutUs: data.aboutUs ?? null,
+      whyChooseUs: data.whyChooseUs ?? null,
     };
     this.companies.push(newCompany);
     return newCompany;
