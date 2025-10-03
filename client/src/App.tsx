@@ -162,6 +162,7 @@ function LandingPage() {
         boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
         position: 'relative',
         zIndex: 2,
+        animation: 'breathingGlow 3s ease-in-out infinite',
       }}>
         <div style={{
           maxWidth: '1200px',
