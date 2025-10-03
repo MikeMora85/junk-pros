@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -15,6 +15,46 @@ import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.j
 import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
 import floridaHero from "@assets/stock_images/miami_beach_florida__ef428d6f.jpg";
 import newYorkHero from "@assets/stock_images/statue_of_liberty_ne_70f49b5f.jpg";
+import washingtonHero from "@assets/stock_images/space_needle_seattle_e0d9ac78.jpg";
+import coloradoHero from "@assets/stock_images/rocky_mountains_colo_a3dbc4bb.jpg";
+import illinoisHero from "@assets/stock_images/willis_tower_chicago_08709be4.jpg";
+import massachusettsHero from "@assets/stock_images/boston_massachusetts_495b1661.jpg";
+import pennsylvaniaHero from "@assets/stock_images/liberty_bell_philade_94af1290.jpg";
+import nevadaHero from "@assets/stock_images/las_vegas_strip_neva_9810840d.jpg";
+import tennesseeHero from "@assets/stock_images/great_smoky_mountain_04319b2a.jpg";
+import georgiaHero from "@assets/stock_images/atlanta_georgia_skyl_42af1e19.jpg";
+import louisianaHero from "@assets/stock_images/french_quarter_new_o_97be723e.jpg";
+import oregonHero from "@assets/stock_images/crater_lake_oregon_s_dbd956cd.jpg";
+import wyomingHero from "@assets/stock_images/yellowstone_national_87fb310b.jpg";
+import montanaHero from "@assets/stock_images/glacier_national_par_ca533513.jpg";
+import utahHero from "@assets/stock_images/arches_national_park_c92ce949.jpg";
+import indianaHero from "@assets/stock_images/indianapolis_motor_s_076178bf.jpg";
+import michiganHero from "@assets/stock_images/mackinac_bridge_mich_70f90f84.jpg";
+import kentuckyHero from "@assets/stock_images/churchill_downs_kent_993eabc9.jpg";
+import northCarolinaHero from "@assets/stock_images/blue_ridge_parkway_n_536d613b.jpg";
+import southCarolinaHero from "@assets/stock_images/fort_sumter_charlest_156df300.jpg";
+import alabamaHero from "@assets/stock_images/uss_alabama_battlesh_57cdea2a.jpg";
+import arkansasHero from "@assets/stock_images/hot_springs_national_148b5220.jpg";
+import mississippiHero from "@assets/stock_images/mississippi_river_de_f2f97e59.jpg";
+import oklahomaHero from "@assets/stock_images/oklahoma_city_nation_f762f0dd.jpg";
+import missouriHero from "@assets/stock_images/gateway_arch_st_loui_fd4c11b6.jpg";
+import southDakotaHero from "@assets/stock_images/mount_rushmore_south_6dd9fb61.jpg";
+import minnesotaHero from "@assets/stock_images/mall_of_america_minn_c6b98b05.jpg";
+import iowaHero from "@assets/stock_images/iowa_state_capitol_d_03687da2.jpg";
+import wisconsinHero from "@assets/stock_images/wisconsin_state_capi_f9c6451e.jpg";
+import idahoHero from "@assets/stock_images/boise_idaho_state_ca_f5997fd7.jpg";
+import alaskaHero from "@assets/stock_images/denali_national_park_280a8832.jpg";
+import hawaiiHero from "@assets/stock_images/diamond_head_waikiki_2fdf0db0.jpg";
+import newMexicoHero from "@assets/stock_images/carlsbad_caverns_new_5adf76a1.jpg";
+import northDakotaHero from "@assets/stock_images/fargo_north_dakota_d_760e03a9.jpg";
+import nebraskaHero from "@assets/stock_images/omaha_nebraska_old_m_16e3ae04.jpg";
+import rhodeIslandHero from "@assets/stock_images/providence_rhode_isl_fd73a38e.jpg";
+import connecticutHero from "@assets/stock_images/mystic_seaport_conne_0a29993f.jpg";
+import delawareHero from "@assets/stock_images/dover_delaware_state_8f01671f.jpg";
+import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg";
+import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
+import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
+import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -387,6 +427,326 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       fact: 'NYC alone generates over 12,000 tons of residential waste daily, making junk removal essential.',
       climate: 'Four-season climate with peak demand during spring cleaning and fall preparation',
     },
+    'washington': {
+      cities: ['Seattle', 'Spokane', 'Tacoma', 'Vancouver', 'Bellevue', 'Kent', 'Everett', 'Renton', 'Spokane Valley', 'Federal Way', 'Yakima', 'Bellingham', 'Kennewick', 'Auburn', 'Pasco'],
+      heroImage: washingtonHero,
+      landmark: 'Space Needle',
+      population: '7.7 million',
+      fact: 'Washington leads in eco-conscious junk removal with strict recycling and composting requirements.',
+      climate: 'Temperate oceanic climate - year-round services available',
+    },
+    'colorado': {
+      cities: ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Lakewood', 'Thornton', 'Arvada', 'Westminster', 'Pueblo', 'Centennial', 'Boulder', 'Greeley', 'Longmont', 'Loveland', 'Grand Junction'],
+      heroImage: coloradoHero,
+      landmark: 'Rocky Mountains',
+      population: '5.8 million',
+      fact: 'Colorado\'s outdoor lifestyle creates high demand for estate and garage cleanout services.',
+      climate: 'Semi-arid climate with four distinct seasons',
+    },
+    'illinois': {
+      cities: ['Chicago', 'Aurora', 'Naperville', 'Joliet', 'Rockford', 'Springfield', 'Elgin', 'Peoria', 'Champaign', 'Waukegan', 'Cicero', 'Bloomington', 'Decatur', 'Evanston', 'Des Plaines'],
+      heroImage: illinoisHero,
+      landmark: 'Willis Tower',
+      population: '12.6 million',
+      fact: 'Chicago is the third-largest junk removal market in the US after NYC and LA.',
+      climate: 'Humid continental climate with peak demand in spring and fall',
+    },
+    'massachusetts': {
+      cities: ['Boston', 'Worcester', 'Springfield', 'Cambridge', 'Lowell', 'Brockton', 'New Bedford', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Lawrence', 'Somerville', 'Framingham', 'Haverhill'],
+      heroImage: massachusettsHero,
+      landmark: 'Freedom Trail',
+      population: '7 million',
+      fact: 'Massachusetts has some of the strictest waste disposal regulations in the nation.',
+      climate: 'Humid continental with distinct four seasons',
+    },
+    'pennsylvania': {
+      cities: ['Philadelphia', 'Pittsburgh', 'Allentown', 'Reading', 'Erie', 'Scranton', 'Bethlehem', 'Lancaster', 'Harrisburg', 'Altoona', 'York', 'State College', 'Wilkes-Barre', 'Chester', 'Williamsport'],
+      heroImage: pennsylvaniaHero,
+      landmark: 'Liberty Bell',
+      population: '12.9 million',
+      fact: 'Pennsylvania\'s renovation boom has increased junk removal demand by 40% in recent years.',
+      climate: 'Humid continental with moderate seasonal changes',
+    },
+    'nevada': {
+      cities: ['Las Vegas', 'Henderson', 'Reno', 'North Las Vegas', 'Sparks', 'Carson City', 'Fernley', 'Elko', 'Mesquite', 'Boulder City', 'Fallon', 'Winnemucca', 'West Wendover', 'Ely', 'Yerington'],
+      heroImage: nevadaHero,
+      landmark: 'Las Vegas Strip',
+      population: '3.1 million',
+      fact: 'Las Vegas generates massive commercial junk removal needs from hotels and casinos.',
+      climate: 'Desert climate - services available year-round',
+    },
+    'tennessee': {
+      cities: ['Nashville', 'Memphis', 'Knoxville', 'Chattanooga', 'Clarksville', 'Murfreesboro', 'Franklin', 'Jackson', 'Johnson City', 'Bartlett', 'Hendersonville', 'Kingsport', 'Collierville', 'Cleveland', 'Smyrna'],
+      heroImage: tennesseeHero,
+      landmark: 'Great Smoky Mountains',
+      population: '7 million',
+      fact: 'Tennessee\'s growing population drives consistent demand for residential junk removal.',
+      climate: 'Humid subtropical with mild winters',
+    },
+    'georgia': {
+      cities: ['Atlanta', 'Columbus', 'Augusta', 'Macon', 'Savannah', 'Athens', 'Sandy Springs', 'Roswell', 'Albany', 'Johns Creek', 'Warner Robins', 'Alpharetta', 'Marietta', 'Valdosta', 'Smyrna'],
+      heroImage: georgiaHero,
+      landmark: 'Atlanta Skyline',
+      population: '10.9 million',
+      fact: 'Atlanta\'s booming construction industry creates high demand for debris removal services.',
+      climate: 'Humid subtropical - services peak in spring and summer',
+    },
+    'louisiana': {
+      cities: ['New Orleans', 'Baton Rouge', 'Shreveport', 'Lafayette', 'Lake Charles', 'Kenner', 'Bossier City', 'Monroe', 'Alexandria', 'Houma', 'New Iberia', 'Slidell', 'Prairieville', 'Central', 'Ruston'],
+      heroImage: louisianaHero,
+      landmark: 'French Quarter',
+      population: '4.6 million',
+      fact: 'Storm cleanup and hurricane debris removal are essential services in Louisiana.',
+      climate: 'Humid subtropical with hurricane season considerations',
+    },
+    'oregon': {
+      cities: ['Portland', 'Eugene', 'Salem', 'Gresham', 'Hillsboro', 'Beaverton', 'Bend', 'Medford', 'Springfield', 'Corvallis', 'Albany', 'Tigard', 'Lake Oswego', 'Keizer', 'Grants Pass'],
+      heroImage: oregonHero,
+      landmark: 'Crater Lake',
+      population: '4.2 million',
+      fact: 'Oregon requires eco-friendly disposal practices with emphasis on recycling and donation.',
+      climate: 'Marine west coast climate - services available year-round',
+    },
+    'wyoming': {
+      cities: ['Cheyenne', 'Casper', 'Laramie', 'Gillette', 'Rock Springs', 'Sheridan', 'Green River', 'Evanston', 'Riverton', 'Jackson', 'Cody', 'Rawlins', 'Lander', 'Torrington', 'Powell'],
+      heroImage: wyomingHero,
+      landmark: 'Yellowstone',
+      population: '580,000',
+      fact: 'Wyoming\'s rural landscape requires specialized long-distance junk removal services.',
+      climate: 'Semi-arid and continental - services year-round',
+    },
+    'montana': {
+      cities: ['Billings', 'Missoula', 'Great Falls', 'Bozeman', 'Butte', 'Helena', 'Kalispell', 'Havre', 'Anaconda', 'Miles City', 'Belgrade', 'Livingston', 'Laurel', 'Whitefish', 'Lewistown'],
+      heroImage: montanaHero,
+      landmark: 'Glacier National Park',
+      population: '1.1 million',
+      fact: 'Montana\'s outdoor recreation economy creates unique junk removal needs for lodges and resorts.',
+      climate: 'Continental climate with cold winters',
+    },
+    'utah': {
+      cities: ['Salt Lake City', 'West Valley City', 'Provo', 'West Jordan', 'Orem', 'Sandy', 'Ogden', 'St. George', 'Layton', 'Taylorsville', 'South Jordan', 'Lehi', 'Logan', 'Murray', 'Draper'],
+      heroImage: utahHero,
+      landmark: 'Arches National Park',
+      population: '3.3 million',
+      fact: 'Utah\'s rapid growth makes it one of the fastest-growing junk removal markets.',
+      climate: 'Semi-arid climate - services available year-round',
+    },
+    'indiana': {
+      cities: ['Indianapolis', 'Fort Wayne', 'Evansville', 'South Bend', 'Carmel', 'Fishers', 'Bloomington', 'Hammond', 'Gary', 'Muncie', 'Lafayette', 'Terre Haute', 'Kokomo', 'Anderson', 'Noblesville'],
+      heroImage: indianaHero,
+      landmark: 'Indianapolis Motor Speedway',
+      population: '6.8 million',
+      fact: 'Indiana\'s manufacturing sector creates high demand for commercial cleanout services.',
+      climate: 'Humid continental with four distinct seasons',
+    },
+    'michigan': {
+      cities: ['Detroit', 'Grand Rapids', 'Warren', 'Sterling Heights', 'Ann Arbor', 'Lansing', 'Flint', 'Dearborn', 'Livonia', 'Troy', 'Westland', 'Farmington Hills', 'Kalamazoo', 'Wyoming', 'Southfield'],
+      heroImage: michiganHero,
+      landmark: 'Mackinac Bridge',
+      population: '10 million',
+      fact: 'Michigan\'s renovation boom drives strong demand for construction debris removal.',
+      climate: 'Humid continental - services peak in spring through fall',
+    },
+    'kentucky': {
+      cities: ['Louisville', 'Lexington', 'Bowling Green', 'Owensboro', 'Covington', 'Richmond', 'Georgetown', 'Florence', 'Elizabethtown', 'Nicholasville', 'Henderson', 'Jeffersontown', 'Frankfort', 'Paducah', 'Hopkinsville'],
+      heroImage: kentuckyHero,
+      landmark: 'Churchill Downs',
+      population: '4.5 million',
+      fact: 'Kentucky\'s horse country estates require specialized large-property cleanout services.',
+      climate: 'Humid subtropical with mild winters',
+    },
+    'north-carolina': {
+      cities: ['Charlotte', 'Raleigh', 'Greensboro', 'Durham', 'Winston-Salem', 'Fayetteville', 'Cary', 'Wilmington', 'High Point', 'Concord', 'Asheville', 'Gastonia', 'Greenville', 'Jacksonville', 'Chapel Hill'],
+      heroImage: northCarolinaHero,
+      landmark: 'Blue Ridge Parkway',
+      population: '10.6 million',
+      fact: 'The Research Triangle drives high demand for office and commercial cleanouts.',
+      climate: 'Humid subtropical with mountain and coastal variations',
+    },
+    'south-carolina': {
+      cities: ['Charleston', 'Columbia', 'North Charleston', 'Mount Pleasant', 'Rock Hill', 'Greenville', 'Summerville', 'Goose Creek', 'Hilton Head Island', 'Florence', 'Spartanburg', 'Myrtle Beach', 'Sumter', 'Anderson', 'Greer'],
+      heroImage: southCarolinaHero,
+      landmark: 'Fort Sumter',
+      population: '5.2 million',
+      fact: 'Coastal hurricane preparedness makes storm debris removal essential in South Carolina.',
+      climate: 'Humid subtropical - services peak after storm season',
+    },
+    'alabama': {
+      cities: ['Birmingham', 'Montgomery', 'Mobile', 'Huntsville', 'Tuscaloosa', 'Hoover', 'Dothan', 'Auburn', 'Decatur', 'Madison', 'Florence', 'Gadsden', 'Vestavia Hills', 'Prattville', 'Phenix City'],
+      heroImage: alabamaHero,
+      landmark: 'USS Alabama',
+      population: '5 million',
+      fact: 'Alabama\'s growing economy increases demand for residential and commercial junk removal.',
+      climate: 'Humid subtropical - services available year-round',
+    },
+    'arkansas': {
+      cities: ['Little Rock', 'Fort Smith', 'Fayetteville', 'Springdale', 'Jonesboro', 'North Little Rock', 'Conway', 'Rogers', 'Pine Bluff', 'Bentonville', 'Hot Springs', 'Benton', 'Texarkana', 'Sherwood', 'Jacksonville'],
+      heroImage: arkansasHero,
+      landmark: 'Hot Springs National Park',
+      population: '3 million',
+      fact: 'Arkansas\'s expanding retail sector drives commercial cleanout demand.',
+      climate: 'Humid subtropical with hot summers',
+    },
+    'mississippi': {
+      cities: ['Jackson', 'Gulfport', 'Southaven', 'Hattiesburg', 'Biloxi', 'Meridian', 'Tupelo', 'Olive Branch', 'Greenville', 'Horn Lake', 'Clinton', 'Pearl', 'Madison', 'Ridgeland', 'Starkville'],
+      heroImage: mississippiHero,
+      landmark: 'Mississippi River Delta',
+      population: '2.9 million',
+      fact: 'Coastal properties require specialized hurricane debris removal services.',
+      climate: 'Humid subtropical - services peak post-hurricane season',
+    },
+    'oklahoma': {
+      cities: ['Oklahoma City', 'Tulsa', 'Norman', 'Broken Arrow', 'Edmond', 'Lawton', 'Moore', 'Midwest City', 'Enid', 'Stillwater', 'Muskogee', 'Bartlesville', 'Owasso', 'Shawnee', 'Ponca City'],
+      heroImage: oklahomaHero,
+      landmark: 'Oklahoma City National Memorial',
+      population: '4 million',
+      fact: 'Oklahoma\'s energy sector creates demand for commercial and industrial cleanouts.',
+      climate: 'Humid subtropical to semi-arid',
+    },
+    'missouri': {
+      cities: ['Kansas City', 'St. Louis', 'Springfield', 'Columbia', 'Independence', 'Lee\'s Summit', 'O\'Fallon', 'St. Joseph', 'St. Charles', 'St. Peters', 'Blue Springs', 'Florissant', 'Joplin', 'Chesterfield', 'Jefferson City'],
+      heroImage: missouriHero,
+      landmark: 'Gateway Arch',
+      population: '6.2 million',
+      fact: 'Missouri\'s two major metros drive strong commercial junk removal demand.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+    'south-dakota': {
+      cities: ['Sioux Falls', 'Rapid City', 'Aberdeen', 'Brookings', 'Watertown', 'Mitchell', 'Yankton', 'Pierre', 'Huron', 'Vermillion', 'Spearfish', 'Box Elder', 'Brandon', 'Harrisburg', 'Sturgis'],
+      heroImage: southDakotaHero,
+      landmark: 'Mount Rushmore',
+      population: '900,000',
+      fact: 'Tourism-driven economy creates seasonal junk removal needs around national parks.',
+      climate: 'Continental - services peak spring through fall',
+    },
+    'minnesota': {
+      cities: ['Minneapolis', 'St. Paul', 'Rochester', 'Duluth', 'Bloomington', 'Brooklyn Park', 'Plymouth', 'Woodbury', 'Maple Grove', 'St. Cloud', 'Eagan', 'Eden Prairie', 'Coon Rapids', 'Burnsville', 'Blaine'],
+      heroImage: minnesotaHero,
+      landmark: 'Mall of America',
+      population: '5.7 million',
+      fact: 'Minnesota\'s harsh winters create spring cleanout surges for junk removal services.',
+      climate: 'Continental with cold winters - peak demand in spring',
+    },
+    'iowa': {
+      cities: ['Des Moines', 'Cedar Rapids', 'Davenport', 'Sioux City', 'Iowa City', 'Waterloo', 'Council Bluffs', 'Ames', 'West Des Moines', 'Dubuque', 'Ankeny', 'Urbandale', 'Cedar Falls', 'Marion', 'Bettendorf'],
+      heroImage: iowaHero,
+      landmark: 'Iowa State Capitol',
+      population: '3.2 million',
+      fact: 'Iowa\'s agricultural sector creates unique farm and estate cleanout needs.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+    'wisconsin': {
+      cities: ['Milwaukee', 'Madison', 'Green Bay', 'Kenosha', 'Racine', 'Appleton', 'Waukesha', 'Eau Claire', 'Oshkosh', 'Janesville', 'West Allis', 'La Crosse', 'Sheboygan', 'Wauwatosa', 'Fond du Lac'],
+      heroImage: wisconsinHero,
+      landmark: 'Wisconsin State Capitol',
+      population: '5.9 million',
+      fact: 'Wisconsin\'s manufacturing heritage creates demand for industrial cleanout services.',
+      climate: 'Humid continental - services peak in spring',
+    },
+    'idaho': {
+      cities: ['Boise', 'Meridian', 'Nampa', 'Idaho Falls', 'Pocatello', 'Caldwell', 'Coeur d\'Alene', 'Twin Falls', 'Post Falls', 'Lewiston', 'Rexburg', 'Eagle', 'Kuna', 'Ammon', 'Chubbuck'],
+      heroImage: idahoHero,
+      landmark: 'Boise State Capitol',
+      population: '1.9 million',
+      fact: 'Idaho\'s rapid growth makes it one of America\'s fastest-growing junk removal markets.',
+      climate: 'Continental - services available year-round',
+    },
+    'alaska': {
+      cities: ['Anchorage', 'Fairbanks', 'Juneau', 'Sitka', 'Ketchikan', 'Wasilla', 'Kenai', 'Kodiak', 'Bethel', 'Palmer', 'Homer', 'Soldotna', 'Barrow', 'Nome', 'Valdez'],
+      heroImage: alaskaHero,
+      landmark: 'Denali',
+      population: '730,000',
+      fact: 'Alaska\'s remote locations require specialized logistics for junk removal services.',
+      climate: 'Subarctic - services peak in short summer months',
+    },
+    'hawaii': {
+      cities: ['Honolulu', 'East Honolulu', 'Pearl City', 'Hilo', 'Kailua', 'Waipahu', 'Kaneohe', 'Mililani Town', 'Kahului', 'Ewa Gentry', 'Mililani Mauka', 'Kihei', 'Makakilo', 'Wahiawa', 'Schofield Barracks'],
+      heroImage: hawaiiHero,
+      landmark: 'Diamond Head',
+      population: '1.4 million',
+      fact: 'Island logistics make eco-friendly waste disposal especially important in Hawaii.',
+      climate: 'Tropical - services available year-round',
+    },
+    'new-mexico': {
+      cities: ['Albuquerque', 'Las Cruces', 'Rio Rancho', 'Santa Fe', 'Roswell', 'Farmington', 'South Valley', 'Clovis', 'Hobbs', 'Alamogordo', 'Carlsbad', 'Gallup', 'Deming', 'Los Lunas', 'Chaparral'],
+      heroImage: newMexicoHero,
+      landmark: 'Carlsbad Caverns',
+      population: '2.1 million',
+      fact: 'New Mexico\'s desert climate requires specialized handling of certain materials.',
+      climate: 'Semi-arid and arid - services available year-round',
+    },
+    'north-dakota': {
+      cities: ['Fargo', 'Bismarck', 'Grand Forks', 'Minot', 'West Fargo', 'Williston', 'Dickinson', 'Mandan', 'Jamestown', 'Wahpeton', 'Devils Lake', 'Valley City', 'Grafton', 'Watford City', 'Lincoln'],
+      heroImage: northDakotaHero,
+      landmark: 'Fargo Downtown',
+      population: '780,000',
+      fact: 'North Dakota\'s energy boom creates commercial junk removal opportunities.',
+      climate: 'Continental with harsh winters - services peak in warmer months',
+    },
+    'nebraska': {
+      cities: ['Omaha', 'Lincoln', 'Bellevue', 'Grand Island', 'Kearney', 'Fremont', 'Hastings', 'Norfolk', 'Columbus', 'Papillion', 'North Platte', 'La Vista', 'Scottsbluff', 'South Sioux City', 'Beatrice'],
+      heroImage: nebraskaHero,
+      landmark: 'Old Market Omaha',
+      population: '2 million',
+      fact: 'Nebraska\'s agricultural economy creates unique rural junk removal needs.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+    'rhode-island': {
+      cities: ['Providence', 'Warwick', 'Cranston', 'Pawtucket', 'East Providence', 'Woonsocket', 'Coventry', 'Cumberland', 'North Providence', 'South Kingstown', 'West Warwick', 'Johnston', 'North Kingstown', 'Newport', 'Bristol'],
+      heroImage: rhodeIslandHero,
+      landmark: 'WaterFire Providence',
+      population: '1.1 million',
+      fact: 'Rhode Island\'s dense population creates high demand for residential cleanouts.',
+      climate: 'Humid continental - services available year-round',
+    },
+    'connecticut': {
+      cities: ['Bridgeport', 'New Haven', 'Stamford', 'Hartford', 'Waterbury', 'Norwalk', 'Danbury', 'New Britain', 'Bristol', 'Meriden', 'Milford', 'West Haven', 'Middletown', 'Norwich', 'Shelton'],
+      heroImage: connecticutHero,
+      landmark: 'Mystic Seaport',
+      population: '3.6 million',
+      fact: 'Connecticut\'s affluent communities drive demand for estate cleanout services.',
+      climate: 'Humid continental with four seasons',
+    },
+    'delaware': {
+      cities: ['Wilmington', 'Dover', 'Newark', 'Middletown', 'Smyrna', 'Milford', 'Seaford', 'Georgetown', 'Elsmere', 'New Castle', 'Millsboro', 'Bear', 'Pike Creek', 'Brookside', 'Hockessin'],
+      heroImage: delawareHero,
+      landmark: 'Delaware State Capitol',
+      population: '1 million',
+      fact: 'Delaware\'s small size enables efficient statewide junk removal services.',
+      climate: 'Humid subtropical - services available year-round',
+    },
+    'maryland': {
+      cities: ['Baltimore', 'Frederick', 'Rockville', 'Gaithersburg', 'Bowie', 'Hagerstown', 'Annapolis', 'College Park', 'Salisbury', 'Laurel', 'Greenbelt', 'Cumberland', 'Westminster', 'Hyattsville', 'Takoma Park'],
+      heroImage: marylandHero,
+      landmark: 'Annapolis State House',
+      population: '6.2 million',
+      fact: 'Maryland\'s proximity to DC creates high demand for government facility cleanouts.',
+      climate: 'Humid subtropical - services available year-round',
+    },
+    'west-virginia': {
+      cities: ['Charleston', 'Huntington', 'Morgantown', 'Parkersburg', 'Wheeling', 'Weirton', 'Fairmont', 'Beckley', 'Martinsburg', 'Clarksburg', 'South Charleston', 'St. Albans', 'Vienna', 'Bluefield', 'Moundsville'],
+      heroImage: westVirginiaHero,
+      landmark: 'West Virginia State Capitol',
+      population: '1.8 million',
+      fact: 'West Virginia\'s mountainous terrain requires specialized hauling equipment.',
+      climate: 'Humid subtropical to humid continental',
+    },
+    'vermont': {
+      cities: ['Burlington', 'South Burlington', 'Rutland', 'Barre', 'Montpelier', 'Winooski', 'St. Albans', 'Newport', 'Vergennes', 'Brattleboro', 'Hartford', 'Springfield', 'Bennington', 'Colchester', 'Essex'],
+      heroImage: vermontHero,
+      landmark: 'Lake Champlain',
+      population: '645,000',
+      fact: 'Vermont\'s environmental focus requires eco-friendly junk removal practices.',
+      climate: 'Humid continental with cold winters',
+    },
+    'new-hampshire': {
+      cities: ['Manchester', 'Nashua', 'Concord', 'Derry', 'Rochester', 'Salem', 'Dover', 'Merrimack', 'Londonderry', 'Hudson', 'Keene', 'Bedford', 'Portsmouth', 'Goffstown', 'Laconia'],
+      heroImage: newHampshireHero,
+      landmark: 'Portsmouth Harbor',
+      population: '1.4 million',
+      fact: 'New Hampshire\'s "Live Free or Die" spirit extends to flexible junk removal options.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
   };
 
   const currentState = stateData[stateSlug] || {
@@ -430,7 +790,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'linear-gradient(135deg, rgba(59,130,246,0.85) 0%, rgba(16,185,129,0.85) 100%)',
+            background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(16,185,129,0.1) 100%)',
           }} />
           <div style={{
             position: 'relative',
@@ -482,8 +842,11 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             textDecoration: 'none',
             fontSize: '14px',
             fontWeight: '700',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
           }}>
-            ← Back to Home
+            <Home size={16} />
           </a>
           <p style={{
             fontSize: '14px',
@@ -688,22 +1051,22 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 {
                   title: 'Same-Day Service',
                   description: 'Most companies offer same-day or next-day pickup throughout ' + stateName,
-                  icon: '🚚',
+                  Icon: Truck,
                 },
                 {
                   title: 'Eco-Friendly',
                   description: 'Items are sorted for recycling, donation, or proper disposal',
-                  icon: '♻️',
+                  Icon: Recycle,
                 },
                 {
                   title: 'Full-Service',
                   description: 'Teams handle all loading and hauling - you don\'t lift a finger',
-                  icon: '💪',
+                  Icon: Dumbbell,
                 },
                 {
                   title: 'Upfront Pricing',
                   description: 'Get free estimates with transparent, volume-based pricing',
-                  icon: '💰',
+                  Icon: DollarSign,
                 },
               ].map((item, i) => (
                 <div
@@ -715,7 +1078,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                   }}
                 >
-                  <div style={{ fontSize: '32px', marginBottom: '12px' }}>{item.icon}</div>
+                  <item.Icon size={32} style={{ color: '#3b82f6', marginBottom: '12px' }} />
                   <h4 style={{
                     fontSize: '18px',
                     fontWeight: '700',
@@ -761,34 +1124,42 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   {
                     service: 'Furniture Removal',
                     description: 'Couches, beds, tables, chairs, and other household furniture',
+                    Icon: Home,
                   },
                   {
                     service: 'Appliance Disposal',
                     description: 'Refrigerators, washers, dryers, stoves, and dishwashers',
+                    Icon: Building2,
                   },
                   {
                     service: 'Electronics Recycling',
                     description: 'TVs, computers, monitors, printers, and e-waste',
+                    Icon: TrendingUp,
                   },
                   {
                     service: 'Yard Waste Removal',
                     description: 'Branches, leaves, grass clippings, and green waste',
+                    Icon: TreeDeciduous,
                   },
                   {
                     service: 'Construction Debris',
                     description: 'Drywall, lumber, flooring, tiles, and renovation waste',
+                    Icon: HardHat,
                   },
                   {
                     service: 'Estate Cleanouts',
                     description: 'Complete property cleanouts for estates and foreclosures',
+                    Icon: Users,
                   },
                   {
                     service: 'Garage Cleanouts',
                     description: 'Old tools, equipment, boxes, and accumulated clutter',
+                    Icon: Building2,
                   },
                   {
                     service: 'Office Cleanouts',
                     description: 'Desks, filing cabinets, chairs, and commercial furniture',
+                    Icon: Briefcase,
                   },
                 ].map((item, i) => (
                   <div
@@ -800,14 +1171,17 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       border: '1px solid #e5e7eb',
                     }}
                   >
-                    <h4 style={{
-                      fontSize: '15px',
-                      fontWeight: '700',
-                      color: '#374151',
-                      marginBottom: '6px',
-                    }}>
-                      {item.service}
-                    </h4>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <item.Icon size={18} style={{ color: '#3b82f6' }} />
+                      <h4 style={{
+                        fontSize: '15px',
+                        fontWeight: '700',
+                        color: '#374151',
+                        margin: 0,
+                      }}>
+                        {item.service}
+                      </h4>
+                    </div>
                     <p style={{
                       fontSize: '13px',
                       color: '#6b7280',
