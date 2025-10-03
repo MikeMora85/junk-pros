@@ -116,7 +116,7 @@ function LandingPage() {
       }}>
       <header style={{
         background: '#e63946',
-        padding: '20px 16px',
+        padding: '28px 16px',
         boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
         position: 'relative',
         zIndex: 2,
@@ -128,7 +128,7 @@ function LandingPage() {
         }}>
           <p style={{
             color: '#fff',
-            fontSize: '14px',
+            fontSize: '18px',
             margin: '0',
             fontWeight: '600',
           }}>
