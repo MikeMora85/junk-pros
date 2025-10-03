@@ -39,6 +39,9 @@ function App() {
       minHeight: '100vh', 
       background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      margin: '0',
+      padding: '0',
+      width: '100%',
     }}>
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes breatheGlow {
