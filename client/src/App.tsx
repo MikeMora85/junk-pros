@@ -306,17 +306,14 @@ function App() {
             <form style={{ padding: '24px' }} onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
-              const locationInput = formData.get('location') as string;
-              // Extract city from location input (format: "City, ST")
-              const locationParts = locationInput.split(',');
-              const businessCity = locationParts[0]?.trim() || city;
-              const businessState = locationParts[1]?.trim() || state;
+              const businessCity = (formData.get('city') as string).trim();
+              const businessState = (formData.get('state') as string).trim();
               
               const data = {
                 name: formData.get('name') as string,
-                address: locationInput,
+                address: `${businessCity}, ${businessState}`,
                 phone: formData.get('phone') as string,
-                website: formData.get('logoUrl') || 'https://example.com',
+                website: formData.get('website') as string,
                 rating: '4.5',
                 reviews: 0,
                 services: ['Junk Removal'],
@@ -392,13 +389,13 @@ function App() {
 
               <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
-                  City, State *
+                  City *
                 </label>
                 <input
                   type="text"
-                  name="location"
+                  name="city"
                   required
-                  placeholder="e.g., Scottsdale, AZ"
+                  placeholder="e.g., Scottsdale"
                   style={{
                     width: '100%',
                     padding: '10px 14px',
@@ -406,7 +403,101 @@ function App() {
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
-                  data-testid="input-business-location"
+                  data-testid="input-business-city"
+                />
+                <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px', marginBottom: 0 }}>
+                  Your business must be physically located in this city
+                </p>
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
+                  State *
+                </label>
+                <select
+                  name="state"
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '15px',
+                    backgroundColor: '#fff',
+                  }}
+                  data-testid="select-business-state"
+                >
+                  <option value="">Select State</option>
+                  <option value="Alabama">Alabama</option>
+                  <option value="Alaska">Alaska</option>
+                  <option value="Arizona">Arizona</option>
+                  <option value="Arkansas">Arkansas</option>
+                  <option value="California">California</option>
+                  <option value="Colorado">Colorado</option>
+                  <option value="Connecticut">Connecticut</option>
+                  <option value="Delaware">Delaware</option>
+                  <option value="Florida">Florida</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Hawaii">Hawaii</option>
+                  <option value="Idaho">Idaho</option>
+                  <option value="Illinois">Illinois</option>
+                  <option value="Indiana">Indiana</option>
+                  <option value="Iowa">Iowa</option>
+                  <option value="Kansas">Kansas</option>
+                  <option value="Kentucky">Kentucky</option>
+                  <option value="Louisiana">Louisiana</option>
+                  <option value="Maine">Maine</option>
+                  <option value="Maryland">Maryland</option>
+                  <option value="Massachusetts">Massachusetts</option>
+                  <option value="Michigan">Michigan</option>
+                  <option value="Minnesota">Minnesota</option>
+                  <option value="Mississippi">Mississippi</option>
+                  <option value="Missouri">Missouri</option>
+                  <option value="Montana">Montana</option>
+                  <option value="Nebraska">Nebraska</option>
+                  <option value="Nevada">Nevada</option>
+                  <option value="New Hampshire">New Hampshire</option>
+                  <option value="New Jersey">New Jersey</option>
+                  <option value="New Mexico">New Mexico</option>
+                  <option value="New York">New York</option>
+                  <option value="North Carolina">North Carolina</option>
+                  <option value="North Dakota">North Dakota</option>
+                  <option value="Ohio">Ohio</option>
+                  <option value="Oklahoma">Oklahoma</option>
+                  <option value="Oregon">Oregon</option>
+                  <option value="Pennsylvania">Pennsylvania</option>
+                  <option value="Rhode Island">Rhode Island</option>
+                  <option value="South Carolina">South Carolina</option>
+                  <option value="South Dakota">South Dakota</option>
+                  <option value="Tennessee">Tennessee</option>
+                  <option value="Texas">Texas</option>
+                  <option value="Utah">Utah</option>
+                  <option value="Vermont">Vermont</option>
+                  <option value="Virginia">Virginia</option>
+                  <option value="Washington">Washington</option>
+                  <option value="West Virginia">West Virginia</option>
+                  <option value="Wisconsin">Wisconsin</option>
+                  <option value="Wyoming">Wyoming</option>
+                </select>
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
+                  Company Website *
+                </label>
+                <input
+                  type="url"
+                  name="website"
+                  required
+                  placeholder="https://yourcompany.com"
+                  style={{
+                    width: '100%',
+                    padding: '10px 14px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '15px',
+                  }}
+                  data-testid="input-business-website"
                 />
               </div>
 
@@ -427,9 +518,6 @@ function App() {
                   }}
                   data-testid="input-business-logo"
                 />
-                <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px', marginBottom: 0 }}>
-                  Provide a link to your company logo for better visibility
-                </p>
               </div>
 
               <button
