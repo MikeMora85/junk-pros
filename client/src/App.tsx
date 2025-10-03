@@ -55,6 +55,7 @@ import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg
 import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
+import dumpTruckHero from "@assets/stock_images/dump_truck_junk_remo_35a3ebaf.jpg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -107,10 +108,57 @@ function LandingPage() {
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e5e5e5 100%)',
     }}>
+      {/* Hero Section with Dump Truck */}
+      <div style={{
+        position: 'relative',
+        height: '500px',
+        backgroundImage: `url(${dumpTruckHero})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(249,65,68,0.1) 100%)',
+        }} />
+        <div style={{
+          position: 'relative',
+          zIndex: 1,
+          textAlign: 'center',
+          color: '#fff',
+          maxWidth: '900px',
+          padding: '0 20px',
+        }}>
+          <h1 style={{
+            fontSize: '56px',
+            fontWeight: '800',
+            marginBottom: '20px',
+            textShadow: '0 4px 12px rgba(0,0,0,0.4)',
+            lineHeight: '1.2',
+          }}>
+            America's Premier Junk Removal Directory
+          </h1>
+          <p style={{
+            fontSize: '22px',
+            marginBottom: '32px',
+            textShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            opacity: 0.95,
+          }}>
+            Find Trusted Local Pros, Get Instant Quotes
+          </p>
+        </div>
+      </div>
+
       <header style={{
         background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
-        padding: '16px',
-        boxShadow: '0 8px 30px rgba(249,65,68,0.3)',
+        padding: '12px 16px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -119,11 +167,11 @@ function LandingPage() {
         }}>
           <p style={{
             color: '#fff',
-            fontSize: '16px',
+            fontSize: '14px',
             margin: '0',
             fontWeight: '600',
           }}>
-            Find Trusted Local Pros, Get Instant Quotes
+            All 50 States • Thousands of Local Companies • Instant Price Estimates
           </p>
         </div>
       </header>
@@ -138,15 +186,12 @@ function LandingPage() {
           marginBottom: '48px',
         }}>
           <h2 style={{
-            fontSize: '42px',
-            fontWeight: '800',
-            background: 'linear-gradient(135deg, #f94144 0%, #ff6b35 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            fontSize: '36px',
+            fontWeight: '700',
+            color: '#374151',
             margin: '0 0 16px 0',
           }}>
-            America's Premier Junk Removal Directory
+            Search by State or City
           </h2>
           <p style={{
             fontSize: '20px',
