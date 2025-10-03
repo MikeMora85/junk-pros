@@ -56,6 +56,7 @@ import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
 import curbsideJunkHero from "@assets/DE088318-00B4-4F2A-A383-99A3CA49C6CA_1759473512583.png";
+import landfillPile from "@assets/stock_images/landfill_pile_junk_t_868d095e.jpg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -141,8 +142,8 @@ function LandingPage() {
       <div style={{
         position: 'relative',
         height: '450px',
-        backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'contain',
+        backgroundImage: `url(${landfillPile})`,
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         display: 'flex',
@@ -151,6 +152,29 @@ function LandingPage() {
         borderBottom: '1px solid #e63946',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
+        {/* Dark overlay for better logo visibility */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          zIndex: 1,
+        }}></div>
+        
+        {/* Logo on top of background */}
+        <img 
+          src={curbsideJunkHero} 
+          alt="Curbside Junk Logo"
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            maxHeight: '400px',
+            maxWidth: '90%',
+            objectFit: 'contain',
+          }}
+        />
       </div>
 
       <div style={{
