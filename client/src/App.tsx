@@ -331,15 +331,25 @@ function LandingPage() {
 
 // State Page Component
 function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: string }) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('overview');
+
   const popularCities: Record<string, string[]> = {
-    'arizona': ['Phoenix', 'Tucson', 'Mesa', 'Chandler', 'Scottsdale', 'Glendale'],
-    'california': ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento'],
-    'texas': ['Houston', 'San Antonio', 'Dallas', 'Austin', 'Fort Worth', 'El Paso'],
-    'florida': ['Jacksonville', 'Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Hialeah'],
-    'new-york': ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany'],
+    'arizona': ['Phoenix', 'Tucson', 'Mesa', 'Chandler', 'Scottsdale', 'Glendale', 'Gilbert', 'Tempe', 'Peoria', 'Surprise'],
+    'california': ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento', 'Long Beach', 'Oakland', 'Bakersfield', 'Anaheim'],
+    'texas': ['Houston', 'San Antonio', 'Dallas', 'Austin', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo'],
+    'florida': ['Jacksonville', 'Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Hialeah', 'Port St. Lucie', 'Cape Coral', 'Tallahassee', 'Fort Lauderdale'],
+    'new-york': ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica'],
   };
 
   const cities = popularCities[stateSlug] || [];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/${stateSlug}/${searchQuery.toLowerCase().replace(/\s+/g, '-')}`;
+    }
+  };
 
   return (
     <div style={{
@@ -382,104 +392,419 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         margin: '0 auto',
         padding: '40px 16px',
       }}>
-        <section style={{ marginBottom: '48px' }}>
+        {/* Search Bar */}
+        <div style={{
+          backgroundColor: '#fff',
+          padding: '32px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+          marginBottom: '32px',
+        }}>
           <h2 style={{
-            fontSize: '28px',
+            fontSize: '24px',
             fontWeight: '700',
-            background: 'linear-gradient(135deg, #2563eb 0%, #059669 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '24px',
+            color: '#374151',
+            marginBottom: '16px',
+            textAlign: 'center',
           }}>
-            <MapPin size={28} style={{ display: 'inline', marginRight: '8px' }} />
-            Find Companies by City
+            Find Junk Removal Services in {stateName}
           </h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-            gap: '16px',
+          <form onSubmit={handleSearch} style={{
+            width: '100%',
+            maxWidth: '500px',
+            margin: '0 auto',
+            display: 'flex',
+            gap: '6px',
+            backgroundColor: '#f9fafb',
+            padding: '5px',
+            borderRadius: '10px',
           }}>
-            {cities.map((city) => (
-              <a
-                key={city}
-                href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
-                style={{
-                  padding: '20px',
-                  backgroundColor: '#fff',
-                  borderRadius: '12px',
-                  textDecoration: 'none',
-                  color: '#374151',
-                  fontWeight: '600',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                  transition: 'all 0.2s',
-                  textAlign: 'center',
-                }}
-                data-testid={`link-city-${city.toLowerCase()}`}
-              >
-                {city}
-              </a>
-            ))}
-          </div>
-        </section>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter your city"
+              style={{
+                flex: 1,
+                minWidth: '0',
+                padding: '10px 12px',
+                border: 'none',
+                outline: 'none',
+                fontSize: '14px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '10px 16px',
+                background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+              }}
+            >
+              <Search size={16} />
+              Search
+            </button>
+          </form>
+        </div>
 
-        <section style={{ marginBottom: '48px' }}>
-          <h2 style={{
-            fontSize: '28px',
-            fontWeight: '700',
-            background: 'linear-gradient(135deg, #2563eb 0%, #059669 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '24px',
-          }}>
-            <Book size={28} style={{ display: 'inline', marginRight: '8px' }} />
-            {stateName} Junk Removal Guide
-          </h2>
-          <div style={{
-            backgroundColor: '#fff',
-            padding: '32px',
-            borderRadius: '12px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-          }}>
-            <h3 style={{
-              fontSize: '22px',
+        {/* Tabs */}
+        <div style={{
+          display: 'flex',
+          gap: '8px',
+          marginBottom: '24px',
+          borderBottom: '2px solid #e5e7eb',
+          overflowX: 'auto',
+        }}>
+          {[
+            { id: 'overview', label: 'Overview' },
+            { id: 'cities', label: 'Cities' },
+            { id: 'pricing', label: 'Pricing Guide' },
+            { id: 'tips', label: 'Tips & Advice' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: '12px 20px',
+                background: 'none',
+                border: 'none',
+                borderBottom: activeTab === tab.id ? '3px solid #3b82f6' : '3px solid transparent',
+                color: activeTab === tab.id ? '#3b82f6' : '#6b7280',
+                fontSize: '15px',
+                fontWeight: activeTab === tab.id ? '700' : '600',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.2s',
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <section style={{ marginBottom: '48px' }}>
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '16px',
+              }}>
+                About Junk Removal Services in {stateName}
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                lineHeight: '1.8',
+                marginBottom: '16px',
+              }}>
+                {stateName} residents and businesses rely on professional junk removal services for efficient, eco-friendly disposal. Whether you're doing a home cleanout, office renovation, or construction project, local junk removal companies provide same-day service with upfront pricing.
+              </p>
+              <p style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                lineHeight: '1.8',
+              }}>
+                Most {stateName} junk removal companies recycle or donate 60-80% of collected items, helping reduce landfill waste while giving back to local communities.
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '20px',
+              marginBottom: '32px',
+            }}>
+              {[
+                {
+                  title: 'Same-Day Service',
+                  description: 'Most companies offer same-day or next-day pickup throughout ' + stateName,
+                  icon: '🚚',
+                },
+                {
+                  title: 'Eco-Friendly',
+                  description: 'Items are sorted for recycling, donation, or proper disposal',
+                  icon: '♻️',
+                },
+                {
+                  title: 'Full-Service',
+                  description: 'Teams handle all loading and hauling - you don\'t lift a finger',
+                  icon: '💪',
+                },
+                {
+                  title: 'Upfront Pricing',
+                  description: 'Get free estimates with transparent, volume-based pricing',
+                  icon: '💰',
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    backgroundColor: '#fff',
+                    padding: '24px',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  }}
+                >
+                  <div style={{ fontSize: '32px', marginBottom: '12px' }}>{item.icon}</div>
+                  <h4 style={{
+                    fontSize: '18px',
+                    fontWeight: '700',
+                    color: '#374151',
+                    marginBottom: '8px',
+                  }}>
+                    {item.title}
+                  </h4>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#6b7280',
+                    margin: '0',
+                    lineHeight: '1.6',
+                  }}>
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Cities Tab */}
+        {activeTab === 'cities' && (
+          <section style={{ marginBottom: '48px' }}>
+            <h2 style={{
+              fontSize: '24px',
               fontWeight: '700',
               color: '#374151',
-              marginBottom: '16px',
+              marginBottom: '20px',
             }}>
-              What You Need to Know About Junk Removal in {stateName}
-            </h3>
-            <p style={{
-              fontSize: '16px',
-              color: '#6b7280',
-              lineHeight: '1.8',
-              marginBottom: '16px',
+              Popular Cities in {stateName}
+            </h2>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+              gap: '12px',
             }}>
-              Finding reliable junk removal services in {stateName} is easier than ever. Whether you're clearing out a garage, renovating your home, or managing an estate cleanout, local professionals are ready to help.
-            </p>
-            <h4 style={{
-              fontSize: '18px',
-              fontWeight: '700',
-              color: '#374151',
-              marginTop: '24px',
-              marginBottom: '12px',
+              {cities.map((city) => (
+                <a
+                  key={city}
+                  href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                  style={{
+                    padding: '16px',
+                    backgroundColor: '#fff',
+                    borderRadius: '10px',
+                    textDecoration: 'none',
+                    color: '#374151',
+                    fontWeight: '600',
+                    fontSize: '15px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    transition: 'all 0.2s',
+                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                  }}
+                  data-testid={`link-city-${city.toLowerCase()}`}
+                >
+                  <MapPin size={14} />
+                  {city}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Pricing Tab */}
+        {activeTab === 'pricing' && (
+          <section style={{ marginBottom: '48px' }}>
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
             }}>
-              Common Services Offered:
-            </h4>
-            <ul style={{
-              fontSize: '16px',
-              color: '#6b7280',
-              lineHeight: '1.8',
-              paddingLeft: '24px',
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+              }}>
+                {stateName} Junk Removal Pricing Guide
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '16px',
+                marginBottom: '24px',
+              }}>
+                {[
+                  { size: '1/8 Truck Load', price: '$100-$200', items: 'Single item or small pile' },
+                  { size: '1/4 Truck Load', price: '$200-$350', items: 'Several items or room cleanout' },
+                  { size: '1/2 Truck Load', price: '$350-$550', items: 'Multiple rooms or garage' },
+                  { size: 'Full Truck Load', price: '$550-$800', items: 'Whole house or large project' },
+                ].map((tier, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '20px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '10px',
+                      border: '2px solid #e5e7eb',
+                    }}
+                  >
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#3b82f6',
+                      marginBottom: '8px',
+                    }}>
+                      {tier.size}
+                    </h4>
+                    <div style={{
+                      fontSize: '24px',
+                      fontWeight: '800',
+                      color: '#374151',
+                      marginBottom: '8px',
+                    }}>
+                      {tier.price}
+                    </div>
+                    <p style={{
+                      fontSize: '14px',
+                      color: '#6b7280',
+                      margin: '0',
+                    }}>
+                      {tier.items}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div style={{
+                padding: '16px',
+                backgroundColor: '#dbeafe',
+                borderRadius: '8px',
+                borderLeft: '4px solid #3b82f6',
+              }}>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#1e40af',
+                  margin: '0',
+                  lineHeight: '1.6',
+                }}>
+                  <strong>💡 Pro Tip:</strong> Most {stateName} companies offer free, no-obligation estimates. Get quotes from 2-3 companies to compare pricing and services.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Tips Tab */}
+        {activeTab === 'tips' && (
+
+          <section style={{ marginBottom: '48px' }}>
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
             }}>
-              <li>Residential junk removal and cleanouts</li>
-              <li>Furniture and appliance disposal</li>
-              <li>Construction debris removal</li>
-              <li>Yard waste and green waste hauling</li>
-              <li>Estate and foreclosure cleanouts</li>
-              <li>Commercial and office cleanouts</li>
-            </ul>
-          </div>
-        </section>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+              }}>
+                Expert Tips for Hiring Junk Removal in {stateName}
+              </h3>
+              <div style={{
+                display: 'grid',
+                gap: '20px',
+              }}>
+                {[
+                  {
+                    title: '1. Sort Before They Arrive',
+                    description: 'Separate items you want removed from keepers. This speeds up the process and may reduce costs.',
+                  },
+                  {
+                    title: '2. Get Multiple Quotes',
+                    description: 'Contact 2-3 companies for estimates. Most offer free quotes and same-day service in ' + stateName + '.',
+                  },
+                  {
+                    title: '3. Ask About Recycling',
+                    description: 'Choose companies that donate usable items and recycle materials rather than sending everything to landfills.',
+                  },
+                  {
+                    title: '4. Check Insurance & Licensing',
+                    description: 'Verify the company is licensed and insured to protect yourself from liability.',
+                  },
+                  {
+                    title: '5. Read Reviews',
+                    description: 'Check online reviews from other ' + stateName + ' customers to gauge reliability and service quality.',
+                  },
+                  {
+                    title: '6. Understand Pricing',
+                    description: 'Most companies charge by volume (truck space), not weight. Get clarity on final costs before work begins.',
+                  },
+                  {
+                    title: '7. Schedule Smart',
+                    description: 'Book early morning or weekday appointments for potentially better rates and availability.',
+                  },
+                  {
+                    title: '8. Know What They Won\'t Take',
+                    description: 'Most companies can\'t accept hazardous materials like paint, chemicals, or asbestos. Ask beforehand.',
+                  },
+                ].map((tip, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '20px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '10px',
+                      borderLeft: '4px solid #10b981',
+                    }}
+                  >
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#374151',
+                      marginBottom: '8px',
+                    }}>
+                      {tip.title}
+                    </h4>
+                    <p style={{
+                      fontSize: '14px',
+                      color: '#6b7280',
+                      margin: '0',
+                      lineHeight: '1.6',
+                    }}>
+                      {tip.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
