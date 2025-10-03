@@ -263,7 +263,7 @@ function LandingPage() {
               style={{
                 padding: '10px 16px',
                 background: '#000000',
-                color: '#000',
+                color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '14px',
@@ -894,7 +894,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             position: 'relative',
             zIndex: 1,
             textAlign: 'center',
-            color: '#000',
+            color: '#fff',
             maxWidth: '800px',
             padding: '0 20px',
           }}>
@@ -940,7 +940,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           justifyContent: 'space-between',
         }}>
           <a href="/" style={{
-            color: '#000',
+            color: '#fff',
             textDecoration: 'none',
             fontSize: '14px',
             fontWeight: '700',
@@ -952,7 +952,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           </a>
           <p style={{
             fontSize: '14px',
-            color: '#000',
+            color: '#fff',
             margin: '0',
             fontWeight: '600',
           }}>
@@ -1015,7 +1015,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               style={{
                 padding: '10px 16px',
                 background: '#000000',
-                color: '#000',
+                color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
                 fontSize: '14px',
@@ -1816,7 +1816,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             href="/"
             style={{
               backgroundColor: 'rgba(255,255,255,0.2)',
-              color: '#000',
+              color: '#fff',
               padding: '10px 16px',
               borderRadius: '8px',
               border: 'none',
@@ -1839,7 +1839,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             className="breathing-button"
             style={{
               background: '#000000',
-              color: '#000',
+              color: '#fff',
               padding: '10px 16px',
               borderRadius: '8px',
               border: 'none',
@@ -1912,7 +1912,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
               <h2 style={{
                 fontSize: '24px',
                 fontWeight: '800',
-                color: '#000',
+                color: '#fff',
                 margin: '0 0 8px 0',
               }}>
                 Add Your Business
@@ -2156,7 +2156,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 style={{
                   width: '100%',
                   background: '#000000',
-                  color: '#000',
+                  color: '#fff',
                   padding: '14px',
                   borderRadius: '8px',
                   border: 'none',
@@ -2227,7 +2227,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     <div style={{
                       display: 'inline-block',
                       background: '#000000',
-                      color: '#000',
+                      color: '#fff',
                       padding: '4px 10px',
                       borderRadius: '0',
                       fontSize: '11px',
@@ -2297,7 +2297,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       justifyContent: 'center',
                       fontSize: '24px',
                       fontWeight: '800',
-                      color: '#000',
+                      color: '#fff',
                       flexShrink: 0,
                       boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
                       padding: c.logoUrl ? '4px' : '0',
@@ -2356,7 +2356,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         {c.local && (
                           <span style={{
                             background: '#ff6b35',
-                            color: '#000',
+                            color: '#fff',
                             padding: '2px 8px',
                             borderRadius: '4px',
                             fontSize: '11px',
@@ -2405,7 +2405,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   <button 
                     style={{
                       background: '#000000',
-                      color: '#000',
+                      color: '#fff',
                       padding: '12px 20px',
                       borderRadius: '0',
                       border: 'none',
@@ -2479,7 +2479,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           flex: '1',
                           minWidth: '140px',
                           background: '#000000',
-                          color: '#000',
+                          color: '#fff',
                           padding: '10px 16px',
                           borderRadius: '8px',
                           border: 'none',
@@ -2699,7 +2699,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
         
         <h1 style={{
-          color: '#000',
+          color: '#fff',
           margin: '0',
           fontSize: '36px',
           fontWeight: '800',
@@ -2717,12 +2717,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               color="#fff"
             />
           ))}
-          <span style={{ color: '#000', marginLeft: '8px', fontSize: '18px', fontWeight: '600' }}>
+          <span style={{ color: '#fff', marginLeft: '8px', fontSize: '18px', fontWeight: '600' }}>
             {company.rating} ({company.reviews} reviews)
           </span>
           {company.yearsInBusiness && (
             <span style={{ 
-              color: '#000', 
+              color: '#fff', 
               marginLeft: '16px', 
               fontSize: '16px',
               background: 'rgba(255,255,255,0.2)',
@@ -2759,7 +2759,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             width: '100%',
             padding: '20px',
             background: '#000000',
-            color: '#000',
+            color: '#fff',
             border: 'none',
             borderRadius: '8px',
             fontSize: '20px',
@@ -2845,7 +2845,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#000',
+                    color: '#fff',
                     fontWeight: '700',
                     fontSize: '14px',
                     marginTop: '2px',
@@ -3011,7 +3011,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 gap: '8px',
                 padding: '12px 20px',
                 background: '#92400e',
-                color: '#000',
+                color: '#fff',
                 textDecoration: 'none',
                 borderRadius: '6px',
                 fontSize: '16px',
@@ -3090,7 +3090,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         }}>
           <h2 style={{ 
             margin: '0 0 20px 0', 
-            color: '#000', 
+            color: '#fff', 
             fontSize: '28px', 
             fontWeight: '700',
             textAlign: 'center',
@@ -3114,7 +3114,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               width: '100%',
               padding: '20px',
               background: '#000000',
-              color: '#000',
+              color: '#fff',
               border: 'none',
               borderRadius: '8px',
               fontSize: '20px',
