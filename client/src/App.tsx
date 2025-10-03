@@ -148,7 +148,7 @@ function LandingPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottom: '1px solid #e63946',
+        borderBottom: '1px solid #166534',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
       </div>
