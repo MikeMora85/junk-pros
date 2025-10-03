@@ -106,7 +106,7 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e5e5e5 100%)',
+      background: '#ffffff',
     }}>
       {/* Hero Section with Dump Truck */}
       <div style={{
@@ -125,7 +125,7 @@ function LandingPage() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(249,65,68,0.1) 100%)',
+          background: 'rgba(230,57,70,0.1)',
         }} />
         <div style={{
           position: 'relative',
@@ -137,10 +137,11 @@ function LandingPage() {
         }}>
           <h1 style={{
             fontSize: '56px',
-            fontWeight: '800',
+            fontWeight: '700',
             marginBottom: '20px',
             textShadow: '0 4px 12px rgba(0,0,0,0.4)',
             lineHeight: '1.2',
+            letterSpacing: '-0.02em',
           }}>
             America's Premier Junk Removal Directory
           </h1>
@@ -156,7 +157,7 @@ function LandingPage() {
       </div>
 
       <header style={{
-        background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+        background: '#e63946',
         padding: '12px 16px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
@@ -188,8 +189,9 @@ function LandingPage() {
           <h2 style={{
             fontSize: '36px',
             fontWeight: '700',
-            color: '#374151',
+            color: '#1a1a1a',
             margin: '0 0 16px 0',
+            letterSpacing: '-0.02em',
           }}>
             Search by State or City
           </h2>
@@ -235,7 +237,7 @@ function LandingPage() {
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+                background: '#e63946',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
@@ -251,7 +253,7 @@ function LandingPage() {
               data-testid="button-homepage-search"
             >
               <Search size={16} />
-              Search
+              SEARCH
             </button>
           </form>
         </div>
@@ -390,7 +392,7 @@ function LandingPage() {
               <div style={{
                 display: 'inline-flex',
                 padding: '16px',
-                background: 'linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%)',
+                background: '#f5f5f5',
                 borderRadius: '12px',
                 color: '#217fc4',
                 marginBottom: '16px',
@@ -816,7 +818,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e5e5e5 100%)',
+      background: '#ffffff',
     }}>
       {/* Hero Section with Landmark */}
       {currentState.heroImage && (
@@ -836,7 +838,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(249,65,68,0.1) 100%)',
+            background: 'rgba(230,57,70,0.1)',
           }} />
           <div style={{
             position: 'relative',
@@ -848,9 +850,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           }}>
             <h1 style={{
               fontSize: '48px',
-              fontWeight: '800',
+              fontWeight: '700',
               marginBottom: '16px',
               textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+              letterSpacing: '-0.02em',
             }}>
               Junk Removal in {stateName}
             </h1>
@@ -872,7 +875,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       )}
 
       <header style={{
-        background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+        background: '#e63946',
         padding: '12px 16px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
@@ -921,9 +924,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           <h2 style={{
             fontSize: '24px',
             fontWeight: '700',
-            color: '#374151',
+            color: '#1a1a1a',
             marginBottom: '16px',
             textAlign: 'center',
+            letterSpacing: '-0.02em',
           }}>
             Find Junk Removal Services in {stateName}
           </h2>
@@ -957,7 +961,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+                background: '#e63946',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
@@ -972,7 +976,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               }}
             >
               <Search size={16} />
-              Search
+              SEARCH
             </button>
           </form>
         </div>
@@ -982,7 +986,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           display: 'flex',
           gap: '8px',
           marginBottom: '24px',
-          borderBottom: '2px solid #e5e7eb',
+          borderBottom: '2px solid #cccccc',
           overflowX: 'auto',
         }}>
           {[
@@ -998,8 +1002,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 padding: '12px 20px',
                 background: 'none',
                 border: 'none',
-                borderBottom: activeTab === tab.id ? '3px solid #ff6b35' : '3px solid transparent',
-                color: activeTab === tab.id ? '#ff6b35' : '#6b7280',
+                borderBottom: activeTab === tab.id ? '3px solid #e63946' : '3px solid transparent',
+                color: activeTab === tab.id ? '#e63946' : '#333333',
                 fontSize: '15px',
                 fontWeight: activeTab === tab.id ? '700' : '600',
                 cursor: 'pointer',
@@ -1424,7 +1428,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
-                      border: '2px solid #e5e7eb',
+                      border: '2px solid #cccccc',
                     }}
                   >
                     <h4 style={{
@@ -1637,7 +1641,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
-  const [searchQuery, setSearchQuery] = useState('');
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies", { city, state }],
@@ -1704,7 +1707,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
     
     <div style={{ 
       minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #e5e5e5 100%)',
+      background: '#ffffff',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       margin: '0',
       padding: '0',
@@ -1742,7 +1745,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       `}} />
       {/* Header */}
       <header style={{
-        background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+        background: '#e63946',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         padding: '16px',
         overflow: 'hidden',
@@ -1776,13 +1779,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
             data-testid="button-home"
           >
             <Home size={16} />
-            Home
+            HOME
           </a>
           <button
             onClick={() => setShowBusinessForm(true)}
             className="breathing-button"
             style={{
-              background: 'linear-gradient(135deg, #f9a8d4 0%, #fda4af 100%)',
+              background: '#e63946',
               color: '#fff',
               padding: '10px 16px',
               borderRadius: '8px',
@@ -1798,7 +1801,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             data-testid="button-add-business"
           >
             <Plus size={16} />
-            Add Business
+            ADD BUSINESS
           </button>
         </div>
       </header>
@@ -1828,7 +1831,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
           }} onClick={(e) => e.stopPropagation()}>
             <div style={{
-              background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+              background: '#e63946',
               padding: '20px',
               borderRadius: '16px 16px 0 0',
               position: 'relative',
@@ -1912,7 +1915,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1932,7 +1935,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1952,7 +1955,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1972,7 +1975,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1993,7 +1996,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                     backgroundColor: '#fff',
@@ -2068,7 +2071,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2087,7 +2090,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #e5e7eb',
+                    border: '2px solid #cccccc',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2099,7 +2102,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 type="submit"
                 style={{
                   width: '100%',
-                  background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+                  background: '#e63946',
                   color: '#fff',
                   padding: '14px',
                   borderRadius: '8px',
@@ -2110,7 +2113,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 }}
                 data-testid="button-submit-business"
               >
-                Publish My Business
+                PUBLISH MY BUSINESS
               </button>
             </form>
           </div>
@@ -2125,10 +2128,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
             fontSize: '28px',
             fontWeight: '700',
             margin: '0 0 8px 0',
-            background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            color: '#1a1a1a',
+            letterSpacing: '-0.02em',
           }} data-testid="text-page-title">
             {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
           </h2>
@@ -2159,7 +2160,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
-                    borderBottom: '1px solid #e5e7eb',
+                    borderBottom: '1px solid #cccccc',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
@@ -2172,7 +2173,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {index === 0 && (
                     <div style={{
                       display: 'inline-block',
-                      background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
+                      background: '#e63946',
                       color: '#fff',
                       padding: '4px 10px',
                       borderRadius: '0',
@@ -2237,7 +2238,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       width: '60px',
                       height: '60px',
                       borderRadius: '10px',
-                      background: c.logoUrl ? '#fff' : 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                      background: c.logoUrl ? '#fff' : '#e63946',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -2263,7 +2264,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             e.currentTarget.style.display = 'none';
                             const parent = e.currentTarget.parentElement;
                             if (parent) {
-                              parent.style.background = 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)';
+                              parent.style.background = '#e63946';
                               parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
                               parent.style.border = 'none';
                               parent.style.padding = '0';
@@ -2350,7 +2351,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Call Now Button */}
                   <button 
                     style={{
-                      background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+                      background: '#e63946',
                       color: 'white',
                       padding: '12px 20px',
                       borderRadius: '0',
@@ -2372,7 +2373,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     data-testid={`button-call-${c.id}`}
                   >
                     <Phone size={18} />
-                    Call Now
+                    CALL NOW
                   </button>
 
                   {/* Quote Section */}
@@ -2404,7 +2405,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           color: '#374151',
                           padding: '10px 16px',
                           borderRadius: '8px',
-                          border: '2px solid #e5e7eb',
+                          border: '2px solid #cccccc',
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontWeight: '600',
@@ -2417,14 +2418,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={16} />
-                        Send Photos
+                        SEND PHOTOS
                       </button>
                       
                       <button
                         style={{
                           flex: '1',
                           minWidth: '140px',
-                          background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
+                          background: '#e63946',
                           color: '#fff',
                           padding: '10px 16px',
                           borderRadius: '8px',
@@ -2444,7 +2445,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         data-testid={`button-in-person-${c.id}`}
                       >
                         <Calendar size={16} />
-                        In Person Estimate
+                        IN PERSON ESTIMATE
                       </button>
                     </div>
 
@@ -2510,7 +2511,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     {/* JunkIQ Ad */}
                     <div style={{
-                      background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+                      background: '#e63946',
                       borderRadius: '12px',
                       padding: '20px',
                       boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
@@ -2549,9 +2550,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         fontSize: '18px', 
                         fontWeight: '700', 
                         margin: '0 0 12px 0',
-                        background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
+                        color: '#1a1a1a',
                       }}>
                         Need a Dumpster?
                       </h3>
@@ -2560,7 +2559,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </p>
                       <button style={{
                         width: '100%',
-                        background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+                        background: '#e63946',
                         color: '#fff',
                         padding: '12px',
                         borderRadius: '8px',
@@ -2593,7 +2592,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       overflow: 'hidden',
     }}>
       <div style={{
-        background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+        background: '#e63946',
         padding: '24px',
         position: 'relative',
       }}>
@@ -2654,7 +2653,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               <span key={i} style={{
                 padding: '6px 12px',
                 background: '#f5f5f5',
-                border: '1px solid #e5e5e5',
+                border: '1px solid #cccccc',
                 borderRadius: '6px',
                 fontSize: '14px',
                 color: '#217fc4',
@@ -2690,7 +2689,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             width: '100%',
             marginTop: '24px',
             padding: '16px',
-            background: 'linear-gradient(135deg, #ff6b35 0%, #f94144 100%)',
+            background: '#e63946',
             color: '#fff',
             border: 'none',
             borderRadius: '8px',

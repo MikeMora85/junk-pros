@@ -3,27 +3,31 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   
-  --primary-red: 14 100% 57%;
-  --primary-orange-red: 16 100% 66%;
-  --secondary-blue: 217 91% 60%;
-  --foundation-white: 0 0% 100%;
-  --foundation-grey: 0 0% 96%;
-  --light-grey: 0 0% 90%;
-  --rating-gold: 43 96% 56%;
+  --primary-red: #e63946;
+  --text-black: #1a1a1a;
+  --text-dark-grey: #333333;
+  --border-grey: #cccccc;
+  --background-white: #ffffff;
+  --light-grey: #f5f5f5;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-black);
 }
 
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: hsl(0 0% 96%);
+  background-color: var(--background-white);
   overflow-x: hidden;
+  color: var(--text-dark-grey);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 #root {
