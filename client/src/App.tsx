@@ -127,7 +127,6 @@ function LandingPage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Homepage search triggered with query:', searchQuery);
     if (searchQuery.trim()) {
       const parts = searchQuery.split(',').map(p => p.trim().toLowerCase());
       const searchCity = parts[0].replace(/\s+/g, '-');
@@ -142,7 +141,6 @@ function LandingPage() {
       };
       const normalizedState = stateMap[searchState] || searchState.replace(/\s+/g, '-');
       
-      console.log('Navigating to:', `/${normalizedState}/${searchCity}`);
       window.location.href = `/${normalizedState}/${searchCity}`;
     }
   };
@@ -262,10 +260,6 @@ function LandingPage() {
             />
             <button
               type="submit"
-              onClick={(e) => {
-                console.log('Homepage button clicked');
-                handleSearch(e as any);
-              }}
               style={{
                 padding: '10px 16px',
                 background: '#fbbf24',
@@ -866,11 +860,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('State page search triggered with query:', searchQuery);
     if (searchQuery.trim()) {
-      const targetUrl = `/${stateSlug}/${searchQuery.toLowerCase().replace(/\s+/g, '-')}`;
-      console.log('Navigating to:', targetUrl);
-      window.location.href = targetUrl;
+      window.location.href = `/${stateSlug}/${searchQuery.toLowerCase().replace(/\s+/g, '-')}`;
     }
   };
 
@@ -1022,10 +1013,6 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             />
             <button
               type="submit"
-              onClick={(e) => {
-                console.log('Button clicked');
-                handleSearch(e as any);
-              }}
               style={{
                 padding: '10px 16px',
                 background: '#fbbf24',
