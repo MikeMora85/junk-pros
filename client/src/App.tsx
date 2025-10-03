@@ -388,13 +388,13 @@ function App() {
                       background: 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
                       color: '#fff',
                       padding: '4px 10px',
-                      borderRadius: '6px',
+                      borderRadius: '0',
                       fontSize: '11px',
                       fontWeight: '700',
                       marginBottom: '12px',
-                      marginLeft: '20px',
-                      marginTop: '20px',
-                      boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
+                      marginLeft: '0',
+                      marginTop: '0',
+                      boxShadow: 'none',
                     }}>
                       TOP RATED
                     </div>
@@ -403,7 +403,7 @@ function App() {
                   {/* Image Carousel */}
                   <div style={{
                     marginBottom: '16px',
-                    marginTop: index === 0 ? '0' : '20px',
+                    marginTop: '0',
                     overflow: 'hidden',
                     borderRadius: '0',
                   }}>
@@ -435,7 +435,7 @@ function App() {
                     </div>
                   </div>
                   
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0 20px' }}>
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
                     <div style={{
                       width: '60px',
                       height: '60px',
@@ -527,12 +527,14 @@ function App() {
                   {c.reviewSnippets && c.reviewSnippets.length > 0 && (
                     <div style={{
                       backgroundColor: '#fdf4ff',
-                      borderRadius: '8px',
+                      borderRadius: '0',
                       padding: '12px',
                       marginBottom: '12px',
-                      marginLeft: '20px',
-                      marginRight: '20px',
-                      border: '1px solid #f3e8ff',
+                      marginLeft: '0',
+                      marginRight: '0',
+                      border: 'none',
+                      borderTop: '1px solid #f3e8ff',
+                      borderBottom: '1px solid #f3e8ff',
                     }}>
                       {c.reviewSnippets.slice(0, 2).map((review, i) => (
                         <div key={i} style={{
@@ -554,20 +556,20 @@ function App() {
                       background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                       color: 'white',
                       padding: '12px 20px',
-                      borderRadius: '8px',
+                      borderRadius: '0',
                       border: 'none',
                       cursor: 'pointer',
                       fontSize: '16px',
                       fontWeight: '700',
-                      width: 'calc(100% - 40px)',
+                      width: '100%',
                       marginBottom: '12px',
-                      marginLeft: '20px',
-                      marginRight: '20px',
+                      marginLeft: '0',
+                      marginRight: '0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
+                      boxShadow: 'none',
                     }}
                     onClick={() => window.open(`tel:${c.phone}`, '_self')}
                     data-testid={`button-call-${c.id}`}
@@ -579,12 +581,13 @@ function App() {
                   {/* Quote Section */}
                   <div style={{
                     backgroundColor: '#fdf4ff',
-                    borderRadius: '8px',
-                    padding: '16px',
-                    marginLeft: '20px',
-                    marginRight: '20px',
-                    marginBottom: '20px',
-                    border: '2px solid #f3e8ff',
+                    borderRadius: '0',
+                    padding: '16px 0',
+                    marginLeft: '0',
+                    marginRight: '0',
+                    marginBottom: '0',
+                    border: 'none',
+                    borderTop: '1px solid #f3e8ff',
                   }}>
                     <h4 style={{
                       fontSize: '14px',
