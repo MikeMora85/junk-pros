@@ -17,32 +17,31 @@ export default function EstimateBuilderInline() {
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 100%)',
-      borderRadius: '16px',
+      background: '#ffffff',
+      border: '2px solid #e63946',
+      borderRadius: '0',
       padding: '24px',
       marginBottom: '20px',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+      boxShadow: 'none',
       position: 'relative',
       overflow: 'hidden',
     }}>
-      <div style={{
-        position: 'absolute',
-        top: '-50px',
-        right: '-50px',
-        width: '150px',
-        height: '150px',
-        background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)',
-        borderRadius: '50%',
-      }} />
       
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
-        <Calculator size={24} color="#fff" />
-        <h3 style={{ fontSize: '20px', fontWeight: '800', margin: 0, color: '#fff' }}>
+        <Calculator size={24} color="#e63946" />
+        <h3 style={{ 
+          fontSize: '20px', 
+          fontWeight: '700', 
+          margin: 0, 
+          color: '#1a1a1a',
+          letterSpacing: '-0.02em',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
           Instant Price Calculator
         </h3>
       </div>
       
-      <p style={{ fontSize: '14px', marginBottom: '20px', color: 'rgba(255,255,255,0.95)', lineHeight: '1.5' }}>
+      <p style={{ fontSize: '14px', marginBottom: '20px', color: '#333333', lineHeight: '1.5' }}>
         Get your estimate in seconds! Most trucks hold 12-15 cubic yards.
       </p>
 
@@ -53,15 +52,15 @@ export default function EstimateBuilderInline() {
             onClick={() => setYards(p.value)}
             style={{
               padding: '10px 4px',
-              borderRadius: '10px',
+              borderRadius: '0',
               fontSize: '14px',
               fontWeight: '700',
-              backgroundColor: yards === p.value ? '#fff' : 'rgba(255,255,255,0.2)',
-              color: yards === p.value ? '#a855f7' : '#fff',
-              border: 'none',
+              backgroundColor: yards === p.value ? '#e63946' : '#ffffff',
+              color: yards === p.value ? '#ffffff' : '#1a1a1a',
+              border: `2px solid ${yards === p.value ? '#e63946' : '#cccccc'}`,
               cursor: 'pointer',
               transition: 'all 0.2s',
-              boxShadow: yards === p.value ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+              textTransform: 'uppercase',
             }}
             data-testid={`button-preset-${p.label.replace(/\s/g, '-')}`}
           >
@@ -72,10 +71,10 @@ export default function EstimateBuilderInline() {
 
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <label style={{ fontSize: '14px', fontWeight: '700', color: '#fff' }}>
+          <label style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>
             Load Size
           </label>
-          <span style={{ fontSize: '16px', fontWeight: '800', color: '#fff' }}>
+          <span style={{ fontSize: '16px', fontWeight: '700', color: '#e63946' }}>
             {yards} yd³
           </span>
         </div>
@@ -91,34 +90,33 @@ export default function EstimateBuilderInline() {
             height: '8px',
             borderRadius: '4px',
             outline: 'none',
-            background: `linear-gradient(to right, #fff 0%, #fff ${percentage}%, rgba(255,255,255,0.3) ${percentage}%, rgba(255,255,255,0.3) 100%)`,
+            background: `linear-gradient(to right, #e63946 0%, #e63946 ${percentage}%, #e5e5e5 ${percentage}%, #e5e5e5 100%)`,
             cursor: 'pointer',
           }}
           data-testid="input-load-size"
         />
         
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
-          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)' }}>Empty</span>
-          <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)' }}>Full</span>
+          <span style={{ fontSize: '12px', color: '#6b7280' }}>Empty</span>
+          <span style={{ fontSize: '12px', color: '#6b7280' }}>Full</span>
         </div>
       </div>
 
       <div style={{
-        backgroundColor: '#fff',
-        borderRadius: '12px',
+        backgroundColor: '#f5f5f5',
+        borderRadius: '0',
         padding: '20px',
         marginBottom: '16px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        border: '1px solid #cccccc',
       }}>
-        <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '600', marginBottom: '4px' }}>
+        <div style={{ fontSize: '13px', color: '#6b7280', fontWeight: '600', marginBottom: '4px' }}>
           Estimated Cost
         </div>
         <div style={{
           fontSize: '32px',
-          fontWeight: '800',
-          background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
+          fontWeight: '700',
+          color: '#e63946',
+          letterSpacing: '-0.02em',
         }} data-testid="text-estimated-cost">
           ${low} - ${high}
         </div>
@@ -129,18 +127,19 @@ export default function EstimateBuilderInline() {
 
       {/* Education Section */}
       <div style={{
-        backgroundColor: 'rgba(255,255,255,0.15)',
-        borderRadius: '10px',
+        backgroundColor: '#f5f5f5',
+        borderRadius: '0',
         padding: '14px',
         marginBottom: '16px',
+        border: '1px solid #cccccc',
       }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '10px' }}>
-          <Info size={16} color="#fff" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <Info size={16} color="#e63946" style={{ flexShrink: 0, marginTop: '2px' }} />
           <div>
-            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#fff', margin: '0 0 8px 0' }}>
+            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
               What is a Cubic Yard?
             </h4>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', margin: 0, lineHeight: '1.5' }}>
+            <p style={{ fontSize: '12px', color: '#333333', margin: 0, lineHeight: '1.5' }}>
               A cubic yard is 3ft × 3ft × 3ft - about the size of a standard washing machine or dryer. Use this as your reference point when estimating your load.
             </p>
           </div>
@@ -149,15 +148,16 @@ export default function EstimateBuilderInline() {
 
       {/* Industry Pricing Info */}
       <div style={{
-        backgroundColor: 'rgba(255,255,255,0.15)',
-        borderRadius: '10px',
+        backgroundColor: '#f5f5f5',
+        borderRadius: '0',
         padding: '14px',
         marginBottom: '16px',
+        border: '1px solid #cccccc',
       }}>
-        <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#fff', margin: '0 0 8px 0' }}>
+        <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
           Industry Pricing Guide
         </h4>
-        <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', lineHeight: '1.6' }}>
+        <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
           <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
           <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
           <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
@@ -168,25 +168,26 @@ export default function EstimateBuilderInline() {
       <button 
         style={{
           width: '100%',
-          background: 'linear-gradient(135deg, #fff 0%, #f3f4f6 100%)',
-          color: '#a855f7',
+          background: '#e63946',
+          color: '#ffffff',
           padding: '14px',
-          borderRadius: '12px',
+          borderRadius: '0',
           border: 'none',
           cursor: 'pointer',
           fontSize: '16px',
-          fontWeight: '800',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          fontWeight: '700',
+          boxShadow: 'none',
           transition: 'all 0.2s',
           marginBottom: '12px',
+          textTransform: 'uppercase',
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
+          e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+          e.currentTarget.style.boxShadow = 'none';
         }}
         data-testid="button-request-quote"
       >
@@ -196,7 +197,7 @@ export default function EstimateBuilderInline() {
       {/* Disclaimer */}
       <div style={{
         fontSize: '11px',
-        color: 'rgba(255,255,255,0.8)',
+        color: '#6b7280',
         textAlign: 'center',
         lineHeight: '1.5',
       }}>
