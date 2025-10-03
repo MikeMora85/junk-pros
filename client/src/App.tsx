@@ -156,13 +156,11 @@ function LandingPage() {
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-      <header style={{
+      <header className="breathing-glow-banner" style={{
         background: 'linear-gradient(135deg, #e63946 0%, #ff7580 100%)',
         padding: '28px 16px',
-        boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
         position: 'relative',
         zIndex: 2,
-        animation: 'breathingGlow 3s ease-in-out infinite',
       }}>
         <div style={{
           maxWidth: '1200px',

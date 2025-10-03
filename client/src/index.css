@@ -50,9 +50,15 @@ div {
 
 @keyframes breathingGlow {
   0%, 100% {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25), 0 0 40px rgba(230, 57, 70, 0.5), 0 0 80px rgba(230, 57, 70, 0.3);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25), 0 0 50px rgba(230, 57, 70, 0.6), 0 0 100px rgba(230, 57, 70, 0.4);
+    filter: drop-shadow(0 0 20px rgba(230, 57, 70, 0.4));
   }
   50% {
-    box-shadow: 0 6px 30px rgba(0,0,0,0.35), 0 0 80px rgba(230, 57, 70, 0.8), 0 0 120px rgba(230, 57, 70, 0.6);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.35), 0 0 100px rgba(230, 57, 70, 0.9), 0 0 150px rgba(230, 57, 70, 0.7);
+    filter: drop-shadow(0 0 40px rgba(230, 57, 70, 0.7));
   }
+}
+
+.breathing-glow-banner {
+  animation: breathingGlow 3s ease-in-out infinite !important;
 }
