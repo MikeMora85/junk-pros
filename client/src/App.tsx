@@ -586,6 +586,191 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </div>
               ))}
             </div>
+
+            {/* Common Service Types */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+              }}>
+                Common Junk Removal Services in {stateName}
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '16px',
+              }}>
+                {[
+                  {
+                    service: 'Furniture Removal',
+                    description: 'Couches, beds, tables, chairs, and other household furniture',
+                  },
+                  {
+                    service: 'Appliance Disposal',
+                    description: 'Refrigerators, washers, dryers, stoves, and dishwashers',
+                  },
+                  {
+                    service: 'Electronics Recycling',
+                    description: 'TVs, computers, monitors, printers, and e-waste',
+                  },
+                  {
+                    service: 'Yard Waste Removal',
+                    description: 'Branches, leaves, grass clippings, and green waste',
+                  },
+                  {
+                    service: 'Construction Debris',
+                    description: 'Drywall, lumber, flooring, tiles, and renovation waste',
+                  },
+                  {
+                    service: 'Estate Cleanouts',
+                    description: 'Complete property cleanouts for estates and foreclosures',
+                  },
+                  {
+                    service: 'Garage Cleanouts',
+                    description: 'Old tools, equipment, boxes, and accumulated clutter',
+                  },
+                  {
+                    service: 'Office Cleanouts',
+                    description: 'Desks, filing cabinets, chairs, and commercial furniture',
+                  },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '16px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '8px',
+                      border: '1px solid #e5e7eb',
+                    }}
+                  >
+                    <h4 style={{
+                      fontSize: '15px',
+                      fontWeight: '700',
+                      color: '#374151',
+                      marginBottom: '6px',
+                    }}>
+                      {item.service}
+                    </h4>
+                    <p style={{
+                      fontSize: '13px',
+                      color: '#6b7280',
+                      margin: '0',
+                      lineHeight: '1.5',
+                    }}>
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Environmental Impact */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '16px',
+              }}>
+                Environmental Impact & Sustainability
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                lineHeight: '1.8',
+                marginBottom: '20px',
+              }}>
+                Professional junk removal companies in {stateName} are committed to reducing landfill waste through recycling and donation programs. Here's how they make a difference:
+              </p>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px',
+              }}>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#d1fae5',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    fontSize: '32px',
+                    fontWeight: '800',
+                    color: '#059669',
+                    marginBottom: '8px',
+                  }}>
+                    60-80%
+                  </div>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#065f46',
+                    margin: '0',
+                    fontWeight: '600',
+                  }}>
+                    Items Recycled or Donated
+                  </p>
+                </div>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#dbeafe',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    fontSize: '32px',
+                    fontWeight: '800',
+                    color: '#2563eb',
+                    marginBottom: '8px',
+                  }}>
+                    100+
+                  </div>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#1e40af',
+                    margin: '0',
+                    fontWeight: '600',
+                  }}>
+                    Local Charities Supported
+                  </p>
+                </div>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#fef3c7',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    fontSize: '32px',
+                    fontWeight: '800',
+                    color: '#d97706',
+                    marginBottom: '8px',
+                  }}>
+                    90%
+                  </div>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#92400e',
+                    margin: '0',
+                    fontWeight: '600',
+                  }}>
+                    Customer Satisfaction
+                  </p>
+                </div>
+              </div>
+            </div>
           </section>
         )}
 
@@ -720,13 +905,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
 
         {/* Tips Tab */}
         {activeTab === 'tips' && (
-
           <section style={{ marginBottom: '48px' }}>
             <div style={{
               backgroundColor: '#fff',
               padding: '32px',
               borderRadius: '12px',
               boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
             }}>
               <h3 style={{
                 fontSize: '22px',
@@ -798,6 +983,73 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       lineHeight: '1.6',
                     }}>
                       {tip.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FAQs */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+              }}>
+                Frequently Asked Questions
+              </h3>
+              <div style={{ display: 'grid', gap: '16px' }}>
+                {[
+                  {
+                    q: 'How much does junk removal cost in ' + stateName + '?',
+                    a: 'Prices typically range from $100-$800 depending on the volume of junk. Most companies charge by how much space your items take up in their truck. A single item costs $100-$200, while a full truck load runs $550-$800.',
+                  },
+                  {
+                    q: 'Do I need to be home during junk removal?',
+                    a: 'Not necessarily. As long as the items are accessible and you\'ve provided clear instructions, many companies can complete the job without you present. However, it\'s recommended to be available for any questions.',
+                  },
+                  {
+                    q: 'What items cannot be removed?',
+                    a: 'Most companies cannot accept hazardous materials including paint, chemicals, asbestos, medical waste, or anything considered toxic. Check with your local provider for their specific restrictions.',
+                  },
+                  {
+                    q: 'How quickly can junk be removed?',
+                    a: 'Many ' + stateName + ' junk removal companies offer same-day or next-day service. During busy seasons, you may need to book 2-3 days in advance.',
+                  },
+                  {
+                    q: 'Is junk removal eco-friendly?',
+                    a: 'Most professional companies recycle 60-80% of collected items and donate usable goods to local charities. Only non-recyclable waste goes to landfills.',
+                  },
+                ].map((faq, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '20px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '8px',
+                    }}
+                  >
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#2563eb',
+                      marginBottom: '8px',
+                    }}>
+                      {faq.q}
+                    </h4>
+                    <p style={{
+                      fontSize: '14px',
+                      color: '#6b7280',
+                      margin: '0',
+                      lineHeight: '1.6',
+                    }}>
+                      {faq.a}
                     </p>
                   </div>
                 ))}
