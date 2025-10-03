@@ -4,6 +4,7 @@ export interface IStorage {
   getCompanies(): Promise<Company[]>;
   getCompanyById(id: number): Promise<Company | null>;
   getCompaniesByLocal(local: boolean): Promise<Company[]>;
+  createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
 }
 
 export class MemStorage implements IStorage {
@@ -75,5 +76,15 @@ export class MemStorage implements IStorage {
 
   async getCompaniesByLocal(local: boolean): Promise<Company[]> {
     return this.companies.filter((c) => c.local === local);
+  }
+
+  async createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company> {
+    const newId = Math.max(...this.companies.map(c => c.id), 0) + 1;
+    const newCompany: Company = {
+      ...data,
+      id: newId,
+    };
+    this.companies.push(newCompany);
+    return newCompany;
   }
 }

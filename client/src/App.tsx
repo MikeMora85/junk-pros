@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { Route, Link, Router } from "wouter";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
+import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import CompanyDetail from "./pages/CompanyDetail";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -12,12 +15,28 @@ import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
 
 const images = [img1, img2, img3, img4, img5, img6];
 
-function App() {
+function HomePage() {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies?local=true"],
+  });
+
+  const createCompanyMutation = useMutation({
+    mutationFn: (data: any) => apiRequest("/api/companies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/companies?local=true"] });
+      setShowBusinessForm(false);
+      alert('Thank you! Your business has been submitted for review.');
+    },
+    onError: () => {
+      alert('Failed to submit business. Please try again.');
+    },
   });
 
   useEffect(() => {
@@ -212,8 +231,22 @@ function App() {
             
             <form style={{ padding: '24px' }} onSubmit={(e) => {
               e.preventDefault();
-              alert('Thank you! We will review your submission within 24 hours.');
-              setShowBusinessForm(false);
+              const formData = new FormData(e.currentTarget);
+              const data = {
+                name: formData.get('name') as string,
+                address: formData.get('location') as string,
+                phone: formData.get('phone') as string,
+                website: formData.get('logoUrl') || 'https://example.com',
+                rating: '4.5',
+                reviews: 0,
+                services: ['Junk Removal'],
+                longitude: -111.9281,
+                latitude: 33.4942,
+                local: true,
+                logoUrl: formData.get('logoUrl') as string || null,
+                reviewSnippets: [],
+              };
+              createCompanyMutation.mutate(data);
             }}>
               <div style={{ marginBottom: '16px' }}>
                 <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>
@@ -364,8 +397,8 @@ function App() {
                   </div>
                 ) : (
                   companies.map((c, index) => (
+                <Link key={c.id} href={`/company/${c.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                 <div 
-                  key={c.id}
                   style={{
                     backgroundColor: '#fff',
                     borderRadius: '0',
@@ -379,6 +412,8 @@ function App() {
                     maxWidth: '100%',
                     boxSizing: 'border-box',
                     overflow: 'hidden',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s',
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
@@ -695,6 +730,7 @@ function App() {
                     )}
                   </div>
                 </div>
+                </Link>
                   ))
                 )}
               </div>
@@ -782,6 +818,15 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Route path="/" component={HomePage} />
+      <Route path="/company/:id" component={CompanyDetail} />
+    </Router>
   );
 }
 
