@@ -108,20 +108,6 @@ function LandingPage() {
       minHeight: '100vh',
       background: '#ffffff',
     }}>
-      {/* Hero Section with Logo */}
-      <div style={{
-        position: 'relative',
-        height: '300px',
-        backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'contain',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      </div>
-
       <header style={{
         background: '#e63946',
         padding: '12px 16px',
@@ -142,6 +128,21 @@ function LandingPage() {
           </p>
         </div>
       </header>
+
+      {/* Hero Section with Logo */}
+      <div style={{
+        position: 'relative',
+        height: '300px',
+        backgroundImage: `url(${curbsideJunkHero})`,
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottom: '1px solid #e63946',
+      }}>
+      </div>
 
       <div style={{
         maxWidth: '1200px',
