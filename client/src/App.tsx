@@ -11,7 +11,27 @@ import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
 import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
 import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
 
-const images = [img1, img2, img3, img4, img5, img6];
+const defaultImages = [img1, img2, img3, img4, img5, img6];
+
+// Grey placeholder component for companies without images
+const PlaceholderImage = ({ index }: { index: number }) => (
+  <div style={{
+    width: '100%',
+    height: '140px',
+    backgroundColor: '#e5e7eb',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#9ca3af',
+    fontSize: '14px',
+    fontWeight: '600',
+  }}>
+    <div style={{ textAlign: 'center' }}>
+      <Camera size={32} style={{ margin: '0 auto 8px' }} />
+      <div>Photo {index + 1}</div>
+    </div>
+  </div>
+);
 
 function App() {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
@@ -57,7 +77,9 @@ function App() {
       setCarouselOffsets((prev) => {
         const next: Record<number, number> = {};
         companies.forEach((c) => {
-          next[c.id] = ((prev[c.id] || 0) + 1) % images.length;
+          // Only rotate if company has images (checking if it's from default data)
+          const hasImages = c.logoUrl || c.reviews > 0;
+          next[c.id] = hasImages ? ((prev[c.id] || 0) + 1) % defaultImages.length : 0;
         });
         return next;
       });
@@ -632,26 +654,36 @@ function App() {
                       transition: 'transform 1.5s ease-in-out',
                       transform: `translateX(-${(carouselOffsets[c.id] || 0) * 50}%)`,
                     }}>
-                      {[...images, ...images].map((img, i) => (
-                        <div
-                          key={i}
-                          style={{
-                            minWidth: '50%',
-                            padding: '0',
-                          }}
-                        >
-                          <img
-                            src={img}
-                            alt="Service photo"
+                      {(() => {
+                        // Show placeholders for newly added businesses (no logo and no reviews)
+                        const hasImages = c.logoUrl || c.reviews > 0;
+                        const imagesToShow = hasImages ? [...defaultImages, ...defaultImages] : [0, 1];
+                        
+                        return imagesToShow.map((item, i) => (
+                          <div
+                            key={i}
                             style={{
-                              width: '100%',
-                              height: '140px',
-                              objectFit: 'cover',
-                              borderRadius: '0',
+                              minWidth: '50%',
+                              padding: '0',
                             }}
-                          />
-                        </div>
-                      ))}
+                          >
+                            {hasImages ? (
+                              <img
+                                src={item as string}
+                                alt="Service photo"
+                                style={{
+                                  width: '100%',
+                                  height: '140px',
+                                  objectFit: 'cover',
+                                  borderRadius: '0',
+                                }}
+                              />
+                            ) : (
+                              <PlaceholderImage index={item as number} />
+                            )}
+                          </div>
+                        ));
+                      })()}
                     </div>
                   </div>
                   
