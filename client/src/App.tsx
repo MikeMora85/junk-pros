@@ -142,6 +142,7 @@ function LandingPage() {
             textShadow: '0 4px 12px rgba(0,0,0,0.4)',
             lineHeight: '1.2',
             letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             America's Premier Junk Removal Directory
           </h1>
@@ -150,6 +151,7 @@ function LandingPage() {
             marginBottom: '32px',
             textShadow: '0 2px 8px rgba(0,0,0,0.3)',
             opacity: 0.95,
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Find Trusted Local Pros, Get Instant Quotes
           </p>
@@ -854,6 +856,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               marginBottom: '16px',
               textShadow: '0 2px 10px rgba(0,0,0,0.3)',
               letterSpacing: '-0.02em',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
               Junk Removal in {stateName}
             </h1>
@@ -861,12 +864,14 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               fontSize: '20px',
               marginBottom: '8px',
               opacity: 0.95,
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
               Featuring the {currentState.landmark}
             </p>
             <p style={{
               fontSize: '16px',
               opacity: 0.9,
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
               Population: {currentState.population} • Professional Services Statewide
             </p>
