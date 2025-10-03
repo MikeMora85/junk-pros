@@ -1798,7 +1798,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       `}} />
       {/* Header */}
       <header style={{
-        background: '#e63946',
+        background: '#fbbf24',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         padding: '16px',
         overflow: 'hidden',
@@ -2181,7 +2181,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             fontSize: '28px',
             fontWeight: '700',
             margin: '0 0 8px 0',
-            color: '#1a1a1a',
+            color: '#e63946',
             letterSpacing: '-0.02em',
           }} data-testid="text-page-title">
             {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
@@ -2458,7 +2458,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           color: '#374151',
                           padding: '10px 16px',
                           borderRadius: '8px',
-                          border: '2px solid #2563eb',
+                          border: '2px solid #e63946',
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontWeight: '600',
