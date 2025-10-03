@@ -18,8 +18,20 @@ function App() {
   const [showBusinessForm, setShowBusinessForm] = useState(false);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  
+  // Extract city and state from URL path like /arizona/scottsdale or default to Scottsdale
+  const path = window.location.pathname;
+  const pathMatch = path.match(/^\/([^/]+)\/([^/]+)/);
+  const city = pathMatch ? pathMatch[2] : 'scottsdale';
+  const state = pathMatch ? pathMatch[1] : 'arizona';
+  
   const { data: companies = [], isLoading } = useQuery<Company[]>({
-    queryKey: ["/api/companies?local=true"],
+    queryKey: ["/api/companies", { city, state }],
+    queryFn: async () => {
+      const response = await fetch(`/api/companies?city=${city}&state=${state}`);
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
   });
 
   const createCompanyMutation = useMutation({
@@ -31,7 +43,7 @@ function App() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/companies?local=true"] });
       setShowBusinessForm(false);
-      alert('Thank you! Your business has been submitted for review.');
+      alert('Success! Your business is now live on the directory.');
     },
     onError: () => {
       alert('Failed to submit business. Please try again.');
@@ -251,9 +263,15 @@ function App() {
             <form style={{ padding: '24px' }} onSubmit={(e) => {
               e.preventDefault();
               const formData = new FormData(e.currentTarget);
+              const locationInput = formData.get('location') as string;
+              // Extract city from location input (format: "City, ST")
+              const locationParts = locationInput.split(',');
+              const businessCity = locationParts[0]?.trim() || city;
+              const businessState = locationParts[1]?.trim() || state;
+              
               const data = {
                 name: formData.get('name') as string,
-                address: formData.get('location') as string,
+                address: locationInput,
                 phone: formData.get('phone') as string,
                 website: formData.get('logoUrl') || 'https://example.com',
                 rating: '4.5',
@@ -264,6 +282,8 @@ function App() {
                 local: true,
                 logoUrl: formData.get('logoUrl') as string || null,
                 reviewSnippets: [],
+                city: businessCity,
+                state: businessState,
               };
               createCompanyMutation.mutate(data);
             }}>
@@ -398,10 +418,10 @@ function App() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }} data-testid="text-page-title">
-            Scottsdale Junk Removal
+            {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
           </h2>
           <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
-            {companies.length} verified pros
+            {companies.length} verified pro{companies.length !== 1 ? 's' : ''}
           </p>
         </div>
 

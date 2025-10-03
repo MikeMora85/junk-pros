@@ -6,10 +6,12 @@ import { insertCompanySchema } from "@shared/schema";
 export function registerRoutes(app: Express, storage: IStorage) {
   app.get("/api/companies", async (req, res) => {
     try {
-      const { local } = req.query;
+      const { local, city, state } = req.query;
       
       let companies;
-      if (local === "true") {
+      if (city && state) {
+        companies = await storage.getCompaniesByCity(city as string, state as string);
+      } else if (local === "true") {
         companies = await storage.getCompaniesByLocal(true);
       } else if (local === "false") {
         companies = await storage.getCompaniesByLocal(false);

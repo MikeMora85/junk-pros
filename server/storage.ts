@@ -4,6 +4,7 @@ export interface IStorage {
   getCompanies(): Promise<Company[]>;
   getCompanyById(id: number): Promise<Company | null>;
   getCompaniesByLocal(local: boolean): Promise<Company[]>;
+  getCompaniesByCity(city: string, state: string): Promise<Company[]>;
   createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
 }
 
@@ -27,6 +28,8 @@ export class MemStorage implements IStorage {
         "Best junk removal in Scottsdale. Highly recommend!",
         "Quick, efficient, and affordable. Will use again."
       ],
+      city: "Scottsdale",
+      state: "Arizona",
     },
     {
       id: 2,
@@ -45,6 +48,8 @@ export class MemStorage implements IStorage {
         "Great experience, friendly crew.",
         "Fair pricing and excellent work.",
       ],
+      city: "Scottsdale",
+      state: "Arizona",
     },
     {
       id: 3,
@@ -63,6 +68,8 @@ export class MemStorage implements IStorage {
         "Decent service but a bit pricey.",
         "Got the job done.",
       ],
+      city: "Phoenix",
+      state: "Arizona",
     },
   ];
 
@@ -76,6 +83,13 @@ export class MemStorage implements IStorage {
 
   async getCompaniesByLocal(local: boolean): Promise<Company[]> {
     return this.companies.filter((c) => c.local === local);
+  }
+
+  async getCompaniesByCity(city: string, state: string): Promise<Company[]> {
+    return this.companies.filter((c) => 
+      c.city.toLowerCase() === city.toLowerCase() && 
+      c.state.toLowerCase() === state.toLowerCase()
+    );
   }
 
   async createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company> {
