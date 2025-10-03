@@ -1450,7 +1450,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
-                      border: '2px solid #cccccc',
+                      border: '2px solid #166534',
                     }}
                   >
                     <h4 style={{
@@ -1937,7 +1937,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1957,7 +1957,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1977,7 +1977,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -1997,7 +1997,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2018,7 +2018,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                     backgroundColor: '#fff',
@@ -2093,7 +2093,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2112,7 +2112,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     width: '100%',
                     padding: '10px 14px',
-                    border: '2px solid #cccccc',
+                    border: '2px solid #166534',
                     borderRadius: '8px',
                     fontSize: '15px',
                   }}
@@ -2182,7 +2182,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
-                    border: '1px solid #e63946',
+                    border: '1px solid #166534',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
@@ -2260,7 +2260,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       width: '60px',
                       height: '60px',
                       borderRadius: '10px',
-                      background: c.logoUrl ? '#fff' : '#e63946',
+                      background: c.logoUrl ? '#fff' : '#fbbf24',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -2270,7 +2270,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       flexShrink: 0,
                       boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
                       padding: c.logoUrl ? '4px' : '0',
-                      border: c.logoUrl ? '2px solid #e5e5e5' : 'none',
+                      border: c.logoUrl ? '2px solid #e5e5e5' : '2px solid #fbbf24',
                       overflow: 'hidden',
                     }}>
                       {c.logoUrl ? (
@@ -2286,9 +2286,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             e.currentTarget.style.display = 'none';
                             const parent = e.currentTarget.parentElement;
                             if (parent) {
-                              parent.style.background = '#e63946';
+                              parent.style.background = '#fbbf24';
                               parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
-                              parent.style.border = 'none';
+                              parent.style.border = '2px solid #fbbf24';
                               parent.style.padding = '0';
                               parent.textContent = c.name.charAt(0);
                             }
@@ -2374,7 +2374,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   <button 
                     style={{
                       background: '#fbbf24',
-                      color: 'white',
+                      color: '#000',
                       padding: '12px 20px',
                       borderRadius: '0',
                       border: 'none',
@@ -2427,7 +2427,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           color: '#374151',
                           padding: '10px 16px',
                           borderRadius: '8px',
-                          border: '2px solid #cccccc',
+                          border: '2px solid #166534',
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontWeight: '600',
