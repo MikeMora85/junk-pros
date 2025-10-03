@@ -123,12 +123,13 @@ function LandingPage() {
           </p>
 
           <form onSubmit={handleSearch} style={{
+            width: '100%',
             maxWidth: '500px',
             margin: '0 auto',
             display: 'flex',
-            gap: '8px',
+            gap: '6px',
             backgroundColor: '#fff',
-            padding: '6px',
+            padding: '5px',
             borderRadius: '10px',
             boxShadow: '0 10px 40px rgba(168,85,247,0.2)',
           }}>
@@ -136,13 +137,14 @@ function LandingPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Enter your city (e.g., Phoenix, AZ)"
+              placeholder="City (e.g., Phoenix, AZ)"
               style={{
                 flex: 1,
-                padding: '12px 16px',
+                minWidth: '0',
+                padding: '10px 12px',
                 border: 'none',
                 outline: 'none',
-                fontSize: '15px',
+                fontSize: '14px',
                 borderRadius: '8px',
               }}
               data-testid="input-homepage-search"
@@ -150,22 +152,23 @@ function LandingPage() {
             <button
               type="submit"
               style={{
-                padding: '12px 24px',
+                padding: '10px 16px',
                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
-                fontSize: '15px',
+                fontSize: '14px',
                 fontWeight: '700',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
+                gap: '4px',
                 whiteSpace: 'nowrap',
+                flexShrink: 0,
               }}
               data-testid="button-homepage-search"
             >
-              <Search size={18} />
+              <Search size={16} />
               Search
             </button>
           </form>
