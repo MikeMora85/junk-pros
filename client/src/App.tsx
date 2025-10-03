@@ -33,6 +33,9 @@ const PlaceholderImage = ({ index }: { index: number }) => (
   </div>
 );
 
+import LandingPage from "./pages/LandingPage";
+import StatePage from "./pages/StatePage";
+
 function App() {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const [showBusinessForm, setShowBusinessForm] = useState(false);
@@ -40,11 +43,34 @@ function App() {
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Extract city and state from URL path like /arizona/scottsdale or default to Scottsdale
+  // Extract path components
   const path = window.location.pathname;
-  const pathMatch = path.match(/^\/([^/]+)\/([^/]+)/);
-  const city = pathMatch ? pathMatch[2] : 'scottsdale';
-  const state = pathMatch ? pathMatch[1] : 'arizona';
+  const pathParts = path.split('/').filter(p => p);
+  
+  // Determine what page to show
+  // / -> Landing page
+  // /arizona -> State page
+  // /arizona/scottsdale -> City page
+  if (pathParts.length === 0) {
+    return <LandingPage />;
+  }
+  
+  if (pathParts.length === 1) {
+    const stateSlug = pathParts[0];
+    const stateNames: Record<string, string> = {
+      'arizona': 'Arizona',
+      'california': 'California',
+      'texas': 'Texas',
+      'florida': 'Florida',
+      'new-york': 'New York',
+      'illinois': 'Illinois',
+    };
+    return <StatePage stateName={stateNames[stateSlug] || 'Unknown'} stateSlug={stateSlug} />;
+  }
+  
+  // City page (existing functionality)
+  const city = pathParts[1];
+  const state = pathParts[0];
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies", { city, state }],
