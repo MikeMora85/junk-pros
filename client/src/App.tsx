@@ -2160,12 +2160,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   style={{
                     backgroundColor: '#fff',
                     borderRadius: '0',
-                    padding: '0',
-                    marginBottom: '1px',
+                    padding: '16px',
+                    marginBottom: '12px',
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
-                    borderBottom: '1px solid #cccccc',
+                    border: '1px solid #e63946',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
@@ -2253,7 +2253,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       flexShrink: 0,
                       boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
                       padding: c.logoUrl ? '4px' : '0',
-                      border: c.logoUrl ? '2px solid #f3e8ff' : 'none',
+                      border: c.logoUrl ? '2px solid #e5e5e5' : 'none',
                       overflow: 'hidden',
                     }}>
                       {c.logoUrl ? (
@@ -2298,8 +2298,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             <Star
                               key={i}
                               size={14}
-                              fill={i < Math.floor(parseFloat(c.rating)) ? "#f472b6" : "none"}
-                              stroke="#f472b6"
+                              fill={i < Math.floor(parseFloat(c.rating)) ? "#e63946" : "none"}
+                              stroke="#e63946"
                             />
                           ))}
                         </div>
@@ -2329,15 +2329,15 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Review Snippets */}
                   {c.reviewSnippets && c.reviewSnippets.length > 0 && (
                     <div style={{
-                      backgroundColor: '#fdf4ff',
+                      backgroundColor: '#f5f5f5',
                       borderRadius: '0',
                       padding: '12px',
                       marginBottom: '12px',
                       marginLeft: '0',
                       marginRight: '0',
                       border: 'none',
-                      borderTop: '1px solid #f3e8ff',
-                      borderBottom: '1px solid #f3e8ff',
+                      borderTop: '1px solid #e5e5e5',
+                      borderBottom: '1px solid #e5e5e5',
                     }}>
                       {c.reviewSnippets.slice(0, 2).map((review, i) => (
                         <div key={i} style={{
@@ -2383,14 +2383,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
                   {/* Quote Section */}
                   <div style={{
-                    backgroundColor: '#fdf4ff',
+                    backgroundColor: '#f5f5f5',
                     borderRadius: '0',
                     padding: '16px 0',
                     marginLeft: '0',
                     marginRight: '0',
                     marginBottom: '0',
                     border: 'none',
-                    borderTop: '1px solid #f3e8ff',
+                    borderTop: '1px solid #e5e5e5',
                   }}>
                     <h4 style={{
                       fontSize: '14px',
@@ -2461,13 +2461,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         padding: '16px',
                         backgroundColor: '#fff',
                         borderRadius: '8px',
-                        border: '2px solid #a855f7',
+                        border: '2px solid #e63946',
                       }}>
                         <h5 style={{
                           fontSize: '14px',
                           fontWeight: '700',
                           margin: '0 0 12px 0',
-                          color: '#a855f7',
+                          color: '#e63946',
                         }}>
                           Available Times
                         </h5>
@@ -2478,13 +2478,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                               key={i}
                               style={{
                                 padding: '10px 16px',
-                                backgroundColor: '#fdf4ff',
-                                border: '2px solid #f3e8ff',
+                                backgroundColor: '#f5f5f5',
+                                border: '2px solid #e5e5e5',
                                 borderRadius: '6px',
                                 cursor: 'pointer',
                                 fontSize: '14px',
                                 fontWeight: '600',
-                                color: '#a855f7',
+                                color: '#e63946',
                                 textAlign: 'left',
                               }}
                               onClick={() => alert(`Appointment scheduled for ${time}`)}
@@ -2676,7 +2676,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               <p key={i} style={{ 
                 padding: '12px', 
                 background: '#f5f5f5', 
-                border: '1px solid #f3e8ff',
+                border: '1px solid #e5e5e5',
                 borderRadius: '8px',
                 margin: '0 0 8px 0',
                 fontStyle: 'italic',
