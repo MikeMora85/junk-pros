@@ -123,13 +123,13 @@ function LandingPage() {
           </p>
 
           <form onSubmit={handleSearch} style={{
-            maxWidth: '600px',
+            maxWidth: '500px',
             margin: '0 auto',
             display: 'flex',
-            gap: '12px',
+            gap: '8px',
             backgroundColor: '#fff',
-            padding: '8px',
-            borderRadius: '12px',
+            padding: '6px',
+            borderRadius: '10px',
             boxShadow: '0 10px 40px rgba(168,85,247,0.2)',
           }}>
             <input
@@ -139,10 +139,10 @@ function LandingPage() {
               placeholder="Enter your city (e.g., Phoenix, AZ)"
               style={{
                 flex: 1,
-                padding: '16px 20px',
+                padding: '12px 16px',
                 border: 'none',
                 outline: 'none',
-                fontSize: '16px',
+                fontSize: '15px',
                 borderRadius: '8px',
               }}
               data-testid="input-homepage-search"
@@ -150,22 +150,22 @@ function LandingPage() {
             <button
               type="submit"
               style={{
-                padding: '16px 32px',
+                padding: '12px 24px',
                 background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
-                fontSize: '16px',
+                fontSize: '15px',
                 fontWeight: '700',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
+                gap: '6px',
                 whiteSpace: 'nowrap',
               }}
               data-testid="button-homepage-search"
             >
-              <Search size={20} />
+              <Search size={18} />
               Search
             </button>
           </form>
@@ -179,46 +179,90 @@ function LandingPage() {
             fontSize: '24px',
             fontWeight: '700',
             color: '#374151',
-            marginBottom: '24px',
+            marginBottom: '20px',
           }}>
             Browse by State
           </h3>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '16px',
-            maxWidth: '900px',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+            gap: '10px',
+            maxWidth: '1000px',
             margin: '0 auto',
           }}>
             {[
+              { name: 'Alabama', slug: 'alabama' },
+              { name: 'Alaska', slug: 'alaska' },
               { name: 'Arizona', slug: 'arizona' },
+              { name: 'Arkansas', slug: 'arkansas' },
               { name: 'California', slug: 'california' },
-              { name: 'Texas', slug: 'texas' },
+              { name: 'Colorado', slug: 'colorado' },
+              { name: 'Connecticut', slug: 'connecticut' },
+              { name: 'Delaware', slug: 'delaware' },
               { name: 'Florida', slug: 'florida' },
-              { name: 'New York', slug: 'new-york' },
+              { name: 'Georgia', slug: 'georgia' },
+              { name: 'Hawaii', slug: 'hawaii' },
+              { name: 'Idaho', slug: 'idaho' },
               { name: 'Illinois', slug: 'illinois' },
+              { name: 'Indiana', slug: 'indiana' },
+              { name: 'Iowa', slug: 'iowa' },
+              { name: 'Kansas', slug: 'kansas' },
+              { name: 'Kentucky', slug: 'kentucky' },
+              { name: 'Louisiana', slug: 'louisiana' },
+              { name: 'Maine', slug: 'maine' },
+              { name: 'Maryland', slug: 'maryland' },
+              { name: 'Massachusetts', slug: 'massachusetts' },
+              { name: 'Michigan', slug: 'michigan' },
+              { name: 'Minnesota', slug: 'minnesota' },
+              { name: 'Mississippi', slug: 'mississippi' },
+              { name: 'Missouri', slug: 'missouri' },
+              { name: 'Montana', slug: 'montana' },
+              { name: 'Nebraska', slug: 'nebraska' },
+              { name: 'Nevada', slug: 'nevada' },
+              { name: 'New Hampshire', slug: 'new-hampshire' },
+              { name: 'New Jersey', slug: 'new-jersey' },
+              { name: 'New Mexico', slug: 'new-mexico' },
+              { name: 'New York', slug: 'new-york' },
+              { name: 'North Carolina', slug: 'north-carolina' },
+              { name: 'North Dakota', slug: 'north-dakota' },
+              { name: 'Ohio', slug: 'ohio' },
+              { name: 'Oklahoma', slug: 'oklahoma' },
+              { name: 'Oregon', slug: 'oregon' },
+              { name: 'Pennsylvania', slug: 'pennsylvania' },
+              { name: 'Rhode Island', slug: 'rhode-island' },
+              { name: 'South Carolina', slug: 'south-carolina' },
+              { name: 'South Dakota', slug: 'south-dakota' },
+              { name: 'Tennessee', slug: 'tennessee' },
+              { name: 'Texas', slug: 'texas' },
+              { name: 'Utah', slug: 'utah' },
+              { name: 'Vermont', slug: 'vermont' },
+              { name: 'Virginia', slug: 'virginia' },
+              { name: 'Washington', slug: 'washington' },
+              { name: 'West Virginia', slug: 'west-virginia' },
+              { name: 'Wisconsin', slug: 'wisconsin' },
+              { name: 'Wyoming', slug: 'wyoming' },
             ].map((state) => (
               <a
                 key={state.slug}
                 href={`/${state.slug}`}
                 style={{
-                  padding: '20px',
+                  padding: '12px 8px',
                   backgroundColor: '#fff',
-                  borderRadius: '12px',
+                  borderRadius: '8px',
                   textDecoration: 'none',
                   color: '#374151',
                   fontWeight: '600',
-                  fontSize: '16px',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  fontSize: '14px',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
                   transition: 'all 0.2s',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '8px',
+                  gap: '6px',
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
-                <MapPin size={18} />
+                <MapPin size={14} />
                 {state.name}
               </a>
             ))}
@@ -1589,12 +1633,19 @@ function App() {
   if (pathParts.length === 1) {
     const stateSlug = pathParts[0];
     const stateNames: Record<string, string> = {
-      'arizona': 'Arizona',
-      'california': 'California',
-      'texas': 'Texas',
-      'florida': 'Florida',
-      'new-york': 'New York',
-      'illinois': 'Illinois',
+      'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
+      'california': 'California', 'colorado': 'Colorado', 'connecticut': 'Connecticut', 'delaware': 'Delaware',
+      'florida': 'Florida', 'georgia': 'Georgia', 'hawaii': 'Hawaii', 'idaho': 'Idaho',
+      'illinois': 'Illinois', 'indiana': 'Indiana', 'iowa': 'Iowa', 'kansas': 'Kansas',
+      'kentucky': 'Kentucky', 'louisiana': 'Louisiana', 'maine': 'Maine', 'maryland': 'Maryland',
+      'massachusetts': 'Massachusetts', 'michigan': 'Michigan', 'minnesota': 'Minnesota', 'mississippi': 'Mississippi',
+      'missouri': 'Missouri', 'montana': 'Montana', 'nebraska': 'Nebraska', 'nevada': 'Nevada',
+      'new-hampshire': 'New Hampshire', 'new-jersey': 'New Jersey', 'new-mexico': 'New Mexico', 'new-york': 'New York',
+      'north-carolina': 'North Carolina', 'north-dakota': 'North Dakota', 'ohio': 'Ohio', 'oklahoma': 'Oklahoma',
+      'oregon': 'Oregon', 'pennsylvania': 'Pennsylvania', 'rhode-island': 'Rhode Island', 'south-carolina': 'South Carolina',
+      'south-dakota': 'South Dakota', 'tennessee': 'Tennessee', 'texas': 'Texas', 'utah': 'Utah',
+      'vermont': 'Vermont', 'virginia': 'Virginia', 'washington': 'Washington', 'west-virginia': 'West Virginia',
+      'wisconsin': 'Wisconsin', 'wyoming': 'Wyoming',
     };
     return <StatePage stateName={stateNames[stateSlug] || 'Unknown'} stateSlug={stateSlug} />;
   }
