@@ -106,7 +106,7 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#ffffff',
+      background: 'linear-gradient(to right, rgba(230,57,70,0.08) 0%, rgba(230,57,70,0.08) 10%, #ffffff 10%, #ffffff 90%, rgba(230,57,70,0.08) 90%, rgba(230,57,70,0.08) 100%)',
     }}>
       <header style={{
         background: '#e63946',
