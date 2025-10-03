@@ -2181,7 +2181,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             fontSize: '28px',
             fontWeight: '700',
             margin: '0 0 8px 0',
-            color: '#1a1a1a',
+            color: '#e63946',
             letterSpacing: '-0.02em',
           }} data-testid="text-page-title">
             {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
@@ -2565,7 +2565,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 1 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #2563eb',
+                      border: '2px solid #e63946',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2603,7 +2603,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 2 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #2563eb',
+                      border: '2px solid #e63946',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
