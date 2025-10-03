@@ -5,11 +5,12 @@
 :root {
   font-family: 'Open Sans', system-ui, -apple-system, sans-serif;
   
-  --brand-green: 142 72% 20%;
-  --deep-forest: 142 60% 15%;
-  --sage-green: 142 40% 92%;
-  --yellow-highlight: 48 96% 53%;
-  --trust-blue: 217 91% 60%;
+  --primary-red: 14 100% 57%;
+  --primary-orange-red: 16 100% 66%;
+  --secondary-blue: 217 91% 60%;
+  --foundation-white: 0 0% 100%;
+  --foundation-grey: 0 0% 96%;
+  --light-grey: 0 0% 90%;
   --rating-gold: 43 96% 56%;
 }
 
