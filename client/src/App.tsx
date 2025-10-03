@@ -336,6 +336,7 @@ function App() {
                 </label>
                 <input
                   type="text"
+                  name="name"
                   required
                   placeholder="e.g., Quick Junk Removal LLC"
                   style={{
@@ -355,6 +356,7 @@ function App() {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   required
                   placeholder="your@email.com"
                   style={{
@@ -374,6 +376,7 @@ function App() {
                 </label>
                 <input
                   type="tel"
+                  name="phone"
                   required
                   placeholder="(555) 123-4567"
                   style={{
@@ -393,6 +396,7 @@ function App() {
                 </label>
                 <input
                   type="text"
+                  name="location"
                   required
                   placeholder="e.g., Scottsdale, AZ"
                   style={{
@@ -412,6 +416,7 @@ function App() {
                 </label>
                 <input
                   type="url"
+                  name="logoUrl"
                   placeholder="https://yourwebsite.com/logo.png"
                   style={{
                     width: '100%',
