@@ -20,7 +20,10 @@ export const companies = pgTable("companies", {
   state: text("state").notNull(),
 });
 
-export const insertCompanySchema = createInsertSchema(companies);
+export const insertCompanySchema = createInsertSchema(companies, {
+  logoUrl: z.string().nullable().optional(),
+  reviewSnippets: z.array(z.string()).nullable().optional(),
+});
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
 export type Company = typeof companies.$inferSelect;

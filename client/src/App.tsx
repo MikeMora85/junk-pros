@@ -42,11 +42,12 @@ function App() {
       body: JSON.stringify(data),
     }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/companies?local=true"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
       setShowBusinessForm(false);
       alert('Success! Your business is now live on the directory.');
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.error('Mutation error:', error);
       alert('Failed to submit business. Please try again.');
     },
   });

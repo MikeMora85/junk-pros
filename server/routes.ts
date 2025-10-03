@@ -45,13 +45,16 @@ export function registerRoutes(app: Express, storage: IStorage) {
 
   app.post("/api/companies", async (req, res) => {
     try {
-      const data = insertCompanySchema.omit({ id: true }).parse(req.body);
+      console.log("Received company data:", req.body);
+      const data = insertCompanySchema.parse(req.body);
       const company = await storage.createCompany(data);
       res.status(201).json(company);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: "Invalid company data", details: error.errors });
+        console.error("Validation error:", error.issues);
+        return res.status(400).json({ error: "Invalid company data", details: error.issues });
       }
+      console.error("Server error:", error);
       res.status(500).json({ error: "Failed to create company" });
     }
   });
