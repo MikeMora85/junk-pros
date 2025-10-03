@@ -55,7 +55,7 @@ import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg
 import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
-import dumpTruckHero from "@assets/stock_images/dump_truck_junk_remo_35a3ebaf.jpg";
+import curbsideJunkHero from "@assets/stock_images/pile_of_junk_garbage_71efc67b.jpg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -112,7 +112,7 @@ function LandingPage() {
       <div style={{
         position: 'relative',
         height: '500px',
-        backgroundImage: `url(${dumpTruckHero})`,
+        backgroundImage: `url(${curbsideJunkHero})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
