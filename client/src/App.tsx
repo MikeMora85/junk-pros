@@ -333,7 +333,7 @@ function App() {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '24px', padding: '0 16px' }}>
+        <div style={{ marginBottom: '24px', padding: '0' }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
@@ -350,7 +350,7 @@ function App() {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0 16px' }}>
+        <div style={{ padding: '0' }}>
           <div className="main-grid">
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
