@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { Route, Link, Router } from "wouter";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
-import CompanyDetail from "./pages/CompanyDetail";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -15,7 +13,8 @@ import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
 
 const images = [img1, img2, img3, img4, img5, img6];
 
-function HomePage() {
+function App() {
+  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const [showBusinessForm, setShowBusinessForm] = useState(false);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
@@ -53,7 +52,27 @@ function HomePage() {
     return () => clearInterval(interval);
   }, [companies]);
 
+  const selectedCompany = companies.find(c => c.id === selectedCompanyId);
+
   return (
+    <>
+      {selectedCompany && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: 2000,
+          overflow: 'auto',
+        }} onClick={() => setSelectedCompanyId(null)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} />
+          </div>
+        </div>
+      )}
+    
     <div style={{ 
       minHeight: '100vh', 
       background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
@@ -397,8 +416,9 @@ function HomePage() {
                   </div>
                 ) : (
                   companies.map((c, index) => (
-                <Link key={c.id} href={`/company/${c.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                 <div 
+                  key={c.id}
+                  onClick={() => setSelectedCompanyId(c.id)} 
                   style={{
                     backgroundColor: '#fff',
                     borderRadius: '0',
@@ -730,7 +750,6 @@ function HomePage() {
                     )}
                   </div>
                 </div>
-                </Link>
                   ))
                 )}
               </div>
@@ -818,15 +837,135 @@ function HomePage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
-function App() {
+function CompanyDetailInline({ company, onClose }: { company: Company; onClose: () => void }) {
   return (
-    <Router>
-      <Route path="/" component={HomePage} />
-      <Route path="/company/:id" component={CompanyDetail} />
-    </Router>
+    <div style={{
+      maxWidth: '900px',
+      margin: '40px auto',
+      background: '#fff',
+      borderRadius: '12px',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+        padding: '24px',
+        position: 'relative',
+      }}>
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            background: 'rgba(255,255,255,0.2)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <X size={24} color="#fff" />
+        </button>
+        
+        <h1 style={{
+          color: '#fff',
+          margin: '0',
+          fontSize: '32px',
+          fontWeight: '800',
+        }}>
+          {company.name}
+        </h1>
+        <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <Star
+              key={star}
+              size={20}
+              fill={star <= Math.floor(parseFloat(company.rating)) ? "#fff" : "none"}
+              color="#fff"
+            />
+          ))}
+          <span style={{ color: '#fff', marginLeft: '8px' }}>
+            {company.rating} ({company.reviews} reviews)
+          </span>
+        </div>
+      </div>
+      
+      <div style={{ padding: '24px' }}>
+        <div style={{ marginBottom: '24px' }}>
+          <h3 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '18px', fontWeight: '700' }}>Contact Info</h3>
+          <p style={{ margin: '0 0 8px 0', color: '#6b7280' }}><MapPin size={16} style={{ display: 'inline', marginRight: '8px' }} />{company.address}</p>
+          <p style={{ margin: '0 0 8px 0', color: '#6b7280' }}><Phone size={16} style={{ display: 'inline', marginRight: '8px' }} />{company.phone}</p>
+        </div>
+        
+        <div style={{ marginBottom: '24px' }}>
+          <h3 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '18px', fontWeight: '700' }}>Services</h3>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {company.services.map((s, i) => (
+              <span key={i} style={{
+                padding: '6px 12px',
+                background: '#fdf4ff',
+                border: '1px solid #f3e8ff',
+                borderRadius: '6px',
+                fontSize: '14px',
+                color: '#a855f7',
+              }}>
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+        
+        {company.reviewSnippets && company.reviewSnippets.length > 0 && (
+          <div>
+            <h3 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '18px', fontWeight: '700' }}>Reviews</h3>
+            {company.reviewSnippets.map((review, i) => (
+              <p key={i} style={{ 
+                padding: '12px', 
+                background: '#fdf4ff', 
+                border: '1px solid #f3e8ff',
+                borderRadius: '8px',
+                margin: '0 0 8px 0',
+                fontStyle: 'italic',
+                color: '#6b7280',
+              }}>
+                "{review}"
+              </p>
+            ))}
+          </div>
+        )}
+        
+        <button
+          onClick={() => window.open(`tel:${company.phone}`, '_self')}
+          style={{
+            width: '100%',
+            marginTop: '24px',
+            padding: '16px',
+            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '18px',
+            fontWeight: '700',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px',
+          }}
+        >
+          <Phone size={20} />
+          Call Now
+        </button>
+      </div>
+    </div>
   );
 }
 
