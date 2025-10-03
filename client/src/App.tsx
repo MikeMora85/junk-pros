@@ -334,9 +334,9 @@ function App() {
       )}
 
       {/* Main Content */}
-      <div style={{ padding: '20px 0 0 0' }}>
+      <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '24px', padding: '0' }}>
+        <div style={{ marginBottom: '24px', padding: '0', margin: '0' }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
@@ -353,10 +353,10 @@ function App() {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0' }}>
-          <div className="main-grid">
+        <div style={{ padding: '0', margin: '0', width: '100%' }}>
+          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%' }}>
               {/* Left - Company Listings */}
-              <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
+              <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0', padding: '0' }}>
                 {isLoading ? (
                   <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280' }} data-testid="text-loading">
                     Loading...
