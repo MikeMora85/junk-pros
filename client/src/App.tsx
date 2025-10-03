@@ -60,12 +60,12 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
+      background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f1f5f9 100%)',
     }}>
       <header style={{
-        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
         padding: '16px',
-        boxShadow: '0 8px 30px rgba(168,85,247,0.6)',
+        boxShadow: '0 8px 30px rgba(59,130,246,0.3)',
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -95,7 +95,7 @@ function LandingPage() {
           <h2 style={{
             fontSize: '42px',
             fontWeight: '800',
-            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            background: 'linear-gradient(135deg, #2563eb 0%, #059669 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             margin: '0 0 16px 0',
@@ -144,7 +144,7 @@ function LandingPage() {
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: '8px',
@@ -299,9 +299,9 @@ function LandingPage() {
               <div style={{
                 display: 'inline-flex',
                 padding: '16px',
-                background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%)',
+                background: 'linear-gradient(135deg, #dbeafe 0%, #d1fae5 100%)',
                 borderRadius: '12px',
-                color: '#a855f7',
+                color: '#2563eb',
                 marginBottom: '16px',
               }}>
                 {feature.icon}
@@ -344,12 +344,12 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
+      background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f1f5f9 100%)',
     }}>
       <header style={{
-        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
         padding: '24px 16px',
-        boxShadow: '0 8px 30px rgba(168,85,247,0.6)',
+        boxShadow: '0 8px 30px rgba(59,130,246,0.3)',
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -363,7 +363,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             display: 'inline-block',
             marginBottom: '12px',
           }}>
-            ← BestJunkRemovalCompanies
+            ← Back to Home
           </a>
           <h1 style={{
             color: '#fff',
@@ -386,7 +386,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
-            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            background: 'linear-gradient(135deg, #2563eb 0%, #059669 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: '24px',
@@ -426,7 +426,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
-            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            background: 'linear-gradient(135deg, #2563eb 0%, #059669 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             marginBottom: '24px',
@@ -558,7 +558,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
     
     <div style={{ 
       minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f5f3ff 100%)',
+      background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f1f5f9 100%)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
       margin: '0',
       padding: '0',
@@ -596,8 +596,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
       `}} />
       {/* Header */}
       <header style={{
-        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
-        boxShadow: '0 8px 30px rgba(168,85,247,0.6), 0 0 60px rgba(236,72,153,0.4)',
+        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
+        boxShadow: '0 8px 30px rgba(59,130,246,0.3), 0 0 60px rgba(16,185,129,0.2)',
         padding: '16px',
         overflow: 'hidden',
       }}>
@@ -731,7 +731,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
           }} onClick={(e) => e.stopPropagation()}>
             <div style={{
-              background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+              background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
               padding: '20px',
               borderRadius: '16px 16px 0 0',
               position: 'relative',
@@ -1002,7 +1002,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 type="submit"
                 style={{
                   width: '100%',
-                  background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
                   color: '#fff',
                   padding: '14px',
                   borderRadius: '8px',
@@ -1028,7 +1028,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             fontSize: '28px',
             fontWeight: '700',
             margin: '0 0 8px 0',
-            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
           }} data-testid="text-page-title">
@@ -1203,7 +1203,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <span style={{ color: '#9ca3af', fontSize: '13px' }}>({c.reviews})</span>
                         {c.local && (
                           <span style={{
-                            background: '#a855f7',
+                            background: '#3b82f6',
                             color: '#fff',
                             padding: '2px 8px',
                             borderRadius: '4px',
@@ -1252,7 +1252,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Call Now Button */}
                   <button 
                     style={{
-                      background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                      background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
                       color: 'white',
                       padding: '12px 20px',
                       borderRadius: '0',
@@ -1412,7 +1412,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     {/* JunkIQ Ad */}
                     <div style={{
-                      background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                      background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
                       borderRadius: '12px',
                       padding: '20px',
                       boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
@@ -1451,7 +1451,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         fontSize: '18px', 
                         fontWeight: '700', 
                         margin: '0 0 12px 0',
-                        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                       }}>
@@ -1462,7 +1462,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </p>
                       <button style={{
                         width: '100%',
-                        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
                         color: '#fff',
                         padding: '12px',
                         borderRadius: '8px',
@@ -1495,7 +1495,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       overflow: 'hidden',
     }}>
       <div style={{
-        background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+        background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
         padding: '24px',
         position: 'relative',
       }}>
@@ -1555,11 +1555,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             {company.services.map((s, i) => (
               <span key={i} style={{
                 padding: '6px 12px',
-                background: '#fdf4ff',
-                border: '1px solid #f3e8ff',
+                background: '#dbeafe',
+                border: '1px solid #bfdbfe',
                 borderRadius: '6px',
                 fontSize: '14px',
-                color: '#a855f7',
+                color: '#2563eb',
               }}>
                 {s}
               </span>
@@ -1573,7 +1573,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             {company.reviewSnippets.map((review, i) => (
               <p key={i} style={{ 
                 padding: '12px', 
-                background: '#fdf4ff', 
+                background: '#dbeafe', 
                 border: '1px solid #f3e8ff',
                 borderRadius: '8px',
                 margin: '0 0 8px 0',
@@ -1592,7 +1592,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             width: '100%',
             marginTop: '24px',
             padding: '16px',
-            background: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)',
+            background: 'linear-gradient(135deg, #3b82f6 0%, #10b981 100%)',
             color: '#fff',
             border: 'none',
             borderRadius: '8px',
