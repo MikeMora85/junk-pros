@@ -106,7 +106,7 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#f5f5f5',
+      background: '#d3d3d3',
     }}>
       <div style={{
         maxWidth: '1400px',
