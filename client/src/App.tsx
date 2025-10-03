@@ -1819,12 +1819,23 @@ function CityPage({ city, state }: { city: string; state: string }) {
               color: '#000',
               padding: '10px',
               borderRadius: '8px',
-              border: '2px solid #000',
+              border: '1px solid #000',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               textDecoration: 'none',
+              boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+              transform: 'translateY(-1px)',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+              e.currentTarget.style.transform = 'translateY(-1px)';
             }}
             data-testid="button-home"
           >
