@@ -164,7 +164,7 @@ function LandingPage() {
             letterSpacing: '-0.02em',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            Search by State or City
+            Search By State Or City
           </h2>
           <p style={{
             fontSize: '20px',
