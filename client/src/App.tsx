@@ -356,13 +356,22 @@ function LandingPage() {
                   color: '#374151',
                   fontWeight: '600',
                   fontSize: '14px',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.15)',
                   transition: 'all 0.2s',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '6px',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  transform: 'translateY(-2px)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.35), 0 4px 8px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.15)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
