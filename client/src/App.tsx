@@ -1678,7 +1678,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
     <div style={{ 
       minHeight: '100vh', 
       background: '#ffffff',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      fontFamily: "'Helvetica Neue', Arial, sans-serif",
       margin: '0',
       padding: '0',
       width: '100%',
