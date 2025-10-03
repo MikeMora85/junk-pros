@@ -128,7 +128,7 @@ function LandingPage() {
         }}>
           <p style={{
             color: '#fff',
-            fontSize: '18px',
+            fontSize: '24px',
             margin: '0',
             fontWeight: '600',
           }}>
