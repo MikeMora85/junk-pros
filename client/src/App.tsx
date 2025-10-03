@@ -25,7 +25,7 @@ import tennesseeHero from "@assets/stock_images/great_smoky_mountain_04319b2a.jp
 import georgiaHero from "@assets/stock_images/atlanta_georgia_skyl_42af1e19.jpg";
 import louisianaHero from "@assets/stock_images/french_quarter_new_o_97be723e.jpg";
 import oregonHero from "@assets/stock_images/crater_lake_oregon_s_dbd956cd.jpg";
-import wyomingHero from "@assets/stock_images/yellowstone_national_87fb310b.jpg";
+import wyomingHero from "@assets/stock_images/old_faithful_geyser__6269315a.jpg";
 import montanaHero from "@assets/stock_images/glacier_national_par_ca533513.jpg";
 import utahHero from "@assets/stock_images/arches_national_park_c92ce949.jpg";
 import indianaHero from "@assets/stock_images/indianapolis_motor_s_076178bf.jpg";
