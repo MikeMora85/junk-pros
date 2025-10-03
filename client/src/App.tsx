@@ -2465,7 +2465,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           color: '#374151',
                           padding: '10px 16px',
                           borderRadius: '8px',
-                          border: '2px solid #2563eb',
+                          border: '2px solid #fbbf24',
                           cursor: 'pointer',
                           fontSize: '14px',
                           fontWeight: '600',
