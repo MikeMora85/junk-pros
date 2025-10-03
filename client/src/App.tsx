@@ -364,9 +364,11 @@ function App() {
                   key={c.id}
                   style={{
                     backgroundColor: '#fff',
-                    borderRadius: '12px',
+                    borderRadius: '0',
                     padding: '20px',
                     marginBottom: '16px',
+                    marginLeft: '0',
+                    marginRight: '0',
                     boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
                     width: '100%',
                     maxWidth: '100%',
