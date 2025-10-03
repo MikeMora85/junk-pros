@@ -1009,6 +1009,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 borderRadius: '8px',
                 backgroundColor: '#fff',
               }}
+              data-testid="input-state-search"
             />
             <button
               type="submit"
@@ -1027,6 +1028,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
               }}
+              data-testid="button-state-search"
             >
               <Search size={16} />
               SEARCH
