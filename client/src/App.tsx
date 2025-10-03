@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -2586,19 +2586,21 @@ function CityPage({ city, state }: { city: string; state: string }) {
 function CompanyDetailInline({ company, onClose }: { company: Company; onClose: () => void }) {
   return (
     <div style={{
-      maxWidth: '900px',
+      maxWidth: '1000px',
       margin: '40px auto',
       background: '#fff',
       borderRadius: '12px',
       overflow: 'hidden',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     }}>
       <div style={{
         background: '#e63946',
-        padding: '24px',
+        padding: '32px 24px',
         position: 'relative',
       }}>
         <button
           onClick={onClose}
+          data-testid="button-close-profile"
           style={{
             position: 'absolute',
             top: '16px',
@@ -2617,95 +2619,473 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <X size={24} color="#fff" />
         </button>
         
+        {company.logoUrl && (
+          <img 
+            src={company.logoUrl} 
+            alt={`${company.name} logo`}
+            style={{ 
+              height: '60px', 
+              marginBottom: '16px',
+              background: '#fff',
+              padding: '8px',
+              borderRadius: '8px',
+            }} 
+          />
+        )}
+        
         <h1 style={{
           color: '#fff',
           margin: '0',
-          fontSize: '32px',
+          fontSize: '36px',
           fontWeight: '800',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
           {company.name}
         </h1>
-        <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+        
+        <div style={{ display: 'flex', gap: '8px', marginTop: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
           {[1, 2, 3, 4, 5].map((star) => (
             <Star
               key={star}
-              size={20}
+              size={24}
               fill={star <= Math.floor(parseFloat(company.rating)) ? "#fff" : "none"}
               color="#fff"
             />
           ))}
-          <span style={{ color: '#fff', marginLeft: '8px' }}>
+          <span style={{ color: '#fff', marginLeft: '8px', fontSize: '18px', fontWeight: '600' }}>
             {company.rating} ({company.reviews} reviews)
           </span>
-        </div>
-      </div>
-      
-      <div style={{ padding: '24px' }}>
-        <div style={{ marginBottom: '24px' }}>
-          <h3 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '18px', fontWeight: '700' }}>Contact Info</h3>
-          <p style={{ margin: '0 0 8px 0', color: '#6b7280' }}><MapPin size={16} style={{ display: 'inline', marginRight: '8px' }} />{company.address}</p>
-          <p style={{ margin: '0 0 8px 0', color: '#6b7280' }}><Phone size={16} style={{ display: 'inline', marginRight: '8px' }} />{company.phone}</p>
-        </div>
-        
-        <div style={{ marginBottom: '24px' }}>
-          <h3 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '18px', fontWeight: '700' }}>Services</h3>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {company.services.map((s, i) => (
-              <span key={i} style={{
-                padding: '6px 12px',
-                background: '#f5f5f5',
-                border: '1px solid #cccccc',
-                borderRadius: '6px',
-                fontSize: '14px',
-                color: '#217fc4',
-              }}>
-                {s}
-              </span>
-            ))}
-          </div>
+          {company.yearsInBusiness && (
+            <span style={{ 
+              color: '#fff', 
+              marginLeft: '16px', 
+              fontSize: '16px',
+              background: 'rgba(255,255,255,0.2)',
+              padding: '4px 12px',
+              borderRadius: '4px',
+            }}>
+              {company.yearsInBusiness}+ Years in Business
+            </span>
+          )}
         </div>
         
-        {company.reviewSnippets && company.reviewSnippets.length > 0 && (
-          <div>
-            <h3 style={{ margin: '0 0 12px 0', color: '#374151', fontSize: '18px', fontWeight: '700' }}>Reviews</h3>
-            {company.reviewSnippets.map((review, i) => (
-              <p key={i} style={{ 
-                padding: '12px', 
-                background: '#f5f5f5', 
-                border: '1px solid #e5e5e5',
-                borderRadius: '8px',
-                margin: '0 0 8px 0',
-                fontStyle: 'italic',
-                color: '#6b7280',
-              }}>
-                "{review}"
-              </p>
-            ))}
+        {company.availability && (
+          <div style={{
+            marginTop: '16px',
+            background: 'rgba(255,255,255,0.95)',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            color: '#e63946',
+            fontWeight: '700',
+            fontSize: '16px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            <Clock size={18} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'middle' }} />
+            {company.availability}
           </div>
         )}
-        
+      </div>
+      
+      <div style={{ padding: '32px 24px' }}>
         <button
           onClick={() => window.open(`tel:${company.phone}`, '_self')}
+          data-testid="button-call-now-top"
           style={{
             width: '100%',
-            marginTop: '24px',
-            padding: '16px',
+            padding: '20px',
             background: '#e63946',
             color: '#fff',
             border: 'none',
             borderRadius: '8px',
-            fontSize: '18px',
+            fontSize: '20px',
             fontWeight: '700',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '10px',
+            gap: '12px',
+            marginBottom: '32px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            textTransform: 'uppercase',
           }}
         >
-          <Phone size={20} />
-          Call Now
+          <Phone size={24} />
+          Call Now: {company.phone}
         </button>
+        
+        {company.description && (
+          <div style={{ marginBottom: '32px' }}>
+            <p style={{ 
+              margin: '0', 
+              color: '#374151', 
+              fontSize: '18px', 
+              lineHeight: '1.7',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              {company.description}
+            </p>
+          </div>
+        )}
+        
+        {company.aboutUs && (
+          <div style={{ marginBottom: '32px', background: '#f9fafb', padding: '24px', borderRadius: '8px' }}>
+            <h2 style={{ 
+              margin: '0 0 16px 0', 
+              color: '#1f2937', 
+              fontSize: '24px', 
+              fontWeight: '700',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              About Us
+            </h2>
+            <p style={{ 
+              margin: '0', 
+              color: '#4b5563', 
+              fontSize: '16px', 
+              lineHeight: '1.7',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              {company.aboutUs}
+            </p>
+          </div>
+        )}
+        
+        {company.whyChooseUs && company.whyChooseUs.length > 0 && (
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{ 
+              margin: '0 0 20px 0', 
+              color: '#1f2937', 
+              fontSize: '24px', 
+              fontWeight: '700',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Why Choose Us
+            </h2>
+            <div style={{ display: 'grid', gap: '12px' }}>
+              {company.whyChooseUs.map((reason, i) => (
+                <div key={i} style={{ 
+                  display: 'flex', 
+                  gap: '12px', 
+                  alignItems: 'flex-start',
+                  padding: '16px',
+                  background: '#fff',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                }}>
+                  <div style={{
+                    minWidth: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: '#e63946',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#fff',
+                    fontWeight: '700',
+                    fontSize: '14px',
+                    marginTop: '2px',
+                  }}>
+                    ✓
+                  </div>
+                  <p style={{ 
+                    margin: '0', 
+                    color: '#374151', 
+                    fontSize: '16px',
+                    flex: 1,
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    {reason}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '32px' }}>
+          <div>
+            <h3 style={{ 
+              margin: '0 0 16px 0', 
+              color: '#1f2937', 
+              fontSize: '20px', 
+              fontWeight: '700',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Services Offered
+            </h3>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              {company.services.map((s, i) => (
+                <span key={i} style={{
+                  padding: '10px 16px',
+                  background: '#f3f4f6',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '6px',
+                  fontSize: '15px',
+                  color: '#1f2937',
+                  fontWeight: '600',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+          
+          {company.specialties && company.specialties.length > 0 && (
+            <div>
+              <h3 style={{ 
+                margin: '0 0 16px 0', 
+                color: '#1f2937', 
+                fontSize: '20px', 
+                fontWeight: '700',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Specialties
+              </h3>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {company.specialties.map((s, i) => (
+                  <span key={i} style={{
+                    padding: '10px 16px',
+                    background: '#fef2f2',
+                    border: '2px solid #fecaca',
+                    borderRadius: '6px',
+                    fontSize: '15px',
+                    color: '#991b1b',
+                    fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        
+        {(company.hours || company.insuranceInfo) && (
+          <div style={{ 
+            marginBottom: '32px', 
+            display: 'grid', 
+            gridTemplateColumns: company.hours && company.insuranceInfo ? '1fr 1fr' : '1fr',
+            gap: '24px',
+            background: '#f9fafb',
+            padding: '24px',
+            borderRadius: '8px',
+          }}>
+            {company.hours && (
+              <div>
+                <h3 style={{ 
+                  margin: '0 0 12px 0', 
+                  color: '#1f2937', 
+                  fontSize: '18px', 
+                  fontWeight: '700',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <Clock size={20} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'middle' }} />
+                  Business Hours
+                </h3>
+                <p style={{ 
+                  margin: '0', 
+                  color: '#4b5563', 
+                  fontSize: '15px', 
+                  lineHeight: '1.7',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  whiteSpace: 'pre-line',
+                }}>
+                  {company.hours}
+                </p>
+              </div>
+            )}
+            
+            {company.insuranceInfo && (
+              <div>
+                <h3 style={{ 
+                  margin: '0 0 12px 0', 
+                  color: '#1f2937', 
+                  fontSize: '18px', 
+                  fontWeight: '700',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <Shield size={20} style={{ display: 'inline', marginRight: '8px', verticalAlign: 'middle' }} />
+                  Insurance & Licensing
+                </h3>
+                <p style={{ 
+                  margin: '0', 
+                  color: '#4b5563', 
+                  fontSize: '15px', 
+                  lineHeight: '1.7',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  whiteSpace: 'pre-line',
+                }}>
+                  {company.insuranceInfo}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+        
+        {company.priceSheetUrl && (
+          <div style={{ marginBottom: '32px', background: '#fef3c7', padding: '20px', borderRadius: '8px', border: '2px solid #fbbf24' }}>
+            <h3 style={{ 
+              margin: '0 0 12px 0', 
+              color: '#92400e', 
+              fontSize: '20px', 
+              fontWeight: '700',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              View Our Price Sheet
+            </h3>
+            <a 
+              href={company.priceSheetUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              data-testid="link-price-sheet"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 20px',
+                background: '#92400e',
+                color: '#fff',
+                textDecoration: 'none',
+                borderRadius: '6px',
+                fontSize: '16px',
+                fontWeight: '700',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+            >
+              <FileText size={20} />
+              Download Price Sheet
+            </a>
+          </div>
+        )}
+        
+        {company.reviewSnippets && company.reviewSnippets.length > 0 && (
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{ 
+              margin: '0 0 20px 0', 
+              color: '#1f2937', 
+              fontSize: '24px', 
+              fontWeight: '700',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              What Our Customers Say
+            </h2>
+            <div style={{ display: 'grid', gap: '16px' }}>
+              {company.reviewSnippets.map((review, i) => (
+                <div key={i} style={{ 
+                  padding: '20px', 
+                  background: '#fff', 
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  position: 'relative',
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '16px',
+                    left: '16px',
+                    fontSize: '32px',
+                    color: '#e5e7eb',
+                    lineHeight: '1',
+                  }}>
+                    "
+                  </div>
+                  <p style={{
+                    margin: '0',
+                    paddingLeft: '24px',
+                    fontStyle: 'italic',
+                    color: '#4b5563',
+                    fontSize: '16px',
+                    lineHeight: '1.7',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    {review}
+                  </p>
+                  <div style={{ display: 'flex', gap: '4px', marginTop: '12px', paddingLeft: '24px' }}>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        size={16}
+                        fill="#fbbf24"
+                        color="#fbbf24"
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        <div style={{ 
+          background: '#1f2937', 
+          padding: '32px', 
+          borderRadius: '12px',
+          marginBottom: '24px',
+        }}>
+          <h2 style={{ 
+            margin: '0 0 20px 0', 
+            color: '#fff', 
+            fontSize: '28px', 
+            fontWeight: '700',
+            textAlign: 'center',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Ready to Get Started?
+          </h2>
+          <p style={{
+            margin: '0 0 24px 0',
+            color: '#d1d5db',
+            fontSize: '16px',
+            textAlign: 'center',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Call now for a free quote and same-day service availability
+          </p>
+          <button
+            onClick={() => window.open(`tel:${company.phone}`, '_self')}
+            data-testid="button-call-now-bottom"
+            style={{
+              width: '100%',
+              padding: '20px',
+              background: '#e63946',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '20px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              textTransform: 'uppercase',
+            }}
+          >
+            <Phone size={24} />
+            Call Now: {company.phone}
+          </button>
+        </div>
+        
+        <div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '14px' }}>
+          <MapPin size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+          {company.address}
+          {company.website && (
+            <>
+              <span style={{ margin: '0 8px' }}>•</span>
+              <a 
+                href={company.website} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                data-testid="link-website"
+                style={{ color: '#e63946', textDecoration: 'none', fontWeight: '600' }}
+              >
+                Visit Website
+              </a>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
