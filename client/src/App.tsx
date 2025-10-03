@@ -228,8 +228,19 @@ function LandingPage() {
             backgroundColor: '#fff',
             padding: '5px',
             borderRadius: '10px',
-            boxShadow: '0 10px 40px rgba(168,85,247,0.2)',
-          }}>
+            boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+            transform: 'translateY(-1px)',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+            e.currentTarget.style.transform = 'translateY(-1px)';
+          }}
+          >
             <input
               type="text"
               value={searchQuery}
@@ -356,22 +367,22 @@ function LandingPage() {
                   color: '#374151',
                   fontWeight: '600',
                   fontSize: '14px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.15)',
+                  boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
                   transition: 'all 0.2s',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '6px',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  transform: 'translateY(-2px)',
+                  transform: 'translateY(-1px)',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.35), 0 4px 8px rgba(0,0,0,0.2)';
-                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.15)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
