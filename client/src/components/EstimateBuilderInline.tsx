@@ -168,8 +168,8 @@ export default function EstimateBuilderInline() {
       <button 
         style={{
           width: '100%',
-          background: '#fbbf24',
-          color: '#000',
+          background: '#e63946',
+          color: '#fff',
           padding: '14px',
           borderRadius: '0',
           border: 'none',
