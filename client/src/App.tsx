@@ -262,7 +262,7 @@ function LandingPage() {
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: '#e63946',
+                background: '#000000',
                 color: '#000',
                 border: 'none',
                 borderRadius: '8px',
@@ -928,7 +928,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       )}
 
       <header style={{
-        background: '#e63946',
+        background: '#000000',
         padding: '12px 16px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       }}>
@@ -1014,7 +1014,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               type="submit"
               style={{
                 padding: '10px 16px',
-                background: '#e63946',
+                background: '#000000',
                 color: '#000',
                 border: 'none',
                 borderRadius: '8px',
@@ -1838,7 +1838,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             onClick={() => setShowBusinessForm(true)}
             className="breathing-button"
             style={{
-              background: '#e63946',
+              background: '#000000',
               color: '#000',
               padding: '10px 16px',
               borderRadius: '8px',
@@ -1884,7 +1884,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             boxShadow: '0 15px 50px rgba(0,0,0,0.4)',
           }} onClick={(e) => e.stopPropagation()}>
             <div style={{
-              background: '#e63946',
+              background: '#000000',
               padding: '20px',
               borderRadius: '16px 16px 0 0',
               position: 'relative',
@@ -2155,7 +2155,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 type="submit"
                 style={{
                   width: '100%',
-                  background: '#e63946',
+                  background: '#000000',
                   color: '#000',
                   padding: '14px',
                   borderRadius: '8px',
@@ -2226,7 +2226,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {index === 0 && (
                     <div style={{
                       display: 'inline-block',
-                      background: '#e63946',
+                      background: '#000000',
                       color: '#000',
                       padding: '4px 10px',
                       borderRadius: '0',
@@ -2404,7 +2404,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Call Now Button */}
                   <button 
                     style={{
-                      background: '#e63946',
+                      background: '#000000',
                       color: '#000',
                       padding: '12px 20px',
                       borderRadius: '0',
@@ -2478,7 +2478,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         style={{
                           flex: '1',
                           minWidth: '140px',
-                          background: '#e63946',
+                          background: '#000000',
                           color: '#000',
                           padding: '10px 16px',
                           borderRadius: '8px',
@@ -2659,7 +2659,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     }}>
       <div style={{
-        background: '#e63946',
+        background: '#000000',
         padding: '32px 24px',
         position: 'relative',
       }}>
@@ -2758,7 +2758,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           style={{
             width: '100%',
             padding: '20px',
-            background: '#e63946',
+            background: '#000000',
             color: '#000',
             border: 'none',
             borderRadius: '8px',
@@ -2841,7 +2841,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     minWidth: '24px',
                     height: '24px',
                     borderRadius: '50%',
-                    background: '#e63946',
+                    background: '#000000',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -3113,7 +3113,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             style={{
               width: '100%',
               padding: '20px',
-              background: '#e63946',
+              background: '#000000',
               color: '#000',
               border: 'none',
               borderRadius: '8px',
