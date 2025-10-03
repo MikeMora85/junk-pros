@@ -55,7 +55,7 @@ import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg
 import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
-import curbsideJunkHero from "@assets/IMG_2368_1759470958393.jpeg";
+import curbsideJunkHero from "@assets/DE088318-00B4-4F2A-A383-99A3CA49C6CA_1759473512583.png";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -108,7 +108,7 @@ function LandingPage() {
       minHeight: '100vh',
       background: '#ffffff',
     }}>
-      {/* Hero Section with Dump Truck */}
+      {/* Hero Section with Logo */}
       <div style={{
         position: 'relative',
         height: '500px',
@@ -119,43 +119,6 @@ function LandingPage() {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(230,57,70,0.1)',
-        }} />
-        <div style={{
-          position: 'relative',
-          zIndex: 1,
-          textAlign: 'center',
-          color: '#fff',
-          maxWidth: '900px',
-          padding: '0 20px',
-        }}>
-          <h1 style={{
-            fontSize: '56px',
-            fontWeight: '700',
-            marginBottom: '20px',
-            textShadow: '0 4px 12px rgba(0,0,0,0.4)',
-            lineHeight: '1.2',
-            letterSpacing: '-0.02em',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}>
-            America's Premier Junk Removal Directory
-          </h1>
-          <p style={{
-            fontSize: '22px',
-            marginBottom: '32px',
-            textShadow: '0 2px 8px rgba(0,0,0,0.3)',
-            opacity: 0.95,
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}>
-            Find Trusted Local Pros, Get Instant Quotes
-          </p>
-        </div>
       </div>
 
       <header style={{
