@@ -55,7 +55,7 @@ import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg
 import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
-import curbsideJunkHero from "@assets/stock_images/household_items_couc_0d75cf98.jpg";
+import curbsideJunkHero from "@assets/IMG_2368_1759470958393.jpeg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
