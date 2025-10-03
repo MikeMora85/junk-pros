@@ -13,7 +13,7 @@ import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
 import arizonaHero from "@assets/stock_images/grand_canyon_arizona_c5218ef2.jpg";
 import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.jpg";
 import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
-import floridaHero from "@assets/stock_images/miami_beach_florida__ef428d6f.jpg";
+import floridaHero from "@assets/stock_images/miami_beach_ocean_dr_91ce49b8.jpg";
 import newYorkHero from "@assets/stock_images/statue_of_liberty_ne_70f49b5f.jpg";
 import washingtonHero from "@assets/stock_images/space_needle_seattle_e0d9ac78.jpg";
 import coloradoHero from "@assets/stock_images/rocky_mountains_colo_f5782bd2.jpg";
