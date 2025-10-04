@@ -2232,6 +2232,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             margin: '0 0 8px 0',
             color: '#1a1a1a',
             letterSpacing: '-0.02em',
+            whiteSpace: 'nowrap',
           }} data-testid="text-page-title">
             {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
           </h2>
