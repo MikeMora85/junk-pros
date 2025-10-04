@@ -53,12 +53,23 @@ app.use((req, res, next) => {
       console.log(`Server running on port ${PORT}`);
     });
   } else {
+    // Register API routes FIRST, before Vite middleware
+    const httpServer = await registerRoutes(app, storage);
+    
     const vite = await createViteServer({
       configFile: false,
       server: { 
         middlewareMode: true,
         host: true,
-        hmr: false,
+        hmr: {
+          host: "localhost",
+        },
+        allowedHosts: [
+          '.replit.dev',
+          '.repl.co',
+          'localhost',
+          '.spock.replit.dev'
+        ],
       },
       appType: "spa",
       root: "client",
@@ -68,14 +79,17 @@ app.use((req, res, next) => {
           "@shared": path.resolve(process.cwd(), "./shared"),
           "@assets": path.resolve(process.cwd(), "./attached_assets"),
         },
+        dedupe: ['react', 'react-dom'],
+      },
+      optimizeDeps: {
+        include: ['react', 'react-dom'],
+        force: true,
       },
       plugins: [
         (await import("@vitejs/plugin-react")).default(),
       ],
     });
     app.use(vite.middlewares);
-    
-    const httpServer = await registerRoutes(app, storage);
     
     const PORT = process.env.PORT || 5000;
     httpServer.listen(PORT, "0.0.0.0", () => {
