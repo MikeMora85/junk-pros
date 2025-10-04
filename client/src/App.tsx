@@ -2401,7 +2401,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       width: '100%',
                       textAlign: 'center',
                     }}>
-                      3 Ways to Get a Quote
+                      3 Ways To Get A Quote
                     </h4>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
