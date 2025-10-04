@@ -3,16 +3,22 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Company } from "@shared/schema";
-import { CheckCircle, X, Edit } from "lucide-react";
+import { CheckCircle, X, Edit, LogOut, UserPlus } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
   const [editingCompany, setEditingCompany] = useState<Company | null>(null);
+  const [inviteEmail, setInviteEmail] = useState("");
 
   const { data: pendingCompanies = [], isLoading } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/pending'],
+    enabled: !!user?.isAdmin,
+  });
+
+  const { data: activeCompanies = [] } = useQuery<Company[]>({
+    queryKey: ['/api/admin/companies/active'],
     enabled: !!user?.isAdmin,
   });
 
@@ -63,6 +69,22 @@ export default function AdminDashboard() {
     },
   });
 
+  const inviteAdminMutation = useMutation({
+    mutationFn: async (email: string) => {
+      await apiRequest('/api/admin/invite', {
+        method: 'POST',
+        body: { email },
+      });
+    },
+    onSuccess: () => {
+      setInviteEmail("");
+      alert("Admin invitation sent successfully!");
+    },
+    onError: (error: any) => {
+      alert(error.message || "Failed to invite admin");
+    },
+  });
+
   if (authLoading) {
     return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
   }
@@ -104,22 +126,98 @@ export default function AdminDashboard() {
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <h1 style={{ fontSize: '32px', fontWeight: '700', color: '#000' }}>Admin Dashboard</h1>
-        <button
-          onClick={() => setLocation('/')}
-          style={{
-            background: '#e5e5e5',
-            color: '#000',
-            padding: '10px 16px',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer',
-          }}
-          data-testid="button-back-home"
-        >
-          Back to Home
-        </button>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button
+            onClick={() => setLocation('/')}
+            style={{
+              background: '#e5e5e5',
+              color: '#000',
+              padding: '10px 16px',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: 'pointer',
+            }}
+            data-testid="button-back-home"
+          >
+            Back to Home
+          </button>
+          <button
+            onClick={() => window.location.href = '/api/logout'}
+            style={{
+              background: '#dc2626',
+              color: '#fff',
+              padding: '10px 16px',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+            data-testid="button-logout"
+          >
+            <LogOut size={16} />
+            Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Invite Admin Section */}
+      <div style={{ 
+        background: '#f3f4f6', 
+        border: '2px solid #e5e7eb',
+        borderRadius: '8px', 
+        padding: '20px', 
+        marginBottom: '32px' 
+      }}>
+        <h2 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '12px', color: '#000' }}>
+          Invite Admin
+        </h2>
+        <p style={{ color: '#666', marginBottom: '16px', fontSize: '14px' }}>
+          Grant admin access to other users by entering their email address
+        </p>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <input
+            type="email"
+            value={inviteEmail}
+            onChange={(e) => setInviteEmail(e.target.value)}
+            placeholder="Enter email address"
+            style={{
+              flex: 1,
+              padding: '10px 16px',
+              border: '2px solid #000',
+              borderRadius: '6px',
+              fontSize: '14px',
+            }}
+            data-testid="input-invite-email"
+          />
+          <button
+            onClick={() => inviteAdminMutation.mutate(inviteEmail)}
+            disabled={!inviteEmail || inviteAdminMutation.isPending}
+            style={{
+              background: '#fbbf24',
+              color: '#000',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '6px',
+              fontSize: '14px',
+              fontWeight: '700',
+              cursor: inviteEmail ? 'pointer' : 'not-allowed',
+              opacity: inviteEmail ? 1 : 0.5,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+            data-testid="button-invite-admin"
+          >
+            <UserPlus size={16} />
+            {inviteAdminMutation.isPending ? 'Inviting...' : 'Invite'}
+          </button>
+        </div>
       </div>
 
       {/* My Companies Section */}
@@ -263,7 +361,7 @@ export default function AdminDashboard() {
       ) : pendingCompanies.length === 0 ? (
         <p style={{ color: '#666' }}>No pending businesses to review</p>
       ) : (
-        <div style={{ display: 'grid', gap: '16px' }}>
+        <div style={{ display: 'grid', gap: '16px', marginBottom: '48px' }}>
           {pendingCompanies.map((company) => (
             <div
               key={company.id}
@@ -327,6 +425,41 @@ export default function AdminDashboard() {
                   <X size={16} />
                   Deny
                 </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Active Businesses Section */}
+      <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '20px', color: '#000' }}>
+        Active Businesses ({activeCompanies.length})
+      </h2>
+
+      {activeCompanies.length === 0 ? (
+        <p style={{ color: '#666' }}>No active businesses</p>
+      ) : (
+        <div style={{ display: 'grid', gap: '16px' }}>
+          {activeCompanies.map((company) => (
+            <div
+              key={company.id}
+              style={{
+                background: '#fff',
+                border: '2px solid #16a34a',
+                borderRadius: '8px',
+                padding: '20px',
+              }}
+            >
+              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '12px', color: '#000' }}>
+                {company.name}
+              </h3>
+              <div style={{ color: '#666' }}>
+                <p><strong>Phone:</strong> {company.phone}</p>
+                <p><strong>Address:</strong> {company.address}</p>
+                <p><strong>Website:</strong> {company.website}</p>
+                <p><strong>City/State:</strong> {company.city}, {company.state}</p>
+                <p><strong>Rating:</strong> {company.rating} ({company.reviews} reviews)</p>
+                {company.description && <p style={{ marginTop: '8px', color: '#000' }}>{company.description}</p>}
               </div>
             </div>
           ))}

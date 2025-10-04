@@ -160,6 +160,38 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Get active companies (admin only)
+  app.get("/api/admin/companies/active", isAuthenticated, isAdmin(storage), async (req, res) => {
+    try {
+      const companies = await storage.getApprovedCompanies();
+      res.json(companies);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch active companies" });
+    }
+  });
+
+  // Invite admin (admin only)
+  app.post("/api/admin/invite", isAuthenticated, isAdmin(storage), async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email || typeof email !== 'string') {
+        return res.status(400).json({ error: "Valid email is required" });
+      }
+
+      const result = await storage.makeUserAdmin(email);
+      
+      if (!result) {
+        return res.status(404).json({ error: "User with this email not found. User must sign up first." });
+      }
+
+      res.json({ message: "User granted admin access successfully", user: result });
+    } catch (error) {
+      console.error("Error inviting admin:", error);
+      res.status(500).json({ error: "Failed to invite admin" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
