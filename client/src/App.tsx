@@ -5,6 +5,7 @@ import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Hom
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
+import AdminDashboard from "./pages/AdminDashboard";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -2926,6 +2927,7 @@ function App() {
       <Switch>
         <Route path="/" component={LandingPage} />
         <Route path="/add-business" component={AddBusiness} />
+        <Route path="/admin" component={AdminDashboard} />
         <Route path="/:state/:city">
           {(params) => <CityPage city={params.city} state={params.state} />}
         </Route>
