@@ -869,7 +869,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         <a
           href="/"
           style={{
-            backgroundColor: '#fff',
+            backgroundColor: '#fbbf24',
             color: '#000',
             padding: '10px',
             borderRadius: '8px',
