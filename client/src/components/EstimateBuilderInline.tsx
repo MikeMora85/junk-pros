@@ -182,7 +182,7 @@ export default function EstimateBuilderInline() {
           color: '#000',
           marginBottom: '8px',
         }}>
-          📚 Educational Tool Only
+          Educational Tool Only
         </div>
         <div style={{
           fontSize: '12px',
