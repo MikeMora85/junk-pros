@@ -7,7 +7,7 @@ import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Auth middleware
-  await setupAuth(app);
+  await setupAuth(app, storage);
 
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
@@ -86,7 +86,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   });
 
   // Admin routes
-  app.get("/api/admin/companies/pending", isAuthenticated, isAdmin, async (req, res) => {
+  app.get("/api/admin/companies/pending", isAuthenticated, isAdmin(storage), async (req, res) => {
     try {
       const companies = await storage.getPendingCompanies();
       res.json(companies);
@@ -95,7 +95,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
-  app.patch("/api/admin/companies/:id/status", isAuthenticated, isAdmin, async (req, res) => {
+  app.patch("/api/admin/companies/:id/status", isAuthenticated, isAdmin(storage), async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;

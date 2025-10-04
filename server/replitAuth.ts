@@ -6,7 +6,7 @@ import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
-import { storage } from "./storage";
+import type { IStorage } from "./storage";
 
 if (!process.env.REPLIT_DOMAINS) {
   throw new Error("Environment variable REPLIT_DOMAINS not provided");
@@ -56,6 +56,7 @@ function updateUserSession(
 
 async function upsertUser(
   claims: any,
+  storage: IStorage,
 ) {
   await storage.upsertUser({
     id: claims["sub"],
@@ -66,7 +67,7 @@ async function upsertUser(
   });
 }
 
-export async function setupAuth(app: Express) {
+export async function setupAuth(app: Express, storage: IStorage) {
   app.set("trust proxy", 1);
   app.use(getSession());
   app.use(passport.initialize());
@@ -80,7 +81,7 @@ export async function setupAuth(app: Express) {
   ) => {
     const user = {};
     updateUserSession(user, tokens);
-    await upsertUser(tokens.claims());
+    await upsertUser(tokens.claims(), storage);
     verified(null, user);
   };
 
@@ -156,17 +157,19 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const isAdmin: RequestHandler = async (req, res, next) => {
-  const user = req.user as any;
-  
-  if (!req.isAuthenticated() || !user.claims?.sub) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+export function isAdmin(storage: IStorage): RequestHandler {
+  return async (req, res, next) => {
+    const user = req.user as any;
+    
+    if (!req.isAuthenticated() || !user.claims?.sub) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-  const dbUser = await storage.getUser(user.claims.sub);
-  if (!dbUser?.isAdmin) {
-    return res.status(403).json({ message: "Forbidden: Admin access required" });
-  }
+    const dbUser = await storage.getUser(user.claims.sub);
+    if (!dbUser?.isAdmin) {
+      return res.status(403).json({ message: "Forbidden: Admin access required" });
+    }
 
-  next();
-};
+    next();
+  };
+}
