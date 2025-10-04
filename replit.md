@@ -4,6 +4,16 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content.
 
 ## Recent Changes
+- 2025-10-04: Redesigned business signup as comprehensive full-page experience
+  - Created new AddBusiness page (`/add-business`) replacing modal-based signup
+  - Added educational content about industry standards and minimum pricing ($38/cubic yard)
+  - Implemented franchise exclusion messaging (no franchises accepted)
+  - Added pricing tier options (Basic Free, Featured $49/month)
+  - Built complete signup form with login creation and location validation
+  - Emphasized value proposition and quality standards for independent operators
+  - Updated all text to black (#000), removed all grey text
+  - Changed slider to black line, updated button and form element colors to brand yellow (#fbbf24)
+  - Added green checkmark badge to TOP RATED company profiles
 - 2025-10-03: Enhanced company profile pages to be comprehensive lead gen landing pages
   - Added new fields: description, hours, availability, price sheets, years in business, insurance info, specialties, about us, why choose us
   - Redesigned CompanyDetailInline component with hero section, multiple CTAs, and detailed business information
