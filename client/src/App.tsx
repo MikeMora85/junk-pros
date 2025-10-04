@@ -2399,7 +2399,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       margin: '0 0 16px 0',
                       color: '#374151',
                       width: '100%',
-                      textAlign: 'left',
+                      textAlign: 'center',
                     }}>
                       3 Ways to Get a Quote
                     </h4>
