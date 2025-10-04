@@ -289,9 +289,9 @@ function LandingPage() {
           </h3>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+            gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '10px',
-            maxWidth: '1000px',
+            maxWidth: '600px',
             margin: '0 auto',
           }}>
             {[
