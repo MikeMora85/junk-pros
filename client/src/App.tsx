@@ -376,7 +376,6 @@ function LandingPage() {
                 }}
                 data-testid={`link-state-${state.slug}`}
               >
-                <MapPin size={14} color="#2563eb" />
                 {state.name}
               </a>
             ))}
