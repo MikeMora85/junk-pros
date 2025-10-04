@@ -283,10 +283,23 @@ export default function AddBusiness() {
                 padding: '16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
+                position: 'relative',
               }}
               data-testid="tier-basic"
             >
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              <div style={{
+                position: 'absolute',
+                top: '16px',
+                left: '16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '4px 10px',
+                fontSize: '14px',
+                fontWeight: '700',
+              }}>
+                1
+              </div>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px', marginTop: '32px' }}>
                 Basic Listing - FREE
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
@@ -315,6 +328,18 @@ export default function AddBusiness() {
             >
               <div style={{
                 position: 'absolute',
+                top: '16px',
+                left: '16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '4px 10px',
+                fontSize: '14px',
+                fontWeight: '700',
+              }}>
+                2
+              </div>
+              <div style={{
+                position: 'absolute',
                 top: '-12px',
                 right: '16px',
                 background: '#fbbf24',
@@ -325,7 +350,7 @@ export default function AddBusiness() {
               }}>
                 RECOMMENDED
               </div>
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px', marginTop: '32px' }}>
                 Professional Profile - $10/month
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
@@ -353,7 +378,19 @@ export default function AddBusiness() {
               }}
               data-testid="tier-featured"
             >
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              <div style={{
+                position: 'absolute',
+                top: '16px',
+                left: '16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '4px 10px',
+                fontSize: '14px',
+                fontWeight: '700',
+              }}>
+                3
+              </div>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px', marginTop: '32px' }}>
                 Featured Listing - $49/month
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
