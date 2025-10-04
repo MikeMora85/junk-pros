@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
-import { CheckCircle, XCircle, Home, TrendingUp, Users, Shield, DollarSign, Award } from "lucide-react";
+import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award } from "lucide-react";
 
 export default function AddBusiness() {
   const [formData, setFormData] = useState({
@@ -21,39 +20,7 @@ export default function AddBusiness() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
-      {/* Header with Home Link */}
-      <div style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        backgroundColor: '#fff',
-        borderBottom: '1px solid #fbbf24',
-        padding: '12px 16px',
-      }}>
-        <Link href="/">
-          <button
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: '#fff',
-              border: '2px solid #000',
-              borderRadius: '6px',
-              padding: '8px 16px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '700',
-              color: '#000',
-            }}
-            data-testid="button-home"
-          >
-            <Home size={18} />
-            Back to Home
-          </button>
-        </Link>
-      </div>
-
+    <div style={{ minHeight: '100vh', backgroundColor: '#fff', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
       {/* Hero Section */}
       <div style={{
         background: '#fbbf24',
@@ -66,6 +33,7 @@ export default function AddBusiness() {
           color: '#000',
           marginBottom: '16px',
           letterSpacing: '-0.02em',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
           Join the Premier Junk Removal Directory
         </h1>
@@ -75,6 +43,7 @@ export default function AddBusiness() {
           maxWidth: '800px',
           margin: '0 auto',
           lineHeight: '1.6',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
           Connect with customers actively searching for professional junk removal services in your area. Built exclusively for independent, quality-focused operators.
         </p>
@@ -95,6 +64,7 @@ export default function AddBusiness() {
             color: '#000',
             marginBottom: '24px',
             letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Why Independent Operators Choose Us
           </h2>
@@ -112,9 +82,9 @@ export default function AddBusiness() {
             }}>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
                 <TrendingUp size={24} color="#fbbf24" />
-                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>Qualified Leads</h3>
+                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>Qualified Leads</h3>
               </div>
-              <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                 Customers come to us ready to hire. They've already done their research and are comparing local options, not just browsing.
               </p>
             </div>
@@ -126,9 +96,9 @@ export default function AddBusiness() {
             }}>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
                 <Users size={24} color="#fbbf24" />
-                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>No Franchise Competition</h3>
+                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>No Franchise Competition</h3>
               </div>
-              <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                 We only list independent operators. Customers find you, not big franchise chains with inflated pricing and corporate overhead.
               </p>
             </div>
@@ -140,9 +110,9 @@ export default function AddBusiness() {
             }}>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
                 <Shield size={24} color="#fbbf24" />
-                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>Quality Standards</h3>
+                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>Quality Standards</h3>
               </div>
-              <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                 We verify minimum pricing standards to protect the industry and ensure sustainable business practices for all operators.
               </p>
             </div>
@@ -170,10 +140,10 @@ export default function AddBusiness() {
             <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
               <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
                   Independent Operators Only
                 </h4>
-                <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                   We exclusively list locally-owned, independent junk removal companies. No franchises accepted.
                 </p>
               </div>
@@ -182,10 +152,10 @@ export default function AddBusiness() {
             <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
               <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
                   Minimum Pricing Standards
                 </h4>
-                <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                   Must charge at least <strong>$38 per cubic yard</strong>. Below-market pricing hurts the entire industry by setting unsustainable expectations and devaluing professional service.
                 </p>
               </div>
@@ -194,10 +164,10 @@ export default function AddBusiness() {
             <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
               <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
                   Service Area Verification
                 </h4>
-                <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                   You can only claim cities where your business actually operates. Each listing is tied to your verified service locations.
                 </p>
               </div>
@@ -212,10 +182,10 @@ export default function AddBusiness() {
             <div style={{ display: 'flex', gap: '12px' }}>
               <XCircle size={20} color="#000" />
               <div>
-                <h4 style={{ fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
                   We Do NOT Accept:
                 </h4>
-                <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
                   <li>Franchise operations (1-800-GOT-JUNK, College Hunks, etc.)</li>
                   <li>Companies charging below industry minimums (&lt;$38/cubic yard)</li>
                   <li>Unlicensed or uninsured operators</li>
@@ -242,15 +212,15 @@ export default function AddBusiness() {
           }}>
             Industry Pricing Standards
           </h2>
-          <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
+          <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
             Understanding proper pricing ensures sustainable business operations and fair compensation for your work:
           </p>
           
           <div style={{ marginBottom: '16px' }}>
-            <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
               Standard Load Pricing (2024)
             </h4>
-            <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+            <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
               <li>Minimum load (¼ truck, ~3.5 cubic yards): $150-$250</li>
               <li>Half truck (~7 cubic yards): $300-$450</li>
               <li>¾ truck (~10 cubic yards): $450-$650</li>
@@ -264,7 +234,7 @@ export default function AddBusiness() {
             border: '2px solid #fbbf24',
           }}>
             <DollarSign size={20} color="#fbbf24" style={{ marginBottom: '8px' }} />
-            <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
               <strong>Why $38/cubic yard minimum?</strong> This covers your truck costs, fuel, labor, disposal fees, insurance, and business overhead. Charging less means you're working at a loss or cutting corners that could hurt you long-term.
             </p>
           </div>
@@ -298,13 +268,13 @@ export default function AddBusiness() {
               }}
               data-testid="tier-basic"
             >
-              <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Basic Listing - FREE
               </h3>
-              <p style={{ fontSize: '14px', color: '#000', marginBottom: '12px' }}>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Get discovered by local customers searching for junk removal
               </p>
-              <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
                 <li>Profile page with business details</li>
                 <li>Contact information display</li>
                 <li>Service area coverage</li>
@@ -336,13 +306,13 @@ export default function AddBusiness() {
               }}>
                 RECOMMENDED
               </div>
-              <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Featured Listing - $49/month
               </h3>
-              <p style={{ fontSize: '14px', color: '#000', marginBottom: '12px' }}>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Stand out and get more leads with premium placement
               </p>
-              <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
                 <li>Everything in Basic</li>
                 <li><strong>Top placement in search results</strong></li>
                 <li><strong>Featured badge on your profile</strong></li>
@@ -498,7 +468,7 @@ export default function AddBusiness() {
               }}
               data-testid="input-city"
             />
-            <p style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '12px', color: '#000', marginTop: '4px' }}>
               You can add more cities after signup
             </p>
           </div>
@@ -565,7 +535,7 @@ export default function AddBusiness() {
           </button>
 
           {!formData.pricingTier && (
-            <p style={{ fontSize: '12px', color: '#000', marginTop: '8px', textAlign: 'center' }}>
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '12px', color: '#000', marginTop: '8px', textAlign: 'center' }}>
               Please select a pricing plan above
             </p>
           )}
@@ -580,10 +550,10 @@ export default function AddBusiness() {
           border: '1px solid #e5e5e5',
         }}>
           <Award size={32} color="#fbbf24" style={{ margin: '0 auto 16px' }} />
-          <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
+          <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
             Join the Community
           </h3>
-          <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
+          <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
             Thousands of homeowners use our directory every month to find trusted local junk removal professionals. Get your share of qualified leads and grow your business.
           </p>
         </div>
