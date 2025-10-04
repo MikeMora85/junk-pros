@@ -336,7 +336,7 @@ export default function AddBusiness() {
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 position: 'relative',
-                overflow: 'hidden',
+                marginTop: '16px',
               }}
               data-testid="tier-featured"
             >
