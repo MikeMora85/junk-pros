@@ -936,9 +936,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       <div style={{
         position: 'fixed',
         top: '16px',
-        left: '16px',
-        right: '16px',
+        left: 0,
+        right: 0,
         zIndex: 100,
+        padding: '0 16px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -1996,7 +1997,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         top: 0,
         zIndex: 100,
         background: 'transparent',
-        padding: '16px',
+        padding: '16px 16px',
         overflow: 'hidden',
       }}>
         <div style={{
