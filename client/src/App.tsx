@@ -2394,10 +2394,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     borderTop: '1px solid #e5e5e5',
                   }}>
                     <h4 style={{
-                      fontSize: '18px',
+                      fontSize: '22px',
                       fontWeight: '700',
-                      margin: '0 0 12px 0',
+                      margin: '0 0 16px 0',
                       color: '#374151',
+                      width: '100%',
+                      textAlign: 'left',
                     }}>
                       3 Ways to Get a Quote
                     </h4>
