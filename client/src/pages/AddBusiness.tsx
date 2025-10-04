@@ -1,7 +1,11 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useAuth } from "@/hooks/useAuth";
 import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft } from "lucide-react";
 
 export default function AddBusiness() {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     businessName: "",
     email: "",
@@ -18,6 +22,24 @@ export default function AddBusiness() {
   const [availabilityStatus, setAvailabilityStatus] = useState<'idle' | 'available' | 'taken'>('idle');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const createBusinessMutation = useMutation({
+    mutationFn: async (data: any) => {
+      return await apiRequest('/api/companies', {
+        method: 'POST',
+        body: data,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+      setIsSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+    onError: (error) => {
+      console.error('Failed to create business:', error);
+      alert('Failed to create business. Please try again.');
+    },
+  });
+
   const handleBack = () => {
     window.history.back();
   };
@@ -32,10 +54,24 @@ export default function AddBusiness() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    setIsSubmitted(true);
-    // Scroll to top to show success message
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Create company data from form
+    const companyData = {
+      name: formData.businessName,
+      address: `${formData.city}, ${formData.state}`,
+      phone: formData.phone,
+      website: formData.email, // Using email as placeholder for website
+      rating: "0.0",
+      reviews: 0,
+      services: ["Junk Removal"],
+      longitude: -111.9, // Default coordinates, would need geocoding in real app
+      latitude: 33.4,
+      local: true,
+      city: formData.city,
+      state: formData.state,
+    };
+
+    createBusinessMutation.mutate(companyData);
   };
 
   return (
