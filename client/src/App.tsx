@@ -937,12 +937,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               textAlign: 'center',
             }}>
               <h1 style={{
-                fontSize: '28px',
+                fontSize: '24px',
                 fontWeight: '700',
                 color: '#000',
                 margin: '0 0 4px 0',
                 letterSpacing: '-0.02em',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                whiteSpace: 'nowrap',
               }}>
                 {stateName} Junk Removal
               </h1>
