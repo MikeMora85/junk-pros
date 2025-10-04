@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -2256,6 +2256,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   key={c.id}
                   onClick={() => setSelectedCompanyId(c.id)} 
                   style={{
+                    position: 'relative',
                     backgroundColor: '#fff',
                     borderRadius: '0',
                     padding: '16px',
@@ -2267,28 +2268,46 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
-                    overflow: 'hidden',
+                    overflow: 'visible',
                     cursor: 'pointer',
                     transition: 'background-color 0.2s',
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
                   {index === 0 && (
-                    <div style={{
-                      display: 'inline-block',
-                      background: '#fbbf24',
-                      color: '#000',
-                      padding: '4px 10px',
-                      borderRadius: '0',
-                      fontSize: '11px',
-                      fontWeight: '700',
-                      marginBottom: '12px',
-                      marginLeft: '0',
-                      marginTop: '0',
-                      boxShadow: 'none',
-                    }}>
-                      TOP RATED
-                    </div>
+                    <>
+                      <div style={{
+                        display: 'inline-block',
+                        background: '#fbbf24',
+                        color: '#000',
+                        padding: '4px 10px',
+                        borderRadius: '0',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        marginBottom: '12px',
+                        marginLeft: '0',
+                        marginTop: '0',
+                        boxShadow: 'none',
+                      }}>
+                        TOP RATED
+                      </div>
+                      <div style={{
+                        position: 'absolute',
+                        top: '-8px',
+                        right: '-8px',
+                        backgroundColor: '#16a34a',
+                        borderRadius: '50%',
+                        width: '32px',
+                        height: '32px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 2px 8px rgba(22, 163, 74, 0.4)',
+                        zIndex: 10,
+                      }}>
+                        <CheckCircle size={20} color="#fff" fill="#16a34a" />
+                      </div>
+                    </>
                   )}
                   
                   {/* Image Carousel */}
