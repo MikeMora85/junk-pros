@@ -1,9 +1,17 @@
 # Junk Removal Directory Website
 
 ## Overview
-A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content.
+A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-04: Implemented admin system with Replit Auth
+  - Added Replit Auth integration for user login/logout
+  - Created admin dashboard at `/admin` for approving/denying businesses
+  - Businesses now require approval before appearing in directory
+  - First user to login automatically becomes admin
+  - Admin can edit their own business (Mora's Junk Removal) from dashboard
+  - Business submissions now pending by default, shown only after admin approval
+  - Added user authentication to associate businesses with owners
 - 2025-10-04: Redesigned business signup as comprehensive full-page experience
   - Created new AddBusiness page (`/add-business`) replacing modal-based signup
   - Added educational content about industry standards and minimum pricing ($38/cubic yard)

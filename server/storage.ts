@@ -144,13 +144,15 @@ export class MemStorage implements IStorage {
       this.users[existingIndex] = updatedUser;
       return updatedUser;
     } else {
+      // Make the first user an admin automatically
+      const isFirstUser = this.users.length === 0;
       const newUser: User = {
         id: userData.id!,
         email: userData.email ?? null,
         firstName: userData.firstName ?? null,
         lastName: userData.lastName ?? null,
         profileImageUrl: userData.profileImageUrl ?? null,
-        isAdmin: userData.isAdmin ?? false,
+        isAdmin: isFirstUser || (userData.isAdmin ?? false),
         createdAt: new Date(),
         updatedAt: new Date(),
       };
