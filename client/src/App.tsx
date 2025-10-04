@@ -1864,7 +1864,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           >
             <Home size={18} color="#000" />
           </a>
-          <Link href="/add-business">
+          <Link href="/add-business" style={{ textDecoration: 'none' }}>
             <button
               className="breathing-button"
               style={{
