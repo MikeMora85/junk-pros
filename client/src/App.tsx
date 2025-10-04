@@ -939,7 +939,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: '0 16px 0 0',
+        padding: '0',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -975,7 +975,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           <Home size={18} color="#000" />
         </a>
 
-        <Link href="/add-business" style={{ textDecoration: 'none' }}>
+        <Link href="/add-business" style={{ textDecoration: 'none', marginRight: '16px' }}>
           <button
             className="breathing-button"
             style={{
@@ -1997,7 +1997,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         top: 0,
         zIndex: 100,
         background: 'transparent',
-        padding: '16px 16px 16px 0',
+        padding: '16px 0',
         overflow: 'hidden',
       }}>
         <div style={{
@@ -2039,7 +2039,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             <Home size={18} color="#000" />
           </a>
           
-          <Link href="/add-business" style={{ textDecoration: 'none' }}>
+          <Link href="/add-business" style={{ textDecoration: 'none', marginRight: '16px' }}>
             <button
               className="breathing-button"
               style={{
