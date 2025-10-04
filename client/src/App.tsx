@@ -980,6 +980,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             marginBottom: '16px',
             textAlign: 'center',
             letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Find Junk Removal Services in {stateName}
           </h2>
@@ -1487,6 +1488,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontWeight: '700',
                 color: '#374151',
                 marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {stateName} Junk Removal Pricing Guide
               </h3>
@@ -1571,6 +1573,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontWeight: '700',
                 color: '#374151',
                 marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Expert Tips for Hiring Junk Removal in {stateName}
               </h3>
