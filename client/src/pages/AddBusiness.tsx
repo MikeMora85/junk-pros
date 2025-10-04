@@ -14,6 +14,18 @@ export default function AddBusiness() {
     confirmNoFranchise: false,
   });
 
+  const [checkCity, setCheckCity] = useState("");
+  const [checkState, setCheckState] = useState("");
+  const [availabilityStatus, setAvailabilityStatus] = useState<'idle' | 'available' | 'taken'>('idle');
+
+  const handleCheckAvailability = (e: React.FormEvent) => {
+    e.preventDefault();
+    // For now, simulate check - in real app would call API
+    // Randomly return available/taken for demo
+    const isAvailable = Math.random() > 0.3;
+    setAvailabilityStatus(isAvailable ? 'available' : 'taken');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
@@ -245,6 +257,133 @@ export default function AddBusiness() {
               <strong>$38 minimum floor:</strong> This is the absolute minimum to cover truck costs, fuel, labor, disposal fees, insurance, and overhead. Charging less means working at a loss or cutting corners that hurt you long-term.
             </p>
           </div>
+        </div>
+
+        {/* City Availability Checker */}
+        <div style={{
+          background: '#fff',
+          border: '2px solid #fbbf24',
+          padding: '32px',
+          marginBottom: '48px',
+        }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '16px',
+            letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Check Featured Listing Availability
+          </h2>
+          <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
+            The Featured tier is exclusive - only one company per city gets top placement. Check if your city is available:
+          </p>
+          
+          <form onSubmit={handleCheckAvailability} style={{ marginBottom: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
+              <div>
+                <label style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                  State
+                </label>
+                <input
+                  type="text"
+                  value={checkState}
+                  onChange={(e) => setCheckState(e.target.value)}
+                  placeholder="e.g., Arizona"
+                  style={{
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    width: '100%',
+                    padding: '12px',
+                    border: '2px solid #e5e5e5',
+                    fontSize: '16px',
+                    color: '#000',
+                  }}
+                  data-testid="input-check-state"
+                />
+              </div>
+              <div>
+                <label style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                  City
+                </label>
+                <input
+                  type="text"
+                  value={checkCity}
+                  onChange={(e) => setCheckCity(e.target.value)}
+                  placeholder="e.g., Scottsdale"
+                  style={{
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    width: '100%',
+                    padding: '12px',
+                    border: '2px solid #e5e5e5',
+                    fontSize: '16px',
+                    color: '#000',
+                  }}
+                  data-testid="input-check-city"
+                />
+              </div>
+            </div>
+            
+            <button
+              type="submit"
+              style={{
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                background: '#fbbf24',
+                color: '#000',
+                padding: '12px 24px',
+                border: 'none',
+                fontSize: '16px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                width: '100%',
+              }}
+              data-testid="button-check-availability"
+            >
+              Check Availability
+            </button>
+          </form>
+
+          {availabilityStatus === 'available' && (
+            <div style={{
+              background: '#dcfce7',
+              border: '2px solid #16a34a',
+              padding: '16px',
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center',
+            }}>
+              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+              <div>
+                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                  Available!
+                </h4>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000' }}>
+                  Great news! {checkCity}, {checkState} is available for Featured listing. Claim it now before someone else does!
+                </p>
+              </div>
+            </div>
+          )}
+
+          {availabilityStatus === 'taken' && (
+            <div style={{
+              background: '#fee2e2',
+              border: '2px solid #dc2626',
+              padding: '16px',
+              display: 'flex',
+              gap: '12px',
+              alignItems: 'center',
+            }}>
+              <XCircle size={24} color="#dc2626" />
+              <div>
+                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                  Already Taken
+                </h4>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000' }}>
+                  {checkCity}, {checkState} already has a Featured listing. Consider the Professional tier ($10/month) or try a neighboring city where your business is also located.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Pricing Tiers */}
