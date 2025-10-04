@@ -160,21 +160,6 @@ function LandingPage() {
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-      <header className="breathing-glow-banner" style={{
-        background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
-        padding: '28px 16px',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          textAlign: 'center',
-        }}>
-          <RotatingBanner />
-        </div>
-      </header>
-
       {/* Navigation */}
       <header style={{
         position: 'sticky',
@@ -299,10 +284,25 @@ function LandingPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottom: '1px solid #fbbf24',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
       </div>
+
+      {/* Yellow Banner */}
+      <header className="breathing-glow-banner" style={{
+        background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
+        padding: '28px 16px',
+        position: 'relative',
+        zIndex: 2,
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          textAlign: 'center',
+        }}>
+          <RotatingBanner />
+        </div>
+      </header>
 
       <div style={{
         maxWidth: '1200px',
