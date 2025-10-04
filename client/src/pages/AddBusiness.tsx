@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award } from "lucide-react";
+import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search } from "lucide-react";
 
 export default function AddBusiness() {
   const [formData, setFormData] = useState({
@@ -409,16 +409,19 @@ export default function AddBusiness() {
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         background: '#fbbf24',
                         color: '#000',
-                        padding: '12px 24px',
+                        padding: '12px 20px',
                         border: 'none',
                         fontSize: '14px',
                         fontWeight: '700',
                         cursor: 'pointer',
                         whiteSpace: 'nowrap',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
                       data-testid="button-check-availability"
                     >
-                      Search
+                      <Search size={18} />
                     </button>
                   </div>
                 </form>
