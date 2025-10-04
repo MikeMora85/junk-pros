@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, Route, Router } from "wouter";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -2896,46 +2896,35 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
   );
 }
 
-// App Router - no hooks allowed here due to conditional returns
 function App() {
-  const path = window.location.pathname;
-  const pathParts = path.split('/').filter(p => p);
-  
-  // / -> Landing page
-  if (pathParts.length === 0) {
-    return <LandingPage />;
-  }
-  
-  // /add-business -> Add Business page
-  if (pathParts.length === 1 && pathParts[0] === 'add-business') {
-    return <AddBusiness />;
-  }
-  
-  // /arizona -> State page
-  if (pathParts.length === 1) {
-    const stateSlug = pathParts[0];
-    const stateNames: Record<string, string> = {
-      'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
-      'california': 'California', 'colorado': 'Colorado', 'connecticut': 'Connecticut', 'delaware': 'Delaware',
-      'florida': 'Florida', 'georgia': 'Georgia', 'hawaii': 'Hawaii', 'idaho': 'Idaho',
-      'illinois': 'Illinois', 'indiana': 'Indiana', 'iowa': 'Iowa', 'kansas': 'Kansas',
-      'kentucky': 'Kentucky', 'louisiana': 'Louisiana', 'maine': 'Maine', 'maryland': 'Maryland',
-      'massachusetts': 'Massachusetts', 'michigan': 'Michigan', 'minnesota': 'Minnesota', 'mississippi': 'Mississippi',
-      'missouri': 'Missouri', 'montana': 'Montana', 'nebraska': 'Nebraska', 'nevada': 'Nevada',
-      'new-hampshire': 'New Hampshire', 'new-jersey': 'New Jersey', 'new-mexico': 'New Mexico', 'new-york': 'New York',
-      'north-carolina': 'North Carolina', 'north-dakota': 'North Dakota', 'ohio': 'Ohio', 'oklahoma': 'Oklahoma',
-      'oregon': 'Oregon', 'pennsylvania': 'Pennsylvania', 'rhode-island': 'Rhode Island', 'south-carolina': 'South Carolina',
-      'south-dakota': 'South Dakota', 'tennessee': 'Tennessee', 'texas': 'Texas', 'utah': 'Utah',
-      'vermont': 'Vermont', 'virginia': 'Virginia', 'washington': 'Washington', 'west-virginia': 'West Virginia',
-      'wisconsin': 'Wisconsin', 'wyoming': 'Wyoming',
-    };
-    return <StatePage stateName={stateNames[stateSlug] || 'Unknown'} stateSlug={stateSlug} />;
-  }
-  
-  // /arizona/scottsdale -> City page
-  const city = pathParts[1];
-  const state = pathParts[0];
-  return <CityPage city={city} state={state} />;
+  const stateNames: Record<string, string> = {
+    'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
+    'california': 'California', 'colorado': 'Colorado', 'connecticut': 'Connecticut', 'delaware': 'Delaware',
+    'florida': 'Florida', 'georgia': 'Georgia', 'hawaii': 'Hawaii', 'idaho': 'Idaho',
+    'illinois': 'Illinois', 'indiana': 'Indiana', 'iowa': 'Iowa', 'kansas': 'Kansas',
+    'kentucky': 'Kentucky', 'louisiana': 'Louisiana', 'maine': 'Maine', 'maryland': 'Maryland',
+    'massachusetts': 'Massachusetts', 'michigan': 'Michigan', 'minnesota': 'Minnesota', 'mississippi': 'Mississippi',
+    'missouri': 'Missouri', 'montana': 'Montana', 'nebraska': 'Nebraska', 'nevada': 'Nevada',
+    'new-hampshire': 'New Hampshire', 'new-jersey': 'New Jersey', 'new-mexico': 'New Mexico', 'new-york': 'New York',
+    'north-carolina': 'North Carolina', 'north-dakota': 'North Dakota', 'ohio': 'Ohio', 'oklahoma': 'Oklahoma',
+    'oregon': 'Oregon', 'pennsylvania': 'Pennsylvania', 'rhode-island': 'Rhode Island', 'south-carolina': 'South Carolina',
+    'south-dakota': 'South Dakota', 'tennessee': 'Tennessee', 'texas': 'Texas', 'utah': 'Utah',
+    'vermont': 'Vermont', 'virginia': 'Virginia', 'washington': 'Washington', 'west-virginia': 'West Virginia',
+    'wisconsin': 'Wisconsin', 'wyoming': 'Wyoming',
+  };
+
+  return (
+    <Router>
+      <Route path="/" component={LandingPage} />
+      <Route path="/add-business" component={AddBusiness} />
+      <Route path="/:state">
+        {(params) => <StatePage stateName={stateNames[params.state] || 'Unknown'} stateSlug={params.state} />}
+      </Route>
+      <Route path="/:state/:city">
+        {(params) => <CityPage city={params.city} state={params.state} />}
+      </Route>
+    </Router>
+  );
 }
 
 export default App;
