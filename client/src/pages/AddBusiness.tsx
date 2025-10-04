@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X } from "lucide-react";
+import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft } from "lucide-react";
 
 export default function AddBusiness() {
   const [formData, setFormData] = useState({
@@ -17,6 +17,10 @@ export default function AddBusiness() {
   const [checkCity, setCheckCity] = useState("");
   const [availabilityStatus, setAvailabilityStatus] = useState<'idle' | 'available' | 'taken'>('idle');
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleBack = () => {
+    window.history.back();
+  };
 
   const handleCheckAvailability = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +40,44 @@ export default function AddBusiness() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff', fontFamily: "'Helvetica Neue', Arial, sans-serif", overflowX: 'hidden' }}>
+      {/* Back Button */}
+      <div style={{
+        position: 'fixed',
+        top: '16px',
+        left: '16px',
+        zIndex: 100,
+      }}>
+        <button
+          onClick={handleBack}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textDecoration: 'none',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          data-testid="button-back"
+        >
+          <ArrowLeft size={18} color="#000" />
+        </button>
+      </div>
+
       {/* Hero Section */}
       <div style={{
         background: '#fbbf24',
