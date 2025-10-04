@@ -871,8 +871,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           style={{
             backgroundColor: '#fbbf24',
             color: '#000',
-            padding: '10px',
-            borderRadius: '8px',
+            padding: '8px',
+            borderRadius: '6px',
             border: '1px solid #000',
             cursor: 'pointer',
             display: 'flex',
@@ -893,7 +893,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           }}
           data-testid="button-home"
         >
-          <Home size={20} />
+          <Home size={18} color="#000" />
         </a>
       </div>
 
@@ -1857,8 +1857,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
             style={{
               backgroundColor: 'transparent',
               color: '#000',
-              padding: '10px',
-              borderRadius: '8px',
+              padding: '8px',
+              borderRadius: '6px',
               border: '1px solid #000',
               cursor: 'pointer',
               display: 'flex',
@@ -1879,7 +1879,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             }}
             data-testid="button-home"
           >
-            <Home size={20} />
+            <Home size={18} color="#000" />
           </a>
           <button
             onClick={() => setShowBusinessForm(true)}
