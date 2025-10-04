@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award } from "lucide-react";
+import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign } from "lucide-react";
 
 export default function AddBusiness() {
   const [formData, setFormData] = useState({
@@ -540,23 +540,6 @@ export default function AddBusiness() {
             </p>
           )}
         </form>
-
-        {/* Trust Signals */}
-        <div style={{
-          marginTop: '48px',
-          textAlign: 'center',
-          padding: '32px 16px',
-          background: '#f5f5f5',
-          border: '1px solid #e5e5e5',
-        }}>
-          <Award size={32} color="#fbbf24" style={{ margin: '0 auto 16px' }} />
-          <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
-            Join the Community
-          </h3>
-          <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
-            Thousands of homeowners use our directory every month to find trusted local junk removal professionals. Get your share of qualified leads and grow your business.
-          </p>
-        </div>
       </div>
     </div>
   );
