@@ -1531,8 +1531,9 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     </div>
                     <p style={{
                       fontSize: '14px',
-                      color: '#6b7280',
+                      color: '#000',
                       margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {tier.items}
                     </p>
@@ -1635,9 +1636,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     </h4>
                     <p style={{
                       fontSize: '14px',
-                      color: '#6b7280',
+                      color: '#000',
                       margin: '0',
                       lineHeight: '1.6',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {tip.description}
                     </p>
@@ -1702,9 +1704,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     </h4>
                     <p style={{
                       fontSize: '14px',
-                      color: '#6b7280',
+                      color: '#000',
                       margin: '0',
                       lineHeight: '1.6',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {faq.a}
                     </p>
@@ -2390,7 +2393,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           ))}
                         </div>
                         <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating}</span>
-                        <span style={{ color: '#9ca3af', fontSize: '13px' }}>({c.reviews})</span>
+                        <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
                         {c.local && (
                           <span style={{
                             background: '#fbbf24',
@@ -2405,7 +2408,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         )}
                       </div>
                       
-                      <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '12px' }}>
+                      <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
                         <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#2563eb" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
                         <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
@@ -2428,10 +2431,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {c.reviewSnippets.slice(0, 2).map((review, i) => (
                         <div key={i} style={{
                           fontSize: '13px',
-                          color: '#6b7280',
+                          color: '#000',
                           marginBottom: i < c.reviewSnippets!.slice(0, 2).length - 1 ? '8px' : '0',
                           fontStyle: 'italic',
                           lineHeight: '1.5',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}>
                           "{review}"
                         </div>
