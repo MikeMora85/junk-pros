@@ -1,0 +1,593 @@
+import { useState } from "react";
+import { Link } from "wouter";
+import { CheckCircle, XCircle, Home, TrendingUp, Users, Shield, DollarSign, Award } from "lucide-react";
+
+export default function AddBusiness() {
+  const [formData, setFormData] = useState({
+    businessName: "",
+    email: "",
+    password: "",
+    phone: "",
+    state: "",
+    city: "",
+    pricingTier: "",
+    confirmPricing: false,
+    confirmNoFranchise: false,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+      {/* Header with Home Link */}
+      <div style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        backgroundColor: '#fff',
+        borderBottom: '1px solid #fbbf24',
+        padding: '12px 16px',
+      }}>
+        <Link href="/">
+          <button
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: '#fff',
+              border: '2px solid #000',
+              borderRadius: '6px',
+              padding: '8px 16px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '700',
+              color: '#000',
+            }}
+            data-testid="button-home"
+          >
+            <Home size={18} />
+            Back to Home
+          </button>
+        </Link>
+      </div>
+
+      {/* Hero Section */}
+      <div style={{
+        background: '#fbbf24',
+        padding: '48px 16px',
+        textAlign: 'center',
+      }}>
+        <h1 style={{
+          fontSize: '36px',
+          fontWeight: '700',
+          color: '#000',
+          marginBottom: '16px',
+          letterSpacing: '-0.02em',
+        }}>
+          Join the Premier Junk Removal Directory
+        </h1>
+        <p style={{
+          fontSize: '18px',
+          color: '#000',
+          maxWidth: '800px',
+          margin: '0 auto',
+          lineHeight: '1.6',
+        }}>
+          Connect with customers actively searching for professional junk removal services in your area. Built exclusively for independent, quality-focused operators.
+        </p>
+      </div>
+
+      {/* Main Content */}
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '40px 16px',
+      }}>
+        
+        {/* Why Join Section */}
+        <div style={{ marginBottom: '48px' }}>
+          <h2 style={{
+            fontSize: '28px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '24px',
+            letterSpacing: '-0.02em',
+          }}>
+            Why Independent Operators Choose Us
+          </h2>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '16px',
+            marginBottom: '32px',
+          }}>
+            <div style={{
+              background: '#f5f5f5',
+              padding: '20px',
+              border: '1px solid #e5e5e5',
+            }}>
+              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                <TrendingUp size={24} color="#fbbf24" />
+                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>Qualified Leads</h3>
+              </div>
+              <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                Customers come to us ready to hire. They've already done their research and are comparing local options, not just browsing.
+              </p>
+            </div>
+
+            <div style={{
+              background: '#f5f5f5',
+              padding: '20px',
+              border: '1px solid #e5e5e5',
+            }}>
+              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                <Users size={24} color="#fbbf24" />
+                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>No Franchise Competition</h3>
+              </div>
+              <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                We only list independent operators. Customers find you, not big franchise chains with inflated pricing and corporate overhead.
+              </p>
+            </div>
+
+            <div style={{
+              background: '#f5f5f5',
+              padding: '20px',
+              border: '1px solid #e5e5e5',
+            }}>
+              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                <Shield size={24} color="#fbbf24" />
+                <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>Quality Standards</h3>
+              </div>
+              <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                We verify minimum pricing standards to protect the industry and ensure sustainable business practices for all operators.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Requirements Section */}
+        <div style={{
+          background: '#fff',
+          border: '2px solid #000',
+          padding: '32px',
+          marginBottom: '48px',
+        }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '24px',
+            letterSpacing: '-0.02em',
+          }}>
+            Membership Requirements
+          </h2>
+
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                  Independent Operators Only
+                </h4>
+                <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                  We exclusively list locally-owned, independent junk removal companies. No franchises accepted.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                  Minimum Pricing Standards
+                </h4>
+                <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                  Must charge at least <strong>$38 per cubic yard</strong>. Below-market pricing hurts the entire industry by setting unsustainable expectations and devaluing professional service.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+              <div>
+                <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                  Service Area Verification
+                </h4>
+                <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                  You can only claim cities where your business actually operates. Each listing is tied to your verified service locations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div style={{
+            background: '#fef3c7',
+            padding: '16px',
+            border: '1px solid #fbbf24',
+          }}>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <XCircle size={20} color="#000" />
+              <div>
+                <h4 style={{ fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                  We Do NOT Accept:
+                </h4>
+                <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                  <li>Franchise operations (1-800-GOT-JUNK, College Hunks, etc.)</li>
+                  <li>Companies charging below industry minimums (&lt;$38/cubic yard)</li>
+                  <li>Unlicensed or uninsured operators</li>
+                  <li>Businesses claiming service areas where they don't operate</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Industry Education */}
+        <div style={{
+          background: '#f5f5f5',
+          padding: '32px',
+          marginBottom: '48px',
+          border: '1px solid #e5e5e5',
+        }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '16px',
+            letterSpacing: '-0.02em',
+          }}>
+            Industry Pricing Standards
+          </h2>
+          <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
+            Understanding proper pricing ensures sustainable business operations and fair compensation for your work:
+          </p>
+          
+          <div style={{ marginBottom: '16px' }}>
+            <h4 style={{ fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              Standard Load Pricing (2024)
+            </h4>
+            <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <li>Minimum load (¼ truck, ~3.5 cubic yards): $150-$250</li>
+              <li>Half truck (~7 cubic yards): $300-$450</li>
+              <li>¾ truck (~10 cubic yards): $450-$650</li>
+              <li>Full truck (~14 cubic yards): $600-$850+</li>
+            </ul>
+          </div>
+
+          <div style={{
+            background: '#fff',
+            padding: '16px',
+            border: '2px solid #fbbf24',
+          }}>
+            <DollarSign size={20} color="#fbbf24" style={{ marginBottom: '8px' }} />
+            <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+              <strong>Why $38/cubic yard minimum?</strong> This covers your truck costs, fuel, labor, disposal fees, insurance, and business overhead. Charging less means you're working at a loss or cutting corners that could hurt you long-term.
+            </p>
+          </div>
+        </div>
+
+        {/* Pricing Tiers */}
+        <div style={{ marginBottom: '48px' }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '24px',
+            letterSpacing: '-0.02em',
+          }}>
+            Choose Your Plan
+          </h2>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: '16px',
+          }}>
+            <div
+              onClick={() => setFormData({ ...formData, pricingTier: 'basic' })}
+              style={{
+                background: formData.pricingTier === 'basic' ? '#fef3c7' : '#fff',
+                border: `2px solid ${formData.pricingTier === 'basic' ? '#fbbf24' : '#e5e5e5'}`,
+                padding: '24px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              data-testid="tier-basic"
+            >
+              <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                Basic Listing - FREE
+              </h3>
+              <p style={{ fontSize: '14px', color: '#000', marginBottom: '12px' }}>
+                Get discovered by local customers searching for junk removal
+              </p>
+              <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                <li>Profile page with business details</li>
+                <li>Contact information display</li>
+                <li>Service area coverage</li>
+                <li>Customer reviews</li>
+              </ul>
+            </div>
+
+            <div
+              onClick={() => setFormData({ ...formData, pricingTier: 'featured' })}
+              style={{
+                background: formData.pricingTier === 'featured' ? '#fef3c7' : '#fff',
+                border: `2px solid ${formData.pricingTier === 'featured' ? '#fbbf24' : '#e5e5e5'}`,
+                padding: '24px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                position: 'relative',
+              }}
+              data-testid="tier-featured"
+            >
+              <div style={{
+                position: 'absolute',
+                top: '-12px',
+                right: '16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '4px 12px',
+                fontSize: '11px',
+                fontWeight: '700',
+              }}>
+                RECOMMENDED
+              </div>
+              <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                Featured Listing - $49/month
+              </h3>
+              <p style={{ fontSize: '14px', color: '#000', marginBottom: '12px' }}>
+                Stand out and get more leads with premium placement
+              </p>
+              <ul style={{ fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                <li>Everything in Basic</li>
+                <li><strong>Top placement in search results</strong></li>
+                <li><strong>Featured badge on your profile</strong></li>
+                <li>Photo gallery (up to 10 images)</li>
+                <li>Priority customer support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Signup Form */}
+        <form onSubmit={handleSubmit} style={{
+          background: '#fff',
+          border: '2px solid #fbbf24',
+          padding: '32px',
+        }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '24px',
+            letterSpacing: '-0.02em',
+          }}>
+            Create Your Account
+          </h2>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              Business Name *
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.businessName}
+              onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
+              placeholder="e.g., Quick Junk Removal LLC"
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #e5e5e5',
+                fontSize: '16px',
+                color: '#000',
+              }}
+              data-testid="input-business-name"
+            />
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              Email *
+            </label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              placeholder="your@email.com"
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #e5e5e5',
+                fontSize: '16px',
+                color: '#000',
+              }}
+              data-testid="input-email"
+            />
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              Password *
+            </label>
+            <input
+              type="password"
+              required
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              placeholder="Create a secure password"
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #e5e5e5',
+                fontSize: '16px',
+                color: '#000',
+              }}
+              data-testid="input-password"
+            />
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              Phone Number *
+            </label>
+            <input
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              placeholder="(555) 123-4567"
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #e5e5e5',
+                fontSize: '16px',
+                color: '#000',
+              }}
+              data-testid="input-phone"
+            />
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              State *
+            </label>
+            <select
+              required
+              value={formData.state}
+              onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #e5e5e5',
+                fontSize: '16px',
+                color: '#000',
+              }}
+              data-testid="select-state"
+            >
+              <option value="">Select your state</option>
+              <option value="alabama">Alabama</option>
+              <option value="arizona">Arizona</option>
+              <option value="california">California</option>
+              <option value="florida">Florida</option>
+              <option value="texas">Texas</option>
+            </select>
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+              Primary City *
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.city}
+              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              placeholder="City where you operate"
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #e5e5e5',
+                fontSize: '16px',
+                color: '#000',
+              }}
+              data-testid="input-city"
+            />
+            <p style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
+              You can add more cities after signup
+            </p>
+          </div>
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '14px',
+              color: '#000',
+              cursor: 'pointer',
+            }}>
+              <input
+                type="checkbox"
+                required
+                checked={formData.confirmPricing}
+                onChange={(e) => setFormData({ ...formData, confirmPricing: e.target.checked })}
+                style={{ width: '18px', height: '18px' }}
+                data-testid="checkbox-pricing"
+              />
+              I confirm my pricing meets the $38/cubic yard minimum standard
+            </label>
+          </div>
+
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '14px',
+              color: '#000',
+              cursor: 'pointer',
+            }}>
+              <input
+                type="checkbox"
+                required
+                checked={formData.confirmNoFranchise}
+                onChange={(e) => setFormData({ ...formData, confirmNoFranchise: e.target.checked })}
+                style={{ width: '18px', height: '18px' }}
+                data-testid="checkbox-franchise"
+              />
+              I confirm this is an independent business, not a franchise
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!formData.pricingTier}
+            style={{
+              width: '100%',
+              background: formData.pricingTier ? '#fbbf24' : '#e5e5e5',
+              color: '#000',
+              padding: '16px',
+              border: 'none',
+              fontSize: '18px',
+              fontWeight: '700',
+              cursor: formData.pricingTier ? 'pointer' : 'not-allowed',
+              transition: 'all 0.2s',
+            }}
+            data-testid="button-submit"
+          >
+            {formData.pricingTier === 'featured' ? 'Start 30-Day Free Trial' : 'Create Free Account'}
+          </button>
+
+          {!formData.pricingTier && (
+            <p style={{ fontSize: '12px', color: '#000', marginTop: '8px', textAlign: 'center' }}>
+              Please select a pricing plan above
+            </p>
+          )}
+        </form>
+
+        {/* Trust Signals */}
+        <div style={{
+          marginTop: '48px',
+          textAlign: 'center',
+          padding: '32px 16px',
+          background: '#f5f5f5',
+          border: '1px solid #e5e5e5',
+        }}>
+          <Award size={32} color="#fbbf24" style={{ margin: '0 auto 16px' }} />
+          <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
+            Join the Community
+          </h3>
+          <p style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
+            Thousands of homeowners use our directory every month to find trusted local junk removal professionals. Get your share of qualified leads and grow your business.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
