@@ -400,7 +400,7 @@ function LandingPage() {
               description: 'Get free estimates from multiple local companies in minutes',
             },
             {
-              icon: <MapPin size={32} color="#2563eb" />,
+              icon: <MapPin size={32} color="#fbbf24" />,
               title: 'Your Neighborhood Crew',
               description: 'Support independent businesses located right in your community',
             },
