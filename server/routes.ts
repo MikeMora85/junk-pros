@@ -1,9 +1,27 @@
 import type { Express } from "express";
+import { createServer, type Server } from "http";
 import { z } from "zod";
 import type { IStorage } from "./storage";
 import { insertCompanySchema } from "@shared/schema";
+import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 
-export function registerRoutes(app: Express, storage: IStorage) {
+export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
+  // Auth middleware
+  await setupAuth(app);
+
+  // Auth routes
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // Public company routes
   app.get("/api/companies", async (req, res) => {
     try {
       const { local, city, state } = req.query;
@@ -16,7 +34,7 @@ export function registerRoutes(app: Express, storage: IStorage) {
       } else if (local === "false") {
         companies = await storage.getCompaniesByLocal(false);
       } else {
-        companies = await storage.getCompanies();
+        companies = await storage.getApprovedCompanies();
       }
       
       res.json(companies);
@@ -43,10 +61,18 @@ export function registerRoutes(app: Express, storage: IStorage) {
     }
   });
 
-  app.post("/api/companies", async (req, res) => {
+  // Create company (authenticated users)
+  app.post("/api/companies", async (req: any, res) => {
     try {
+      const userId = req.isAuthenticated() ? req.user?.claims?.sub : null;
       console.log("Received company data:", req.body);
-      const data = insertCompanySchema.parse(req.body);
+      
+      const data = insertCompanySchema.parse({
+        ...req.body,
+        userId,
+        status: 'pending',
+      });
+      
       const company = await storage.createCompany(data);
       res.status(201).json(company);
     } catch (error) {
@@ -58,4 +84,82 @@ export function registerRoutes(app: Express, storage: IStorage) {
       res.status(500).json({ error: "Failed to create company" });
     }
   });
+
+  // Admin routes
+  app.get("/api/admin/companies/pending", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const companies = await storage.getPendingCompanies();
+      res.json(companies);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch pending companies" });
+    }
+  });
+
+  app.patch("/api/admin/companies/:id/status", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status } = req.body;
+
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      if (!['approved', 'denied', 'pending'].includes(status)) {
+        return res.status(400).json({ error: "Invalid status" });
+      }
+
+      const company = await storage.updateCompanyStatus(id, status);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json(company);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update company status" });
+    }
+  });
+
+  // Update company (owner or admin)
+  app.patch("/api/companies/:id", isAuthenticated, async (req: any, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userId = req.user.claims.sub;
+
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.getCompanyById(id);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      const user = await storage.getUser(userId);
+      const isOwner = company.userId === userId;
+      const isAdminUser = user?.isAdmin ?? false;
+
+      if (!isOwner && !isAdminUser) {
+        return res.status(403).json({ error: "Forbidden: You can only edit your own companies" });
+      }
+
+      const updatedCompany = await storage.updateCompany(id, req.body);
+      res.json(updatedCompany);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update company" });
+    }
+  });
+
+  // Get user's companies
+  app.get("/api/user/companies", isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const companies = await storage.getCompaniesByUserId(userId);
+      res.json(companies);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch user companies" });
+    }
+  });
+
+  const httpServer = createServer(app);
+  return httpServer;
 }

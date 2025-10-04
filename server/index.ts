@@ -40,8 +40,7 @@ app.use((req, res, next) => {
 
 (async () => {
   const storage = new MemStorage();
-  registerRoutes(app, storage);
-
+  
   if (process.env.NODE_ENV === "production") {
     app.use(express.static("dist/client"));
     app.get(/.*/, (_req, res) => {
@@ -78,8 +77,10 @@ app.use((req, res, next) => {
     app.use(vite.middlewares);
   }
 
+  const httpServer = await registerRoutes(app, storage);
+
   const PORT = process.env.PORT || 5000;
-  app.listen(PORT, "0.0.0.0", () => {
+  httpServer.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
   });
 })();
