@@ -258,99 +258,6 @@ export default function AddBusiness() {
           </div>
         </div>
 
-        {/* City Availability Checker */}
-        <div style={{
-          background: '#fff',
-          border: '2px solid #fbbf24',
-          padding: '32px',
-          marginBottom: '48px',
-        }}>
-          <h2 style={{
-            fontSize: '24px',
-            fontWeight: '700',
-            color: '#000',
-            marginBottom: '16px',
-            letterSpacing: '-0.02em',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}>
-            Check City Availability
-          </h2>
-          <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
-            The Featured tier is exclusive - only one company per city. Check if your city is available:
-          </p>
-          
-          <form onSubmit={handleCheckAvailability}>
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-              <input
-                type="text"
-                value={checkCity}
-                onChange={(e) => setCheckCity(e.target.value)}
-                placeholder="Enter city, state (e.g., Scottsdale, Arizona)"
-                style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  flex: 1,
-                  padding: '14px',
-                  border: '2px solid #e5e5e5',
-                  fontSize: '16px',
-                  color: '#000',
-                }}
-                data-testid="input-check-city"
-              />
-              <button
-                type="submit"
-                style={{
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  background: '#fbbf24',
-                  color: '#000',
-                  padding: '14px 32px',
-                  border: 'none',
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                }}
-                data-testid="button-check-availability"
-              >
-                Search
-              </button>
-            </div>
-          </form>
-
-          {availabilityStatus === 'available' && (
-            <div style={{
-              padding: '16px',
-              display: 'flex',
-              gap: '12px',
-              alignItems: 'center',
-              background: '#fff',
-            }}>
-              <CheckCircle size={28} color="#16a34a" fill="#16a34a" />
-              <div>
-                <span style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#16a34a' }}>
-                  {checkCity} is available!
-                </span>
-              </div>
-            </div>
-          )}
-
-          {availabilityStatus === 'taken' && (
-            <div style={{
-              padding: '16px',
-              display: 'flex',
-              gap: '12px',
-              alignItems: 'center',
-              background: '#fff',
-            }}>
-              <XCircle size={28} color="#dc2626" />
-              <div>
-                <span style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#dc2626' }}>
-                  {checkCity} is taken
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-
         {/* Pricing Tiers */}
         <div style={{ marginBottom: '48px' }}>
           <h2 style={{
@@ -450,13 +357,101 @@ export default function AddBusiness() {
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Maximum visibility and all professional tools combined
               </p>
-              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '20px' }}>
                 <li>Everything in Professional</li>
                 <li>Top placement in search results</li>
                 <li>Featured badge on your profile</li>
                 <li>Photo gallery (up to 15 images)</li>
                 <li>Priority customer support</li>
               </ul>
+
+              {/* City Availability Checker */}
+              <div onClick={(e) => e.stopPropagation()} style={{
+                background: '#fff',
+                border: '2px solid #fbbf24',
+                padding: '20px',
+                marginTop: '20px',
+              }}>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  color: '#000',
+                  marginBottom: '12px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Check City Availability
+                </h4>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '16px' }}>
+                  The Featured tier is exclusive - only one company per city. Check if your city is available:
+                </p>
+                
+                <form onSubmit={handleCheckAvailability}>
+                  <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                    <input
+                      type="text"
+                      value={checkCity}
+                      onChange={(e) => setCheckCity(e.target.value)}
+                      placeholder="Enter city, state (e.g., Scottsdale, Arizona)"
+                      style={{
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        flex: 1,
+                        padding: '12px',
+                        border: '2px solid #e5e5e5',
+                        fontSize: '14px',
+                        color: '#000',
+                      }}
+                      data-testid="input-check-city"
+                    />
+                    <button
+                      type="submit"
+                      style={{
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        background: '#fbbf24',
+                        color: '#000',
+                        padding: '12px 24px',
+                        border: 'none',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap',
+                      }}
+                      data-testid="button-check-availability"
+                    >
+                      Search
+                    </button>
+                  </div>
+                </form>
+
+                {availabilityStatus === 'available' && (
+                  <div style={{
+                    padding: '12px',
+                    display: 'flex',
+                    gap: '10px',
+                    alignItems: 'center',
+                    background: '#fff',
+                  }}>
+                    <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+                    <span style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#16a34a' }}>
+                      {checkCity} is available!
+                    </span>
+                  </div>
+                )}
+
+                {availabilityStatus === 'taken' && (
+                  <div style={{
+                    padding: '12px',
+                    display: 'flex',
+                    gap: '10px',
+                    alignItems: 'center',
+                    background: '#fff',
+                  }}>
+                    <XCircle size={24} color="#dc2626" />
+                    <span style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#dc2626' }}>
+                      {checkCity} is taken
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
