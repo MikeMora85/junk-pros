@@ -861,7 +861,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
     }}>
       {/* Home Button - Top Left */}
       <div style={{
-        position: 'absolute',
+        position: 'fixed',
         top: '16px',
         left: '16px',
         zIndex: 100,
@@ -1835,6 +1835,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
       `}} />
       {/* Header */}
       <header style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
         background: '#fbbf24',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         padding: '16px',
