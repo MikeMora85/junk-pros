@@ -931,7 +931,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               </h1>
               <p style={{
                 fontSize: '13px',
-                color: '#4b5563',
+                color: '#000',
                 margin: '0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
