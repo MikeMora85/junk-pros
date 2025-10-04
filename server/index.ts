@@ -48,7 +48,7 @@ app.use((req, res, next) => {
       res.sendFile(path.resolve("dist/client", "index.html"));
     });
     
-    const PORT = process.env.PORT || 5000;
+    const PORT = parseInt(process.env.PORT || "5000", 10);
     httpServer.listen(PORT, "0.0.0.0", () => {
       console.log(`Server running on port ${PORT}`);
     });
@@ -90,7 +90,7 @@ app.use((req, res, next) => {
     });
     app.use(vite.middlewares);
     
-    const PORT = process.env.PORT || 5000;
+    const PORT = parseInt(process.env.PORT || "5000", 10);
     httpServer.listen(PORT, "0.0.0.0", () => {
       console.log(`Server running on port ${PORT}`);
     });
