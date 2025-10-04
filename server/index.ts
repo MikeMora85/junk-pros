@@ -83,7 +83,6 @@ app.use((req, res, next) => {
       },
       optimizeDeps: {
         include: ['react', 'react-dom'],
-        force: true,
       },
       plugins: [
         (await import("@vitejs/plugin-react")).default(),
