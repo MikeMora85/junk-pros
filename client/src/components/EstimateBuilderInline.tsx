@@ -85,20 +85,23 @@ export default function EstimateBuilderInline() {
           max={truckCapacity}
           value={yards}
           onChange={(e) => setYards(parseInt(e.target.value))}
+          className="custom-slider"
           style={{
             width: '100%',
             height: '8px',
             borderRadius: '4px',
             outline: 'none',
-            background: `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${percentage}%, #e5e5e5 ${percentage}%, #e5e5e5 100%)`,
+            background: `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${percentage}%, #000 ${percentage}%, #000 100%)`,
             cursor: 'pointer',
+            WebkitAppearance: 'none',
+            appearance: 'none',
           }}
           data-testid="input-load-size"
         />
         
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
-          <span style={{ fontSize: '12px', color: '#6b7280' }}>Empty</span>
-          <span style={{ fontSize: '12px', color: '#6b7280' }}>Full</span>
+          <span style={{ fontSize: '12px', color: '#000' }}>Empty</span>
+          <span style={{ fontSize: '12px', color: '#000' }}>Full</span>
         </div>
       </div>
 
