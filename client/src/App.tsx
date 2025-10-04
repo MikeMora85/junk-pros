@@ -908,6 +908,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             fontWeight: '600',
             textAlign: 'center',
             flex: 1,
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Find Trusted Local Pros, Get Instant Quotes
           </p>
