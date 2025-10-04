@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, User } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
+import { useAuth } from "./hooks/useAuth";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -126,6 +127,7 @@ function RotatingBanner() {
 // Landing Page Component
 function LandingPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const { user, isAuthenticated } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,6 +172,150 @@ function LandingPage() {
           textAlign: 'center',
         }}>
           <RotatingBanner />
+        </div>
+      </header>
+
+      {/* Navigation */}
+      <header style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        background: 'transparent',
+        padding: '16px',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '12px',
+          width: '100%',
+        }}>
+          <a
+            href="/"
+            style={{
+              backgroundColor: '#fbbf24',
+              color: '#000',
+              padding: '8px',
+              borderRadius: '6px',
+              border: '1px solid #000',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+              transform: 'translateY(-2px)',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+              e.currentTarget.style.transform = 'translateY(-3px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            data-testid="button-home"
+          >
+            <Home size={18} color="#000" />
+          </a>
+          
+          {isAuthenticated ? (
+            <Link href="/admin" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-admin"
+              >
+                <User size={16} />
+                ADMIN
+              </button>
+            </Link>
+          ) : (
+            <a href="/api/login" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-login"
+              >
+                <LogIn size={16} />
+                LOGIN
+              </button>
+            </a>
+          )}
+          
+          <Link href="/add-business" style={{ textDecoration: 'none' }}>
+            <button
+              className="breathing-button"
+              style={{
+                background: '#fbbf24',
+                color: '#000',
+                padding: '10px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '700',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                whiteSpace: 'nowrap',
+              }}
+              data-testid="button-add-business"
+            >
+              <Plus size={16} />
+              ADD BUSINESS
+            </button>
+          </Link>
         </div>
       </header>
 
@@ -466,6 +612,7 @@ function LandingPage() {
 function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: string }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const { user, isAuthenticated } = useAuth();
 
   const stateData: Record<string, { 
     cities: string[];
@@ -860,12 +1007,17 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       minHeight: '100vh',
       background: '#ffffff',
     }}>
-      {/* Home Button - Top Left */}
+      {/* Navigation - Top */}
       <div style={{
         position: 'fixed',
         top: '16px',
         left: '16px',
+        right: '16px',
         zIndex: 100,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '12px',
       }}>
         <a
           href="/"
@@ -896,6 +1048,78 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         >
           <Home size={18} color="#000" />
         </a>
+
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {isAuthenticated ? (
+            <Link href="/admin" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-admin"
+              >
+                <User size={16} />
+                ADMIN
+              </button>
+            </Link>
+          ) : (
+            <a href="/api/login" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-login"
+              >
+                <LogIn size={16} />
+                LOGIN
+              </button>
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Hero Image - Clean without text overlay */}
@@ -1733,6 +1957,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  const { user, isAuthenticated } = useAuth();
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies", { city, state }],
@@ -1865,6 +2090,77 @@ function CityPage({ city, state }: { city: string; state: string }) {
           >
             <Home size={18} color="#000" />
           </a>
+          
+          {isAuthenticated ? (
+            <Link href="/admin" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-admin"
+              >
+                <User size={16} />
+                ADMIN
+              </button>
+            </Link>
+          ) : (
+            <a href="/api/login" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-login"
+              >
+                <LogIn size={16} />
+                LOGIN
+              </button>
+            </a>
+          )}
+          
           <Link href="/add-business" style={{ textDecoration: 'none' }}>
             <button
               className="breathing-button"
