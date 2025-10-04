@@ -1,6 +1,28 @@
-import { pgTable, text, integer, decimal, boolean, doublePrecision } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, decimal, boolean, doublePrecision, varchar, timestamp, jsonb, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { sql } from "drizzle-orm";
+
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: varchar("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
+export const users = pgTable("users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: varchar("email").unique(),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
+  profileImageUrl: varchar("profile_image_url"),
+  isAdmin: boolean("is_admin").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
 
 export const companies = pgTable("companies", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
@@ -27,6 +49,9 @@ export const companies = pgTable("companies", {
   specialties: text("specialties").array(),
   aboutUs: text("about_us"),
   whyChooseUs: text("why_choose_us").array(),
+  status: text("status").notNull().default("pending"),
+  userId: varchar("user_id").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const insertCompanySchema = createInsertSchema(companies, {
@@ -41,7 +66,12 @@ export const insertCompanySchema = createInsertSchema(companies, {
   specialties: z.array(z.string()).nullable().optional(),
   aboutUs: z.string().nullable().optional(),
   whyChooseUs: z.array(z.string()).nullable().optional(),
+  status: z.string().optional(),
+  userId: z.string().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
 export type Company = typeof companies.$inferSelect;
+
+export type UpsertUser = typeof users.$inferInsert;
+export type User = typeof users.$inferSelect;

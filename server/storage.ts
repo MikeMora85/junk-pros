@@ -1,14 +1,25 @@
-import type { Company, InsertCompany } from "@shared/schema";
+import type { Company, InsertCompany, User, UpsertUser } from "@shared/schema";
 
 export interface IStorage {
+  // User operations (required for Replit Auth)
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
+  
+  // Company operations
   getCompanies(): Promise<Company[]>;
+  getApprovedCompanies(): Promise<Company[]>;
+  getPendingCompanies(): Promise<Company[]>;
   getCompanyById(id: number): Promise<Company | null>;
   getCompaniesByLocal(local: boolean): Promise<Company[]>;
   getCompaniesByCity(city: string, state: string): Promise<Company[]>;
+  getCompaniesByUserId(userId: string): Promise<Company[]>;
   createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
+  updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null>;
+  updateCompanyStatus(id: number, status: string): Promise<Company | null>;
 }
 
 export class MemStorage implements IStorage {
+  private users: User[] = [];
   private companies: Company[] = [
     {
       id: 1,
@@ -46,6 +57,9 @@ export class MemStorage implements IStorage {
         "Family-owned local business, not a franchise",
         "Free estimates with no obligation"
       ],
+      status: "approved",
+      userId: null,
+      createdAt: new Date('2024-01-01'),
     },
     {
       id: 2,
@@ -75,6 +89,9 @@ export class MemStorage implements IStorage {
       specialties: null,
       aboutUs: null,
       whyChooseUs: null,
+      status: "approved",
+      userId: null,
+      createdAt: new Date('2024-01-15'),
     },
     {
       id: 3,
@@ -104,11 +121,55 @@ export class MemStorage implements IStorage {
       specialties: null,
       aboutUs: null,
       whyChooseUs: null,
+      status: "approved",
+      userId: null,
+      createdAt: new Date('2024-02-01'),
     },
   ];
 
+  // User operations
+  async getUser(id: string): Promise<User | undefined> {
+    return this.users.find(u => u.id === id);
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const existingIndex = this.users.findIndex(u => u.id === userData.id);
+    
+    if (existingIndex >= 0) {
+      const updatedUser: User = {
+        ...this.users[existingIndex],
+        ...userData,
+        updatedAt: new Date(),
+      };
+      this.users[existingIndex] = updatedUser;
+      return updatedUser;
+    } else {
+      const newUser: User = {
+        id: userData.id!,
+        email: userData.email ?? null,
+        firstName: userData.firstName ?? null,
+        lastName: userData.lastName ?? null,
+        profileImageUrl: userData.profileImageUrl ?? null,
+        isAdmin: userData.isAdmin ?? false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      this.users.push(newUser);
+      return newUser;
+    }
+  }
+
+  // Company operations
   async getCompanies(): Promise<Company[]> {
     return this.companies;
+  }
+
+  async getApprovedCompanies(): Promise<Company[]> {
+    return this.companies.filter(c => c.status === 'approved');
+  }
+
+  async getPendingCompanies(): Promise<Company[]> {
+    return this.companies.filter(c => c.status === 'pending');
   }
 
   async getCompanyById(id: number): Promise<Company | null> {
@@ -116,14 +177,19 @@ export class MemStorage implements IStorage {
   }
 
   async getCompaniesByLocal(local: boolean): Promise<Company[]> {
-    return this.companies.filter((c) => c.local === local);
+    return this.companies.filter((c) => c.local === local && c.status === 'approved');
   }
 
   async getCompaniesByCity(city: string, state: string): Promise<Company[]> {
     return this.companies.filter((c) => 
       c.city.toLowerCase() === city.toLowerCase() && 
-      c.state.toLowerCase() === state.toLowerCase()
+      c.state.toLowerCase() === state.toLowerCase() &&
+      c.status === 'approved'
     );
+  }
+
+  async getCompaniesByUserId(userId: string): Promise<Company[]> {
+    return this.companies.filter(c => c.userId === userId);
   }
 
   async createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company> {
@@ -153,8 +219,32 @@ export class MemStorage implements IStorage {
       specialties: data.specialties ?? null,
       aboutUs: data.aboutUs ?? null,
       whyChooseUs: data.whyChooseUs ?? null,
+      status: data.status ?? 'pending',
+      userId: data.userId ?? null,
+      createdAt: new Date(),
     };
     this.companies.push(newCompany);
     return newCompany;
   }
+
+  async updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null> {
+    const index = this.companies.findIndex(c => c.id === id);
+    if (index === -1) return null;
+
+    this.companies[index] = {
+      ...this.companies[index],
+      ...data,
+    };
+    return this.companies[index];
+  }
+
+  async updateCompanyStatus(id: number, status: string): Promise<Company | null> {
+    const index = this.companies.findIndex(c => c.id === id);
+    if (index === -1) return null;
+
+    this.companies[index].status = status;
+    return this.companies[index];
+  }
 }
+
+export const storage = new MemStorage();
