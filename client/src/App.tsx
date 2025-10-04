@@ -1510,7 +1510,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
-                      border: '2px solid #e63946',
+                      border: '2px solid #fbbf24',
                     }}
                   >
                     <h4 style={{
@@ -2250,7 +2250,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
-                    border: '1px solid #e63946',
+                    border: '1px solid #fbbf24',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
@@ -2383,8 +2383,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             <Star
                               key={i}
                               size={14}
-                              fill={i < Math.floor(parseFloat(c.rating)) ? "#e63946" : "none"}
-                              stroke="#e63946"
+                              fill={i < Math.floor(parseFloat(c.rating)) ? "#fbbf24" : "none"}
+                              stroke="#fbbf24"
                             />
                           ))}
                         </div>
@@ -2552,7 +2552,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           fontSize: '14px',
                           fontWeight: '700',
                           margin: '0 0 12px 0',
-                          color: '#e63946',
+                          color: '#fbbf24',
                         }}>
                           Available Times
                         </h5>
@@ -2569,7 +2569,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 cursor: 'pointer',
                                 fontSize: '14px',
                                 fontWeight: '600',
-                                color: '#e63946',
+                                color: '#fbbf24',
                                 textAlign: 'left',
                               }}
                               onClick={() => alert(`Appointment scheduled for ${time}`)}
@@ -2602,7 +2602,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 1 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #e63946',
+                      border: '2px solid #fbbf24',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2629,7 +2629,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <p style={{ 
                         fontSize: '14px', 
                         margin: 0, 
-                        color: '#e63946',
+                        color: '#fbbf24',
                         fontWeight: '700',
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}>
@@ -2640,7 +2640,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     {/* Ad Placeholder 2 */}
                     <div style={{
                       backgroundColor: '#f5f5f5',
-                      border: '2px solid #e63946',
+                      border: '2px solid #fbbf24',
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
@@ -2667,7 +2667,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <p style={{ 
                         fontSize: '14px', 
                         margin: 0, 
-                        color: '#e63946',
+                        color: '#fbbf24',
                         fontWeight: '700',
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}>
@@ -2777,7 +2777,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             background: 'rgba(255,255,255,0.95)',
             padding: '12px 16px',
             borderRadius: '8px',
-            color: '#e63946',
+            color: '#fbbf24',
             fontWeight: '700',
             fontSize: '16px',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -3181,7 +3181,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 target="_blank" 
                 rel="noopener noreferrer"
                 data-testid="link-website"
-                style={{ color: '#e63946', textDecoration: 'none', fontWeight: '600' }}
+                style={{ color: '#fbbf24', textDecoration: 'none', fontWeight: '600' }}
               >
                 Visit Website
               </a>
