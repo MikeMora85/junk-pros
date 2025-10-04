@@ -290,6 +290,33 @@ export default function AddBusiness() {
             </div>
 
             <div
+              onClick={() => setFormData({ ...formData, pricingTier: 'professional' })}
+              style={{
+                background: formData.pricingTier === 'professional' ? '#fef3c7' : '#fff',
+                border: `2px solid ${formData.pricingTier === 'professional' ? '#fbbf24' : '#e5e5e5'}`,
+                padding: '24px',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              data-testid="tier-professional"
+            >
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                Professional Profile - $10/month
+              </h3>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
+                Full landing page experience with booking and quoting tools
+              </p>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                <li>Everything in Basic</li>
+                <li><strong>Full-blown landing page profile</strong></li>
+                <li><strong>Integrated quoting tool</strong></li>
+                <li><strong>Online booking system</strong></li>
+                <li><strong>Active calendar with availability</strong></li>
+                <li>Photo gallery (up to 5 images)</li>
+              </ul>
+            </div>
+
+            <div
               onClick={() => setFormData({ ...formData, pricingTier: 'featured' })}
               style={{
                 background: formData.pricingTier === 'featured' ? '#fef3c7' : '#fff',
@@ -317,14 +344,15 @@ export default function AddBusiness() {
                 Featured Listing - $49/month
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
-                Stand out and get more leads with premium placement
+                Maximum visibility and all professional tools combined
               </p>
               <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
-                <li>Everything in Basic</li>
+                <li>Everything in Professional</li>
                 <li><strong>Top placement in search results</strong></li>
                 <li><strong>Featured badge on your profile</strong></li>
-                <li>Photo gallery (up to 10 images)</li>
+                <li>Photo gallery (up to 15 images)</li>
                 <li>Priority customer support</li>
+                <li>Advanced analytics dashboard</li>
               </ul>
             </div>
           </div>
