@@ -937,9 +937,9 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         position: 'fixed',
         top: '16px',
         left: 0,
-        right: 0,
+        right: '16px',
         zIndex: 100,
-        padding: '0 16px 0 0',
+        padding: '0',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -1997,17 +1997,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
         top: 0,
         zIndex: 100,
         background: 'transparent',
-        padding: '16px 16px 16px 0',
+        padding: '16px 0',
         overflow: 'hidden',
       }}>
         <div style={{
           maxWidth: '1200px',
-          margin: '0 auto',
+          margin: '0 16px 0 auto',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           gap: '12px',
-          width: '100%',
+          width: 'calc(100% - 16px)',
         }}>
           <a
             href="/"
