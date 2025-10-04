@@ -160,23 +160,26 @@ function LandingPage() {
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-      {/* Navigation */}
-      <header style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        background: 'transparent',
-        padding: '16px',
-        overflow: 'hidden',
+      {/* Hero Section with Logo and Login Button */}
+      <div style={{
+        position: 'relative',
+        height: '300px',
+        backgroundImage: `url(${curbsideJunkHero})`,
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
+        {/* Login Button Positioned on Hero */}
         <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          gap: '12px',
-          width: '100%',
+          position: 'absolute',
+          top: '16px',
+          right: '16px',
+          zIndex: 10,
         }}>
           {isAuthenticated ? (
             <Link href="/admin" style={{ textDecoration: 'none' }}>
@@ -240,22 +243,6 @@ function LandingPage() {
             </a>
           )}
         </div>
-      </header>
-
-      {/* Hero Section with Logo */}
-      <div style={{
-        position: 'relative',
-        height: '300px',
-        backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'contain',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundColor: '#ffffff',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-      }}>
       </div>
 
       {/* Yellow Banner */}
