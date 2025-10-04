@@ -1056,7 +1056,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: '12px 20px',
-                background: activeTab === tab.id ? '#fef3c7' : 'transparent',
+                background: activeTab === tab.id ? '#e5e7eb' : 'transparent',
                 border: 'none',
                 borderBottom: activeTab === tab.id ? '3px solid #fbbf24' : '3px solid transparent',
                 color: activeTab === tab.id ? '#1a1a1a' : '#6b7280',
