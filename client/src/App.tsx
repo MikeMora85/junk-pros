@@ -1547,9 +1547,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               }}>
                 <p style={{
                   fontSize: '14px',
-                  color: '#fbbf24',
+                  color: '#000',
                   margin: '0',
                   lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   <strong>💡 Pro Tip:</strong> Most {stateName} companies offer free, no-obligation estimates. Get quotes from 2-3 companies to compare pricing and services.
                 </p>
