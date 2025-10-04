@@ -31,7 +31,7 @@ export default function AddBusiness() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#fff', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#fff', fontFamily: "'Helvetica Neue', Arial, sans-serif", overflowX: 'hidden' }}>
       {/* Hero Section */}
       <div style={{
         background: '#fbbf24',
@@ -64,7 +64,7 @@ export default function AddBusiness() {
       <div style={{
         maxWidth: '900px',
         margin: '0 auto',
-        padding: '40px 16px',
+        padding: '40px 12px',
       }}>
         
         {/* Why Join Section */}
@@ -280,7 +280,7 @@ export default function AddBusiness() {
               style={{
                 background: formData.pricingTier === 'basic' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'basic' ? '#fbbf24' : '#e5e5e5'}`,
-                padding: '24px',
+                padding: '16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
               }}
@@ -305,7 +305,7 @@ export default function AddBusiness() {
               style={{
                 background: formData.pricingTier === 'professional' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'professional' ? '#fbbf24' : '#e5e5e5'}`,
-                padding: '24px',
+                padding: '16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
               }}
@@ -332,10 +332,11 @@ export default function AddBusiness() {
               style={{
                 background: formData.pricingTier === 'featured' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'featured' ? '#fbbf24' : '#e5e5e5'}`,
-                padding: '24px',
+                padding: '16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 position: 'relative',
+                overflow: 'hidden',
               }}
               data-testid="tier-featured"
             >
@@ -369,7 +370,7 @@ export default function AddBusiness() {
               <div onClick={(e) => e.stopPropagation()} style={{
                 background: '#fff',
                 border: '2px solid #fbbf24',
-                padding: '20px',
+                padding: '16px',
                 marginTop: '20px',
               }}>
                 <h4 style={{
