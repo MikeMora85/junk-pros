@@ -929,6 +929,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             backgroundColor: '#fbbf24',
             padding: '12px 20px',
             borderBottom: '2px solid #fbbf24',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1)',
+            transform: 'translateY(-1px)',
           }}>
             <div style={{
               maxWidth: '1200px',
