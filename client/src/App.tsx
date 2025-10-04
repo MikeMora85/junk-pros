@@ -1088,6 +1088,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontWeight: '700',
                 color: '#374151',
                 marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 About Junk Removal Services in {stateName}
               </h3>
@@ -1096,6 +1097,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 color: '#6b7280',
                 lineHeight: '1.8',
                 marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {stateName} residents and businesses rely on professional junk removal services for efficient, eco-friendly disposal. Whether you're doing a home cleanout, office renovation, or construction project, local junk removal companies provide same-day service with upfront pricing.
               </p>
@@ -1104,6 +1106,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 color: '#6b7280',
                 lineHeight: '1.8',
                 marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Most {stateName} junk removal companies recycle or donate 60-80% of collected items, helping reduce landfill waste while giving back to local communities.
               </p>
@@ -1118,6 +1121,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   fontWeight: '700',
                   color: '#217fc4',
                   marginBottom: '8px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   {stateName} Junk Removal Facts
                 </h4>
@@ -1126,6 +1130,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   color: '#217fc4',
                   margin: '0 0 8px 0',
                   lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   <strong>Population:</strong> {currentState.population}
                 </p>
@@ -1134,6 +1139,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   color: '#217fc4',
                   margin: '0 0 8px 0',
                   lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   <strong>Climate:</strong> {currentState.climate}
                 </p>
@@ -1142,6 +1148,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   color: '#217fc4',
                   margin: '0',
                   lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   <strong>Local Insight:</strong> {currentState.fact}
                 </p>
@@ -1191,6 +1198,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     fontWeight: '700',
                     color: '#374151',
                     marginBottom: '8px',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}>
                     {item.title}
                   </h4>
@@ -1199,6 +1207,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     color: '#6b7280',
                     margin: '0',
                     lineHeight: '1.6',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}>
                     {item.description}
                   </p>
@@ -1219,6 +1228,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontWeight: '700',
                 color: '#374151',
                 marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Common Junk Removal Services in {stateName}
               </h3>
@@ -1285,6 +1295,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                         fontWeight: '700',
                         color: '#374151',
                         margin: 0,
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}>
                         {item.service}
                       </h4>
@@ -1294,6 +1305,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       color: '#6b7280',
                       margin: '0',
                       lineHeight: '1.5',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {item.description}
                     </p>
@@ -1314,6 +1326,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontWeight: '700',
                 color: '#374151',
                 marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Environmental Impact & Sustainability
               </h3>
@@ -1322,6 +1335,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 color: '#6b7280',
                 lineHeight: '1.8',
                 marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Professional junk removal companies in {stateName} are committed to reducing landfill waste through recycling and donation programs. Here's how they make a difference:
               </p>
