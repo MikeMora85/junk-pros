@@ -229,15 +229,12 @@ function LandingPage() {
                 style={{
                   background: '#166534',
                   color: '#fff',
-                  padding: '8px 12px',
+                  padding: '8px 16px',
                   borderRadius: '6px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '13px',
+                  fontSize: '14px',
                   fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
                   whiteSpace: 'nowrap',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                   transform: 'translateY(-2px)',
@@ -253,7 +250,6 @@ function LandingPage() {
                 }}
                 data-testid="button-admin"
               >
-                <User size={16} />
                 ADMIN
               </button>
             </Link>
@@ -263,15 +259,12 @@ function LandingPage() {
                 style={{
                   background: '#166534',
                   color: '#fff',
-                  padding: '8px 12px',
+                  padding: '8px 16px',
                   borderRadius: '6px',
                   border: 'none',
                   cursor: 'pointer',
-                  fontSize: '13px',
+                  fontSize: '14px',
                   fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
                   whiteSpace: 'nowrap',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                   transform: 'translateY(-2px)',
@@ -287,35 +280,10 @@ function LandingPage() {
                 }}
                 data-testid="button-login"
               >
-                <LogIn size={16} />
                 LOGIN
               </button>
             </a>
           )}
-          
-          <Link href="/add-business" style={{ textDecoration: 'none' }}>
-            <button
-              className="breathing-button"
-              style={{
-                background: '#fbbf24',
-                color: '#000',
-                padding: '10px 16px',
-                borderRadius: '8px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '700',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                whiteSpace: 'nowrap',
-              }}
-              data-testid="button-add-business"
-            >
-              <Plus size={16} />
-              ADD BUSINESS
-            </button>
-          </Link>
         </div>
       </header>
 
