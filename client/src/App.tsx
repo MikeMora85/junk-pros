@@ -2232,9 +2232,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
             margin: '0 0 8px 0',
             color: '#1a1a1a',
             letterSpacing: '-0.02em',
-            whiteSpace: 'nowrap',
+            lineHeight: '1.2',
           }} data-testid="text-page-title">
-            {city.charAt(0).toUpperCase() + city.slice(1)} Junk Removal
+            {city.charAt(0).toUpperCase() + city.slice(1)}<br />Junk Removal
           </h2>
           <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
             {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {city.charAt(0).toUpperCase() + city.slice(1)}
