@@ -928,42 +928,32 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           {/* Info Bar Below Image */}
           <div style={{
             backgroundColor: '#fef3c7',
-            padding: '16px 20px',
+            padding: '12px 20px',
             borderBottom: '2px solid #fbbf24',
           }}>
             <div style={{
               maxWidth: '1200px',
               margin: '0 auto',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-              alignItems: 'center',
+              textAlign: 'center',
             }}>
               <h1 style={{
-                fontSize: '32px',
+                fontSize: '28px',
                 fontWeight: '700',
                 color: '#000',
-                margin: '0',
+                margin: '0 0 4px 0',
                 letterSpacing: '-0.02em',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
-                Junk Removal in {stateName}
+                {stateName} Junk Removal
               </h1>
-              <div style={{
-                display: 'flex',
-                gap: '16px',
-                fontSize: '15px',
-                color: '#1a1a1a',
+              <p style={{
+                fontSize: '13px',
+                color: '#4b5563',
+                margin: '0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                flexWrap: 'wrap',
-                justifyContent: 'center',
               }}>
-                <span>📍 Featuring the {currentState.landmark}</span>
-                <span>•</span>
-                <span>👥 Population: {currentState.population}</span>
-                <span>•</span>
-                <span>✓ Professional Services Statewide</span>
-              </div>
+                Featuring the {currentState.landmark}
+              </p>
             </div>
           </div>
         </>
