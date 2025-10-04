@@ -1119,7 +1119,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 <h4 style={{
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: '#217fc4',
+                  color: '#fbbf24',
                   marginBottom: '8px',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
@@ -1127,7 +1127,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </h4>
                 <p style={{
                   fontSize: '14px',
-                  color: '#217fc4',
+                  color: '#fbbf24',
                   margin: '0 0 8px 0',
                   lineHeight: '1.6',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1136,7 +1136,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </p>
                 <p style={{
                   fontSize: '14px',
-                  color: '#217fc4',
+                  color: '#fbbf24',
                   margin: '0 0 8px 0',
                   lineHeight: '1.6',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1145,7 +1145,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </p>
                 <p style={{
                   fontSize: '14px',
-                  color: '#217fc4',
+                  color: '#fbbf24',
                   margin: '0',
                   lineHeight: '1.6',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1192,7 +1192,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                   }}
                 >
-                  <item.Icon size={32} style={{ color: '#ff6b35', marginBottom: '12px' }} />
+                  <item.Icon size={32} style={{ color: '#fbbf24', marginBottom: '12px' }} />
                   <h4 style={{
                     fontSize: '18px',
                     fontWeight: '700',
@@ -1289,7 +1289,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                      <item.Icon size={18} style={{ color: '#ff6b35' }} />
+                      <item.Icon size={18} style={{ color: '#fbbf24' }} />
                       <h4 style={{
                         fontSize: '15px',
                         fontWeight: '700',
@@ -1376,14 +1376,14 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <div style={{
                     fontSize: '32px',
                     fontWeight: '800',
-                    color: '#217fc4',
+                    color: '#fbbf24',
                     marginBottom: '8px',
                   }}>
                     100+
                   </div>
                   <p style={{
                     fontSize: '14px',
-                    color: '#217fc4',
+                    color: '#fbbf24',
                     margin: '0',
                     fontWeight: '600',
                   }}>
@@ -1505,7 +1505,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#ff6b35',
+                      color: '#fbbf24',
                       marginBottom: '8px',
                     }}>
                       {tier.size}
@@ -1532,11 +1532,11 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 padding: '16px',
                 backgroundColor: '#f5f5f5',
                 borderRadius: '8px',
-                borderLeft: '4px solid #217fc4',
+                borderLeft: '4px solid #fbbf24',
               }}>
                 <p style={{
                   fontSize: '14px',
-                  color: '#217fc4',
+                  color: '#fbbf24',
                   margin: '0',
                   lineHeight: '1.6',
                 }}>
@@ -1609,7 +1609,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
-                      borderLeft: '4px solid #ff6b35',
+                      borderLeft: '4px solid #fbbf24',
                     }}
                   >
                     <h4 style={{
@@ -1682,7 +1682,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#217fc4',
+                      color: '#fbbf24',
                       marginBottom: '8px',
                     }}>
                       {faq.q}
@@ -2380,7 +2380,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <span style={{ color: '#9ca3af', fontSize: '13px' }}>({c.reviews})</span>
                         {c.local && (
                           <span style={{
-                            background: '#ff6b35',
+                            background: '#fbbf24',
                             color: '#000',
                             padding: '2px 8px',
                             borderRadius: '4px',
