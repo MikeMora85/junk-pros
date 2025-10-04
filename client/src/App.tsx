@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import AddBusiness from "./pages/AddBusiness";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -1883,28 +1885,29 @@ function CityPage({ city, state }: { city: string; state: string }) {
           >
             <Home size={18} color="#000" />
           </a>
-          <button
-            onClick={() => setShowBusinessForm(true)}
-            className="breathing-button"
-            style={{
-              background: '#fbbf24',
-              color: '#000',
-              padding: '10px 16px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '700',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-            }}
-            data-testid="button-add-business"
-          >
-            <Plus size={16} />
-            ADD BUSINESS
-          </button>
+          <Link href="/add-business">
+            <button
+              className="breathing-button"
+              style={{
+                background: '#fbbf24',
+                color: '#000',
+                padding: '10px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '700',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                whiteSpace: 'nowrap',
+              }}
+              data-testid="button-add-business"
+            >
+              <Plus size={16} />
+              ADD BUSINESS
+            </button>
+          </Link>
         </div>
       </header>
 
@@ -3234,6 +3237,11 @@ function App() {
   // / -> Landing page
   if (pathParts.length === 0) {
     return <LandingPage />;
+  }
+  
+  // /add-business -> Add Business page
+  if (pathParts.length === 1 && pathParts[0] === 'add-business') {
+    return <AddBusiness />;
   }
   
   // /arizona -> State page
