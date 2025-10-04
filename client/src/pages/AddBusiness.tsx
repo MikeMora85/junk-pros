@@ -308,10 +308,10 @@ export default function AddBusiness() {
               </p>
               <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
                 <li>Everything in Basic</li>
-                <li><strong>Full-blown landing page profile</strong></li>
-                <li><strong>Integrated quoting tool</strong></li>
-                <li><strong>Online booking system</strong></li>
-                <li><strong>Active calendar with availability</strong></li>
+                <li>Full-blown landing page profile</li>
+                <li>Integrated quoting tool</li>
+                <li>Online booking system</li>
+                <li>Active calendar with availability</li>
                 <li>Photo gallery (up to 5 images)</li>
               </ul>
             </div>
@@ -348,11 +348,10 @@ export default function AddBusiness() {
               </p>
               <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
                 <li>Everything in Professional</li>
-                <li><strong>Top placement in search results</strong></li>
-                <li><strong>Featured badge on your profile</strong></li>
+                <li>Top placement in search results</li>
+                <li>Featured badge on your profile</li>
                 <li>Photo gallery (up to 15 images)</li>
                 <li>Priority customer support</li>
-                <li>Advanced analytics dashboard</li>
               </ul>
             </div>
           </div>
