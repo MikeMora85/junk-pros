@@ -1012,7 +1012,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             <Link href="/admin" style={{ textDecoration: 'none' }}>
               <button
                 style={{
-                  background: '#166534',
+                  background: '#16a34a',
                   color: '#fff',
                   padding: '8px',
                   borderRadius: '6px',
@@ -1042,7 +1042,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             <a href="/api/login" style={{ textDecoration: 'none' }}>
               <button
                 style={{
-                  background: '#166534',
+                  background: '#16a34a',
                   color: '#fff',
                   padding: '8px',
                   borderRadius: '6px',
@@ -2073,7 +2073,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             <Link href="/admin" style={{ textDecoration: 'none' }}>
               <button
                 style={{
-                  background: '#166534',
+                  background: '#16a34a',
                   color: '#fff',
                   padding: '8px',
                   borderRadius: '6px',
@@ -2103,7 +2103,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             <a href="/api/login" style={{ textDecoration: 'none' }}>
               <button
                 style={{
-                  background: '#166534',
+                  background: '#16a34a',
                   color: '#fff',
                   padding: '8px',
                   borderRadius: '6px',
