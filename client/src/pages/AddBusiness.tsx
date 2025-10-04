@@ -308,9 +308,23 @@ export default function AddBusiness() {
                 padding: '16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
+                position: 'relative',
+                marginTop: '16px',
               }}
               data-testid="tier-professional"
             >
+              <div style={{
+                position: 'absolute',
+                top: '-12px',
+                right: '16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '4px 12px',
+                fontSize: '11px',
+                fontWeight: '700',
+              }}>
+                RECOMMENDED
+              </div>
               <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Professional Profile - $10/month
               </h3>
@@ -336,22 +350,9 @@ export default function AddBusiness() {
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 position: 'relative',
-                marginTop: '16px',
               }}
               data-testid="tier-featured"
             >
-              <div style={{
-                position: 'absolute',
-                top: '-12px',
-                right: '16px',
-                background: '#fbbf24',
-                color: '#000',
-                padding: '4px 12px',
-                fontSize: '11px',
-                fontWeight: '700',
-              }}>
-                RECOMMENDED
-              </div>
               <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Featured Listing - $49/month
               </h3>
