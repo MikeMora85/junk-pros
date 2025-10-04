@@ -909,7 +909,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           
           {/* Info Bar Below Image */}
           <div style={{
-            backgroundColor: '#fef3c7',
+            backgroundColor: '#fbbf24',
             padding: '12px 20px',
             borderBottom: '2px solid #fbbf24',
           }}>
