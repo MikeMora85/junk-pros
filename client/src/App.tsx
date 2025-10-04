@@ -1841,8 +1841,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        background: '#fbbf24',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        background: 'transparent',
         padding: '16px',
         overflow: 'hidden',
       }}>
@@ -1858,7 +1857,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           <a
             href="/"
             style={{
-              backgroundColor: 'transparent',
+              backgroundColor: '#fbbf24',
               color: '#000',
               padding: '8px',
               borderRadius: '6px',
