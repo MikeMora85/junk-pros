@@ -112,7 +112,7 @@ export default function EstimateBuilderInline() {
         marginBottom: '16px',
         border: '1px solid #cccccc',
       }}>
-        <div style={{ fontSize: '13px', color: '#6b7280', fontWeight: '600', marginBottom: '4px' }}>
+        <div style={{ fontSize: '13px', color: '#000', fontWeight: '600', marginBottom: '4px' }}>
           Estimated Cost
         </div>
         <div style={{
@@ -123,7 +123,7 @@ export default function EstimateBuilderInline() {
         }} data-testid="text-estimated-cost">
           ${low} - ${high}
         </div>
-        <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
+        <div style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
           Based on {yards} cubic yards • Industry average
         </div>
       </div>
