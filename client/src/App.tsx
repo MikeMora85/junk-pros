@@ -2382,37 +2382,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
-                  {/* Call Now Button */}
-                  <button 
-                    style={{
-                      background: '#fbbf24',
-                      color: '#000',
-                      padding: '12px 20px',
-                      borderRadius: '0',
-                      border: 'none',
-                      cursor: 'pointer',
-                      fontSize: '16px',
-                      fontWeight: '700',
-                      width: '100%',
-                      marginBottom: '12px',
-                      marginLeft: '0',
-                      marginRight: '0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      boxShadow: 'none',
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      window.open(`tel:${c.phone}`, '_self');
-                    }}
-                    data-testid={`button-call-${c.id}`}
-                  >
-                    <Phone size={18} />
-                    CALL NOW
-                  </button>
-
                   {/* Quote Section */}
                   <div style={{
                     backgroundColor: '#f5f5f5',
@@ -2425,15 +2394,45 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     borderTop: '1px solid #e5e5e5',
                   }}>
                     <h4 style={{
-                      fontSize: '14px',
+                      fontSize: '18px',
                       fontWeight: '700',
                       margin: '0 0 12px 0',
                       color: '#374151',
                     }}>
-                      Get a Quote
+                      3 Ways to Get a Quote
                     </h4>
                     
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {/* Call Now Button */}
+                      <button 
+                        style={{
+                          flex: '1',
+                          width: '100%',
+                          background: '#fbbf24',
+                          color: '#000',
+                          padding: '12px 20px',
+                          borderRadius: '8px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          fontSize: '16px',
+                          fontWeight: '700',
+                          marginBottom: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          boxShadow: 'none',
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(`tel:${c.phone}`, '_self');
+                        }}
+                        data-testid={`button-call-${c.id}`}
+                      >
+                        <Phone size={18} />
+                        CALL NOW
+                      </button>
+
                       <button
                         style={{
                           flex: '1',
