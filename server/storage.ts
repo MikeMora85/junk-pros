@@ -4,6 +4,7 @@ export interface IStorage {
   // User operations (required for Replit Auth)
   getUser(id: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
+  makeUserAdmin(email: string): Promise<User | null>;
   
   // Company operations
   getCompanies(): Promise<Company[]>;
@@ -159,6 +160,15 @@ export class MemStorage implements IStorage {
       this.users.push(newUser);
       return newUser;
     }
+  }
+
+  async makeUserAdmin(email: string): Promise<User | null> {
+    const user = this.users.find(u => u.email === email);
+    if (!user) return null;
+
+    user.isAdmin = true;
+    user.updatedAt = new Date();
+    return user;
   }
 
   // Company operations
