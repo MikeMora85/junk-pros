@@ -530,6 +530,7 @@ export default function AddBusiness() {
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
                 color: '#000',
+                textAlign: 'center',
               }}
               data-testid="input-business-name"
             />
@@ -551,6 +552,7 @@ export default function AddBusiness() {
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
                 color: '#000',
+                textAlign: 'center',
               }}
               data-testid="input-email"
             />
@@ -572,6 +574,7 @@ export default function AddBusiness() {
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
                 color: '#000',
+                textAlign: 'center',
               }}
               data-testid="input-password"
             />
@@ -593,6 +596,7 @@ export default function AddBusiness() {
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
                 color: '#000',
+                textAlign: 'center',
               }}
               data-testid="input-phone"
             />
@@ -612,6 +616,7 @@ export default function AddBusiness() {
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
                 color: '#000',
+                textAlign: 'center',
               }}
               data-testid="select-state"
             >
@@ -640,6 +645,7 @@ export default function AddBusiness() {
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
                 color: '#000',
+                textAlign: 'center',
               }}
               data-testid="input-city"
             />
