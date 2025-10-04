@@ -1363,16 +1363,17 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <div style={{
                     fontSize: '32px',
                     fontWeight: '800',
-                    color: '#fbbf24',
+                    color: '#000',
                     marginBottom: '8px',
                   }}>
                     60-80%
                   </div>
                   <p style={{
                     fontSize: '14px',
-                    color: '#fbbf24',
+                    color: '#000',
                     margin: '0',
                     fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}>
                     Items Recycled or Donated
                   </p>
@@ -1386,16 +1387,17 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <div style={{
                     fontSize: '32px',
                     fontWeight: '800',
-                    color: '#fbbf24',
+                    color: '#000',
                     marginBottom: '8px',
                   }}>
                     100+
                   </div>
                   <p style={{
                     fontSize: '14px',
-                    color: '#fbbf24',
+                    color: '#000',
                     margin: '0',
                     fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}>
                     Local Charities Supported
                   </p>
@@ -1409,16 +1411,17 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <div style={{
                     fontSize: '32px',
                     fontWeight: '800',
-                    color: '#fbbf24',
+                    color: '#000',
                     marginBottom: '8px',
                   }}>
                     90%
                   </div>
                   <p style={{
                     fontSize: '14px',
-                    color: '#fbbf24',
+                    color: '#000',
                     margin: '0',
                     fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}>
                     Customer Satisfaction
                   </p>
