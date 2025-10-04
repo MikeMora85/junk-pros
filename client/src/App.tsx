@@ -2236,7 +2236,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           }} data-testid="text-page-title">
             {city.charAt(0).toUpperCase() + city.slice(1)}<br />Junk Removal
           </h2>
-          <p style={{ fontSize: '15px', color: '#6b7280', margin: 0 }}>
+          <p style={{ fontSize: '15px', color: '#000', margin: 0 }}>
             {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {city.charAt(0).toUpperCase() + city.slice(1)}
           </p>
         </div>
