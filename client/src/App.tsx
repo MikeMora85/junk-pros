@@ -1104,7 +1104,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               </h3>
               <p style={{
                 fontSize: '16px',
-                color: '#6b7280',
+                color: '#000',
                 lineHeight: '1.8',
                 marginBottom: '16px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1113,7 +1113,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               </p>
               <p style={{
                 fontSize: '16px',
-                color: '#6b7280',
+                color: '#000',
                 lineHeight: '1.8',
                 marginBottom: '16px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1137,7 +1137,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </h4>
                 <p style={{
                   fontSize: '14px',
-                  color: '#fbbf24',
+                  color: '#000',
                   margin: '0 0 8px 0',
                   lineHeight: '1.6',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1146,7 +1146,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </p>
                 <p style={{
                   fontSize: '14px',
-                  color: '#fbbf24',
+                  color: '#000',
                   margin: '0 0 8px 0',
                   lineHeight: '1.6',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1155,7 +1155,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </p>
                 <p style={{
                   fontSize: '14px',
-                  color: '#fbbf24',
+                  color: '#000',
                   margin: '0',
                   lineHeight: '1.6',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1214,7 +1214,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   </h4>
                   <p style={{
                     fontSize: '14px',
-                    color: '#6b7280',
+                    color: '#000',
                     margin: '0',
                     lineHeight: '1.6',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1312,7 +1312,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     </div>
                     <p style={{
                       fontSize: '13px',
-                      color: '#6b7280',
+                      color: '#000',
                       margin: '0',
                       lineHeight: '1.5',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1342,7 +1342,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               </h3>
               <p style={{
                 fontSize: '16px',
-                color: '#6b7280',
+                color: '#000',
                 lineHeight: '1.8',
                 marginBottom: '20px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
