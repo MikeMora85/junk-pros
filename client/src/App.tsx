@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, UserCircle } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -939,7 +939,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         left: 0,
         right: 0,
         zIndex: 100,
-        background: 'rgba(255, 255, 255, 0.95)',
+        background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
         display: 'flex',
@@ -976,99 +976,100 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           <Home size={18} color="#000" />
         </a>
 
-        <Link href="/add-business" style={{ textDecoration: 'none' }}>
-          <button
-            className="breathing-button"
-            style={{
-              background: '#fbbf24',
-              color: '#000',
-              padding: '10px 16px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '700',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-            }}
-            data-testid="button-add-business"
-          >
-            <Plus size={16} />
-            ADD BUSINESS
-          </button>
-        </Link>
-      </div>
-
-      {/* Login Button - Below Header */}
-      <div style={{
-        position: 'absolute',
-        top: '72px',
-        right: '16px',
-        zIndex: 50,
-      }}>
-        {isAuthenticated ? (
-          <Link href="/admin" style={{ textDecoration: 'none' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <Link href="/add-business" style={{ textDecoration: 'none' }}>
             <button
+              className="breathing-button"
               style={{
-                background: '#166534',
-                color: '#fff',
-                padding: '8px 16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '8px',
                 borderRadius: '6px',
-                border: 'none',
+                border: '1px solid #000',
                 cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
                 transform: 'translateY(-2px)',
                 transition: 'all 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
                 e.currentTarget.style.transform = 'translateY(-3px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
-              data-testid="button-admin"
+              data-testid="button-add-business"
             >
-              ADMIN
+              <Plus size={18} />
             </button>
           </Link>
-        ) : (
-          <a href="/api/login" style={{ textDecoration: 'none' }}>
-            <button
-              style={{
-                background: '#166534',
-                color: '#fff',
-                padding: '8px 16px',
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              data-testid="button-login"
-            >
-              LOGIN
-            </button>
-          </a>
-        )}
+
+          {isAuthenticated ? (
+            <Link href="/admin" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  border: '1px solid #000',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-admin"
+              >
+                <UserCircle size={18} />
+              </button>
+            </Link>
+          ) : (
+            <a href="/api/login" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  border: '1px solid #000',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-login"
+              >
+                <LogIn size={18} />
+              </button>
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Hero Image - Clean without text overlay */}
@@ -1999,7 +2000,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         left: 0,
         right: 0,
         zIndex: 100,
-        background: 'rgba(255, 255, 255, 0.95)',
+        background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
         display: 'flex',
@@ -2036,99 +2037,100 @@ function CityPage({ city, state }: { city: string; state: string }) {
           <Home size={18} color="#000" />
         </a>
 
-        <Link href="/add-business" style={{ textDecoration: 'none' }}>
-          <button
-            className="breathing-button"
-            style={{
-              background: '#fbbf24',
-              color: '#000',
-              padding: '10px 16px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '14px',
-              fontWeight: '700',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              whiteSpace: 'nowrap',
-            }}
-            data-testid="button-add-business"
-          >
-            <Plus size={16} />
-            ADD BUSINESS
-          </button>
-        </Link>
-      </div>
-
-      {/* Login Button - Below Header */}
-      <div style={{
-        position: 'absolute',
-        top: '72px',
-        right: '16px',
-        zIndex: 50,
-      }}>
-        {isAuthenticated ? (
-          <Link href="/admin" style={{ textDecoration: 'none' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <Link href="/add-business" style={{ textDecoration: 'none' }}>
             <button
+              className="breathing-button"
               style={{
-                background: '#166534',
-                color: '#fff',
-                padding: '8px 16px',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '8px',
                 borderRadius: '6px',
-                border: 'none',
+                border: '1px solid #000',
                 cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
                 transform: 'translateY(-2px)',
                 transition: 'all 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
                 e.currentTarget.style.transform = 'translateY(-3px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
-              data-testid="button-admin"
+              data-testid="button-add-business"
             >
-              ADMIN
+              <Plus size={18} />
             </button>
           </Link>
-        ) : (
-          <a href="/api/login" style={{ textDecoration: 'none' }}>
-            <button
-              style={{
-                background: '#166534',
-                color: '#fff',
-                padding: '8px 16px',
-                borderRadius: '6px',
-                border: 'none',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              data-testid="button-login"
-            >
-              LOGIN
-            </button>
-          </a>
-        )}
+
+          {isAuthenticated ? (
+            <Link href="/admin" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  border: '1px solid #000',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-admin"
+              >
+                <UserCircle size={18} />
+              </button>
+            </Link>
+          ) : (
+            <a href="/api/login" style={{ textDecoration: 'none' }}>
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  border: '1px solid #000',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-login"
+              >
+                <LogIn size={18} />
+              </button>
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Main Content */}
