@@ -2418,7 +2418,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       
                       <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
-                        <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#2563eb" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
+                        <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
                         <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
                     </div>
@@ -3185,7 +3185,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         </div>
         
         <div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '14px' }}>
-          <MapPin size={16} color="#2563eb" style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+          <MapPin size={16} color="#000" style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
           {company.address}
           {company.website && (
             <>
