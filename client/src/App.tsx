@@ -915,53 +915,58 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         </div>
       </header>
 
-      {/* Hero Section with Landmark */}
+      {/* Hero Image - Clean without text overlay */}
       {currentState.heroImage && (
-        <div style={{
-          position: 'relative',
-          height: '400px',
-          backgroundImage: `url(${currentState.heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+        <>
           <div style={{
-            position: 'relative',
-            zIndex: 1,
-            textAlign: 'center',
-            color: '#000',
-            maxWidth: '800px',
-            padding: '0 20px',
+            height: '400px',
+            backgroundImage: `url(${currentState.heroImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }} />
+          
+          {/* Info Bar Below Image */}
+          <div style={{
+            backgroundColor: '#fef3c7',
+            padding: '16px 20px',
+            borderBottom: '2px solid #fbbf24',
           }}>
-            <h1 style={{
-              fontSize: '48px',
-              fontWeight: '700',
-              marginBottom: '16px',
-              textShadow: '0 2px 10px rgba(0,0,0,0.3)',
-              letterSpacing: '-0.02em',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            <div style={{
+              maxWidth: '1200px',
+              margin: '0 auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              alignItems: 'center',
             }}>
-              Junk Removal in {stateName}
-            </h1>
-            <p style={{
-              fontSize: '20px',
-              marginBottom: '8px',
-              opacity: 0.95,
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}>
-              Featuring the {currentState.landmark}
-            </p>
-            <p style={{
-              fontSize: '16px',
-              opacity: 0.9,
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}>
-              Population: {currentState.population} • Professional Services Statewide
-            </p>
+              <h1 style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                color: '#000',
+                margin: '0',
+                letterSpacing: '-0.02em',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Junk Removal in {stateName}
+              </h1>
+              <div style={{
+                display: 'flex',
+                gap: '16px',
+                fontSize: '15px',
+                color: '#1a1a1a',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+              }}>
+                <span>📍 Featuring the {currentState.landmark}</span>
+                <span>•</span>
+                <span>👥 Population: {currentState.population}</span>
+                <span>•</span>
+                <span>✓ Professional Services Statewide</span>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       <div style={{
