@@ -64,26 +64,61 @@ export default function AddBusiness() {
         </p>
       </div>
 
-      {/* Success Message */}
+      {/* Success Modal Popup */}
       {isSubmitted && (
-        <div style={{
-          background: '#dcfce7',
-          border: '2px solid #16a34a',
-          padding: '24px',
-          margin: '20px 12px',
-          maxWidth: '900px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}>
-          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-            <CheckCircle size={32} color="#16a34a" fill="#16a34a" />
-            <div>
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
-                Account Created Successfully!
-              </h3>
-              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', color: '#000', lineHeight: '1.6' }}>
-                Welcome to the directory, {formData.businessName}! Your {formData.pricingTier === 'basic' ? 'FREE Basic' : formData.pricingTier === 'professional' ? 'Professional' : 'Featured'} listing is now being processed. You'll receive an email at {formData.email} with next steps to complete your profile and start getting leads.
-              </p>
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px',
+          }}
+          onClick={() => setIsSubmitted(false)}
+        >
+          <div 
+            style={{
+              background: '#dcfce7',
+              border: '3px solid #16a34a',
+              padding: '32px',
+              maxWidth: '500px',
+              width: '100%',
+              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', textAlign: 'center' }}>
+              <CheckCircle size={48} color="#16a34a" fill="#16a34a" />
+              <div>
+                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '24px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
+                  Account Created Successfully!
+                </h3>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
+                  Welcome to the directory, {formData.businessName}! Your {formData.pricingTier === 'basic' ? 'FREE Basic' : formData.pricingTier === 'professional' ? 'Professional' : 'Featured'} listing is now being processed. You'll receive an email at {formData.email} with next steps to complete your profile and start getting leads.
+                </p>
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  style={{
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    background: '#16a34a',
+                    color: '#fff',
+                    padding: '12px 32px',
+                    border: 'none',
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    cursor: 'pointer',
+                  }}
+                  data-testid="button-close-success"
+                >
+                  Got it!
+                </button>
+              </div>
             </div>
           </div>
         </div>
