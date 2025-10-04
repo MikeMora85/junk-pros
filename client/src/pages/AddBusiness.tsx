@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search } from "lucide-react";
+import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X } from "lucide-react";
 
 export default function AddBusiness() {
   const [formData, setFormData] = useState({
@@ -79,6 +79,7 @@ export default function AddBusiness() {
             justifyContent: 'center',
             zIndex: 1000,
             padding: '20px',
+            overflowY: 'auto',
           }}
           onClick={() => setIsSubmitted(false)}
         >
@@ -89,10 +90,30 @@ export default function AddBusiness() {
               padding: '32px',
               maxWidth: '500px',
               width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
               boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
+              position: 'relative',
+              margin: 'auto',
             }}
             onClick={(e) => e.stopPropagation()}
           >
+            <button
+              onClick={() => setIsSubmitted(false)}
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '4px',
+              }}
+              data-testid="button-close-x"
+            >
+              <X size={24} color="#000" />
+            </button>
+            
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', textAlign: 'center' }}>
               <CheckCircle size={48} color="#16a34a" fill="#16a34a" />
               <div>
