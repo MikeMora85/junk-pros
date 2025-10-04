@@ -1509,7 +1509,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <div
                     key={i}
                     style={{
-                      padding: '20px',
+                      padding: '14px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
                       border: '2px solid #fbbf24',
