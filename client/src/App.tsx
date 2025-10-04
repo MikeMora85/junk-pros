@@ -252,7 +252,7 @@ function LandingPage() {
             <button
               type="submit"
               style={{
-                padding: '10px 16px',
+                padding: '10px 14px',
                 background: '#fbbf24',
                 color: '#000',
                 border: 'none',
@@ -262,15 +262,14 @@ function LandingPage() {
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                justifyContent: 'center',
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="button-homepage-search"
             >
-              <Search size={16} />
-              SEARCH
+              <Search size={18} />
             </button>
           </form>
         </div>
@@ -1016,7 +1015,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             <button
               type="submit"
               style={{
-                padding: '10px 16px',
+                padding: '10px 14px',
                 background: '#fbbf24',
                 color: '#000',
                 border: 'none',
@@ -1026,14 +1025,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                justifyContent: 'center',
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
               }}
               data-testid="button-state-search"
             >
-              <Search size={16} />
-              SEARCH
+              <Search size={18} />
             </button>
           </form>
         </div>
