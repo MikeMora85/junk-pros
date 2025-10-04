@@ -1057,15 +1057,27 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               onClick={() => setActiveTab(tab.id)}
               style={{
                 padding: '12px 20px',
-                background: 'none',
+                background: activeTab === tab.id ? '#fef3c7' : 'transparent',
                 border: 'none',
-                borderBottom: activeTab === tab.id ? '3px solid #e63946' : '3px solid transparent',
-                color: activeTab === tab.id ? '#e63946' : '#333333',
+                borderBottom: activeTab === tab.id ? '3px solid #fbbf24' : '3px solid transparent',
+                color: activeTab === tab.id ? '#1a1a1a' : '#6b7280',
                 fontSize: '15px',
                 fontWeight: activeTab === tab.id ? '700' : '600',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
                 transition: 'all 0.2s',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                borderRadius: '8px 8px 0 0',
+              }}
+              onMouseEnter={(e) => {
+                if (activeTab !== tab.id) {
+                  e.currentTarget.style.backgroundColor = '#f9fafb';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeTab !== tab.id) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
               }}
             >
               {tab.label}
