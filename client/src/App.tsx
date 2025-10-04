@@ -2160,7 +2160,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       gap: '8px',
                       boxShadow: 'none',
                     }}
-                    onClick={() => window.open(`tel:${c.phone}`, '_self')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(`tel:${c.phone}`, '_self');
+                    }}
                     data-testid={`button-call-${c.id}`}
                   >
                     <Phone size={18} />
@@ -2205,7 +2208,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           justifyContent: 'center',
                           gap: '6px',
                         }}
-                        onClick={() => alert('Photo upload feature coming soon!')}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          alert('Photo upload feature coming soon!');
+                        }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={16} />
@@ -2230,7 +2236,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           gap: '6px',
                           boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
                         }}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setExpandedQuote(expandedQuote === c.id ? null : c.id);
                         }}
                         data-testid={`button-in-person-${c.id}`}
@@ -2273,7 +2280,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 color: '#fbbf24',
                                 textAlign: 'left',
                               }}
-                              onClick={() => alert(`Appointment scheduled for ${time}`)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                alert(`Appointment scheduled for ${time}`);
+                              }}
                               data-testid={`button-time-slot-${c.id}-${i}`}
                             >
                               {time}
