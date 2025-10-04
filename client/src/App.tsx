@@ -1346,21 +1346,21 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               }}>
                 <div style={{
                   padding: '20px',
-                  backgroundColor: '#e5e5e5',
+                  backgroundColor: '#f5f5f5',
                   borderRadius: '10px',
                   textAlign: 'center',
                 }}>
                   <div style={{
                     fontSize: '32px',
                     fontWeight: '800',
-                    color: '#f94144',
+                    color: '#fbbf24',
                     marginBottom: '8px',
                   }}>
                     60-80%
                   </div>
                   <p style={{
                     fontSize: '14px',
-                    color: '#666666',
+                    color: '#fbbf24',
                     margin: '0',
                     fontWeight: '600',
                   }}>
@@ -1392,21 +1392,21 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 </div>
                 <div style={{
                   padding: '20px',
-                  backgroundColor: '#fef3c7',
+                  backgroundColor: '#f5f5f5',
                   borderRadius: '10px',
                   textAlign: 'center',
                 }}>
                   <div style={{
                     fontSize: '32px',
                     fontWeight: '800',
-                    color: '#d97706',
+                    color: '#fbbf24',
                     marginBottom: '8px',
                   }}>
                     90%
                   </div>
                   <p style={{
                     fontSize: '14px',
-                    color: '#92400e',
+                    color: '#fbbf24',
                     margin: '0',
                     fontWeight: '600',
                   }}>
