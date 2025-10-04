@@ -1495,8 +1495,9 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 {stateName} Junk Removal Pricing Guide
               </h3>
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
                 gap: '16px',
                 marginBottom: '24px',
               }}>
@@ -1513,6 +1514,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       backgroundColor: '#f9fafb',
                       borderRadius: '10px',
                       border: '2px solid #fbbf24',
+                      width: '100%',
+                      maxWidth: '360px',
                     }}
                   >
                     <h4 style={{
