@@ -1445,7 +1445,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             </h2>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+              gridTemplateColumns: 'repeat(2, 1fr)',
               gap: '12px',
             }}>
               {cities.map((city) => (
@@ -1466,11 +1466,9 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px',
                   }}
                   data-testid={`link-city-${city.toLowerCase()}`}
                 >
-                  <MapPin size={14} color="#2563eb" />
                   {city}
                 </a>
               ))}
