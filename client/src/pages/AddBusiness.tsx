@@ -153,10 +153,10 @@ export default function AddBusiness() {
               <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
               <div>
                 <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
-                  Minimum Pricing Standards
+                  Pricing Standards
                 </h4>
                 <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                  Must charge at least <strong>$38 per cubic yard</strong>. Below-market pricing hurts the entire industry by setting unsustainable expectations and devaluing professional service.
+                  Minimum <strong>$38 per cubic yard</strong> required. Established companies typically charge <strong>$45-$65 per cubic yard</strong>. Below-market pricing hurts the industry by setting unsustainable expectations and devaluing professional service.
                 </p>
               </div>
             </div>
@@ -165,10 +165,10 @@ export default function AddBusiness() {
               <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
               <div>
                 <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
-                  Service Area Verification
+                  Physical Location Requirement
                 </h4>
                 <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                  You can only claim cities where your business actually operates. Each listing is tied to your verified service locations.
+                  Your business must be <strong>physically located in the city you select</strong>. We're hyperlocal—connecting customers with their neighborhood junk removal company. You cannot list a city just because you serve it; your business address must be within city limits.
                 </p>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function AddBusiness() {
                   <li>Franchise operations (1-800-GOT-JUNK, College Hunks, etc.)</li>
                   <li>Companies charging below industry minimums (&lt;$38/cubic yard)</li>
                   <li>Unlicensed or uninsured operators</li>
-                  <li>Businesses claiming service areas where they don't operate</li>
+                  <li>Businesses not physically located in the city they're listing (must be hyperlocal)</li>
                 </ul>
               </div>
             </div>
@@ -213,29 +213,36 @@ export default function AddBusiness() {
             Industry Pricing Standards
           </h2>
           <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
-            Understanding proper pricing ensures sustainable business operations and fair compensation for your work:
+            Understanding proper pricing ensures sustainable business operations and fair compensation for your work. While $38/cubic yard is our minimum requirement, established junk removal companies typically charge <strong>$45-$65 per cubic yard</strong>.
           </p>
           
           <div style={{ marginBottom: '16px' }}>
             <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
-              Standard Load Pricing (2024)
+              Standard Load Pricing (Established Companies)
             </h4>
             <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
-              <li>Minimum load (¼ truck, ~3.5 cubic yards): $150-$250</li>
-              <li>Half truck (~7 cubic yards): $300-$450</li>
+              <li>Minimum load (¼ truck, ~3.5 cubic yards): $160-$230</li>
+              <li>Half truck (~7 cubic yards): $315-$455</li>
               <li>¾ truck (~10 cubic yards): $450-$650</li>
-              <li>Full truck (~14 cubic yards): $600-$850+</li>
+              <li>Full truck (~14 cubic yards): $630-$910</li>
             </ul>
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '13px', color: '#000', marginTop: '8px', fontStyle: 'italic' }}>
+              Based on $45-$65 per cubic yard industry standard
+            </p>
           </div>
 
           <div style={{
             background: '#fff',
             padding: '16px',
             border: '2px solid #fbbf24',
+            marginBottom: '16px',
           }}>
             <DollarSign size={20} color="#fbbf24" style={{ marginBottom: '8px' }} />
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '12px' }}>
+              <strong>Why the $45-$65 standard?</strong> Established companies charge this range to properly cover all business costs while maintaining quality service and sustainable operations.
+            </p>
             <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-              <strong>Why $38/cubic yard minimum?</strong> This covers your truck costs, fuel, labor, disposal fees, insurance, and business overhead. Charging less means you're working at a loss or cutting corners that could hurt you long-term.
+              <strong>$38 minimum floor:</strong> This is the absolute minimum to cover truck costs, fuel, labor, disposal fees, insurance, and overhead. Charging less means working at a loss or cutting corners that hurt you long-term.
             </p>
           </div>
         </div>
