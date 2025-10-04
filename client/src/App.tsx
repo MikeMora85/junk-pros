@@ -1130,7 +1130,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 <h4 style={{
                   fontSize: '16px',
                   fontWeight: '700',
-                  color: '#fbbf24',
+                  color: '#000',
                   marginBottom: '8px',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
