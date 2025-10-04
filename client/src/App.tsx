@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, Route, Router } from "wouter";
+import { Link, Route, Router, Switch } from "wouter";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -2915,14 +2915,16 @@ function App() {
 
   return (
     <Router>
-      <Route path="/" component={LandingPage} />
-      <Route path="/add-business" component={AddBusiness} />
-      <Route path="/:state">
-        {(params) => <StatePage stateName={stateNames[params.state] || 'Unknown'} stateSlug={params.state} />}
-      </Route>
-      <Route path="/:state/:city">
-        {(params) => <CityPage city={params.city} state={params.state} />}
-      </Route>
+      <Switch>
+        <Route path="/" component={LandingPage} />
+        <Route path="/add-business" component={AddBusiness} />
+        <Route path="/:state/:city">
+          {(params) => <CityPage city={params.city} state={params.state} />}
+        </Route>
+        <Route path="/:state">
+          {(params) => <StatePage stateName={stateNames[params.state] || 'Unknown'} stateSlug={params.state} />}
+        </Route>
+      </Switch>
     </Router>
   );
 }
