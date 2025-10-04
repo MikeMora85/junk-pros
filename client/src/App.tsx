@@ -2402,11 +2402,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       3 Ways to Get a Quote
                     </h4>
                     
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       {/* Call Now Button */}
                       <button 
                         style={{
-                          flex: '1',
                           width: '100%',
                           background: '#fbbf24',
                           color: '#000',
@@ -2416,7 +2415,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           cursor: 'pointer',
                           fontSize: '16px',
                           fontWeight: '700',
-                          marginBottom: '8px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -2435,20 +2433,19 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
                       <button
                         style={{
-                          flex: '1',
-                          minWidth: '140px',
+                          width: '100%',
                           backgroundColor: '#fff',
                           color: '#374151',
-                          padding: '10px 16px',
+                          padding: '12px 20px',
                           borderRadius: '8px',
                           border: '2px solid #fbbf24',
                           cursor: 'pointer',
-                          fontSize: '14px',
+                          fontSize: '16px',
                           fontWeight: '600',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px',
+                          gap: '8px',
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -2456,26 +2453,25 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={16} />
+                        <Camera size={18} />
                         SEND PHOTOS
                       </button>
                       
                       <button
                         style={{
-                          flex: '1',
-                          minWidth: '140px',
+                          width: '100%',
                           background: '#fbbf24',
                           color: '#000',
-                          padding: '10px 16px',
+                          padding: '12px 20px',
                           borderRadius: '8px',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '14px',
+                          fontSize: '16px',
                           fontWeight: '700',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px',
+                          gap: '8px',
                           boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
                         }}
                         onClick={(e) => {
@@ -2484,7 +2480,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar size={16} />
+                        <Calendar size={18} />
                         IN PERSON ESTIMATE
                       </button>
                     </div>
