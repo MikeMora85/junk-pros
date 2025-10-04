@@ -932,76 +932,79 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       minHeight: '100vh',
       background: '#ffffff',
     }}>
-      {/* Sticky Navigation - Home Button */}
-      <a
-        href="/"
-        style={{
-          position: 'fixed',
-          top: '16px',
-          left: '16px',
-          zIndex: 100,
-          backgroundColor: '#fbbf24',
-          color: '#000',
-          padding: '8px',
-          borderRadius: '6px',
-          border: '1px solid #000',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textDecoration: 'none',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-          transform: 'translateY(-2px)',
-          transition: 'all 0.2s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-          e.currentTarget.style.transform = 'translateY(-3px)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-          e.currentTarget.style.transform = 'translateY(-2px)';
-        }}
-        data-testid="button-home"
-      >
-        <Home size={18} color="#000" />
-      </a>
-
-      {/* Sticky Add Business Button - Aligned with Login */}
-      <Link href="/add-business" style={{ 
+      {/* Sticky Navigation Header */}
+      <div style={{
         position: 'fixed',
-        top: '16px',
-        right: '16px',
+        top: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
-        textDecoration: 'none'
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        padding: '16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
       }}>
-        <button
-          className="breathing-button"
+        <a
+          href="/"
           style={{
-            background: '#fbbf24',
+            backgroundColor: '#fbbf24',
             color: '#000',
-            padding: '10px 16px',
-            borderRadius: '8px',
-            border: 'none',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
             cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '700',
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            whiteSpace: 'nowrap',
+            justifyContent: 'center',
+            textDecoration: 'none',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
           }}
-          data-testid="button-add-business"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          data-testid="button-home"
         >
-          <Plus size={16} />
-          ADD BUSINESS
-        </button>
-      </Link>
+          <Home size={18} color="#000" />
+        </a>
 
-      {/* Login Button - Not Sticky */}
+        <Link href="/add-business" style={{ textDecoration: 'none' }}>
+          <button
+            className="breathing-button"
+            style={{
+              background: '#fbbf24',
+              color: '#000',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              whiteSpace: 'nowrap',
+            }}
+            data-testid="button-add-business"
+          >
+            <Plus size={16} />
+            ADD BUSINESS
+          </button>
+        </Link>
+      </div>
+
+      {/* Login Button - Below Header */}
       <div style={{
         position: 'absolute',
-        top: '80px',
+        top: '72px',
         right: '16px',
         zIndex: 50,
       }}>
@@ -1989,77 +1992,79 @@ function CityPage({ city, state }: { city: string; state: string }) {
           }
         }
       `}} />
-      {/* Sticky Header - Home Button */}
-      <a
-        href="/"
-        style={{
-          position: 'sticky',
-          top: '16px',
-          left: '16px',
-          zIndex: 100,
-          backgroundColor: '#fbbf24',
-          color: '#000',
-          padding: '8px',
-          borderRadius: '6px',
-          border: '1px solid #000',
-          cursor: 'pointer',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textDecoration: 'none',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-          transform: 'translateY(-2px)',
-          transition: 'all 0.2s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-          e.currentTarget.style.transform = 'translateY(-3px)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-          e.currentTarget.style.transform = 'translateY(-2px)';
-        }}
-        data-testid="button-home"
-      >
-        <Home size={18} color="#000" />
-      </a>
-
-      {/* Sticky Add Business Button - Aligned with Login */}
-      <Link href="/add-business" style={{
+      {/* Sticky Navigation Header */}
+      <div style={{
         position: 'sticky',
-        top: '16px',
-        float: 'right',
-        right: '16px',
+        top: 0,
+        left: 0,
+        right: 0,
         zIndex: 100,
-        textDecoration: 'none'
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        padding: '16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
       }}>
-        <button
-          className="breathing-button"
+        <a
+          href="/"
           style={{
-            background: '#fbbf24',
+            backgroundColor: '#fbbf24',
             color: '#000',
-            padding: '10px 16px',
-            borderRadius: '8px',
-            border: 'none',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
             cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '700',
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            whiteSpace: 'nowrap',
+            justifyContent: 'center',
+            textDecoration: 'none',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
           }}
-          data-testid="button-add-business"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          data-testid="button-home"
         >
-          <Plus size={16} />
-          ADD BUSINESS
-        </button>
-      </Link>
+          <Home size={18} color="#000" />
+        </a>
 
-      {/* Login Button - Not Sticky */}
+        <Link href="/add-business" style={{ textDecoration: 'none' }}>
+          <button
+            className="breathing-button"
+            style={{
+              background: '#fbbf24',
+              color: '#000',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '700',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              whiteSpace: 'nowrap',
+            }}
+            data-testid="button-add-business"
+          >
+            <Plus size={16} />
+            ADD BUSINESS
+          </button>
+        </Link>
+      </div>
+
+      {/* Login Button - Below Header */}
       <div style={{
         position: 'absolute',
-        top: '80px',
+        top: '72px',
         right: '16px',
         zIndex: 50,
       }}>
