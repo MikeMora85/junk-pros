@@ -2293,8 +2293,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       <div style={{
                         position: 'absolute',
-                        top: '-8px',
-                        right: '-8px',
+                        top: '8px',
+                        right: '8px',
                         backgroundColor: '#16a34a',
                         borderRadius: '50%',
                         width: '32px',
