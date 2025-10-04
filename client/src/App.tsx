@@ -1517,10 +1517,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     }}
                   >
                     <h4 style={{
-                      fontSize: '20px',
+                      fontSize: '26px',
                       fontWeight: '700',
                       color: '#fbbf24',
-                      marginBottom: '8px',
+                      marginBottom: '12px',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {tier.size}
