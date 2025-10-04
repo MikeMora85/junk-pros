@@ -16,6 +16,7 @@ export default function AddBusiness() {
 
   const [checkCity, setCheckCity] = useState("");
   const [availabilityStatus, setAvailabilityStatus] = useState<'idle' | 'available' | 'taken'>('idle');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleCheckAvailability = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +29,9 @@ export default function AddBusiness() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    setIsSubmitted(true);
+    // Scroll to top to show success message
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -59,6 +63,31 @@ export default function AddBusiness() {
           Connect with customers actively searching for professional junk removal services in your area. Built exclusively for independent, quality-focused operators.
         </p>
       </div>
+
+      {/* Success Message */}
+      {isSubmitted && (
+        <div style={{
+          background: '#dcfce7',
+          border: '2px solid #16a34a',
+          padding: '24px',
+          margin: '20px 12px',
+          maxWidth: '900px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <CheckCircle size={32} color="#16a34a" fill="#16a34a" />
+            <div>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                Account Created Successfully!
+              </h3>
+              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', color: '#000', lineHeight: '1.6' }}>
+                Welcome to the directory, {formData.businessName}! Your {formData.pricingTier === 'basic' ? 'FREE Basic' : formData.pricingTier === 'professional' ? 'Professional' : 'Featured'} listing is now being processed. You'll receive an email at {formData.email} with next steps to complete your profile and start getting leads.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Content */}
       <div style={{
