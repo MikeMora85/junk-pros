@@ -168,43 +168,48 @@ export default function EstimateBuilderInline() {
         </div>
       </div>
 
-      <button 
-        style={{
-          width: '100%',
-          background: '#fbbf24',
-          color: '#000',
-          padding: '14px',
-          borderRadius: '0',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '16px',
-          fontWeight: '700',
-          boxShadow: 'none',
-          transition: 'all 0.2s',
-          marginBottom: '12px',
-          textTransform: 'uppercase',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = 'none';
-        }}
-        data-testid="button-request-quote"
-      >
-        Get Accurate Quote Now
-      </button>
-
-      {/* Disclaimer */}
+      {/* Educational Disclaimer */}
       <div style={{
-        fontSize: '11px',
-        color: '#6b7280',
-        textAlign: 'center',
-        lineHeight: '1.5',
+        backgroundColor: '#fff3cd',
+        borderRadius: '0',
+        padding: '16px',
+        marginBottom: '16px',
+        border: '2px solid #fbbf24',
       }}>
-        For education only. Actual pricing varies by company, location, and specific requirements. Contact companies directly for accurate quotes.
+        <div style={{
+          fontSize: '13px',
+          fontWeight: '700',
+          color: '#000',
+          marginBottom: '8px',
+        }}>
+          📚 Educational Tool Only
+        </div>
+        <div style={{
+          fontSize: '12px',
+          color: '#000',
+          lineHeight: '1.6',
+        }}>
+          This calculator provides estimates for <strong>basic junk removal</strong> to help you understand typical pricing. Contact companies directly for accurate quotes based on your specific situation.
+        </div>
+      </div>
+
+      {/* Common Upcharges */}
+      <div style={{
+        backgroundColor: '#f5f5f5',
+        borderRadius: '0',
+        padding: '14px',
+        border: '1px solid #cccccc',
+      }}>
+        <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
+          Common Upcharges
+        </h4>
+        <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+          <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
+          <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
+          <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
+          <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
+          <div>• Soiled or contaminated materials</div>
+        </div>
       </div>
     </div>
   );
