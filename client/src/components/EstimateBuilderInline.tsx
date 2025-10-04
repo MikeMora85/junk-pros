@@ -18,7 +18,7 @@ export default function EstimateBuilderInline() {
   return (
     <div style={{
       background: '#ffffff',
-      border: '2px solid #e63946',
+      border: '2px solid #fbbf24',
       borderRadius: '0',
       padding: '24px',
       marginBottom: '20px',
@@ -28,7 +28,7 @@ export default function EstimateBuilderInline() {
     }}>
       
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
-        <Calculator size={24} color="#e63946" />
+        <Calculator size={24} color="#fbbf24" />
         <h3 style={{ 
           fontSize: '20px', 
           fontWeight: '700', 
@@ -55,9 +55,9 @@ export default function EstimateBuilderInline() {
               borderRadius: '0',
               fontSize: '14px',
               fontWeight: '700',
-              backgroundColor: yards === p.value ? '#e63946' : '#ffffff',
-              color: yards === p.value ? '#ffffff' : '#1a1a1a',
-              border: `2px solid ${yards === p.value ? '#e63946' : '#cccccc'}`,
+              backgroundColor: yards === p.value ? '#fbbf24' : '#ffffff',
+              color: yards === p.value ? '#000' : '#1a1a1a',
+              border: `2px solid ${yards === p.value ? '#fbbf24' : '#cccccc'}`,
               cursor: 'pointer',
               transition: 'all 0.2s',
               textTransform: 'uppercase',
@@ -74,7 +74,7 @@ export default function EstimateBuilderInline() {
           <label style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>
             Load Size
           </label>
-          <span style={{ fontSize: '16px', fontWeight: '700', color: '#e63946' }}>
+          <span style={{ fontSize: '16px', fontWeight: '700', color: '#fbbf24' }}>
             {yards} yd³
           </span>
         </div>
@@ -90,7 +90,7 @@ export default function EstimateBuilderInline() {
             height: '8px',
             borderRadius: '4px',
             outline: 'none',
-            background: `linear-gradient(to right, #e63946 0%, #e63946 ${percentage}%, #e5e5e5 ${percentage}%, #e5e5e5 100%)`,
+            background: `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${percentage}%, #e5e5e5 ${percentage}%, #e5e5e5 100%)`,
             cursor: 'pointer',
           }}
           data-testid="input-load-size"
@@ -115,7 +115,7 @@ export default function EstimateBuilderInline() {
         <div style={{
           fontSize: '32px',
           fontWeight: '700',
-          color: '#e63946',
+          color: '#fbbf24',
           letterSpacing: '-0.02em',
         }} data-testid="text-estimated-cost">
           ${low} - ${high}
@@ -134,7 +134,7 @@ export default function EstimateBuilderInline() {
         border: '1px solid #cccccc',
       }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '10px' }}>
-          <Info size={16} color="#e63946" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <Info size={16} color="#fbbf24" style={{ flexShrink: 0, marginTop: '2px' }} />
           <div>
             <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
               What is a Cubic Yard?
