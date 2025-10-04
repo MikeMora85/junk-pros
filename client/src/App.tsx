@@ -901,11 +901,28 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       {currentState.heroImage && (
         <>
           <div style={{
+            position: 'relative',
             height: '400px',
-            backgroundImage: `url(${currentState.heroImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }} />
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: `url(${currentState.heroImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }} />
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            }} />
+          </div>
           
           {/* Info Bar Below Image */}
           <div style={{
