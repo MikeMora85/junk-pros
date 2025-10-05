@@ -90,6 +90,21 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Simple auth middleware
+  const requireSimpleAuth = (req: any, res: any, next: any) => {
+    if (req.session?.user) {
+      return next();
+    }
+    res.status(401).json({ error: 'Unauthorized' });
+  };
+
+  const requireSimpleAdmin = (req: any, res: any, next: any) => {
+    if (req.session?.user?.isAdmin) {
+      return next();
+    }
+    res.status(403).json({ error: 'Forbidden: Admin access required' });
+  };
+
   // Public company routes
   app.get("/api/companies", async (req, res) => {
     try {
@@ -155,7 +170,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   });
 
   // Admin routes
-  app.get("/api/admin/companies/pending", isAuthenticated, isAdmin(storage), async (req, res) => {
+  app.get("/api/admin/companies/pending", requireSimpleAdmin, async (req, res) => {
     try {
       const companies = await storage.getPendingCompanies();
       res.json(companies);
@@ -164,7 +179,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
-  app.patch("/api/admin/companies/:id/status", isAuthenticated, isAdmin(storage), async (req, res) => {
+  app.patch("/api/admin/companies/:id/status", requireSimpleAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
@@ -189,10 +204,10 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   });
 
   // Update company (owner or admin)
-  app.patch("/api/companies/:id", isAuthenticated, async (req: any, res) => {
+  app.patch("/api/companies/:id", requireSimpleAuth, async (req: any, res) => {
     try {
       const id = parseInt(req.params.id);
-      const userId = req.user.claims.sub;
+      const userEmail = req.session.user.email;
 
       if (isNaN(id)) {
         return res.status(400).json({ error: "Invalid company ID" });
@@ -203,34 +218,32 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ error: "Company not found" });
       }
 
-      const user = await storage.getUser(userId);
-      const isOwner = company.userId === userId;
-      const isAdminUser = user?.isAdmin ?? false;
-
-      if (!isOwner && !isAdminUser) {
-        return res.status(403).json({ error: "Forbidden: You can only edit your own companies" });
+      // Admin can edit anything
+      if (req.session.user.isAdmin) {
+        const updatedCompany = await storage.updateCompany(id, req.body);
+        return res.json(updatedCompany);
       }
 
-      const updatedCompany = await storage.updateCompany(id, req.body);
-      res.json(updatedCompany);
+      // Business owners can only edit their own companies
+      // TODO: Add user-company relationship check
+      return res.status(403).json({ error: "Forbidden: You can only edit your own companies" });
     } catch (error) {
       res.status(500).json({ error: "Failed to update company" });
     }
   });
 
   // Get user's companies
-  app.get("/api/user/companies", isAuthenticated, async (req: any, res) => {
+  app.get("/api/user/companies", requireSimpleAuth, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const companies = await storage.getCompaniesByUserId(userId);
-      res.json(companies);
+      // TODO: Implement user-company relationship
+      res.json([]);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch user companies" });
     }
   });
 
   // Get active companies (admin only)
-  app.get("/api/admin/companies/active", isAuthenticated, isAdmin(storage), async (req, res) => {
+  app.get("/api/admin/companies/active", requireSimpleAdmin, async (req, res) => {
     try {
       const companies = await storage.getApprovedCompanies();
       res.json(companies);
@@ -240,7 +253,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   });
 
   // Invite admin (admin only)
-  app.post("/api/admin/invite", isAuthenticated, isAdmin(storage), async (req, res) => {
+  app.post("/api/admin/invite", requireSimpleAdmin, async (req, res) => {
     try {
       const { email } = req.body;
       
