@@ -17,7 +17,7 @@ interface ActionTemplate {
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<'pending' | 'active' | 'payments' | 'analytics' | 'reports'>('pending');
+  const [activeTab, setActiveTab] = useState<'active' | 'payments' | 'analytics' | 'reports'>('active');
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [tierFilter, setTierFilter] = useState<string>("all");
@@ -194,7 +194,7 @@ export default function AdminDashboard() {
     );
   }
 
-  const filteredCompanies = (activeTab === 'pending' ? pendingCompanies : activeCompanies).filter(company => {
+  const filteredCompanies = activeCompanies.filter(company => {
     const matchesSearch = company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          company.state.toLowerCase().includes(searchQuery.toLowerCase());
@@ -396,7 +396,7 @@ export default function AdminDashboard() {
         padding: '8px 16px',
       }}>
         <div style={{ display: 'inline-flex', gap: '8px', minWidth: '100%' }}>
-          {(['pending', 'active', 'payments', 'analytics', 'reports'] as const).map(tab => (
+          {(['active', 'payments', 'analytics', 'reports'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -421,7 +421,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Search and Filters - Mobile */}
-      {(activeTab === 'pending' || activeTab === 'active') && (
+      {activeTab === 'active' && (
         <div style={{ padding: '16px' }}>
           <div style={{ position: 'relative', marginBottom: '12px' }}>
             <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#6b7280' }} />
@@ -486,9 +486,9 @@ export default function AdminDashboard() {
       )}
 
       {/* Companies List - Mobile Optimized */}
-      {(activeTab === 'pending' || activeTab === 'active') && (
+      {activeTab === 'active' && (
         <div style={{ padding: '0 16px 16px' }}>
-          {(activeTab === 'pending' ? pendingLoading : activeLoading) ? (
+          {activeLoading ? (
             <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>Loading...</div>
           ) : filteredCompanies.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
@@ -522,32 +522,127 @@ export default function AdminDashboard() {
                       </div>
 
                       {activeTab === 'active' && (
-                        <button
-                          onClick={() => setExpandedCompany(expandedCompany === company.id ? null : company.id)}
-                          style={{
-                            background: '#166534',
-                            color: '#fff',
-                            border: 'none',
-                            borderRadius: '8px',
-                            padding: '8px 12px',
-                            fontSize: '12px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                          }}
-                          data-testid={`actions-${company.id}`}
-                        >
-                          Actions
-                          <ChevronDown 
-                            size={16} 
-                            style={{ 
-                              transform: expandedCompany === company.id ? 'rotate(180deg)' : 'rotate(0deg)',
-                              transition: 'transform 0.2s'
-                            }} 
-                          />
-                        </button>
+                        <div style={{ position: 'relative' }}>
+                          <button
+                            onClick={() => setExpandedCompany(expandedCompany === company.id ? null : company.id)}
+                            style={{
+                              background: '#166534',
+                              color: '#fff',
+                              border: 'none',
+                              borderRadius: '8px',
+                              padding: '8px 12px',
+                              fontSize: '12px',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                            }}
+                            data-testid={`actions-${company.id}`}
+                          >
+                            Actions
+                            <ChevronDown 
+                              size={16} 
+                              style={{ 
+                                transform: expandedCompany === company.id ? 'rotate(180deg)' : 'rotate(0deg)',
+                                transition: 'transform 0.2s'
+                              }} 
+                            />
+                          </button>
+                          
+                          {/* Dropdown Menu */}
+                          {expandedCompany === company.id && (
+                            <div style={{
+                              position: 'absolute',
+                              right: 0,
+                              top: '100%',
+                              marginTop: '4px',
+                              background: '#fff',
+                              border: '1px solid #e5e7eb',
+                              borderRadius: '8px',
+                              boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+                              minWidth: '200px',
+                              zIndex: 1000,
+                              overflow: 'hidden',
+                            }}>
+                              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <button
+                                  onClick={() => {
+                                    window.open(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}/${company.id}`, '_blank');
+                                    setExpandedCompany(null);
+                                  }}
+                                  style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '12px 16px',
+                                    textAlign: 'left',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                    color: '#374151',
+                                    transition: 'background 0.15s',
+                                  }}
+                                  onMouseEnter={(e) => e.currentTarget.style.background = '#f3f4f6'}
+                                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                  data-testid={`view-profile-${company.id}`}
+                                >
+                                  View Profile
+                                </button>
+                                
+                                <button
+                                  onClick={() => {
+                                    const action = company.subscriptionStatus === 'active' ? 'pause' : 'resume';
+                                    if (confirm(`${action === 'pause' ? 'Pause' : 'Resume'} ${company.name}?`)) {
+                                      alert(`Pause/Resume coming soon!`);
+                                    }
+                                    setExpandedCompany(null);
+                                  }}
+                                  style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '12px 16px',
+                                    textAlign: 'left',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                    color: company.subscriptionStatus === 'active' ? '#f59e0b' : '#10b981',
+                                    transition: 'background 0.15s',
+                                  }}
+                                  onMouseEnter={(e) => e.currentTarget.style.background = '#f3f4f6'}
+                                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                  data-testid={`pause-${company.id}`}
+                                >
+                                  {company.subscriptionStatus === 'active' ? 'Pause Profile' : 'Resume Profile'}
+                                </button>
+                                
+                                <button
+                                  onClick={() => {
+                                    if (confirm(`⚠️ DELETE ${company.name}?`)) {
+                                      alert(`Delete coming soon!`);
+                                    }
+                                    setExpandedCompany(null);
+                                  }}
+                                  style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '12px 16px',
+                                    textAlign: 'left',
+                                    cursor: 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: '500',
+                                    color: '#ef4444',
+                                    transition: 'background 0.15s',
+                                  }}
+                                  onMouseEnter={(e) => e.currentTarget.style.background = '#fef2f2'}
+                                  onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                  data-testid={`delete-${company.id}`}
+                                >
+                                  Delete Profile
+                                </button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
 
@@ -586,263 +681,7 @@ export default function AdminDashboard() {
                         )}
                       </div>
                     )}
-
-                    {/* Pending Actions */}
-                    {activeTab === 'pending' && (
-                      <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
-                        <button
-                          onClick={() => approveMutation.mutate(company.id)}
-                          disabled={approveMutation.isPending}
-                          style={{
-                            flex: 1,
-                            background: '#10b981',
-                            color: '#fff',
-                            padding: '10px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                          }}
-                          data-testid={`approve-${company.id}`}
-                        >
-                          ✓ Approve
-                        </button>
-                        <button
-                          onClick={() => denyMutation.mutate(company.id)}
-                          disabled={denyMutation.isPending}
-                          style={{
-                            flex: 1,
-                            background: '#ef4444',
-                            color: '#fff',
-                            padding: '10px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                          }}
-                          data-testid={`deny-${company.id}`}
-                        >
-                          ✗ Deny
-                        </button>
-                      </div>
-                    )}
                   </div>
-
-                  {/* Expanded Actions Dropdown */}
-                  {activeTab === 'active' && expandedCompany === company.id && (
-                    <div style={{
-                      borderTop: '2px solid #e5e7eb',
-                      background: '#f9fafb',
-                      padding: '12px 16px',
-                    }}>
-                      <div style={{ fontSize: '12px', fontWeight: '700', color: '#6b7280', marginBottom: '12px' }}>
-                        QUICK ACTIONS
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {/* View Profile - Always visible */}
-                        <button
-                          onClick={() => {
-                            window.open(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}/${company.id}`, '_blank');
-                            setExpandedCompany(null);
-                          }}
-                          style={{
-                            width: '100%',
-                            background: '#166534',
-                            color: '#fff',
-                            padding: '12px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                          }}
-                          data-testid={`view-profile-${company.id}`}
-                        >
-                          <Mail size={18} />
-                          View Company Profile
-                        </button>
-
-                        {/* Pause/Resume Profile */}
-                        <button
-                          onClick={() => {
-                            const action = company.subscriptionStatus === 'active' ? 'pause' : 'resume';
-                            if (confirm(`${action === 'pause' ? 'Pause' : 'Resume'} ${company.name}? ${action === 'pause' ? 'They will not appear in search results.' : 'They will appear in search results again.'}`)) {
-                              // TODO: Implement pause/resume mutation
-                              alert(`Pause/Resume functionality coming soon!`);
-                            }
-                            setExpandedCompany(null);
-                          }}
-                          style={{
-                            width: '100%',
-                            background: company.subscriptionStatus === 'active' ? '#f59e0b' : '#10b981',
-                            color: '#fff',
-                            padding: '12px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                          }}
-                          data-testid={`pause-${company.id}`}
-                        >
-                          <Mail size={18} />
-                          {company.subscriptionStatus === 'active' ? 'Pause Profile' : 'Resume Profile'}
-                        </button>
-
-                        {/* Delete Profile */}
-                        <button
-                          onClick={() => {
-                            if (confirm(`⚠️ PERMANENTLY DELETE ${company.name}? This action cannot be undone!`)) {
-                              // TODO: Implement delete mutation
-                              alert(`Delete functionality coming soon!`);
-                            }
-                            setExpandedCompany(null);
-                          }}
-                          style={{
-                            width: '100%',
-                            background: '#ef4444',
-                            color: '#fff',
-                            padding: '12px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                          }}
-                          data-testid={`delete-${company.id}`}
-                        >
-                          <Mail size={18} />
-                          Delete Profile
-                        </button>
-                        
-                        {/* Payment actions for featured listings */}
-                        {company.subscriptionTier === 'featured' && company.subscriptionStatus !== 'active' && (
-                          <>
-                            <button
-                              onClick={() => {
-                                sendReminderMutation.mutate(company.id);
-                                setExpandedCompany(null);
-                              }}
-                              disabled={sendReminderMutation.isPending}
-                              style={{
-                                width: '100%',
-                                background: '#fbbf24',
-                                color: '#000',
-                                padding: '12px',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                              }}
-                              data-testid={`reminder-${company.id}`}
-                            >
-                              <Mail size={18} />
-                              Send Payment Reminder
-                            </button>
-                            <button
-                              onClick={() => {
-                                if (confirm(`Send warning to ${company.name}? This will increment their warning count.`)) {
-                                  sendWarningMutation.mutate(company.id);
-                                }
-                                setExpandedCompany(null);
-                              }}
-                              disabled={sendWarningMutation.isPending}
-                              style={{
-                                width: '100%',
-                                background: '#f59e0b',
-                                color: '#fff',
-                                padding: '12px',
-                                border: 'none',
-                                borderRadius: '8px',
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                              }}
-                              data-testid={`warning-${company.id}`}
-                            >
-                              <Mail size={18} />
-                              Send Payment Warning
-                            </button>
-                          </>
-                        )}
-                        {company.subscriptionStatus === 'cancelled' ? (
-                          <button
-                            onClick={() => {
-                              if (confirm(`Reactivate subscription for ${company.name}?`)) {
-                                reactivateMutation.mutate(company.id);
-                              }
-                              setExpandedCompany(null);
-                            }}
-                            disabled={reactivateMutation.isPending}
-                            style={{
-                              width: '100%',
-                              background: '#10b981',
-                              color: '#fff',
-                              padding: '12px',
-                              border: 'none',
-                              borderRadius: '8px',
-                              fontSize: '14px',
-                              fontWeight: '600',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px',
-                            }}
-                            data-testid={`reactivate-${company.id}`}
-                          >
-                            <Mail size={18} />
-                            Reactivate Subscription
-                          </button>
-                        ) : company.subscriptionTier === 'featured' && (
-                          <button
-                            onClick={() => {
-                              if (confirm(`Cancel subscription for ${company.name}? This will remove them from the directory.`)) {
-                                cancelSubscriptionMutation.mutate(company.id);
-                              }
-                              setExpandedCompany(null);
-                            }}
-                            disabled={cancelSubscriptionMutation.isPending}
-                            style={{
-                              width: '100%',
-                              background: '#ef4444',
-                              color: '#fff',
-                              padding: '12px',
-                              border: 'none',
-                              borderRadius: '8px',
-                              fontSize: '14px',
-                              fontWeight: '600',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px',
-                            }}
-                            data-testid={`cancel-${company.id}`}
-                          >
-                            <Mail size={18} />
-                            Cancel Subscription
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
