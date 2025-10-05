@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 import { registerRoutes } from "./routes";
-import { MemStorage } from "./storage";
+import { storage } from "./storage";
 import { createServer as createViteServer } from "vite";
 
 const app = express();
@@ -39,8 +39,6 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  const storage = new MemStorage();
-  
   if (process.env.NODE_ENV === "production") {
     const httpServer = await registerRoutes(app, storage);
     app.use(express.static("dist/client"));
