@@ -1020,11 +1020,12 @@ function LandingPage() {
               placeholder="Search for your state, city, or town"
               style={{
                 flex: 1,
-                minWidth: '280px',
-                padding: '10px 12px',
+                minWidth: '0',
+                width: '100%',
+                padding: '10px 8px',
                 border: 'none',
                 outline: 'none',
-                fontSize: '14px',
+                fontSize: '13px',
                 borderRadius: '8px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
