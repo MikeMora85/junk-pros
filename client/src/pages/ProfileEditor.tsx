@@ -1,15 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useAuth } from '../hooks/useAuth';
 import { apiRequest, queryClient } from '../lib/queryClient';
 import type { Company } from '@shared/schema';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Save, Eye, EyeOff, Plus, Upload, Star, Trash2 } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Upload, Plus, Trash2, Star, Phone, MapPin, Globe, Mail } from 'lucide-react';
 
 export default function ProfileEditor() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeSection, setActiveSection] = useState<'basic' | 'features' | 'reviews' | 'gallery'>('basic');
+  const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string>('');
 
   // Get user's company
   const { data: companies, isLoading } = useQuery<Company[]>({
@@ -21,16 +23,16 @@ export default function ProfileEditor() {
 
   // Local state for form
   const [formData, setFormData] = useState<Partial<Company>>({});
-  const [newReview, setNewReview] = useState({ platform: '', author: '', rating: 5, text: '', date: '', url: '' });
-  const [priceSheetItem, setPriceSheetItem] = useState({ service: '', price: '', unit: 'load' });
-  const [addOnItem, setAddOnItem] = useState({ name: '', price: '' });
 
   // Initialize form data when company loads
-  useState(() => {
+  useEffect(() => {
     if (company && Object.keys(formData).length === 0) {
       setFormData(company);
+      if (company.logoUrl) {
+        setLogoPreview(company.logoUrl);
+      }
     }
-  });
+  }, [company]);
 
   const updateMutation = useMutation({
     mutationFn: async (data: Partial<Company>) => {
@@ -43,6 +45,7 @@ export default function ProfileEditor() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/companies/my'] });
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+      alert('Profile saved successfully!');
     },
   });
 
@@ -50,634 +53,517 @@ export default function ProfileEditor() {
     updateMutation.mutate(formData);
   };
 
-  const toggleFeature = (feature: 'priceSheetVisible' | 'addOnCostsVisible') => {
-    setFormData(prev => ({ ...prev, [feature]: !prev[feature] }));
-  };
-
-  const addReview = () => {
-    const reviews = (formData.platformReviews as any[]) || [];
-    const reviewId = `review-${Date.now()}`;
-    setFormData(prev => ({
-      ...prev,
-      platformReviews: [...reviews, { ...newReview, id: reviewId }],
-    }));
-    setNewReview({ platform: '', author: '', rating: 5, text: '', date: '', url: '' });
-  };
-
-  const removeReview = (reviewId: string) => {
-    const reviews = (formData.platformReviews as any[]) || [];
-    setFormData(prev => ({
-      ...prev,
-      platformReviews: reviews.filter((r: any) => r.id !== reviewId),
-      featuredReviewIds: (prev.featuredReviewIds || []).filter(id => id !== reviewId),
-    }));
-  };
-
-  const toggleFeaturedReview = (reviewId: string) => {
-    const featured = formData.featuredReviewIds || [];
-    const isFeatured = featured.includes(reviewId);
-    setFormData(prev => ({
-      ...prev,
-      featuredReviewIds: isFeatured 
-        ? featured.filter(id => id !== reviewId)
-        : [...featured, reviewId],
-    }));
-  };
-
-  const addPriceSheetItem = () => {
-    const items = (formData.priceSheetData as any[]) || [];
-    setFormData(prev => ({
-      ...prev,
-      priceSheetData: [...items, { ...priceSheetItem, id: Date.now() }],
-    }));
-    setPriceSheetItem({ service: '', price: '', unit: 'load' });
-  };
-
-  const addAddOnItem = () => {
-    const items = (formData.addOnCosts as any[]) || [];
-    setFormData(prev => ({
-      ...prev,
-      addOnCosts: [...items, { ...addOnItem, id: Date.now() }],
-    }));
-    setAddOnItem({ name: '', price: '' });
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setLogoFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setLogoPreview(result);
+        setFormData(prev => ({ ...prev, logoUrl: result }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   if (isLoading) {
-    return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif"
+      }}>
+        <div style={{ textAlign: 'center', color: '#166534', fontSize: '18px', fontWeight: '600' }}>
+          Loading your profile...
+        </div>
+      </div>
+    );
   }
 
   if (!company) {
-    return <div style={{ padding: '40px', textAlign: 'center' }}>No company found</div>;
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        padding: '20px'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
+            No company found
+          </div>
+          <button
+            onClick={() => setLocation('/')}
+            style={{
+              background: '#fbbf24',
+              color: '#000',
+              border: 'none',
+              padding: '12px 24px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+            }}
+            data-testid="button-home"
+          >
+            Go Home
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  const reviews = (formData.platformReviews as any[]) || [];
-  const priceSheet = (formData.priceSheetData as any[]) || [];
-  const addOns = (formData.addOnCosts as any[]) || [];
-
   return (
-    <div style={{ minHeight: '100vh', background: '#f9fafb' }}>
+    <div style={{ 
+      minHeight: '100vh', 
+      backgroundColor: '#fff',
+      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+    }}>
       {/* Header */}
-      <div style={{ 
-        background: '#fff', 
-        borderBottom: '1px solid #e5e7eb',
+      <div style={{
+        background: '#166534',
         padding: '16px 20px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <button
             onClick={() => setLocation('/')}
             style={{
-              background: 'transparent',
-              border: '1px solid #d1d5db',
+              background: '#fbbf24',
+              border: 'none',
               padding: '8px',
-              borderRadius: '8px',
+              borderRadius: '6px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
             }}
             data-testid="button-back"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={20} color="#000" />
           </button>
-          <h1 style={{ fontSize: '24px', fontWeight: '700', margin: 0 }}>Edit Your Profile</h1>
+          <h1 style={{ 
+            fontSize: '20px', 
+            fontWeight: '700', 
+            margin: 0,
+            color: '#fff',
+          }}>
+            Business Profile
+          </h1>
         </div>
         <button
           onClick={handleSave}
           disabled={updateMutation.isPending}
           style={{
-            background: '#166534',
-            color: '#fff',
+            background: '#fbbf24',
+            color: '#000',
             border: 'none',
             padding: '10px 20px',
-            borderRadius: '8px',
+            borderRadius: '6px',
             fontSize: '16px',
             fontWeight: '600',
             cursor: updateMutation.isPending ? 'not-allowed' : 'pointer',
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
+            opacity: updateMutation.isPending ? 0.7 : 1,
           }}
           data-testid="button-save"
         >
           <Save size={18} />
-          {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
+          {updateMutation.isPending ? 'Saving...' : 'Save'}
         </button>
       </div>
 
       {/* Tabs */}
       <div style={{
-        background: '#fff',
-        borderBottom: '1px solid #e5e7eb',
+        background: '#f9fafb',
+        borderBottom: '2px solid #e5e7eb',
         padding: '0 20px',
         display: 'flex',
-        gap: '32px',
-        overflowX: 'auto',
+        gap: '8px',
       }}>
-        {[
-          { id: 'basic', label: 'Basic Info' },
-          { id: 'features', label: 'Features & Pricing' },
-          { id: 'reviews', label: 'Reviews' },
-          { id: 'gallery', label: 'Gallery' },
-        ].map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveSection(tab.id as any)}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              padding: '16px 0',
-              fontSize: '15px',
-              fontWeight: '600',
-              color: activeSection === tab.id ? '#166534' : '#6b7280',
-              borderBottom: activeSection === tab.id ? '2px solid #166534' : '2px solid transparent',
-              cursor: 'pointer',
-            }}
-            data-testid={`tab-${tab.id}`}
-          >
-            {tab.label}
-          </button>
-        ))}
+        <button
+          onClick={() => setActiveTab('edit')}
+          style={{
+            background: activeTab === 'edit' ? '#fff' : 'transparent',
+            border: 'none',
+            padding: '12px 24px',
+            fontSize: '15px',
+            fontWeight: '600',
+            color: activeTab === 'edit' ? '#166534' : '#6b7280',
+            borderBottom: activeTab === 'edit' ? '3px solid #166534' : '3px solid transparent',
+            cursor: 'pointer',
+            borderRadius: '0',
+          }}
+          data-testid="tab-edit"
+        >
+          Edit Profile
+        </button>
+        <button
+          onClick={() => setActiveTab('preview')}
+          style={{
+            background: activeTab === 'preview' ? '#fff' : 'transparent',
+            border: 'none',
+            padding: '12px 24px',
+            fontSize: '15px',
+            fontWeight: '600',
+            color: activeTab === 'preview' ? '#166534' : '#6b7280',
+            borderBottom: activeTab === 'preview' ? '3px solid #166534' : '3px solid transparent',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+          }}
+          data-testid="tab-preview"
+        >
+          <Eye size={18} />
+          Preview
+        </button>
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 20px' }}>
-        {/* Basic Info */}
-        {activeSection === 'basic' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px' }}>Business Information</h3>
+      <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+        {activeTab === 'edit' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {/* Logo Upload */}
+            <div style={{ 
+              background: '#f9fafb', 
+              padding: '20px', 
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: '#000' }}>
+                Company Logo
+              </h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+                {logoPreview && (
+                  <div style={{
+                    width: '150px',
+                    height: '150px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    border: '2px solid #e5e7eb',
+                  }}>
+                    <img 
+                      src={logoPreview} 
+                      alt="Logo preview" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                )}
+                <label style={{
+                  background: '#166534',
+                  color: '#fff',
+                  padding: '10px 20px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                }}>
+                  <Upload size={18} />
+                  Upload Logo
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleLogoChange}
+                    style={{ display: 'none' }}
+                    data-testid="input-logo"
+                  />
+                </label>
+                <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>
+                  JPG, PNG, or GIF (max 5MB)
+                </p>
+              </div>
+            </div>
+
+            {/* Basic Info */}
+            <div style={{ 
+              background: '#f9fafb', 
+              padding: '20px', 
+              borderRadius: '8px',
+              border: '1px solid #e5e7eb',
+            }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: '#000' }}>
+                Basic Information
+              </h3>
               
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Business Name</label>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Business Name *
+                  </label>
                   <input
                     type="text"
                     value={formData.name || ''}
                     onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
+                    style={{ 
+                      width: '100%', 
+                      padding: '12px', 
+                      border: '1px solid #d1d5db', 
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      boxSizing: 'border-box',
+                    }}
                     data-testid="input-name"
                   />
                 </div>
+
                 <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Phone</label>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Phone *
+                  </label>
                   <input
-                    type="text"
+                    type="tel"
                     value={formData.phone || ''}
                     onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
+                    style={{ 
+                      width: '100%', 
+                      padding: '12px', 
+                      border: '1px solid #d1d5db', 
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      boxSizing: 'border-box',
+                    }}
                     data-testid="input-phone"
                   />
                 </div>
-              </div>
 
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Website URL</label>
-                <input
-                  type="text"
-                  value={formData.website || ''}
-                  onChange={e => setFormData(prev => ({ ...prev, website: e.target.value }))}
-                  style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="input-website"
-                />
-              </div>
-
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>About Your Business</label>
-                <textarea
-                  value={formData.aboutUs || ''}
-                  onChange={e => setFormData(prev => ({ ...prev, aboutUs: e.target.value }))}
-                  rows={5}
-                  style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px', fontFamily: 'inherit' }}
-                  data-testid="textarea-about"
-                />
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Hours of Operation</label>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Website
+                  </label>
                   <input
-                    type="text"
-                    value={formData.hours || ''}
-                    onChange={e => setFormData(prev => ({ ...prev, hours: e.target.value }))}
-                    placeholder="Mon-Fri: 8AM-6PM"
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                    data-testid="input-hours"
+                    type="url"
+                    value={formData.website || ''}
+                    onChange={e => setFormData(prev => ({ ...prev, website: e.target.value }))}
+                    style={{ 
+                      width: '100%', 
+                      padding: '12px', 
+                      border: '1px solid #d1d5db', 
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      boxSizing: 'border-box',
+                    }}
+                    data-testid="input-website"
                   />
                 </div>
+
                 <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px' }}>Years in Business</label>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    About Your Business
+                  </label>
+                  <textarea
+                    value={formData.aboutUs || ''}
+                    onChange={e => setFormData(prev => ({ ...prev, aboutUs: e.target.value }))}
+                    rows={5}
+                    placeholder="Tell customers about your business, experience, and what makes you unique..."
+                    style={{ 
+                      width: '100%', 
+                      padding: '12px', 
+                      border: '1px solid #d1d5db', 
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      boxSizing: 'border-box',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      resize: 'vertical',
+                    }}
+                    data-testid="input-about"
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Years in Business
+                  </label>
                   <input
                     type="number"
                     value={formData.yearsInBusiness || ''}
-                    onChange={e => setFormData(prev => ({ ...prev, yearsInBusiness: parseInt(e.target.value) }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
+                    onChange={e => setFormData(prev => ({ ...prev, yearsInBusiness: parseInt(e.target.value) || 0 }))}
+                    style={{ 
+                      width: '100%', 
+                      padding: '12px', 
+                      border: '1px solid #d1d5db', 
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      boxSizing: 'border-box',
+                    }}
                     data-testid="input-years"
                   />
                 </div>
-              </div>
-            </div>
-          </div>
-        )}
 
-        {/* Features & Pricing */}
-        {activeSection === 'features' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {/* Price Sheet */}
-            <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '700', margin: 0 }}>Price Sheet</h3>
-                <button
-                  onClick={() => toggleFeature('priceSheetVisible')}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: formData.priceSheetVisible ? '#166534' : '#9ca3af',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '8px 16px',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                  }}
-                  data-testid="toggle-pricesheet"
-                >
-                  {formData.priceSheetVisible ? <Eye size={16} /> : <EyeOff size={16} />}
-                  {formData.priceSheetVisible ? 'Visible' : 'Hidden'}
-                </button>
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-                <input
-                  type="text"
-                  placeholder="Service (e.g., Furniture Removal)"
-                  value={priceSheetItem.service}
-                  onChange={e => setPriceSheetItem(prev => ({ ...prev, service: e.target.value }))}
-                  style={{ flex: 2, padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="input-price-service"
-                />
-                <input
-                  type="text"
-                  placeholder="Price"
-                  value={priceSheetItem.price}
-                  onChange={e => setPriceSheetItem(prev => ({ ...prev, price: e.target.value }))}
-                  style={{ flex: 1, padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="input-price-amount"
-                />
-                <select
-                  value={priceSheetItem.unit}
-                  onChange={e => setPriceSheetItem(prev => ({ ...prev, unit: e.target.value }))}
-                  style={{ padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="select-price-unit"
-                >
-                  <option value="load">per load</option>
-                  <option value="item">per item</option>
-                  <option value="hour">per hour</option>
-                  <option value="cubic yard">per cubic yard</option>
-                </select>
-                <button
-                  onClick={addPriceSheetItem}
-                  disabled={!priceSheetItem.service || !priceSheetItem.price}
-                  style={{
-                    background: '#166534',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '10px 20px',
-                    borderRadius: '8px',
-                    cursor: priceSheetItem.service && priceSheetItem.price ? 'pointer' : 'not-allowed',
-                  }}
-                  data-testid="button-add-price"
-                >
-                  <Plus size={18} />
-                </button>
-              </div>
-
-              {priceSheet.length > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {priceSheet.map((item: any) => (
-                    <div
-                      key={item.id}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: '12px',
-                        background: '#f9fafb',
-                        borderRadius: '8px',
-                        border: '1px solid #e5e7eb',
-                      }}
-                    >
-                      <span style={{ fontWeight: '600' }}>{item.service}</span>
-                      <span>{item.price} {item.unit}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Add-On Costs */}
-            <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '700', margin: 0 }}>Add-On Costs</h3>
-                <button
-                  onClick={() => toggleFeature('addOnCostsVisible')}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    background: formData.addOnCostsVisible ? '#166534' : '#9ca3af',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '8px 16px',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                  }}
-                  data-testid="toggle-addons"
-                >
-                  {formData.addOnCostsVisible ? <Eye size={16} /> : <EyeOff size={16} />}
-                  {formData.addOnCostsVisible ? 'Visible' : 'Hidden'}
-                </button>
-              </div>
-
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-                <input
-                  type="text"
-                  placeholder="Add-on name (e.g., Extra labor)"
-                  value={addOnItem.name}
-                  onChange={e => setAddOnItem(prev => ({ ...prev, name: e.target.value }))}
-                  style={{ flex: 2, padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="input-addon-name"
-                />
-                <input
-                  type="text"
-                  placeholder="Price"
-                  value={addOnItem.price}
-                  onChange={e => setAddOnItem(prev => ({ ...prev, price: e.target.value }))}
-                  style={{ flex: 1, padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="input-addon-price"
-                />
-                <button
-                  onClick={addAddOnItem}
-                  disabled={!addOnItem.name || !addOnItem.price}
-                  style={{
-                    background: '#166534',
-                    color: '#fff',
-                    border: 'none',
-                    padding: '10px 20px',
-                    borderRadius: '8px',
-                    cursor: addOnItem.name && addOnItem.price ? 'pointer' : 'not-allowed',
-                  }}
-                  data-testid="button-add-addon"
-                >
-                  <Plus size={18} />
-                </button>
-              </div>
-
-              {addOns.length > 0 && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {addOns.map((item: any) => (
-                    <div
-                      key={item.id}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: '12px',
-                        background: '#f9fafb',
-                        borderRadius: '8px',
-                        border: '1px solid #e5e7eb',
-                      }}
-                    >
-                      <span style={{ fontWeight: '600' }}>{item.name}</span>
-                      <span>{item.price}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Reviews */}
-        {activeSection === 'reviews' && (
-          <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
-            <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px' }}>Platform Reviews</h3>
-            <p style={{ color: '#6b7280', marginBottom: '24px' }}>Add reviews from Google, Yelp, Facebook, and other platforms. Star reviews to feature them on your quick view profile.</p>
-
-            {/* Add Review Form */}
-            <div style={{ marginBottom: '24px', padding: '20px', background: '#f9fafb', borderRadius: '8px' }}>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '16px' }}>Add New Review</h4>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '6px' }}>Platform</label>
-                  <select
-                    value={newReview.platform}
-                    onChange={e => setNewReview(prev => ({ ...prev, platform: e.target.value }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                    data-testid="select-platform"
-                  >
-                    <option value="">Select platform</option>
-                    <option value="Google">Google</option>
-                    <option value="Yelp">Yelp</option>
-                    <option value="Facebook">Facebook</option>
-                    <option value="BBB">Better Business Bureau</option>
-                    <option value="Trustpilot">Trustpilot</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '6px' }}>Author Name</label>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Insurance Information
+                  </label>
                   <input
                     type="text"
-                    value={newReview.author}
-                    onChange={e => setNewReview(prev => ({ ...prev, author: e.target.value }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                    data-testid="input-author"
+                    value={formData.insuranceInfo || ''}
+                    onChange={e => setFormData(prev => ({ ...prev, insuranceInfo: e.target.value }))}
+                    placeholder="e.g., Fully insured, $1M liability"
+                    style={{ 
+                      width: '100%', 
+                      padding: '12px', 
+                      border: '1px solid #d1d5db', 
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                      boxSizing: 'border-box',
+                    }}
+                    data-testid="input-insurance"
                   />
                 </div>
               </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '6px' }}>Rating</label>
-                  <select
-                    value={newReview.rating}
-                    onChange={e => setNewReview(prev => ({ ...prev, rating: parseInt(e.target.value) }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                    data-testid="select-rating"
-                  >
-                    <option value={5}>5 Stars</option>
-                    <option value={4}>4 Stars</option>
-                    <option value={3}>3 Stars</option>
-                    <option value={2}>2 Stars</option>
-                    <option value={1}>1 Star</option>
-                  </select>
+            </div>
+          </div>
+        ) : (
+          // Preview Tab
+          <div style={{ 
+            background: '#f9fafb', 
+            padding: '20px', 
+            borderRadius: '8px',
+            border: '1px solid #e5e7eb',
+          }}>
+            <div style={{ 
+              background: '#fff', 
+              borderRadius: '12px', 
+              overflow: 'hidden',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            }}>
+              {/* Preview Header */}
+              <div style={{ 
+                background: '#166534', 
+                padding: '24px 20px',
+                color: '#fff',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                  {logoPreview && (
+                    <div style={{
+                      width: '80px',
+                      height: '80px',
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      background: '#fff',
+                      border: '2px solid #fbbf24',
+                    }}>
+                      <img 
+                        src={logoPreview} 
+                        alt={formData.name} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    </div>
+                  )}
+                  <div style={{ flex: 1 }}>
+                    <h2 style={{ fontSize: '24px', fontWeight: '700', margin: '0 0 8px 0', color: '#fff' }}>
+                      {formData.name || 'Your Business Name'}
+                    </h2>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Star size={18} fill="#fbbf24" color="#fbbf24" />
+                      <span style={{ fontSize: '16px', fontWeight: '600' }}>
+                        {formData.rating || '0.0'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '6px' }}>Date</label>
-                  <input
-                    type="date"
-                    value={newReview.date}
-                    onChange={e => setNewReview(prev => ({ ...prev, date: e.target.value }))}
-                    style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                    data-testid="input-date"
-                  />
+              </div>
+
+              {/* Preview Content */}
+              <div style={{ padding: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {formData.phone && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <Phone size={20} color="#166534" />
+                      <span style={{ color: '#000', fontSize: '16px' }}>{formData.phone}</span>
+                    </div>
+                  )}
+
+                  {formData.website && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <Globe size={20} color="#166534" />
+                      <a 
+                        href={formData.website} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ color: '#166534', fontSize: '16px', textDecoration: 'underline' }}
+                      >
+                        Visit Website
+                      </a>
+                    </div>
+                  )}
+
+                  {formData.address && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <MapPin size={20} color="#166534" />
+                      <span style={{ color: '#000', fontSize: '16px' }}>{formData.address}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div style={{ marginBottom: '12px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '6px' }}>Review Text</label>
-                <textarea
-                  value={newReview.text}
-                  onChange={e => setNewReview(prev => ({ ...prev, text: e.target.value }))}
-                  rows={3}
-                  style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px', fontFamily: 'inherit' }}
-                  data-testid="textarea-review"
-                />
-              </div>
+                {formData.aboutUs && (
+                  <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: '1px solid #e5e7eb' }}>
+                    <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '12px', color: '#000' }}>
+                      About Us
+                    </h3>
+                    <p style={{ color: '#374151', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>
+                      {formData.aboutUs}
+                    </p>
+                  </div>
+                )}
 
-              <div style={{ marginBottom: '12px' }}>
-                <label style={{ display: 'block', fontSize: '14px', fontWeight: '500', marginBottom: '6px' }}>Review URL (optional)</label>
-                <input
-                  type="text"
-                  value={newReview.url}
-                  onChange={e => setNewReview(prev => ({ ...prev, url: e.target.value }))}
-                  placeholder="https://..."
-                  style={{ width: '100%', padding: '10px', border: '1px solid #d1d5db', borderRadius: '8px' }}
-                  data-testid="input-url"
-                />
-              </div>
+                {formData.yearsInBusiness && formData.yearsInBusiness > 0 && (
+                  <div style={{ marginTop: '20px' }}>
+                    <div style={{ 
+                      background: '#f0fdf4', 
+                      border: '1px solid #166534',
+                      padding: '12px',
+                      borderRadius: '6px',
+                      color: '#166534',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                    }}>
+                      {formData.yearsInBusiness} years in business
+                    </div>
+                  </div>
+                )}
 
-              <button
-                onClick={addReview}
-                disabled={!newReview.platform || !newReview.author || !newReview.text}
-                style={{
-                  background: '#166534',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '8px',
-                  cursor: (newReview.platform && newReview.author && newReview.text) ? 'pointer' : 'not-allowed',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                }}
-                data-testid="button-add-review"
-              >
-                Add Review
-              </button>
+                {formData.insuranceInfo && (
+                  <div style={{ marginTop: '12px' }}>
+                    <div style={{ 
+                      background: '#fef3c7', 
+                      border: '1px solid #fbbf24',
+                      padding: '12px',
+                      borderRadius: '6px',
+                      color: '#000',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                    }}>
+                      🛡️ {formData.insuranceInfo}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Reviews List */}
-            {reviews.length > 0 && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: '600' }}>Your Reviews ({reviews.length})</h4>
-                {reviews.map((review: any) => {
-                  const isFeatured = (formData.featuredReviewIds || []).includes(review.id);
-                  return (
-                    <div
-                      key={review.id}
-                      style={{
-                        padding: '16px',
-                        background: isFeatured ? '#f0fdf4' : '#f9fafb',
-                        borderRadius: '8px',
-                        border: isFeatured ? '2px solid #166534' : '1px solid #e5e7eb',
-                      }}
-                    >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                          <span style={{ 
-                            background: '#166534', 
-                            color: '#fff', 
-                            padding: '4px 12px', 
-                            borderRadius: '6px',
-                            fontSize: '12px',
-                            fontWeight: '600',
-                          }}>
-                            {review.platform}
-                          </span>
-                          <div style={{ display: 'flex', gap: '4px' }}>
-                            {Array.from({ length: review.rating }).map((_, i) => (
-                              <Star key={i} size={16} fill="#fbbf24" color="#fbbf24" />
-                            ))}
-                          </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button
-                            onClick={() => toggleFeaturedReview(review.id)}
-                            style={{
-                              background: isFeatured ? '#166534' : '#e5e7eb',
-                              color: isFeatured ? '#fff' : '#000',
-                              border: 'none',
-                              padding: '6px 12px',
-                              borderRadius: '6px',
-                              cursor: 'pointer',
-                              fontSize: '12px',
-                              fontWeight: '600',
-                            }}
-                            data-testid={`button-feature-${review.id}`}
-                          >
-                            {isFeatured ? '★ Featured' : 'Feature'}
-                          </button>
-                          <button
-                            onClick={() => removeReview(review.id)}
-                            style={{
-                              background: '#ef4444',
-                              color: '#fff',
-                              border: 'none',
-                              padding: '6px 12px',
-                              borderRadius: '6px',
-                              cursor: 'pointer',
-                            }}
-                            data-testid={`button-delete-${review.id}`}
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
-                      </div>
-                      <p style={{ fontSize: '14px', marginBottom: '8px' }}>{review.text}</p>
-                      <div style={{ fontSize: '12px', color: '#6b7280' }}>
-                        <strong>{review.author}</strong> • {review.date}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Gallery */}
-        {activeSection === 'gallery' && (
-          <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
-            <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px' }}>Photo Gallery</h3>
-            <p style={{ color: '#6b7280', marginBottom: '24px' }}>Add photos of your work, team, trucks, and completed projects.</p>
-            
-            <div style={{
-              border: '2px dashed #d1d5db',
-              borderRadius: '12px',
-              padding: '40px',
-              textAlign: 'center',
+            <div style={{ 
+              marginTop: '20px', 
+              padding: '16px', 
+              background: '#fef3c7',
+              borderRadius: '8px',
+              border: '1px solid #fbbf24',
             }}>
-              <Upload size={48} color="#9ca3af" style={{ margin: '0 auto 16px' }} />
-              <p style={{ color: '#6b7280', marginBottom: '16px' }}>Photo upload coming soon</p>
-              <button
-                style={{
-                  background: '#166534',
-                  color: '#fff',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '8px',
-                  cursor: 'not-allowed',
-                  opacity: 0.5,
-                }}
-                disabled
-              >
-                Upload Photos
-              </button>
+              <p style={{ margin: 0, fontSize: '14px', color: '#000', fontWeight: '600' }}>
+                📱 This is how your profile will appear to customers on mobile and desktop
+              </p>
             </div>
           </div>
         )}
