@@ -251,7 +251,7 @@ export default function ProfileEditor() {
           </h1>
           {company?.city && company?.state && (
             <button
-              onClick={() => setLocation(`/${company.city.toLowerCase()}/${company.state.toLowerCase()}`)}
+              onClick={() => setLocation(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}`)}
               style={{
                 background: '#fbbf24',
                 color: '#000',
