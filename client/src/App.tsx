@@ -456,6 +456,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 // Landing Page Component
 function LandingPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -483,6 +484,8 @@ function LandingPage() {
       minHeight: '100vh',
       background: '#d3d3d3',
     }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
       <div style={{
         maxWidth: '1400px',
         margin: '0 auto',
@@ -503,6 +506,29 @@ function LandingPage() {
         justifyContent: 'center',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
+        {/* Hamburger Menu Button */}
+        <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            position: 'absolute',
+            top: '16px',
+            left: '16px',
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            zIndex: 10,
+          }}
+          data-testid="button-menu"
+        >
+          <Menu size={24} color="#000" />
+        </button>
       </div>
 
       {/* Yellow Banner */}
