@@ -12,7 +12,9 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryFn: async ({ queryKey }) => {
-        const response = await fetch(queryKey[0] as string);
+        const response = await fetch(queryKey[0] as string, {
+          credentials: 'include', // Include cookies with requests
+        });
         return handleResponse(response);
       },
       staleTime: 1000 * 60 * 5,
@@ -24,6 +26,7 @@ export const queryClient = new QueryClient({
 export async function apiRequest(url: string, options?: RequestInit) {
   const response = await fetch(url, {
     ...options,
+    credentials: 'include', // Include cookies with requests
     headers: {
       "Content-Type": "application/json",
       ...options?.headers,
