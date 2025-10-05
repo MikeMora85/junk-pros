@@ -358,43 +358,35 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* Stats Grid - Responsive */}
+      {/* Stats Grid - 2 per line, Yellow Theme */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+        gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '12px',
         padding: '16px',
       }}>
-        <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '1px solid #e5e7eb' }}>
+        <div style={{ background: '#fef3c7', borderRadius: '12px', padding: '16px', border: '2px solid #fbbf24' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <Building2 size={20} color="#166534" />
-            <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: '500' }}>Active</span>
+            <Building2 size={20} color="#92400e" />
+            <span style={{ fontSize: '12px', color: '#92400e', fontWeight: '600' }}>Active</span>
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#000' }}>{stats.totalActive}</div>
+          <div style={{ fontSize: '28px', fontWeight: '700', color: '#92400e' }}>{stats.totalActive}</div>
         </div>
 
-        <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '1px solid #e5e7eb' }}>
+        <div style={{ background: '#fef3c7', borderRadius: '12px', padding: '16px', border: '2px solid #fbbf24' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <AlertTriangle size={20} color="#f59e0b" />
-            <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: '500' }}>Pending</span>
+            <TrendingUp size={20} color="#92400e" />
+            <span style={{ fontSize: '12px', color: '#92400e', fontWeight: '600' }}>Featured</span>
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#000' }}>{stats.totalPending}</div>
+          <div style={{ fontSize: '28px', fontWeight: '700', color: '#92400e' }}>{stats.featuredCount}</div>
         </div>
 
-        <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '1px solid #e5e7eb' }}>
+        <div style={{ background: '#fef3c7', borderRadius: '12px', padding: '16px', border: '2px solid #fbbf24' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <TrendingUp size={20} color="#8b5cf6" />
-            <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: '500' }}>Featured</span>
+            <DollarSign size={20} color="#92400e" />
+            <span style={{ fontSize: '12px', color: '#92400e', fontWeight: '600' }}>Past Due</span>
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#000' }}>{stats.featuredCount}</div>
-        </div>
-
-        <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '1px solid #e5e7eb' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <DollarSign size={20} color="#ef4444" />
-            <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: '500' }}>Past Due</span>
-          </div>
-          <div style={{ fontSize: '24px', fontWeight: '700', color: '#ef4444' }}>{stats.pastDue}</div>
+          <div style={{ fontSize: '28px', fontWeight: '700', color: '#92400e' }}>{stats.pastDue}</div>
         </div>
       </div>
 
@@ -574,8 +566,9 @@ export default function AdminDashboard() {
                               borderRadius: '8px',
                               boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
                               minWidth: '200px',
+                              maxHeight: '250px',
+                              overflowY: 'auto',
                               zIndex: 1000,
-                              overflow: 'hidden',
                             }}>
                               <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <button
