@@ -381,7 +381,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const token = authHeader.substring(7);
         try {
           const decoded = Buffer.from(token, 'base64').toString();
-          const [type, email] = decoded.split(':');
+          const parts = decoded.split(':');
+          const type = parts[0];
+          const email = parts[1];
+          
+          console.log('PATCH Auth - Decoded token:', { type, email, companyId: id });
           
           // Admin can edit anything
           if (type === 'admin' && email === process.env.ADMIN_EMAIL) {
@@ -392,13 +396,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           // Business owner can only edit their own company
           if (type === 'business') {
             const owner = await storage.getBusinessOwnerByEmail(email);
+            console.log('PATCH Auth - Owner found:', { ownerEmail: owner?.email, ownerCompanyId: owner?.companyId, requestedId: id });
             if (owner && owner.companyId === id) {
               const updatedCompany = await storage.updateCompany(id, req.body);
               return res.json(updatedCompany);
             }
-            return res.status(403).json({ error: "You can only edit your own company" });
+            return res.status(403).json({ error: `You can only edit your own company. Your company ID: ${owner?.companyId}, Requested: ${id}` });
           }
         } catch (e) {
+          console.error('Token decode error:', e);
           return res.status(401).json({ error: "Invalid token" });
         }
       }

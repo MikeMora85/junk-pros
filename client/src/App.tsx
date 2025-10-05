@@ -3577,12 +3577,15 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
               fontSize: '36px',
               fontWeight: '800',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              border: '2px solid #166534',
-              borderRadius: '6px',
-              padding: '8px',
-              background: '#fff',
+              border: '1px solid rgba(22, 101, 52, 0.3)',
+              borderRadius: '4px',
+              padding: '4px 8px',
+              background: 'rgba(255, 255, 255, 0.9)',
               width: '100%',
+              outline: 'none',
             }}
+            onFocus={(e) => e.currentTarget.style.border = '1px solid #166534'}
+            onBlur={(e) => e.currentTarget.style.border = '1px solid rgba(22, 101, 52, 0.3)'}
           />
         ) : (
           <h1 style={{
@@ -3642,8 +3645,8 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
       <div style={{ padding: '32px 24px' }}>
         {/* Phone - Editable */}
         {isOwner && editMode ? (
-          <div style={{ marginBottom: '32px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151' }}>Phone Number</label>
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151', fontSize: '14px' }}>Phone Number</label>
             <input
               type="tel"
               value={formData.phone}
@@ -3651,11 +3654,14 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
               data-testid="input-phone"
               style={{
                 width: '100%',
-                padding: '12px',
-                border: '2px solid #166534',
-                borderRadius: '6px',
+                padding: '10px 12px',
+                border: '1px solid rgba(22, 101, 52, 0.3)',
+                borderRadius: '4px',
                 fontSize: '16px',
+                outline: 'none',
               }}
+              onFocus={(e) => e.currentTarget.style.border = '1px solid #166534'}
+              onBlur={(e) => e.currentTarget.style.border = '1px solid rgba(22, 101, 52, 0.3)'}
             />
           </div>
         ) : (
@@ -3691,22 +3697,25 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
         
         {/* Description - Editable */}
         {isOwner && editMode ? (
-          <div style={{ marginBottom: '32px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151' }}>Description</label>
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151', fontSize: '14px' }}>Description</label>
             <textarea
               value={formData.description || ''}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               data-testid="input-description"
-              rows={4}
+              rows={3}
               style={{
                 width: '100%',
-                padding: '12px',
-                border: '2px solid #166534',
-                borderRadius: '6px',
+                padding: '10px 12px',
+                border: '1px solid rgba(22, 101, 52, 0.3)',
+                borderRadius: '4px',
                 fontSize: '16px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 resize: 'vertical',
+                outline: 'none',
               }}
+              onFocus={(e) => e.currentTarget.style.border = '1px solid #166534'}
+              onBlur={(e) => e.currentTarget.style.border = '1px solid rgba(22, 101, 52, 0.3)'}
             />
           </div>
         ) : (
@@ -3729,22 +3738,25 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
         
         {/* About Us - Editable */}
         {isOwner && editMode ? (
-          <div style={{ marginBottom: '32px' }}>
-            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151' }}>About Us</label>
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151', fontSize: '14px' }}>About Us</label>
             <textarea
               value={formData.aboutUs || ''}
               onChange={(e) => setFormData({ ...formData, aboutUs: e.target.value })}
               data-testid="input-about-us"
-              rows={6}
+              rows={4}
               style={{
                 width: '100%',
-                padding: '12px',
-                border: '2px solid #166534',
-                borderRadius: '6px',
+                padding: '10px 12px',
+                border: '1px solid rgba(22, 101, 52, 0.3)',
+                borderRadius: '4px',
                 fontSize: '16px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 resize: 'vertical',
+                outline: 'none',
               }}
+              onFocus={(e) => e.currentTarget.style.border = '1px solid #166534'}
+              onBlur={(e) => e.currentTarget.style.border = '1px solid rgba(22, 101, 52, 0.3)'}
             />
           </div>
         ) : (
