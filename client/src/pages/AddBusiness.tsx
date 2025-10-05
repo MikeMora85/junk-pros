@@ -27,14 +27,21 @@ export default function AddBusiness() {
         body: data,
       });
     },
-    onSuccess: () => {
+    onSuccess: (response: any) => {
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
-      setIsSubmitted(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // If we got a token back, save it and redirect to profile editor
+      if (response.token) {
+        localStorage.setItem('authToken', response.token);
+        window.location.href = '/profile/edit';
+      } else {
+        setIsSubmitted(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error('Failed to create business:', error);
-      alert('Failed to create business. Please try again.');
+      alert(error.message || 'Failed to create business. Please try again.');
     },
   });
 
@@ -67,6 +74,8 @@ export default function AddBusiness() {
       local: true,
       city: formData.city,
       state: formData.state,
+      email: formData.email,
+      password: formData.password,
     };
 
     createBusinessMutation.mutate(companyData);
