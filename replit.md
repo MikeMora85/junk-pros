@@ -4,6 +4,23 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: Built comprehensive admin dashboard with payment management system
+  - Added payment tracking fields to schema: subscriptionTier, subscriptionStatus, lastPaymentDate, nextPaymentDate, paymentWarnings
+  - Switched to localStorage + Bearer token authentication for reliability
+  - Created full-featured admin dashboard at `/admin` with 4 tabs:
+    - **Pending Tab**: Approve/deny new business submissions
+    - **Active Tab**: Manage active businesses with search, tier filter (Free/Featured), status filter (Active/Past Due/Cancelled)
+    - **Payments Tab**: Payment management (placeholder for future features)
+    - **Analytics Tab**: Analytics dashboard (placeholder for future features)
+  - Implemented comprehensive payment management system:
+    - Send payment reminders (💰 button)
+    - Send warnings with auto-increment warning counter (⚠️ button)
+    - Cancel subscriptions (removes from directory, sets to free tier)
+    - Reactivate cancelled subscriptions
+  - Added stats dashboard showing: Active Businesses, Pending Approvals, Featured Tier count, Past Due count
+  - Business cards display subscription badges (FREE/FEATURED) and status badges (ACTIVE/PAST_DUE/CANCELLED)
+  - Warning indicators show number of warnings sent
+  - All admin actions protected with token-based authentication
 - 2025-10-05: Created custom login page with Admin and Business tabs
   - Built dedicated `/login` page replacing direct OAuth redirect
   - Two-tab interface: "Business Owner" and "Administrator" with dynamic submit button text
