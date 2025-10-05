@@ -76,6 +76,7 @@ export const companies = pgTable("companies", {
 });
 
 export const insertCompanySchema = createInsertSchema(companies, {
+  website: z.string().optional().default(""),
   logoUrl: z.string().nullable().optional(),
   reviewSnippets: z.array(z.string()).nullable().optional(),
   description: z.string().nullable().optional(),
