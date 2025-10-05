@@ -129,6 +129,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   const [stateSearch, setStateSearch] = useState('');
   const [citySearch, setCitySearch] = useState('');
   const [townSearch, setTownSearch] = useState('');
+  const [itemSearch, setItemSearch] = useState('');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const allStates = [
@@ -204,6 +205,17 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
     specialty: ['Storage Unit Cleanouts', 'Construction Debris', 'Electronic Waste', 'Appliance Removal'],
   };
 
+  const commonItems = [
+    'Refrigerator', 'Washing Machine', 'Dryer', 'Dishwasher', 'Oven', 'Stove',
+    'Sofa', 'Couch', 'Mattress', 'Box Spring', 'Bed Frame', 'Dresser',
+    'Hot Tub', 'Piano', 'Pool Table', 'Treadmill', 'Exercise Equipment',
+    'TV', 'Computer', 'Desk', 'Office Chair', 'Filing Cabinet',
+    'Shed', 'Deck', 'Fence', 'Swing Set', 'Trampoline',
+    'Carpet', 'Tile', 'Drywall', 'Lumber', 'Concrete',
+    'Lawn Mower', 'Grill', 'Patio Furniture', 'Garden Tools',
+    'Toys', 'Books', 'Clothing', 'Boxes', 'E-Waste',
+  ];
+
   const filteredStates = allStates.filter(state =>
     state.name.toLowerCase().includes(stateSearch.toLowerCase())
   );
@@ -214,6 +226,10 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
   const filteredTowns = majorTowns.filter(town =>
     town.toLowerCase().includes(townSearch.toLowerCase())
+  );
+
+  const filteredItems = commonItems.filter(item =>
+    item.toLowerCase().includes(itemSearch.toLowerCase())
   );
 
   if (!isOpen) return null;
@@ -758,6 +774,84 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Common Items Removed */}
+          <div style={{ borderBottom: '1px solid #e5e5e5' }}>
+            <button
+              onClick={() => setExpandedSection(expandedSection === 'items' ? null : 'items')}
+              style={{
+                width: '100%',
+                padding: '16px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '18px',
+                fontWeight: '600',
+                color: '#000',
+                textAlign: 'left',
+              }}
+              data-testid="button-common-items"
+            >
+              <span>Common Items Removed</span>
+              <ChevronDown size={18} style={{ transform: expandedSection === 'items' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            </button>
+
+            {expandedSection === 'items' && (
+              <div style={{ padding: '0 16px 12px 16px' }}>
+                <div style={{ display: 'flex', gap: '0', marginBottom: '12px' }}>
+                  <input
+                    type="text"
+                    value={itemSearch}
+                    onChange={(e) => setItemSearch(e.target.value)}
+                    style={{
+                      width: '100px',
+                      padding: '8px',
+                      border: '2px solid #fbbf24',
+                      borderRadius: '6px 0 0 6px',
+                      fontSize: '14px',
+                      borderRight: 'none',
+                    }}
+                    data-testid="input-item-search"
+                  />
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '8px',
+                    backgroundColor: '#fbbf24',
+                    border: '2px solid #fbbf24',
+                    borderLeft: 'none',
+                    borderRadius: '0 6px 6px 0',
+                  }}>
+                    <Search size={16} color="#000" />
+                  </div>
+                </div>
+                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                  {filteredItems.map(item => (
+                    <div
+                      key={item}
+                      style={{
+                        display: 'block',
+                        padding: '8px 12px',
+                        color: '#000',
+                        fontSize: '15px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      data-testid={`item-common-${item.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Blog */}
