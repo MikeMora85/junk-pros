@@ -24,6 +24,14 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+export const businessOwners = pgTable("business_owners", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  email: varchar("email").unique().notNull(),
+  passwordHash: varchar("password_hash").notNull(),
+  companyId: integer("company_id").references(() => companies.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const companies = pgTable("companies", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull(),
@@ -49,7 +57,7 @@ export const companies = pgTable("companies", {
   specialties: text("specialties").array(),
   aboutUs: text("about_us"),
   whyChooseUs: text("why_choose_us").array(),
-  status: text("status").notNull().default("pending"),
+  status: text("status").notNull().default("approved"),
   userId: varchar("user_id").references(() => users.id),
   subscriptionTier: text("subscription_tier").notNull().default("free"),
   subscriptionStatus: text("subscription_status").notNull().default("active"),
@@ -101,6 +109,15 @@ export type Company = typeof companies.$inferSelect;
 
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
+
+export const insertBusinessOwnerSchema = createInsertSchema(businessOwners, {
+  email: z.string().email(),
+  passwordHash: z.string(),
+  companyId: z.number().nullable().optional(),
+});
+
+export type InsertBusinessOwner = z.infer<typeof insertBusinessOwnerSchema>;
+export type BusinessOwner = typeof businessOwners.$inferSelect;
 
 export const businessEvents = pgTable("business_events", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
