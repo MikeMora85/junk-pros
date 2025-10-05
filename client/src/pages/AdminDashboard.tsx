@@ -1281,7 +1281,7 @@ export default function AdminDashboard() {
                         padding: '16px',
                         display: 'flex',
                         justifyContent: 'space-between',
-                        alignItems: 'center',
+                        alignItems: 'start',
                         gap: '12px',
                       }}
                     >
