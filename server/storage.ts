@@ -406,4 +406,237 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+import { db } from './db';
+import { eq, and, gte, lte } from 'drizzle-orm';
+import { companies, users, businessOwners, businessEvents } from '@shared/schema';
+
+export class DbStorage implements IStorage {
+  // User operations
+  async getUser(id: string): Promise<User | undefined> {
+    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    return result[0];
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const existing = await this.getUser(userData.id!);
+    
+    if (existing) {
+      const [updated] = await db
+        .update(users)
+        .set({ ...userData, updatedAt: new Date() })
+        .where(eq(users.id, userData.id!))
+        .returning();
+      return updated;
+    } else {
+      // Make the first user an admin automatically
+      const allUsers = await db.select().from(users);
+      const isFirstUser = allUsers.length === 0;
+      
+      const [newUser] = await db
+        .insert(users)
+        .values({
+          id: userData.id!,
+          email: userData.email ?? null,
+          firstName: userData.firstName ?? null,
+          lastName: userData.lastName ?? null,
+          profileImageUrl: userData.profileImageUrl ?? null,
+          isAdmin: isFirstUser || (userData.isAdmin ?? false),
+        })
+        .returning();
+      return newUser;
+    }
+  }
+
+  async makeUserAdmin(email: string): Promise<User | null> {
+    const [user] = await db
+      .update(users)
+      .set({ isAdmin: true, updatedAt: new Date() })
+      .where(eq(users.email, email))
+      .returning();
+    return user || null;
+  }
+
+  // Company operations
+  async getCompanies(): Promise<Company[]> {
+    return await db.select().from(companies);
+  }
+
+  async getApprovedCompanies(): Promise<Company[]> {
+    return await db.select().from(companies).where(eq(companies.status, 'approved'));
+  }
+
+  async getPendingCompanies(): Promise<Company[]> {
+    return await db.select().from(companies).where(eq(companies.status, 'pending'));
+  }
+
+  async getCompanyById(id: number): Promise<Company | null> {
+    const result = await db.select().from(companies).where(eq(companies.id, id)).limit(1);
+    return result[0] || null;
+  }
+
+  async getCompaniesByLocal(local: boolean): Promise<Company[]> {
+    return await db.select().from(companies).where(
+      and(eq(companies.local, local), eq(companies.status, 'approved'))
+    );
+  }
+
+  async getCompaniesByCity(city: string, state: string): Promise<Company[]> {
+    return await db.select().from(companies).where(
+      and(
+        eq(companies.city, city),
+        eq(companies.state, state),
+        eq(companies.status, 'approved')
+      )
+    );
+  }
+
+  async getCompaniesByUserId(userId: string): Promise<Company[]> {
+    return await db.select().from(companies).where(eq(companies.userId, userId));
+  }
+
+  async createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company> {
+    const [newCompany] = await db
+      .insert(companies)
+      .values({
+        name: data.name,
+        address: data.address,
+        phone: data.phone,
+        website: data.website ?? '',
+        rating: data.rating,
+        reviews: data.reviews ?? 0,
+        services: data.services,
+        longitude: data.longitude,
+        latitude: data.latitude,
+        local: data.local ?? true,
+        city: data.city,
+        state: data.state,
+        logoUrl: data.logoUrl ?? null,
+        reviewSnippets: data.reviewSnippets ?? null,
+        description: data.description ?? null,
+        hours: data.hours ?? null,
+        availability: data.availability ?? null,
+        priceSheetUrl: data.priceSheetUrl ?? null,
+        yearsInBusiness: data.yearsInBusiness ?? null,
+        insuranceInfo: data.insuranceInfo ?? null,
+        specialties: data.specialties ?? null,
+        aboutUs: data.aboutUs ?? null,
+        whyChooseUs: data.whyChooseUs ?? null,
+        status: data.status ?? 'approved',
+        userId: data.userId ?? null,
+        subscriptionTier: data.subscriptionTier ?? 'free',
+        subscriptionStatus: data.subscriptionStatus ?? 'active',
+        lastPaymentDate: data.lastPaymentDate ?? null,
+        nextPaymentDate: data.nextPaymentDate ?? null,
+        paymentWarnings: data.paymentWarnings ?? 0,
+        priceSheetVisible: data.priceSheetVisible ?? true,
+        addOnCostsVisible: data.addOnCostsVisible ?? true,
+        priceSheetData: data.priceSheetData ?? null,
+        addOnCosts: data.addOnCosts ?? null,
+        platformReviews: data.platformReviews ?? null,
+        featuredReviewIds: data.featuredReviewIds ?? null,
+        galleryImages: data.galleryImages ?? null,
+        serviceAreaCities: data.serviceAreaCities ?? null,
+      })
+      .returning();
+    return newCompany;
+  }
+
+  async updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null> {
+    const [updated] = await db
+      .update(companies)
+      .set(data)
+      .where(eq(companies.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  async updateCompanyStatus(id: number, status: string): Promise<Company | null> {
+    const [updated] = await db
+      .update(companies)
+      .set({ status })
+      .where(eq(companies.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  // Business owner operations
+  async createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner> {
+    const [newOwner] = await db
+      .insert(businessOwners)
+      .values({
+        email: data.email,
+        passwordHash: data.passwordHash,
+        companyId: data.companyId ?? null,
+      })
+      .returning();
+    return newOwner;
+  }
+
+  async getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null> {
+    const result = await db.select().from(businessOwners).where(eq(businessOwners.email, email)).limit(1);
+    return result[0] || null;
+  }
+
+  async getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null> {
+    const result = await db.select().from(businessOwners).where(eq(businessOwners.companyId, companyId)).limit(1);
+    return result[0] || null;
+  }
+
+  async updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null> {
+    const [updated] = await db
+      .update(businessOwners)
+      .set({ companyId })
+      .where(eq(businessOwners.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  // Business event tracking
+  async trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent> {
+    const [newEvent] = await db
+      .insert(businessEvents)
+      .values({
+        companyId: data.companyId,
+        eventType: data.eventType,
+        metadata: data.metadata ?? null,
+      })
+      .returning();
+    return newEvent;
+  }
+
+  async getEventsByCompany(companyId: number, startDate?: Date, endDate?: Date): Promise<BusinessEvent[]> {
+    const conditions = [eq(businessEvents.companyId, companyId)];
+    
+    if (startDate) {
+      conditions.push(gte(businessEvents.eventDate, startDate));
+    }
+    if (endDate) {
+      conditions.push(lte(businessEvents.eventDate, endDate));
+    }
+    
+    return await db.select().from(businessEvents).where(and(...conditions));
+  }
+
+  async getMonthlyReportData(companyId: number, year: number, month: number): Promise<{
+    clicks: number;
+    calls: number;
+    bookQuotes: number;
+    photoQuotes: number;
+    totalEvents: number;
+  }> {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59);
+    
+    const events = await this.getEventsByCompany(companyId, startDate, endDate);
+    
+    return {
+      clicks: events.filter(e => e.eventType === 'click').length,
+      calls: events.filter(e => e.eventType === 'call').length,
+      bookQuotes: events.filter(e => e.eventType === 'book_quote').length,
+      photoQuotes: events.filter(e => e.eventType === 'photo_quote').length,
+      totalEvents: events.length,
+    };
+  }
+}
+
+export const storage = new DbStorage();
