@@ -871,6 +871,23 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
           >
             Blog
           </a>
+
+          {/* Login */}
+          <Link
+            href="/login"
+            style={{
+              display: 'block',
+              padding: '16px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '18px',
+              fontWeight: '600',
+              borderBottom: '1px solid #e5e5e5',
+            }}
+            data-testid="link-menu-login"
+          >
+            Login
+          </Link>
         </div>
       </div>
     </>
