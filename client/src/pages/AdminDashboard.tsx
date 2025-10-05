@@ -152,13 +152,21 @@ export default function AdminDashboard() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      return await apiRequest(`/api/companies/${id}`, {
+      console.log('Deleting company:', id);
+      const result = await apiRequest(`/api/companies/${id}`, {
         method: 'DELETE',
       });
+      console.log('Delete result:', result);
+      return result;
     },
     onSuccess: () => {
+      console.log('Delete successful, invalidating queries');
       queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+    },
+    onError: (error) => {
+      console.error('Delete failed:', error);
+      alert(`Failed to delete: ${error.message}`);
     },
   });
 
@@ -566,7 +574,7 @@ export default function AdminDashboard() {
                               borderRadius: '8px',
                               boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
                               minWidth: '200px',
-                              maxHeight: '250px',
+                              maxHeight: '400px',
                               overflowY: 'auto',
                               zIndex: 1000,
                             }}>
