@@ -197,7 +197,7 @@ export default function AddBusiness() {
                   Account Created Successfully!
                 </h3>
                 <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
-                  Welcome to the directory, {formData.businessName}! Your {formData.pricingTier === 'basic' ? 'FREE Basic' : formData.pricingTier === 'professional' ? 'Professional' : 'Featured'} listing is now being processed. You'll receive an email at {formData.email} with next steps to complete your profile and start getting leads.
+                  Welcome to the directory, {formData.businessName}! Your {formData.pricingTier === 'basic' ? 'FREE Basic' : formData.pricingTier === 'professional' ? 'Professional' : 'Featured'} listing is now being processed. You'll receive an email at {formData.email} with next steps to complete your profile and start receiving local SEO traffic and exposure.
                 </p>
                 <button
                   onClick={() => setIsSubmitted(false)}
@@ -254,7 +254,7 @@ export default function AddBusiness() {
             }}>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
                 <TrendingUp size={24} color="#fbbf24" />
-                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>Qualified Leads</h3>
+                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>High-Intent Traffic</h3>
               </div>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
                 Customers come to us ready to hire. They've already done their research and are comparing local options, not just browsing.
@@ -896,7 +896,7 @@ export default function AddBusiness() {
             Join the Community
           </h3>
           <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
-            Thousands of homeowners use our directory every month to find trusted local junk removal professionals. Get your share of qualified leads and grow your business.
+            Thousands of homeowners use our directory every month to find trusted local junk removal professionals. Get your share of local SEO traffic and exposure to grow your business.
           </p>
         </div>
       </div>

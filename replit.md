@@ -83,10 +83,10 @@ A full-stack JavaScript application that helps users find local junk removal com
   - Updated all text to black (#000), removed all grey text
   - Changed slider to black line, updated button and form element colors to brand yellow (#fbbf24)
   - Added green checkmark badge to TOP RATED company profiles
-- 2025-10-03: Enhanced company profile pages to be comprehensive lead gen landing pages
+- 2025-10-03: Enhanced company profile pages to be comprehensive business profile pages
   - Added new fields: description, hours, availability, price sheets, years in business, insurance info, specialties, about us, why choose us
   - Redesigned CompanyDetailInline component with hero section, multiple CTAs, and detailed business information
-  - Updated schema and storage to support new lead gen fields
+  - Updated schema and storage to support new business profile fields
   - Increased red banner font size to 24px for better prominence
   - Implemented consistent 3D lift effects across UI: state buttons, feature sections, and search bar all have 1px default lift and 2px hover lift with coordinated shadows
   - Changed home button to icon-only with black outline box (no text)
