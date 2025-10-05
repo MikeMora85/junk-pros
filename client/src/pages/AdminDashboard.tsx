@@ -17,7 +17,7 @@ interface ActionTemplate {
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<'pending' | 'active' | 'payments' | 'analytics'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'active' | 'payments' | 'analytics' | 'reports'>('pending');
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [tierFilter, setTierFilter] = useState<string>("all");
@@ -396,7 +396,7 @@ export default function AdminDashboard() {
         padding: '8px 16px',
       }}>
         <div style={{ display: 'inline-flex', gap: '8px', minWidth: '100%' }}>
-          {(['pending', 'active', 'payments', 'analytics'] as const).map(tab => (
+          {(['pending', 'active', 'payments', 'analytics', 'reports'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -1095,6 +1095,129 @@ export default function AdminDashboard() {
               </>
             );
           })()}
+        </div>
+      )}
+
+      {/* Reports Tab */}
+      {activeTab === 'reports' && (
+        <div style={{ padding: '16px' }}>
+          <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #e5e7eb', marginBottom: '16px' }}>
+            <h2 style={{ margin: '0 0 16px 0', fontSize: '20px', fontWeight: '700', color: '#000' }}>
+              Monthly Performance Reports
+            </h2>
+            <p style={{ margin: '0 0 20px 0', fontSize: '14px', color: '#6b7280' }}>
+              Track clicks, calls, photo quotes, and in-person estimates for all businesses. Select a month below to view detailed performance data.
+            </p>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '20px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                  Month
+                </label>
+                <select
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    background: '#fff',
+                  }}
+                >
+                  <option>October 2025</option>
+                  <option>September 2025</option>
+                  <option>August 2025</option>
+                </select>
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                  Filter by Tier
+                </label>
+                <select
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    background: '#fff',
+                  }}
+                >
+                  <option value="all">All Tiers</option>
+                  <option value="featured">Featured Only</option>
+                  <option value="free">Free Only</option>
+                </select>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {activeCompanies.slice(0, 5).map((company) => (
+                <div
+                  key={company.id}
+                  style={{
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    background: '#f9fafb',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '12px' }}>
+                    <div>
+                      <h3 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '700', color: '#000' }}>
+                        {company.name}
+                      </h3>
+                      <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                        {company.city}, {company.state}
+                      </div>
+                    </div>
+                    <span style={{
+                      background: company.subscriptionTier === 'featured' ? '#fef3c7' : '#e5e7eb',
+                      color: company.subscriptionTier === 'featured' ? '#92400e' : '#6b7280',
+                      padding: '4px 10px',
+                      borderRadius: '6px',
+                      fontSize: '12px',
+                      fontWeight: '600'
+                    }}>
+                      {company.subscriptionTier?.toUpperCase() || 'FREE'}
+                    </span>
+                  </div>
+
+                  <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+                    gap: '12px',
+                    background: '#fff',
+                    padding: '12px',
+                    borderRadius: '8px',
+                    border: '1px solid #e5e7eb'
+                  }}>
+                    <div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>Profile Clicks</div>
+                      <div style={{ fontSize: '20px', fontWeight: '700', color: '#166534' }}>0</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>Calls</div>
+                      <div style={{ fontSize: '20px', fontWeight: '700', color: '#166534' }}>0</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>Photo Quotes</div>
+                      <div style={{ fontSize: '20px', fontWeight: '700', color: '#166534' }}>0</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>In-Person Estimates</div>
+                      <div style={{ fontSize: '20px', fontWeight: '700', color: '#166534' }}>0</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {activeCompanies.length === 0 && (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+                No active businesses to report on
+              </div>
+            )}
+          </div>
         </div>
       )}
 

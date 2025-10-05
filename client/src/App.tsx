@@ -2798,7 +2798,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   companies.map((c, index) => (
                 <div 
                   key={c.id}
-                  onClick={() => setSelectedCompanyId(c.id)} 
+                  onClick={() => {
+                    trackBusinessEvent(c.id, 'click');
+                    setSelectedCompanyId(c.id);
+                  }} 
                   style={{
                     position: 'relative',
                     backgroundColor: '#fff',
@@ -3377,7 +3380,10 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       
       <div style={{ padding: '32px 24px' }}>
         <button
-          onClick={() => window.open(`tel:${company.phone}`, '_self')}
+          onClick={() => {
+            trackBusinessEvent(company.id, 'call');
+            window.open(`tel:${company.phone}`, '_self');
+          }}
           data-testid="button-call-now-top"
           style={{
             width: '100%',
@@ -3732,7 +3738,10 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             Call now for a free quote and same-day service availability
           </p>
           <button
-            onClick={() => window.open(`tel:${company.phone}`, '_self')}
+            onClick={() => {
+              trackBusinessEvent(company.id, 'call');
+              window.open(`tel:${company.phone}`, '_self');
+            }}
             data-testid="button-call-now-bottom"
             style={{
               width: '100%',

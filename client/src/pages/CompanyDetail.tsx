@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import { MapPin, Phone, Star, Globe, ArrowLeft } from "lucide-react";
 import type { Company } from "@shared/schema";
+import { trackBusinessEvent } from "../lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -217,7 +218,10 @@ export default function CompanyDetail() {
               gap: '10px',
               boxShadow: '0 4px 12px rgba(168,85,247,0.3)',
             }}
-            onClick={() => window.open(`tel:${company.phone}`, '_self')}
+            onClick={() => {
+              trackBusinessEvent(company.id, 'call');
+              window.open(`tel:${company.phone}`, '_self');
+            }}
             data-testid="button-call-now"
           >
             <Phone size={20} />
