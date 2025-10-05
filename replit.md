@@ -4,23 +4,25 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
-- 2025-10-05: Built comprehensive admin dashboard with payment management system
-  - Added payment tracking fields to schema: subscriptionTier, subscriptionStatus, lastPaymentDate, nextPaymentDate, paymentWarnings
-  - Switched to localStorage + Bearer token authentication for reliability
-  - Created full-featured admin dashboard at `/admin` with 4 tabs:
-    - **Pending Tab**: Approve/deny new business submissions
-    - **Active Tab**: Manage active businesses with search, tier filter (Free/Featured), status filter (Active/Past Due/Cancelled)
-    - **Payments Tab**: Payment management (placeholder for future features)
-    - **Analytics Tab**: Analytics dashboard (placeholder for future features)
-  - Implemented comprehensive payment management system:
-    - Send payment reminders (💰 button)
-    - Send warnings with auto-increment warning counter (⚠️ button)
-    - Cancel subscriptions (removes from directory, sets to free tier)
-    - Reactivate cancelled subscriptions
-  - Added stats dashboard showing: Active Businesses, Pending Approvals, Featured Tier count, Past Due count
-  - Business cards display subscription badges (FREE/FEATURED) and status badges (ACTIVE/PAST_DUE/CANCELLED)
-  - Warning indicators show number of warnings sent
-  - All admin actions protected with token-based authentication
+- 2025-10-05: Built comprehensive mobile-responsive admin dashboard with payment management
+  - **Mobile-First Design**: Fully responsive layout that works perfectly on all screen sizes
+  - **Hamburger Menu**: Compact navigation menu replacing large buttons (Back to Home, Logout)
+  - **Payment Tracking Schema**: subscriptionTier, subscriptionStatus, lastPaymentDate, nextPaymentDate, paymentWarnings
+  - **Token-Based Auth**: localStorage + Bearer token authentication for reliability
+  - **4 Dashboard Tabs**: Pending, Active, Payments, Analytics (responsive scrollable tabs)
+  - **Smart Stats Grid**: Auto-adjusting grid showing Active, Pending, Featured, Past Due counts
+  - **Business Card Dropdowns**: Expandable action menus on each business with quick access to all features
+  - **Prebuilt Message Templates**: Professional email templates for:
+    - Payment reminders with due date personalization
+    - Warning letters with auto-calculated overdue days
+    - Cancellation notices with reactivation instructions
+    - Reactivation welcome messages
+  - **Message Preview Modal**: Review all communications before sending
+  - **Advanced Filtering**: Search by name/city/state + tier/status filters on mobile
+  - **Color Scheme**: Matches main site with green (#166534) primary, yellow (#fbbf24) featured badges
+  - **Subscription Badges**: Visual FREE/FEATURED tier indicators and ACTIVE/PAST_DUE/CANCELLED status
+  - **Warning System**: Auto-incrementing warning counter with visual indicators
+  - **All admin actions protected** with token-based authentication
 - 2025-10-05: Created custom login page with Admin and Business tabs
   - Built dedicated `/login` page replacing direct OAuth redirect
   - Two-tab interface: "Business Owner" and "Administrator" with dynamic submit button text
