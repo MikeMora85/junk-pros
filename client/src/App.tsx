@@ -129,7 +129,6 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   const [stateSearch, setStateSearch] = useState('');
   const [citySearch, setCitySearch] = useState('');
   const [townSearch, setTownSearch] = useState('');
-  const [serviceSearch, setServiceSearch] = useState('');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const allStates = [
@@ -198,23 +197,12 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
     'Napa, CA', 'Carmel, CA', 'Santa Barbara, CA', 'Savannah, GA',
   ];
 
-  const serviceTypes = [
-    'Appliance Removal',
-    'Furniture Removal',
-    'Mattress Removal',
-    'Hot Tub Removal',
-    'Garage Cleanouts',
-    'Estate Cleanouts',
-    'Hoarding Cleanup',
-    'Construction Debris',
-    'Yard Waste Removal',
-    'Electronic Waste',
-    'Commercial Junk Removal',
-    'Foreclosure Cleanouts',
-    'Storage Unit Cleanouts',
-    'Shed Removal',
-    'Deck Removal',
-  ];
+  const serviceTypes = {
+    commercial: ['Office Cleanouts', 'Warehouse Clearing', 'Retail Space', 'Restaurant Equipment'],
+    residential: ['Home Cleanouts', 'Garage Cleanouts', 'Attic/Basement', 'Yard Debris'],
+    estates: ['Estate Cleanouts', 'Foreclosure Cleanouts', 'Hoarding Cleanup', 'Downsizing'],
+    specialty: ['Storage Unit Cleanouts', 'Construction Debris', 'Electronic Waste', 'Appliance Removal'],
+  };
 
   const filteredStates = allStates.filter(state =>
     state.name.toLowerCase().includes(stateSearch.toLowerCase())
@@ -226,10 +214,6 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
   const filteredTowns = majorTowns.filter(town =>
     town.toLowerCase().includes(townSearch.toLowerCase())
-  );
-
-  const filteredServices = serviceTypes.filter(service =>
-    service.toLowerCase().includes(serviceSearch.toLowerCase())
   );
 
   if (!isOpen) return null;
@@ -562,82 +546,218 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             </div>
           </div>
 
-          {/* Junk Removal Services */}
+          {/* Junk Removal Services - Section Title */}
           <div style={{ borderBottom: '1px solid #e5e5e5' }}>
-            <button
-              onClick={() => setExpandedSection(expandedSection === 'services' ? null : 'services')}
+            <div
               style={{
-                width: '100%',
                 padding: '16px',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
                 fontSize: '18px',
                 fontWeight: '600',
                 color: '#000',
-                textAlign: 'left',
               }}
-              data-testid="button-services"
             >
-              <span>Junk Removal Services</span>
-              <ChevronDown size={18} style={{ transform: expandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-            </button>
+              Junk Removal Services
+            </div>
 
-            {expandedSection === 'services' && (
-              <div style={{ padding: '0 12px 12px 12px' }}>
-                <div style={{ display: 'flex', gap: '0', marginBottom: '12px' }}>
-                  <input
-                    type="text"
-                    value={serviceSearch}
-                    onChange={(e) => setServiceSearch(e.target.value)}
-                    style={{
-                      width: '100px',
-                      padding: '8px',
-                      border: '2px solid #fbbf24',
-                      borderRadius: '6px 0 0 6px',
-                      fontSize: '14px',
-                      borderRight: 'none',
-                    }}
-                    data-testid="input-service-search"
-                  />
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '8px',
-                    backgroundColor: '#fbbf24',
-                    border: '2px solid #fbbf24',
-                    borderLeft: 'none',
-                    borderRadius: '0 6px 6px 0',
-                  }}>
-                    <Search size={16} color="#000" />
+            {/* Commercial */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'commercial' ? null : 'commercial')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-commercial"
+              >
+                <span>Commercial</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'commercial' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'commercial' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {serviceTypes.commercial.map(service => (
+                      <div
+                        key={service}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`item-commercial-${service.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        {service}
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                  {filteredServices.map(service => (
-                    <div
-                      key={service}
-                      style={{
-                        display: 'block',
-                        padding: '8px 12px',
-                        color: '#000',
-                        fontSize: '15px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                      data-testid={`item-service-${service.toLowerCase().replace(/\s+/g, '-')}`}
-                    >
-                      {service}
-                    </div>
-                  ))}
+              )}
+            </div>
+
+            {/* Residential */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'residential' ? null : 'residential')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-residential"
+              >
+                <span>Residential</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'residential' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'residential' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {serviceTypes.residential.map(service => (
+                      <div
+                        key={service}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`item-residential-${service.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        {service}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
+            {/* Estate Cleanouts */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'estates' ? null : 'estates')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-estates"
+              >
+                <span>Estate Cleanouts</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'estates' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'estates' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {serviceTypes.estates.map(service => (
+                      <div
+                        key={service}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`item-estates-${service.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        {service}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Specialty */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'specialty' ? null : 'specialty')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-specialty"
+              >
+                <span>Specialty</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'specialty' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'specialty' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {serviceTypes.specialty.map(service => (
+                      <div
+                        key={service}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`item-specialty-${service.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        {service}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Blog */}
