@@ -4,6 +4,14 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: **FIXED PROFILE EDITOR DATA POPULATION & DESIGN CONSISTENCY**
+  - **Query Fix**: Removed blocking `enabled: !!user` condition preventing company data from loading
+  - **Direct Token Auth**: Profile editor now fetches company data immediately using localStorage token
+  - **useEffect Fix**: Corrected dependency array to prevent infinite re-renders
+  - **Design Consistency**: Changed all action buttons from green to yellow (#fbbf24) to match AddBusiness/Login pages
+  - **Yellow Buttons**: Save, Add Review, Add Add-On, Add Photo buttons now use brand yellow with black text
+  - **Green Header**: Kept green (#166534) header for brand consistency across profile and preview
+  - **Flow Verified**: Signup → auto-login → profile editor data population confirmed working via API tests
 - 2025-10-05: **MIGRATED TO POSTGRESQL DATABASE** - Critical infrastructure upgrade
   - **Database Storage**: Switched from in-memory (MemStorage) to PostgreSQL (DbStorage) using Drizzle ORM
   - **Data Persistence**: All user signups, business owners, companies, and events now persist across server restarts
