@@ -164,9 +164,10 @@ export default function AdminDashboard() {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error('Delete failed:', error);
-      alert(`Failed to delete: ${error.message}`);
+      const errorMsg = error?.message || error?.toString() || 'Unknown error';
+      alert(`Failed to delete: ${errorMsg}`);
     },
   });
 
@@ -565,16 +566,15 @@ export default function AdminDashboard() {
                           {/* Dropdown Menu */}
                           {expandedCompany === company.id && (
                             <div style={{
-                              position: 'absolute',
-                              right: 0,
-                              top: '100%',
-                              marginTop: '4px',
+                              position: 'fixed',
+                              right: '16px',
+                              top: 'auto',
                               background: '#fff',
                               border: '1px solid #e5e7eb',
                               borderRadius: '8px',
                               boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
                               minWidth: '200px',
-                              maxHeight: '400px',
+                              maxHeight: '80vh',
                               overflowY: 'auto',
                               zIndex: 1000,
                             }}>
