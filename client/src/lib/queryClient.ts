@@ -8,7 +8,7 @@ async function handleResponse(response: Response) {
   return response.json();
 }
 
-function getAuthHeaders() {
+function getAuthHeaders(): Record<string, string> {
   const token = localStorage.getItem('auth_token');
   if (token) {
     return {

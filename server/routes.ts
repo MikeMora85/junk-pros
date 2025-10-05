@@ -283,9 +283,9 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       if (email && password) {
         const passwordHash = await bcrypt.hash(password, 10);
         const owner = await storage.createBusinessOwner({
-          email,
-          passwordHash,
-          companyId: company.id,
+          email: email as string,
+          passwordHash: passwordHash as string,
+          companyId: company.id as number,
         });
         
         // Return with auth token
