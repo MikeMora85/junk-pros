@@ -150,6 +150,18 @@ export default function AdminDashboard() {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await apiRequest(`/api/companies/${id}`, {
+        method: 'DELETE',
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+    },
+  });
+
   const handleLogout = async () => {
     localStorage.removeItem('auth_token');
     await apiRequest('/api/auth/logout', { method: 'POST' });
@@ -617,27 +629,29 @@ export default function AdminDashboard() {
                                 
                                 <button
                                   onClick={() => {
-                                    if (confirm(`⚠️ DELETE ${company.name}?`)) {
-                                      alert(`Delete coming soon!`);
+                                    if (confirm(`⚠️ PERMANENTLY DELETE ${company.name}? This cannot be undone!`)) {
+                                      deleteMutation.mutate(company.id);
                                     }
                                     setExpandedCompany(null);
                                   }}
+                                  disabled={deleteMutation.isPending}
                                   style={{
                                     background: 'transparent',
                                     border: 'none',
                                     padding: '12px 16px',
                                     textAlign: 'left',
-                                    cursor: 'pointer',
+                                    cursor: deleteMutation.isPending ? 'not-allowed' : 'pointer',
                                     fontSize: '14px',
                                     fontWeight: '500',
                                     color: '#ef4444',
                                     transition: 'background 0.15s',
+                                    opacity: deleteMutation.isPending ? 0.5 : 1,
                                   }}
-                                  onMouseEnter={(e) => e.currentTarget.style.background = '#fef2f2'}
+                                  onMouseEnter={(e) => !deleteMutation.isPending && (e.currentTarget.style.background = '#fef2f2')}
                                   onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                   data-testid={`delete-${company.id}`}
                                 >
-                                  Delete Profile
+                                  {deleteMutation.isPending ? 'Deleting...' : 'Delete Profile'}
                                 </button>
                               </div>
                             </div>

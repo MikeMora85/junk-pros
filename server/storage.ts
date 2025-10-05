@@ -17,6 +17,7 @@ export interface IStorage {
   createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
   updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null>;
   updateCompanyStatus(id: number, status: string): Promise<Company | null>;
+  deleteCompany(id: number): Promise<boolean>;
   
   // Business owner operations
   createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner>;
@@ -329,6 +330,14 @@ export class MemStorage implements IStorage {
     return this.companies[index];
   }
 
+  async deleteCompany(id: number): Promise<boolean> {
+    const index = this.companies.findIndex(c => c.id === id);
+    if (index === -1) return false;
+    
+    this.companies.splice(index, 1);
+    return true;
+  }
+
   async trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent> {
     const newId = Math.max(...this.businessEvents.map(e => e.id), 0) + 1;
     const newEvent: BusinessEvent = {
@@ -557,6 +566,13 @@ export class DbStorage implements IStorage {
       .where(eq(companies.id, id))
       .returning();
     return updated || null;
+  }
+
+  async deleteCompany(id: number): Promise<boolean> {
+    const result = await db
+      .delete(companies)
+      .where(eq(companies.id, id));
+    return true;
   }
 
   // Business owner operations
