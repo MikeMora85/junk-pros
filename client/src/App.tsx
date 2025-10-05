@@ -8,6 +8,7 @@ import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 import { useAuth } from "./hooks/useAuth";
+import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -3057,6 +3058,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
+                          trackBusinessEvent(c.id, 'call');
                           window.open(`tel:${c.phone}`, '_self');
                         }}
                         data-testid={`button-call-${c.id}`}
@@ -3083,6 +3085,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
+                          trackBusinessEvent(c.id, 'photo_quote');
                           alert('Photo upload feature coming soon!');
                         }}
                         data-testid={`button-send-photos-${c.id}`}
@@ -3110,6 +3113,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
+                          trackBusinessEvent(c.id, 'book_quote');
                           setExpandedQuote(expandedQuote === c.id ? null : c.id);
                         }}
                         data-testid={`button-in-person-${c.id}`}
