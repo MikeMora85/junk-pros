@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '../hooks/useAuth';
 import { apiRequest, queryClient } from '../lib/queryClient';
 import type { Company } from '@shared/schema';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Save, Eye, EyeOff, Plus, X, Upload, Star, Trash2 } from 'lucide-react';
+import { ArrowLeft, Save, Eye, EyeOff, Plus, Upload, Star, Trash2 } from 'lucide-react';
 
 export default function ProfileEditor() {
   const { user } = useAuth();
@@ -37,7 +37,7 @@ export default function ProfileEditor() {
       if (!company) return;
       await apiRequest(`/api/companies/${company.id}`, {
         method: 'PATCH',
-        body: data,
+        body: data as any,
       });
     },
     onSuccess: () => {

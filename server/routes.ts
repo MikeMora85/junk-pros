@@ -391,8 +391,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       const warnings = (company.paymentWarnings || 0) + 1;
       await storage.updateCompany(id, { 
         paymentWarnings: warnings,
-        subscriptionStatus: 'past_due'
-      });
+        subscriptionStatus: 'past_due' as any
+      } as any);
 
       // TODO: Implement actual email/SMS sending
       console.log(`Sending warning #${warnings} to ${company.name}`);
@@ -418,7 +418,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         subscriptionStatus: 'cancelled',
         subscriptionTier: 'free',
         status: 'denied'
-      });
+      } as any);
 
       if (!company) {
         return res.status(404).json({ error: "Company not found" });
@@ -445,7 +445,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         subscriptionStatus: 'active',
         paymentWarnings: 0,
         status: 'approved'
-      });
+      } as any);
 
       if (!company) {
         return res.status(404).json({ error: "Company not found" });
@@ -475,7 +475,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         eventType,
         eventDate: new Date(),
         metadata: metadata || null,
-      });
+      } as any);
 
       res.json({ success: true, event });
     } catch (error) {
