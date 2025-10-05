@@ -9,6 +9,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Setup auth but don't force it globally
   await setupAuth(app, storage);
 
+  // Diagnostic endpoint to check auth state
+  app.get('/api/auth/debug', async (req: any, res) => {
+    res.json({
+      isAuthenticated: req.isAuthenticated ? req.isAuthenticated() : false,
+      hasUser: !!req.user,
+      hasClaims: !!req.user?.claims,
+      sessionID: req.sessionID,
+      hostname: req.hostname,
+      protocol: req.protocol,
+    });
+  });
+
   // Auth routes - completely public, no middleware
   app.get('/api/auth/user', async (req: any, res) => {
     try {
