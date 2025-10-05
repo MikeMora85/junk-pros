@@ -3625,6 +3625,25 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               </div>
             </div>
 
+            {/* Items We Don't Take */}
+            <div style={{ marginBottom: '24px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Items We Don't Take
+              </h2>
+              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div>• Hazardous Materials</div>
+                <div>• Chemicals & Paint</div>
+                <div>• Asbestos</div>
+                <div>• Medical Waste</div>
+              </div>
+            </div>
+
             {/* Payment Methods */}
             <div style={{ marginBottom: '24px' }}>
               <h2 style={{
@@ -3749,42 +3768,61 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <div style={{
             width: '100%',
             height: '250px',
-            background: '#f3f4f6',
+            background: '#e8f0e3',
             borderRadius: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             position: 'relative',
             overflow: 'hidden',
+            border: '1px solid #d1d5db',
           }}>
-            {/* Mock map with pin */}
+            {/* Map background with streets */}
+            <svg style={{ position: 'absolute', width: '100%', height: '100%' }}>
+              {/* Park/green space */}
+              <rect x="60" y="40" width="80" height="70" fill="#c7e6bd" />
+              {/* Streets - horizontal */}
+              <rect x="0" y="80" width="100%" height="4" fill="#fff" />
+              <rect x="0" y="160" width="100%" height="4" fill="#fff" />
+              {/* Streets - vertical */}
+              <rect x="120" y="0" width="4" height="100%" fill="#fff" />
+              <rect x="240" y="0" width="4" height="100%" fill="#fff" />
+              <rect x="360" y="0" width="4" height="100%" fill="#fff" />
+              {/* Street labels */}
+              <text x="10" y="75" fontSize="10" fill="#6b7280" fontFamily="system-ui">Main St</text>
+              <text x="10" y="155" fontSize="10" fill="#6b7280" fontFamily="system-ui">Elm St</text>
+              <text x="128" y="20" fontSize="10" fill="#6b7280" fontFamily="system-ui">1st Ave</text>
+              {/* Buildings */}
+              <rect x="30" y="90" width="25" height="30" fill="#d1d5db" opacity="0.7" />
+              <rect x="140" y="90" width="30" height="35" fill="#d1d5db" opacity="0.7" />
+              <rect x="250" y="100" width="28" height="30" fill="#d1d5db" opacity="0.7" />
+              <rect x="150" y="175" width="35" height="40" fill="#d1d5db" opacity="0.7" />
+            </svg>
+            
+            {/* Location marker */}
             <div style={{
               position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              textAlign: 'center',
+              top: '45%',
+              left: '55%',
+              transform: 'translate(-50%, -100%)',
+              zIndex: 10,
             }}>
-              <MapPin size={48} color="#ef4444" fill="#ef4444" />
-              <div style={{
-                marginTop: '8px',
-                fontSize: '14px',
-                fontWeight: '600',
-                color: '#374151',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                {company.address || '1234 Elm St, Springfield, IL 62701'}
-              </div>
+              <MapPin size={40} color="#ef4444" fill="#ef4444" strokeWidth={2} />
             </div>
-            {/* Grid lines to simulate map */}
-            <svg style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0.1 }}>
-              <defs>
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#000" strokeWidth="1"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
+            
+            {/* Address label */}
+            <div style={{
+              position: 'absolute',
+              bottom: '12px',
+              left: '12px',
+              background: 'rgba(255, 255, 255, 0.95)',
+              padding: '8px 12px',
+              borderRadius: '6px',
+              fontSize: '12px',
+              fontWeight: '600',
+              color: '#374151',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            }}>
+              {company.address || '1234 Elm St, Springfield, IL 62701'}
+            </div>
           </div>
         </div>
       </div>
