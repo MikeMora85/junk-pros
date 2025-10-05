@@ -4,6 +4,16 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: Built comprehensive analytics system with geographic search
+  - **State/City Filtering**: Search analytics for any state, city, or website-wide data
+  - **Business Statistics**: Total, Active, Pending, Denied counts with color-coded cards
+  - **Subscription Metrics**: Featured/Free tier counts, Active/Past Due/Cancelled status tracking
+  - **Revenue Analytics**: Monthly revenue (active subs), potential revenue, at-risk revenue calculations
+  - **Geographic Distribution**: State-by-state breakdown with total/active/featured counts
+  - **City Breakdown**: Drill down to city-level metrics when state selected
+  - **Business Details List**: Complete business info with status/tier badges for filtered results
+  - **Dynamic Headers**: Shows current filter context (Website-Wide, State, or City/State)
+  - **Mobile-Responsive**: Responsive grid layouts that adapt to all screen sizes
 - 2025-10-05: Added action template management system to admin dashboard
   - **New Action Menu Item**: Create custom action templates from hamburger menu
   - **Edit Actions Menu Item**: Manage and modify all action templates
