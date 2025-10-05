@@ -565,19 +565,21 @@ export default function AdminDashboard() {
                           
                           {/* Dropdown Menu */}
                           {expandedCompany === company.id && (
-                            <div style={{
-                              position: 'fixed',
-                              right: '16px',
-                              top: 'auto',
-                              background: '#fff',
-                              border: '1px solid #e5e7eb',
-                              borderRadius: '8px',
-                              boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
-                              minWidth: '200px',
-                              maxHeight: '80vh',
-                              overflowY: 'auto',
-                              zIndex: 1000,
-                            }}>
+                            <div 
+                              onClick={(e) => e.stopPropagation()}
+                              style={{
+                                position: 'absolute',
+                                right: 0,
+                                bottom: 'auto',
+                                top: '100%',
+                                marginTop: '4px',
+                                background: '#fff',
+                                border: '1px solid #e5e7eb',
+                                borderRadius: '8px',
+                                boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)',
+                                minWidth: '200px',
+                                zIndex: 1000,
+                              }}>
                               <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <button
                                   onClick={() => {
