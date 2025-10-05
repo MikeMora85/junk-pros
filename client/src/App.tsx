@@ -3367,43 +3367,60 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       </div>
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
-        {/* Header with company name and request quote button */}
+        {/* Logo and Header */}
         <div style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
+          alignItems: 'center',
+          gap: '16px',
           marginBottom: '16px',
         }}>
-          <h1 style={{
-            fontSize: '28px',
-            fontWeight: '700',
-            margin: '0',
-            color: '#000',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-          }} data-testid="text-company-name">
-            {company.name}
-          </h1>
-          <button
-            style={{
-              padding: '12px 24px',
-              background: '#fbbf24',
+          {/* Logo */}
+          <div style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            background: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            border: '2px solid #e5e7eb',
+          }}>
+            <Truck size={40} color="#6b7280" />
+          </div>
+          
+          {/* Company name and button */}
+          <div style={{ flex: 1 }}>
+            <h1 style={{
+              fontSize: '28px',
+              fontWeight: '700',
+              margin: '0 0 12px 0',
               color: '#000',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '16px',
-              fontWeight: '600',
               fontFamily: 'system-ui, -apple-system, sans-serif',
-              alignSelf: 'flex-start',
-            }}
-            onClick={() => {
-              trackBusinessEvent(company.id, 'call');
-              window.open(`tel:${company.phone}`, '_self');
-            }}
-            data-testid="button-request-quote"
-          >
-            Request a Quote
-          </button>
+            }} data-testid="text-company-name">
+              {company.name}
+            </h1>
+            <button
+              style={{
+                padding: '12px 24px',
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: '600',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}
+              onClick={() => {
+                trackBusinessEvent(company.id, 'call');
+                window.open(`tel:${company.phone}`, '_self');
+              }}
+              data-testid="button-request-quote"
+            >
+              Request a Quote
+            </button>
+          </div>
         </div>
 
         {/* Rating */}
