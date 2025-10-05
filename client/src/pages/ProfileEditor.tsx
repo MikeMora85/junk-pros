@@ -22,26 +22,18 @@ export default function ProfileEditor() {
 
   const company = companies?.[0];
 
-  // Debug logging
-  useEffect(() => {
-    console.log('ProfileEditor - companies:', companies);
-    console.log('ProfileEditor - isLoading:', isLoading);
-    console.log('ProfileEditor - error:', error);
-    console.log('ProfileEditor - auth_token:', localStorage.getItem('auth_token'));
-  }, [companies, isLoading, error]);
-
   // Local state for form
   const [formData, setFormData] = useState<Partial<Company>>({});
 
   // Initialize form data when company loads
   useEffect(() => {
-    if (company && Object.keys(formData).length === 0) {
+    if (company) {
       setFormData(company);
       if (company.logoUrl) {
         setLogoPreview(company.logoUrl);
       }
     }
-  }, [company, formData]);
+  }, [company]);
 
   const updateMutation = useMutation({
     mutationFn: async (data: Partial<Company>) => {
