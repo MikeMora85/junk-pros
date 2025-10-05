@@ -4,6 +4,17 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: Implemented automatic business approval and owner authentication system
+  - **Auto-Approval**: Businesses are now automatically approved on signup (no pending approval needed)
+  - **Business Owner Login**: Email and password authentication for business owners
+  - **Schema Updates**: Added businessOwners table with email, passwordHash, companyId fields
+  - **Secure Authentication**: Bcrypt password hashing for security
+  - **Token-Based Auth**: Bearer tokens for business owner sessions
+  - **Signup Flow**: Business owners create credentials during signup and are auto-logged in
+  - **Profile Access**: After signup, owners are automatically redirected to profile editor
+  - **Storage Updates**: New storage methods for creating/retrieving business owners
+  - **Login Support**: Business tab on /login page for owner authentication
+  - **Company Association**: Each business owner linked to their company via companyId
 - 2025-10-05: Implemented business performance tracking system
   - **Event Tracking**: Automatic tracking of all customer interactions (clicks, calls, photo quotes, in-person estimates)
   - **Tracking API**: POST /api/track/event endpoint to record events with companyId, eventType, timestamp, and metadata
