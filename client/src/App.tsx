@@ -1684,36 +1684,6 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         >
           <Menu size={18} color="#000" />
         </button>
-        
-        <a
-          href="/"
-          style={{
-            backgroundColor: '#fbbf24',
-            color: '#000',
-            padding: '8px',
-            borderRadius: '6px',
-            border: '1px solid #000',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textDecoration: 'none',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-            transform: 'translateY(-2px)',
-            transition: 'all 0.2s',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-            e.currentTarget.style.transform = 'translateY(-3px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-            e.currentTarget.style.transform = 'translateY(-2px)';
-          }}
-          data-testid="button-home"
-        >
-          <Home size={18} color="#000" />
-        </a>
       </div>
 
       {/* Hero Image - Clean without text overlay */}
@@ -2551,6 +2521,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
@@ -2582,6 +2553,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
   return (
     <>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       {selectedCompany && (
         <div style={{
           position: 'fixed',
@@ -2651,8 +2623,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
         justifyContent: 'space-between',
         alignItems: 'center',
       }}>
-        <a
-          href="/"
+        <button
+          onClick={() => setMenuOpen(true)}
           style={{
             backgroundColor: '#fbbf24',
             color: '#000',
@@ -2663,7 +2635,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            textDecoration: 'none',
             boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
             transform: 'translateY(-2px)',
             transition: 'all 0.2s',
@@ -2676,10 +2647,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
             e.currentTarget.style.transform = 'translateY(-2px)';
           }}
-          data-testid="button-home"
+          data-testid="button-menu-city"
         >
-          <Home size={18} color="#000" />
-        </a>
+          <Menu size={18} color="#000" />
+        </button>
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           <Link href="/add-business" style={{ textDecoration: 'none' }}>
