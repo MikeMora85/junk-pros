@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { IStorage } from "./storage";
 import { insertCompanySchema } from "@shared/schema";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
+import bcrypt from "bcryptjs";
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Setup auth but don't force it globally
@@ -42,8 +43,26 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       
       // For business owners, check if they exist in the system
       if (role === 'business') {
-        // TODO: Implement business owner login
-        return res.status(401).json({ error: 'Business owner login not yet implemented' });
+        const owner = await storage.getBusinessOwnerByEmail(email);
+        
+        if (!owner) {
+          return res.status(401).json({ error: 'Invalid credentials' });
+        }
+        
+        // Check password
+        const validPassword = await bcrypt.compare(password, owner.passwordHash);
+        if (!validPassword) {
+          return res.status(401).json({ error: 'Invalid credentials' });
+        }
+        
+        // Generate auth token
+        const token = Buffer.from(`business:${email}:${owner.id}:${Date.now()}`).toString('base64');
+        
+        return res.json({ 
+          success: true, 
+          token,
+          user: { email, isAdmin: false, role: 'business', ownerId: owner.id, companyId: owner.companyId }
+        });
       }
       
       res.status(401).json({ error: 'Invalid credentials' });
@@ -62,10 +81,26 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const token = authHeader.substring(7);
         try {
           const decoded = Buffer.from(token, 'base64').toString();
-          const [type, email] = decoded.split(':');
+          const parts = decoded.split(':');
+          const type = parts[0];
+          const email = parts[1];
           
           if (type === 'admin' && email === process.env.ADMIN_EMAIL) {
             return res.json({ email, isAdmin: true, role: 'admin' });
+          }
+          
+          if (type === 'business') {
+            const ownerId = parseInt(parts[2]);
+            const owner = await storage.getBusinessOwnerByEmail(email);
+            if (owner && owner.id === ownerId) {
+              return res.json({ 
+                email, 
+                isAdmin: false, 
+                role: 'business', 
+                ownerId: owner.id, 
+                companyId: owner.companyId 
+              });
+            }
           }
         } catch (e) {
           // Invalid token, continue
@@ -227,14 +262,42 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       const userId = req.isAuthenticated() ? req.user?.claims?.sub : null;
       console.log("Received company data:", req.body);
       
+      const { email, password, ...companyData } = req.body;
+      
+      // Check if business owner email already exists
+      if (email) {
+        const existingOwner = await storage.getBusinessOwnerByEmail(email);
+        if (existingOwner) {
+          return res.status(400).json({ error: "Email already in use" });
+        }
+      }
+      
       const data = insertCompanySchema.parse({
-        ...req.body,
+        ...companyData,
         userId,
-        status: 'pending',
       });
       
       const company = await storage.createCompany(data);
-      res.status(201).json(company);
+      
+      // If email and password provided, create business owner
+      if (email && password) {
+        const passwordHash = await bcrypt.hash(password, 10);
+        const owner = await storage.createBusinessOwner({
+          email,
+          passwordHash,
+          companyId: company.id,
+        });
+        
+        // Return with auth token
+        const token = Buffer.from(`business:${email}:${owner.id}:${Date.now()}`).toString('base64');
+        return res.status(201).json({ 
+          company, 
+          token,
+          user: { email, isAdmin: false, role: 'business', ownerId: owner.id, companyId: company.id }
+        });
+      }
+      
+      res.status(201).json({ company });
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Validation error:", error.issues);
