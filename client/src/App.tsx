@@ -160,7 +160,7 @@ function LandingPage() {
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-      {/* Hero Section with Logo and Login Button */}
+      {/* Hero Section */}
       <div style={{
         position: 'relative',
         height: '300px',
@@ -174,75 +174,6 @@ function LandingPage() {
         justifyContent: 'center',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
-        {/* Login Button Positioned on Hero */}
-        <div style={{
-          position: 'absolute',
-          top: '16px',
-          right: '16px',
-          zIndex: 10,
-        }}>
-          {isAuthenticated ? (
-            <Link href="/admin" style={{ textDecoration: 'none' }}>
-              <button
-                style={{
-                  background: '#166534',
-                  color: '#fff',
-                  padding: '8px 16px',
-                  borderRadius: '6px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  whiteSpace: 'nowrap',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                data-testid="button-admin"
-              >
-                ADMIN
-              </button>
-            </Link>
-          ) : (
-            <a href="/api/login" style={{ textDecoration: 'none' }}>
-              <button
-                style={{
-                  background: '#166534',
-                  color: '#fff',
-                  padding: '8px 16px',
-                  borderRadius: '6px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  whiteSpace: 'nowrap',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                data-testid="button-login"
-              >
-                LOGIN
-              </button>
-            </a>
-          )}
-        </div>
       </div>
 
       {/* Yellow Banner */}
