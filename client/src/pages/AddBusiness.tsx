@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { useAuth } from "@/hooks/useAuth";
 import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft } from "lucide-react";
 
 export default function AddBusiness() {
-  const { user } = useAuth();
   const [formData, setFormData] = useState({
     businessName: "",
     email: "",
