@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -3424,31 +3424,40 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             marginBottom: '32px',
             textAlign: 'center',
           }}>
-            {company.services.slice(0, 6).map((service, i) => (
-              <div key={i}>
-                <div style={{
-                  width: '80px',
-                  height: '80px',
-                  margin: '0 auto 12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <svg width="80" height="80" viewBox="0 0 80 80">
-                    <circle cx="40" cy="40" r="35" fill="none" stroke="#000" strokeWidth="2"/>
-                    {i === 0 && <path d="M30,25 L30,55 M25,30 L35,30 M25,50 L35,50 M40,25 L50,35 M50,25 L40,35 M40,45 L50,55 M50,45 L40,55" stroke="#000" strokeWidth="2" fill="none"/>}
-                    {i === 1 && <path d="M25,35 L25,55 L55,55 L55,35 L40,25 Z M30,45 L37,45 M43,45 L50,45" stroke="#000" strokeWidth="2" fill="none"/>}
-                    {i === 2 && <path d="M25,30 L55,30 L55,55 L25,55 Z M30,35 L50,35 M30,42 L50,42 M35,48 L45,48" stroke="#000" strokeWidth="2" fill="none"/>}
-                    {i === 3 && <path d="M25,50 L55,50 M25,50 L25,35 L35,35 L35,30 L45,30 L45,35 L55,35 L55,50" stroke="#000" strokeWidth="2" fill="none"/>}
-                    {i === 4 && <path d="M30,25 L50,25 L50,45 L30,45 Z M35,30 L45,30 M35,35 L45,35 M30,50 L50,50 M30,55 L50,55" stroke="#000" strokeWidth="2" fill="none"/>}
-                    {i === 5 && <path d="M25,30 L40,25 L55,30 L55,50 L40,55 L25,50 Z M35,35 L35,45 M45,35 L45,45" stroke="#000" strokeWidth="2" fill="none"/>}
-                  </svg>
+            {company.services.slice(0, 6).map((service, i) => {
+              const getIcon = () => {
+                const serviceLower = service.toLowerCase();
+                if (serviceLower.includes('junk')) return <Trash2 size={40} />;
+                if (serviceLower.includes('cleanout')) return <Home size={40} />;
+                if (serviceLower.includes('appliance')) return <Refrigerator size={40} />;
+                if (serviceLower.includes('furniture')) return <Sofa size={40} />;
+                if (serviceLower.includes('estate')) return <Package size={40} />;
+                if (serviceLower.includes('construction')) return <HardHat size={40} />;
+                if (serviceLower.includes('yard')) return <Trees size={40} />;
+                if (serviceLower.includes('electronic')) return <Tv size={40} />;
+                return <Trash2 size={40} />;
+              };
+              
+              return (
+                <div key={i}>
+                  <div style={{
+                    width: '80px',
+                    height: '80px',
+                    margin: '0 auto 12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '2px solid #000',
+                    borderRadius: '50%',
+                  }}>
+                    {getIcon()}
+                  </div>
+                  <div style={{ fontSize: '14px', fontWeight: '500', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    {service}
+                  </div>
                 </div>
-                <div style={{ fontSize: '14px', fontWeight: '500', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  {service}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
