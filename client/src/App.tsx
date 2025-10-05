@@ -2710,35 +2710,51 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
           {isAuthenticated ? (
             <>
-              <Link href={user?.role === 'admin' ? '/admin' : '/'} style={{ textDecoration: 'none' }}>
-                <button
-                  style={{
-                    background: '#16a34a',
-                    color: '#fff',
-                    padding: '8px',
-                    borderRadius: '6px',
-                    border: '1px solid #000',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                    transform: 'translateY(-2px)',
-                    transition: 'all 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                    e.currentTarget.style.transform = 'translateY(-3px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                  }}
-                  data-testid="button-profile"
-                >
-                  <UserCircle size={18} />
-                </button>
-              </Link>
+              <button
+                onClick={async () => {
+                  if (user?.role === 'admin') {
+                    window.location.href = '/admin';
+                  } else {
+                    // Fetch user's company and navigate to their profile
+                    const response = await fetch('/api/companies/my', {
+                      credentials: 'include',
+                      headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+                      },
+                    });
+                    const companies = await response.json();
+                    if (companies && companies.length > 0) {
+                      const company = companies[0];
+                      window.location.href = `/${company.state.toLowerCase()}/${company.city.toLowerCase()}`;
+                    }
+                  }
+                }}
+                style={{
+                  background: '#16a34a',
+                  color: '#fff',
+                  padding: '8px',
+                  borderRadius: '6px',
+                  border: '1px solid #000',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  transform: 'translateY(-2px)',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                data-testid="button-profile"
+              >
+                <UserCircle size={18} />
+              </button>
               <button
                 onClick={handleLogout}
                 style={{
@@ -3322,7 +3338,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await fetch(`/api/companies/${company.id}`, {
+      const response = await fetch(`/api/companies/${company.id}`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {
@@ -3331,11 +3347,19 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
         },
         body: JSON.stringify(formData),
       });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || `Save failed: ${response.status}`);
+      }
+      
       await queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
+      alert('Profile saved successfully!');
       setEditMode(false);
       window.location.reload();
     } catch (error: any) {
       alert('Failed to save: ' + error.message);
+      console.error('Save error:', error);
     } finally {
       setIsSaving(false);
     }
