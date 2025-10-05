@@ -365,7 +365,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.patch("/api/companies/:id", requireSimpleAuth, async (req: any, res) => {
     try {
       const id = parseInt(req.params.id);
-      const userEmail = req.session.user.email;
 
       if (isNaN(id)) {
         return res.status(400).json({ error: "Invalid company ID" });
@@ -376,16 +375,45 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ error: "Company not found" });
       }
 
-      // Admin can edit anything
-      if (req.session.user.isAdmin) {
-        const updatedCompany = await storage.updateCompany(id, req.body);
-        return res.json(updatedCompany);
+      // Check Bearer token auth
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.substring(7);
+        try {
+          const decoded = Buffer.from(token, 'base64').toString();
+          const [type, email] = decoded.split(':');
+          
+          // Admin can edit anything
+          if (type === 'admin' && email === process.env.ADMIN_EMAIL) {
+            const updatedCompany = await storage.updateCompany(id, req.body);
+            return res.json(updatedCompany);
+          }
+          
+          // Business owner can only edit their own company
+          if (type === 'business') {
+            const owner = await storage.getBusinessOwnerByEmail(email);
+            if (owner && owner.companyId === id) {
+              const updatedCompany = await storage.updateCompany(id, req.body);
+              return res.json(updatedCompany);
+            }
+            return res.status(403).json({ error: "You can only edit your own company" });
+          }
+        } catch (e) {
+          return res.status(401).json({ error: "Invalid token" });
+        }
       }
 
-      // Business owners can only edit their own companies
-      // TODO: Add user-company relationship check
+      // Check session auth (legacy)
+      if (req.session?.user) {
+        if (req.session.user.isAdmin) {
+          const updatedCompany = await storage.updateCompany(id, req.body);
+          return res.json(updatedCompany);
+        }
+      }
+
       return res.status(403).json({ error: "Forbidden: You can only edit your own companies" });
     } catch (error) {
+      console.error('Error updating company:', error);
       res.status(500).json({ error: "Failed to update company" });
     }
   });
