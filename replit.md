@@ -4,20 +4,28 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: Added action template management system to admin dashboard
+  - **New Action Menu Item**: Create custom action templates from hamburger menu
+  - **Edit Actions Menu Item**: Manage and modify all action templates
+  - **Template Editor**: Full-featured form for creating/editing actions with:
+    - Action name field
+    - Email subject line field
+    - Message body with variable support ({businessName}, {dueDate}, {daysOverdue}, {warningNumber})
+    - Color picker with 7 preset colors for button styling
+  - **Template List View**: See all action templates with color indicators and edit buttons
+  - **4 Prebuilt Templates**: Payment Reminder, Payment Warning, Cancellation Notice, Reactivation Welcome
+  - **Form Validation**: Required field validation, disabled save until all fields complete
+  - **Success Alerts**: Confirmation messages on create/update actions
+  - **Modal Interface**: Full-screen overlay modal with close button and responsive design
 - 2025-10-05: Built comprehensive mobile-responsive admin dashboard with payment management
   - **Mobile-First Design**: Fully responsive layout that works perfectly on all screen sizes
-  - **Hamburger Menu**: Compact navigation menu replacing large buttons (Back to Home, Logout)
+  - **Hamburger Menu**: Compact navigation menu with Back to Home, New Action, Edit Actions, and Logout
   - **Payment Tracking Schema**: subscriptionTier, subscriptionStatus, lastPaymentDate, nextPaymentDate, paymentWarnings
   - **Token-Based Auth**: localStorage + Bearer token authentication for reliability
   - **4 Dashboard Tabs**: Pending, Active, Payments, Analytics (responsive scrollable tabs)
   - **Smart Stats Grid**: Auto-adjusting grid showing Active, Pending, Featured, Past Due counts
   - **Business Card Dropdowns**: Expandable action menus on each business with quick access to all features
-  - **Prebuilt Message Templates**: Professional email templates for:
-    - Payment reminders with due date personalization
-    - Warning letters with auto-calculated overdue days
-    - Cancellation notices with reactivation instructions
-    - Reactivation welcome messages
-  - **Message Preview Modal**: Review all communications before sending
+  - **Dropdown Actions with Mail Icons**: All action buttons execute immediately with mail icon (✉️)
   - **Advanced Filtering**: Search by name/city/state + tier/status filters on mobile
   - **Color Scheme**: Matches main site with green (#166534) primary, yellow (#fbbf24) featured badges
   - **Subscription Badges**: Visual FREE/FEATURED tier indicators and ACTIVE/PAST_DUE/CANCELLED status
