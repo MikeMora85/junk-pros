@@ -516,7 +516,7 @@ export default function AdminDashboard() {
                     background: '#fff',
                     border: '2px solid #e5e7eb',
                     borderRadius: '12px',
-                    overflow: 'hidden',
+                    overflow: 'visible',
                   }}
                 >
                   {/* Company Header */}
