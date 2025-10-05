@@ -3313,43 +3313,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
 }
 
 function CompanyDetailInline({ company, onClose, user }: { company: Company; onClose: () => void; user?: any }) {
-  const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState<Partial<Company>>(company);
-  const [logoPreview, setLogoPreview] = useState(company.logoUrl || '');
-  
   // Check if user owns this company
   const isOwner = user?.companyId === company.id;
-  
-  const updateMutation = useMutation({
-    mutationFn: async (data: Partial<Company>) => {
-      await apiRequest(`/api/companies/${company.id}`, {
-        method: 'PATCH',
-        body: data as any,
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
-      alert('✅ Profile saved successfully!');
-      setEditMode(false);
-    },
-  });
-
-  const handleSave = () => {
-    updateMutation.mutate(formData);
-  };
-
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result as string;
-        setLogoPreview(result);
-        setFormData(prev => ({ ...prev, logoUrl: result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div style={{
@@ -3366,43 +3331,24 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
         position: 'relative',
       }}>
         <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', gap: '8px' }}>
-          {isOwner && !editMode && (
-            <button
-              onClick={() => setEditMode(true)}
-              style={{
-                background: '#166534',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-              }}
-              data-testid="button-edit-profile"
-            >
-              ✏️ Edit
-            </button>
-          )}
-          {isOwner && editMode && (
-            <button
-              onClick={handleSave}
-              disabled={updateMutation.isPending}
-              style={{
-                background: '#166534',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                cursor: updateMutation.isPending ? 'not-allowed' : 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-                opacity: updateMutation.isPending ? 0.7 : 1,
-              }}
-              data-testid="button-save-profile"
-            >
-              {updateMutation.isPending ? 'Saving...' : '💾 Save'}
-            </button>
+          {isOwner && (
+            <Link href="/profile/edit">
+              <button
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  padding: '10px 20px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                }}
+                data-testid="button-edit-profile"
+              >
+                ✏️ Edit Your Profile
+              </button>
+            </Link>
           )}
           <button
             onClick={onClose}
@@ -3423,65 +3369,18 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           </button>
         </div>
         
-        {editMode && isOwner ? (
-          <div style={{ position: 'relative', display: 'inline-block', marginBottom: '16px' }}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleLogoUpload}
-              style={{ display: 'none' }}
-              id="logo-upload-inline"
-            />
-            <label
-              htmlFor="logo-upload-inline"
-              style={{
-                display: 'block',
-                cursor: 'pointer',
-                position: 'relative',
-              }}
-            >
-              {logoPreview ? (
-                <img 
-                  src={logoPreview}
-                  alt="Company logo"
-                  style={{ 
-                    height: '60px', 
-                    background: '#fff',
-                    padding: '8px',
-                    borderRadius: '8px',
-                  }} 
-                />
-              ) : (
-                <div style={{
-                  height: '60px',
-                  width: '120px',
-                  background: '#e5e7eb',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: '8px',
-                  color: '#6b7280',
-                  fontSize: '12px',
-                }}>
-                  📷 Add Logo
-                </div>
-              )}
-            </label>
-          </div>
-        ) : (
-          company.logoUrl && (
-            <img 
-              src={company.logoUrl} 
-              alt={`${company.name} logo`}
-              style={{ 
-                height: '60px', 
-                marginBottom: '16px',
-                background: '#fff',
-                padding: '8px',
-                borderRadius: '8px',
-              }} 
-            />
-          )
+        {company.logoUrl && (
+          <img 
+            src={company.logoUrl} 
+            alt={`${company.name} logo`}
+            style={{ 
+              height: '60px', 
+              marginBottom: '16px',
+              background: '#fff',
+              padding: '8px',
+              borderRadius: '8px',
+            }} 
+          />
         )}
         
         <h1 style={{
