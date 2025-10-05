@@ -8,12 +8,25 @@ async function handleResponse(response: Response) {
   return response.json();
 }
 
+function getAuthHeaders() {
+  const token = localStorage.getItem('auth_token');
+  if (token) {
+    return {
+      'Authorization': `Bearer ${token}`
+    };
+  }
+  return {};
+}
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryFn: async ({ queryKey }) => {
         const response = await fetch(queryKey[0] as string, {
-          credentials: 'include', // Include cookies with requests
+          credentials: 'include',
+          headers: {
+            ...getAuthHeaders(),
+          },
         });
         return handleResponse(response);
       },
@@ -26,9 +39,10 @@ export const queryClient = new QueryClient({
 export async function apiRequest(url: string, options?: RequestInit) {
   const response = await fetch(url, {
     ...options,
-    credentials: 'include', // Include cookies with requests
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeaders(),
       ...options?.headers,
     },
   });

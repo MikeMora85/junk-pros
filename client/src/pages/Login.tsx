@@ -31,7 +31,10 @@ export default function Login() {
         })
       });
 
-      if (response.success) {
+      if (response.success && response.token) {
+        // Store token in localStorage
+        localStorage.setItem('auth_token', response.token);
+        
         // Invalidate user cache
         await queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
         

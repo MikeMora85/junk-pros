@@ -25,33 +25,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.post('/api/auth/simple-login', async (req, res) => {
     try {
       const { email, password, role } = req.body;
-      console.log('Login attempt:', { email, role });
       
       // Check admin credentials
       if (role === 'admin') {
         if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-          // Store admin session
-          (req as any).session.user = {
-            email: process.env.ADMIN_EMAIL,
-            isAdmin: true,
-            role: 'admin'
-          };
+          // Generate a simple auth token (just base64 encoded for now)
+          const token = Buffer.from(`admin:${email}:${Date.now()}`).toString('base64');
           
-          // Save session explicitly
-          await new Promise((resolve, reject) => {
-            (req as any).session.save((err: any) => {
-              if (err) {
-                console.error('Session save error:', err);
-                reject(err);
-              } else {
-                console.log('Session saved successfully:', (req as any).session.id);
-                resolve(true);
-              }
-            });
+          return res.json({ 
+            success: true, 
+            token,
+            user: { email, isAdmin: true, role: 'admin' }
           });
-          
-          console.log('Admin login successful, session:', (req as any).session.user);
-          return res.json({ success: true, user: { email, isAdmin: true } });
         }
       }
       
@@ -71,30 +56,38 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Check if user is logged in
   app.get('/api/auth/user', async (req: any, res) => {
     try {
-      console.log('Auth check - Session ID:', req.sessionID);
-      console.log('Auth check - Session user:', req.session?.user);
-      console.log('Auth check - Cookies:', req.headers.cookie);
+      // Check for Bearer token in Authorization header
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.substring(7);
+        try {
+          const decoded = Buffer.from(token, 'base64').toString();
+          const [type, email] = decoded.split(':');
+          
+          if (type === 'admin' && email === process.env.ADMIN_EMAIL) {
+            return res.json({ email, isAdmin: true, role: 'admin' });
+          }
+        } catch (e) {
+          // Invalid token, continue
+        }
+      }
       
-      // Check simple auth session first
+      // Check simple auth session (legacy)
       if (req.session?.user) {
-        console.log('Returning session user:', req.session.user);
         return res.json(req.session.user);
       }
       
-      // Check if user is authenticated via Replit OAuth
+      // Check if user is authenticated via Replit OAuth (legacy)
       if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
         const userId = req.user.claims.sub;
         const user = await storage.getUser(userId);
-        console.log('Returning OAuth user:', user);
         return res.json(user);
       }
       
       // Return null for unauthenticated users (no error)
-      console.log('No user found, returning null');
       res.json(null);
     } catch (error) {
       console.error("Error fetching user:", error);
-      // Don't fail, just return null
       res.json(null);
     }
   });
@@ -115,6 +108,20 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
   // Simple auth middleware
   const requireSimpleAuth = (req: any, res: any, next: any) => {
+    // Check Bearer token
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const decoded = Buffer.from(token, 'base64').toString();
+        const [type] = decoded.split(':');
+        if (type === 'admin') {
+          return next();
+        }
+      } catch (e) {}
+    }
+    
+    // Check session (legacy)
     if (req.session?.user) {
       return next();
     }
@@ -122,6 +129,20 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   };
 
   const requireSimpleAdmin = (req: any, res: any, next: any) => {
+    // Check Bearer token
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const decoded = Buffer.from(token, 'base64').toString();
+        const [type, email] = decoded.split(':');
+        if (type === 'admin' && email === process.env.ADMIN_EMAIL) {
+          return next();
+        }
+      } catch (e) {}
+    }
+    
+    // Check session (legacy)
     if (req.session?.user?.isAdmin) {
       return next();
     }
