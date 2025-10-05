@@ -3322,9 +3322,14 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await apiRequest(`/api/companies/${company.id}`, {
+      await fetch(`/api/companies/${company.id}`, {
         method: 'PATCH',
-        body: formData,
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
+        },
+        body: JSON.stringify(formData),
       });
       await queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
       setEditMode(false);
@@ -3507,7 +3512,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
                 cursor: 'pointer',
               }}>
                 {logoPreview || formData.logoUrl ? (
-                  <img src={logoPreview || formData.logoUrl} alt="Logo" style={{ height: '100%' }} />
+                  <img src={logoPreview || formData.logoUrl || ''} alt="Logo" style={{ height: '100%' }} />
                 ) : (
                   <div style={{ textAlign: 'center', color: '#166534' }}>
                     <Camera size={24} style={{ margin: '0 auto' }} />
@@ -3521,7 +3526,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           <>
             {(formData.logoUrl || logoPreview) && (
               <img 
-                src={logoPreview || formData.logoUrl} 
+                src={logoPreview || formData.logoUrl || ''} 
                 alt={`${formData.name} logo`}
                 style={{ 
                   height: '60px', 
@@ -3611,70 +3616,138 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
       </div>
       
       <div style={{ padding: '32px 24px' }}>
-        <button
-          onClick={() => {
-            trackBusinessEvent(company.id, 'call');
-            window.open(`tel:${company.phone}`, '_self');
-          }}
-          data-testid="button-call-now-top"
-          style={{
-            width: '100%',
-            padding: '20px',
-            background: '#fbbf24',
-            color: '#000',
-            border: 'none',
-            borderRadius: '8px',
-            fontSize: '20px',
-            fontWeight: '700',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px',
-            marginBottom: '32px',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            textTransform: 'uppercase',
-          }}
-        >
-          <Phone size={24} />
-          Call Now: {company.phone}
-        </button>
-        
-        {company.description && (
+        {/* Phone - Editable */}
+        {isOwner && editMode ? (
           <div style={{ marginBottom: '32px' }}>
-            <p style={{ 
-              margin: '0', 
-              color: '#374151', 
-              fontSize: '18px', 
-              lineHeight: '1.7',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}>
-              {company.description}
-            </p>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151' }}>Phone Number</label>
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              data-testid="input-phone"
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #166534',
+                borderRadius: '6px',
+                fontSize: '16px',
+              }}
+            />
           </div>
+        ) : (
+          <button
+            onClick={() => {
+              trackBusinessEvent(company.id, 'call');
+              window.open(`tel:${formData.phone}`, '_self');
+            }}
+            data-testid="button-call-now-top"
+            style={{
+              width: '100%',
+              padding: '20px',
+              background: '#fbbf24',
+              color: '#000',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '20px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              marginBottom: '32px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              textTransform: 'uppercase',
+            }}
+          >
+            <Phone size={24} />
+            Call Now: {formData.phone}
+          </button>
         )}
         
-        {company.aboutUs && (
-          <div style={{ marginBottom: '32px', background: '#f9fafb', padding: '24px', borderRadius: '8px' }}>
-            <h2 style={{ 
-              margin: '0 0 16px 0', 
-              color: '#1f2937', 
-              fontSize: '24px', 
-              fontWeight: '700',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}>
-              About Us
-            </h2>
-            <p style={{ 
-              margin: '0', 
-              color: '#4b5563', 
-              fontSize: '16px', 
-              lineHeight: '1.7',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}>
-              {company.aboutUs}
-            </p>
+        {/* Description - Editable */}
+        {isOwner && editMode ? (
+          <div style={{ marginBottom: '32px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151' }}>Description</label>
+            <textarea
+              value={formData.description || ''}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              data-testid="input-description"
+              rows={4}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #166534',
+                borderRadius: '6px',
+                fontSize: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                resize: 'vertical',
+              }}
+            />
           </div>
+        ) : (
+          <>
+            {formData.description && (
+              <div style={{ marginBottom: '32px' }}>
+                <p style={{ 
+                  margin: '0', 
+                  color: '#374151', 
+                  fontSize: '18px', 
+                  lineHeight: '1.7',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {formData.description}
+                </p>
+              </div>
+            )}
+          </>
+        )}
+        
+        {/* About Us - Editable */}
+        {isOwner && editMode ? (
+          <div style={{ marginBottom: '32px' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#374151' }}>About Us</label>
+            <textarea
+              value={formData.aboutUs || ''}
+              onChange={(e) => setFormData({ ...formData, aboutUs: e.target.value })}
+              data-testid="input-about-us"
+              rows={6}
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid #166534',
+                borderRadius: '6px',
+                fontSize: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                resize: 'vertical',
+              }}
+            />
+          </div>
+        ) : (
+          <>
+            {formData.aboutUs && (
+              <div style={{ marginBottom: '32px', background: '#f9fafb', padding: '24px', borderRadius: '8px' }}>
+                <h2 style={{ 
+                  margin: '0 0 16px 0', 
+                  color: '#1f2937', 
+                  fontSize: '24px', 
+                  fontWeight: '700',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  About Us
+                </h2>
+                <p style={{ 
+                  margin: '0', 
+                  color: '#4b5563', 
+                  fontSize: '16px', 
+                  lineHeight: '1.7',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {formData.aboutUs}
+                </p>
+              </div>
+            )}
+          </>
         )}
         
         {company.whyChooseUs && company.whyChooseUs.length > 0 && (
