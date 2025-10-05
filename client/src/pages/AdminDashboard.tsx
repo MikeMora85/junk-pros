@@ -31,29 +31,29 @@ export default function AdminDashboard() {
     {
       id: 'reminder',
       name: 'Payment Reminder',
-      subject: 'Payment Reminder - BestJunkRemovalCompanies.com',
-      body: 'Hi {businessName},\n\nThis is a friendly reminder that your Featured listing payment of $49 is due on {dueDate}.\n\nTo maintain your Featured status and continue receiving premium leads, please submit payment at your earliest convenience.\n\nThank you for being part of our directory!\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      subject: 'Featured Listing Payment Due - BestJunkRemovalCompanies.com',
+      body: 'Hello local junk hauler,\n\nThis is a friendly reminder that your Featured listing payment of $49 is due on {dueDate}.\n\nTo maintain your Featured status and continue receiving premium leads, please submit payment at your earliest convenience.\n\nThank you for being part of our directory!\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
       color: '#fbbf24'
     },
     {
       id: 'warning',
       name: 'Payment Warning',
-      subject: 'Payment Warning - Action Required',
-      body: 'Hi {businessName},\n\nYour Featured listing payment is now {daysOverdue} days overdue. This is warning #{warningNumber}.\n\nIf payment is not received within 5 business days, your listing will be downgraded to Free tier and removed from Featured results.\n\nPlease contact us immediately to resolve this matter.\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      subject: 'URGENT: Payment Overdue - Action Required',
+      body: 'Hello local junk hauler,\n\nYour Featured listing payment is now {daysOverdue} days overdue. This is warning #{warningNumber}.\n\nIf payment is not received within 5 business days, your listing will be downgraded to Free tier and removed from Featured results.\n\nPlease contact us immediately to resolve this matter.\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
       color: '#f59e0b'
     },
     {
       id: 'cancellation',
       name: 'Cancellation Notice',
-      subject: 'Subscription Cancelled - BestJunkRemovalCompanies.com',
-      body: 'Hi {businessName},\n\nDue to non-payment, your Featured subscription has been cancelled and your listing has been removed from our directory.\n\nYou may reactivate at any time by logging into your account and updating your payment information.\n\nIf you have questions, please contact our support team.\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      subject: 'Featured Subscription Cancelled - BestJunkRemovalCompanies.com',
+      body: 'Hello local junk hauler,\n\nDue to non-payment, your Featured subscription has been cancelled and your listing has been removed from our directory.\n\nYou may reactivate at any time by logging into your account and updating your payment information.\n\nIf you have questions, please contact our support team.\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
       color: '#ef4444'
     },
     {
       id: 'reactivation',
       name: 'Reactivation Welcome',
-      subject: 'Welcome Back - Subscription Reactivated',
-      body: 'Hi {businessName},\n\nGreat news! Your Featured listing has been reactivated and is now live in our directory.\n\nYou\'ll start receiving premium leads immediately. Thank you for being part of our network!\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      subject: 'Welcome Back! Your Featured Listing is Live',
+      body: 'Hello local junk hauler,\n\nGreat news! Your Featured listing has been reactivated and is now live in our directory.\n\nYou\'ll start receiving premium leads immediately. Thank you for being part of our network!\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
       color: '#10b981'
     }
   ]);
