@@ -4,6 +4,17 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: **IMPLEMENTED INLINE WYSIWYG EDITING ON LIVE CITY PAGES**
+  - **Inline Edit Mode**: Business owners can now edit their profiles directly on live city pages (/:state/:city)
+  - **Smart Ownership Detection**: CompanyDetailInline checks if user.companyId === company.id to show Edit button
+  - **Edit/Save Controls**: Green Edit button appears for owners → toggles to Save button in edit mode
+  - **Clickable Logo Upload**: Logo becomes clickable in edit mode, opens file input for image upload
+  - **Live Preview**: Logo changes preview immediately with base64 conversion before save
+  - **PATCH API**: Updates sent to /api/companies/:id, invalidates cache on success
+  - **User Feedback**: Alert message on successful save, automatic exit from edit mode
+  - **Fixed Database Connection**: Switched server/index.ts from MemStorage to DbStorage for persistence
+  - **Test Data Created**: Mora's Junk Removal with login credentials (morasjunk@gmail.com / test123)
+  - **Files Modified**: client/src/App.tsx (CompanyDetailInline component), server/index.ts (storage import)
 - 2025-10-05: **FIXED LOGIN BUTTON ROUTING - Business Owners vs Admin**
   - **Smart Routing**: Login button (person icon) now routes based on user role
   - **Business Owners**: Clicking person icon when logged in as business owner → /profile/edit (not /admin)
