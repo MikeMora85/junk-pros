@@ -3602,6 +3602,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 <div>• Single Item: $75</div>
                 <div>• 1/4 Load: $150</div>
                 <div>• 1/2 Load: $500</div>
+                <div>• 3/4 Load: $750</div>
+                <div>• Full Load: $1000</div>
               </div>
             </div>
 
@@ -3730,6 +3732,59 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 Request a Quote
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Map Location */}
+        <div style={{ marginTop: '32px' }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            marginBottom: '12px',
+            color: '#000',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}>
+            Map
+          </h2>
+          <div style={{
+            width: '100%',
+            height: '250px',
+            background: '#f3f4f6',
+            borderRadius: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            {/* Mock map with pin */}
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              textAlign: 'center',
+            }}>
+              <MapPin size={48} color="#ef4444" fill="#ef4444" />
+              <div style={{
+                marginTop: '8px',
+                fontSize: '14px',
+                fontWeight: '600',
+                color: '#374151',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                {company.address || '1234 Elm St, Springfield, IL 62701'}
+              </div>
+            </div>
+            {/* Grid lines to simulate map */}
+            <svg style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0.1 }}>
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#000" strokeWidth="1"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
           </div>
         </div>
       </div>
