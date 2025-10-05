@@ -94,7 +94,7 @@ export default function AdminDashboard() {
       <div style={{ padding: '40px', textAlign: 'center' }}>
         <h2 style={{ marginBottom: '20px' }}>Please log in to access admin dashboard</h2>
         <button
-          onClick={() => window.location.href = '/api/login'}
+          onClick={() => window.location.href = '/login'}
           style={{
             background: '#fbbf24',
             color: '#000',
