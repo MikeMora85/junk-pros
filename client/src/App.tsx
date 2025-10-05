@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, UserCircle, Menu, ChevronDown } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -2544,6 +2544,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
   
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    window.location.href = '/';
+  };
+  
   const { data: companies = [], isLoading } = useQuery<Company[]>({
     queryKey: ["/api/companies", { city, state }],
     queryFn: async () => {
@@ -2704,10 +2709,40 @@ function CityPage({ city, state }: { city: string; state: string }) {
           </button>
 
           {isAuthenticated ? (
-            <Link href={user?.role === 'admin' ? '/admin' : '/profile/edit'} style={{ textDecoration: 'none' }}>
+            <>
+              <Link href={user?.role === 'admin' ? '/admin' : '/profile/edit'} style={{ textDecoration: 'none' }}>
+                <button
+                  style={{
+                    background: '#16a34a',
+                    color: '#fff',
+                    padding: '8px',
+                    borderRadius: '6px',
+                    border: '1px solid #000',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                    transform: 'translateY(-2px)',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  data-testid="button-profile"
+                >
+                  <UserCircle size={18} />
+                </button>
+              </Link>
               <button
+                onClick={handleLogout}
                 style={{
-                  background: '#16a34a',
+                  background: '#ef4444',
                   color: '#fff',
                   padding: '8px',
                   borderRadius: '6px',
@@ -2728,11 +2763,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
                   e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
-                data-testid="button-profile"
+                data-testid="button-logout"
               >
-                <UserCircle size={18} />
+                <LogOut size={18} />
               </button>
-            </Link>
+            </>
           ) : (
             <Link href="/login" style={{ textDecoration: 'none' }}>
               <button
