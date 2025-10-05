@@ -52,6 +52,60 @@ export default function AdminDashboard() {
     },
   });
 
+  const sendReminderMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await apiRequest('/api/admin/companies/:id/send-reminder', {
+        method: 'POST',
+        params: { id: id.toString() },
+      });
+    },
+    onSuccess: (data: any) => {
+      alert(data.message || 'Payment reminder sent!');
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+    },
+  });
+
+  const sendWarningMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await apiRequest('/api/admin/companies/:id/send-warning', {
+        method: 'POST',
+        params: { id: id.toString() },
+      });
+    },
+    onSuccess: (data: any) => {
+      alert(data.message || 'Warning sent!');
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+    },
+  });
+
+  const cancelSubscriptionMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await apiRequest('/api/admin/companies/:id/cancel-subscription', {
+        method: 'POST',
+        params: { id: id.toString() },
+      });
+    },
+    onSuccess: (data: any) => {
+      alert(data.message || 'Subscription cancelled!');
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+    },
+  });
+
+  const reactivateMutation = useMutation({
+    mutationFn: async (id: number) => {
+      return await apiRequest('/api/admin/companies/:id/reactivate', {
+        method: 'POST',
+        params: { id: id.toString() },
+      });
+    },
+    onSuccess: (data: any) => {
+      alert(data.message || 'Subscription reactivated!');
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+    },
+  });
+
   const handleLogout = async () => {
     localStorage.removeItem('auth_token');
     await apiRequest('/api/auth/logout', { method: 'POST' });
@@ -385,7 +439,7 @@ export default function AdminDashboard() {
                     )}
                   </div>
 
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {activeTab === 'pending' ? (
                       <>
                         <button
@@ -431,21 +485,93 @@ export default function AdminDashboard() {
                       </>
                     ) : (
                       <>
-                        <button
-                          style={{
-                            background: '#3b82f6',
-                            color: '#fff',
-                            padding: '8px 16px',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontSize: '14px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                          }}
-                          data-testid={`edit-${company.id}`}
-                        >
-                          <Edit size={16} />
-                        </button>
+                        {company.subscriptionTier === 'featured' && company.subscriptionStatus !== 'active' && (
+                          <>
+                            <button
+                              onClick={() => sendReminderMutation.mutate(company.id)}
+                              disabled={sendReminderMutation.isPending}
+                              style={{
+                                background: '#fbbf24',
+                                color: '#000',
+                                padding: '8px 16px',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                              }}
+                              data-testid={`reminder-${company.id}`}
+                            >
+                              💰 Reminder
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm(`Send warning to ${company.name}? This will increment their warning count.`)) {
+                                  sendWarningMutation.mutate(company.id);
+                                }
+                              }}
+                              disabled={sendWarningMutation.isPending}
+                              style={{
+                                background: '#f59e0b',
+                                color: '#fff',
+                                padding: '8px 16px',
+                                border: 'none',
+                                borderRadius: '8px',
+                                fontSize: '14px',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                              }}
+                              data-testid={`warning-${company.id}`}
+                            >
+                              ⚠️ Warning
+                            </button>
+                          </>
+                        )}
+                        {company.subscriptionStatus === 'cancelled' ? (
+                          <button
+                            onClick={() => {
+                              if (confirm(`Reactivate subscription for ${company.name}?`)) {
+                                reactivateMutation.mutate(company.id);
+                              }
+                            }}
+                            disabled={reactivateMutation.isPending}
+                            style={{
+                              background: '#10b981',
+                              color: '#fff',
+                              padding: '8px 16px',
+                              border: 'none',
+                              borderRadius: '8px',
+                              fontSize: '14px',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                            }}
+                            data-testid={`reactivate-${company.id}`}
+                          >
+                            ✅ Reactivate
+                          </button>
+                        ) : company.subscriptionTier === 'featured' && (
+                          <button
+                            onClick={() => {
+                              if (confirm(`Cancel subscription for ${company.name}? This will remove them from the directory.`)) {
+                                cancelSubscriptionMutation.mutate(company.id);
+                              }
+                            }}
+                            disabled={cancelSubscriptionMutation.isPending}
+                            style={{
+                              background: '#ef4444',
+                              color: '#fff',
+                              padding: '8px 16px',
+                              border: 'none',
+                              borderRadius: '8px',
+                              fontSize: '14px',
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                            }}
+                            data-testid={`cancel-${company.id}`}
+                          >
+                            <Ban size={16} /> Cancel
+                          </button>
+                        )}
                       </>
                     )}
                   </div>

@@ -318,6 +318,117 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Payment Management Routes
+  app.post("/api/admin/companies/:id/send-reminder", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.getCompanyById(id);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      // TODO: Implement actual email sending
+      console.log(`Sending payment reminder to ${company.name} at ${company.phone}`);
+      
+      res.json({ 
+        success: true, 
+        message: `Payment reminder sent to ${company.name}` 
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to send payment reminder" });
+    }
+  });
+
+  app.post("/api/admin/companies/:id/send-warning", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.getCompanyById(id);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      // Increment warning count
+      const warnings = (company.paymentWarnings || 0) + 1;
+      await storage.updateCompany(id, { 
+        paymentWarnings: warnings,
+        subscriptionStatus: 'past_due'
+      });
+
+      // TODO: Implement actual email/SMS sending
+      console.log(`Sending warning #${warnings} to ${company.name}`);
+      
+      res.json({ 
+        success: true, 
+        message: `Warning sent to ${company.name} (Warning #${warnings})`,
+        warnings
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to send warning" });
+    }
+  });
+
+  app.post("/api/admin/companies/:id/cancel-subscription", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.updateCompany(id, { 
+        subscriptionStatus: 'cancelled',
+        subscriptionTier: 'free',
+        status: 'denied'
+      });
+
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json({ 
+        success: true, 
+        message: `Subscription cancelled for ${company.name}`,
+        company
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to cancel subscription" });
+    }
+  });
+
+  app.post("/api/admin/companies/:id/reactivate", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.updateCompany(id, { 
+        subscriptionStatus: 'active',
+        paymentWarnings: 0,
+        status: 'approved'
+      });
+
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json({ 
+        success: true, 
+        message: `Subscription reactivated for ${company.name}`,
+        company
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to reactivate subscription" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
