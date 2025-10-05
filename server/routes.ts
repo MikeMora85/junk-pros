@@ -6,21 +6,24 @@ import { insertCompanySchema } from "@shared/schema";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
-  // Auth middleware
+  // Setup auth but don't force it globally
   await setupAuth(app, storage);
 
-  // Auth routes
+  // Auth routes - completely public, no middleware
   app.get('/api/auth/user', async (req: any, res) => {
     try {
-      if (!req.isAuthenticated() || !req.user?.claims?.sub) {
-        return res.json(null);
+      // Check if user is authenticated without requiring it
+      if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
+        const userId = req.user.claims.sub;
+        const user = await storage.getUser(userId);
+        return res.json(user);
       }
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      res.json(user);
+      // Return null for unauthenticated users (no error)
+      res.json(null);
     } catch (error) {
       console.error("Error fetching user:", error);
-      res.status(500).json({ message: "Failed to fetch user" });
+      // Don't fail, just return null
+      res.json(null);
     }
   });
 
