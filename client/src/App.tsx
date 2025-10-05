@@ -355,7 +355,6 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                   <div style={{ position: 'relative', marginBottom: '12px', width: '140px' }}>
                     <input
                       type="text"
-                      placeholder="Search states..."
                       value={stateSearch}
                       onChange={(e) => setStateSearch(e.target.value)}
                       style={{
@@ -423,7 +422,6 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                   <div style={{ position: 'relative', marginBottom: '12px', width: '140px' }}>
                     <input
                       type="text"
-                      placeholder="Search cities..."
                       value={citySearch}
                       onChange={(e) => setCitySearch(e.target.value)}
                       style={{
@@ -490,7 +488,6 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                   <div style={{ position: 'relative', marginBottom: '12px', width: '140px' }}>
                     <input
                       type="text"
-                      placeholder="Search towns..."
                       value={townSearch}
                       onChange={(e) => setTownSearch(e.target.value)}
                       style={{
@@ -558,7 +555,6 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 <div style={{ position: 'relative', marginBottom: '12px', width: '140px' }}>
                   <input
                     type="text"
-                    placeholder="Search services..."
                     value={serviceSearch}
                     onChange={(e) => setServiceSearch(e.target.value)}
                     style={{
