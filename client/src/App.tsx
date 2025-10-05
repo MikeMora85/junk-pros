@@ -7,6 +7,7 @@ import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
+import ProfileEditor from "./pages/ProfileEditor";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -3813,6 +3814,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/add-business" component={AddBusiness} />
         <Route path="/admin" component={AdminDashboard} />
+        <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/:state/:city">
           {(params) => <CityPage city={params.city} state={params.state} />}
         </Route>

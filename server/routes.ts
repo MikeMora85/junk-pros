@@ -189,6 +189,38 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Get current user's companies
+  app.get("/api/companies/my", requireSimpleAuth, async (req: any, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      let userId = null;
+      
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.substring(7);
+        const decoded = Buffer.from(token, 'base64').toString();
+        const [type, email] = decoded.split(':');
+        
+        // For now, return empty array for admin
+        if (type === 'admin') {
+          return res.json([]);
+        }
+      }
+      
+      if (req.isAuthenticated && req.isAuthenticated()) {
+        userId = req.user?.claims?.sub;
+      }
+      
+      if (!userId) {
+        return res.json([]);
+      }
+      
+      const companies = await storage.getCompaniesByUserId(userId);
+      res.json(companies);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch your companies" });
+    }
+  });
+
   // Create company (authenticated users)
   app.post("/api/companies", async (req: any, res) => {
     try {
