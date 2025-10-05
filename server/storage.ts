@@ -407,7 +407,7 @@ export class MemStorage implements IStorage {
 }
 
 import { db } from './db';
-import { eq, and, gte, lte } from 'drizzle-orm';
+import { eq, and, gte, lte, sql } from 'drizzle-orm';
 import { companies, users, businessOwners, businessEvents } from '@shared/schema';
 
 export class DbStorage implements IStorage {
@@ -483,8 +483,8 @@ export class DbStorage implements IStorage {
   async getCompaniesByCity(city: string, state: string): Promise<Company[]> {
     return await db.select().from(companies).where(
       and(
-        eq(companies.city, city),
-        eq(companies.state, state),
+        sql`LOWER(TRIM(${companies.city})) = LOWER(${city})`,
+        sql`LOWER(TRIM(${companies.state})) = LOWER(${state})`,
         eq(companies.status, 'approved')
       )
     );
