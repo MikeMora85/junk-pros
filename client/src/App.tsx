@@ -127,6 +127,8 @@ function RotatingBanner() {
 // Hamburger Menu Component
 function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [stateSearch, setStateSearch] = useState('');
+  const [citySearch, setCitySearch] = useState('');
+  const [townSearch, setTownSearch] = useState('');
   const [serviceSearch, setServiceSearch] = useState('');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
@@ -183,6 +185,19 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
     { name: 'Wyoming', slug: 'wyoming' },
   ];
 
+  const majorCities = [
+    'Phoenix, AZ', 'Los Angeles, CA', 'San Diego, CA', 'San Francisco, CA',
+    'Houston, TX', 'Dallas, TX', 'Austin, TX', 'Chicago, IL', 'New York, NY',
+    'Miami, FL', 'Tampa, FL', 'Seattle, WA', 'Denver, CO', 'Las Vegas, NV',
+    'Portland, OR', 'Boston, MA', 'Atlanta, GA', 'Philadelphia, PA',
+  ];
+
+  const majorTowns = [
+    'Scottsdale, AZ', 'Gilbert, AZ', 'Chandler, AZ', 'Tempe, AZ',
+    'Boulder, CO', 'Sedona, AZ', 'Aspen, CO', 'Park City, UT',
+    'Napa, CA', 'Carmel, CA', 'Santa Barbara, CA', 'Savannah, GA',
+  ];
+
   const serviceTypes = [
     'Appliance Removal',
     'Furniture Removal',
@@ -203,6 +218,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
   const filteredStates = allStates.filter(state =>
     state.name.toLowerCase().includes(stateSearch.toLowerCase())
+  );
+
+  const filteredCities = majorCities.filter(city =>
+    city.toLowerCase().includes(citySearch.toLowerCase())
+  );
+
+  const filteredTowns = majorTowns.filter(town =>
+    town.toLowerCase().includes(townSearch.toLowerCase())
   );
 
   const filteredServices = serviceTypes.filter(service =>
@@ -329,7 +352,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               {expandedSection === 'states' && (
                 <div style={{ paddingBottom: '12px' }}>
-                  <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '250px' }}>
+                  <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '180px' }}>
                     <input
                       type="text"
                       placeholder="Search states..."
@@ -397,7 +420,43 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               {expandedSection === 'cities' && (
                 <div style={{ paddingBottom: '12px' }}>
-                  <p style={{ fontSize: '14px', color: '#666', padding: '8px 12px' }}>Select a state to view cities</p>
+                  <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '180px' }}>
+                    <input
+                      type="text"
+                      placeholder="Search cities..."
+                      value={citySearch}
+                      onChange={(e) => setCitySearch(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '8px 32px 8px 12px',
+                        border: '2px solid #fbbf24',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                      }}
+                      data-testid="input-city-search"
+                    />
+                    <Search size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                  </div>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {filteredCities.map(city => (
+                      <div
+                        key={city}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`item-city-${city.toLowerCase().replace(/[,\s]+/g, '-')}`}
+                      >
+                        {city}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -428,7 +487,43 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               {expandedSection === 'towns' && (
                 <div style={{ paddingBottom: '12px' }}>
-                  <p style={{ fontSize: '14px', color: '#666', padding: '8px 12px' }}>Select a state to view towns</p>
+                  <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '180px' }}>
+                    <input
+                      type="text"
+                      placeholder="Search towns..."
+                      value={townSearch}
+                      onChange={(e) => setTownSearch(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '8px 32px 8px 12px',
+                        border: '2px solid #fbbf24',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                      }}
+                      data-testid="input-town-search"
+                    />
+                    <Search size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                  </div>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {filteredTowns.map(town => (
+                      <div
+                        key={town}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`item-town-${town.toLowerCase().replace(/[,\s]+/g, '-')}`}
+                      >
+                        {town}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -460,7 +555,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
             {expandedSection === 'services' && (
               <div style={{ padding: '0 12px 12px 12px' }}>
-                <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '250px' }}>
+                <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '180px' }}>
                   <input
                     type="text"
                     placeholder="Search services..."
