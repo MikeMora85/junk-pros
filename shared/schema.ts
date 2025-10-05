@@ -73,6 +73,11 @@ export const insertCompanySchema = createInsertSchema(companies, {
   whyChooseUs: z.array(z.string()).nullable().optional(),
   status: z.string().optional(),
   userId: z.string().nullable().optional(),
+  subscriptionTier: z.string().optional(),
+  subscriptionStatus: z.string().optional(),
+  lastPaymentDate: z.date().nullable().optional(),
+  nextPaymentDate: z.date().nullable().optional(),
+  paymentWarnings: z.number().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;

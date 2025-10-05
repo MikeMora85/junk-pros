@@ -60,6 +60,11 @@ export class MemStorage implements IStorage {
       ],
       status: "approved",
       userId: null,
+      subscriptionTier: "featured",
+      subscriptionStatus: "active",
+      lastPaymentDate: new Date('2024-10-01'),
+      nextPaymentDate: new Date('2024-11-01'),
+      paymentWarnings: 0,
       createdAt: new Date('2024-01-01'),
     },
     {
@@ -92,6 +97,11 @@ export class MemStorage implements IStorage {
       whyChooseUs: null,
       status: "approved",
       userId: null,
+      subscriptionTier: "free",
+      subscriptionStatus: "active",
+      lastPaymentDate: null,
+      nextPaymentDate: null,
+      paymentWarnings: 0,
       createdAt: new Date('2024-01-15'),
     },
     {
@@ -124,6 +134,11 @@ export class MemStorage implements IStorage {
       whyChooseUs: null,
       status: "approved",
       userId: null,
+      subscriptionTier: "featured",
+      subscriptionStatus: "past_due",
+      lastPaymentDate: new Date('2024-09-01'),
+      nextPaymentDate: new Date('2024-10-01'),
+      paymentWarnings: 2,
       createdAt: new Date('2024-02-01'),
     },
   ];
@@ -233,6 +248,11 @@ export class MemStorage implements IStorage {
       whyChooseUs: data.whyChooseUs ?? null,
       status: data.status ?? 'pending',
       userId: data.userId ?? null,
+      subscriptionTier: "free",
+      subscriptionStatus: "active",
+      lastPaymentDate: null,
+      nextPaymentDate: null,
+      paymentWarnings: 0,
       createdAt: new Date(),
     };
     this.companies.push(newCompany);
