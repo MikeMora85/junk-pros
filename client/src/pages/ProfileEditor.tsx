@@ -21,7 +21,6 @@ export default function ProfileEditor() {
   // Get user's company
   const { data: companies, isLoading } = useQuery<Company[]>({
     queryKey: ['/api/companies/my'],
-    enabled: !!user,
   });
 
   const company = companies?.[0];
@@ -37,7 +36,7 @@ export default function ProfileEditor() {
         setLogoPreview(company.logoUrl);
       }
     }
-  }, [company]);
+  }, [company, formData]);
 
   const updateMutation = useMutation({
     mutationFn: async (data: Partial<Company>) => {
