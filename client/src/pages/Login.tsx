@@ -23,12 +23,11 @@ export default function Login() {
     try {
       const response = await apiRequest('/api/auth/simple-login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        body: {
           email: formData.email,
           password: formData.password,
           role: activeTab
-        })
+        } as any
       });
 
       if (response.success && response.token) {
