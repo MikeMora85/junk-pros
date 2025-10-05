@@ -4,6 +4,13 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: **MIGRATED TO POSTGRESQL DATABASE** - Critical infrastructure upgrade
+  - **Database Storage**: Switched from in-memory (MemStorage) to PostgreSQL (DbStorage) using Drizzle ORM
+  - **Data Persistence**: All user signups, business owners, companies, and events now persist across server restarts
+  - **Database Tables**: Created companies, businessOwners, businessEvents, users, sessions tables in PostgreSQL
+  - **Drizzle Integration**: Connected to DATABASE_URL with node-postgres (pg) driver
+  - **Production-Ready**: No more data loss - all signups and profiles are permanently stored
+  - **Files**: server/db.ts (connection), server/storage.ts (DbStorage class)
 - 2025-10-05: Implemented automatic business approval and owner authentication system
   - **Auto-Approval**: Businesses are now automatically approved on signup (no pending approval needed)
   - **Business Owner Login**: Email and password authentication for business owners
