@@ -429,6 +429,87 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Business event tracking endpoints
+  app.post("/api/track/event", async (req, res) => {
+    try {
+      const { companyId, eventType, metadata } = req.body;
+      
+      if (!companyId || !eventType) {
+        return res.status(400).json({ error: "Company ID and event type are required" });
+      }
+
+      const event = await storage.trackEvent({
+        companyId,
+        eventType,
+        eventDate: new Date(),
+        metadata: metadata || null,
+      });
+
+      res.json({ success: true, event });
+    } catch (error) {
+      console.error("Error tracking event:", error);
+      res.status(500).json({ error: "Failed to track event" });
+    }
+  });
+
+  // Get monthly report for a company
+  app.get("/api/admin/companies/:id/report/:year/:month", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const year = parseInt(req.params.year);
+      const month = parseInt(req.params.month);
+
+      if (isNaN(id) || isNaN(year) || isNaN(month)) {
+        return res.status(400).json({ error: "Invalid parameters" });
+      }
+
+      const report = await storage.getMonthlyReportData(id, year, month);
+      const company = await storage.getCompanyById(id);
+
+      res.json({ 
+        success: true, 
+        company,
+        report,
+        period: { year, month }
+      });
+    } catch (error) {
+      console.error("Error getting report:", error);
+      res.status(500).json({ error: "Failed to get report" });
+    }
+  });
+
+  // Get all monthly reports for all companies (admin only)
+  app.get("/api/admin/reports/:year/:month", requireSimpleAdmin, async (req, res) => {
+    try {
+      const year = parseInt(req.params.year);
+      const month = parseInt(req.params.month);
+
+      if (isNaN(year) || isNaN(month)) {
+        return res.status(400).json({ error: "Invalid parameters" });
+      }
+
+      const companies = await storage.getApprovedCompanies();
+      const reports = await Promise.all(
+        companies.map(async (company) => {
+          const report = await storage.getMonthlyReportData(company.id, year, month);
+          return {
+            company,
+            report
+          };
+        })
+      );
+
+      res.json({ 
+        success: true, 
+        reports,
+        period: { year, month }
+      });
+    } catch (error) {
+      console.error("Error getting reports:", error);
+      res.status(500).json({ error: "Failed to get reports" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
