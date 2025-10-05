@@ -233,10 +233,22 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.substring(7);
         const decoded = Buffer.from(token, 'base64').toString();
-        const [type, email] = decoded.split(':');
+        const parts = decoded.split(':');
+        const type = parts[0];
         
-        // For now, return empty array for admin
+        // For admin, return empty array
         if (type === 'admin') {
+          return res.json([]);
+        }
+        
+        // For business owner, get their company
+        if (type === 'business') {
+          const email = parts[1];
+          const owner = await storage.getBusinessOwnerByEmail(email);
+          if (owner && owner.companyId) {
+            const company = await storage.getCompanyById(owner.companyId);
+            return res.json(company ? [company] : []);
+          }
           return res.json([]);
         }
       }

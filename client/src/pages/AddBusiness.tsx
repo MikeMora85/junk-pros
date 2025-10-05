@@ -32,7 +32,7 @@ export default function AddBusiness() {
       
       // If we got a token back, save it and redirect to profile editor
       if (response.token) {
-        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('auth_token', response.token);
         window.location.href = '/profile/edit';
       } else {
         setIsSubmitted(true);
