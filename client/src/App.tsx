@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
+import { apiRequest, queryClient } from "./lib/queryClient";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -2591,7 +2592,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           overflow: 'auto',
         }} onClick={() => setSelectedCompanyId(null)}>
           <div onClick={(e) => e.stopPropagation()}>
-            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} />
+            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} user={user} />
           </div>
         </div>
       )}
@@ -3311,7 +3312,45 @@ function CityPage({ city, state }: { city: string; state: string }) {
   );
 }
 
-function CompanyDetailInline({ company, onClose }: { company: Company; onClose: () => void }) {
+function CompanyDetailInline({ company, onClose, user }: { company: Company; onClose: () => void; user?: any }) {
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState<Partial<Company>>(company);
+  const [logoPreview, setLogoPreview] = useState(company.logoUrl || '');
+  
+  // Check if user owns this company
+  const isOwner = user?.companyId === company.id;
+  
+  const updateMutation = useMutation({
+    mutationFn: async (data: Partial<Company>) => {
+      await apiRequest(`/api/companies/${company.id}`, {
+        method: 'PATCH',
+        body: data as any,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
+      alert('✅ Profile saved successfully!');
+      setEditMode(false);
+    },
+  });
+
+  const handleSave = () => {
+    updateMutation.mutate(formData);
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setLogoPreview(result);
+        setFormData(prev => ({ ...prev, logoUrl: result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div style={{
       maxWidth: '1000px',
