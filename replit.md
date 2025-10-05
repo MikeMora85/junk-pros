@@ -28,7 +28,7 @@ I prefer detailed explanations.
 - **Visual Estimate Builder**: Interactive calculator with graphical representations of items and truck capacity.
 - **Business Management**:
     - **Signup**: Comprehensive full-page signup process with educational content, pricing tiers, and login creation.
-    - **Profile Editing**: Inline WYSIWYG editing for business owners directly on live city pages.
+    - **Profile Editing**: Comprehensive ProfileEditor page (/profile/edit) for business owners with tabs for Basic Info, Pricing, Reviews, and Gallery. City page profiles display "Edit Your Profile" button for owners.
     - **Approval System**: Automatic business approval upon signup.
     - **Performance Tracking**: Automatic tracking of customer interactions (clicks, calls, photo quotes, in-person estimates) with an API endpoint `/api/track/event`.
 - **Admin Dashboard**:
