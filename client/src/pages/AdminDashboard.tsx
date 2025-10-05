@@ -3,8 +3,16 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Company } from "@shared/schema";
-import { Menu, ChevronDown, Home, LogOut, Search, Building2, AlertTriangle, TrendingUp, DollarSign, Mail } from "lucide-react";
+import { Menu, ChevronDown, Home, LogOut, Search, Building2, AlertTriangle, TrendingUp, DollarSign, Mail, Plus, Edit } from "lucide-react";
 import { useLocation } from "wouter";
+
+interface ActionTemplate {
+  id: string;
+  name: string;
+  subject: string;
+  body: string;
+  color: string;
+}
 
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
@@ -15,6 +23,38 @@ export default function AdminDashboard() {
   const [tierFilter, setTierFilter] = useState<string>("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedCompany, setExpandedCompany] = useState<number | null>(null);
+  const [actionsView, setActionsView] = useState<'list' | 'new' | 'edit' | null>(null);
+  const [editingAction, setEditingAction] = useState<ActionTemplate | null>(null);
+  const [actionTemplates, setActionTemplates] = useState<ActionTemplate[]>([
+    {
+      id: 'reminder',
+      name: 'Payment Reminder',
+      subject: 'Payment Reminder - BestJunkRemovalCompanies.com',
+      body: 'Hi {businessName},\n\nThis is a friendly reminder that your Featured listing payment of $49 is due on {dueDate}.\n\nTo maintain your Featured status and continue receiving premium leads, please submit payment at your earliest convenience.\n\nThank you for being part of our directory!\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      color: '#fbbf24'
+    },
+    {
+      id: 'warning',
+      name: 'Payment Warning',
+      subject: 'Payment Warning - Action Required',
+      body: 'Hi {businessName},\n\nYour Featured listing payment is now {daysOverdue} days overdue. This is warning #{warningNumber}.\n\nIf payment is not received within 5 business days, your listing will be downgraded to Free tier and removed from Featured results.\n\nPlease contact us immediately to resolve this matter.\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      color: '#f59e0b'
+    },
+    {
+      id: 'cancellation',
+      name: 'Cancellation Notice',
+      subject: 'Subscription Cancelled - BestJunkRemovalCompanies.com',
+      body: 'Hi {businessName},\n\nDue to non-payment, your Featured subscription has been cancelled and your listing has been removed from our directory.\n\nYou may reactivate at any time by logging into your account and updating your payment information.\n\nIf you have questions, please contact our support team.\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      color: '#ef4444'
+    },
+    {
+      id: 'reactivation',
+      name: 'Reactivation Welcome',
+      subject: 'Welcome Back - Subscription Reactivated',
+      body: 'Hi {businessName},\n\nGreat news! Your Featured listing has been reactivated and is now live in our directory.\n\nYou\'ll start receiving premium leads immediately. Thank you for being part of our network!\n\nBest regards,\nBestJunkRemovalCompanies.com Team',
+      color: '#10b981'
+    }
+  ]);
   
   const { data: pendingCompanies = [], isLoading: pendingLoading } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/pending'],
@@ -233,6 +273,51 @@ export default function AdminDashboard() {
             >
               <Home size={20} color="#166534" />
               <span style={{ fontSize: '16px', fontWeight: '500' }}>Back to Home</span>
+            </button>
+            <button
+              onClick={() => {
+                setActionsView('new');
+                setEditingAction(null);
+                setMenuOpen(false);
+              }}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                border: 'none',
+                background: 'transparent',
+                textAlign: 'left',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                borderBottom: '1px solid #e5e7eb',
+              }}
+              data-testid="menu-new-action"
+            >
+              <Plus size={20} color="#166534" />
+              <span style={{ fontSize: '16px', fontWeight: '500' }}>New Action</span>
+            </button>
+            <button
+              onClick={() => {
+                setActionsView('list');
+                setMenuOpen(false);
+              }}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                border: 'none',
+                background: 'transparent',
+                textAlign: 'left',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                borderBottom: '1px solid #e5e7eb',
+              }}
+              data-testid="menu-edit-actions"
+            >
+              <Edit size={20} color="#166534" />
+              <span style={{ fontSize: '16px', fontWeight: '500' }}>Edit Actions</span>
             </button>
             <button
               onClick={() => {
@@ -701,6 +786,263 @@ export default function AdminDashboard() {
             <p style={{ color: '#6b7280', margin: 0 }}>
               View performance metrics and generate reports.
             </p>
+          </div>
+        </div>
+      )}
+
+      {/* Action Templates Management Modal */}
+      {actionsView && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          zIndex: 1000,
+        }}>
+          <div style={{
+            background: '#fff',
+            borderRadius: '16px',
+            maxWidth: '600px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto',
+          }}>
+            {/* Header */}
+            <div style={{ padding: '20px', borderBottom: '2px solid #e5e7eb', position: 'sticky', top: 0, background: '#fff', zIndex: 10 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '700' }}>
+                  {actionsView === 'list' ? 'Manage Actions' : actionsView === 'new' ? 'New Action' : 'Edit Action'}
+                </h3>
+                <button
+                  onClick={() => {
+                    setActionsView(null);
+                    setEditingAction(null);
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    fontSize: '24px',
+                    cursor: 'pointer',
+                    color: '#6b7280',
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            {/* List View */}
+            {actionsView === 'list' && (
+              <div style={{ padding: '20px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {actionTemplates.map((template) => (
+                    <div
+                      key={template.id}
+                      style={{
+                        border: '2px solid #e5e7eb',
+                        borderRadius: '12px',
+                        padding: '16px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        gap: '12px',
+                      }}
+                    >
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                          <div
+                            style={{
+                              width: '12px',
+                              height: '12px',
+                              borderRadius: '50%',
+                              background: template.color,
+                            }}
+                          />
+                          <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '700' }}>
+                            {template.name}
+                          </h4>
+                        </div>
+                        <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                          {template.subject}
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setEditingAction(template);
+                          setActionsView('edit');
+                        }}
+                        style={{
+                          background: '#166534',
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '8px',
+                          padding: '8px 16px',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Create/Edit Form */}
+            {(actionsView === 'new' || actionsView === 'edit') && (
+              <div style={{ padding: '20px' }}>
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Action Name
+                  </label>
+                  <input
+                    type="text"
+                    value={editingAction?.name || ''}
+                    onChange={(e) => setEditingAction(prev => prev ? { ...prev, name: e.target.value } : {
+                      id: Date.now().toString(),
+                      name: e.target.value,
+                      subject: '',
+                      body: '',
+                      color: '#166534'
+                    })}
+                    placeholder="e.g., Payment Reminder"
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Email Subject
+                  </label>
+                  <input
+                    type="text"
+                    value={editingAction?.subject || ''}
+                    onChange={(e) => setEditingAction(prev => prev ? { ...prev, subject: e.target.value } : null)}
+                    placeholder="Payment Reminder - BestJunkRemovalCompanies.com"
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      boxSizing: 'border-box',
+                    }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: '16px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Message Body
+                  </label>
+                  <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '8px' }}>
+                    Available variables: {'{businessName}'}, {'{dueDate}'}, {'{daysOverdue}'}, {'{warningNumber}'}
+                  </div>
+                  <textarea
+                    value={editingAction?.body || ''}
+                    onChange={(e) => setEditingAction(prev => prev ? { ...prev, body: e.target.value } : null)}
+                    placeholder="Hi {businessName},&#10;&#10;Your message here..."
+                    rows={8}
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      boxSizing: 'border-box',
+                      fontFamily: 'inherit',
+                      resize: 'vertical',
+                    }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: '20px' }}>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#000' }}>
+                    Button Color
+                  </label>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {['#fbbf24', '#f59e0b', '#ef4444', '#10b981', '#166534', '#3b82f6', '#8b5cf6'].map(color => (
+                      <button
+                        key={color}
+                        onClick={() => setEditingAction(prev => prev ? { ...prev, color } : null)}
+                        style={{
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '8px',
+                          background: color,
+                          border: editingAction?.color === color ? '3px solid #000' : '2px solid #e5e7eb',
+                          cursor: 'pointer',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    onClick={() => {
+                      setActionsView('list');
+                      setEditingAction(null);
+                    }}
+                    style={{
+                      flex: 1,
+                      background: '#e5e7eb',
+                      color: '#000',
+                      padding: '12px',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => {
+                      if (editingAction) {
+                        if (actionsView === 'new') {
+                          setActionTemplates(prev => [...prev, editingAction]);
+                        } else {
+                          setActionTemplates(prev => prev.map(t => t.id === editingAction.id ? editingAction : t));
+                        }
+                        alert(`Action "${editingAction.name}" ${actionsView === 'new' ? 'created' : 'updated'} successfully!`);
+                        setActionsView('list');
+                        setEditingAction(null);
+                      }
+                    }}
+                    disabled={!editingAction?.name || !editingAction?.subject || !editingAction?.body}
+                    style={{
+                      flex: 1,
+                      background: (!editingAction?.name || !editingAction?.subject || !editingAction?.body) ? '#9ca3af' : '#166534',
+                      color: '#fff',
+                      padding: '12px',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: '600',
+                      cursor: (!editingAction?.name || !editingAction?.subject || !editingAction?.body) ? 'not-allowed' : 'pointer',
+                    }}
+                  >
+                    {actionsView === 'new' ? 'Create Action' : 'Save Changes'}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
