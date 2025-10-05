@@ -1017,7 +1017,7 @@ function LandingPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="City (e.g., Phoenix, AZ)"
+              placeholder="Search for your state, city, or town"
               style={{
                 flex: 1,
                 minWidth: '0',
