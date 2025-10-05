@@ -352,21 +352,33 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               {expandedSection === 'states' && (
                 <div style={{ paddingBottom: '12px' }}>
-                  <div style={{ position: 'relative', marginBottom: '12px', width: '50px' }}>
+                  <div style={{ display: 'flex', gap: '0', marginBottom: '12px' }}>
                     <input
                       type="text"
                       value={stateSearch}
                       onChange={(e) => setStateSearch(e.target.value)}
                       style={{
-                        width: '100%',
-                        padding: '8px 26px 8px 8px',
+                        width: '100px',
+                        padding: '8px',
                         border: '2px solid #fbbf24',
-                        borderRadius: '6px',
+                        borderRadius: '6px 0 0 6px',
                         fontSize: '14px',
+                        borderRight: 'none',
                       }}
                       data-testid="input-state-search"
                     />
-                    <Search size={16} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '8px',
+                      backgroundColor: '#fbbf24',
+                      border: '2px solid #fbbf24',
+                      borderLeft: 'none',
+                      borderRadius: '0 6px 6px 0',
+                    }}>
+                      <Search size={16} color="#000" />
+                    </div>
                   </div>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {filteredStates.map(state => (
@@ -419,21 +431,33 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               {expandedSection === 'cities' && (
                 <div style={{ paddingBottom: '12px' }}>
-                  <div style={{ position: 'relative', marginBottom: '12px', width: '50px' }}>
+                  <div style={{ display: 'flex', gap: '0', marginBottom: '12px' }}>
                     <input
                       type="text"
                       value={citySearch}
                       onChange={(e) => setCitySearch(e.target.value)}
                       style={{
-                        width: '100%',
-                        padding: '8px 26px 8px 8px',
+                        width: '100px',
+                        padding: '8px',
                         border: '2px solid #fbbf24',
-                        borderRadius: '6px',
+                        borderRadius: '6px 0 0 6px',
                         fontSize: '14px',
+                        borderRight: 'none',
                       }}
                       data-testid="input-city-search"
                     />
-                    <Search size={16} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '8px',
+                      backgroundColor: '#fbbf24',
+                      border: '2px solid #fbbf24',
+                      borderLeft: 'none',
+                      borderRadius: '0 6px 6px 0',
+                    }}>
+                      <Search size={16} color="#000" />
+                    </div>
                   </div>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {filteredCities.map(city => (
@@ -485,21 +509,33 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
               {expandedSection === 'towns' && (
                 <div style={{ paddingBottom: '12px' }}>
-                  <div style={{ position: 'relative', marginBottom: '12px', width: '50px' }}>
+                  <div style={{ display: 'flex', gap: '0', marginBottom: '12px' }}>
                     <input
                       type="text"
                       value={townSearch}
                       onChange={(e) => setTownSearch(e.target.value)}
                       style={{
-                        width: '100%',
-                        padding: '8px 26px 8px 8px',
+                        width: '100px',
+                        padding: '8px',
                         border: '2px solid #fbbf24',
-                        borderRadius: '6px',
+                        borderRadius: '6px 0 0 6px',
                         fontSize: '14px',
+                        borderRight: 'none',
                       }}
                       data-testid="input-town-search"
                     />
-                    <Search size={16} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '8px',
+                      backgroundColor: '#fbbf24',
+                      border: '2px solid #fbbf24',
+                      borderLeft: 'none',
+                      borderRadius: '0 6px 6px 0',
+                    }}>
+                      <Search size={16} color="#000" />
+                    </div>
                   </div>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {filteredTowns.map(town => (
@@ -552,21 +588,33 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
             {expandedSection === 'services' && (
               <div style={{ padding: '0 12px 12px 12px' }}>
-                <div style={{ position: 'relative', marginBottom: '12px', width: '50px' }}>
+                <div style={{ display: 'flex', gap: '0', marginBottom: '12px' }}>
                   <input
                     type="text"
                     value={serviceSearch}
                     onChange={(e) => setServiceSearch(e.target.value)}
                     style={{
-                      width: '100%',
-                      padding: '8px 26px 8px 8px',
+                      width: '100px',
+                      padding: '8px',
                       border: '2px solid #fbbf24',
-                      borderRadius: '6px',
+                      borderRadius: '6px 0 0 6px',
                       fontSize: '14px',
+                      borderRight: 'none',
                     }}
                     data-testid="input-service-search"
                   />
-                  <Search size={16} style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '8px',
+                    backgroundColor: '#fbbf24',
+                    border: '2px solid #fbbf24',
+                    borderLeft: 'none',
+                    borderRadius: '0 6px 6px 0',
+                  }}>
+                    <Search size={16} color="#000" />
+                  </div>
                 </div>
                 <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                   {filteredServices.map(service => (
