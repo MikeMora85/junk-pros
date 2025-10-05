@@ -289,7 +289,7 @@ export class MemStorage implements IStorage {
       specialties: data.specialties ?? null,
       aboutUs: data.aboutUs ?? null,
       whyChooseUs: data.whyChooseUs ?? null,
-      status: data.status ?? 'pending',
+      status: data.status ?? 'approved',
       userId: data.userId ?? null,
       subscriptionTier: "free",
       subscriptionStatus: "active",
