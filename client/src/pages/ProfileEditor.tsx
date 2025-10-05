@@ -251,11 +251,13 @@ export default function ProfileEditor() {
   const galleryImages = formData.galleryImages || [];
 
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: '#fff',
-      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-    }}>
+    <div 
+      key={company?.id || 'no-company'}
+      style={{ 
+        minHeight: '100vh', 
+        backgroundColor: '#fff',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+      }}>
       {/* Header */}
       <div style={{
         background: '#166534',
