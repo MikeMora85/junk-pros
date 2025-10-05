@@ -3,28 +3,25 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Company } from "@shared/schema";
-import { CheckCircle, X, Edit, LogOut, UserPlus } from "lucide-react";
+import { CheckCircle, X, Edit, LogOut, UserPlus, Search, AlertTriangle, Ban, DollarSign, TrendingUp, Users, Building2, Filter } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const [editingCompany, setEditingCompany] = useState<Company | null>(null);
-  const [inviteEmail, setInviteEmail] = useState("");
-
-  const { data: pendingCompanies = [], isLoading } = useQuery<Company[]>({
+  const [activeTab, setActiveTab] = useState<'pending' | 'active' | 'payments' | 'analytics'>('pending');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [tierFilter, setTierFilter] = useState<string>("all");
+  
+  const { data: pendingCompanies = [], isLoading: pendingLoading } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/pending'],
     enabled: !!user?.isAdmin,
   });
 
-  const { data: activeCompanies = [] } = useQuery<Company[]>({
+  const { data: activeCompanies = [], isLoading: activeLoading } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/active'],
-    enabled: !!user?.isAdmin,
-  });
-
-  const { data: myCompanies = [] } = useQuery<Company[]>({
-    queryKey: ['/api/user/companies'],
-    enabled: !!user,
+    enabled: !!user?.isAdmin && activeTab === 'active',
   });
 
   const approveMutation = useMutation({
@@ -37,6 +34,7 @@ export default function AdminDashboard() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/pending'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
     },
   });
@@ -54,36 +52,11 @@ export default function AdminDashboard() {
     },
   });
 
-  const updateMutation = useMutation({
-    mutationFn: async ({ id, data }: { id: number; data: Partial<Company> }) => {
-      await apiRequest('/api/companies/:id', {
-        method: 'PATCH',
-        body: data,
-        params: { id: id.toString() },
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/user/companies'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
-      setEditingCompany(null);
-    },
-  });
-
-  const inviteAdminMutation = useMutation({
-    mutationFn: async (email: string) => {
-      await apiRequest('/api/admin/invite', {
-        method: 'POST',
-        body: { email },
-      });
-    },
-    onSuccess: () => {
-      setInviteEmail("");
-      alert("Admin invitation sent successfully!");
-    },
-    onError: (error: any) => {
-      alert(error.message || "Failed to invite admin");
-    },
-  });
+  const handleLogout = async () => {
+    localStorage.removeItem('auth_token');
+    await apiRequest('/api/auth/logout', { method: 'POST' });
+    window.location.href = '/';
+  };
 
   if (authLoading) {
     return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
@@ -122,33 +95,59 @@ export default function AdminDashboard() {
     );
   }
 
+  const filteredCompanies = (activeTab === 'pending' ? pendingCompanies : activeCompanies).filter(company => {
+    const matchesSearch = company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         company.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         company.state.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || company.subscriptionStatus === statusFilter;
+    const matchesTier = tierFilter === 'all' || company.subscriptionTier === tierFilter;
+    return matchesSearch && matchesStatus && matchesTier;
+  });
+
+  const stats = {
+    totalActive: activeCompanies.length,
+    totalPending: pendingCompanies.length,
+    featuredCount: activeCompanies.filter(c => c.subscriptionTier === 'featured').length,
+    pastDue: activeCompanies.filter(c => c.subscriptionStatus === 'past_due').length,
+  };
+
   return (
-    <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-        <h1 style={{ fontSize: '32px', fontWeight: '700', color: '#000' }}>Admin Dashboard</h1>
+    <div style={{ minHeight: '100vh', background: '#f5f5f5', padding: '20px' }}>
+      {/* Header */}
+      <div style={{
+        background: '#fff',
+        borderRadius: '12px',
+        padding: '20px',
+        marginBottom: '20px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      }}>
+        <h1 style={{ margin: 0, fontSize: '28px', fontWeight: '700' }}>Admin Dashboard</h1>
         <div style={{ display: 'flex', gap: '12px' }}>
           <button
             onClick={() => setLocation('/')}
             style={{
-              background: '#e5e5e5',
+              background: '#e5e7eb',
               color: '#000',
-              padding: '10px 16px',
+              padding: '10px 20px',
               border: 'none',
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '600',
               cursor: 'pointer',
             }}
-            data-testid="button-back-home"
+            data-testid="button-home"
           >
             Back to Home
           </button>
           <button
-            onClick={() => window.location.href = '/api/logout'}
+            onClick={handleLogout}
             style={{
-              background: '#dc2626',
+              background: '#ef4444',
               color: '#fff',
-              padding: '10px 16px',
+              padding: '10px 20px',
               border: 'none',
               borderRadius: '8px',
               fontSize: '14px',
@@ -156,313 +155,341 @@ export default function AdminDashboard() {
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              gap: '8px',
             }}
             data-testid="button-logout"
           >
-            <LogOut size={16} />
-            Logout
+            <LogOut size={18} /> Logout
           </button>
         </div>
       </div>
 
-      {/* Invite Admin Section */}
-      <div style={{ 
-        background: '#f3f4f6', 
-        border: '2px solid #e5e7eb',
-        borderRadius: '8px', 
-        padding: '20px', 
-        marginBottom: '32px' 
+      {/* Stats Cards */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '16px',
+        marginBottom: '20px',
       }}>
-        <h2 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '12px', color: '#000' }}>
-          Invite Admin
-        </h2>
-        <p style={{ color: '#666', marginBottom: '16px', fontSize: '14px' }}>
-          Grant admin access to other users by entering their email address
-        </p>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <input
-            type="email"
-            value={inviteEmail}
-            onChange={(e) => setInviteEmail(e.target.value)}
-            placeholder="Enter email address"
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+            <Building2 size={24} color="#166534" />
+            <span style={{ fontSize: '14px', color: '#6b7280' }}>Active Businesses</span>
+          </div>
+          <div style={{ fontSize: '32px', fontWeight: '700' }}>{stats.totalActive}</div>
+        </div>
+
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+            <AlertTriangle size={24} color="#f59e0b" />
+            <span style={{ fontSize: '14px', color: '#6b7280' }}>Pending Approval</span>
+          </div>
+          <div style={{ fontSize: '32px', fontWeight: '700' }}>{stats.totalPending}</div>
+        </div>
+
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+            <TrendingUp size={24} color="#8b5cf6" />
+            <span style={{ fontSize: '14px', color: '#6b7280' }}>Featured Tier</span>
+          </div>
+          <div style={{ fontSize: '32px', fontWeight: '700' }}>{stats.featuredCount}</div>
+        </div>
+
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+            <DollarSign size={24} color="#ef4444" />
+            <span style={{ fontSize: '14px', color: '#6b7280' }}>Past Due</span>
+          </div>
+          <div style={{ fontSize: '32px', fontWeight: '700', color: '#ef4444' }}>{stats.pastDue}</div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{
+        background: '#fff',
+        borderRadius: '12px',
+        padding: '8px',
+        marginBottom: '20px',
+        display: 'flex',
+        gap: '8px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      }}>
+        {(['pending', 'active', 'payments', 'analytics'] as const).map(tab => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
             style={{
               flex: 1,
-              padding: '10px 16px',
-              border: '2px solid #000',
-              borderRadius: '6px',
-              fontSize: '14px',
-            }}
-            data-testid="input-invite-email"
-          />
-          <button
-            onClick={() => inviteAdminMutation.mutate(inviteEmail)}
-            disabled={!inviteEmail || inviteAdminMutation.isPending}
-            style={{
-              background: '#fbbf24',
-              color: '#000',
-              padding: '10px 20px',
+              padding: '12px',
+              background: activeTab === tab ? '#fbbf24' : 'transparent',
+              color: activeTab === tab ? '#000' : '#6b7280',
               border: 'none',
-              borderRadius: '6px',
-              fontSize: '14px',
-              fontWeight: '700',
-              cursor: inviteEmail ? 'pointer' : 'not-allowed',
-              opacity: inviteEmail ? 1 : 0.5,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              textTransform: 'capitalize',
             }}
-            data-testid="button-invite-admin"
+            data-testid={`tab-${tab}`}
           >
-            <UserPlus size={16} />
-            {inviteAdminMutation.isPending ? 'Inviting...' : 'Invite'}
+            {tab}
           </button>
-        </div>
+        ))}
       </div>
 
-      {/* My Companies Section */}
-      {myCompanies.length > 0 && (
-        <div style={{ marginBottom: '48px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '20px', color: '#000' }}>
-            My Business
+      {/* Search and Filters */}
+      {(activeTab === 'pending' || activeTab === 'active') && (
+        <div style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '20px',
+          marginBottom: '20px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: '200px', position: 'relative' }}>
+              <Search size={20} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#6b7280' }} />
+              <input
+                type="text"
+                placeholder="Search businesses..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  width: '100%',
+                  padding: '12px 12px 12px 44px',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  boxSizing: 'border-box',
+                }}
+                data-testid="input-search"
+              />
+            </div>
+
+            {activeTab === 'active' && (
+              <>
+                <select
+                  value={tierFilter}
+                  onChange={(e) => setTierFilter(e.target.value)}
+                  style={{
+                    padding: '12px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    background: '#fff',
+                  }}
+                  data-testid="select-tier"
+                >
+                  <option value="all">All Tiers</option>
+                  <option value="free">Free</option>
+                  <option value="featured">Featured</option>
+                </select>
+
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  style={{
+                    padding: '12px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    background: '#fff',
+                  }}
+                  data-testid="select-status"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="past_due">Past Due</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Companies List */}
+      {(activeTab === 'pending' || activeTab === 'active') && (
+        <div style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '20px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+          <h2 style={{ margin: '0 0 20px 0', fontSize: '20px', fontWeight: '700' }}>
+            {activeTab === 'pending' ? 'Pending Approvals' : 'Active Businesses'}
           </h2>
-          {myCompanies.map((company) => (
-            <div
-              key={company.id}
-              style={{
-                background: '#fff',
-                border: '2px solid #fbbf24',
-                borderRadius: '8px',
-                padding: '20px',
-                marginBottom: '16px',
-              }}
-            >
-              {editingCompany?.id === company.id ? (
-                <div>
-                  <h3 style={{ marginBottom: '16px', color: '#000' }}>Edit Business</h3>
-                  <div style={{ display: 'grid', gap: '16px' }}>
-                    <input
-                      type="text"
-                      value={editingCompany.name}
-                      onChange={(e) => setEditingCompany({ ...editingCompany, name: e.target.value })}
-                      placeholder="Business Name"
-                      style={{
-                        padding: '10px',
-                        border: '2px solid #000',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                      }}
-                    />
-                    <input
-                      type="text"
-                      value={editingCompany.phone}
-                      onChange={(e) => setEditingCompany({ ...editingCompany, phone: e.target.value })}
-                      placeholder="Phone"
-                      style={{
-                        padding: '10px',
-                        border: '2px solid #000',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                      }}
-                    />
-                    <textarea
-                      value={editingCompany.description || ''}
-                      onChange={(e) => setEditingCompany({ ...editingCompany, description: e.target.value })}
-                      placeholder="Description"
-                      rows={4}
-                      style={{
-                        padding: '10px',
-                        border: '2px solid #000',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                      }}
-                    />
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <button
-                        onClick={() => updateMutation.mutate({ id: company.id, data: editingCompany })}
-                        disabled={updateMutation.isPending}
-                        style={{
-                          background: '#fbbf24',
+          
+          {(activeTab === 'pending' ? pendingLoading : activeLoading) ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>Loading...</div>
+          ) : filteredCompanies.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+              No businesses found
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {filteredCompanies.map((company) => (
+                <div
+                  key={company.id}
+                  style={{
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '16px',
+                  }}
+                  data-testid={`company-${company.id}`}
+                >
+                  <div style={{ flex: 1 }}>
+                    <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '700' }}>
+                      {company.name}
+                    </h3>
+                    <div style={{ fontSize: '14px', color: '#6b7280', marginBottom: '8px' }}>
+                      {company.city}, {company.state} • {company.phone}
+                    </div>
+                    {activeTab === 'active' && (
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <span style={{
+                          background: company.subscriptionTier === 'featured' ? '#fbbf24' : '#e5e7eb',
                           color: '#000',
-                          padding: '10px 20px',
-                          border: 'none',
-                          borderRadius: '4px',
-                          fontSize: '14px',
-                          fontWeight: '700',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
-                      </button>
-                      <button
-                        onClick={() => setEditingCompany(null)}
-                        style={{
-                          background: '#e5e5e5',
-                          color: '#000',
-                          padding: '10px 20px',
-                          border: 'none',
-                          borderRadius: '4px',
-                          fontSize: '14px',
+                          padding: '4px 12px',
+                          borderRadius: '12px',
+                          fontSize: '12px',
                           fontWeight: '600',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
+                        }}>
+                          {company.subscriptionTier === 'featured' ? 'FEATURED' : 'FREE'}
+                        </span>
+                        <span style={{
+                          background: company.subscriptionStatus === 'active' ? '#10b981' : 
+                                     company.subscriptionStatus === 'past_due' ? '#ef4444' : '#6b7280',
+                          color: '#fff',
+                          padding: '4px 12px',
+                          borderRadius: '12px',
+                          fontSize: '12px',
+                          fontWeight: '600',
+                        }}>
+                          {company.subscriptionStatus?.toUpperCase()}
+                        </span>
+                        {company.paymentWarnings > 0 && (
+                          <span style={{
+                            color: '#ef4444',
+                            fontSize: '12px',
+                            fontWeight: '600',
+                          }}>
+                            ⚠️ {company.paymentWarnings} warning(s)
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    {activeTab === 'pending' ? (
+                      <>
+                        <button
+                          onClick={() => approveMutation.mutate(company.id)}
+                          disabled={approveMutation.isPending}
+                          style={{
+                            background: '#10b981',
+                            color: '#fff',
+                            padding: '8px 16px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`approve-${company.id}`}
+                        >
+                          <CheckCircle size={16} /> Approve
+                        </button>
+                        <button
+                          onClick={() => denyMutation.mutate(company.id)}
+                          disabled={denyMutation.isPending}
+                          style={{
+                            background: '#ef4444',
+                            color: '#fff',
+                            padding: '8px 16px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`deny-${company.id}`}
+                        >
+                          <X size={16} /> Deny
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          style={{
+                            background: '#3b82f6',
+                            color: '#fff',
+                            padding: '8px 16px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                          }}
+                          data-testid={`edit-${company.id}`}
+                        >
+                          <Edit size={16} />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
-              ) : (
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                    <div>
-                      <h3 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '8px', color: '#000' }}>
-                        {company.name}
-                      </h3>
-                      <p style={{ color: '#666', marginBottom: '4px' }}>{company.phone}</p>
-                      <p style={{ color: '#666', marginBottom: '4px' }}>{company.address}</p>
-                      {company.description && <p style={{ color: '#000', marginTop: '12px' }}>{company.description}</p>}
-                    </div>
-                    <button
-                      onClick={() => setEditingCompany(company)}
-                      style={{
-                        background: '#fbbf24',
-                        color: '#000',
-                        padding: '8px 16px',
-                        border: 'none',
-                        borderRadius: '4px',
-                        fontSize: '14px',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                      }}
-                      data-testid={`button-edit-${company.id}`}
-                    >
-                      <Edit size={16} />
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              )}
+              ))}
             </div>
-          ))}
+          )}
         </div>
       )}
 
-      {/* Pending Businesses Section */}
-      <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '20px', color: '#000' }}>
-        Pending Businesses ({pendingCompanies.length})
-      </h2>
-
-      {isLoading ? (
-        <p>Loading pending businesses...</p>
-      ) : pendingCompanies.length === 0 ? (
-        <p style={{ color: '#666' }}>No pending businesses to review</p>
-      ) : (
-        <div style={{ display: 'grid', gap: '16px', marginBottom: '48px' }}>
-          {pendingCompanies.map((company) => (
-            <div
-              key={company.id}
-              style={{
-                background: '#fff',
-                border: '2px solid #e5e5e5',
-                borderRadius: '8px',
-                padding: '20px',
-              }}
-            >
-              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '12px', color: '#000' }}>
-                {company.name}
-              </h3>
-              <div style={{ marginBottom: '16px', color: '#666' }}>
-                <p><strong>Phone:</strong> {company.phone}</p>
-                <p><strong>Address:</strong> {company.address}</p>
-                <p><strong>Website:</strong> {company.website}</p>
-                <p><strong>City/State:</strong> {company.city}, {company.state}</p>
-                {company.description && <p style={{ marginTop: '8px', color: '#000' }}>{company.description}</p>}
-              </div>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <button
-                  onClick={() => approveMutation.mutate(company.id)}
-                  disabled={approveMutation.isPending}
-                  style={{
-                    background: '#16a34a',
-                    color: '#fff',
-                    padding: '10px 20px',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '14px',
-                    fontWeight: '700',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}
-                  data-testid={`button-approve-${company.id}`}
-                >
-                  <CheckCircle size={16} />
-                  Approve
-                </button>
-                <button
-                  onClick={() => denyMutation.mutate(company.id)}
-                  disabled={denyMutation.isPending}
-                  style={{
-                    background: '#dc2626',
-                    color: '#fff',
-                    padding: '10px 20px',
-                    border: 'none',
-                    borderRadius: '4px',
-                    fontSize: '14px',
-                    fontWeight: '700',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}
-                  data-testid={`button-deny-${company.id}`}
-                >
-                  <X size={16} />
-                  Deny
-                </button>
-              </div>
-            </div>
-          ))}
+      {/* Payments Tab */}
+      {activeTab === 'payments' && (
+        <div style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '20px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+          <h2 style={{ margin: '0 0 20px 0', fontSize: '20px', fontWeight: '700' }}>
+            Payment Management
+          </h2>
+          <p style={{ color: '#6b7280', marginBottom: '20px' }}>
+            Track subscriptions, send payment reminders, and manage billing.
+          </p>
+          <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+            Payment management features coming soon...
+          </div>
         </div>
       )}
 
-      {/* Active Businesses Section */}
-      <h2 style={{ fontSize: '24px', fontWeight: '700', marginBottom: '20px', color: '#000' }}>
-        Active Businesses ({activeCompanies.length})
-      </h2>
-
-      {activeCompanies.length === 0 ? (
-        <p style={{ color: '#666' }}>No active businesses</p>
-      ) : (
-        <div style={{ display: 'grid', gap: '16px' }}>
-          {activeCompanies.map((company) => (
-            <div
-              key={company.id}
-              style={{
-                background: '#fff',
-                border: '2px solid #16a34a',
-                borderRadius: '8px',
-                padding: '20px',
-              }}
-            >
-              <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '12px', color: '#000' }}>
-                {company.name}
-              </h3>
-              <div style={{ color: '#666' }}>
-                <p><strong>Phone:</strong> {company.phone}</p>
-                <p><strong>Address:</strong> {company.address}</p>
-                <p><strong>Website:</strong> {company.website}</p>
-                <p><strong>City/State:</strong> {company.city}, {company.state}</p>
-                <p><strong>Rating:</strong> {company.rating} ({company.reviews} reviews)</p>
-                {company.description && <p style={{ marginTop: '8px', color: '#000' }}>{company.description}</p>}
-              </div>
-            </div>
-          ))}
+      {/* Analytics Tab */}
+      {activeTab === 'analytics' && (
+        <div style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '20px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+          <h2 style={{ margin: '0 0 20px 0', fontSize: '20px', fontWeight: '700' }}>
+            Analytics & Reports
+          </h2>
+          <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+            Analytics dashboard coming soon...
+          </div>
         </div>
       )}
     </div>

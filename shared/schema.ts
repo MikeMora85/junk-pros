@@ -51,6 +51,11 @@ export const companies = pgTable("companies", {
   whyChooseUs: text("why_choose_us").array(),
   status: text("status").notNull().default("pending"),
   userId: varchar("user_id").references(() => users.id),
+  subscriptionTier: text("subscription_tier").notNull().default("free"),
+  subscriptionStatus: text("subscription_status").notNull().default("active"),
+  lastPaymentDate: timestamp("last_payment_date"),
+  nextPaymentDate: timestamp("next_payment_date"),
+  paymentWarnings: integer("payment_warnings").notNull().default(0),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
