@@ -3,27 +3,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Company } from "@shared/schema";
-import { Menu, ChevronDown, Home, LogOut, Search, Building2, AlertTriangle, TrendingUp, DollarSign } from "lucide-react";
+import { Menu, ChevronDown, Home, LogOut, Search, Building2, AlertTriangle, TrendingUp, DollarSign, Mail } from "lucide-react";
 import { useLocation } from "wouter";
-
-const PREBUILT_MESSAGES = {
-  reminder: {
-    subject: "Payment Reminder - BestJunkRemovalCompanies.com",
-    body: "Hi {businessName},\n\nThis is a friendly reminder that your Featured listing payment of $49 is due on {dueDate}.\n\nTo maintain your Featured status and continue receiving premium leads, please submit payment at your earliest convenience.\n\nThank you for being part of our directory!\n\nBest regards,\nBestJunkRemovalCompanies.com Team"
-  },
-  warning: {
-    subject: "Payment Warning - Action Required",
-    body: "Hi {businessName},\n\nYour Featured listing payment is now {daysOverdue} days overdue. This is warning #{warningNumber}.\n\nIf payment is not received within 5 business days, your listing will be downgraded to Free tier and removed from Featured results.\n\nPlease contact us immediately to resolve this matter.\n\nBest regards,\nBestJunkRemovalCompanies.com Team"
-  },
-  cancellation: {
-    subject: "Subscription Cancelled - BestJunkRemovalCompanies.com",
-    body: "Hi {businessName},\n\nDue to non-payment, your Featured subscription has been cancelled and your listing has been removed from our directory.\n\nYou may reactivate at any time by logging into your account and updating your payment information.\n\nIf you have questions, please contact our support team.\n\nBest regards,\nBestJunkRemovalCompanies.com Team"
-  },
-  reactivation: {
-    subject: "Welcome Back - Subscription Reactivated",
-    body: "Hi {businessName},\n\nGreat news! Your Featured listing has been reactivated and is now live in our directory.\n\nYou'll start receiving premium leads immediately. Thank you for being part of our network!\n\nBest regards,\nBestJunkRemovalCompanies.com Team"
-  }
-};
 
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
@@ -34,11 +15,6 @@ export default function AdminDashboard() {
   const [tierFilter, setTierFilter] = useState<string>("all");
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedCompany, setExpandedCompany] = useState<number | null>(null);
-  const [messageModal, setMessageModal] = useState<{open: boolean, type: string, company: Company | null}>({
-    open: false,
-    type: '',
-    company: null
-  });
   
   const { data: pendingCompanies = [], isLoading: pendingLoading } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/pending'],
@@ -138,23 +114,6 @@ export default function AdminDashboard() {
     window.location.href = '/';
   };
 
-  const getPrebuiltMessage = (type: string, company: Company) => {
-    const template = PREBUILT_MESSAGES[type as keyof typeof PREBUILT_MESSAGES];
-    if (!template) return { subject: '', body: '' };
-
-    const daysOverdue = company.nextPaymentDate 
-      ? Math.floor((Date.now() - new Date(company.nextPaymentDate).getTime()) / (1000 * 60 * 60 * 24))
-      : 0;
-
-    return {
-      subject: template.subject,
-      body: template.body
-        .replace('{businessName}', company.name)
-        .replace('{dueDate}', company.nextPaymentDate ? new Date(company.nextPaymentDate).toLocaleDateString() : 'N/A')
-        .replace('{daysOverdue}', daysOverdue.toString())
-        .replace('{warningNumber}', ((company.paymentWarnings || 0) + 1).toString())
-    };
-  };
 
   if (authLoading) {
     return <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>;
@@ -599,9 +558,10 @@ export default function AdminDashboard() {
                           <>
                             <button
                               onClick={() => {
-                                setMessageModal({ open: true, type: 'reminder', company });
+                                sendReminderMutation.mutate(company.id);
                                 setExpandedCompany(null);
                               }}
+                              disabled={sendReminderMutation.isPending}
                               style={{
                                 width: '100%',
                                 background: '#fbbf24',
@@ -612,17 +572,23 @@ export default function AdminDashboard() {
                                 fontSize: '14px',
                                 fontWeight: '600',
                                 cursor: 'pointer',
-                                textAlign: 'left',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
                               }}
                               data-testid={`reminder-${company.id}`}
                             >
-                              💰 Send Payment Reminder
+                              <Mail size={18} />
+                              Send Payment Reminder
                             </button>
                             <button
                               onClick={() => {
-                                setMessageModal({ open: true, type: 'warning', company });
+                                if (confirm(`Send warning to ${company.name}? This will increment their warning count.`)) {
+                                  sendWarningMutation.mutate(company.id);
+                                }
                                 setExpandedCompany(null);
                               }}
+                              disabled={sendWarningMutation.isPending}
                               style={{
                                 width: '100%',
                                 background: '#f59e0b',
@@ -633,20 +599,26 @@ export default function AdminDashboard() {
                                 fontSize: '14px',
                                 fontWeight: '600',
                                 cursor: 'pointer',
-                                textAlign: 'left',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
                               }}
                               data-testid={`warning-${company.id}`}
                             >
-                              ⚠️ Send Payment Warning
+                              <Mail size={18} />
+                              Send Payment Warning
                             </button>
                           </>
                         )}
                         {company.subscriptionStatus === 'cancelled' ? (
                           <button
                             onClick={() => {
-                              setMessageModal({ open: true, type: 'reactivation', company });
+                              if (confirm(`Reactivate subscription for ${company.name}?`)) {
+                                reactivateMutation.mutate(company.id);
+                              }
                               setExpandedCompany(null);
                             }}
+                            disabled={reactivateMutation.isPending}
                             style={{
                               width: '100%',
                               background: '#10b981',
@@ -657,18 +629,24 @@ export default function AdminDashboard() {
                               fontSize: '14px',
                               fontWeight: '600',
                               cursor: 'pointer',
-                              textAlign: 'left',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
                             }}
                             data-testid={`reactivate-${company.id}`}
                           >
-                            ✅ Reactivate Subscription
+                            <Mail size={18} />
+                            Reactivate Subscription
                           </button>
                         ) : company.subscriptionTier === 'featured' && (
                           <button
                             onClick={() => {
-                              setMessageModal({ open: true, type: 'cancellation', company });
+                              if (confirm(`Cancel subscription for ${company.name}? This will remove them from the directory.`)) {
+                                cancelSubscriptionMutation.mutate(company.id);
+                              }
                               setExpandedCompany(null);
                             }}
+                            disabled={cancelSubscriptionMutation.isPending}
                             style={{
                               width: '100%',
                               background: '#ef4444',
@@ -679,11 +657,14 @@ export default function AdminDashboard() {
                               fontSize: '14px',
                               fontWeight: '600',
                               cursor: 'pointer',
-                              textAlign: 'left',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
                             }}
                             data-testid={`cancel-${company.id}`}
                           >
-                            🚫 Cancel Subscription
+                            <Mail size={18} />
+                            Cancel Subscription
                           </button>
                         )}
                       </div>
@@ -720,122 +701,6 @@ export default function AdminDashboard() {
             <p style={{ color: '#6b7280', margin: 0 }}>
               View performance metrics and generate reports.
             </p>
-          </div>
-        </div>
-      )}
-
-      {/* Message Preview Modal */}
-      {messageModal.open && messageModal.company && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(0,0,0,0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '16px',
-          zIndex: 1000,
-        }}>
-          <div style={{
-            background: '#fff',
-            borderRadius: '16px',
-            maxWidth: '500px',
-            width: '100%',
-            maxHeight: '80vh',
-            overflow: 'auto',
-          }}>
-            <div style={{ padding: '20px', borderBottom: '2px solid #e5e7eb' }}>
-              <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '700' }}>
-                {messageModal.type.charAt(0).toUpperCase() + messageModal.type.slice(1)} Message Preview
-              </h3>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6b7280' }}>
-                Review message before sending to {messageModal.company.name}
-              </p>
-            </div>
-
-            <div style={{ padding: '20px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: '#6b7280', marginBottom: '4px' }}>
-                  SUBJECT
-                </div>
-                <div style={{ 
-                  background: '#f9fafb', 
-                  padding: '12px', 
-                  borderRadius: '8px', 
-                  fontSize: '14px',
-                  border: '1px solid #e5e7eb'
-                }}>
-                  {getPrebuiltMessage(messageModal.type, messageModal.company).subject}
-                </div>
-              </div>
-
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: '#6b7280', marginBottom: '4px' }}>
-                  MESSAGE
-                </div>
-                <div style={{ 
-                  background: '#f9fafb', 
-                  padding: '12px', 
-                  borderRadius: '8px', 
-                  fontSize: '14px',
-                  whiteSpace: 'pre-wrap',
-                  border: '1px solid #e5e7eb',
-                  lineHeight: '1.6'
-                }}>
-                  {getPrebuiltMessage(messageModal.type, messageModal.company).body}
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button
-                  onClick={() => setMessageModal({ open: false, type: '', company: null })}
-                  style={{
-                    flex: 1,
-                    background: '#e5e7eb',
-                    color: '#000',
-                    padding: '12px',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    if (messageModal.type === 'reminder') {
-                      sendReminderMutation.mutate(messageModal.company!.id);
-                    } else if (messageModal.type === 'warning') {
-                      sendWarningMutation.mutate(messageModal.company!.id);
-                    } else if (messageModal.type === 'cancellation') {
-                      cancelSubscriptionMutation.mutate(messageModal.company!.id);
-                    } else if (messageModal.type === 'reactivation') {
-                      reactivateMutation.mutate(messageModal.company!.id);
-                    }
-                    setMessageModal({ open: false, type: '', company: null });
-                  }}
-                  style={{
-                    flex: 1,
-                    background: '#166534',
-                    color: '#fff',
-                    padding: '12px',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '14px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                  }}
-                  data-testid="send-message"
-                >
-                  Send Message
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       )}
