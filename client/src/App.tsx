@@ -290,72 +290,148 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             Home
           </a>
 
-          {/* Areas Served */}
+          {/* Areas Served - Section Title */}
           <div style={{ borderBottom: '1px solid #e5e5e5' }}>
-            <button
-              onClick={() => setExpandedSection(expandedSection === 'states' ? null : 'states')}
+            <div
               style={{
-                width: '100%',
                 padding: '16px',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
                 fontSize: '18px',
                 fontWeight: '600',
                 color: '#000',
-                textAlign: 'left',
               }}
-              data-testid="button-areas-served"
             >
-              <span>Areas Served</span>
-              <ChevronDown size={18} style={{ transform: expandedSection === 'states' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-            </button>
+              Areas Served
+            </div>
 
-            {expandedSection === 'states' && (
-              <div style={{ padding: '0 12px 12px 12px' }}>
-                <div style={{ position: 'relative', marginBottom: '12px' }}>
-                  <input
-                    type="text"
-                    placeholder="Search states..."
-                    value={stateSearch}
-                    onChange={(e) => setStateSearch(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 32px 8px 12px',
-                      border: '2px solid #fbbf24',
-                      borderRadius: '6px',
-                      fontSize: '14px',
-                    }}
-                    data-testid="input-state-search"
-                  />
-                  <Search size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
-                </div>
-                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                  {filteredStates.map(state => (
-                    <a
-                      key={state.slug}
-                      href={`/${state.slug}`}
+            {/* States */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'states' ? null : 'states')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-states"
+              >
+                <span>States</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'states' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'states' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '250px' }}>
+                    <input
+                      type="text"
+                      placeholder="Search states..."
+                      value={stateSearch}
+                      onChange={(e) => setStateSearch(e.target.value)}
                       style={{
-                        display: 'block',
-                        padding: '12px 16px',
-                        color: '#000',
-                        textDecoration: 'none',
-                        fontSize: '16px',
-                        borderRadius: '4px',
+                        width: '100%',
+                        padding: '8px 32px 8px 12px',
+                        border: '2px solid #fbbf24',
+                        borderRadius: '6px',
+                        fontSize: '14px',
                       }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                      data-testid={`link-state-${state.slug}`}
-                    >
-                      {state.name}
-                    </a>
-                  ))}
+                      data-testid="input-state-search"
+                    />
+                    <Search size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                  </div>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {filteredStates.map(state => (
+                      <a
+                        key={state.slug}
+                        href={`/${state.slug}`}
+                        style={{
+                          display: 'block',
+                          padding: '8px 12px',
+                          color: '#000',
+                          textDecoration: 'none',
+                          fontSize: '15px',
+                          borderRadius: '4px',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                        data-testid={`link-state-${state.slug}`}
+                      >
+                        {state.name}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+
+            {/* Cities */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'cities' ? null : 'cities')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-cities"
+              >
+                <span>Cities</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'cities' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'cities' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <p style={{ fontSize: '14px', color: '#666', padding: '8px 12px' }}>Select a state to view cities</p>
+                </div>
+              )}
+            </div>
+
+            {/* Towns */}
+            <div style={{ paddingLeft: '16px' }}>
+              <button
+                onClick={() => setExpandedSection(expandedSection === 'towns' ? null : 'towns')}
+                style={{
+                  width: '100%',
+                  padding: '12px 16px 12px 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  color: '#000',
+                  textAlign: 'left',
+                }}
+                data-testid="button-towns"
+              >
+                <span>Towns</span>
+                <ChevronDown size={16} style={{ transform: expandedSection === 'towns' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+              </button>
+
+              {expandedSection === 'towns' && (
+                <div style={{ paddingBottom: '12px' }}>
+                  <p style={{ fontSize: '14px', color: '#666', padding: '8px 12px' }}>Select a state to view towns</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Junk Removal Services */}
@@ -384,7 +460,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
             {expandedSection === 'services' && (
               <div style={{ padding: '0 12px 12px 12px' }}>
-                <div style={{ position: 'relative', marginBottom: '12px' }}>
+                <div style={{ position: 'relative', marginBottom: '12px', maxWidth: '250px' }}>
                   <input
                     type="text"
                     placeholder="Search services..."
@@ -407,9 +483,9 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                       key={service}
                       style={{
                         display: 'block',
-                        padding: '12px 16px',
+                        padding: '8px 12px',
                         color: '#000',
-                        fontSize: '16px',
+                        fontSize: '15px',
                         borderRadius: '4px',
                         cursor: 'pointer',
                       }}
