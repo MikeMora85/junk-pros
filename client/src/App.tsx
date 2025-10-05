@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, UserCircle } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, UserCircle, Menu, ChevronDown } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -121,6 +121,335 @@ function RotatingBanner() {
         </p>
       ))}
     </div>
+  );
+}
+
+// Hamburger Menu Component
+function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [stateSearch, setStateSearch] = useState('');
+  const [serviceSearch, setServiceSearch] = useState('');
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+  const allStates = [
+    { name: 'Alabama', slug: 'alabama' },
+    { name: 'Alaska', slug: 'alaska' },
+    { name: 'Arizona', slug: 'arizona' },
+    { name: 'Arkansas', slug: 'arkansas' },
+    { name: 'California', slug: 'california' },
+    { name: 'Colorado', slug: 'colorado' },
+    { name: 'Connecticut', slug: 'connecticut' },
+    { name: 'Delaware', slug: 'delaware' },
+    { name: 'Florida', slug: 'florida' },
+    { name: 'Georgia', slug: 'georgia' },
+    { name: 'Hawaii', slug: 'hawaii' },
+    { name: 'Idaho', slug: 'idaho' },
+    { name: 'Illinois', slug: 'illinois' },
+    { name: 'Indiana', slug: 'indiana' },
+    { name: 'Iowa', slug: 'iowa' },
+    { name: 'Kansas', slug: 'kansas' },
+    { name: 'Kentucky', slug: 'kentucky' },
+    { name: 'Louisiana', slug: 'louisiana' },
+    { name: 'Maine', slug: 'maine' },
+    { name: 'Maryland', slug: 'maryland' },
+    { name: 'Massachusetts', slug: 'massachusetts' },
+    { name: 'Michigan', slug: 'michigan' },
+    { name: 'Minnesota', slug: 'minnesota' },
+    { name: 'Mississippi', slug: 'mississippi' },
+    { name: 'Missouri', slug: 'missouri' },
+    { name: 'Montana', slug: 'montana' },
+    { name: 'Nebraska', slug: 'nebraska' },
+    { name: 'Nevada', slug: 'nevada' },
+    { name: 'New Hampshire', slug: 'new-hampshire' },
+    { name: 'New Jersey', slug: 'new-jersey' },
+    { name: 'New Mexico', slug: 'new-mexico' },
+    { name: 'New York', slug: 'new-york' },
+    { name: 'North Carolina', slug: 'north-carolina' },
+    { name: 'North Dakota', slug: 'north-dakota' },
+    { name: 'Ohio', slug: 'ohio' },
+    { name: 'Oklahoma', slug: 'oklahoma' },
+    { name: 'Oregon', slug: 'oregon' },
+    { name: 'Pennsylvania', slug: 'pennsylvania' },
+    { name: 'Rhode Island', slug: 'rhode-island' },
+    { name: 'South Carolina', slug: 'south-carolina' },
+    { name: 'South Dakota', slug: 'south-dakota' },
+    { name: 'Tennessee', slug: 'tennessee' },
+    { name: 'Texas', slug: 'texas' },
+    { name: 'Utah', slug: 'utah' },
+    { name: 'Vermont', slug: 'vermont' },
+    { name: 'Virginia', slug: 'virginia' },
+    { name: 'Washington', slug: 'washington' },
+    { name: 'West Virginia', slug: 'west-virginia' },
+    { name: 'Wisconsin', slug: 'wisconsin' },
+    { name: 'Wyoming', slug: 'wyoming' },
+  ];
+
+  const serviceTypes = [
+    'Appliance Removal',
+    'Furniture Removal',
+    'Mattress Removal',
+    'Hot Tub Removal',
+    'Garage Cleanouts',
+    'Estate Cleanouts',
+    'Hoarding Cleanup',
+    'Construction Debris',
+    'Yard Waste Removal',
+    'Electronic Waste',
+    'Commercial Junk Removal',
+    'Foreclosure Cleanouts',
+    'Storage Unit Cleanouts',
+    'Shed Removal',
+    'Deck Removal',
+  ];
+
+  const filteredStates = allStates.filter(state =>
+    state.name.toLowerCase().includes(stateSearch.toLowerCase())
+  );
+
+  const filteredServices = serviceTypes.filter(service =>
+    service.toLowerCase().includes(serviceSearch.toLowerCase())
+  );
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+        }}
+        onClick={onClose}
+        data-testid="menu-overlay"
+      />
+
+      {/* Side Menu */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: '50%',
+          maxWidth: '400px',
+          backgroundColor: '#ffffff',
+          zIndex: 1001,
+          overflowY: 'auto',
+          boxShadow: '4px 0 16px rgba(0,0,0,0.2)',
+        }}
+        data-testid="side-menu"
+      >
+        {/* Header */}
+        <div style={{
+          padding: '20px',
+          borderBottom: '2px solid #fbbf24',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          position: 'sticky',
+          top: 0,
+          backgroundColor: '#ffffff',
+          zIndex: 10,
+        }}>
+          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '700', color: '#000' }}>Menu</h2>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '4px',
+            }}
+            data-testid="button-close-menu"
+          >
+            <X size={24} color="#000" />
+          </button>
+        </div>
+
+        {/* Menu Content */}
+        <div style={{ padding: '20px' }}>
+          {/* Home */}
+          <a
+            href="/"
+            style={{
+              display: 'block',
+              padding: '12px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: '600',
+              borderBottom: '1px solid #e5e5e5',
+            }}
+            data-testid="link-home"
+          >
+            <Home size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Home
+          </a>
+
+          {/* Areas Served */}
+          <div style={{ borderBottom: '1px solid #e5e5e5' }}>
+            <button
+              onClick={() => setExpandedSection(expandedSection === 'states' ? null : 'states')}
+              style={{
+                width: '100%',
+                padding: '12px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#000',
+              }}
+              data-testid="button-areas-served"
+            >
+              <span>
+                <MapPin size={18} style={{ display: 'inline', marginRight: '8px' }} />
+                Areas Served
+              </span>
+              <ChevronDown size={18} style={{ transform: expandedSection === 'states' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            </button>
+
+            {expandedSection === 'states' && (
+              <div style={{ padding: '0 12px 12px 12px' }}>
+                <div style={{ position: 'relative', marginBottom: '12px' }}>
+                  <input
+                    type="text"
+                    placeholder="Search states..."
+                    value={stateSearch}
+                    onChange={(e) => setStateSearch(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 32px 8px 12px',
+                      border: '2px solid #fbbf24',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                    }}
+                    data-testid="input-state-search"
+                  />
+                  <Search size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                </div>
+                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                  {filteredStates.map(state => (
+                    <a
+                      key={state.slug}
+                      href={`/${state.slug}`}
+                      style={{
+                        display: 'block',
+                        padding: '8px 12px',
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontSize: '14px',
+                        borderRadius: '4px',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      data-testid={`link-state-${state.slug}`}
+                    >
+                      {state.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Junk Removal Services */}
+          <div style={{ borderBottom: '1px solid #e5e5e5' }}>
+            <button
+              onClick={() => setExpandedSection(expandedSection === 'services' ? null : 'services')}
+              style={{
+                width: '100%',
+                padding: '12px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#000',
+              }}
+              data-testid="button-services"
+            >
+              <span>
+                <Truck size={18} style={{ display: 'inline', marginRight: '8px' }} />
+                Junk Removal Services
+              </span>
+              <ChevronDown size={18} style={{ transform: expandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            </button>
+
+            {expandedSection === 'services' && (
+              <div style={{ padding: '0 12px 12px 12px' }}>
+                <div style={{ position: 'relative', marginBottom: '12px' }}>
+                  <input
+                    type="text"
+                    placeholder="Search services..."
+                    value={serviceSearch}
+                    onChange={(e) => setServiceSearch(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 32px 8px 12px',
+                      border: '2px solid #fbbf24',
+                      borderRadius: '6px',
+                      fontSize: '14px',
+                    }}
+                    data-testid="input-service-search"
+                  />
+                  <Search size={16} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af' }} />
+                </div>
+                <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                  {filteredServices.map(service => (
+                    <div
+                      key={service}
+                      style={{
+                        display: 'block',
+                        padding: '8px 12px',
+                        color: '#000',
+                        fontSize: '14px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      data-testid={`item-service-${service.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      {service}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Blog */}
+          <a
+            href="/blog"
+            style={{
+              display: 'block',
+              padding: '12px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontWeight: '600',
+              borderBottom: '1px solid #e5e5e5',
+            }}
+            data-testid="link-blog"
+          >
+            <FileText size={18} style={{ display: 'inline', marginRight: '8px' }} />
+            Blog
+          </a>
+        </div>
+      </div>
+    </>
   );
 }
 
