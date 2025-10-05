@@ -22,6 +22,14 @@ export default function ProfileEditor() {
 
   const company = companies?.[0];
 
+  // Debug logging
+  useEffect(() => {
+    console.log('ProfileEditor - companies:', companies);
+    console.log('ProfileEditor - company:', company);
+    console.log('ProfileEditor - error:', error);
+    console.log('ProfileEditor - isLoading:', isLoading);
+  }, [companies, company, error, isLoading]);
+
   // Local state for form
   const [formData, setFormData] = useState<Partial<Company>>({});
 
@@ -167,6 +175,43 @@ export default function ProfileEditor() {
   const toggleFeature = (feature: 'priceSheetVisible' | 'addOnCostsVisible') => {
     setFormData(prev => ({ ...prev, [feature]: !prev[feature] }));
   };
+
+  if (error) {
+    return (
+      <div style={{ 
+        minHeight: '100vh', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        flexDirection: 'column',
+        gap: '20px',
+        padding: '20px',
+      }}>
+        <div style={{ textAlign: 'center', color: '#dc2626', fontSize: '18px', fontWeight: '600' }}>
+          Error loading profile
+        </div>
+        <div style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', maxWidth: '500px' }}>
+          {error.message || 'Failed to load company data. Please make sure you are logged in.'}
+        </div>
+        <button
+          onClick={() => window.location.href = '/login'}
+          style={{
+            background: '#fbbf24',
+            color: '#000',
+            border: 'none',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            fontSize: '16px',
+            fontWeight: '600',
+            cursor: 'pointer',
+          }}
+        >
+          Go to Login
+        </button>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
