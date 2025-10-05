@@ -361,8 +361,8 @@ export default function ProfileEditor() {
                   key={section.id}
                   onClick={() => setActiveSection(section.id as any)}
                   style={{
-                    background: activeSection === section.id ? '#166534' : '#e5e7eb',
-                    color: activeSection === section.id ? '#fff' : '#000',
+                    background: activeSection === section.id ? '#fbbf24' : '#e5e7eb',
+                    color: activeSection === section.id ? '#000' : '#000',
                     border: 'none',
                     padding: '10px 16px',
                     borderRadius: '6px',
@@ -412,8 +412,8 @@ export default function ProfileEditor() {
                       </div>
                     )}
                     <label style={{
-                      background: '#166534',
-                      color: '#fff',
+                      background: '#fbbf24',
+                      color: '#000',
                       padding: '10px 20px',
                       borderRadius: '6px',
                       cursor: 'pointer',
@@ -643,8 +643,8 @@ export default function ProfileEditor() {
                     <button
                       onClick={addPriceSheetItem}
                       style={{
-                        background: '#166534',
-                        color: '#fff',
+                        background: '#fbbf24',
+                        color: '#000',
                         border: 'none',
                         padding: '10px',
                         borderRadius: '6px',
@@ -747,8 +747,8 @@ export default function ProfileEditor() {
                     <button
                       onClick={addAddOnItem}
                       style={{
-                        background: '#166534',
-                        color: '#fff',
+                        background: '#fbbf24',
+                        color: '#000',
                         border: 'none',
                         padding: '10px',
                         borderRadius: '6px',
@@ -864,8 +864,8 @@ export default function ProfileEditor() {
                   <button
                     onClick={addReview}
                     style={{
-                      background: '#166534',
-                      color: '#fff',
+                      background: '#fbbf24',
+                      color: '#000',
                       border: 'none',
                       padding: '10px',
                       borderRadius: '6px',
@@ -958,8 +958,8 @@ export default function ProfileEditor() {
                   <button
                     onClick={addGalleryImage}
                     style={{
-                      background: '#166534',
-                      color: '#fff',
+                      background: '#fbbf24',
+                      color: '#000',
                       border: 'none',
                       padding: '10px',
                       borderRadius: '6px',
