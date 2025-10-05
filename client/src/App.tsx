@@ -870,12 +870,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         left: 0,
         right: 0,
         zIndex: 100,
-        background: 'rgba(251, 191, 36, 0.15)',
-        backdropFilter: 'blur(10px)',
         padding: '16px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
       }}>
         <a
           href="/"
@@ -906,101 +901,6 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         >
           <Home size={18} color="#000" />
         </a>
-
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <Link href="/add-business" style={{ textDecoration: 'none' }}>
-            <button
-              className="breathing-button"
-              style={{
-                background: '#fbbf24',
-                color: '#000',
-                padding: '8px',
-                borderRadius: '6px',
-                border: '1px solid #000',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              data-testid="button-add-business"
-            >
-              <Plus size={18} />
-            </button>
-          </Link>
-
-          {isAuthenticated ? (
-            <Link href="/admin" style={{ textDecoration: 'none' }}>
-              <button
-                style={{
-                  background: '#16a34a',
-                  color: '#fff',
-                  padding: '8px',
-                  borderRadius: '6px',
-                  border: '1px solid #000',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                data-testid="button-admin"
-              >
-                <UserCircle size={18} />
-              </button>
-            </Link>
-          ) : (
-            <a href="/api/login" style={{ textDecoration: 'none' }}>
-              <button
-                style={{
-                  background: '#16a34a',
-                  color: '#fff',
-                  padding: '8px',
-                  borderRadius: '6px',
-                  border: '1px solid #000',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                  transform: 'translateY(-2px)',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                data-testid="button-login"
-              >
-                <LogIn size={18} />
-              </button>
-            </a>
-          )}
-        </div>
       </div>
 
       {/* Hero Image - Clean without text overlay */}
