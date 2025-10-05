@@ -3524,10 +3524,10 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           </div>
         ) : (
           <>
-            {(formData.logoUrl || logoPreview) && (
+            {company.logoUrl && (
               <img 
-                src={logoPreview || formData.logoUrl || ''} 
-                alt={`${formData.name} logo`}
+                src={company.logoUrl} 
+                alt={`${company.name} logo`}
                 style={{ 
                   height: '60px', 
                   marginBottom: '16px',
@@ -3568,7 +3568,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
             fontWeight: '800',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            {formData.name}
+            {company.name}
           </h1>
         )}
         
@@ -3638,7 +3638,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           <button
             onClick={() => {
               trackBusinessEvent(company.id, 'call');
-              window.open(`tel:${formData.phone}`, '_self');
+              window.open(`tel:${company.phone}`, '_self');
             }}
             data-testid="button-call-now-top"
             style={{
@@ -3661,7 +3661,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
             }}
           >
             <Phone size={24} />
-            Call Now: {formData.phone}
+            Call Now: {company.phone}
           </button>
         )}
         
@@ -3687,7 +3687,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           </div>
         ) : (
           <>
-            {formData.description && (
+            {company.description && (
               <div style={{ marginBottom: '32px' }}>
                 <p style={{ 
                   margin: '0', 
@@ -3696,7 +3696,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
                   lineHeight: '1.7',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
-                  {formData.description}
+                  {company.description}
                 </p>
               </div>
             )}
@@ -3725,7 +3725,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           </div>
         ) : (
           <>
-            {formData.aboutUs && (
+            {company.aboutUs && (
               <div style={{ marginBottom: '32px', background: '#f9fafb', padding: '24px', borderRadius: '8px' }}>
                 <h2 style={{ 
                   margin: '0 0 16px 0', 
@@ -3743,7 +3743,7 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
                   lineHeight: '1.7',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
-                  {formData.aboutUs}
+                  {company.aboutUs}
                 </p>
               </div>
             )}
