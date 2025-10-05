@@ -641,6 +641,32 @@ export default function AdminDashboard() {
                         QUICK ACTIONS
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {/* Always visible actions */}
+                        <button
+                          onClick={() => {
+                            window.open(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}/${company.id}`, '_blank');
+                            setExpandedCompany(null);
+                          }}
+                          style={{
+                            width: '100%',
+                            background: '#166534',
+                            color: '#fff',
+                            padding: '12px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`view-profile-${company.id}`}
+                        >
+                          <Mail size={18} />
+                          View Company Profile
+                        </button>
+                        
                         {company.subscriptionTier === 'featured' && company.subscriptionStatus !== 'active' && (
                           <>
                             <button
