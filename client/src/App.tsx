@@ -3419,12 +3419,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         {company.services && company.services.length > 0 && (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '20px',
             marginBottom: '32px',
             textAlign: 'center',
           }}>
-            {company.services.slice(0, 4).map((service, i) => (
+            {company.services.slice(0, 6).map((service, i) => (
               <div key={i}>
                 <div style={{
                   width: '80px',
@@ -3440,6 +3440,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     {i === 1 && <path d="M25,35 L25,55 L55,55 L55,35 L40,25 Z M30,45 L37,45 M43,45 L50,45" stroke="#000" strokeWidth="2" fill="none"/>}
                     {i === 2 && <path d="M25,30 L55,30 L55,55 L25,55 Z M30,35 L50,35 M30,42 L50,42 M35,48 L45,48" stroke="#000" strokeWidth="2" fill="none"/>}
                     {i === 3 && <path d="M25,50 L55,50 M25,50 L25,35 L35,35 L35,30 L45,30 L45,35 L55,35 L55,50" stroke="#000" strokeWidth="2" fill="none"/>}
+                    {i === 4 && <path d="M30,25 L50,25 L50,45 L30,45 Z M35,30 L45,30 M35,35 L45,35 M30,50 L50,50 M30,55 L50,55" stroke="#000" strokeWidth="2" fill="none"/>}
+                    {i === 5 && <path d="M25,30 L40,25 L55,30 L55,50 L40,55 L25,50 Z M35,35 L35,45 M45,35 L45,45" stroke="#000" strokeWidth="2" fill="none"/>}
                   </svg>
                 </div>
                 <div style={{ fontSize: '14px', fontWeight: '500', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
