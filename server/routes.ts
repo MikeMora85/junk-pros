@@ -150,7 +150,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       try {
         const decoded = Buffer.from(token, 'base64').toString();
         const [type] = decoded.split(':');
-        if (type === 'admin') {
+        if (type === 'admin' || type === 'business') {
           return next();
         }
       } catch (e) {}
@@ -206,25 +206,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
-  app.get("/api/companies/:id", async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      if (isNaN(id)) {
-        return res.status(400).json({ error: "Invalid company ID" });
-      }
-
-      const company = await storage.getCompanyById(id);
-      if (!company) {
-        return res.status(404).json({ error: "Company not found" });
-      }
-
-      res.json(company);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch company" });
-    }
-  });
-
-  // Get current user's companies
+  // Get current user's companies (must be before /:id route)
   app.get("/api/companies/my", requireSimpleAuth, async (req: any, res) => {
     try {
       const authHeader = req.headers.authorization;
@@ -272,6 +254,24 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       res.json(companies);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch your companies" });
+    }
+  });
+
+  app.get("/api/companies/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.getCompanyById(id);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json(company);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch company" });
     }
   });
 
