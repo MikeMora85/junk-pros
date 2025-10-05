@@ -228,27 +228,34 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.get("/api/companies/my", requireSimpleAuth, async (req: any, res) => {
     try {
       const authHeader = req.headers.authorization;
+      console.log('GET /api/companies/my - Auth header:', authHeader);
       let userId = null;
       
       if (authHeader && authHeader.startsWith('Bearer ')) {
         const token = authHeader.substring(7);
         const decoded = Buffer.from(token, 'base64').toString();
+        console.log('Decoded token:', decoded);
         const parts = decoded.split(':');
         const type = parts[0];
         
         // For admin, return empty array
         if (type === 'admin') {
+          console.log('Admin user - returning empty array');
           return res.json([]);
         }
         
         // For business owner, get their company
         if (type === 'business') {
           const email = parts[1];
+          console.log('Business owner email:', email);
           const owner = await storage.getBusinessOwnerByEmail(email);
+          console.log('Found owner:', owner);
           if (owner && owner.companyId) {
             const company = await storage.getCompanyById(owner.companyId);
+            console.log('Found company:', company);
             return res.json(company ? [company] : []);
           }
+          console.log('No owner or companyId found');
           return res.json([]);
         }
       }
