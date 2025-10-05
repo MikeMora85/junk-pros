@@ -2704,7 +2704,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           </button>
 
           {isAuthenticated ? (
-            <Link href="/admin" style={{ textDecoration: 'none' }}>
+            <Link href={user?.role === 'admin' ? '/admin' : '/profile/edit'} style={{ textDecoration: 'none' }}>
               <button
                 style={{
                   background: '#16a34a',
@@ -2728,7 +2728,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
                   e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
-                data-testid="button-admin"
+                data-testid="button-profile"
               >
                 <UserCircle size={18} />
               </button>

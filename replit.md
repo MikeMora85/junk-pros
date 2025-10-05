@@ -4,6 +4,14 @@
 A full-stack JavaScript application that helps users find local junk removal companies in Scottsdale, AZ. The site features an interactive map, visual estimate builder, company listings with ratings, and educational content. Includes admin system for managing business listings.
 
 ## Recent Changes
+- 2025-10-05: **FIXED LOGIN BUTTON ROUTING - Business Owners vs Admin**
+  - **Smart Routing**: Login button (person icon) now routes based on user role
+  - **Business Owners**: Clicking person icon when logged in as business owner → /profile/edit (not /admin)
+  - **Admin Users**: Clicking person icon when logged in as admin → /admin dashboard
+  - **Not Logged In**: Shows login icon, clicking → /login page
+  - **Role Detection**: Uses user.role field from auth endpoint ('admin' vs 'business')
+  - **Access Control**: Business owners can no longer accidentally access admin dashboard
+  - **File Updated**: client/src/App.tsx line 2710 - conditional routing based on user.role
 - 2025-10-05: **FIXED PROFILE EDITOR DATA POPULATION & DESIGN CONSISTENCY**
   - **Query Fix**: Removed blocking `enabled: !!user` condition preventing company data from loading
   - **Direct Token Auth**: Profile editor now fetches company data immediately using localStorage token
