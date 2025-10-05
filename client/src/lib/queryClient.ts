@@ -45,6 +45,7 @@ export async function apiRequest(url: string, options?: RequestInit) {
       ...getAuthHeaders(),
       ...options?.headers,
     },
+    body: options?.body ? JSON.stringify(options.body) : undefined,
   });
   return handleResponse(response);
 }
