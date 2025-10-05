@@ -3336,229 +3336,361 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       left: 0,
       right: 0,
       bottom: 0,
-      background: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      background: '#fff',
       zIndex: 1000,
-      padding: '20px',
       overflowY: 'auto',
     }}>
+      {/* Back button */}
       <div style={{
-        maxWidth: '800px',
-        width: '100%',
-        background: '#f9fafb',
-        borderRadius: '12px',
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        position: 'relative',
+        padding: '16px 20px',
+        borderBottom: '1px solid #e5e7eb',
       }}>
-        {/* Close button */}
         <button
           onClick={onClose}
           data-testid="button-close-profile"
           style={{
-            position: 'absolute',
-            top: '20px',
-            right: '20px',
-            background: '#fff',
+            background: 'none',
             border: 'none',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
             cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            zIndex: 10,
+            fontSize: '24px',
+            padding: 0,
           }}
         >
-          <X size={24} color="#000" />
+          ← Back
         </button>
+      </div>
 
-        <div style={{ padding: '20px' }}>
-          {/* Company Header */}
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+        {/* Header with company name and request quote button */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          marginBottom: '16px',
+          gap: '16px',
+        }}>
+          <h1 style={{
+            fontSize: '32px',
+            fontWeight: '700',
+            margin: '0',
+            color: '#000',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }} data-testid="text-company-name">
+            {company.name}
+          </h1>
+          <button
+            style={{
+              padding: '12px 24px',
+              background: '#2563eb',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              whiteSpace: 'nowrap',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}
+            onClick={() => {
+              trackBusinessEvent(company.id, 'call');
+              window.open(`tel:${company.phone}`, '_self');
+            }}
+            data-testid="button-request-quote"
+          >
+            Request a Quote
+          </button>
+        </div>
+
+        {/* Rating */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span key={star} style={{ color: '#fbbf24', fontSize: '20px' }}>★</span>
+          ))}
+          <span style={{ fontWeight: '700', fontSize: '18px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            {company.rating}
+          </span>
+          <span style={{ color: '#6b7280', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            {company.reviews} reviews
+          </span>
+        </div>
+
+        {/* Services Icons */}
+        {company.services && company.services.length > 0 && (
           <div style={{
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            padding: '24px',
-            marginBottom: '16px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '24px',
+            marginBottom: '32px',
+            textAlign: 'center',
           }}>
-            <h1 style={{
-              fontSize: '28px',
-              fontWeight: '700',
-              margin: '0 0 12px 0',
-              color: '#111827',
-            }} data-testid="text-company-name">
-              {company.name}
-            </h1>
+            {company.services.slice(0, 4).map((service, i) => (
+              <div key={i}>
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  margin: '0 auto 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="35" fill="none" stroke="#000" strokeWidth="2"/>
+                    {i === 0 && <path d="M30,25 L30,55 M25,30 L35,30 M25,50 L35,50 M40,25 L50,35 M50,25 L40,35 M40,45 L50,55 M50,45 L40,55" stroke="#000" strokeWidth="2" fill="none"/>}
+                    {i === 1 && <path d="M25,35 L25,55 L55,55 L55,35 L40,25 Z M30,45 L37,45 M43,45 L50,45" stroke="#000" strokeWidth="2" fill="none"/>}
+                    {i === 2 && <path d="M25,30 L55,30 L55,55 L25,55 Z M30,35 L50,35 M30,42 L50,42 M35,48 L45,48" stroke="#000" strokeWidth="2" fill="none"/>}
+                    {i === 3 && <path d="M25,50 L55,50 M25,50 L25,35 L35,35 L35,30 L45,30 L45,35 L55,35 L55,50" stroke="#000" strokeWidth="2" fill="none"/>}
+                  </svg>
+                </div>
+                <div style={{ fontSize: '14px', fontWeight: '500', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {service}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} style={{ color: '#fbbf24', fontSize: '18px' }}>★</span>
+        {/* Two Column Layout */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '24px' }}>
+          {/* Left Column */}
+          <div>
+            {/* About Us */}
+            {company.description && (
+              <div style={{ marginBottom: '32px' }}>
+                <h2 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  About Us
+                </h2>
+                <p style={{
+                  fontSize: '16px',
+                  color: '#000',
+                  lineHeight: '1.6',
+                  margin: 0,
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  {company.description}
+                </p>
+              </div>
+            )}
+
+            {/* Photos */}
+            <div style={{ marginBottom: '32px' }}>
+              <h2 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Photos
+              </h2>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '12px',
+              }}>
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    style={{
+                      width: '100%',
+                      height: '140px',
+                      background: '#e5e7eb',
+                      borderRadius: '8px',
+                    }}
+                  />
                 ))}
-                <span style={{ marginLeft: '8px', fontWeight: '700', fontSize: '18px', color: '#111827' }}>
-                  {company.rating}
-                </span>
-                <span style={{ marginLeft: '4px', color: '#6b7280', fontSize: '14px' }}>
-                  {company.reviews} reviews
-                </span>
               </div>
             </div>
 
-            <button
-              style={{
-                width: '100%',
-                padding: '14px',
-                background: '#2563eb',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '16px',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-              }}
-              onClick={() => {
-                trackBusinessEvent(company.id, 'call');
-                window.open(`tel:${company.phone}`, '_self');
-              }}
-              data-testid="button-request-quote"
-            >
-              Request a Quote
-            </button>
+            {/* Reviews */}
+            <div>
+              <h2 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Reviews
+              </h2>
+              {['Michael D.', 'Sarah M.', 'John R.'].map((name, i) => (
+                <div key={i} style={{ marginBottom: '16px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: '#e5e7eb',
+                    }} />
+                    <div>
+                      <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{name}</div>
+                      <div style={{ display: 'flex' }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span key={star} style={{ color: '#fbbf24', fontSize: '14px' }}>★</span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    {i === 0 && "Great experience! The team was on time, worked quickly, and left the area spotless. Highly recommend!"}
+                    {i === 1 && "Very professional and reasonably priced. Will definitely use them again for future junk removal projects."}
+                    {i === 2 && "Excellent service from start to finish! The crew was courteous and efficient."}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Services Icons */}
-          {company.services && company.services.length > 0 && (
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '16px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
-                gap: '16px',
-                textAlign: 'center',
+          {/* Right Column */}
+          <div>
+            {/* Pricing */}
+            <div style={{ marginBottom: '24px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
               }}>
-                {company.services.slice(0, 4).map((service, i) => (
-                  <div key={i}>
-                    <div style={{
-                      width: '60px',
-                      height: '60px',
-                      margin: '0 auto 8px',
-                      background: '#f3f4f6',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      <Trash2 size={32} color="#374151" />
-                    </div>
-                    <div style={{ fontSize: '13px', fontWeight: '500', color: '#111827' }}>
-                      {service}
-                    </div>
+                Pricing
+              </h2>
+              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div>• Single Item: $75</div>
+                <div>• 1/4 Load: $150</div>
+                <div>• 1/2 Load: $500</div>
+              </div>
+            </div>
+
+            {/* Amenities */}
+            <div style={{ marginBottom: '24px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Amenities
+              </h2>
+              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div>• Free Estimates</div>
+                <div>• Same-Day Service</div>
+                <div>• Eco-Friendly</div>
+              </div>
+            </div>
+
+            {/* Payment Methods */}
+            <div style={{ marginBottom: '24px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Payment Methods
+              </h2>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {['VISA', 'MC', 'AMEX', 'DISC'].map((method) => (
+                  <div key={method} style={{
+                    padding: '4px 12px',
+                    background: '#e5e7eb',
+                    borderRadius: '4px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                  }}>
+                    {method}
                   </div>
                 ))}
               </div>
             </div>
-          )}
 
-          {/* Description */}
-          {company.description && (
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '16px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            }}>
+            {/* Business Hours */}
+            <div style={{ marginBottom: '24px' }}>
               <h2 style={{
-                fontSize: '18px',
+                fontSize: '20px',
                 fontWeight: '700',
                 marginBottom: '12px',
-                color: '#111827',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
               }}>
-                About Us
+                Business Hours
               </h2>
-              <p style={{
-                fontSize: '14px',
-                color: '#6b7280',
-                lineHeight: '1.6',
-                margin: 0,
-              }}>
-                {company.description}
-              </p>
-            </div>
-          )}
-
-          {/* Contact Information */}
-          <div style={{
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            padding: '20px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          }}>
-            <h2 style={{
-              fontSize: '18px',
-              fontWeight: '700',
-              marginBottom: '12px',
-              color: '#111827',
-            }}>
-              Contact Information
-            </h2>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Phone size={16} color="#6b7280" />
-              <a href={`tel:${company.phone}`} style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none' }}>
-                {company.phone}
-              </a>
-            </div>
-            {company.address && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <MapPin size={16} color="#6b7280" />
-                <span style={{ fontSize: '14px', color: '#6b7280' }}>
-                  {company.address}
-                </span>
+              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div>8:00 AM - 6:00 PM</div>
+                <div>8:00 AM - 4:00 PM</div>
+                <div>Sunday - Closed</div>
               </div>
-            )}
-            {company.website && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Globe size={16} color="#6b7280" />
-                <a href={company.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: '#2563eb', textDecoration: 'none' }}>
-                  Visit Website
+            </div>
+
+            {/* Location */}
+            <div style={{ marginBottom: '24px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Location
+              </h2>
+              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <div>1234 Elm St</div>
+                <div>Springfield, IL 62701</div>
+              </div>
+            </div>
+
+            {/* Contact Information */}
+            <div>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Contact Information
+              </h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <Phone size={16} color="#000" />
+                <a href={`tel:${company.phone}`} style={{ fontSize: '14px', color: '#000', textDecoration: 'none', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.phone}
                 </a>
               </div>
-            )}
-            <button
-              style={{
-                width: '100%',
-                marginTop: '16px',
-                padding: '12px',
-                background: '#2563eb',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: '600',
-              }}
-              onClick={() => {
-                trackBusinessEvent(company.id, 'call');
-                window.open(`tel:${company.phone}`, '_self');
-              }}
-              data-testid="button-request-quote-bottom"
-            >
-              Request a Quote
-            </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                <Globe size={16} color="#000" />
+                <span style={{ fontSize: '14px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  1234@moras.com
+                </span>
+              </div>
+              <button
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: '#2563eb',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}
+                onClick={() => {
+                  trackBusinessEvent(company.id, 'call');
+                  window.open(`tel:${company.phone}`, '_self');
+                }}
+                data-testid="button-request-quote-bottom"
+              >
+                Request a Quote
+              </button>
+            </div>
           </div>
         </div>
       </div>
