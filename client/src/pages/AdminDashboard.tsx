@@ -1276,32 +1276,28 @@ export default function AdminDashboard() {
                     <div
                       key={template.id}
                       style={{
+                        position: 'relative',
                         border: '2px solid #e5e7eb',
                         borderRadius: '12px',
                         padding: '16px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'start',
-                        gap: '12px',
+                        paddingRight: '100px',
                       }}
                     >
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                          <div
-                            style={{
-                              width: '12px',
-                              height: '12px',
-                              borderRadius: '50%',
-                              background: template.color,
-                            }}
-                          />
-                          <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '700' }}>
-                            {template.name}
-                          </h4>
-                        </div>
-                        <div style={{ fontSize: '13px', color: '#6b7280' }}>
-                          {template.subject}
-                        </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                        <div
+                          style={{
+                            width: '12px',
+                            height: '12px',
+                            borderRadius: '50%',
+                            background: template.color,
+                          }}
+                        />
+                        <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '700' }}>
+                          {template.name}
+                        </h4>
+                      </div>
+                      <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                        {template.subject}
                       </div>
                       <button
                         onClick={() => {
@@ -1309,6 +1305,9 @@ export default function AdminDashboard() {
                           setActionsView('edit');
                         }}
                         style={{
+                          position: 'absolute',
+                          top: '16px',
+                          right: '16px',
                           background: '#166534',
                           color: '#fff',
                           border: 'none',
