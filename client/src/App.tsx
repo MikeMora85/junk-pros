@@ -1020,7 +1020,7 @@ function LandingPage() {
               placeholder="Search for your state, city, or town"
               style={{
                 flex: 1,
-                minWidth: '0',
+                minWidth: '280px',
                 padding: '10px 12px',
                 border: 'none',
                 outline: 'none',
