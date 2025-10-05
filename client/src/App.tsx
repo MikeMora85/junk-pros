@@ -3365,39 +3365,123 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
         padding: '32px 24px',
         position: 'relative',
       }}>
-        <button
-          onClick={onClose}
-          data-testid="button-close-profile"
-          style={{
-            position: 'absolute',
-            top: '16px',
-            right: '16px',
-            background: 'rgba(255,255,255,0.2)',
-            border: 'none',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <X size={24} color="#fff" />
-        </button>
+        <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', gap: '8px' }}>
+          {isOwner && !editMode && (
+            <button
+              onClick={() => setEditMode(true)}
+              style={{
+                background: '#166534',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+              }}
+              data-testid="button-edit-profile"
+            >
+              ✏️ Edit
+            </button>
+          )}
+          {isOwner && editMode && (
+            <button
+              onClick={handleSave}
+              disabled={updateMutation.isPending}
+              style={{
+                background: '#166534',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '8px 16px',
+                cursor: updateMutation.isPending ? 'not-allowed' : 'pointer',
+                fontSize: '14px',
+                fontWeight: '600',
+                opacity: updateMutation.isPending ? 0.7 : 1,
+              }}
+              data-testid="button-save-profile"
+            >
+              {updateMutation.isPending ? 'Saving...' : '💾 Save'}
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            data-testid="button-close-profile"
+            style={{
+              background: 'rgba(255,255,255,0.2)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <X size={24} color="#fff" />
+          </button>
+        </div>
         
-        {company.logoUrl && (
-          <img 
-            src={company.logoUrl} 
-            alt={`${company.name} logo`}
-            style={{ 
-              height: '60px', 
-              marginBottom: '16px',
-              background: '#fff',
-              padding: '8px',
-              borderRadius: '8px',
-            }} 
-          />
+        {editMode && isOwner ? (
+          <div style={{ position: 'relative', display: 'inline-block', marginBottom: '16px' }}>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleLogoUpload}
+              style={{ display: 'none' }}
+              id="logo-upload-inline"
+            />
+            <label
+              htmlFor="logo-upload-inline"
+              style={{
+                display: 'block',
+                cursor: 'pointer',
+                position: 'relative',
+              }}
+            >
+              {logoPreview ? (
+                <img 
+                  src={logoPreview}
+                  alt="Company logo"
+                  style={{ 
+                    height: '60px', 
+                    background: '#fff',
+                    padding: '8px',
+                    borderRadius: '8px',
+                  }} 
+                />
+              ) : (
+                <div style={{
+                  height: '60px',
+                  width: '120px',
+                  background: '#e5e7eb',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: '8px',
+                  color: '#6b7280',
+                  fontSize: '12px',
+                }}>
+                  📷 Add Logo
+                </div>
+              )}
+            </label>
+          </div>
+        ) : (
+          company.logoUrl && (
+            <img 
+              src={company.logoUrl} 
+              alt={`${company.name} logo`}
+              style={{ 
+                height: '60px', 
+                marginBottom: '16px',
+                background: '#fff',
+                padding: '8px',
+                borderRadius: '8px',
+              }} 
+            />
+          )
         )}
         
         <h1 style={{
