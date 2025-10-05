@@ -56,6 +56,14 @@ export const companies = pgTable("companies", {
   lastPaymentDate: timestamp("last_payment_date"),
   nextPaymentDate: timestamp("next_payment_date"),
   paymentWarnings: integer("payment_warnings").notNull().default(0),
+  priceSheetVisible: boolean("price_sheet_visible").notNull().default(true),
+  addOnCostsVisible: boolean("add_on_costs_visible").notNull().default(true),
+  priceSheetData: jsonb("price_sheet_data"),
+  addOnCosts: jsonb("add_on_costs"),
+  platformReviews: jsonb("platform_reviews"),
+  featuredReviewIds: text("featured_review_ids").array(),
+  galleryImages: text("gallery_images").array(),
+  serviceAreaCities: text("service_area_cities").array(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -78,6 +86,14 @@ export const insertCompanySchema = createInsertSchema(companies, {
   lastPaymentDate: z.date().nullable().optional(),
   nextPaymentDate: z.date().nullable().optional(),
   paymentWarnings: z.number().optional(),
+  priceSheetVisible: z.boolean().optional(),
+  addOnCostsVisible: z.boolean().optional(),
+  priceSheetData: z.any().nullable().optional(),
+  addOnCosts: z.any().nullable().optional(),
+  platformReviews: z.any().nullable().optional(),
+  featuredReviewIds: z.array(z.string()).nullable().optional(),
+  galleryImages: z.array(z.string()).nullable().optional(),
+  serviceAreaCities: z.array(z.string()).nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
