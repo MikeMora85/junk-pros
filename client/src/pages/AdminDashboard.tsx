@@ -25,6 +25,8 @@ export default function AdminDashboard() {
   const [expandedCompany, setExpandedCompany] = useState<number | null>(null);
   const [actionsView, setActionsView] = useState<'list' | 'new' | 'edit' | null>(null);
   const [editingAction, setEditingAction] = useState<ActionTemplate | null>(null);
+  const [analyticsStateFilter, setAnalyticsStateFilter] = useState<string>("all");
+  const [analyticsCityFilter, setAnalyticsCityFilter] = useState<string>("all");
   const [actionTemplates, setActionTemplates] = useState<ActionTemplate[]>([
     {
       id: 'reminder',
@@ -779,14 +781,320 @@ export default function AdminDashboard() {
       {/* Analytics Tab */}
       {activeTab === 'analytics' && (
         <div style={{ padding: '16px' }}>
-          <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #e5e7eb' }}>
-            <h2 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: '700' }}>
-              Analytics & Reports
-            </h2>
-            <p style={{ color: '#6b7280', margin: 0 }}>
-              View performance metrics and generate reports.
-            </p>
+          {/* Search Filters */}
+          <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', marginBottom: '16px', border: '1px solid #e5e7eb' }}>
+            <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '700', color: '#000' }}>
+              Filter Analytics
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '6px', color: '#000' }}>
+                  State
+                </label>
+                <select
+                  value={analyticsStateFilter}
+                  onChange={(e) => {
+                    setAnalyticsStateFilter(e.target.value);
+                    setAnalyticsCityFilter("all");
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '10px',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    background: '#fff',
+                  }}
+                  data-testid="select-analytics-state"
+                >
+                  <option value="all">All States (Website-Wide)</option>
+                  {Array.from(new Set([...pendingCompanies, ...activeCompanies].map(c => c.state))).sort().map(state => (
+                    <option key={state} value={state}>{state}</option>
+                  ))}
+                </select>
+              </div>
+              {analyticsStateFilter !== "all" && (
+                <div>
+                  <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', marginBottom: '6px', color: '#000' }}>
+                    City
+                  </label>
+                  <select
+                    value={analyticsCityFilter}
+                    onChange={(e) => setAnalyticsCityFilter(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      background: '#fff',
+                    }}
+                    data-testid="select-analytics-city"
+                  >
+                    <option value="all">All Cities in {analyticsStateFilter}</option>
+                    {Array.from(new Set([...pendingCompanies, ...activeCompanies]
+                      .filter(c => c.state === analyticsStateFilter)
+                      .map(c => c.city))).sort().map(city => (
+                      <option key={city} value={city}>{city}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
           </div>
+
+          {(() => {
+            const allCompanies = [...pendingCompanies, ...activeCompanies];
+            const filteredAnalytics = allCompanies.filter(c => {
+              if (analyticsStateFilter !== "all" && c.state !== analyticsStateFilter) return false;
+              if (analyticsCityFilter !== "all" && c.city !== analyticsCityFilter) return false;
+              return true;
+            });
+
+            const analyticsData = {
+              total: filteredAnalytics.length,
+              active: filteredAnalytics.filter(c => c.status === 'approved').length,
+              pending: filteredAnalytics.filter(c => c.status === 'pending').length,
+              denied: filteredAnalytics.filter(c => c.status === 'denied').length,
+              featured: filteredAnalytics.filter(c => c.subscriptionTier === 'featured').length,
+              free: filteredAnalytics.filter(c => c.subscriptionTier === 'free').length,
+              activeSubscriptions: filteredAnalytics.filter(c => c.subscriptionStatus === 'active').length,
+              pastDue: filteredAnalytics.filter(c => c.subscriptionStatus === 'past_due').length,
+              cancelled: filteredAnalytics.filter(c => c.subscriptionStatus === 'cancelled').length,
+              monthlyRevenue: filteredAnalytics.filter(c => c.subscriptionTier === 'featured' && c.subscriptionStatus === 'active').length * 49,
+              potentialRevenue: filteredAnalytics.filter(c => c.subscriptionTier === 'featured').length * 49,
+            };
+
+            const locationLabel = analyticsCityFilter !== "all" 
+              ? `${analyticsCityFilter}, ${analyticsStateFilter}`
+              : analyticsStateFilter !== "all"
+                ? analyticsStateFilter
+                : "Website-Wide";
+
+            return (
+              <>
+                {/* Overview Header */}
+                <div style={{ background: '#166534', borderRadius: '12px', padding: '20px', marginBottom: '16px', color: '#fff' }}>
+                  <h2 style={{ margin: '0 0 8px 0', fontSize: '20px', fontWeight: '700' }}>
+                    Analytics: {locationLabel}
+                  </h2>
+                  <p style={{ margin: 0, opacity: 0.9, fontSize: '14px' }}>
+                    Complete business metrics and performance data
+                  </p>
+                </div>
+
+                {/* Business Statistics Grid */}
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                  gap: '12px',
+                  marginBottom: '16px'
+                }}>
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '2px solid #e5e7eb' }}>
+                    <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '6px', fontWeight: '600' }}>Total Businesses</div>
+                    <div style={{ fontSize: '28px', fontWeight: '700', color: '#000' }}>{analyticsData.total}</div>
+                  </div>
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '2px solid #10b981' }}>
+                    <div style={{ fontSize: '13px', color: '#10b981', marginBottom: '6px', fontWeight: '600' }}>Active</div>
+                    <div style={{ fontSize: '28px', fontWeight: '700', color: '#10b981' }}>{analyticsData.active}</div>
+                  </div>
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '2px solid #fbbf24' }}>
+                    <div style={{ fontSize: '13px', color: '#f59e0b', marginBottom: '6px', fontWeight: '600' }}>Pending</div>
+                    <div style={{ fontSize: '28px', fontWeight: '700', color: '#f59e0b' }}>{analyticsData.pending}</div>
+                  </div>
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '2px solid #ef4444' }}>
+                    <div style={{ fontSize: '13px', color: '#ef4444', marginBottom: '6px', fontWeight: '600' }}>Denied</div>
+                    <div style={{ fontSize: '28px', fontWeight: '700', color: '#ef4444' }}>{analyticsData.denied}</div>
+                  </div>
+                </div>
+
+                {/* Subscription Metrics */}
+                <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', marginBottom: '16px', border: '1px solid #e5e7eb' }}>
+                  <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '700', color: '#000' }}>
+                    Subscription Metrics
+                  </h3>
+                  <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                    gap: '16px'
+                  }}>
+                    <div>
+                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>Featured Tier</div>
+                      <div style={{ fontSize: '24px', fontWeight: '700', color: '#fbbf24' }}>{analyticsData.featured}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>Free Tier</div>
+                      <div style={{ fontSize: '24px', fontWeight: '700', color: '#6b7280' }}>{analyticsData.free}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>Active Subs</div>
+                      <div style={{ fontSize: '24px', fontWeight: '700', color: '#10b981' }}>{analyticsData.activeSubscriptions}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>Past Due</div>
+                      <div style={{ fontSize: '24px', fontWeight: '700', color: '#f59e0b' }}>{analyticsData.pastDue}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>Cancelled</div>
+                      <div style={{ fontSize: '24px', fontWeight: '700', color: '#ef4444' }}>{analyticsData.cancelled}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Revenue Analytics */}
+                <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', marginBottom: '16px', border: '1px solid #e5e7eb' }}>
+                  <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '700', color: '#000' }}>
+                    Revenue Analytics
+                  </h3>
+                  <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+                    gap: '16px'
+                  }}>
+                    <div style={{ background: '#dcfce7', borderRadius: '8px', padding: '16px' }}>
+                      <div style={{ fontSize: '13px', color: '#166534', marginBottom: '4px', fontWeight: '600' }}>Monthly Revenue (Active)</div>
+                      <div style={{ fontSize: '28px', fontWeight: '700', color: '#166534' }}>${analyticsData.monthlyRevenue}</div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
+                        From {analyticsData.activeSubscriptions} active subscriptions
+                      </div>
+                    </div>
+                    <div style={{ background: '#fef3c7', borderRadius: '8px', padding: '16px' }}>
+                      <div style={{ fontSize: '13px', color: '#92400e', marginBottom: '4px', fontWeight: '600' }}>Potential Revenue</div>
+                      <div style={{ fontSize: '28px', fontWeight: '700', color: '#92400e' }}>${analyticsData.potentialRevenue}</div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
+                        If all {analyticsData.featured} featured paid
+                      </div>
+                    </div>
+                    <div style={{ background: '#fee2e2', borderRadius: '8px', padding: '16px' }}>
+                      <div style={{ fontSize: '13px', color: '#991b1b', marginBottom: '4px', fontWeight: '600' }}>At Risk Revenue</div>
+                      <div style={{ fontSize: '28px', fontWeight: '700', color: '#991b1b' }}>${analyticsData.pastDue * 49}</div>
+                      <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
+                        From {analyticsData.pastDue} past due accounts
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Geographic Breakdown */}
+                {analyticsStateFilter === "all" && (
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #e5e7eb' }}>
+                    <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '700', color: '#000' }}>
+                      Geographic Distribution
+                    </h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {Array.from(new Set(allCompanies.map(c => c.state))).sort().map(state => {
+                        const stateCompanies = allCompanies.filter(c => c.state === state);
+                        const stateActive = stateCompanies.filter(c => c.status === 'approved').length;
+                        const stateFeatured = stateCompanies.filter(c => c.subscriptionTier === 'featured').length;
+                        return (
+                          <div key={state} style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            padding: '12px',
+                            background: '#f9fafb',
+                            borderRadius: '8px',
+                            border: '1px solid #e5e7eb'
+                          }}>
+                            <div style={{ fontWeight: '600', color: '#000' }}>{state}</div>
+                            <div style={{ display: 'flex', gap: '16px', fontSize: '14px' }}>
+                              <span style={{ color: '#6b7280' }}>Total: <strong>{stateCompanies.length}</strong></span>
+                              <span style={{ color: '#10b981' }}>Active: <strong>{stateActive}</strong></span>
+                              <span style={{ color: '#fbbf24' }}>Featured: <strong>{stateFeatured}</strong></span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* City Breakdown */}
+                {analyticsStateFilter !== "all" && analyticsCityFilter === "all" && (
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', border: '1px solid #e5e7eb' }}>
+                    <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '700', color: '#000' }}>
+                      Cities in {analyticsStateFilter}
+                    </h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {Array.from(new Set(allCompanies.filter(c => c.state === analyticsStateFilter).map(c => c.city))).sort().map(city => {
+                        const cityCompanies = allCompanies.filter(c => c.state === analyticsStateFilter && c.city === city);
+                        const cityActive = cityCompanies.filter(c => c.status === 'approved').length;
+                        const cityFeatured = cityCompanies.filter(c => c.subscriptionTier === 'featured').length;
+                        return (
+                          <div key={city} style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            padding: '12px',
+                            background: '#f9fafb',
+                            borderRadius: '8px',
+                            border: '1px solid #e5e7eb'
+                          }}>
+                            <div style={{ fontWeight: '600', color: '#000' }}>{city}</div>
+                            <div style={{ display: 'flex', gap: '16px', fontSize: '14px' }}>
+                              <span style={{ color: '#6b7280' }}>Total: <strong>{cityCompanies.length}</strong></span>
+                              <span style={{ color: '#10b981' }}>Active: <strong>{cityActive}</strong></span>
+                              <span style={{ color: '#fbbf24' }}>Featured: <strong>{cityFeatured}</strong></span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Business List */}
+                {filteredAnalytics.length > 0 && (
+                  <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', marginTop: '16px', border: '1px solid #e5e7eb' }}>
+                    <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '700', color: '#000' }}>
+                      Business Details ({filteredAnalytics.length})
+                    </h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {filteredAnalytics.map(company => (
+                        <div key={company.id} style={{ 
+                          padding: '12px',
+                          background: '#f9fafb',
+                          borderRadius: '8px',
+                          border: '1px solid #e5e7eb'
+                        }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: '12px' }}>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontWeight: '700', color: '#000', marginBottom: '4px' }}>{company.name}</div>
+                              <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                                {company.city}, {company.state} • {company.phone}
+                              </div>
+                            </div>
+                            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                              <span style={{ 
+                                background: company.status === 'approved' ? '#dcfce7' : company.status === 'pending' ? '#fef3c7' : '#fee2e2',
+                                color: company.status === 'approved' ? '#166534' : company.status === 'pending' ? '#92400e' : '#991b1b',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                fontSize: '12px',
+                                fontWeight: '600'
+                              }}>
+                                {company.status?.toUpperCase() || 'PENDING'}
+                              </span>
+                              <span style={{ 
+                                background: company.subscriptionTier === 'featured' ? '#fef3c7' : '#e5e7eb',
+                                color: company.subscriptionTier === 'featured' ? '#92400e' : '#6b7280',
+                                padding: '4px 10px',
+                                borderRadius: '6px',
+                                fontSize: '12px',
+                                fontWeight: '600'
+                              }}>
+                                {company.subscriptionTier?.toUpperCase() || 'FREE'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       )}
 
