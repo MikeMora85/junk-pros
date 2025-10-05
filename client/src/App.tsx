@@ -823,6 +823,7 @@ function LandingPage() {
 function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: string }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
 
   const stateData: Record<string, { 
@@ -1218,6 +1219,8 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       minHeight: '100vh',
       background: '#ffffff',
     }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
       {/* Sticky Navigation Header */}
       <div style={{
         position: 'fixed',
@@ -1226,7 +1229,38 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         right: 0,
         zIndex: 100,
         padding: '16px',
+        display: 'flex',
+        gap: '12px',
       }}>
+        <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          data-testid="button-menu-state"
+        >
+          <Menu size={18} color="#000" />
+        </button>
+        
         <a
           href="/"
           style={{
