@@ -569,9 +569,21 @@ export class DbStorage implements IStorage {
   }
 
   async deleteCompany(id: number): Promise<boolean> {
-    const result = await db
+    // Delete related records first due to foreign key constraints
+    // 1. Delete business events
+    await db.delete(businessEvents).where(eq(businessEvents.companyId, id));
+    
+    // 2. Update business owners to remove company reference
+    await db
+      .update(businessOwners)
+      .set({ companyId: null })
+      .where(eq(businessOwners.companyId, id));
+    
+    // 3. Delete the company
+    await db
       .delete(companies)
       .where(eq(companies.id, id));
+    
     return true;
   }
 

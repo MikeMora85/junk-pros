@@ -428,12 +428,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.delete("/api/companies/:id", requireSimpleAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      console.log('DELETE request for company:', id);
 
       if (isNaN(id)) {
         return res.status(400).json({ error: "Invalid company ID" });
       }
 
       const success = await storage.deleteCompany(id);
+      console.log('Delete operation result:', success);
+      
       if (!success) {
         return res.status(404).json({ error: "Company not found" });
       }
@@ -441,7 +444,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       res.json({ success: true, message: "Company deleted successfully" });
     } catch (error) {
       console.error('Error deleting company:', error);
-      res.status(500).json({ error: "Failed to delete company" });
+      res.status(500).json({ error: "Failed to delete company", details: error instanceof Error ? error.message : String(error) });
     }
   });
 
