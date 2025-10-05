@@ -63,6 +63,10 @@ import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
 import curbsideJunkHero from "@assets/662A4A2C-FCD0-43E0-9DC4-2ABCD8C1DC69_1759626202147.png";
+import profilePhoto1 from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
+import profilePhoto2 from "@assets/stock_images/junk_removal_truck_l_d830abe1.jpg";
+import profilePhoto3 from "@assets/stock_images/junk_removal_truck_l_edd9160e.jpg";
+import profilePhoto4 from "@assets/stock_images/junk_removal_truck_l_163f0dce.jpg";
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
@@ -3509,13 +3513,15 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 gridTemplateColumns: 'repeat(2, 1fr)',
                 gap: '12px',
               }}>
-                {[1, 2, 3, 4].map((i) => (
-                  <div
+                {[profilePhoto1, profilePhoto2, profilePhoto3, profilePhoto4].map((photo, i) => (
+                  <img
                     key={i}
+                    src={photo}
+                    alt={`Company photo ${i + 1}`}
                     style={{
                       width: '100%',
                       height: '140px',
-                      background: '#e5e7eb',
+                      objectFit: 'cover',
                       borderRadius: '8px',
                     }}
                   />
