@@ -25,6 +25,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.post('/api/auth/simple-login', async (req, res) => {
     try {
       const { email, password, role } = req.body;
+      console.log('Login attempt:', { email, role });
       
       // Check admin credentials
       if (role === 'admin') {
@@ -35,6 +36,21 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             isAdmin: true,
             role: 'admin'
           };
+          
+          // Save session explicitly
+          await new Promise((resolve, reject) => {
+            (req as any).session.save((err: any) => {
+              if (err) {
+                console.error('Session save error:', err);
+                reject(err);
+              } else {
+                console.log('Session saved successfully:', (req as any).session.id);
+                resolve(true);
+              }
+            });
+          });
+          
+          console.log('Admin login successful, session:', (req as any).session.user);
           return res.json({ success: true, user: { email, isAdmin: true } });
         }
       }
@@ -55,8 +71,13 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Check if user is logged in
   app.get('/api/auth/user', async (req: any, res) => {
     try {
+      console.log('Auth check - Session ID:', req.sessionID);
+      console.log('Auth check - Session user:', req.session?.user);
+      console.log('Auth check - Cookies:', req.headers.cookie);
+      
       // Check simple auth session first
       if (req.session?.user) {
+        console.log('Returning session user:', req.session.user);
         return res.json(req.session.user);
       }
       
@@ -64,10 +85,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
         const userId = req.user.claims.sub;
         const user = await storage.getUser(userId);
+        console.log('Returning OAuth user:', user);
         return res.json(user);
       }
       
       // Return null for unauthenticated users (no error)
+      console.log('No user found, returning null');
       res.json(null);
     } catch (error) {
       console.error("Error fetching user:", error);
