@@ -8,7 +8,6 @@ import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
-import ProfileEditor from "./pages/ProfileEditor";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -2711,7 +2710,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
           {isAuthenticated ? (
             <>
-              <Link href={user?.role === 'admin' ? '/admin' : '/profile/edit'} style={{ textDecoration: 'none' }}>
+              <Link href={user?.role === 'admin' ? '/admin' : '/'} style={{ textDecoration: 'none' }}>
                 <button
                   style={{
                     background: '#16a34a',
@@ -3315,6 +3314,40 @@ function CityPage({ city, state }: { city: string; state: string }) {
 function CompanyDetailInline({ company, onClose, user }: { company: Company; onClose: () => void; user?: any }) {
   // Check if user owns this company
   const isOwner = user?.companyId === company.id;
+  const [editMode, setEditMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [formData, setFormData] = useState(company);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await apiRequest(`/api/companies/${company.id}`, {
+        method: 'PATCH',
+        body: formData,
+      });
+      await queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
+      setEditMode(false);
+      window.location.reload();
+    } catch (error: any) {
+      alert('Failed to save: ' + error.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setLogoPreview(result);
+        setFormData({ ...formData, logoUrl: result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div style={{
@@ -3325,31 +3358,111 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
       overflow: 'hidden',
       boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     }}>
+      {/* Header with Edit Controls */}
+      {isOwner && editMode && (
+        <div style={{
+          background: '#166534',
+          padding: '20px 24px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <h2 style={{ margin: 0, color: '#fff', fontSize: '20px', fontWeight: '700' }}>Business Profile</h2>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button
+              onClick={() => window.open(`/${company.state}/${company.city}`, '_blank')}
+              data-testid="button-view-live"
+              style={{
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '12px 24px',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '700',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              👁 Go to Live Profile
+            </button>
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              data-testid="button-save-profile"
+              style={{
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                borderRadius: '6px',
+                padding: '12px 24px',
+                cursor: isSaving ? 'not-allowed' : 'pointer',
+                fontSize: '14px',
+                fontWeight: '700',
+                opacity: isSaving ? 0.6 : 1,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              💾 {isSaving ? 'Saving...' : 'Save'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Edit/Preview Tabs (Yelp-style) */}
+      {isOwner && (
+        <div style={{
+          display: 'flex',
+          borderBottom: '2px solid #e5e7eb',
+          background: '#fff',
+        }}>
+          <button
+            onClick={() => setEditMode(true)}
+            data-testid="tab-edit-profile"
+            style={{
+              flex: 1,
+              padding: '16px',
+              background: 'none',
+              border: 'none',
+              borderBottom: editMode ? '4px solid #166534' : 'none',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              color: editMode ? '#166534' : '#6b7280',
+            }}
+          >
+            ✏️ Edit Profile
+          </button>
+          <button
+            onClick={() => setEditMode(false)}
+            data-testid="tab-preview"
+            style={{
+              flex: 1,
+              padding: '16px',
+              background: 'none',
+              border: 'none',
+              borderBottom: !editMode ? '4px solid #166534' : 'none',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: '600',
+              color: !editMode ? '#166534' : '#6b7280',
+            }}
+          >
+            👁 Preview
+          </button>
+        </div>
+      )}
+
       <div style={{
         background: '#fbbf24',
         padding: '32px 24px',
         position: 'relative',
       }}>
         <div style={{ position: 'absolute', top: '16px', right: '16px', display: 'flex', gap: '8px' }}>
-          {isOwner && (
-            <Link href="/profile/edit">
-              <button
-                style={{
-                  background: '#166534',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '6px',
-                  padding: '10px 20px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                }}
-                data-testid="button-edit-profile"
-              >
-                ✏️ Edit Your Profile
-              </button>
-            </Link>
-          )}
           <button
             onClick={onClose}
             data-testid="button-close-profile"
@@ -3369,29 +3482,90 @@ function CompanyDetailInline({ company, onClose, user }: { company: Company; onC
           </button>
         </div>
         
-        {company.logoUrl && (
-          <img 
-            src={company.logoUrl} 
-            alt={`${company.name} logo`}
-            style={{ 
-              height: '60px', 
-              marginBottom: '16px',
-              background: '#fff',
-              padding: '8px',
-              borderRadius: '8px',
-            }} 
-          />
+        {/* Logo - Editable or Display */}
+        {isOwner && editMode ? (
+          <div>
+            <label style={{ cursor: 'pointer' }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleLogoUpload}
+                data-testid="input-logo-upload"
+                style={{ display: 'none' }}
+              />
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '60px',
+                minWidth: '120px',
+                marginBottom: '16px',
+                background: logoPreview || formData.logoUrl ? 'transparent' : '#e5e7eb',
+                border: '2px dashed #166534',
+                borderRadius: '8px',
+                padding: '8px',
+                cursor: 'pointer',
+              }}>
+                {logoPreview || formData.logoUrl ? (
+                  <img src={logoPreview || formData.logoUrl} alt="Logo" style={{ height: '100%' }} />
+                ) : (
+                  <div style={{ textAlign: 'center', color: '#166534' }}>
+                    <Camera size={24} style={{ margin: '0 auto' }} />
+                    <div style={{ fontSize: '12px', marginTop: '4px' }}>Click to upload logo</div>
+                  </div>
+                )}
+              </div>
+            </label>
+          </div>
+        ) : (
+          <>
+            {(formData.logoUrl || logoPreview) && (
+              <img 
+                src={logoPreview || formData.logoUrl} 
+                alt={`${formData.name} logo`}
+                style={{ 
+                  height: '60px', 
+                  marginBottom: '16px',
+                  background: '#fff',
+                  padding: '8px',
+                  borderRadius: '8px',
+                }} 
+              />
+            )}
+          </>
         )}
         
-        <h1 style={{
-          color: '#000',
-          margin: '0',
-          fontSize: '36px',
-          fontWeight: '800',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        }}>
-          {company.name}
-        </h1>
+        {/* Company Name - Editable */}
+        {isOwner && editMode ? (
+          <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            data-testid="input-company-name"
+            style={{
+              color: '#000',
+              margin: '0',
+              fontSize: '36px',
+              fontWeight: '800',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              border: '2px solid #166534',
+              borderRadius: '6px',
+              padding: '8px',
+              background: '#fff',
+              width: '100%',
+            }}
+          />
+        ) : (
+          <h1 style={{
+            color: '#000',
+            margin: '0',
+            fontSize: '36px',
+            fontWeight: '800',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            {formData.name}
+          </h1>
+        )}
         
         <div style={{ display: 'flex', gap: '8px', marginTop: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
           {[1, 2, 3, 4, 5].map((star) => (
@@ -3871,7 +4045,6 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/add-business" component={AddBusiness} />
         <Route path="/admin" component={AdminDashboard} />
-        <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/:state/:city">
           {(params) => <CityPage city={params.city} state={params.state} />}
         </Route>
