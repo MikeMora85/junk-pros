@@ -1,17 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { useAuth } from '../hooks/useAuth';
 import { apiRequest, queryClient } from '../lib/queryClient';
 import type { Company } from '@shared/schema';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Save, Eye, Upload, Plus, Trash2, Star, Phone, MapPin, Globe, DollarSign, Image as ImageIcon, X, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Save, Eye, Upload, Plus, Trash2, Star, Phone, MapPin, Globe, DollarSign, Image as ImageIcon, X, ToggleLeft, ToggleRight } from 'lucide-react';
 
 export default function ProfileEditor() {
-  const { user } = useAuth();
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit');
   const [activeSection, setActiveSection] = useState<'basic' | 'pricing' | 'reviews' | 'gallery'>('basic');
-  const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>('');
   const [newReview, setNewReview] = useState({ platform: 'Google', author: '', rating: 5, text: '', date: '', url: '' });
   const [priceSheetItem, setPriceSheetItem] = useState({ service: '', price: '', unit: 'load' });
@@ -60,7 +57,6 @@ export default function ProfileEditor() {
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setLogoFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result as string;
@@ -244,22 +240,7 @@ export default function ProfileEditor() {
         flexWrap: 'wrap',
         gap: '12px',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <button
-            onClick={() => setLocation('/')}
-            style={{
-              background: '#fbbf24',
-              border: 'none',
-              padding: '8px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-            data-testid="button-back"
-          >
-            <ArrowLeft size={20} color="#000" />
-          </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           <h1 style={{ 
             fontSize: '20px', 
             fontWeight: '700', 
@@ -268,6 +249,28 @@ export default function ProfileEditor() {
           }}>
             Business Profile
           </h1>
+          {company?.city && company?.state && (
+            <button
+              onClick={() => setLocation(`/${company.city.toLowerCase()}/${company.state.toLowerCase()}`)}
+              style={{
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '14px',
+                fontWeight: '600',
+              }}
+              data-testid="button-live-profile"
+            >
+              <Eye size={18} color="#000" />
+              Go to Live Profile
+            </button>
+          )}
         </div>
         <button
           onClick={handleSave}
