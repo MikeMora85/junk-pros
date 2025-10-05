@@ -16,11 +16,19 @@ export default function ProfileEditor() {
   const [galleryUrl, setGalleryUrl] = useState('');
 
   // Get user's company
-  const { data: companies, isLoading } = useQuery<Company[]>({
+  const { data: companies, isLoading, error } = useQuery<Company[]>({
     queryKey: ['/api/companies/my'],
   });
 
   const company = companies?.[0];
+
+  // Debug logging
+  useEffect(() => {
+    console.log('ProfileEditor - companies:', companies);
+    console.log('ProfileEditor - isLoading:', isLoading);
+    console.log('ProfileEditor - error:', error);
+    console.log('ProfileEditor - auth_token:', localStorage.getItem('auth_token'));
+  }, [companies, isLoading, error]);
 
   // Local state for form
   const [formData, setFormData] = useState<Partial<Company>>({});
@@ -194,26 +202,52 @@ export default function ProfileEditor() {
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
         padding: '20px'
       }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '12px' }}>
-            No company found
+        <div style={{ textAlign: 'center', maxWidth: '400px' }}>
+          <div style={{ fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            No Business Profile Found
           </div>
-          <button
-            onClick={() => setLocation('/')}
-            style={{
-              background: '#fbbf24',
-              color: '#000',
-              border: 'none',
-              padding: '12px 24px',
-              borderRadius: '8px',
-              fontSize: '16px',
-              fontWeight: '600',
-              cursor: 'pointer',
-            }}
-            data-testid="button-home"
-          >
-            Go Home
-          </button>
+          <div style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>
+            {localStorage.getItem('auth_token') ? 
+              'Your account is not linked to a business. Please sign up to create your business profile.' :
+              'Please log in to access your business profile.'
+            }
+          </div>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+            {!localStorage.getItem('auth_token') && (
+              <button
+                onClick={() => setLocation('/login')}
+                style={{
+                  background: '#166534',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                }}
+                data-testid="button-login"
+              >
+                Login
+              </button>
+            )}
+            <button
+              onClick={() => setLocation('/')}
+              style={{
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+              }}
+              data-testid="button-home"
+            >
+              Go Home
+            </button>
+          </div>
         </div>
       </div>
     );
