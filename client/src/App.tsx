@@ -278,16 +278,15 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             href="/"
             style={{
               display: 'block',
-              padding: '12px',
+              padding: '16px',
               color: '#000',
               textDecoration: 'none',
-              fontSize: '16px',
+              fontSize: '18px',
               fontWeight: '600',
               borderBottom: '1px solid #e5e5e5',
             }}
             data-testid="link-home"
           >
-            <Home size={18} style={{ display: 'inline', marginRight: '8px' }} />
             Home
           </a>
 
@@ -297,23 +296,21 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               onClick={() => setExpandedSection(expandedSection === 'states' ? null : 'states')}
               style={{
                 width: '100%',
-                padding: '12px',
+                padding: '16px',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                fontSize: '16px',
+                fontSize: '18px',
                 fontWeight: '600',
                 color: '#000',
+                textAlign: 'left',
               }}
               data-testid="button-areas-served"
             >
-              <span>
-                <MapPin size={18} style={{ display: 'inline', marginRight: '8px' }} />
-                Areas Served
-              </span>
+              <span>Areas Served</span>
               <ChevronDown size={18} style={{ transform: expandedSection === 'states' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </button>
 
@@ -343,10 +340,10 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                       href={`/${state.slug}`}
                       style={{
                         display: 'block',
-                        padding: '8px 12px',
+                        padding: '12px 16px',
                         color: '#000',
                         textDecoration: 'none',
-                        fontSize: '14px',
+                        fontSize: '16px',
                         borderRadius: '4px',
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
@@ -367,23 +364,21 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               onClick={() => setExpandedSection(expandedSection === 'services' ? null : 'services')}
               style={{
                 width: '100%',
-                padding: '12px',
+                padding: '16px',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                fontSize: '16px',
+                fontSize: '18px',
                 fontWeight: '600',
                 color: '#000',
+                textAlign: 'left',
               }}
               data-testid="button-services"
             >
-              <span>
-                <Truck size={18} style={{ display: 'inline', marginRight: '8px' }} />
-                Junk Removal Services
-              </span>
+              <span>Junk Removal Services</span>
               <ChevronDown size={18} style={{ transform: expandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </button>
 
@@ -412,9 +407,9 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                       key={service}
                       style={{
                         display: 'block',
-                        padding: '8px 12px',
+                        padding: '12px 16px',
                         color: '#000',
-                        fontSize: '14px',
+                        fontSize: '16px',
                         borderRadius: '4px',
                         cursor: 'pointer',
                       }}
@@ -435,16 +430,15 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             href="/blog"
             style={{
               display: 'block',
-              padding: '12px',
+              padding: '16px',
               color: '#000',
               textDecoration: 'none',
-              fontSize: '16px',
+              fontSize: '18px',
               fontWeight: '600',
               borderBottom: '1px solid #e5e5e5',
             }}
             data-testid="link-blog"
           >
-            <FileText size={18} style={{ display: 'inline', marginRight: '8px' }} />
             Blog
           </a>
         </div>
