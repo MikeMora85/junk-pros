@@ -85,3 +85,18 @@ export type Company = typeof companies.$inferSelect;
 
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
+
+export const businessEvents = pgTable("business_events", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  companyId: integer("company_id").notNull().references(() => companies.id),
+  eventType: text("event_type").notNull(), // 'click', 'call', 'book_quote', 'photo_quote'
+  eventDate: timestamp("event_date").notNull().defaultNow(),
+  metadata: jsonb("metadata"), // Additional data like source, device, etc.
+});
+
+export const insertBusinessEventSchema = createInsertSchema(businessEvents, {
+  metadata: z.any().nullable().optional(),
+});
+
+export type InsertBusinessEvent = z.infer<typeof insertBusinessEventSchema>;
+export type BusinessEvent = typeof businessEvents.$inferSelect;

@@ -1,4 +1,4 @@
-import type { Company, InsertCompany, User, UpsertUser } from "@shared/schema";
+import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent } from "@shared/schema";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -17,10 +17,22 @@ export interface IStorage {
   createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
   updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null>;
   updateCompanyStatus(id: number, status: string): Promise<Company | null>;
+  
+  // Business event tracking
+  trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent>;
+  getEventsByCompany(companyId: number, startDate?: Date, endDate?: Date): Promise<BusinessEvent[]>;
+  getMonthlyReportData(companyId: number, year: number, month: number): Promise<{
+    clicks: number;
+    calls: number;
+    bookQuotes: number;
+    photoQuotes: number;
+    totalEvents: number;
+  }>;
 }
 
 export class MemStorage implements IStorage {
   private users: User[] = [];
+  private businessEvents: BusinessEvent[] = [];
   private companies: Company[] = [
     {
       id: 1,
@@ -276,6 +288,53 @@ export class MemStorage implements IStorage {
 
     this.companies[index].status = status;
     return this.companies[index];
+  }
+
+  async trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent> {
+    const newId = Math.max(...this.businessEvents.map(e => e.id), 0) + 1;
+    const newEvent: BusinessEvent = {
+      id: newId,
+      companyId: data.companyId,
+      eventType: data.eventType,
+      eventDate: data.eventDate || new Date(),
+      metadata: data.metadata || null,
+    };
+    this.businessEvents.push(newEvent);
+    return newEvent;
+  }
+
+  async getEventsByCompany(companyId: number, startDate?: Date, endDate?: Date): Promise<BusinessEvent[]> {
+    let events = this.businessEvents.filter(e => e.companyId === companyId);
+    
+    if (startDate) {
+      events = events.filter(e => e.eventDate >= startDate);
+    }
+    if (endDate) {
+      events = events.filter(e => e.eventDate <= endDate);
+    }
+    
+    return events;
+  }
+
+  async getMonthlyReportData(companyId: number, year: number, month: number): Promise<{
+    clicks: number;
+    calls: number;
+    bookQuotes: number;
+    photoQuotes: number;
+    totalEvents: number;
+  }> {
+    const startDate = new Date(year, month - 1, 1);
+    const endDate = new Date(year, month, 0, 23, 59, 59);
+    
+    const events = await this.getEventsByCompany(companyId, startDate, endDate);
+    
+    return {
+      clicks: events.filter(e => e.eventType === 'click').length,
+      calls: events.filter(e => e.eventType === 'call').length,
+      bookQuotes: events.filter(e => e.eventType === 'book_quote').length,
+      photoQuotes: events.filter(e => e.eventType === 'photo_quote').length,
+      totalEvents: events.length,
+    };
   }
 }
 
