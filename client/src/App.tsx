@@ -3352,25 +3352,26 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            fontSize: '24px',
+            fontSize: '20px',
             padding: 0,
+            color: '#fbbf24',
+            fontWeight: '600',
           }}
         >
           ← Back
         </button>
       </div>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
         {/* Header with company name and request quote button */}
         <div style={{
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
+          flexDirection: 'column',
+          gap: '12px',
           marginBottom: '16px',
-          gap: '16px',
         }}>
           <h1 style={{
-            fontSize: '32px',
+            fontSize: '28px',
             fontWeight: '700',
             margin: '0',
             color: '#000',
@@ -3381,15 +3382,15 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <button
             style={{
               padding: '12px 24px',
-              background: '#2563eb',
-              color: '#fff',
+              background: '#fbbf24',
+              color: '#000',
               border: 'none',
               borderRadius: '8px',
               cursor: 'pointer',
               fontSize: '16px',
               fontWeight: '600',
-              whiteSpace: 'nowrap',
               fontFamily: 'system-ui, -apple-system, sans-serif',
+              alignSelf: 'flex-start',
             }}
             onClick={() => {
               trackBusinessEvent(company.id, 'call');
@@ -3450,7 +3451,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
 
         {/* Two Column Layout */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '24px' }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: window.innerWidth > 768 ? '1fr 300px' : '1fr', 
+          gap: '24px' 
+        }}>
           {/* Left Column */}
           <div>
             {/* About Us */}
@@ -3673,8 +3678,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: '#2563eb',
-                  color: '#fff',
+                  background: '#fbbf24',
+                  color: '#000',
                   border: 'none',
                   borderRadius: '8px',
                   cursor: 'pointer',
