@@ -641,7 +641,7 @@ export default function AdminDashboard() {
                         QUICK ACTIONS
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {/* Always visible actions */}
+                        {/* View Profile - Always visible */}
                         <button
                           onClick={() => {
                             window.open(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}/${company.id}`, '_blank');
@@ -666,7 +666,67 @@ export default function AdminDashboard() {
                           <Mail size={18} />
                           View Company Profile
                         </button>
+
+                        {/* Pause/Resume Profile */}
+                        <button
+                          onClick={() => {
+                            const action = company.subscriptionStatus === 'active' ? 'pause' : 'resume';
+                            if (confirm(`${action === 'pause' ? 'Pause' : 'Resume'} ${company.name}? ${action === 'pause' ? 'They will not appear in search results.' : 'They will appear in search results again.'}`)) {
+                              // TODO: Implement pause/resume mutation
+                              alert(`Pause/Resume functionality coming soon!`);
+                            }
+                            setExpandedCompany(null);
+                          }}
+                          style={{
+                            width: '100%',
+                            background: company.subscriptionStatus === 'active' ? '#f59e0b' : '#10b981',
+                            color: '#fff',
+                            padding: '12px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`pause-${company.id}`}
+                        >
+                          <Mail size={18} />
+                          {company.subscriptionStatus === 'active' ? 'Pause Profile' : 'Resume Profile'}
+                        </button>
+
+                        {/* Delete Profile */}
+                        <button
+                          onClick={() => {
+                            if (confirm(`⚠️ PERMANENTLY DELETE ${company.name}? This action cannot be undone!`)) {
+                              // TODO: Implement delete mutation
+                              alert(`Delete functionality coming soon!`);
+                            }
+                            setExpandedCompany(null);
+                          }}
+                          style={{
+                            width: '100%',
+                            background: '#ef4444',
+                            color: '#fff',
+                            padding: '12px',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`delete-${company.id}`}
+                        >
+                          <Mail size={18} />
+                          Delete Profile
+                        </button>
                         
+                        {/* Payment actions for featured listings */}
                         {company.subscriptionTier === 'featured' && company.subscriptionStatus !== 'active' && (
                           <>
                             <button
