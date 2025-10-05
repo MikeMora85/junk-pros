@@ -1,4 +1,4 @@
-import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent } from "@shared/schema";
+import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent, BusinessOwner, InsertBusinessOwner } from "@shared/schema";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -18,6 +18,12 @@ export interface IStorage {
   updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null>;
   updateCompanyStatus(id: number, status: string): Promise<Company | null>;
   
+  // Business owner operations
+  createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner>;
+  getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null>;
+  getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null>;
+  updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null>;
+  
   // Business event tracking
   trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent>;
   getEventsByCompany(companyId: number, startDate?: Date, endDate?: Date): Promise<BusinessEvent[]>;
@@ -33,6 +39,7 @@ export interface IStorage {
 export class MemStorage implements IStorage {
   private users: User[] = [];
   private businessEvents: BusinessEvent[] = [];
+  private businessOwners: BusinessOwner[] = [];
   private companies: Company[] = [
     {
       id: 1,
@@ -367,6 +374,35 @@ export class MemStorage implements IStorage {
       photoQuotes: events.filter(e => e.eventType === 'photo_quote').length,
       totalEvents: events.length,
     };
+  }
+
+  async createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner> {
+    const newId = Math.max(...this.businessOwners.map(o => o.id), 0) + 1;
+    const newOwner: BusinessOwner = {
+      id: newId,
+      email: data.email,
+      passwordHash: data.passwordHash,
+      companyId: data.companyId || null,
+      createdAt: new Date(),
+    };
+    this.businessOwners.push(newOwner);
+    return newOwner;
+  }
+
+  async getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null> {
+    return this.businessOwners.find(o => o.email === email) || null;
+  }
+
+  async getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null> {
+    return this.businessOwners.find(o => o.companyId === companyId) || null;
+  }
+
+  async updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null> {
+    const index = this.businessOwners.findIndex(o => o.id === id);
+    if (index === -1) return null;
+
+    this.businessOwners[index].companyId = companyId;
+    return this.businessOwners[index];
   }
 }
 
