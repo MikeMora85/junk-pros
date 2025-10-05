@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function Login() {
   const [activeTab, setActiveTab] = useState<'admin' | 'business'>('business');
@@ -7,15 +8,45 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleBack = () => {
     window.history.back();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Redirect to Replit auth with the appropriate flow
-    window.location.href = '/api/login';
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const response = await apiRequest('/api/auth/simple-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          role: activeTab
+        })
+      });
+
+      if (response.success) {
+        // Invalidate user cache
+        await queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
+        
+        // Redirect to admin dashboard for admins
+        if (activeTab === 'admin') {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/';
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || 'Invalid credentials. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -205,32 +236,51 @@ export default function Login() {
               />
             </div>
 
+            {error && (
+              <div style={{
+                padding: '12px',
+                marginBottom: '20px',
+                backgroundColor: '#fee2e2',
+                color: '#991b1b',
+                borderRadius: '8px',
+                fontSize: '14px',
+              }} data-testid="error-message">
+                {error}
+              </div>
+            )}
+
             <button
               type="submit"
+              disabled={isLoading}
               style={{
                 width: '100%',
                 padding: '14px',
                 fontSize: '16px',
                 fontWeight: '700',
                 color: '#000',
-                backgroundColor: '#fbbf24',
+                backgroundColor: isLoading ? '#e5e5e5' : '#fbbf24',
                 border: '2px solid #000',
                 borderRadius: '8px',
-                cursor: 'pointer',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
                 transition: 'all 0.2s',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                opacity: isLoading ? 0.7 : 1,
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                if (!isLoading) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25)';
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                if (!isLoading) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+                }
               }}
               data-testid="button-submit"
             >
-              {activeTab === 'admin' ? 'Sign In as Admin' : 'Sign In as Business'}
+              {isLoading ? 'Signing in...' : (activeTab === 'admin' ? 'Sign In as Admin' : 'Sign In as Business')}
             </button>
 
             <div style={{
