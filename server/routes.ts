@@ -21,21 +21,72 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     });
   });
 
-  // Auth routes - completely public, no middleware
+  // Simple login endpoint
+  app.post('/api/auth/simple-login', async (req, res) => {
+    try {
+      const { email, password, role } = req.body;
+      
+      // Check admin credentials
+      if (role === 'admin') {
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+          // Store admin session
+          (req as any).session.user = {
+            email: process.env.ADMIN_EMAIL,
+            isAdmin: true,
+            role: 'admin'
+          };
+          return res.json({ success: true, user: { email, isAdmin: true } });
+        }
+      }
+      
+      // For business owners, check if they exist in the system
+      if (role === 'business') {
+        // TODO: Implement business owner login
+        return res.status(401).json({ error: 'Business owner login not yet implemented' });
+      }
+      
+      res.status(401).json({ error: 'Invalid credentials' });
+    } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ error: 'Login failed' });
+    }
+  });
+
+  // Check if user is logged in
   app.get('/api/auth/user', async (req: any, res) => {
     try {
-      // Check if user is authenticated without requiring it
+      // Check simple auth session first
+      if (req.session?.user) {
+        return res.json(req.session.user);
+      }
+      
+      // Check if user is authenticated via Replit OAuth
       if (req.isAuthenticated && req.isAuthenticated() && req.user?.claims?.sub) {
         const userId = req.user.claims.sub;
         const user = await storage.getUser(userId);
         return res.json(user);
       }
+      
       // Return null for unauthenticated users (no error)
       res.json(null);
     } catch (error) {
       console.error("Error fetching user:", error);
       // Don't fail, just return null
       res.json(null);
+    }
+  });
+
+  // Logout endpoint
+  app.post('/api/auth/logout', async (req: any, res) => {
+    try {
+      req.session.destroy((err: any) => {
+        if (err) {
+          console.error('Session destroy error:', err);
+        }
+        res.json({ success: true });
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Logout failed' });
     }
   });
 
