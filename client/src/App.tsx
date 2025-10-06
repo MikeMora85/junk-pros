@@ -3918,6 +3918,7 @@ function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }
               </span>
               <ChevronDown
                 size={20}
+                color="#fbbf24"
                 style={{
                   transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                   transition: 'transform 0.2s',
