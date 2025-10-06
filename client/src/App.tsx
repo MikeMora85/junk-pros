@@ -3211,8 +3211,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </button>
                     </div>
 
-                    {/* Social Media Icons */}
-                    {(c.facebookUrl || c.instagramUrl || c.gmbUrl || c.youtubeUrl) && (
+                    {/* Social Media Icons and Website */}
+                    {(c.website || c.facebookUrl || c.instagramUrl || c.gmbUrl || c.youtubeUrl) && (
                       <div style={{
                         marginTop: '16px',
                         paddingTop: '16px',
@@ -3221,6 +3221,26 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         justifyContent: 'center',
                         gap: '16px',
                       }}>
+                        {c.website && (
+                          <a
+                            href={c.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              color: '#6b7280',
+                              transition: 'transform 0.2s',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            data-testid={`link-website-${c.id}`}
+                          >
+                            <Globe size={32} />
+                          </a>
+                        )}
                         {c.facebookUrl && (
                           <a
                             href={c.facebookUrl}
@@ -3494,12 +3514,31 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           ← Back
         </button>
         
-        {/* Social Media Icons */}
-        {(company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
+        {/* Social Media Icons and Website */}
+        {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
           <div style={{
             display: 'flex',
             gap: '16px',
           }}>
+            {company.website && (
+              <a
+                href={company.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#6b7280',
+                  transition: 'transform 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                data-testid={`link-website-modal-${company.id}`}
+              >
+                <Globe size={28} />
+              </a>
+            )}
             {company.facebookUrl && (
               <a
                 href={company.facebookUrl}
