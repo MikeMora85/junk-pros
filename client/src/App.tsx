@@ -17,84 +17,6 @@ import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
 import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
 import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
 import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
-
-function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  return (
-    <div>
-      <h2 style={{
-        fontSize: '24px',
-        fontWeight: '700',
-        marginBottom: '12px',
-        color: '#000',
-        fontFamily: 'system-ui, -apple-system, sans-serif',
-      }}>
-        Frequently Asked Questions
-      </h2>
-      {faqs.map((faq, i) => {
-        const isOpen = openIndex === i;
-        return (
-          <div key={i} style={{
-            marginBottom: '12px',
-            border: '1px solid #e5e7eb',
-            borderRadius: '8px',
-            overflow: 'hidden',
-          }}>
-            <button
-              onClick={() => setOpenIndex(isOpen ? null : i)}
-              style={{
-                width: '100%',
-                padding: '16px',
-                background: isOpen ? '#f9fafb' : '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                textAlign: 'left',
-              }}
-              data-testid={`button-faq-${i}`}
-            >
-              <span style={{
-                fontWeight: '600',
-                fontSize: '14px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                {faq.question}
-              </span>
-              <ChevronDown
-                size={20}
-                style={{
-                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.2s',
-                }}
-              />
-            </button>
-            {isOpen && (
-              <div style={{
-                padding: '16px',
-                backgroundColor: '#f9fafb',
-                borderTop: '1px solid #e5e7eb',
-              }}>
-                <p style={{
-                  margin: 0,
-                  fontSize: '14px',
-                  color: '#374151',
-                  lineHeight: '1.6',
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
-                }}>
-                  {faq.answer}
-                </p>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 import arizonaHero from "@assets/stock_images/grand_canyon_arizona_c5218ef2.jpg";
 import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.jpg";
 import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
@@ -3947,6 +3869,85 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
     </div>
   );
 }
+
+function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <div>
+      <h2 style={{
+        fontSize: '24px',
+        fontWeight: '700',
+        marginBottom: '12px',
+        color: '#000',
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+      }}>
+        Frequently Asked Questions
+      </h2>
+      {faqs.map((faq, i) => {
+        const isOpen = openIndex === i;
+        return (
+          <div key={i} style={{
+            marginBottom: '12px',
+            border: '1px solid #e5e7eb',
+            borderRadius: '8px',
+            overflow: 'hidden',
+          }}>
+            <button
+              onClick={() => setOpenIndex(isOpen ? null : i)}
+              style={{
+                width: '100%',
+                padding: '16px',
+                background: isOpen ? '#f9fafb' : '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                textAlign: 'left',
+              }}
+              data-testid={`button-faq-${i}`}
+            >
+              <span style={{
+                fontWeight: '600',
+                fontSize: '14px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                {faq.question}
+              </span>
+              <ChevronDown
+                size={20}
+                style={{
+                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                }}
+              />
+            </button>
+            {isOpen && (
+              <div style={{
+                padding: '16px',
+                backgroundColor: '#f9fafb',
+                borderTop: '1px solid #e5e7eb',
+              }}>
+                <p style={{
+                  margin: 0,
+                  fontSize: '14px',
+                  color: '#374151',
+                  lineHeight: '1.6',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  {faq.answer}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function App() {
   const stateNames: Record<string, string> = {
     'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
