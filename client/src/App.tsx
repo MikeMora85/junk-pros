@@ -10,6 +10,7 @@ import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 import ExampleProfile from "./pages/ExampleProfile";
+import CompanyDetail from "./pages/CompanyDetail";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -4054,7 +4055,22 @@ function StatePageWrapper(params: any) {
 }
 
 function App() {
-  return <LandingPage />;
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" component={LandingPage} />
+        <Route path="/login" component={Login} />
+        <Route path="/add-business" component={AddBusiness} />
+        <Route path="/admin" component={AdminDashboard} />
+        <Route path="/example-profile" component={ExampleProfile} />
+        <Route path="/company/:id" component={CompanyDetail} />
+        <Route path="/:state/:city/:id" component={CompanyDetail} />
+        <Route path="/:state/:city" component={CityPageWrapper} />
+        <Route path="/:state" component={StatePageWrapper} />
+        <Route>404 - Page Not Found</Route>
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
