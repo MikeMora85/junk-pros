@@ -34,7 +34,7 @@ const TABS: TabConfig[] = [
 ];
 
 export default function ProfileEditor() {
-  const { user } = useAuth();
+  const { user, isLoading: isAuthLoading } = useAuth();
   const [, navigate] = useLocation();
   const [activeTab, setActiveTab] = useState(1);
   const [completedTabs, setCompletedTabs] = useState<Set<number>>(new Set());
@@ -174,7 +174,7 @@ export default function ProfileEditor() {
     }));
   };
 
-  if (isLoading) {
+  if (isAuthLoading || isLoading) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ fontSize: "18px", color: "#666" }}>Loading your profile...</div>
