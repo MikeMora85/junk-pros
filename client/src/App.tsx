@@ -904,6 +904,16 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
 // Landing Page Component
 function LandingPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    
+    window.location.href = `/?search=${encodeURIComponent(searchQuery)}`;
+  };
+
   return (
     <div style={{
       minHeight: '100vh',
