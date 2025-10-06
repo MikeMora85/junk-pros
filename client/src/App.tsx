@@ -4046,14 +4046,6 @@ const stateNames: Record<string, string> = {
   'wisconsin': 'Wisconsin', 'wyoming': 'Wyoming',
 };
 
-function CityPageWrapper(params: any) {
-  return <CityPage city={params.city} state={params.state} />;
-}
-
-function StatePageWrapper(params: any) {
-  return <StatePage stateName={stateNames[params.state] || 'Unknown'} stateSlug={params.state} />;
-}
-
 function App() {
   return (
     <Router>
@@ -4065,8 +4057,12 @@ function App() {
         <Route path="/example-profile" component={ExampleProfile} />
         <Route path="/company/:id" component={CompanyDetail} />
         <Route path="/:state/:city/:id" component={CompanyDetail} />
-        <Route path="/:state/:city" component={CityPageWrapper} />
-        <Route path="/:state" component={StatePageWrapper} />
+        <Route path="/:state/:city">
+          {(params) => <CityPage city={params.city} state={params.state} />}
+        </Route>
+        <Route path="/:state">
+          {(params) => <StatePage stateName={stateNames[params.state] || 'Unknown'} stateSlug={params.state} />}
+        </Route>
         <Route>404 - Page Not Found</Route>
       </Switch>
     </Router>
