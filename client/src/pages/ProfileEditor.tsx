@@ -132,7 +132,7 @@ export default function ProfileEditor() {
     mutationFn: async (data: any) => {
       return apiRequest("/api/business/profile", {
         method: "PATCH",
-        body: JSON.stringify(data),
+        body: data,
       });
     },
     onSuccess: () => {
