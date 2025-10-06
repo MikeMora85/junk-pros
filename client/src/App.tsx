@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
-import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -3212,7 +3212,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
 
                     {/* Social Media Icons */}
-                    {(c.facebookUrl || c.instagramUrl || c.twitterUrl || c.linkedinUrl) && (
+                    {(c.facebookUrl || c.instagramUrl || c.gmbUrl || c.youtubeUrl) && (
                       <div style={{
                         marginTop: '16px',
                         paddingTop: '16px',
@@ -3261,14 +3261,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             <FaInstagram size={32} />
                           </a>
                         )}
-                        {c.twitterUrl && (
+                        {c.gmbUrl && (
                           <a
-                            href={c.twitterUrl}
+                            href={c.gmbUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
                             style={{
-                              color: '#1DA1F2',
+                              color: '#4285F4',
                               transition: 'transform 0.2s',
                               display: 'flex',
                               alignItems: 'center',
@@ -3276,19 +3276,19 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             }}
                             onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
                             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                            data-testid={`link-twitter-${c.id}`}
+                            data-testid={`link-gmb-${c.id}`}
                           >
-                            <FaTwitter size={32} />
+                            <FaGoogle size={32} />
                           </a>
                         )}
-                        {c.linkedinUrl && (
+                        {c.youtubeUrl && (
                           <a
-                            href={c.linkedinUrl}
+                            href={c.youtubeUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={(e) => e.stopPropagation()}
                             style={{
-                              color: '#0A66C2',
+                              color: '#FF0000',
                               transition: 'transform 0.2s',
                               display: 'flex',
                               alignItems: 'center',
@@ -3296,9 +3296,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             }}
                             onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
                             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                            data-testid={`link-linkedin-${c.id}`}
+                            data-testid={`link-youtube-${c.id}`}
                           >
-                            <FaLinkedin size={32} />
+                            <FaYoutube size={32} />
                           </a>
                         )}
                       </div>
@@ -3495,7 +3495,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         </button>
         
         {/* Social Media Icons */}
-        {(company.facebookUrl || company.instagramUrl || company.twitterUrl || company.linkedinUrl) && (
+        {(company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
           <div style={{
             display: 'flex',
             gap: '16px',
@@ -3538,13 +3538,13 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 <FaInstagram size={28} />
               </a>
             )}
-            {company.twitterUrl && (
+            {company.gmbUrl && (
               <a
-                href={company.twitterUrl}
+                href={company.gmbUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  color: '#1DA1F2',
+                  color: '#4285F4',
                   transition: 'transform 0.2s',
                   display: 'flex',
                   alignItems: 'center',
@@ -3552,18 +3552,18 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-twitter-modal-${company.id}`}
+                data-testid={`link-gmb-modal-${company.id}`}
               >
-                <FaTwitter size={28} />
+                <FaGoogle size={28} />
               </a>
             )}
-            {company.linkedinUrl && (
+            {company.youtubeUrl && (
               <a
-                href={company.linkedinUrl}
+                href={company.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  color: '#0A66C2',
+                  color: '#FF0000',
                   transition: 'transform 0.2s',
                   display: 'flex',
                   alignItems: 'center',
@@ -3571,9 +3571,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-linkedin-modal-${company.id}`}
+                data-testid={`link-youtube-modal-${company.id}`}
               >
-                <FaLinkedin size={28} />
+                <FaYoutube size={28} />
               </a>
             )}
           </div>
