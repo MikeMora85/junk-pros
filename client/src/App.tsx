@@ -908,11 +908,41 @@ function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     
-    window.location.href = `/?search=${encodeURIComponent(searchQuery)}`;
+    const query = searchQuery.trim().toLowerCase();
+    const slug = query.replace(/\s+/g, '-');
+    
+    // Check if it's a state name
+    const isState = Object.keys(stateNames).includes(slug) || 
+                    Object.values(stateNames).map(s => s.toLowerCase()).includes(query);
+    
+    if (isState) {
+      // Navigate to state page
+      const stateSlug = Object.keys(stateNames).find(key => 
+        key === slug || stateNames[key].toLowerCase() === query
+      );
+      window.location.href = `/${stateSlug}`;
+    } else {
+      // It's a city - search across all states to find which one has it
+      try {
+        const response = await fetch(`/api/search-city?city=${encodeURIComponent(slug)}`);
+        const result = await response.json();
+        
+        if (result.state) {
+          // Found the city in a specific state
+          window.location.href = `/${result.state}/${slug}`;
+        } else {
+          // City not found, default to Arizona for now
+          window.location.href = `/arizona/${slug}`;
+        }
+      } catch (error) {
+        // On error, default to Arizona
+        window.location.href = `/arizona/${slug}`;
+      }
+    }
   };
 
   return (

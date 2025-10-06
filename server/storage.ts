@@ -14,6 +14,7 @@ export interface IStorage {
   getCompaniesByLocal(local: boolean): Promise<Company[]>;
   getCompaniesByCity(city: string, state: string): Promise<Company[]>;
   getCitiesForState(state: string): Promise<string[]>;
+  findStateForCity(city: string): Promise<{ state: string | null; city: string }>;
   getCompaniesByUserId(userId: string): Promise<Company[]>;
   createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
   updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null>;
@@ -271,6 +272,16 @@ export class MemStorage implements IStorage {
     return cities.sort();
   }
 
+  async findStateForCity(city: string): Promise<{ state: string | null; city: string }> {
+    const company = this.companies.find((c) => 
+      c.city.toLowerCase() === city.toLowerCase() && c.status === 'approved'
+    );
+    return {
+      state: company ? company.state.toLowerCase().replace(/\s+/g, '-') : null,
+      city: city
+    };
+  }
+
   async getCompaniesByUserId(userId: string): Promise<Company[]> {
     return this.companies.filter(c => c.userId === userId);
   }
@@ -522,6 +533,24 @@ export class DbStorage implements IStorage {
         )
       );
     return results.map(r => r.city).sort();
+  }
+
+  async findStateForCity(city: string): Promise<{ state: string | null; city: string }> {
+    const result = await db
+      .select({ state: companies.state })
+      .from(companies)
+      .where(
+        and(
+          sql`LOWER(TRIM(${companies.city})) = LOWER(${city})`,
+          eq(companies.status, 'approved')
+        )
+      )
+      .limit(1);
+    
+    return {
+      state: result[0] ? result[0].state.toLowerCase().replace(/\s+/g, '-') : null,
+      city: city
+    };
   }
 
   async getCompaniesByUserId(userId: string): Promise<Company[]> {

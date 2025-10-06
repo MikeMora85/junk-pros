@@ -200,6 +200,22 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Search for which state has a specific city
+  app.get("/api/search-city", async (req, res) => {
+    try {
+      const { city } = req.query;
+      
+      if (!city) {
+        return res.status(400).json({ error: "City parameter required" });
+      }
+      
+      const result = await storage.findStateForCity(city as string);
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to search city" });
+    }
+  });
+
   // Public company routes
   app.get("/api/companies", async (req, res) => {
     try {
