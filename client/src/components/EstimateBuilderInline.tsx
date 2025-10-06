@@ -65,9 +65,27 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         </h3>
       </div>
       
+      {vehicleCapacity && (
+        <div style={{
+          backgroundColor: '#fbbf24',
+          borderRadius: '8px',
+          padding: '12px 16px',
+          marginBottom: '16px',
+          textAlign: 'center',
+          border: '2px solid #f59e0b',
+        }}>
+          <div style={{ fontSize: '13px', fontWeight: '600', color: '#000', marginBottom: '4px' }}>
+            Our Truck Capacity
+          </div>
+          <div style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>
+            {vehicleCapacity}
+          </div>
+        </div>
+      )}
+
       <p style={{ fontSize: '14px', marginBottom: '20px', color: '#333333', lineHeight: '1.5' }}>
         {vehicleCapacity ? (
-          <>Our truck holds {vehicleCapacity}. Send photos or book an in-person estimate to confirm your volume and final price.</>
+          <>Send photos or book an in-person estimate to confirm your volume and final price.</>
         ) : (
           <>Get your estimate in seconds! Most trucks hold 12-15 cubic yards.</>
         )}
