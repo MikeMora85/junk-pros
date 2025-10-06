@@ -141,10 +141,11 @@ export default function ProfileEditor() {
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     },
-    onError: () => {
-      setToastMessage("Failed to update profile");
+    onError: (error: any) => {
+      console.error("Profile update error:", error);
+      setToastMessage(`Failed to update profile: ${error.message || 'Unknown error'}`);
       setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
+      setTimeout(() => setShowToast(false), 5000);
     },
   });
 
