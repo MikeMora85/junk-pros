@@ -3633,7 +3633,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   fullLoad: company.fullLoadPrice ? parseFloat(company.fullLoadPrice) : 1000,
                 }}
                 showDisclaimers={false}
-                vehicleCapacity={company.trailerSize}
+                vehicleCapacity={company.trailerSize || undefined}
               />
             </div>
 
