@@ -37,11 +37,11 @@ export default function Login() {
         // Invalidate user cache
         await queryClient.invalidateQueries({ queryKey: ['/api/auth/user'] });
         
-        // Redirect to admin dashboard for admins
+        // Redirect to admin dashboard for admins, profile editor for business owners
         if (activeTab === 'admin') {
           window.location.href = '/admin';
         } else {
-          window.location.href = '/';
+          window.location.href = '/profile/edit';
         }
       }
     } catch (err: any) {
