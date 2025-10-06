@@ -3469,7 +3469,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       <div style={{
         position: 'sticky',
         top: 0,
-        background: '#fff',
+        background: 'rgba(255, 255, 255, 0.9)',
+        backdropFilter: 'blur(10px)',
         padding: '16px 20px',
         borderBottom: '1px solid #e5e7eb',
         display: 'flex',
