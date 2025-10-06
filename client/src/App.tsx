@@ -2745,22 +2745,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
           {isAuthenticated ? (
             <>
               <button
-                onClick={async () => {
+                onClick={() => {
                   if (user?.role === 'admin') {
                     window.location.href = '/admin';
                   } else {
-                    // Fetch user's company and navigate to their profile
-                    const response = await fetch('/api/companies/my', {
-                      credentials: 'include',
-                      headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-                      },
-                    });
-                    const companies = await response.json();
-                    if (companies && companies.length > 0) {
-                      const company = companies[0];
-                      window.location.href = `/${company.state.toLowerCase()}/${company.city.toLowerCase()}`;
-                    }
+                    // Navigate to profile editor for business owners
+                    window.location.href = '/profile/edit';
                   }
                 }}
                 style={{
