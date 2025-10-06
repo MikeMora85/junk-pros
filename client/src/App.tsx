@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -3650,31 +3650,61 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             </div>
 
             {/* Payment Methods */}
-            <div style={{ marginBottom: '24px' }}>
-              <h2 style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Payment Methods
-              </h2>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {['VISA', 'MC', 'AMEX', 'DISC'].map((method) => (
-                  <div key={method} style={{
-                    padding: '4px 12px',
-                    background: '#e5e7eb',
-                    borderRadius: '4px',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
-                  }}>
-                    {method}
-                  </div>
-                ))}
+            {company.paymentMethods && company.paymentMethods.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Payment Methods
+                </h2>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  {company.paymentMethods.map((method) => {
+                    const getMethodIcon = () => {
+                      switch(method.toLowerCase()) {
+                        case 'cash':
+                          return <DollarSign size={20} />;
+                        case 'card':
+                          return <CreditCard size={20} />;
+                        case 'zelle':
+                          return <span style={{ fontSize: '18px', fontWeight: '700' }}>Z</span>;
+                        case 'venmo':
+                          return <span style={{ fontSize: '18px', fontWeight: '700' }}>V</span>;
+                        case 'apple pay':
+                          return <Smartphone size={20} />;
+                        case 'cash app':
+                          return <span style={{ fontSize: '18px', fontWeight: '700' }}>$</span>;
+                        case 'check':
+                          return <FileText size={20} />;
+                        default:
+                          return <DollarSign size={20} />;
+                      }
+                    };
+                    
+                    return (
+                      <div key={method} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '8px 14px',
+                        background: '#f3f4f6',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#374151',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                      }}>
+                        {getMethodIcon()}
+                        {method}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Business Hours */}
             <div style={{ marginBottom: '24px' }}>
