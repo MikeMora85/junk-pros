@@ -28,7 +28,14 @@ I prefer detailed explanations.
 - **Visual Estimate Builder**: Interactive calculator with graphical representations of items and truck capacity.
 - **Business Management**:
     - **Signup**: Comprehensive full-page signup process with educational content, pricing tiers, and login creation.
-    - **Profile Editing**: Comprehensive ProfileEditor page (/profile/edit) for business owners with tabs for Basic Info, Pricing, Reviews, and Gallery. City page profiles display "Edit Your Profile" button for owners.
+    - **Profile Editing**: Simple, intuitive ProfileEditor page (/profile/edit) with:
+        - Full-width yellow numbered tabs (#fbbf24 inactive, #f59e0b active)
+        - 6 organized sections: Basic Information, Services & Specialties, About Your Business, Pricing, Team & Gallery, Visibility Settings
+        - Completion tracking with green checkmarks (#16a34a) for finished sections
+        - 9 selectable service type icons (residential, commercial, furniture, appliances, electronics, yard waste, construction, moving, general junk)
+        - Toggle switches for visibility settings (Show Pricing, Show Additional Costs)
+        - Save Progress and Go to Live Page buttons
+        - Clean yellow and black design matching brand colors
     - **Approval System**: Automatic business approval upon signup.
     - **Performance Tracking**: Automatic tracking of customer interactions (clicks, calls, photo quotes, in-person estimates) with an API endpoint `/api/track/event`.
 - **Admin Dashboard**:
