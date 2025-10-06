@@ -4,12 +4,7 @@ import { apiRequest, queryClient } from "../lib/queryClient";
 import { useAuth } from "../hooks/useAuth";
 import { useLocation } from "wouter";
 import { CheckCircle, Circle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
+import type { Company } from "@shared/schema";
 
 const SERVICE_ICONS = [
   { id: "residential", icon: Home, label: "Residential" },
@@ -41,9 +36,10 @@ const TABS: TabConfig[] = [
 export default function ProfileEditor() {
   const { user } = useAuth();
   const [, navigate] = useLocation();
-  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState(1);
   const [completedTabs, setCompletedTabs] = useState<Set<number>>(new Set());
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -72,7 +68,7 @@ export default function ProfileEditor() {
     availability: "",
   });
 
-  const { data: company, isLoading } = useQuery({
+  const { data: company, isLoading } = useQuery<Company>({
     queryKey: ["/api/business/profile"],
     enabled: !!user,
   });
@@ -100,7 +96,7 @@ export default function ProfileEditor() {
         singleItemMinimum: company.singleItemMinimum || "",
         priceSheetVisible: company.priceSheetVisible ?? true,
         addOnCostsVisible: company.addOnCostsVisible ?? true,
-        teamMembers: company.teamMembers || [],
+        teamMembers: (company.teamMembers as any[]) || [],
         galleryImages: company.galleryImages || [],
         hours: company.hours || "",
         availability: company.availability || "",
@@ -141,17 +137,14 @@ export default function ProfileEditor() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
-      toast({
-        title: "Profile Updated",
-        description: "Your changes have been saved successfully.",
-      });
+      setToastMessage("Profile updated successfully!");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
     },
     onError: () => {
-      toast({
-        title: "Error",
-        description: "Failed to update profile. Please try again.",
-        variant: "destructive",
-      });
+      setToastMessage("Failed to update profile");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
     },
   });
 
@@ -194,8 +187,42 @@ export default function ProfileEditor() {
     return null;
   }
 
+  const inputStyle = {
+    width: "100%",
+    padding: "12px",
+    border: "2px solid #e5e7eb",
+    borderRadius: "8px",
+    fontSize: "16px",
+    fontFamily: "inherit",
+  };
+
+  const labelStyle = {
+    display: "block",
+    marginBottom: "8px",
+    fontSize: "14px",
+    fontWeight: "600" as const,
+    color: "#000",
+  };
+
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#fff" }}>
+      {/* Toast Notification */}
+      {showToast && (
+        <div style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          backgroundColor: "#000",
+          color: "#fff",
+          padding: "16px 24px",
+          borderRadius: "8px",
+          zIndex: 1000,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.3)"
+        }}>
+          {toastMessage}
+        </div>
+      )}
+
       {/* Header */}
       <div style={{
         backgroundColor: "#000",
@@ -288,10 +315,11 @@ export default function ProfileEditor() {
             </h2>
             
             <div>
-              <Label htmlFor="name">Company Name *</Label>
-              <Input
+              <label style={labelStyle} htmlFor="name">Company Name *</label>
+              <input
                 id="name"
                 data-testid="input-name"
+                style={inputStyle}
                 value={formData.name}
                 onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                 placeholder="Your Junk Removal Co."
@@ -299,10 +327,11 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="phone">Phone Number *</Label>
-              <Input
+              <label style={labelStyle} htmlFor="phone">Phone Number *</label>
+              <input
                 id="phone"
                 data-testid="input-phone"
+                style={inputStyle}
                 value={formData.phone}
                 onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                 placeholder="(555) 123-4567"
@@ -310,10 +339,11 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="website">Website</Label>
-              <Input
+              <label style={labelStyle} htmlFor="website">Website</label>
+              <input
                 id="website"
                 data-testid="input-website"
+                style={inputStyle}
                 value={formData.website}
                 onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
                 placeholder="https://yourwebsite.com"
@@ -321,10 +351,11 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="address">Street Address *</Label>
-              <Input
+              <label style={labelStyle} htmlFor="address">Street Address *</label>
+              <input
                 id="address"
                 data-testid="input-address"
+                style={inputStyle}
                 value={formData.address}
                 onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
                 placeholder="123 Main St"
@@ -333,10 +364,11 @@ export default function ProfileEditor() {
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <div>
-                <Label htmlFor="city">City *</Label>
-                <Input
+                <label style={labelStyle} htmlFor="city">City *</label>
+                <input
                   id="city"
                   data-testid="input-city"
+                  style={inputStyle}
                   value={formData.city}
                   onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
                   placeholder="Phoenix"
@@ -344,10 +376,11 @@ export default function ProfileEditor() {
               </div>
 
               <div>
-                <Label htmlFor="state">State *</Label>
-                <Input
+                <label style={labelStyle} htmlFor="state">State *</label>
+                <input
                   id="state"
                   data-testid="input-state"
+                  style={inputStyle}
                   value={formData.state}
                   onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
                   placeholder="Arizona"
@@ -356,10 +389,11 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="hours">Business Hours</Label>
-              <Input
+              <label style={labelStyle} htmlFor="hours">Business Hours</label>
+              <input
                 id="hours"
                 data-testid="input-hours"
+                style={inputStyle}
                 value={formData.hours}
                 onChange={(e) => setFormData(prev => ({ ...prev, hours: e.target.value }))}
                 placeholder="Mon-Fri 8AM-6PM, Sat 9AM-3PM"
@@ -367,10 +401,11 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="availability">Availability</Label>
-              <Input
+              <label style={labelStyle} htmlFor="availability">Availability</label>
+              <input
                 id="availability"
                 data-testid="input-availability"
+                style={inputStyle}
                 value={formData.availability}
                 onChange={(e) => setFormData(prev => ({ ...prev, availability: e.target.value }))}
                 placeholder="Same Day Service Available"
@@ -440,25 +475,26 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="specialties">Additional Specialties (one per line)</Label>
-              <Textarea
+              <label style={labelStyle} htmlFor="specialties">Additional Specialties (one per line)</label>
+              <textarea
                 id="specialties"
                 data-testid="input-specialties"
+                style={{ ...inputStyle, minHeight: "120px", fontFamily: "inherit", resize: "vertical" }}
                 value={formData.specialties.join("\n")}
                 onChange={(e) => setFormData(prev => ({
                   ...prev,
                   specialties: e.target.value.split("\n").filter(s => s.trim())
                 }))}
                 placeholder="Estate cleanouts&#10;Hoarding cleanup&#10;Foreclosure cleanups"
-                rows={4}
               />
             </div>
 
             <div>
-              <Label htmlFor="insurance">Insurance Information</Label>
-              <Input
+              <label style={labelStyle} htmlFor="insurance">Insurance Information</label>
+              <input
                 id="insurance"
                 data-testid="input-insurance"
+                style={inputStyle}
                 value={formData.insuranceInfo}
                 onChange={(e) => setFormData(prev => ({ ...prev, insuranceInfo: e.target.value }))}
                 placeholder="Fully Licensed & Insured - $1M Liability"
@@ -466,11 +502,12 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="years">Years in Business</Label>
-              <Input
+              <label style={labelStyle} htmlFor="years">Years in Business</label>
+              <input
                 id="years"
                 data-testid="input-years"
                 type="number"
+                style={inputStyle}
                 value={formData.yearsInBusiness}
                 onChange={(e) => setFormData(prev => ({ ...prev, yearsInBusiness: e.target.value }))}
                 placeholder="5"
@@ -487,23 +524,24 @@ export default function ProfileEditor() {
             </h2>
 
             <div>
-              <Label htmlFor="about">About Us</Label>
-              <Textarea
+              <label style={labelStyle} htmlFor="about">About Us</label>
+              <textarea
                 id="about"
                 data-testid="input-about"
+                style={{ ...inputStyle, minHeight: "180px", fontFamily: "inherit", resize: "vertical" }}
                 value={formData.aboutUs}
                 onChange={(e) => setFormData(prev => ({ ...prev, aboutUs: e.target.value }))}
                 placeholder="Tell customers about your business, your mission, and what makes you unique..."
-                rows={6}
               />
             </div>
 
             <div>
-              <Label>Why Choose Us? (Add up to 5 reasons)</Label>
+              <label style={labelStyle}>Why Choose Us? (Add up to 5 reasons)</label>
               {formData.whyChooseUs.map((reason, index) => (
                 <div key={index} style={{ marginBottom: "12px" }}>
-                  <Input
+                  <input
                     data-testid={`input-why-${index}`}
+                    style={inputStyle}
                     value={reason}
                     onChange={(e) => {
                       const newReasons = [...formData.whyChooseUs];
@@ -515,16 +553,24 @@ export default function ProfileEditor() {
                 </div>
               ))}
               {formData.whyChooseUs.length < 5 && (
-                <Button
+                <button
                   onClick={() => setFormData(prev => ({
                     ...prev,
                     whyChooseUs: [...prev.whyChooseUs, ""]
                   }))}
                   data-testid="button-add-reason"
-                  variant="outline"
+                  style={{
+                    padding: "10px 20px",
+                    border: "2px solid #000",
+                    borderRadius: "6px",
+                    backgroundColor: "#fff",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    fontWeight: "600"
+                  }}
                 >
                   Add Another Reason
-                </Button>
+                </button>
               )}
             </div>
           </div>
@@ -538,10 +584,11 @@ export default function ProfileEditor() {
             </h2>
 
             <div>
-              <Label htmlFor="minimum">Minimum Service Fee</Label>
-              <Input
+              <label style={labelStyle} htmlFor="minimum">Minimum Service Fee</label>
+              <input
                 id="minimum"
                 data-testid="input-minimum"
+                style={inputStyle}
                 value={formData.minimumPrice}
                 onChange={(e) => setFormData(prev => ({ ...prev, minimumPrice: e.target.value }))}
                 placeholder="$99"
@@ -549,10 +596,11 @@ export default function ProfileEditor() {
             </div>
 
             <div>
-              <Label htmlFor="singleItem">Single Item Minimum</Label>
-              <Input
+              <label style={labelStyle} htmlFor="singleItem">Single Item Minimum</label>
+              <input
                 id="singleItem"
                 data-testid="input-single-item"
+                style={inputStyle}
                 value={formData.singleItemMinimum}
                 onChange={(e) => setFormData(prev => ({ ...prev, singleItemMinimum: e.target.value }))}
                 placeholder="$75"
@@ -561,10 +609,11 @@ export default function ProfileEditor() {
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <div>
-                <Label htmlFor="quarter">1/4 Load Price</Label>
-                <Input
+                <label style={labelStyle} htmlFor="quarter">1/4 Load Price</label>
+                <input
                   id="quarter"
                   data-testid="input-quarter"
+                  style={inputStyle}
                   value={formData.quarterLoadPrice}
                   onChange={(e) => setFormData(prev => ({ ...prev, quarterLoadPrice: e.target.value }))}
                   placeholder="$150"
@@ -572,10 +621,11 @@ export default function ProfileEditor() {
               </div>
 
               <div>
-                <Label htmlFor="half">1/2 Load Price</Label>
-                <Input
+                <label style={labelStyle} htmlFor="half">1/2 Load Price</label>
+                <input
                   id="half"
                   data-testid="input-half"
+                  style={inputStyle}
                   value={formData.halfLoadPrice}
                   onChange={(e) => setFormData(prev => ({ ...prev, halfLoadPrice: e.target.value }))}
                   placeholder="$250"
@@ -585,10 +635,11 @@ export default function ProfileEditor() {
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <div>
-                <Label htmlFor="threequarter">3/4 Load Price</Label>
-                <Input
+                <label style={labelStyle} htmlFor="threequarter">3/4 Load Price</label>
+                <input
                   id="threequarter"
                   data-testid="input-threequarter"
+                  style={inputStyle}
                   value={formData.threeQuarterLoadPrice}
                   onChange={(e) => setFormData(prev => ({ ...prev, threeQuarterLoadPrice: e.target.value }))}
                   placeholder="$350"
@@ -596,10 +647,11 @@ export default function ProfileEditor() {
               </div>
 
               <div>
-                <Label htmlFor="full">Full Load Price</Label>
-                <Input
+                <label style={labelStyle} htmlFor="full">Full Load Price</label>
+                <input
                   id="full"
                   data-testid="input-full"
+                  style={inputStyle}
                   value={formData.fullLoadPrice}
                   onChange={(e) => setFormData(prev => ({ ...prev, fullLoadPrice: e.target.value }))}
                   placeholder="$450"
@@ -653,11 +705,37 @@ export default function ProfileEditor() {
                   Display your pricing information to customers
                 </div>
               </div>
-              <Switch
-                checked={formData.priceSheetVisible}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, priceSheetVisible: checked }))}
-                data-testid="toggle-pricing"
-              />
+              <label style={{ position: "relative", display: "inline-block", width: "60px", height: "34px" }}>
+                <input
+                  type="checkbox"
+                  checked={formData.priceSheetVisible}
+                  onChange={(e) => setFormData(prev => ({ ...prev, priceSheetVisible: e.target.checked }))}
+                  data-testid="toggle-pricing"
+                  style={{ opacity: 0, width: 0, height: 0 }}
+                />
+                <span style={{
+                  position: "absolute",
+                  cursor: "pointer",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: formData.priceSheetVisible ? "#fbbf24" : "#ccc",
+                  transition: "0.4s",
+                  borderRadius: "34px"
+                }}>
+                  <span style={{
+                    position: "absolute",
+                    height: "26px",
+                    width: "26px",
+                    left: formData.priceSheetVisible ? "30px" : "4px",
+                    bottom: "4px",
+                    backgroundColor: "white",
+                    transition: "0.4s",
+                    borderRadius: "50%"
+                  }} />
+                </span>
+              </label>
             </div>
 
             <div style={{
@@ -677,11 +755,37 @@ export default function ProfileEditor() {
                   Display add-on fees and extra charges
                 </div>
               </div>
-              <Switch
-                checked={formData.addOnCostsVisible}
-                onCheckedChange={(checked) => setFormData(prev => ({ ...prev, addOnCostsVisible: checked }))}
-                data-testid="toggle-addon"
-              />
+              <label style={{ position: "relative", display: "inline-block", width: "60px", height: "34px" }}>
+                <input
+                  type="checkbox"
+                  checked={formData.addOnCostsVisible}
+                  onChange={(e) => setFormData(prev => ({ ...prev, addOnCostsVisible: e.target.checked }))}
+                  data-testid="toggle-addon"
+                  style={{ opacity: 0, width: 0, height: 0 }}
+                />
+                <span style={{
+                  position: "absolute",
+                  cursor: "pointer",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: formData.addOnCostsVisible ? "#fbbf24" : "#ccc",
+                  transition: "0.4s",
+                  borderRadius: "34px"
+                }}>
+                  <span style={{
+                    position: "absolute",
+                    height: "26px",
+                    width: "26px",
+                    left: formData.addOnCostsVisible ? "30px" : "4px",
+                    bottom: "4px",
+                    backgroundColor: "white",
+                    transition: "0.4s",
+                    borderRadius: "50%"
+                  }} />
+                </span>
+              </label>
             </div>
           </div>
         )}
@@ -695,20 +799,26 @@ export default function ProfileEditor() {
           paddingTop: "24px",
           borderTop: "2px solid #e5e7eb"
         }}>
-          <Button
+          <button
             onClick={handleSave}
             disabled={updateMutation.isPending}
             data-testid="button-save"
-            variant="outline"
             style={{
               fontSize: "16px",
-              padding: "12px 32px"
+              padding: "12px 32px",
+              border: "2px solid #000",
+              borderRadius: "8px",
+              backgroundColor: "#fff",
+              color: "#000",
+              fontWeight: "600",
+              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+              opacity: updateMutation.isPending ? 0.6 : 1
             }}
           >
             {updateMutation.isPending ? "Saving..." : "Save Progress"}
-          </Button>
+          </button>
 
-          <Button
+          <button
             onClick={handleGoLive}
             disabled={updateMutation.isPending}
             data-testid="button-go-live"
@@ -717,11 +827,15 @@ export default function ProfileEditor() {
               padding: "12px 32px",
               backgroundColor: "#fbbf24",
               color: "#000",
-              fontWeight: "700"
+              fontWeight: "700",
+              border: "none",
+              borderRadius: "8px",
+              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+              opacity: updateMutation.isPending ? 0.6 : 1
             }}
           >
             Go to Live Page
-          </Button>
+          </button>
         </div>
       </div>
     </div>

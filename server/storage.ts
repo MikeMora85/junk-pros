@@ -24,6 +24,7 @@ export interface IStorage {
   // Business owner operations
   createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner>;
   getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null>;
+  getBusinessOwnerById(id: number): Promise<BusinessOwner | null>;
   getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null>;
   updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null>;
   
@@ -425,6 +426,10 @@ export class MemStorage implements IStorage {
     return this.businessOwners.find(o => o.email === email) || null;
   }
 
+  async getBusinessOwnerById(id: number): Promise<BusinessOwner | null> {
+    return this.businessOwners.find(o => o.id === id) || null;
+  }
+
   async getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null> {
     return this.businessOwners.find(o => o.companyId === companyId) || null;
   }
@@ -656,6 +661,11 @@ export class DbStorage implements IStorage {
 
   async getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null> {
     const result = await db.select().from(businessOwners).where(eq(businessOwners.email, email)).limit(1);
+    return result[0] || null;
+  }
+
+  async getBusinessOwnerById(id: number): Promise<BusinessOwner | null> {
+    const result = await db.select().from(businessOwners).where(eq(businessOwners.id, id)).limit(1);
     return result[0] || null;
   }
 
