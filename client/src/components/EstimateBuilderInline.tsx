@@ -12,9 +12,10 @@ interface CompanyPrices {
 interface EstimateBuilderInlineProps {
   companyPrices?: CompanyPrices;
   showDisclaimers?: boolean;
+  vehicleCapacity?: string;
 }
 
-export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true }: EstimateBuilderInlineProps = {}) {
+export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true, vehicleCapacity }: EstimateBuilderInlineProps = {}) {
   const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
   
   // Calculate price based on load size and company prices
@@ -65,7 +66,11 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
       </div>
       
       <p style={{ fontSize: '14px', marginBottom: '20px', color: '#333333', lineHeight: '1.5' }}>
-        Get your estimate in seconds! Most trucks hold 12-15 cubic yards.
+        {vehicleCapacity ? (
+          <>Our truck holds {vehicleCapacity}. Send photos or book an in-person estimate to confirm your volume and final price.</>
+        ) : (
+          <>Get your estimate in seconds! Most trucks hold 12-15 cubic yards.</>
+        )}
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '24px' }}>
