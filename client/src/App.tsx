@@ -3632,6 +3632,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   threeQuarterLoad: company.threeQuarterLoadPrice ? parseFloat(company.threeQuarterLoadPrice) : 750,
                   fullLoad: company.fullLoadPrice ? parseFloat(company.fullLoadPrice) : 1000,
                 }}
+                showDisclaimers={false}
               />
             </div>
 

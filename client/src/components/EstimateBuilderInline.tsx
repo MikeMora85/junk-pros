@@ -11,9 +11,10 @@ interface CompanyPrices {
 
 interface EstimateBuilderInlineProps {
   companyPrices?: CompanyPrices;
+  showDisclaimers?: boolean;
 }
 
-export default function EstimateBuilderInline({ companyPrices }: EstimateBuilderInlineProps = {}) {
+export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true }: EstimateBuilderInlineProps = {}) {
   const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
   
   // Calculate price based on load size and company prices
@@ -148,68 +149,72 @@ export default function EstimateBuilderInline({ companyPrices }: EstimateBuilder
         </div>
       </div>
 
-      {/* Industry Pricing Info */}
-      <div style={{
-        backgroundColor: '#f5f5f5',
-        borderRadius: '0',
-        padding: '14px',
-        marginBottom: '16px',
-        border: '1px solid #cccccc',
-      }}>
-        <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
-          Industry Pricing Guide
-        </h4>
-        <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
-          <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
-          <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
-          <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
-          <div>• Full truck: $600-$850+</div>
-        </div>
-      </div>
+      {showDisclaimers && (
+        <>
+          {/* Industry Pricing Info */}
+          <div style={{
+            backgroundColor: '#f5f5f5',
+            borderRadius: '0',
+            padding: '14px',
+            marginBottom: '16px',
+            border: '1px solid #cccccc',
+          }}>
+            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
+              Industry Pricing Guide
+            </h4>
+            <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+              <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
+              <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
+              <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
+              <div>• Full truck: $600-$850+</div>
+            </div>
+          </div>
 
-      {/* Educational Disclaimer */}
-      <div style={{
-        backgroundColor: '#fff3cd',
-        borderRadius: '0',
-        padding: '16px',
-        marginBottom: '16px',
-        border: '2px solid #fbbf24',
-      }}>
-        <div style={{
-          fontSize: '13px',
-          fontWeight: '700',
-          color: '#000',
-          marginBottom: '8px',
-        }}>
-          Educational Tool Only
-        </div>
-        <div style={{
-          fontSize: '12px',
-          color: '#000',
-          lineHeight: '1.6',
-        }}>
-          This calculator provides estimates for <strong>basic junk removal</strong> to help you understand typical pricing. Contact companies directly for accurate quotes based on your specific situation.
-        </div>
-      </div>
+          {/* Educational Disclaimer */}
+          <div style={{
+            backgroundColor: '#fff3cd',
+            borderRadius: '0',
+            padding: '16px',
+            marginBottom: '16px',
+            border: '2px solid #fbbf24',
+          }}>
+            <div style={{
+              fontSize: '13px',
+              fontWeight: '700',
+              color: '#000',
+              marginBottom: '8px',
+            }}>
+              Educational Tool Only
+            </div>
+            <div style={{
+              fontSize: '12px',
+              color: '#000',
+              lineHeight: '1.6',
+            }}>
+              This calculator provides estimates for <strong>basic junk removal</strong> to help you understand typical pricing. Contact companies directly for accurate quotes based on your specific situation.
+            </div>
+          </div>
 
-      {/* Common Upcharges */}
-      <div style={{
-        backgroundColor: '#f5f5f5',
-        borderRadius: '0',
-        padding: '14px',
-        border: '1px solid #cccccc',
-      }}>
-        <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
-          Common Upcharges
-        </h4>
-        <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
-          <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
-          <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
-          <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
-          <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
-          <div>• Soiled or contaminated materials</div>
-        </div>
-      </div>
+          {/* Common Upcharges */}
+          <div style={{
+            backgroundColor: '#f5f5f5',
+            borderRadius: '0',
+            padding: '14px',
+            border: '1px solid #cccccc',
+          }}>
+            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
+              Common Upcharges
+            </h4>
+            <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+              <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
+              <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
+              <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
+              <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
+              <div>• Soiled or contaminated materials</div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
