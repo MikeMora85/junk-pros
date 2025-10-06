@@ -3587,32 +3587,6 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
 
           {/* Right Column */}
           <div>
-            {/* Trailer Size */}
-            {company.trailerSize && (
-              <div style={{ marginBottom: '24px' }}>
-                <h2 style={{
-                  fontSize: '20px',
-                  fontWeight: '700',
-                  marginBottom: '12px',
-                  color: '#000',
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
-                }}>
-                  Our Truck
-                </h2>
-                <div style={{
-                  background: '#f3f4f6',
-                  borderRadius: '8px',
-                  padding: '16px',
-                  textAlign: 'center',
-                }}>
-                  <Truck size={48} color="#374151" style={{ margin: '0 auto 8px' }} />
-                  <div style={{ fontSize: '16px', fontWeight: '600', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                    {company.trailerSize}
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Pricing Estimator */}
             <div style={{ marginBottom: '24px' }}>
               <h2 style={{
