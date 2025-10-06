@@ -688,11 +688,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ error: "No company associated with this account" });
       }
 
+      console.log("Updating company:", owner.companyId, "with data:", req.body);
       const updatedCompany = await storage.updateCompany(owner.companyId, req.body as any);
+      console.log("Updated company result:", updatedCompany);
       res.json(updatedCompany);
     } catch (error) {
       console.error("Error updating business profile:", error);
-      res.status(500).json({ error: "Failed to update profile" });
+      console.error("Error stack:", error instanceof Error ? error.stack : 'No stack trace');
+      res.status(500).json({ error: "Failed to update profile", details: error instanceof Error ? error.message : String(error) });
     }
   });
 
