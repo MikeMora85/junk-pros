@@ -633,6 +633,69 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Business owner profile endpoints
+  app.get("/api/business/profile", async (req: any, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const token = authHeader.substring(7);
+      const decoded = Buffer.from(token, 'base64').toString();
+      const parts = decoded.split(':');
+      const type = parts[0];
+
+      if (type !== 'business') {
+        return res.status(403).json({ error: "Only business owners can access this" });
+      }
+
+      const ownerId = parseInt(parts[2]);
+      const owner = await storage.getBusinessOwnerById(ownerId);
+      
+      if (!owner || !owner.companyId) {
+        return res.status(404).json({ error: "No company associated with this account" });
+      }
+
+      const company = await storage.getCompanyById(owner.companyId);
+      res.json(company);
+    } catch (error) {
+      console.error("Error fetching business profile:", error);
+      res.status(500).json({ error: "Failed to fetch profile" });
+    }
+  });
+
+  app.patch("/api/business/profile", async (req: any, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const token = authHeader.substring(7);
+      const decoded = Buffer.from(token, 'base64').toString();
+      const parts = decoded.split(':');
+      const type = parts[0];
+
+      if (type !== 'business') {
+        return res.status(403).json({ error: "Only business owners can access this" });
+      }
+
+      const ownerId = parseInt(parts[2]);
+      const owner = await storage.getBusinessOwnerById(ownerId);
+      
+      if (!owner || !owner.companyId) {
+        return res.status(404).json({ error: "No company associated with this account" });
+      }
+
+      const updatedCompany = await storage.updateCompany(owner.companyId, req.body as any);
+      res.json(updatedCompany);
+    } catch (error) {
+      console.error("Error updating business profile:", error);
+      res.status(500).json({ error: "Failed to update profile" });
+    }
+  });
+
   // Business event tracking endpoints
   app.post("/api/track/event", async (req, res) => {
     try {

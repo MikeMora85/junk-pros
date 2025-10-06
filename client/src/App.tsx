@@ -11,6 +11,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
 import ExampleProfile from "./pages/ExampleProfile";
 import CompanyDetail from "./pages/CompanyDetail";
+import ProfileEditor from "./pages/ProfileEditor";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -4309,6 +4310,7 @@ function App() {
         <Route path="/" component={LandingPage} />
         <Route path="/login" component={Login} />
         <Route path="/add-business" component={AddBusiness} />
+        <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/example-profile" component={ExampleProfile} />
         <Route path="/company/:id" component={CompanyDetail} />
