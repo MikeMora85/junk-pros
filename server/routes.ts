@@ -184,6 +184,22 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     res.status(403).json({ error: 'Forbidden: Admin access required' });
   };
 
+  // Get cities with companies for a state
+  app.get("/api/cities", async (req, res) => {
+    try {
+      const { state } = req.query;
+      
+      if (!state) {
+        return res.status(400).json({ error: "State parameter required" });
+      }
+      
+      const cities = await storage.getCitiesForState(state as string);
+      res.json(cities);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch cities" });
+    }
+  });
+
   // Public company routes
   app.get("/api/companies", async (req, res) => {
     try {

@@ -13,6 +13,7 @@ export interface IStorage {
   getCompanyById(id: number): Promise<Company | null>;
   getCompaniesByLocal(local: boolean): Promise<Company[]>;
   getCompaniesByCity(city: string, state: string): Promise<Company[]>;
+  getCitiesForState(state: string): Promise<string[]>;
   getCompaniesByUserId(userId: string): Promise<Company[]>;
   createCompany(data: Omit<InsertCompany, 'id'>): Promise<Company>;
   updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null>;
@@ -259,6 +260,17 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getCitiesForState(state: string): Promise<string[]> {
+    const approvedCompanies = this.companies.filter((c) => 
+      c.state.toLowerCase() === state.toLowerCase() &&
+      c.status === 'approved'
+    );
+    const citySet = new Set<string>();
+    approvedCompanies.forEach(c => citySet.add(c.city));
+    const cities = Array.from(citySet);
+    return cities.sort();
+  }
+
   async getCompaniesByUserId(userId: string): Promise<Company[]> {
     return this.companies.filter(c => c.userId === userId);
   }
@@ -497,6 +509,19 @@ export class DbStorage implements IStorage {
         eq(companies.status, 'approved')
       )
     );
+  }
+
+  async getCitiesForState(state: string): Promise<string[]> {
+    const results = await db
+      .selectDistinct({ city: companies.city })
+      .from(companies)
+      .where(
+        and(
+          sql`LOWER(TRIM(${companies.state})) = LOWER(${state})`,
+          eq(companies.status, 'approved')
+        )
+      );
+    return results.map(r => r.city).sort();
   }
 
   async getCompaniesByUserId(userId: string): Promise<Company[]> {

@@ -1642,7 +1642,17 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
     climate: 'Services available year-round',
   };
 
-  const cities = currentState.cities;
+  // Fetch cities that actually have companies in this state
+  const { data: citiesWithCompanies = [] } = useQuery<string[]>({
+    queryKey: ["/api/cities", stateSlug],
+    queryFn: async () => {
+      const response = await fetch(`/api/cities?state=${stateSlug}`);
+      if (!response.ok) return [];
+      return response.json();
+    },
+  });
+
+  const cities = citiesWithCompanies.length > 0 ? citiesWithCompanies : currentState.cities;
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
