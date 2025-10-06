@@ -2625,7 +2625,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           overflow: 'auto',
         }} onClick={() => setSelectedCompanyId(null)}>
           <div onClick={(e) => e.stopPropagation()}>
-            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} user={user} />
+            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} />
           </div>
         </div>
       )}
