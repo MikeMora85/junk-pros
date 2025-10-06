@@ -130,19 +130,25 @@ export default function ProfileEditor() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: any) => {
-      return apiRequest("/api/business/profile", {
+      console.log("Sending update with data:", data);
+      const result = await apiRequest("/api/business/profile", {
         method: "PATCH",
         body: data,
       });
+      console.log("Update successful, result:", result);
+      return result;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
+    onSuccess: async (data) => {
+      console.log("Mutation success, invalidating cache and refetching");
+      await queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
+      await queryClient.refetchQueries({ queryKey: ["/api/business/profile"] });
       setToastMessage("Profile updated successfully!");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     },
     onError: (error: any) => {
       console.error("Profile update error:", error);
+      console.error("Error details:", JSON.stringify(error, null, 2));
       setToastMessage(`Failed to update profile: ${error.message || 'Unknown error'}`);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 5000);
