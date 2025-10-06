@@ -3363,190 +3363,107 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       zIndex: 1000,
       overflowY: 'auto',
     }}>
-      {/* Hero Section with Overlay Header */}
+      {/* Sticky Header with faint yellow background */}
       <div style={{
-        position: 'relative',
-        height: '320px',
-        backgroundImage: `url(${profilePhoto1})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        position: 'sticky',
+        top: 0,
+        background: 'rgba(251, 191, 36, 0.15)',
+        backdropFilter: 'blur(10px)',
+        padding: '16px 20px',
+        borderBottom: '1px solid rgba(251, 191, 36, 0.3)',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        zIndex: 10,
       }}>
-        {/* Faint gradient overlay at top */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '140px',
-          background: 'linear-gradient(180deg, rgba(251, 191, 36, 0.3) 0%, rgba(251, 191, 36, 0.1) 50%, transparent 100%)',
-        }} />
+        <button
+          onClick={onClose}
+          data-testid="button-close-profile"
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '20px',
+            padding: 0,
+            color: '#fbbf24',
+            fontWeight: '600',
+          }}
+        >
+          ← Back
+        </button>
         
-        {/* Navigation Header Overlay */}
-        <div style={{
-          position: 'absolute',
-          top: '16px',
-          left: '16px',
-          right: '16px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          zIndex: 10,
-        }}>
-          {/* Hamburger Menu Button */}
-          <button
-            onClick={onClose}
-            data-testid="button-menu"
-            style={{
-              width: '48px',
-              height: '48px',
-              background: '#fbbf24',
-              border: 'none',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-            }}
-          >
-            <Menu size={24} color="#000" />
-          </button>
-          
-          {/* Right side buttons */}
-          <div style={{ display: 'flex', gap: '12px' }}>
-            {/* Plus Button */}
-            <button
-              data-testid="button-add"
-              style={{
-                width: '48px',
-                height: '48px',
-                background: '#fbbf24',
-                border: 'none',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '24px',
-                fontWeight: '600',
-                color: '#000',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-              }}
-            >
-              +
-            </button>
-            
-            {/* Login/Profile Button */}
-            <button
-              data-testid="button-login"
-              style={{
-                width: '48px',
-                height: '48px',
-                background: '#22c55e',
-                border: 'none',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-              }}
-            >
-              <UserCircle size={24} color="#fff" />
-            </button>
-          </div>
-        </div>
-        {/* Company Info Card - Overlaying hero */}
-        <div style={{
-          position: 'absolute',
-          bottom: '-60px',
-          left: '16px',
-          right: '16px',
-          background: '#fff',
-          borderRadius: '16px',
-          padding: '20px',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-            {/* Logo */}
-            <div style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '16px',
-              background: '#fbbf24',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              fontSize: '36px',
-              fontWeight: '700',
-              color: '#000',
-              fontFamily: 'system-ui, -apple-system, sans-serif',
-            }}>
-              {company.name.charAt(0)}
-            </div>
-            
-            {/* Company Info */}
-            <div style={{ flex: 1 }}>
-              <h1 style={{
-                fontSize: '22px',
-                fontWeight: '700',
-                margin: '0 0 8px 0',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }} data-testid="text-company-name">
-                {company.name}
-              </h1>
-              
-              {/* Rating */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <span key={star} style={{ color: '#fbbf24', fontSize: '16px' }}>★</span>
-                ))}
-                <span style={{ fontWeight: '700', fontSize: '16px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  {company.rating}
-                </span>
-                <span style={{ color: '#6b7280', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  ({company.reviews})
-                </span>
-              </div>
-              
-              {/* LOCAL Badge */}
-              <div style={{
-                display: 'inline-block',
-                background: '#fbbf24',
-                color: '#000',
-                fontSize: '12px',
-                fontWeight: '700',
-                padding: '4px 12px',
-                borderRadius: '6px',
-                marginBottom: '12px',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                LOCAL
-              </div>
-              
-              {/* Address */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '8px' }}>
-                <MapPin size={16} color="#000" style={{ marginTop: '2px', flexShrink: 0 }} />
-                <span style={{ fontSize: '14px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  {company.address}, {company.city}, {company.state} {company.zipCode}
-                </span>
-              </div>
-              
-              {/* Phone */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Phone size={16} color="#000" />
-                <span style={{ fontSize: '14px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  {company.phone}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Call Now Button */}
+        <button
+          style={{
+            padding: '12px 24px',
+            background: '#fbbf24',
+            color: '#000',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: '600',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}
+          onClick={() => {
+            trackBusinessEvent(company.id, 'call');
+            window.open(`tel:${company.phone}`, '_self');
+          }}
+          data-testid="button-call-now"
+        >
+          Call Now
+        </button>
       </div>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '76px 16px 16px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
+        {/* Logo and Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          marginBottom: '16px',
+        }}>
+          {/* Logo */}
+          <div style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            background: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            border: '2px solid #e5e7eb',
+          }}>
+            <Truck size={40} color="#6b7280" />
+          </div>
+          
+          {/* Company name */}
+          <div style={{ flex: 1 }}>
+            <h1 style={{
+              fontSize: '28px',
+              fontWeight: '700',
+              margin: 0,
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }} data-testid="text-company-name">
+              {company.name}
+            </h1>
+          </div>
+        </div>
+
+        {/* Rating */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span key={star} style={{ color: '#fbbf24', fontSize: '20px' }}>★</span>
+          ))}
+          <span style={{ fontWeight: '700', fontSize: '18px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            {company.rating}
+          </span>
+          <span style={{ color: '#6b7280', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            {company.reviews} reviews
+          </span>
+        </div>
 
         {/* Social Media Icons */}
         {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
