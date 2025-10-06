@@ -3681,6 +3681,41 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               </div>
             </div>
 
+            {/* Reviews */}
+            <div style={{ marginBottom: '32px' }}>
+              <h2 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Reviews
+              </h2>
+              {[
+                { name: 'Michael D.', location: 'Downtown Phoenix', text: "Great experience! The team was on time, worked quickly, and left the area spotless. Highly recommend!" },
+                { name: 'Sarah M.', location: 'Tempe', text: "Very professional and reasonably priced. Will definitely use them again for future junk removal projects." },
+                { name: 'John R.', location: 'Old Town Scottsdale', text: "Excellent service from start to finish! The crew was courteous and efficient." }
+              ].map((review, i) => (
+                <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < 2 ? '1px solid #e5e7eb' : 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <div>
+                      <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.name}</div>
+                      <div style={{ fontSize: '13px', color: '#6b7280', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.location}</div>
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <span key={star} style={{ color: '#fbbf24', fontSize: '14px' }}>★</span>
+                      ))}
+                    </div>
+                  </div>
+                  <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    {review.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+
             {/* Meet the Team */}
             {company.teamMembers && Array.isArray(company.teamMembers) && company.teamMembers.length > 0 && (
               <div style={{ marginBottom: '32px' }}>
@@ -3764,44 +3799,6 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 </div>
               </div>
             )}
-
-            {/* Reviews */}
-            <div style={{ marginBottom: '32px' }}>
-              <h2 style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Reviews
-              </h2>
-              {['Michael D.', 'Sarah M.', 'John R.'].map((name, i) => (
-                <div key={i} style={{ marginBottom: '16px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <div style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '50%',
-                      background: '#e5e7eb',
-                    }} />
-                    <div>
-                      <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{name}</div>
-                      <div style={{ display: 'flex' }}>
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <span key={star} style={{ color: '#fbbf24', fontSize: '14px' }}>★</span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                    {i === 0 && "Great experience! The team was on time, worked quickly, and left the area spotless. Highly recommend!"}
-                    {i === 1 && "Very professional and reasonably priced. Will definitely use them again for future junk removal projects."}
-                    {i === 2 && "Excellent service from start to finish! The crew was courteous and efficient."}
-                  </p>
-                </div>
-              ))}
-            </div>
 
             {/* FAQs */}
             {company.faqs && Array.isArray(company.faqs) && company.faqs.length > 0 && (
