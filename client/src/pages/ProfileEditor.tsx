@@ -151,9 +151,28 @@ export default function ProfileEditor() {
 
   const handleSave = () => {
     const payload = {
-      ...formData,
+      name: formData.name,
+      phone: formData.phone,
+      website: formData.website,
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
       services: formData.selectedServices,
+      specialties: formData.specialties.filter(s => s.trim()),
+      aboutUs: formData.aboutUs || null,
+      whyChooseUs: formData.whyChooseUs.filter(r => r.trim()),
       yearsInBusiness: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
+      insuranceInfo: formData.insuranceInfo || null,
+      minimumPrice: formData.minimumPrice || null,
+      quarterLoadPrice: formData.quarterLoadPrice || null,
+      halfLoadPrice: formData.halfLoadPrice || null,
+      threeQuarterLoadPrice: formData.threeQuarterLoadPrice || null,
+      fullLoadPrice: formData.fullLoadPrice || null,
+      singleItemMinimum: formData.singleItemMinimum || null,
+      priceSheetVisible: formData.priceSheetVisible,
+      addOnCostsVisible: formData.addOnCostsVisible,
+      hours: formData.hours || null,
+      availability: formData.availability || null,
     };
     updateMutation.mutate(payload);
     checkCompletedTabs(payload);
