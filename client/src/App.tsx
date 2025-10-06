@@ -3608,6 +3608,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 }}
                 showDisclaimers={false}
                 vehicleCapacity={company.trailerSize || undefined}
+                singleItemMinimum={company.singleItemMinimum ? parseFloat(company.singleItemMinimum) : undefined}
               />
             </div>
 

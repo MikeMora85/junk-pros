@@ -13,9 +13,10 @@ interface EstimateBuilderInlineProps {
   companyPrices?: CompanyPrices;
   showDisclaimers?: boolean;
   vehicleCapacity?: string;
+  singleItemMinimum?: number;
 }
 
-export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true, vehicleCapacity }: EstimateBuilderInlineProps = {}) {
+export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true, vehicleCapacity, singleItemMinimum }: EstimateBuilderInlineProps = {}) {
   const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
   
   // Calculate price based on load size and company prices
@@ -170,6 +171,17 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         <div style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
           For a {loadSize === 'quarter' ? '¼' : loadSize === 'half' ? '½' : loadSize === 'threeQuarter' ? '¾' : 'full'} load
         </div>
+        {singleItemMinimum && (
+          <div style={{ 
+            fontSize: '12px', 
+            color: '#666', 
+            marginTop: '8px',
+            paddingTop: '8px',
+            borderTop: '1px solid #e5e7eb'
+          }}>
+            Single item minimum: ${singleItemMinimum}
+          </div>
+        )}
       </div>
 
       {showDisclaimers && (
