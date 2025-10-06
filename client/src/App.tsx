@@ -3467,11 +3467,15 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
     }}>
       {/* Back button and Social Media Icons */}
       <div style={{
+        position: 'sticky',
+        top: 0,
+        background: '#fff',
         padding: '16px 20px',
         borderBottom: '1px solid #e5e7eb',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 10,
       }}>
         <button
           onClick={onClose}
