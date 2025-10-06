@@ -3603,6 +3603,96 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           </div>
         )}
 
+        {/* Social Media Icons */}
+        {(company.facebookUrl || company.instagramUrl || company.twitterUrl || company.linkedinUrl) && (
+          <div style={{
+            marginTop: '24px',
+            marginBottom: '32px',
+            paddingTop: '24px',
+            borderTop: '2px solid #e5e5e5',
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '20px',
+          }}>
+            {company.facebookUrl && (
+              <a
+                href={company.facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#1877f2',
+                  transition: 'transform 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.2)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                data-testid={`link-facebook-modal-${company.id}`}
+              >
+                <FaFacebook size={40} />
+              </a>
+            )}
+            {company.instagramUrl && (
+              <a
+                href={company.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#E4405F',
+                  transition: 'transform 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.2)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                data-testid={`link-instagram-modal-${company.id}`}
+              >
+                <FaInstagram size={40} />
+              </a>
+            )}
+            {company.twitterUrl && (
+              <a
+                href={company.twitterUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#1DA1F2',
+                  transition: 'transform 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.2)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                data-testid={`link-twitter-modal-${company.id}`}
+              >
+                <FaTwitter size={40} />
+              </a>
+            )}
+            {company.linkedinUrl && (
+              <a
+                href={company.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#0A66C2',
+                  transition: 'transform 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.2)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                data-testid={`link-linkedin-modal-${company.id}`}
+              >
+                <FaLinkedin size={40} />
+              </a>
+            )}
+          </div>
+        )}
+
         {/* Two Column Layout */}
         <div style={{ 
           display: 'grid', 
