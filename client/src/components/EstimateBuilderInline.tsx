@@ -1,18 +1,40 @@
 import { useState } from "react";
-import { Calculator, Info } from "lucide-react";
+import { Calculator } from "lucide-react";
 
-export default function EstimateBuilderInline() {
-  const [yards, setYards] = useState(7);
-  const truckCapacity = 14;
-  const low = yards * 45;
-  const high = yards * 60;
-  const percentage = (yards / truckCapacity) * 100;
+interface CompanyPrices {
+  minimum?: number;
+  quarterLoad?: number;
+  halfLoad?: number;
+  threeQuarterLoad?: number;
+  fullLoad?: number;
+}
+
+interface EstimateBuilderInlineProps {
+  companyPrices?: CompanyPrices;
+}
+
+export default function EstimateBuilderInline({ companyPrices }: EstimateBuilderInlineProps = {}) {
+  const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
+  
+  // Calculate price based on load size and company prices
+  const getPrice = () => {
+    const prices = {
+      quarter: companyPrices?.quarterLoad || 150,
+      half: companyPrices?.halfLoad || 500,
+      threeQuarter: companyPrices?.threeQuarterLoad || 750,
+      full: companyPrices?.fullLoad || 1000,
+    };
+    return prices[loadSize];
+  };
+  
+  const price = getPrice();
+  const percentage = loadSize === 'quarter' ? 25 : loadSize === 'half' ? 50 : loadSize === 'threeQuarter' ? 75 : 100;
 
   const presets = [
-    { label: "¼", value: Math.round(truckCapacity * 0.25) },
-    { label: "½", value: Math.round(truckCapacity * 0.5) },
-    { label: "¾", value: Math.round(truckCapacity * 0.75) },
-    { label: "Full", value: truckCapacity },
+    { label: "¼", value: 'quarter' as const },
+    { label: "½", value: 'half' as const },
+    { label: "¾", value: 'threeQuarter' as const },
+    { label: "Full", value: 'full' as const },
   ];
 
   return (
@@ -49,15 +71,15 @@ export default function EstimateBuilderInline() {
         {presets.map((p) => (
           <button
             key={p.label}
-            onClick={() => setYards(p.value)}
+            onClick={() => setLoadSize(p.value)}
             style={{
               padding: '10px 4px',
               borderRadius: '0',
               fontSize: '14px',
               fontWeight: '700',
-              backgroundColor: yards === p.value ? '#fbbf24' : '#ffffff',
-              color: yards === p.value ? '#000' : '#1a1a1a',
-              border: `2px solid ${yards === p.value ? '#fbbf24' : '#cccccc'}`,
+              backgroundColor: loadSize === p.value ? '#fbbf24' : '#ffffff',
+              color: loadSize === p.value ? '#000' : '#1a1a1a',
+              border: `2px solid ${loadSize === p.value ? '#fbbf24' : '#cccccc'}`,
               cursor: 'pointer',
               transition: 'all 0.2s',
               textTransform: 'uppercase',
@@ -70,38 +92,36 @@ export default function EstimateBuilderInline() {
       </div>
 
       <div style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <label style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>
-            Load Size
-          </label>
-          <span style={{ fontSize: '16px', fontWeight: '700', color: '#fbbf24' }}>
-            {yards} yd³
-          </span>
-        </div>
-        
-        <input
-          type="range"
-          min="1"
-          max={truckCapacity}
-          value={yards}
-          onChange={(e) => setYards(parseInt(e.target.value))}
-          className="custom-slider"
-          style={{
-            width: '100%',
-            height: '8px',
-            borderRadius: '4px',
-            outline: 'none',
-            background: `linear-gradient(to right, #fbbf24 0%, #fbbf24 ${percentage}%, #000 ${percentage}%, #000 100%)`,
-            cursor: 'pointer',
-            WebkitAppearance: 'none',
-            appearance: 'none',
-          }}
-          data-testid="input-load-size"
-        />
-        
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
-          <span style={{ fontSize: '12px', color: '#000' }}>Empty</span>
-          <span style={{ fontSize: '12px', color: '#000' }}>Full</span>
+        <div style={{ 
+          width: '100%',
+          height: '40px',
+          background: '#f3f4f6',
+          borderRadius: '8px',
+          position: 'relative',
+          overflow: 'hidden',
+          border: '2px solid #000',
+        }}>
+          <div style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: `${percentage}%`,
+            background: '#fbbf24',
+            transition: 'width 0.3s ease',
+          }} />
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            fontSize: '14px',
+            fontWeight: '700',
+            color: '#000',
+            zIndex: 1,
+          }}>
+            Truck: {percentage}% Full
+          </div>
         </div>
       </div>
 
@@ -121,31 +141,10 @@ export default function EstimateBuilderInline() {
           color: '#fbbf24',
           letterSpacing: '-0.02em',
         }} data-testid="text-estimated-cost">
-          ${low} - ${high}
+          ${price}
         </div>
         <div style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
-          Based on {yards} cubic yards • Industry average
-        </div>
-      </div>
-
-      {/* Education Section */}
-      <div style={{
-        backgroundColor: '#f5f5f5',
-        borderRadius: '0',
-        padding: '14px',
-        marginBottom: '16px',
-        border: '1px solid #cccccc',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '10px' }}>
-          <Info size={16} color="#fbbf24" style={{ flexShrink: 0, marginTop: '2px' }} />
-          <div>
-            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
-              What is a Cubic Yard?
-            </h4>
-            <p style={{ fontSize: '12px', color: '#333333', margin: 0, lineHeight: '1.5' }}>
-              A cubic yard is 3ft × 3ft × 3ft - about the size of a standard washing machine or dryer. Use this as your reference point when estimating your load.
-            </p>
-          </div>
+          For a {loadSize === 'quarter' ? '¼' : loadSize === 'half' ? '½' : loadSize === 'threeQuarter' ? '¾' : 'full'} load
         </div>
       </div>
 

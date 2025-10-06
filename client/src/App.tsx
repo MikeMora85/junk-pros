@@ -3546,6 +3546,35 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               </div>
             </div>
 
+            {/* Pricing Estimator */}
+            <div style={{ marginBottom: '32px' }}>
+              <h2 style={{
+                fontSize: '24px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Get Your Estimate
+              </h2>
+              <div style={{
+                background: '#f9fafb',
+                borderRadius: '12px',
+                padding: '20px',
+                border: '1px solid #e5e7eb',
+              }}>
+                <EstimateBuilderInline 
+                  companyPrices={{
+                    minimum: company.minimumPrice ? parseFloat(company.minimumPrice) : 75,
+                    quarterLoad: company.quarterLoadPrice ? parseFloat(company.quarterLoadPrice) : 150,
+                    halfLoad: company.halfLoadPrice ? parseFloat(company.halfLoadPrice) : 500,
+                    threeQuarterLoad: company.threeQuarterLoadPrice ? parseFloat(company.threeQuarterLoadPrice) : 750,
+                    fullLoad: company.fullLoadPrice ? parseFloat(company.fullLoadPrice) : 1000,
+                  }}
+                />
+              </div>
+            </div>
+
             {/* Reviews */}
             <div>
               <h2 style={{
@@ -3587,6 +3616,32 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
 
           {/* Right Column */}
           <div>
+            {/* Trailer Size */}
+            {company.trailerSize && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Our Truck
+                </h2>
+                <div style={{
+                  background: '#f3f4f6',
+                  borderRadius: '8px',
+                  padding: '16px',
+                  textAlign: 'center',
+                }}>
+                  <Truck size={48} color="#374151" style={{ margin: '0 auto 8px' }} />
+                  <div style={{ fontSize: '16px', fontWeight: '600', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    {company.trailerSize}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Pricing */}
             <div style={{ marginBottom: '24px' }}>
               <h2 style={{
@@ -3599,11 +3654,20 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 Pricing
               </h2>
               <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                <div>• Single Item: $75</div>
-                <div>• 1/4 Load: $150</div>
-                <div>• 1/2 Load: $500</div>
-                <div>• 3/4 Load: $750</div>
-                <div>• Full Load: $1000</div>
+                {company.minimumPrice && <div>• Minimum: ${company.minimumPrice}</div>}
+                {company.quarterLoadPrice && <div>• 1/4 Load: ${company.quarterLoadPrice}</div>}
+                {company.halfLoadPrice && <div>• 1/2 Load: ${company.halfLoadPrice}</div>}
+                {company.threeQuarterLoadPrice && <div>• 3/4 Load: ${company.threeQuarterLoadPrice}</div>}
+                {company.fullLoadPrice && <div>• Full Load: ${company.fullLoadPrice}</div>}
+                {!company.minimumPrice && !company.quarterLoadPrice && (
+                  <>
+                    <div>• Minimum: $75</div>
+                    <div>• 1/4 Load: $150</div>
+                    <div>• 1/2 Load: $500</div>
+                    <div>• 3/4 Load: $750</div>
+                    <div>• Full Load: $1000</div>
+                  </>
+                )}
               </div>
             </div>
 

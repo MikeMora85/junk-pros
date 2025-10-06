@@ -72,6 +72,12 @@ export const companies = pgTable("companies", {
   featuredReviewIds: text("featured_review_ids").array(),
   galleryImages: text("gallery_images").array(),
   serviceAreaCities: text("service_area_cities").array(),
+  trailerSize: text("trailer_size"),
+  minimumPrice: decimal("minimum_price", { precision: 10, scale: 2 }),
+  quarterLoadPrice: decimal("quarter_load_price", { precision: 10, scale: 2 }),
+  halfLoadPrice: decimal("half_load_price", { precision: 10, scale: 2 }),
+  threeQuarterLoadPrice: decimal("three_quarter_load_price", { precision: 10, scale: 2 }),
+  fullLoadPrice: decimal("full_load_price", { precision: 10, scale: 2 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -103,6 +109,12 @@ export const insertCompanySchema = createInsertSchema(companies, {
   featuredReviewIds: z.array(z.string()).nullable().optional(),
   galleryImages: z.array(z.string()).nullable().optional(),
   serviceAreaCities: z.array(z.string()).nullable().optional(),
+  trailerSize: z.string().nullable().optional(),
+  minimumPrice: z.string().nullable().optional(),
+  quarterLoadPrice: z.string().nullable().optional(),
+  halfLoadPrice: z.string().nullable().optional(),
+  threeQuarterLoadPrice: z.string().nullable().optional(),
+  fullLoadPrice: z.string().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
