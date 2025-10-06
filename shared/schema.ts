@@ -81,6 +81,10 @@ export const companies = pgTable("companies", {
   halfLoadPrice: decimal("half_load_price", { precision: 10, scale: 2 }),
   threeQuarterLoadPrice: decimal("three_quarter_load_price", { precision: 10, scale: 2 }),
   fullLoadPrice: decimal("full_load_price", { precision: 10, scale: 2 }),
+  facebookUrl: text("facebook_url"),
+  instagramUrl: text("instagram_url"),
+  twitterUrl: text("twitter_url"),
+  linkedinUrl: text("linkedin_url"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -121,6 +125,10 @@ export const insertCompanySchema = createInsertSchema(companies, {
   halfLoadPrice: z.string().nullable().optional(),
   threeQuarterLoadPrice: z.string().nullable().optional(),
   fullLoadPrice: z.string().nullable().optional(),
+  facebookUrl: z.string().nullable().optional(),
+  instagramUrl: z.string().nullable().optional(),
+  twitterUrl: z.string().nullable().optional(),
+  linkedinUrl: z.string().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;

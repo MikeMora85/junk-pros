@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
+import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
 import AddBusiness from "./pages/AddBusiness";
@@ -3182,6 +3183,99 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         IN PERSON ESTIMATE
                       </button>
                     </div>
+
+                    {/* Social Media Icons */}
+                    {(c.facebookUrl || c.instagramUrl || c.twitterUrl || c.linkedinUrl) && (
+                      <div style={{
+                        marginTop: '16px',
+                        paddingTop: '16px',
+                        borderTop: '1px solid #e5e5e5',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '16px',
+                      }}>
+                        {c.facebookUrl && (
+                          <a
+                            href={c.facebookUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              color: '#1877f2',
+                              transition: 'transform 0.2s',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            data-testid={`link-facebook-${c.id}`}
+                          >
+                            <FaFacebook size={32} />
+                          </a>
+                        )}
+                        {c.instagramUrl && (
+                          <a
+                            href={c.instagramUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              color: '#E4405F',
+                              transition: 'transform 0.2s',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            data-testid={`link-instagram-${c.id}`}
+                          >
+                            <FaInstagram size={32} />
+                          </a>
+                        )}
+                        {c.twitterUrl && (
+                          <a
+                            href={c.twitterUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              color: '#1DA1F2',
+                              transition: 'transform 0.2s',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            data-testid={`link-twitter-${c.id}`}
+                          >
+                            <FaTwitter size={32} />
+                          </a>
+                        )}
+                        {c.linkedinUrl && (
+                          <a
+                            href={c.linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              color: '#0A66C2',
+                              transition: 'transform 0.2s',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
+                            onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            data-testid={`link-linkedin-${c.id}`}
+                          >
+                            <FaLinkedin size={32} />
+                          </a>
+                        )}
+                      </div>
+                    )}
 
                     {/* Calendar/Availability Section */}
                     {expandedQuote === c.id && (
