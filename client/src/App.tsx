@@ -3942,9 +3942,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 Business Hours
               </h2>
               <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                <div>8:00 AM - 6:00 PM</div>
-                <div>8:00 AM - 4:00 PM</div>
-                <div>Sunday - Closed</div>
+                <div><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</div>
+                <div><strong>Saturday:</strong> 8:00 AM - 4:00 PM</div>
+                <div><strong>Sunday:</strong> Closed</div>
               </div>
             </div>
 
