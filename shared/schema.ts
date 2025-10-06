@@ -85,6 +85,7 @@ export const companies = pgTable("companies", {
   instagramUrl: text("instagram_url"),
   gmbUrl: text("gmb_url"),
   youtubeUrl: text("youtube_url"),
+  teamMembers: jsonb("team_members"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -129,6 +130,7 @@ export const insertCompanySchema = createInsertSchema(companies, {
   instagramUrl: z.string().nullable().optional(),
   gmbUrl: z.string().nullable().optional(),
   youtubeUrl: z.string().nullable().optional(),
+  teamMembers: z.any().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;

@@ -3799,6 +3799,90 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               </div>
             </div>
 
+            {/* Meet the Team */}
+            {company.teamMembers && Array.isArray(company.teamMembers) && company.teamMembers.length > 0 && (
+              <div style={{ marginBottom: '32px' }}>
+                <h2 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  marginBottom: '16px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Meet the Team
+                </h2>
+                <div style={{
+                  display: 'grid',
+                  gap: '20px',
+                }}>
+                  {company.teamMembers.map((member: any, i: number) => (
+                    <div key={i} style={{
+                      display: 'flex',
+                      gap: '16px',
+                      padding: '16px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '12px',
+                    }}>
+                      <div style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        backgroundColor: '#e5e7eb',
+                        flexShrink: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                      }}>
+                        {member.imageUrl ? (
+                          <img 
+                            src={member.imageUrl} 
+                            alt={member.name}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                        ) : (
+                          <UserCircle size={48} color="#9ca3af" />
+                        )}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <h3 style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          margin: '0 0 4px 0',
+                          color: '#000',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                        }}>
+                          {member.name}
+                        </h3>
+                        <p style={{
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          margin: '0 0 8px 0',
+                          color: '#fbbf24',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                        }}>
+                          {member.role}
+                        </p>
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#4b5563',
+                          margin: 0,
+                          lineHeight: '1.5',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                        }}>
+                          {member.bio}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Reviews */}
             <div style={{ marginBottom: '32px' }}>
               <h2 style={{
