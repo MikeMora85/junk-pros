@@ -3363,7 +3363,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       zIndex: 1000,
       overflowY: 'auto',
     }}>
-      {/* Back button and Social Media Icons */}
+      {/* Back button and Call Now Button */}
       <div style={{
         position: 'sticky',
         top: 0,
@@ -3392,11 +3392,86 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           ← Back
         </button>
         
-        {/* Social Media Icons and Website */}
+        {/* Call Now Button */}
+        <button
+          style={{
+            padding: '12px 24px',
+            background: '#fbbf24',
+            color: '#000',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: '600',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}
+          onClick={() => {
+            trackBusinessEvent(company.id, 'call');
+            window.open(`tel:${company.phone}`, '_self');
+          }}
+          data-testid="button-call-now"
+        >
+          Call Now
+        </button>
+      </div>
+
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
+        {/* Logo and Header */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          marginBottom: '16px',
+        }}>
+          {/* Logo */}
+          <div style={{
+            width: '80px',
+            height: '80px',
+            borderRadius: '50%',
+            background: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            border: '2px solid #e5e7eb',
+          }}>
+            <Truck size={40} color="#6b7280" />
+          </div>
+          
+          {/* Company name */}
+          <div style={{ flex: 1 }}>
+            <h1 style={{
+              fontSize: '28px',
+              fontWeight: '700',
+              margin: 0,
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }} data-testid="text-company-name">
+              {company.name}
+            </h1>
+          </div>
+        </div>
+
+        {/* Rating */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span key={star} style={{ color: '#fbbf24', fontSize: '20px' }}>★</span>
+          ))}
+          <span style={{ fontWeight: '700', fontSize: '18px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            {company.rating}
+          </span>
+          <span style={{ color: '#6b7280', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+            {company.reviews} reviews
+          </span>
+        </div>
+
+        {/* Social Media Icons */}
         {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
           <div style={{
             display: 'flex',
+            justifyContent: 'center',
             gap: '16px',
+            marginBottom: '24px',
           }}>
             {company.website && (
               <a
@@ -3495,77 +3570,6 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             )}
           </div>
         )}
-      </div>
-
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
-        {/* Logo and Header */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          marginBottom: '16px',
-        }}>
-          {/* Logo */}
-          <div style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '50%',
-            background: '#f3f4f6',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-            border: '2px solid #e5e7eb',
-          }}>
-            <Truck size={40} color="#6b7280" />
-          </div>
-          
-          {/* Company name and button */}
-          <div style={{ flex: 1 }}>
-            <h1 style={{
-              fontSize: '28px',
-              fontWeight: '700',
-              margin: '0 0 12px 0',
-              color: '#000',
-              fontFamily: 'system-ui, -apple-system, sans-serif',
-            }} data-testid="text-company-name">
-              {company.name}
-            </h1>
-            <button
-              style={{
-                padding: '12px 24px',
-                background: '#fbbf24',
-                color: '#000',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '16px',
-                fontWeight: '600',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}
-              onClick={() => {
-                trackBusinessEvent(company.id, 'call');
-                window.open(`tel:${company.phone}`, '_self');
-              }}
-              data-testid="button-request-quote"
-            >
-              Request a Quote
-            </button>
-          </div>
-        </div>
-
-        {/* Rating */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span key={star} style={{ color: '#fbbf24', fontSize: '20px' }}>★</span>
-          ))}
-          <span style={{ fontWeight: '700', fontSize: '18px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            {company.rating}
-          </span>
-          <span style={{ color: '#6b7280', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            {company.reviews} reviews
-          </span>
-        </div>
 
         {/* Services Icons */}
         {company.services && company.services.length > 0 && (
