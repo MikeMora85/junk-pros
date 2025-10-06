@@ -195,7 +195,7 @@ export default function CompanyDetail() {
           {/* Left Column */}
           <div style={{ flex: 1 }}>
             {/* About Us */}
-            {company.description && (
+            {company.aboutUs && (
               <div style={{
                 backgroundColor: '#fff',
                 borderRadius: '12px',
@@ -216,8 +216,9 @@ export default function CompanyDetail() {
                   color: '#6b7280',
                   lineHeight: '1.6',
                   margin: 0,
+                  whiteSpace: 'pre-wrap',
                 }}>
-                  {company.description}
+                  {company.aboutUs}
                 </p>
               </div>
             )}
