@@ -537,7 +537,15 @@ export class DbStorage implements IStorage {
           eq(companies.status, 'approved')
         )
       );
-    return results.map(r => r.city).sort();
+    // Trim city names and remove duplicates
+    const citySet = new Set<string>();
+    results.forEach(r => {
+      const trimmedCity = r.city.trim();
+      if (trimmedCity) {
+        citySet.add(trimmedCity);
+      }
+    });
+    return Array.from(citySet).sort();
   }
 
   async findStateForCity(city: string): Promise<{ state: string | null; city: string }> {
