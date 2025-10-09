@@ -23,6 +23,7 @@ I prefer detailed explanations.
   - 16 service category pages (/services/office-cleanouts, /services/garage-cleanouts, etc.) with detailed benefits, process steps, and common items sections
   - All landing pages include zip search functionality, Back/Home navigation buttons, and auto scroll-to-top
   - Mobile-friendly with responsive typography using clamp() and flexible grid layouts
+  - City interlinks sections on both service and item pages linking to major cities (Scottsdale, Phoenix, Tempe, Mesa, Chandler, Gilbert, Glendale, Peoria) for enhanced SEO
 
 ### Technical Implementations
 - **Frontend**: React with Vite, styled using Tailwind CSS.

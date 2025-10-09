@@ -501,6 +501,92 @@ export default function ItemRemovalPage() {
         </section>
       )}
 
+      {/* Cities Section - Interlinks */}
+      <section style={{
+        padding: '60px 16px',
+        backgroundColor: '#f8f8f8',
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{
+            fontSize: 'clamp(24px, 5vw, 36px)',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            textAlign: 'center',
+            margin: '0 0 16px 0',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            {itemInfo.title} in Major Cities
+          </h2>
+          <p style={{
+            fontSize: 'clamp(16px, 3vw, 18px)',
+            color: '#666',
+            textAlign: 'center',
+            margin: '0 0 32px 0',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Find trusted local haulers for {itemInfo.title.toLowerCase()} in your area
+          </p>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '16px',
+          }}>
+            {[
+              { city: 'Scottsdale', state: 'Arizona', url: '/arizona/scottsdale' },
+              { city: 'Phoenix', state: 'Arizona', url: '/arizona/phoenix' },
+              { city: 'Tempe', state: 'Arizona', url: '/arizona/tempe' },
+              { city: 'Mesa', state: 'Arizona', url: '/arizona/mesa' },
+              { city: 'Chandler', state: 'Arizona', url: '/arizona/chandler' },
+              { city: 'Gilbert', state: 'Arizona', url: '/arizona/gilbert' },
+              { city: 'Glendale', state: 'Arizona', url: '/arizona/glendale' },
+              { city: 'Peoria', state: 'Arizona', url: '/arizona/peoria' }
+            ].map((cityData, index) => (
+              <a
+                key={index}
+                href={cityData.url}
+                style={{
+                  display: 'block',
+                  padding: '20px',
+                  backgroundColor: '#fff',
+                  border: '2px solid #fbbf24',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#fffbeb';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#fff';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+                data-testid={`link-city-${cityData.city.toLowerCase()}`}
+              >
+                <div style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  color: '#1a1a1a',
+                  marginBottom: '4px',
+                }}>
+                  {cityData.city}
+                </div>
+                <div style={{
+                  fontSize: '14px',
+                  color: '#666',
+                }}>
+                  {cityData.state}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section style={{
         padding: '60px 16px',
