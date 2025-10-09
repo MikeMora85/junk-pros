@@ -1318,7 +1318,7 @@ function LandingPage() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '60px 16px',
+        padding: '60px 20px',
       }}>
         <div style={{
           textAlign: 'center',
@@ -1347,7 +1347,7 @@ function LandingPage() {
           </p>
 
           <form onSubmit={handleSearch} style={{
-            width: '100%',
+            width: 'calc(100% - 8px)',
             maxWidth: '500px',
             margin: '0 auto',
             display: 'flex',
@@ -1357,6 +1357,7 @@ function LandingPage() {
             borderRadius: '10px',
             boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
             transform: 'translateY(-1px)',
+            boxSizing: 'border-box',
           }}>
             <input
               type="text"
