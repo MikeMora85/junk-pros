@@ -6,15 +6,25 @@ const serviceDetails: Record<string, {
   title: string;
   category: string;
   description: string;
+  detailedDescription: string;
   benefits: string[];
   process: string[];
   commonItems: string[];
+  whyChooseLocal: string[];
   icon: any;
 }> = {
   'office-cleanouts': {
     title: 'Office Cleanouts',
     category: 'Commercial',
     description: 'Professional office cleanout services for businesses relocating, downsizing, or renovating. Our local junk haulers specialize in removing office furniture, electronics, and equipment efficiently with minimal disruption to your operations.',
+    detailedDescription: 'Businesses across Arizona trust our local office cleanout specialists for professional, efficient service. Whether you\'re relocating your headquarters, downsizing your workspace, or renovating your facilities, our experienced teams handle everything from cubicle disassembly to electronics removal. We work with businesses of all sizes, from small startups to large corporate offices, providing customized solutions that meet your timeline and budget.',
+    whyChooseLocal: [
+      'Local teams in Scottsdale, Phoenix, and Tempe provide faster response times',
+      'Familiar with Arizona commercial building regulations and requirements',
+      'Established relationships with local recycling centers and donation facilities',
+      'Support local businesses - we\'re your neighbors in Mesa, Chandler, and Gilbert',
+      'Same-day service available throughout Glendale and Peoria areas'
+    ],
     benefits: [
       'After-hours and weekend availability',
       'Secure document destruction available',
@@ -36,6 +46,14 @@ const serviceDetails: Record<string, {
     title: 'Warehouse Clearing',
     category: 'Commercial',
     description: 'Complete warehouse and industrial facility clearing services. We handle large-scale cleanouts for warehouses, manufacturing plants, and distribution centers with specialized equipment and experienced crews.',
+    detailedDescription: 'Arizona\'s growing industrial sector demands reliable warehouse clearing services that can handle massive projects efficiently. Our experienced crews specialize in clearing distribution centers, manufacturing facilities, and industrial warehouses of any size. We bring industrial-grade equipment and large teams to complete your project on schedule, whether you\'re closing a facility, relocating operations, or preparing for new tenants. From pallet rack removal to heavy machinery disposal, we handle every aspect with professionalism and attention to safety regulations.',
+    whyChooseLocal: [
+      'Rapid deployment from our Phoenix and Tempe locations for urgent clearing needs',
+      'Deep understanding of industrial zoning and disposal regulations across Scottsdale and Mesa',
+      'Established partnerships with Arizona recycling centers maximize your salvage value returns',
+      'Local teams in Chandler and Gilbert provide consistent, reliable service you can trust',
+      'Same-day assessments available throughout Glendale and Peoria industrial corridors'
+    ],
     benefits: [
       'Industrial-grade equipment available',
       'Large crew capacity for quick completion',
@@ -57,6 +75,14 @@ const serviceDetails: Record<string, {
     title: 'Retail Space Cleanouts',
     category: 'Commercial',
     description: 'Retail space cleanout services for store closures, renovations, or relocations. Fast, professional removal of fixtures, inventory, and displays to help you meet tight deadlines.',
+    detailedDescription: 'Retail businesses throughout Arizona face tight timelines when closing, renovating, or relocating their storefronts. Our retail cleanout specialists understand the urgency of lease deadlines and the importance of leaving spaces market-ready for landlords. We efficiently remove display fixtures, shelving systems, point-of-sale equipment, and remaining inventory while coordinating donation opportunities for usable merchandise. Whether you\'re a boutique in Scottsdale or a shopping center anchor store, we handle everything from mannequins to merchandising displays with speed and professionalism.',
+    whyChooseLocal: [
+      'Quick response times from our Phoenix and Scottsdale teams to meet your lease deadlines',
+      'Familiar with retail property management requirements in Tempe and Mesa shopping districts',
+      'Connections with local charities in Chandler and Gilbert for inventory donation opportunities',
+      'Understanding of peak traffic hours to minimize disruption in busy areas like Glendale',
+      'Same-day emergency services available for unexpected closures throughout Peoria'
+    ],
     benefits: [
       'Quick turnaround for lease deadlines',
       'Fixture and display removal expertise',
@@ -78,6 +104,14 @@ const serviceDetails: Record<string, {
     title: 'Restaurant Equipment Removal',
     category: 'Commercial',
     description: 'Specialized restaurant equipment removal for closures, renovations, or upgrades. We safely remove and dispose of commercial kitchen equipment, following all health and safety regulations.',
+    detailedDescription: 'Arizona\'s vibrant restaurant scene requires specialized expertise when it comes to commercial kitchen equipment removal. Our certified technicians safely disconnect and remove everything from commercial ovens and walk-in coolers to grease traps and exhaust hoods, ensuring full compliance with health department regulations. We understand the value of commercial kitchen equipment and can coordinate resale or donation of working appliances. Whether you\'re a fine dining establishment undergoing renovation or closing a quick-service location, we handle your equipment with the care and professionalism it deserves.',
+    whyChooseLocal: [
+      'Licensed technicians in Phoenix and Scottsdale trained in commercial kitchen disconnection',
+      'Familiar with Maricopa County health department requirements and disposal regulations',
+      'Network of restaurant equipment buyers in Tempe and Mesa for working appliance resale',
+      'Quick turnaround times help Chandler and Gilbert restaurants meet renovation schedules',
+      'After-hours service available in Glendale and Peoria to minimize business disruption'
+    ],
     benefits: [
       'Commercial kitchen expertise',
       'Proper disconnection of gas/electric',
@@ -99,6 +133,14 @@ const serviceDetails: Record<string, {
     title: 'Home Cleanouts',
     category: 'Residential',
     description: 'Complete residential cleanout services for any situation. Whether you\'re moving, decluttering, or preparing a home for sale, our local haulers provide compassionate and efficient service.',
+    detailedDescription: 'Arizona homeowners trust our complete home cleanout services for life\'s major transitions. Whether you\'re downsizing, moving across the country, preparing a property for sale, or simply reclaiming space from years of accumulation, our compassionate teams handle every item with respect. We sort through belongings carefully, identifying items for donation, recycling, or proper disposal while treating your home and memories with dignity. Our eco-friendly approach ensures usable items find new homes while reducing landfill waste.',
+    whyChooseLocal: [
+      'Same-day service available in Phoenix and Scottsdale for time-sensitive moving situations',
+      'Established relationships with donation centers throughout Tempe and Mesa communities',
+      'Local teams understand the unique needs of Arizona homeowners in Chandler and Gilbert',
+      'Familiar with HOA requirements and disposal guidelines in Glendale neighborhoods',
+      'Trusted by Peoria families for sensitive cleanout situations requiring compassion and discretion'
+    ],
     benefits: [
       'Same-day service often available',
       'Sensitive to personal situations',
@@ -120,6 +162,14 @@ const serviceDetails: Record<string, {
     title: 'Garage Cleanouts',
     category: 'Residential',
     description: 'Garage and basement cleanout services to reclaim your space. We remove years of accumulated items quickly and affordably, recycling and donating whenever possible.',
+    detailedDescription: 'Garages across Arizona become catch-all spaces for everything from seasonal decorations to old lawn equipment and forgotten projects. Our garage cleanout specialists transform cluttered spaces into functional storage areas or workshop spaces you can actually use. We handle the heavy lifting of removing decades of accumulation, properly disposing of hazardous materials like old paint and chemicals, and recycling metal and electronics. No sorting required on your part - we handle everything from evaluation to final sweep, leaving your garage clean and organized.',
+    whyChooseLocal: [
+      'Fast response times in Scottsdale and Phoenix for weekend project scheduling',
+      'Knowledge of Arizona hazardous waste disposal sites and regulations in Tempe',
+      'Local teams in Mesa and Chandler understand desert climate storage challenges',
+      'Convenient scheduling around your availability in Gilbert and Glendale communities',
+      'Same-day service often available for Peoria residents ready to reclaim their space'
+    ],
     benefits: [
       'No sorting required on your part',
       'Heavy item removal included',
@@ -141,6 +191,14 @@ const serviceDetails: Record<string, {
     title: 'Attic & Basement Cleanouts',
     category: 'Residential',
     description: 'Professional attic and basement clearing services. We navigate tight spaces and stairs to remove decades of stored items, treating your belongings with care and respect.',
+    detailedDescription: 'Attics and basements hold generations of memories along with forgotten storage. Our experienced crews specialize in navigating narrow stairs, low ceilings, and tight access points to safely remove everything from vintage furniture to boxes of family keepsakes. We take extra care with potentially valuable or sentimental items, alerting you to anything that might have significance or worth. Whether you\'re preparing a home for sale, creating usable space, or settling an estate, we handle the physical challenges while treating each item with the respect it deserves.',
+    whyChooseLocal: [
+      'Experienced with Arizona home layouts common in Scottsdale and Phoenix neighborhoods',
+      'Careful handling protects your property while navigating stairs in Tempe and Mesa homes',
+      'Local expertise in identifying valuable vintage items common to Arizona estates',
+      'Flexible scheduling works around family availability in Chandler and Gilbert',
+      'Trusted by Glendale and Peoria homeowners for respectful, thorough service'
+    ],
     benefits: [
       'Experienced with tight spaces',
       'Careful stair navigation',
@@ -162,6 +220,14 @@ const serviceDetails: Record<string, {
     title: 'Yard Debris Removal',
     category: 'Residential',
     description: 'Yard waste and debris removal for landscaping projects, storm cleanup, or seasonal maintenance. We handle branches, leaves, soil, and all types of organic yard waste.',
+    detailedDescription: 'Arizona\'s desert landscape requires specialized yard debris removal, especially after monsoon season storms or major landscaping projects. Our teams handle everything from palm tree trimmings and citrus tree pruning waste to rock garden redesign debris and old xeriscaping materials. We understand the unique challenges of Arizona yards - from handling prickly desert plants to disposing of large quantities of decorative rock and gravel. Whether you\'re refreshing your desert landscape or cleaning up after storm damage, we provide efficient removal with eco-friendly disposal practices.',
+    whyChooseLocal: [
+      'Rapid storm cleanup response across Phoenix and Scottsdale neighborhoods',
+      'Expertise with desert landscaping materials unique to Tempe and Mesa properties',
+      'Knowledge of Arizona composting facilities and green waste recycling in Chandler',
+      'Understanding of HOA landscaping requirements in Gilbert and Glendale communities',
+      'Same-day service available in Peoria for urgent project cleanup needs'
+    ],
     benefits: [
       'Large capacity trucks',
       'Organic waste composting',
@@ -183,6 +249,14 @@ const serviceDetails: Record<string, {
     title: 'Estate Cleanouts',
     category: 'Estates',
     description: 'Compassionate estate cleanout services during difficult times. We handle complete property clearing with respect, care, and sensitivity to family heirlooms and memories.',
+    detailedDescription: 'Settling an estate is emotionally challenging, and our compassionate teams provide supportive, respectful service during this difficult time. We work closely with families, executors, and estate attorneys to systematically clear properties while carefully identifying valuable items, family heirlooms, and personal effects. Our experienced crews understand the emotional weight of this process and handle every belonging with dignity and care. We coordinate with local charities for donation of usable items, arrange estate sales when appropriate, and ensure the property is left clean and ready for the next chapter.',
+    whyChooseLocal: [
+      'Trusted by Phoenix and Scottsdale families for generations of compassionate estate service',
+      'Established relationships with local estate sale companies in Tempe and Mesa',
+      'Knowledge of Arizona probate timelines helps families in Chandler and Gilbert meet deadlines',
+      'Connections with local charities and donation centers throughout Glendale',
+      'Discreet, respectful service protects family privacy in Peoria communities'
+    ],
     benefits: [
       'Compassionate and respectful service',
       'Experience with sensitive situations',
@@ -204,6 +278,14 @@ const serviceDetails: Record<string, {
     title: 'Foreclosure Cleanouts',
     category: 'Estates',
     description: 'Fast foreclosure property cleanout services for banks, realtors, and property managers. We clear properties quickly to get them market-ready with competitive pricing.',
+    detailedDescription: 'Banks, realtors, and property managers across Arizona rely on our foreclosure cleanout services to quickly transform vacant properties into market-ready homes. We handle everything from occupied to completely abandoned properties, removing all contents, debris, and unwanted items while documenting the property condition. Our efficient crews work fast to minimize holding costs and get properties ready for resale. We\'re experienced with REO properties, short sales, and bank-owned homes, providing the rapid turnaround and competitive pricing that real estate professionals demand.',
+    whyChooseLocal: [
+      'Quick deployment in Phoenix and Scottsdale to minimize property holding costs',
+      'Established relationships with real estate agents and banks throughout Tempe and Mesa',
+      'Understanding of Arizona real estate market timelines in Chandler and Gilbert',
+      'Secure service protects property integrity in Glendale neighborhoods',
+      'Volume pricing available for property management companies in Peoria'
+    ],
     benefits: [
       'Rapid response and completion',
       'Experienced with abandoned properties',
@@ -225,6 +307,14 @@ const serviceDetails: Record<string, {
     title: 'Hoarding Cleanup',
     category: 'Estates',
     description: 'Professional hoarding cleanup services with compassion and discretion. Our trained teams work with sensitivity to help restore safe, livable spaces while respecting the individual\'s needs.',
+    detailedDescription: 'Hoarding situations require specialized expertise, compassion, and complete discretion. Our trained professionals work with individuals, families, and mental health specialists to restore safe, livable environments while respecting the emotional complexity of hoarding disorder. We proceed at a pace comfortable for the individual, carefully sorting through accumulated items and identifying anything of value or importance. Our teams are trained in biohazard safety, proper sanitization, and trauma-informed care, ensuring we treat every person and situation with the dignity and understanding they deserve.',
+    whyChooseLocal: [
+      'Discreet service protects client privacy in Phoenix and Scottsdale communities',
+      'Partnerships with Arizona mental health professionals in Tempe and Mesa',
+      'Compassionate local teams understand the sensitive nature of hoarding situations',
+      'Knowledge of local resources and support services in Chandler and Gilbert',
+      'Trusted throughout Glendale and Peoria for non-judgmental, respectful service'
+    ],
     benefits: [
       'Trained in hoarding situations',
       'Non-judgmental approach',
@@ -246,6 +336,14 @@ const serviceDetails: Record<string, {
     title: 'Downsizing Services',
     category: 'Estates',
     description: 'Downsizing and senior moving services to help transition to smaller homes or senior living. We make the process easier by handling furniture removal and donation coordination.',
+    detailedDescription: 'Transitioning to a smaller home or senior living community is a significant life change, and our downsizing specialists make the process manageable and stress-free. We work patiently with seniors and their families to decide what treasured items will fit in the new space and what needs to find new homes. Our compassionate teams handle the physical work of moving, donation coordination, and disposal, allowing families to focus on the emotional aspects of this transition. We understand the importance of preserving dignity and independence throughout the downsizing journey.',
+    whyChooseLocal: [
+      'Patient, understanding teams familiar with Phoenix and Scottsdale senior communities',
+      'Established relationships with Arizona senior living facilities in Tempe and Mesa',
+      'Knowledge of local donation centers that pick up from Chandler and Gilbert homes',
+      'Flexible scheduling accommodates family availability in Glendale area',
+      'Trusted by Peoria families for compassionate downsizing assistance'
+    ],
     benefits: [
       'Patient and understanding service',
       'Help with decision-making',
@@ -267,6 +365,14 @@ const serviceDetails: Record<string, {
     title: 'Storage Unit Cleanouts',
     category: 'Specialty',
     description: 'Storage unit cleanout and clearing services. Whether you\'re closing a unit or clearing inherited storage, we handle complete removal quickly and affordably.',
+    detailedDescription: 'Storage units often become forgotten spaces filled with items from life transitions, moves, or inheritances. Our storage unit cleanout services help you reclaim those monthly fees by completely clearing units quickly and affordably. We meet you at the storage facility, sort through contents to identify anything valuable or worth keeping, and haul away everything else. Whether you\'re closing a unit you\'ve had for years, dealing with an inherited storage space, or need to clear out a business storage, we handle the entire process efficiently so you can stop paying storage fees.',
+    whyChooseLocal: [
+      'Quick response helps Phoenix and Scottsdale residents avoid additional monthly storage fees',
+      'Familiar with major storage facilities throughout Tempe and Mesa',
+      'Same-day service available in Chandler and Gilbert to meet facility deadlines',
+      'Local teams provide reliable, punctual service in Glendale area',
+      'Trusted by Peoria residents for fast, affordable storage unit clearing'
+    ],
     benefits: [
       'Meet at storage facility',
       'Avoid late fees with quick service',
@@ -288,6 +394,14 @@ const serviceDetails: Record<string, {
     title: 'Construction Debris Removal',
     category: 'Specialty',
     description: 'Construction and renovation debris removal for contractors and homeowners. We handle drywall, lumber, concrete, and all types of construction waste with proper disposal.',
+    detailedDescription: 'Construction and renovation projects generate massive amounts of debris that can slow down your work and create safety hazards. Our construction debris removal services keep job sites clean and compliant with safety regulations. We handle everything from demolition waste and drywall scraps to roofing materials and concrete, providing a cost-effective alternative to renting dumpsters. Whether you\'re a contractor working on multiple projects or a homeowner tackling a DIY renovation, we offer flexible pickup schedules and proper disposal of all construction materials, including recycling when possible.',
+    whyChooseLocal: [
+      'Quick turnaround keeps Phoenix and Scottsdale construction projects on schedule',
+      'Understanding of Arizona building codes and disposal requirements in Tempe and Mesa',
+      'Flexible scheduling works with contractor timelines in Chandler and Gilbert',
+      'Knowledge of local recycling facilities for construction materials in Glendale',
+      'Reliable service trusted by Peoria contractors and homeowners alike'
+    ],
     benefits: [
       'Contractor-friendly service',
       'Dumpster alternative',
@@ -309,6 +423,14 @@ const serviceDetails: Record<string, {
     title: 'Electronic Waste Removal',
     category: 'Specialty',
     description: 'E-waste removal and recycling services for safe disposal of electronics. We ensure proper recycling and data destruction for all electronic devices.',
+    detailedDescription: 'Electronic waste contains hazardous materials that require specialized disposal and recycling. Our certified e-waste removal service ensures your old computers, monitors, televisions, and other electronics are recycled responsibly and in compliance with environmental regulations. We provide secure data destruction for devices containing sensitive information and can handle everything from single items to bulk corporate electronics disposal. Whether you\'re upgrading office equipment, clearing out old technology, or responsibly disposing of household electronics, we make it easy and environmentally friendly.',
+    whyChooseLocal: [
+      'Certified e-waste recycling partnerships throughout Phoenix and Scottsdale',
+      'Secure data destruction services protect businesses in Tempe and Mesa',
+      'Knowledge of Arizona environmental regulations for electronic disposal',
+      'Convenient pickup scheduling for Chandler and Gilbert residents and businesses',
+      'Free recycling options available for some items in Glendale and Peoria areas'
+    ],
     benefits: [
       'Certified e-waste recycling',
       'Data security and wiping',
@@ -330,6 +452,14 @@ const serviceDetails: Record<string, {
     title: 'Appliance Removal',
     category: 'Specialty',
     description: 'Professional appliance removal and disposal service. We safely disconnect and remove all types of household and commercial appliances with proper recycling.',
+    detailedDescription: 'Removing old appliances requires proper disconnection, careful handling, and environmentally responsible disposal. Our appliance removal specialists handle refrigerators, washers, dryers, dishwashers, and all major appliances with care to avoid damage to your home. We include basic disconnection service, navigate stairs and tight spaces safely, and ensure appliances are recycled properly rather than ending up in landfills. Whether you\'re upgrading to energy-efficient models, clearing out rental property appliances, or disposing of broken units, we make the process quick, easy, and eco-friendly.',
+    whyChooseLocal: [
+      'Same-day appliance removal available in Phoenix and Scottsdale',
+      'Knowledge of appliance recycling facilities throughout Tempe and Mesa',
+      'Experienced with Arizona home layouts and tight spaces in Chandler and Gilbert',
+      'Affordable flat-rate pricing for Glendale area residents',
+      'Trusted by Peoria homeowners and property managers for reliable service'
+    ],
     benefits: [
       'Safe disconnection included',
       'Appliance recycling',
@@ -348,6 +478,61 @@ const serviceDetails: Record<string, {
     icon: Truck
   }
 };
+
+const cityLinks = [
+  { name: 'Scottsdale', url: '/arizona/scottsdale' },
+  { name: 'Phoenix', url: '/arizona/phoenix' },
+  { name: 'Tempe', url: '/arizona/tempe' },
+  { name: 'Mesa', url: '/arizona/mesa' },
+  { name: 'Chandler', url: '/arizona/chandler' },
+  { name: 'Gilbert', url: '/arizona/gilbert' },
+  { name: 'Glendale', url: '/arizona/glendale' },
+  { name: 'Peoria', url: '/arizona/peoria' }
+];
+
+// Helper function to convert city names to links
+function addCityLinks(text: string) {
+  let result: (string | JSX.Element)[] = [text];
+  
+  cityLinks.forEach(({ name, url }) => {
+    result = result.flatMap((part) => {
+      if (typeof part !== 'string') return [part];
+      
+      const regex = new RegExp(`\\b${name}\\b`, 'g');
+      const parts: (string | JSX.Element)[] = [];
+      let lastIndex = 0;
+      let match;
+      
+      while ((match = regex.exec(part)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push(part.slice(lastIndex, match.index));
+        }
+        parts.push(
+          <a
+            key={`${name}-${match.index}`}
+            href={url}
+            style={{
+              color: '#166534',
+              fontWeight: '600',
+              textDecoration: 'underline',
+            }}
+          >
+            {name}
+          </a>
+        );
+        lastIndex = match.index + name.length;
+      }
+      
+      if (lastIndex < part.length) {
+        parts.push(part.slice(lastIndex));
+      }
+      
+      return parts.length > 0 ? parts : [part];
+    });
+  });
+  
+  return result;
+}
 
 export default function ServicePage() {
   const [, params] = useRoute('/services/:service');
@@ -544,6 +729,92 @@ export default function ServicePage() {
         </div>
       </section>
 
+      {/* Detailed Description Section */}
+      <section style={{
+        padding: '60px 16px',
+        backgroundColor: '#fff',
+      }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <h2 style={{
+            fontSize: 'clamp(24px, 5vw, 36px)',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            textAlign: 'center',
+            margin: '0 0 24px 0',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            About Our {serviceInfo.title}
+          </h2>
+          <p style={{
+            fontSize: 'clamp(16px, 3vw, 18px)',
+            color: '#333',
+            lineHeight: '1.8',
+            textAlign: 'center',
+            margin: '0',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            {addCityLinks(serviceInfo.detailedDescription)}
+          </p>
+        </div>
+      </section>
+
+      {/* Why Choose Local Section */}
+      <section style={{
+        padding: '60px 16px',
+        backgroundColor: '#f8f8f8',
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{
+            fontSize: 'clamp(24px, 5vw, 36px)',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            textAlign: 'center',
+            margin: '0 0 32px 0',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Why Choose Local Haulers?
+          </h2>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '20px',
+          }}>
+            {serviceInfo.whyChooseLocal.map((reason, index) => (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  gap: '12px',
+                  padding: '20px',
+                  backgroundColor: '#fff',
+                  borderRadius: '8px',
+                  border: '2px solid #fbbf24',
+                }}
+              >
+                <CheckCircle2 
+                  size={24} 
+                  style={{ 
+                    color: '#166534', 
+                    flexShrink: 0,
+                    marginTop: '2px' 
+                  }} 
+                />
+                <p style={{
+                  margin: 0,
+                  fontSize: '16px',
+                  color: '#333',
+                  lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {addCityLinks(reason)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Section */}
       <section style={{
         padding: '60px 16px',
@@ -558,7 +829,7 @@ export default function ServicePage() {
             margin: '0 0 32px 0',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            Why Choose Local Haulers?
+            Service Benefits
           </h2>
           
           <div style={{
