@@ -1337,7 +1337,7 @@ function LandingPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Type zip code for closest vetted hauler or search city/state"
+              placeholder="search by zip code, city, state"
               style={{
                 flex: 1,
                 minWidth: '0',
