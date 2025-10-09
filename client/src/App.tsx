@@ -1004,6 +1004,7 @@ function BlogPage() {
             fontWeight: '700',
             color: '#000',
             marginBottom: '12px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Blog
           </h1>
@@ -1013,6 +1014,7 @@ function BlogPage() {
             maxWidth: '700px',
             margin: '0 auto',
             padding: '0 8px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Expert advice, industry insights, and helpful tips for all your junk removal needs
           </p>
@@ -1061,6 +1063,7 @@ function BlogPage() {
                   fontWeight: '600',
                   marginBottom: '16px',
                   border: '1px solid #000',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   {post.category}
                 </div>
@@ -1071,6 +1074,7 @@ function BlogPage() {
                   marginBottom: '12px',
                   lineHeight: '1.3',
                   wordWrap: 'break-word',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   {post.title}
                 </h2>
@@ -1080,6 +1084,7 @@ function BlogPage() {
                   marginBottom: '16px',
                   lineHeight: '1.6',
                   wordWrap: 'break-word',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   {post.excerpt}
                 </p>
@@ -1087,6 +1092,7 @@ function BlogPage() {
                   fontSize: '14px',
                   color: '#999',
                   fontWeight: '500',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
                   {post.date}
                 </div>
@@ -1112,6 +1118,7 @@ function BlogPage() {
               fontWeight: '700',
               marginBottom: '16px',
               color: '#fff',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
               Ready to Find Your Local Hauler?
             </h3>
@@ -1120,6 +1127,7 @@ function BlogPage() {
               marginBottom: '24px',
               color: '#fff',
               padding: '0 8px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
               Search by zip code to find vetted junk removal companies near you
             </p>
@@ -1136,6 +1144,7 @@ function BlogPage() {
                 fontWeight: '700',
                 textDecoration: 'none',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="link-blog-to-home"
             >
