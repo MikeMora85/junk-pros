@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import ExampleProfile from "./pages/ExampleProfile";
 import CompanyDetail from "./pages/CompanyDetail";
 import ProfileEditor from "./pages/ProfileEditor";
+import ItemRemovalPage from "./pages/ItemRemovalPage";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -4933,6 +4934,7 @@ function App() {
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/example-profile" component={ExampleProfile} />
         <Route path="/blog" component={BlogPage} />
+        <Route path="/items/:item" component={ItemRemovalPage} />
         <Route path="/zip/:zipCode">
           {(params) => <ZipSearchPage zipCode={params.zipCode} />}
         </Route>
