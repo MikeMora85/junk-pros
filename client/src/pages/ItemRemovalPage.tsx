@@ -215,37 +215,6 @@ export default function ItemRemovalPage() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
 
-      {/* Header */}
-      <header style={{
-        background: 'linear-gradient(135deg, #166534 0%, #15803d 100%)',
-        color: '#fff',
-        padding: '16px 0',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <Link href="/">
-            <h1 style={{
-              fontSize: '24px',
-              fontWeight: '700',
-              margin: 0,
-              color: '#fff',
-              textDecoration: 'none',
-              cursor: 'pointer',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}>
-              BestJunkRemovalCompanies.com
-            </h1>
-          </Link>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(to bottom, #f8f8f8, #fff)',
