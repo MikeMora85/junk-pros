@@ -13,6 +13,7 @@ import ExampleProfile from "./pages/ExampleProfile";
 import CompanyDetail from "./pages/CompanyDetail";
 import ProfileEditor from "./pages/ProfileEditor";
 import ItemRemovalPage from "./pages/ItemRemovalPage";
+import ServicePage from "./pages/ServicePage";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
@@ -635,12 +636,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 <div style={{ paddingBottom: '12px' }}>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {serviceTypes.commercial.map(service => (
-                      <div
+                      <a
                         key={service}
+                        href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
                         style={{
                           display: 'block',
                           padding: '8px 12px',
                           color: '#000',
+                          textDecoration: 'none',
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
@@ -651,7 +654,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         data-testid={`item-commercial-${service.toLowerCase().replace(/\s+/g, '-')}`}
                       >
                         {service}
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -686,12 +689,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 <div style={{ paddingBottom: '12px' }}>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {serviceTypes.residential.map(service => (
-                      <div
+                      <a
                         key={service}
+                        href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
                         style={{
                           display: 'block',
                           padding: '8px 12px',
                           color: '#000',
+                          textDecoration: 'none',
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
@@ -702,7 +707,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         data-testid={`item-residential-${service.toLowerCase().replace(/\s+/g, '-')}`}
                       >
                         {service}
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -737,12 +742,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 <div style={{ paddingBottom: '12px' }}>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {serviceTypes.estates.map(service => (
-                      <div
+                      <a
                         key={service}
+                        href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
                         style={{
                           display: 'block',
                           padding: '8px 12px',
                           color: '#000',
+                          textDecoration: 'none',
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
@@ -753,7 +760,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         data-testid={`item-estates-${service.toLowerCase().replace(/\s+/g, '-')}`}
                       >
                         {service}
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -788,12 +795,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 <div style={{ paddingBottom: '12px' }}>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                     {serviceTypes.specialty.map(service => (
-                      <div
+                      <a
                         key={service}
+                        href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
                         style={{
                           display: 'block',
                           padding: '8px 12px',
                           color: '#000',
+                          textDecoration: 'none',
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
@@ -804,7 +813,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         data-testid={`item-specialty-${service.toLowerCase().replace(/\s+/g, '-')}`}
                       >
                         {service}
-                      </div>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -4960,6 +4969,7 @@ function App() {
         <Route path="/example-profile" component={ExampleProfile} />
         <Route path="/blog" component={BlogPage} />
         <Route path="/items/:item" component={ItemRemovalPage} />
+        <Route path="/services/:service" component={ServicePage} />
         <Route path="/zip/:zipCode">
           {(params) => <ZipSearchPage zipCode={params.zipCode} />}
         </Route>
