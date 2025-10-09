@@ -855,12 +855,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 </div>
                 <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                   {filteredItems.map(item => (
-                    <div
+                    <a
                       key={item}
+                      href={`/items/${item.toLowerCase().replace(/\s+/g, '-')}`}
                       style={{
                         display: 'block',
                         padding: '8px 12px',
                         color: '#000',
+                        textDecoration: 'none',
                         fontSize: '15px',
                         borderRadius: '4px',
                         cursor: 'pointer',
@@ -871,7 +873,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                       data-testid={`item-common-${item.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       {item}
-                    </div>
+                    </a>
                   ))}
                 </div>
               </div>
