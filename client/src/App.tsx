@@ -914,6 +914,15 @@ function LandingPage() {
     if (!searchQuery.trim()) return;
     
     const query = searchQuery.trim().toLowerCase();
+    
+    // Check if it's a zip code (5 digits)
+    const zipCodePattern = /^\d{5}$/;
+    if (zipCodePattern.test(query)) {
+      // Navigate to zip code search page
+      window.location.href = `/zip/${query}`;
+      return;
+    }
+    
     const slug = query.replace(/\s+/g, '-');
     
     // Check if it's a state name
@@ -1061,7 +1070,7 @@ function LandingPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search for your state, city, or town"
+              placeholder="Type zip code for closest vetted hauler or search city/state"
               style={{
                 flex: 1,
                 minWidth: '0',
