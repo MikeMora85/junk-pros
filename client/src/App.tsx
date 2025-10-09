@@ -1368,11 +1368,18 @@ function LandingPage() {
                 minWidth: '0',
                 width: '100%',
                 padding: '10px 8px',
-                border: 'none',
+                border: '2px solid transparent',
                 outline: 'none',
                 fontSize: '13px',
                 borderRadius: '8px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                boxSizing: 'border-box',
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.border = '2px solid #fbbf24';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.border = '2px solid transparent';
               }}
               data-testid="input-homepage-search"
             />
