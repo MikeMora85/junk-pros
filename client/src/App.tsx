@@ -1233,8 +1233,6 @@ function LandingPage() {
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <div style={{
-        maxWidth: '1400px',
-        margin: '0 auto',
         background: '#ffffff',
         minHeight: '100vh',
       }}>
@@ -1242,8 +1240,9 @@ function LandingPage() {
       <div style={{
         position: 'relative',
         height: '300px',
+        width: '100%',
         backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#ffffff',
