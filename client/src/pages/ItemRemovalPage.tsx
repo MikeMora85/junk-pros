@@ -1,5 +1,5 @@
-import { useRoute, Link } from 'wouter';
-import { CheckCircle2, Search } from 'lucide-react';
+import { useRoute, Link, useLocation } from 'wouter';
+import { CheckCircle2, Search, Home, ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const itemDetails: Record<string, {
@@ -190,9 +190,15 @@ const generateGenericItem = (item: string) => {
 export default function ItemRemovalPage() {
   const [, params] = useRoute('/items/:item');
   const [zipCode, setZipCode] = useState('');
+  const [location] = useLocation();
   
   const itemSlug = params?.item || '';
   const itemInfo = itemDetails[itemSlug] || generateGenericItem(itemSlug);
+  
+  // Scroll to top when page loads or item changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   
   // Set page title and meta tags for SEO
   useEffect(() => {
@@ -211,9 +217,71 @@ export default function ItemRemovalPage() {
       window.location.href = `/?zip=${encodeURIComponent(zipCode.trim())}`;
     }
   };
+  
+  const handleBack = () => {
+    window.history.back();
+  };
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
+      
+      {/* Navigation Bar */}
+      <nav style={{
+        backgroundColor: '#fff',
+        borderBottom: '1px solid #e5e7eb',
+        padding: '12px 16px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        display: 'flex',
+        gap: '12px',
+        alignItems: 'center',
+      }}>
+        <button
+          onClick={handleBack}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '8px 16px',
+            backgroundColor: '#f3f4f6',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: '600',
+            color: '#374151',
+            cursor: 'pointer',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+          data-testid="button-back"
+        >
+          <ArrowLeft size={18} />
+          <span>Back</span>
+        </button>
+        
+        <Link
+          href="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '8px 16px',
+            backgroundColor: '#fbbf24',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: '600',
+            color: '#000',
+            textDecoration: 'none',
+            cursor: 'pointer',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+          data-testid="button-home"
+        >
+          <Home size={18} />
+          <span>Home</span>
+        </Link>
+      </nav>
 
       {/* Hero Section */}
       <section style={{
