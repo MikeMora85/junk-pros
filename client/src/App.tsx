@@ -290,7 +290,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
           backgroundColor: '#ffffff',
           zIndex: 10,
         }}>
-          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '700', color: '#000' }}>Menu</h2>
+          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '700', color: '#000', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Menu</h2>
           <button
             onClick={onClose}
             style={{
@@ -318,6 +318,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               fontSize: '18px',
               fontWeight: '600',
               borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}
             data-testid="link-home"
           >
@@ -332,6 +333,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 fontSize: '18px',
                 fontWeight: '600',
                 color: '#000',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
             >
               Areas Served
@@ -581,6 +583,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 fontSize: '18px',
                 fontWeight: '600',
                 color: '#000',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
             >
               Junk Removal Services
@@ -804,6 +807,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                 fontWeight: '600',
                 color: '#000',
                 textAlign: 'left',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="button-common-items"
             >
@@ -876,6 +880,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               fontSize: '18px',
               fontWeight: '600',
               borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}
             data-testid="link-blog"
           >
@@ -893,6 +898,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
               fontSize: '18px',
               fontWeight: '600',
               borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}
             data-testid="link-menu-login"
           >
