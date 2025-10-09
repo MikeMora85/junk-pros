@@ -13,11 +13,16 @@ I prefer detailed explanations.
 ### UI/UX Decisions
 - **Color Scheme**: Brand green (#166534) for primary actions and headers, yellow (#fbbf24) for highlights, featured badges, action buttons, and form elements.
 - **Layout**: Clean, card-based layout for company listings, mobile-first responsive design across all components (admin dashboard, navigation).
-- **Typography**: Inter font family used throughout the application.
+- **Typography**: 'Helvetica Neue', Arial, sans-serif font family used throughout the application.
 - **Interactive Elements**: 3D lift effects (1px default, 2px hover) on state buttons, feature sections, and search bar.
 - **Navigation**: Comprehensive hamburger menu with searchable dropdowns for "Areas Served" and "Junk Removal Services".
 - **Company Profiles**: Enhanced profiles with hero sections, multiple CTAs, detailed business information, and green checkmark badges for "TOP RATED" companies.
 - **Zip Code Search**: Interactive search feature allowing users to find their closest vetted hauler by entering a zip code, with full-screen "Congratulations" overlay showing the nearest company and up to 5 additional nearby options within 15 miles, all sorted by distance.
+- **SEO Landing Pages**: 
+  - 40+ item removal pages (/items/refrigerator, /items/sofa, etc.) with rich content, tips, and mobile-responsive design
+  - 16 service category pages (/services/office-cleanouts, /services/garage-cleanouts, etc.) with detailed benefits, process steps, and common items sections
+  - All landing pages include zip search functionality, Back/Home navigation buttons, and auto scroll-to-top
+  - Mobile-friendly with responsive typography using clamp() and flexible grid layouts
 
 ### Technical Implementations
 - **Frontend**: React with Vite, styled using Tailwind CSS.
