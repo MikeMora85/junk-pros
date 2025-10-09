@@ -1347,7 +1347,7 @@ function LandingPage() {
           </p>
 
           <form onSubmit={handleSearch} style={{
-            width: 'calc(100% - 8px)',
+            width: '100%',
             maxWidth: '500px',
             margin: '0 auto',
             display: 'flex',
@@ -1357,8 +1357,16 @@ function LandingPage() {
             borderRadius: '10px',
             boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
             transform: 'translateY(-1px)',
+            border: '2px solid transparent',
             boxSizing: 'border-box',
-          }}>
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.border = '2px solid #fbbf24';
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.border = '2px solid transparent';
+          }}
+          >
             <input
               type="text"
               value={searchQuery}
@@ -1369,18 +1377,12 @@ function LandingPage() {
                 minWidth: '0',
                 width: '100%',
                 padding: '10px 8px',
-                border: '2px solid transparent',
+                border: 'none',
                 outline: 'none',
                 fontSize: '13px',
                 borderRadius: '8px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                boxSizing: 'border-box',
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.border = '2px solid #fbbf24';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.border = '2px solid transparent';
+                backgroundColor: 'transparent',
               }}
               data-testid="input-homepage-search"
             />
