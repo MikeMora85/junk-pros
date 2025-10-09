@@ -904,6 +904,246 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   );
 }
 
+// Blog Page Component
+function BlogPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: "How to Choose the Right Junk Removal Company",
+      excerpt: "Finding a reliable junk removal service doesn't have to be difficult. Learn the key factors to consider when selecting a company for your needs.",
+      date: "March 15, 2024",
+      category: "Tips & Guides"
+    },
+    {
+      id: 2,
+      title: "What Can and Cannot Be Removed by Junk Haulers",
+      excerpt: "Understanding what items junk removal companies can legally and safely haul away will help you prepare for your appointment and avoid surprises.",
+      date: "March 10, 2024",
+      category: "Industry Info"
+    },
+    {
+      id: 3,
+      title: "Preparing Your Home for Junk Removal Service",
+      excerpt: "Get the most out of your junk removal service with these simple preparation tips that will save you time and money.",
+      date: "March 5, 2024",
+      category: "Tips & Guides"
+    },
+    {
+      id: 4,
+      title: "The Environmental Benefits of Professional Junk Removal",
+      excerpt: "Learn how professional junk removal companies help reduce landfill waste through responsible recycling and donation practices.",
+      date: "February 28, 2024",
+      category: "Sustainability"
+    },
+    {
+      id: 5,
+      title: "Estate Cleanouts: A Complete Guide",
+      excerpt: "Estate cleanouts can be overwhelming. This comprehensive guide walks you through the process and helps you find the right assistance.",
+      date: "February 20, 2024",
+      category: "Services"
+    },
+    {
+      id: 6,
+      title: "Commercial vs. Residential Junk Removal: Key Differences",
+      excerpt: "Understanding the differences between commercial and residential junk removal services will help you choose the right provider for your project.",
+      date: "February 15, 2024",
+      category: "Industry Info"
+    }
+  ];
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: '#d3d3d3',
+    }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      <div style={{
+        maxWidth: '1400px',
+        margin: '0 auto',
+        background: '#ffffff',
+        minHeight: '100vh',
+      }}>
+        {/* Header with Menu */}
+        <div style={{
+          position: 'relative',
+          background: '#ffffff',
+          padding: '16px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+          <button
+            onClick={() => setMenuOpen(true)}
+            style={{
+              backgroundColor: '#fbbf24',
+              color: '#000',
+              padding: '8px',
+              borderRadius: '6px',
+              border: '1px solid #000',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            }}
+            data-testid="button-menu"
+          >
+            <Menu size={24} color="#000" />
+          </button>
+        </div>
+
+        {/* Yellow Banner */}
+        <header style={{
+          background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
+          padding: '48px 16px',
+          textAlign: 'center',
+        }}>
+          <h1 style={{
+            fontSize: '48px',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '12px',
+          }}>
+            Blog
+          </h1>
+          <p style={{
+            fontSize: '20px',
+            color: '#333',
+            maxWidth: '700px',
+            margin: '0 auto',
+          }}>
+            Expert advice, industry insights, and helpful tips for all your junk removal needs
+          </p>
+        </header>
+
+        {/* Blog Posts Grid */}
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '60px 16px',
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+            gap: '32px',
+          }}>
+            {blogPosts.map((post) => (
+              <article
+                key={post.id}
+                style={{
+                  background: '#fff',
+                  border: '2px solid #000',
+                  borderRadius: '8px',
+                  padding: '24px',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                }}
+                data-testid={`article-blog-${post.id}`}
+              >
+                <div style={{
+                  display: 'inline-block',
+                  background: '#fbbf24',
+                  color: '#000',
+                  padding: '6px 12px',
+                  borderRadius: '4px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  marginBottom: '16px',
+                  border: '1px solid #000',
+                }}>
+                  {post.category}
+                </div>
+                <h2 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: '#000',
+                  marginBottom: '12px',
+                  lineHeight: '1.3',
+                }}>
+                  {post.title}
+                </h2>
+                <p style={{
+                  fontSize: '16px',
+                  color: '#666',
+                  marginBottom: '16px',
+                  lineHeight: '1.6',
+                }}>
+                  {post.excerpt}
+                </p>
+                <div style={{
+                  fontSize: '14px',
+                  color: '#999',
+                  fontWeight: '500',
+                }}>
+                  {post.date}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Section */}
+        <div style={{
+          background: '#166534',
+          color: '#fff',
+          padding: '48px 16px',
+          marginTop: '60px',
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}>
+            <h3 style={{
+              fontSize: '28px',
+              fontWeight: '700',
+              marginBottom: '16px',
+              color: '#fff',
+            }}>
+              Ready to Find Your Local Hauler?
+            </h3>
+            <p style={{
+              fontSize: '18px',
+              marginBottom: '24px',
+              color: '#fff',
+            }}>
+              Search by zip code to find vetted junk removal companies near you
+            </p>
+            <a
+              href="/"
+              style={{
+                display: 'inline-block',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '16px 32px',
+                borderRadius: '8px',
+                border: '2px solid #000',
+                fontSize: '18px',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+              }}
+              data-testid="link-blog-to-home"
+            >
+              Start Your Search
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Landing Page Component
 function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -4674,6 +4914,7 @@ function App() {
         <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/example-profile" component={ExampleProfile} />
+        <Route path="/blog" component={BlogPage} />
         <Route path="/zip/:zipCode">
           {(params) => <ZipSearchPage zipCode={params.zipCode} />}
         </Route>
