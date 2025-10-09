@@ -475,25 +475,32 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                     </div>
                   </div>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                    {filteredCities.map(city => (
-                      <div
-                        key={city}
-                        style={{
-                          display: 'block',
-                          padding: '8px 12px',
-                          color: '#000',
-                          fontSize: '15px',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                        data-testid={`item-city-${city.toLowerCase().replace(/[,\s]+/g, '-')}`}
-                      >
-                        {city}
-                      </div>
-                    ))}
+                    {filteredCities.map(city => {
+                      const [cityName, stateAbbr] = city.split(', ');
+                      const stateName = allStates.find(s => s.name.startsWith(stateAbbr))?.slug || stateAbbr.toLowerCase();
+                      const citySlug = cityName.toLowerCase().replace(/\s+/g, '-');
+                      return (
+                        <a
+                          key={city}
+                          href={`/${stateName}/${citySlug}`}
+                          style={{
+                            display: 'block',
+                            padding: '8px 12px',
+                            color: '#000',
+                            textDecoration: 'none',
+                            fontSize: '15px',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                          data-testid={`item-city-${city.toLowerCase().replace(/[,\s]+/g, '-')}`}
+                        >
+                          {city}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -554,25 +561,32 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                     </div>
                   </div>
                   <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                    {filteredTowns.map(town => (
-                      <div
-                        key={town}
-                        style={{
-                          display: 'block',
-                          padding: '8px 12px',
-                          color: '#000',
-                          fontSize: '15px',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                        data-testid={`item-town-${town.toLowerCase().replace(/[,\s]+/g, '-')}`}
-                      >
-                        {town}
-                      </div>
-                    ))}
+                    {filteredTowns.map(town => {
+                      const [townName, stateAbbr] = town.split(', ');
+                      const stateName = allStates.find(s => s.name.startsWith(stateAbbr))?.slug || stateAbbr.toLowerCase();
+                      const townSlug = townName.toLowerCase().replace(/\s+/g, '-');
+                      return (
+                        <a
+                          key={town}
+                          href={`/${stateName}/${townSlug}`}
+                          style={{
+                            display: 'block',
+                            padding: '8px 12px',
+                            color: '#000',
+                            textDecoration: 'none',
+                            fontSize: '15px',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                          data-testid={`item-town-${town.toLowerCase().replace(/[,\s]+/g, '-')}`}
+                        >
+                          {town}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               )}
