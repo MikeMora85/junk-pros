@@ -139,7 +139,7 @@ export type Company = typeof companies.$inferSelect;
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 
-export const insertBusinessOwnerSchema = createInsertSchema(businessOwners, {
+export const insertBusinessOwnerSchema = z.object({
   email: z.string().email(),
   passwordHash: z.string(),
   companyId: z.number().nullable().optional(),

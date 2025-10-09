@@ -333,11 +333,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       // If email and password provided, create business owner
       if (email && password) {
         const passwordHash = await bcrypt.hash(password, 10);
-        const owner = await storage.createBusinessOwner({
+        const ownerData = {
           email: email as string,
-          passwordHash: passwordHash as string,
+          passwordHash: passwordHash,
           companyId: company.id as number,
-        });
+        };
+        const owner = await storage.createBusinessOwner(ownerData);
         
         // Return with auth token
         const token = Buffer.from(`business:${email}:${owner.id}:${Date.now()}`).toString('base64');

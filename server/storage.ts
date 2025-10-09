@@ -22,7 +22,7 @@ export interface IStorage {
   deleteCompany(id: number): Promise<boolean>;
   
   // Business owner operations
-  createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner>;
+  createBusinessOwner(data: Omit<InsertBusinessOwner, 'id' | 'createdAt'>): Promise<BusinessOwner>;
   getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null>;
   getBusinessOwnerById(id: number): Promise<BusinessOwner | null>;
   getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null>;
@@ -409,7 +409,7 @@ export class MemStorage implements IStorage {
     };
   }
 
-  async createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner> {
+  async createBusinessOwner(data: Omit<InsertBusinessOwner, 'id' | 'createdAt'>): Promise<BusinessOwner> {
     const newId = Math.max(...this.businessOwners.map(o => o.id), 0) + 1;
     const newOwner: BusinessOwner = {
       id: newId,
@@ -657,7 +657,7 @@ export class DbStorage implements IStorage {
   }
 
   // Business owner operations
-  async createBusinessOwner(data: Omit<InsertBusinessOwner, 'id'>): Promise<BusinessOwner> {
+  async createBusinessOwner(data: Omit<InsertBusinessOwner, 'id' | 'createdAt'>): Promise<BusinessOwner> {
     const [newOwner] = await db
       .insert(businessOwners)
       .values({
