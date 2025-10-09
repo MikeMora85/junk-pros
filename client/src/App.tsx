@@ -1318,7 +1318,7 @@ function LandingPage() {
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            Find independent, locally-owned junk removal companies based in your city. No franchises - just your neighborhood junk crew.
+            For Your Local Hauler Closest To You. No National Franchises, Local Vetted Junk Haulers Only.
           </p>
 
           <form onSubmit={handleSearch} style={{
