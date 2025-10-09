@@ -2861,6 +2861,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
   
+  // Helper function to format city name: remove dashes and capitalize each word
+  const formatCityName = (citySlug: string) => {
+    return citySlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+  
+  const displayCityName = formatCityName(city);
+  
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
     window.location.href = '/';
@@ -3137,10 +3147,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
             letterSpacing: '-0.02em',
             lineHeight: '1.2',
           }} data-testid="text-page-title">
-            {city.charAt(0).toUpperCase() + city.slice(1)}<br />Junk Removal
+            {displayCityName}<br />Junk Removal
           </h2>
           <p style={{ fontSize: '15px', color: '#000', margin: 0 }}>
-            {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {city.charAt(0).toUpperCase() + city.slice(1)}
+            {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {displayCityName}
           </p>
         </div>
 
