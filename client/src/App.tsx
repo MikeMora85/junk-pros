@@ -996,11 +996,11 @@ function BlogPage() {
         {/* Yellow Banner */}
         <header style={{
           background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
-          padding: '48px 16px',
+          padding: '32px 16px',
           textAlign: 'center',
         }}>
           <h1 style={{
-            fontSize: '48px',
+            fontSize: 'clamp(32px, 8vw, 48px)',
             fontWeight: '700',
             color: '#000',
             marginBottom: '12px',
@@ -1008,10 +1008,11 @@ function BlogPage() {
             Blog
           </h1>
           <p style={{
-            fontSize: '20px',
+            fontSize: 'clamp(16px, 4vw, 20px)',
             color: '#333',
             maxWidth: '700px',
             margin: '0 auto',
+            padding: '0 8px',
           }}>
             Expert advice, industry insights, and helpful tips for all your junk removal needs
           </p>
@@ -1021,12 +1022,12 @@ function BlogPage() {
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '60px 16px',
+          padding: '40px 16px',
         }}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-            gap: '32px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+            gap: '24px',
           }}>
             {blogPosts.map((post) => (
               <article
@@ -1064,19 +1065,21 @@ function BlogPage() {
                   {post.category}
                 </div>
                 <h2 style={{
-                  fontSize: '24px',
+                  fontSize: 'clamp(20px, 5vw, 24px)',
                   fontWeight: '700',
                   color: '#000',
                   marginBottom: '12px',
                   lineHeight: '1.3',
+                  wordWrap: 'break-word',
                 }}>
                   {post.title}
                 </h2>
                 <p style={{
-                  fontSize: '16px',
+                  fontSize: 'clamp(14px, 3.5vw, 16px)',
                   color: '#666',
                   marginBottom: '16px',
                   lineHeight: '1.6',
+                  wordWrap: 'break-word',
                 }}>
                   {post.excerpt}
                 </p>
@@ -1096,8 +1099,8 @@ function BlogPage() {
         <div style={{
           background: '#166534',
           color: '#fff',
-          padding: '48px 16px',
-          marginTop: '60px',
+          padding: '40px 16px',
+          marginTop: '40px',
         }}>
           <div style={{
             maxWidth: '1200px',
@@ -1105,7 +1108,7 @@ function BlogPage() {
             textAlign: 'center',
           }}>
             <h3 style={{
-              fontSize: '28px',
+              fontSize: 'clamp(22px, 6vw, 28px)',
               fontWeight: '700',
               marginBottom: '16px',
               color: '#fff',
@@ -1113,9 +1116,10 @@ function BlogPage() {
               Ready to Find Your Local Hauler?
             </h3>
             <p style={{
-              fontSize: '18px',
+              fontSize: 'clamp(16px, 4vw, 18px)',
               marginBottom: '24px',
               color: '#fff',
+              padding: '0 8px',
             }}>
               Search by zip code to find vetted junk removal companies near you
             </p>
@@ -1125,10 +1129,10 @@ function BlogPage() {
                 display: 'inline-block',
                 background: '#fbbf24',
                 color: '#000',
-                padding: '16px 32px',
+                padding: '14px 28px',
                 borderRadius: '8px',
                 border: '2px solid #000',
-                fontSize: '18px',
+                fontSize: 'clamp(16px, 4vw, 18px)',
                 fontWeight: '700',
                 textDecoration: 'none',
                 boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
