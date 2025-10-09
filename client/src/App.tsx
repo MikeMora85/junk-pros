@@ -1375,14 +1375,16 @@ function LandingPage() {
               style={{
                 flex: 1,
                 minWidth: '0',
-                width: '100%',
+                width: '1px',
                 padding: '10px 8px',
                 border: 'none',
                 outline: 'none',
-                fontSize: '13px',
+                fontSize: '16px',
                 borderRadius: '8px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 backgroundColor: 'transparent',
+                WebkitTextSizeAdjust: '100%',
+                touchAction: 'manipulation',
               }}
               data-testid="input-homepage-search"
             />
