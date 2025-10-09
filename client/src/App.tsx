@@ -405,6 +405,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           textDecoration: 'none',
                           fontSize: '15px',
                           borderRadius: '4px',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -483,6 +484,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -561,6 +563,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -626,6 +629,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -676,6 +680,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -726,6 +731,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -776,6 +782,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                           fontSize: '15px',
                           borderRadius: '4px',
                           cursor: 'pointer',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
                         }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
@@ -856,6 +863,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                         fontSize: '15px',
                         borderRadius: '4px',
                         cursor: 'pointer',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}
                       onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
                       onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
