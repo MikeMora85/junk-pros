@@ -1,5 +1,5 @@
 import { useRoute, Link } from 'wouter';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Search } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const itemDetails: Record<string, {
@@ -218,24 +218,24 @@ export default function ItemRemovalPage() {
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(to bottom, #f8f8f8, #fff)',
-        padding: '60px 16px',
+        padding: '40px 16px',
         textAlign: 'center',
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h1 style={{
-            fontSize: '48px',
+            fontSize: 'clamp(28px, 6vw, 48px)',
             fontWeight: '700',
             color: '#1a1a1a',
-            margin: '0 0 24px 0',
+            margin: '0 0 16px 0',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             {itemInfo.title}
           </h1>
           <p style={{
-            fontSize: '20px',
+            fontSize: 'clamp(16px, 3vw, 20px)',
             color: '#666',
             lineHeight: '1.6',
-            margin: '0 0 40px 0',
+            margin: '0 0 32px 0',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             {itemInfo.description}
@@ -258,7 +258,7 @@ export default function ItemRemovalPage() {
                 padding: '14px 16px',
                 border: '2px solid #fbbf24',
                 borderRadius: '8px',
-                fontSize: '16px',
+                fontSize: 'clamp(14px, 2.5vw, 16px)',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="input-zip-search"
@@ -266,7 +266,7 @@ export default function ItemRemovalPage() {
             <button
               type="submit"
               style={{
-                padding: '14px 28px',
+                padding: '14px 20px',
                 backgroundColor: '#fbbf24',
                 color: '#000',
                 border: 'none',
@@ -274,11 +274,14 @@ export default function ItemRemovalPage() {
                 fontSize: '16px',
                 fontWeight: '700',
                 cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
               data-testid="button-zip-search"
             >
-              Find Haulers
+              <Search size={20} />
             </button>
           </form>
         </div>
@@ -286,16 +289,16 @@ export default function ItemRemovalPage() {
 
       {/* Why Choose Local */}
       <section style={{
-        padding: '80px 16px',
+        padding: '60px 16px',
         backgroundColor: '#fff',
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#1a1a1a',
             textAlign: 'center',
-            margin: '0 0 48px 0',
+            margin: '0 0 32px 0',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Why Choose Local Haulers For {itemInfo.title}?
@@ -303,8 +306,8 @@ export default function ItemRemovalPage() {
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
           }}>
             {itemInfo.whyLocal.map((reason, index) => (
               <div
@@ -336,16 +339,16 @@ export default function ItemRemovalPage() {
 
       {/* Helpful Tips */}
       <section style={{
-        padding: '80px 16px',
+        padding: '60px 16px',
         backgroundColor: '#f8f8f8',
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
             color: '#1a1a1a',
             textAlign: 'center',
-            margin: '0 0 48px 0',
+            margin: '0 0 32px 0',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Helpful Tips
@@ -382,16 +385,16 @@ export default function ItemRemovalPage() {
       {/* Related Items */}
       {itemInfo.relatedItems.length > 0 && (
         <section style={{
-          padding: '80px 16px',
+          padding: '60px 16px',
           backgroundColor: '#fff',
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h2 style={{
-              fontSize: '36px',
+              fontSize: 'clamp(24px, 5vw, 36px)',
               fontWeight: '700',
               color: '#1a1a1a',
               textAlign: 'center',
-              margin: '0 0 48px 0',
+              margin: '0 0 32px 0',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
               Related Removal Services
@@ -399,8 +402,8 @@ export default function ItemRemovalPage() {
             
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '16px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+              gap: '12px',
             }}>
               {itemInfo.relatedItems.map((relatedItem) => (
                 <Link
@@ -432,23 +435,23 @@ export default function ItemRemovalPage() {
 
       {/* CTA Section */}
       <section style={{
-        padding: '80px 16px',
+        padding: '60px 16px',
         backgroundColor: '#166534',
         color: '#fff',
         textAlign: 'center',
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h2 style={{
-            fontSize: '36px',
+            fontSize: 'clamp(24px, 5vw, 36px)',
             fontWeight: '700',
-            margin: '0 0 24px 0',
+            margin: '0 0 16px 0',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Ready To Remove Your {itemInfo.title.replace(' Removal', '')}?
           </h2>
           <p style={{
-            fontSize: '18px',
-            margin: '0 0 32px 0',
+            fontSize: 'clamp(16px, 3vw, 18px)',
+            margin: '0 0 24px 0',
             opacity: 0.9,
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
@@ -458,12 +461,12 @@ export default function ItemRemovalPage() {
             href="/"
             style={{
               display: 'inline-block',
-              padding: '16px 40px',
+              padding: '14px 32px',
               backgroundColor: '#fbbf24',
               color: '#000',
               textDecoration: 'none',
               borderRadius: '8px',
-              fontSize: '18px',
+              fontSize: 'clamp(16px, 3vw, 18px)',
               fontWeight: '700',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}
