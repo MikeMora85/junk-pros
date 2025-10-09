@@ -17,6 +17,7 @@ I prefer detailed explanations.
 - **Interactive Elements**: 3D lift effects (1px default, 2px hover) on state buttons, feature sections, and search bar.
 - **Navigation**: Comprehensive hamburger menu with searchable dropdowns for "Areas Served" and "Junk Removal Services".
 - **Company Profiles**: Enhanced profiles with hero sections, multiple CTAs, detailed business information, and green checkmark badges for "TOP RATED" companies.
+- **Zip Code Search**: Interactive search feature allowing users to find their closest vetted hauler by entering a zip code, with full-screen "Congratulations" overlay showing the nearest company and up to 5 additional nearby options within 15 miles, all sorted by distance.
 
 ### Technical Implementations
 - **Frontend**: React with Vite, styled using Tailwind CSS.
@@ -25,6 +26,11 @@ I prefer detailed explanations.
 - **Authentication**: Token-based authentication for business owners and administrators using bcrypt for password hashing. Replit Auth for initial admin setup.
 - **Data Fetching**: TanStack Query for efficient data management in the frontend.
 - **Mapping**: Mapbox GL and react-map-gl for interactive maps.
+- **Geocoding & Distance Calculation**: 
+    - Google Maps Geocoding API for converting zip codes to coordinates
+    - Haversine formula for calculating distances between user location and haulers
+    - Distance-based filtering showing haulers within 15-mile radius
+    - Automatic sorting by proximity from user's zip code
 - **Visual Estimate Builder**: Interactive calculator with graphical representations of items and truck capacity.
 - **Business Management**:
     - **Signup**: Comprehensive full-page signup process with educational content, pricing tiers, and login creation.
@@ -56,6 +62,7 @@ I prefer detailed explanations.
 ## External Dependencies
 - **PostgreSQL**: Primary database for all persistent data.
 - **Mapbox GL / react-map-gl**: For interactive maps and location services.
+- **Google Maps Geocoding API**: For zip code to coordinate conversion (requires VITE_GOOGLE_MAPS_API_KEY environment variable).
 - **Drizzle ORM**: Object-relational mapper for database interactions.
 - **Zod**: For schema validation.
 - **TanStack Query**: For data fetching and caching in the React frontend.
