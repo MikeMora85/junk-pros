@@ -4174,6 +4174,480 @@ function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }
   );
 }
 
+// Zip Code Search Page Component
+function ZipSearchPage({ zipCode }: { zipCode: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [closestHauler, setClosestHauler] = useState<any>(null);
+  const [nearbyHaulers, setNearbyHaulers] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const { data: companies = [] } = useQuery<Company[]>({
+    queryKey: ['/api/companies'],
+  });
+
+  useEffect(() => {
+    async function searchByZipCode() {
+      setIsLoading(true);
+      setError(null);
+
+      // Dynamically import geocoding utilities
+      const { geocodeZipCode, sortCompaniesByDistance, filterCompaniesByRadius } = await import('./lib/geocoding');
+
+      // Geocode the zip code
+      const coordinates = await geocodeZipCode(zipCode);
+
+      if (!coordinates) {
+        setError('Unable to find location for this zip code. Please add GOOGLE_MAPS_API_KEY environment variable or try searching by city/state.');
+        setIsLoading(false);
+        return;
+      }
+
+      if (companies.length === 0) {
+        setError('No haulers found in our directory yet. Check back soon!');
+        setIsLoading(false);
+        return;
+      }
+
+      // Sort companies by distance
+      const companiesWithDistance = sortCompaniesByDistance(companies, coordinates);
+
+      // Get closest hauler
+      if (companiesWithDistance.length > 0) {
+        setClosestHauler(companiesWithDistance[0]);
+        setShowOverlay(true);
+      }
+
+      // Get other nearby haulers within 15 miles (excluding the closest one)
+      const nearby = filterCompaniesByRadius(companiesWithDistance.slice(1), 15);
+      setNearbyHaulers(nearby.slice(0, 5)); // Max 5
+
+      setIsLoading(false);
+    }
+
+    if (companies.length > 0) {
+      searchByZipCode();
+    }
+  }, [zipCode, companies]);
+
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#ffffff',
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '50px',
+            height: '50px',
+            border: '4px solid #fbbf24',
+            borderTopColor: 'transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px',
+          }}></div>
+          <p style={{ fontSize: '18px', color: '#6b7280' }}>Finding your closest vetted hauler...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#ffffff',
+        padding: '20px',
+      }}>
+        <div style={{
+          maxWidth: '600px',
+          textAlign: 'center',
+          padding: '40px',
+          backgroundColor: '#fff',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+        }}>
+          <div style={{
+            fontSize: '48px',
+            marginBottom: '20px',
+          }}>⚠️</div>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            marginBottom: '16px',
+            color: '#1a1a1a',
+          }}>{error}</h2>
+          <Link href="/">
+            <button style={{
+              marginTop: '20px',
+              padding: '12px 24px',
+              backgroundColor: '#fbbf24',
+              color: '#000',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '700',
+              cursor: 'pointer',
+            }} data-testid="button-back-home">
+              Back to Home
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: '#ffffff',
+    }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+
+      {/* Congratulations Overlay */}
+      {showOverlay && closestHauler && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          zIndex: 3000,
+          overflow: 'auto',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <div style={{
+            maxWidth: '900px',
+            width: '100%',
+            margin: '20px',
+            backgroundColor: '#fff',
+            borderRadius: '16px',
+            overflow: 'hidden',
+          }}>
+            {/* Close button */}
+            <button
+              onClick={() => setShowOverlay(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                background: '#fbbf24',
+                border: 'none',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                zIndex: 3001,
+              }}
+              data-testid="button-close-overlay"
+            >
+              <X size={24} color="#000" />
+            </button>
+
+            {/* Congratulations Header */}
+            <div style={{
+              background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+              padding: '40px 20px',
+              textAlign: 'center',
+              color: '#fff',
+            }}>
+              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎉</div>
+              <h1 style={{
+                fontSize: '32px',
+                fontWeight: '700',
+                marginBottom: '12px',
+              }}>
+                Congratulations!
+              </h1>
+              <p style={{
+                fontSize: '20px',
+                opacity: 0.95,
+              }}>
+                You found your local vetted hauler
+              </p>
+            </div>
+
+            {/* Closest Hauler Info */}
+            <div style={{ padding: '32px 20px' }}>
+              <div style={{
+                backgroundColor: '#f9fafb',
+                padding: '24px',
+                borderRadius: '12px',
+                marginBottom: '24px',
+              }}>
+                <h2 style={{
+                  fontSize: '28px',
+                  fontWeight: '700',
+                  color: '#1a1a1a',
+                  marginBottom: '8px',
+                }}>
+                  {closestHauler.company.name}
+                </h2>
+                <p style={{
+                  fontSize: '16px',
+                  color: '#6b7280',
+                  marginBottom: '16px',
+                }}>
+                  📍 {closestHauler.distance} miles away
+                </p>
+                <div style={{
+                  display: 'flex',
+                  gap: '12px',
+                  marginTop: '20px',
+                  flexWrap: 'wrap',
+                }}>
+                  <a
+                    href={`tel:${closestHauler.company.phone}`}
+                    style={{
+                      flex: 1,
+                      minWidth: '200px',
+                      padding: '14px 20px',
+                      backgroundColor: '#16a34a',
+                      color: '#fff',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                    }}
+                    data-testid="button-call-closest"
+                  >
+                    <Phone size={20} /> Call Now
+                  </a>
+                  <Link
+                    href={`/company/${closestHauler.company.id}`}
+                    style={{
+                      flex: 1,
+                      minWidth: '200px',
+                      padding: '14px 20px',
+                      backgroundColor: '#fbbf24',
+                      color: '#000',
+                      textDecoration: 'none',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      textAlign: 'center',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                    }}
+                    data-testid="button-view-profile-closest"
+                  >
+                    <FileText size={20} /> View Full Profile
+                  </Link>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowOverlay(false)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  backgroundColor: '#e5e7eb',
+                  color: '#1a1a1a',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                }}
+                data-testid="button-see-alternatives"
+              >
+                See {nearbyHaulers.length} Other Nearby Options
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '40px 20px',
+      }}>
+        {/* Header */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '40px',
+        }}>
+          <h1 style={{
+            fontSize: '32px',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            marginBottom: '12px',
+          }}>
+            Haulers Near Zip Code {zipCode}
+          </h1>
+          <p style={{
+            fontSize: '16px',
+            color: '#6b7280',
+          }}>
+            Sorted by distance from your location
+          </p>
+        </div>
+
+        {/* Nearby Haulers List */}
+        {nearbyHaulers.length > 0 ? (
+          <div style={{
+            display: 'grid',
+            gap: '20px',
+          }}>
+            {nearbyHaulers.map((item, index) => (
+              <div
+                key={item.company.id}
+                style={{
+                  backgroundColor: '#fff',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                }}
+              >
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  gap: '20px',
+                  flexWrap: 'wrap',
+                }}>
+                  <div style={{ flex: 1, minWidth: '250px' }}>
+                    <h3 style={{
+                      fontSize: '22px',
+                      fontWeight: '700',
+                      color: '#1a1a1a',
+                      marginBottom: '8px',
+                    }}>
+                      {item.company.name}
+                    </h3>
+                    <p style={{
+                      fontSize: '14px',
+                      color: '#6b7280',
+                      marginBottom: '12px',
+                    }}>
+                      📍 {item.distance} miles away
+                    </p>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      marginBottom: '16px',
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                      }}>
+                        <Star size={16} fill="#fbbf24" color="#fbbf24" />
+                        <span style={{ fontWeight: '600' }}>{item.company.rating}</span>
+                      </div>
+                      <span style={{ color: '#6b7280' }}>({item.company.reviews} reviews)</span>
+                    </div>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    gap: '12px',
+                    flexWrap: 'wrap',
+                  }}>
+                    <a
+                      href={`tel:${item.company.phone}`}
+                      style={{
+                        padding: '10px 20px',
+                        backgroundColor: '#16a34a',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                      data-testid={`button-call-${index}`}
+                    >
+                      <Phone size={16} /> Call
+                    </a>
+                    <Link
+                      href={`/company/${item.company.id}`}
+                      style={{
+                        padding: '10px 20px',
+                        backgroundColor: '#fbbf24',
+                        color: '#000',
+                        textDecoration: 'none',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        fontWeight: '700',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                      }}
+                      data-testid={`button-view-${index}`}
+                    >
+                      <FileText size={16} /> View Profile
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{
+            textAlign: 'center',
+            padding: '60px 20px',
+            backgroundColor: '#f9fafb',
+            borderRadius: '12px',
+          }}>
+            <p style={{
+              fontSize: '18px',
+              color: '#6b7280',
+            }}>
+              No other haulers found within 15 miles. The closest one is shown above!
+            </p>
+          </div>
+        )}
+
+        <div style={{
+          marginTop: '40px',
+          textAlign: 'center',
+        }}>
+          <Link href="/">
+            <button style={{
+              padding: '12px 24px',
+              backgroundColor: '#e5e7eb',
+              color: '#1a1a1a',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+            }} data-testid="button-new-search">
+              Try Another Search
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const stateNames: Record<string, string> = {
   'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
   'california': 'California', 'colorado': 'Colorado', 'connecticut': 'Connecticut', 'delaware': 'Delaware',
@@ -4200,6 +4674,9 @@ function App() {
         <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/example-profile" component={ExampleProfile} />
+        <Route path="/zip/:zipCode">
+          {(params) => <ZipSearchPage zipCode={params.zipCode} />}
+        </Route>
         <Route path="/company/:id" component={CompanyDetail} />
         <Route path="/:state/:city/:id" component={CompanyDetail} />
         <Route path="/:state/:city">
