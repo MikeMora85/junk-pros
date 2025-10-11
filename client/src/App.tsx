@@ -1262,18 +1262,18 @@ function LandingPage() {
       {/* Hero Section */}
       <div style={{
         position: 'relative',
-        height: '200px',
         width: '100%',
-        backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'contain',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundColor: '#ffffff',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
         boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
       }}>
+        <img 
+          src={curbsideJunkHero} 
+          alt="My Local Junk Hauler" 
+          style={{
+            width: '100%',
+            height: 'auto',
+            display: 'block',
+          }}
+        />
         {/* Hamburger Menu Button */}
         <button
           onClick={() => setMenuOpen(true)}
