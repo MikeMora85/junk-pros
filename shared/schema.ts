@@ -90,6 +90,8 @@ export const companies = pgTable("companies", {
   agreedToPlatformStandards: timestamp("agreed_to_platform_standards"),
   agreedToRequirements: timestamp("agreed_to_requirements"),
   contactEmail: text("contact_email"),
+  displayOrder: integer("display_order").default(999),
+  badge: text("badge"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -144,6 +146,8 @@ export const insertCompanySchema = createInsertSchema(companies, {
   agreedToPlatformStandards: z.date().nullable().optional(),
   agreedToRequirements: z.date().nullable().optional(),
   contactEmail: z.string().nullable().optional(),
+  displayOrder: z.number().optional(),
+  badge: z.string().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
