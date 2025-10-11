@@ -53,11 +53,13 @@ I prefer detailed explanations.
     - **Approval System**: Automatic business approval upon signup.
     - **Performance Tracking**: Automatic tracking of customer interactions (clicks, calls, photo quotes, in-person estimates) with an API endpoint `/api/track/event`.
     - **Unclaimed Business Listings**:
-        - Businesses can be prefilled with just name and phone number
+        - Businesses can be prefilled with name, phone, city, state, and optional zip
         - Marked as "unclaimed" until business owner claims their profile
         - Unclaimed listings display with limited information (name and phone only)
         - Non-clickable gray cards with "Unclaimed Listing - Basic Info Only" badge
         - Bulk import endpoint for admins: `POST /api/admin/companies/bulk-unclaimed`
+        - Required fields: name, phone, city, state (zip optional)
+        - Address auto-generated from city, state, zip for search indexing
         - Database schema includes `claimed` boolean field (default: false)
 - **Admin Dashboard**:
     - Mobile-responsive design with a hamburger menu.

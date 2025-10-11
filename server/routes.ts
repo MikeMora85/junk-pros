@@ -792,11 +792,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       const results = [];
       for (const biz of businesses) {
-        if (!biz.name || !biz.phone) {
+        if (!biz.name || !biz.phone || !biz.city || !biz.state) {
           results.push({ 
             success: false, 
             name: biz.name || "Unknown", 
-            error: "Name and phone are required" 
+            error: "Name, phone, city, and state are required" 
           });
           continue;
         }
@@ -805,8 +805,9 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           const company = await storage.createCompany({
             name: biz.name,
             phone: biz.phone,
-            city: biz.city || "Unknown",
-            state: biz.state || "Arizona",
+            city: biz.city,
+            state: biz.state,
+            address: biz.zip ? `${biz.city}, ${biz.state} ${biz.zip}` : `${biz.city}, ${biz.state}`,
             claimed: false,
             status: "approved", // Unclaimed businesses are approved but not featured
             subscriptionTier: "free",
@@ -819,7 +820,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
           results.push({ 
             success: true, 
-            name: biz.name, 
+            name: biz.name,
+            city: biz.city,
             id: company.id 
           });
         } catch (error) {
