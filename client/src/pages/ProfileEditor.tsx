@@ -303,58 +303,47 @@ export default function ProfileEditor() {
         <div style={{
           padding: "16px 20px",
           display: "flex",
-          flexDirection: "column",
           gap: "12px"
         }}>
-          <h1 style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: "700", margin: 0, color: "#000" }}>
-            Edit Your Profile
-          </h1>
+          <button
+            onClick={handleSave}
+            disabled={updateMutation.isPending}
+            data-testid="button-save"
+            style={{
+              flex: "1 1 140px",
+              padding: "12px 20px",
+              backgroundColor: "#000",
+              color: "#fbbf24",
+              border: "none",
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontWeight: "600",
+              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+              opacity: updateMutation.isPending ? 0.6 : 1,
+            }}
+          >
+            {updateMutation.isPending ? "Saving..." : "Save Progress"}
+          </button>
           
-          {/* Action Buttons */}
-          <div style={{
-            display: "flex",
-            gap: "12px"
-          }}>
-            <button
-              onClick={handleSave}
-              disabled={updateMutation.isPending}
-              data-testid="button-save"
-              style={{
-                flex: "1 1 140px",
-                padding: "12px 20px",
-                backgroundColor: "#000",
-                color: "#fbbf24",
-                border: "none",
-                borderRadius: "8px",
-                fontSize: "16px",
-                fontWeight: "600",
-                cursor: updateMutation.isPending ? "not-allowed" : "pointer",
-                opacity: updateMutation.isPending ? 0.6 : 1,
-              }}
-            >
-              {updateMutation.isPending ? "Saving..." : "Save Progress"}
-            </button>
-            
-            <button
-              onClick={handleGoLive}
-              disabled={updateMutation.isPending}
-              data-testid="button-go-live"
-              style={{
-                flex: "1 1 140px",
-                padding: "12px 20px",
-                backgroundColor: "#16a34a",
-                color: "#fff",
-                border: "none",
-                borderRadius: "8px",
-                fontSize: "16px",
-                fontWeight: "600",
-                cursor: updateMutation.isPending ? "not-allowed" : "pointer",
-                opacity: updateMutation.isPending ? 0.6 : 1,
-              }}
-            >
-              Save & Go Live
-            </button>
-          </div>
+          <button
+            onClick={handleGoLive}
+            disabled={updateMutation.isPending}
+            data-testid="button-go-live"
+            style={{
+              flex: "1 1 140px",
+              padding: "12px 20px",
+              backgroundColor: "#16a34a",
+              color: "#fff",
+              border: "none",
+              borderRadius: "8px",
+              fontSize: "16px",
+              fontWeight: "600",
+              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+              opacity: updateMutation.isPending ? 0.6 : 1,
+            }}
+          >
+            Save & Go Live
+          </button>
         </div>
       </div>
 
