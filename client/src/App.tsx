@@ -2308,7 +2308,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               ))}
             </div>
 
-            {/* Common Junk Removal Services - 2 Column Layout */}
+            {/* Common Junk Removal Services */}
             <div style={{
               backgroundColor: '#fff',
               padding: '32px',
@@ -2328,190 +2328,274 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '16px',
+                gap: '12px',
               }}>
-                {/* Item Removal Box */}
+                {/* Furniture Removal */}
                 <div style={{
-                  padding: '20px',
+                  padding: '16px',
                   backgroundColor: '#f9fafb',
                   borderRadius: '8px',
                   border: '1px solid #e5e7eb',
                 }}>
-                  <h4 style={{
-                    fontSize: '16px',
-                    fontWeight: '700',
-                    color: '#374151',
-                    marginBottom: '12px',
-                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  }}>
-                    Item Removal
-                  </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <Link href="/items/furniture" style={{ textDecoration: 'none' }} data-testid="link-item-furniture">
-                      <div style={{
-                        padding: '8px',
-                        backgroundColor: '#fff',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                      >
-                        <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Furniture</span>
-                      </div>
-                    </Link>
-                    <Link href="/items/appliances" style={{ textDecoration: 'none' }} data-testid="link-item-appliances">
-                      <div style={{
-                        padding: '8px',
-                        backgroundColor: '#fff',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                      >
-                        <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Appliances</span>
-                      </div>
-                    </Link>
-                    <Link href="/items/electronics" style={{ textDecoration: 'none' }} data-testid="link-item-electronics">
-                      <div style={{
-                        padding: '8px',
-                        backgroundColor: '#fff',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                      >
-                        <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Electronics</span>
-                      </div>
-                    </Link>
-                    <details style={{ marginTop: '4px' }}>
-                      <summary style={{
-                        fontSize: '13px',
-                        color: '#fbbf24',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        listStyle: 'none',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        + View More Items
-                      </summary>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                        {['Mattress', 'Refrigerator', 'Sofa', 'TV', 'Hot Tub', 'Yard Waste'].map((item) => (
-                          <Link key={item} href={`/items/${item.toLowerCase().replace(/\s+/g, '-')}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase().replace(/\s+/g, '-')}`}>
-                            <div style={{
-                              padding: '8px',
-                              backgroundColor: '#fff',
-                              borderRadius: '6px',
-                              cursor: 'pointer',
-                              transition: 'background 0.2s',
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                            >
-                              <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>{item}</span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </details>
-                  </div>
+                  <Link href="/items/furniture" style={{ textDecoration: 'none' }} data-testid="link-furniture-removal">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Furniture Removal
+                    </h4>
+                  </Link>
+                  <details style={{ marginTop: '4px' }}>
+                    <summary style={{
+                      fontSize: '13px',
+                      color: '#6b7280',
+                      cursor: 'pointer',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      View items ▾
+                    </summary>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px', paddingLeft: '8px' }}>
+                      {['Sofa', 'Bed', 'Dresser', 'Dining Table', 'Desk', 'Recliner'].map((item) => (
+                        <Link key={item} href={`/items/${item.toLowerCase().replace(/\s+/g, '-')}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase().replace(/\s+/g, '-')}`}>
+                          <span style={{ fontSize: '14px', color: '#166534', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
                 </div>
 
-                {/* Service Types Box */}
+                {/* Appliance Disposal */}
                 <div style={{
-                  padding: '20px',
+                  padding: '16px',
                   backgroundColor: '#f9fafb',
                   borderRadius: '8px',
                   border: '1px solid #e5e7eb',
                 }}>
-                  <h4 style={{
-                    fontSize: '16px',
-                    fontWeight: '700',
-                    color: '#374151',
-                    marginBottom: '12px',
+                  <Link href="/items/appliances" style={{ textDecoration: 'none' }} data-testid="link-appliance-disposal">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Appliance Disposal
+                    </h4>
+                  </Link>
+                  <details style={{ marginTop: '4px' }}>
+                    <summary style={{
+                      fontSize: '13px',
+                      color: '#6b7280',
+                      cursor: 'pointer',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      View items ▾
+                    </summary>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px', paddingLeft: '8px' }}>
+                      {['Refrigerator', 'Washer', 'Dryer', 'Stove', 'Dishwasher', 'Freezer'].map((item) => (
+                        <Link key={item} href={`/items/${item.toLowerCase()}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase()}`}>
+                          <span style={{ fontSize: '14px', color: '#166534', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                </div>
+
+                {/* Electronics Recycling */}
+                <div style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                }}>
+                  <Link href="/items/electronics" style={{ textDecoration: 'none' }} data-testid="link-electronics-recycling">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Electronics Recycling
+                    </h4>
+                  </Link>
+                  <details style={{ marginTop: '4px' }}>
+                    <summary style={{
+                      fontSize: '13px',
+                      color: '#6b7280',
+                      cursor: 'pointer',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      View items ▾
+                    </summary>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px', paddingLeft: '8px' }}>
+                      {['TV', 'Computer', 'Laptop', 'Monitor', 'Printer', 'Phone'].map((item) => (
+                        <Link key={item} href={`/items/${item.toLowerCase()}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase()}`}>
+                          <span style={{ fontSize: '14px', color: '#166534', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                </div>
+
+                {/* Yard Waste Removal */}
+                <div style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                }}>
+                  <Link href="/items/yard-waste" style={{ textDecoration: 'none' }} data-testid="link-yard-waste">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Yard Waste Removal
+                    </h4>
+                  </Link>
+                  <details style={{ marginTop: '4px' }}>
+                    <summary style={{
+                      fontSize: '13px',
+                      color: '#6b7280',
+                      cursor: 'pointer',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      View items ▾
+                    </summary>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px', paddingLeft: '8px' }}>
+                      {['Branches', 'Leaves', 'Grass', 'Tree Stumps', 'Bushes', 'Mulch'].map((item) => (
+                        <Link key={item} href={`/items/${item.toLowerCase().replace(/\s+/g, '-')}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase().replace(/\s+/g, '-')}`}>
+                          <span style={{ fontSize: '14px', color: '#166534', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                </div>
+
+                {/* Garage Cleanouts */}
+                <div style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                }}>
+                  <Link href="/services/garage-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-garage-cleanouts">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Garage Cleanouts
+                    </h4>
+                  </Link>
+                  <p style={{
+                    fontSize: '13px',
+                    color: '#6b7280',
+                    margin: '0',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}>
-                    Service Types
-                  </h4>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <Link href="/services/residential-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-service-residential">
-                      <div style={{
-                        padding: '8px',
-                        backgroundColor: '#fff',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                      >
-                        <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Residential Cleanouts</span>
-                      </div>
-                    </Link>
-                    <Link href="/services/commercial-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-service-commercial">
-                      <div style={{
-                        padding: '8px',
-                        backgroundColor: '#fff',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                      >
-                        <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Commercial Cleanouts</span>
-                      </div>
-                    </Link>
-                    <Link href="/services/estate-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-service-estate">
-                      <div style={{
-                        padding: '8px',
-                        backgroundColor: '#fff',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        transition: 'background 0.2s',
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                      >
-                        <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Estate Cleanouts</span>
-                      </div>
-                    </Link>
-                    <details style={{ marginTop: '4px' }}>
-                      <summary style={{
-                        fontSize: '13px',
-                        color: '#fbbf24',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        listStyle: 'none',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        + View More Services
-                      </summary>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' }}>
-                        {['Garage Cleanouts', 'Office Cleanouts', 'Construction Debris', 'Hoarding Cleanup', 'Moving Junk'].map((service) => (
-                          <Link key={service} href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`} style={{ textDecoration: 'none' }} data-testid={`link-service-${service.toLowerCase().replace(/\s+/g, '-')}`}>
-                            <div style={{
-                              padding: '8px',
-                              backgroundColor: '#fff',
-                              borderRadius: '6px',
-                              cursor: 'pointer',
-                              transition: 'background 0.2s',
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-                            >
-                              <span style={{ fontSize: '14px', color: '#166534', fontWeight: '600', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>{service}</span>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    </details>
-                  </div>
+                    Tools, boxes, old storage
+                  </p>
+                </div>
+
+                {/* Estate Cleanouts */}
+                <div style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                }}>
+                  <Link href="/services/estate-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-estate-cleanouts">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Estate Cleanouts
+                    </h4>
+                  </Link>
+                  <p style={{
+                    fontSize: '13px',
+                    color: '#6b7280',
+                    margin: '0',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    Full property cleanouts
+                  </p>
+                </div>
+
+                {/* Office Cleanouts */}
+                <div style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                }}>
+                  <Link href="/services/office-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-office-cleanouts">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Office Cleanouts
+                    </h4>
+                  </Link>
+                  <p style={{
+                    fontSize: '13px',
+                    color: '#6b7280',
+                    margin: '0',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    Desks, filing cabinets
+                  </p>
+                </div>
+
+                {/* Construction Debris */}
+                <div style={{
+                  padding: '16px',
+                  backgroundColor: '#f9fafb',
+                  borderRadius: '8px',
+                  border: '1px solid #e5e7eb',
+                }}>
+                  <Link href="/services/construction-debris" style={{ textDecoration: 'none' }} data-testid="link-construction-debris">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#166534',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Construction Debris
+                    </h4>
+                  </Link>
+                  <p style={{
+                    fontSize: '13px',
+                    color: '#6b7280',
+                    margin: '0',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    Drywall, lumber, tiles
+                  </p>
                 </div>
               </div>
             </div>
