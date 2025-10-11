@@ -1315,74 +1315,6 @@ function LandingPage() {
         </div>
       </header>
 
-      {/* Floating Sticky Search Bar */}
-      <div style={{
-        position: 'sticky',
-        top: '0',
-        zIndex: 100,
-        backgroundColor: '#ffffff',
-        padding: '12px 16px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-        borderBottom: '2px solid #fbbf24',
-      }}>
-        <form onSubmit={handleSearch} style={{
-          width: '100%',
-          maxWidth: '600px',
-          margin: '0 auto',
-          display: 'flex',
-          gap: '8px',
-          backgroundColor: '#fff',
-          padding: '6px',
-          borderRadius: '10px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-          border: '2px solid #e5e7eb',
-        }}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="search by zip code, city, state"
-            style={{
-              flex: 1,
-              minWidth: '0',
-              width: '1px',
-              padding: '10px 12px',
-              border: 'none',
-              outline: 'none',
-              fontSize: '16px',
-              borderRadius: '8px',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              backgroundColor: 'transparent',
-              WebkitTextSizeAdjust: '100%',
-              touchAction: 'manipulation',
-            }}
-            data-testid="input-sticky-search"
-          />
-          <button
-            type="submit"
-            style={{
-              padding: '10px 16px',
-              background: '#fbbf24',
-              color: '#000',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '14px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              whiteSpace: 'nowrap',
-              flexShrink: 0,
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}
-            data-testid="button-sticky-search"
-          >
-            <Search size={18} />
-          </button>
-        </form>
-      </div>
-
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
@@ -1391,6 +1323,13 @@ function LandingPage() {
         <div style={{
           textAlign: 'center',
           marginBottom: '48px',
+          position: 'sticky',
+          top: '0',
+          zIndex: 100,
+          backgroundColor: '#ffffff',
+          padding: '20px',
+          margin: '0 -20px 48px -20px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
         }}>
           <h2 style={{
             fontSize: '36px',
