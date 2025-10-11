@@ -2343,7 +2343,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2354,7 +2354,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <details>
                     <summary style={{
                       fontSize: '16px',
-                      color: '#9ca3af',
+                      color: '#fbbf24',
                       cursor: 'pointer',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       listStyle: 'none',
@@ -2385,7 +2385,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2396,7 +2396,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <details>
                     <summary style={{
                       fontSize: '16px',
-                      color: '#9ca3af',
+                      color: '#fbbf24',
                       cursor: 'pointer',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       listStyle: 'none',
@@ -2427,7 +2427,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2438,7 +2438,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <details>
                     <summary style={{
                       fontSize: '16px',
-                      color: '#9ca3af',
+                      color: '#fbbf24',
                       cursor: 'pointer',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       listStyle: 'none',
@@ -2469,7 +2469,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2480,7 +2480,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <details>
                     <summary style={{
                       fontSize: '16px',
-                      color: '#9ca3af',
+                      color: '#fbbf24',
                       cursor: 'pointer',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       listStyle: 'none',
@@ -2511,7 +2511,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2521,7 +2521,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   </Link>
                   <div style={{
                     fontSize: '16px',
-                    color: '#9ca3af',
+                    color: '#fbbf24',
                     margin: '0',
                   }}>
                     ▾
@@ -2541,7 +2541,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2551,7 +2551,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   </Link>
                   <div style={{
                     fontSize: '16px',
-                    color: '#9ca3af',
+                    color: '#fbbf24',
                     margin: '0',
                   }}>
                     ▾
@@ -2571,7 +2571,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2581,7 +2581,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   </Link>
                   <div style={{
                     fontSize: '16px',
-                    color: '#9ca3af',
+                    color: '#fbbf24',
                     margin: '0',
                   }}>
                     ▾
@@ -2601,7 +2601,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                     <h4 style={{
                       fontSize: '16px',
                       fontWeight: '700',
-                      color: '#fbbf24',
+                      color: '#000',
                       margin: '0 0 6px 0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
@@ -2611,7 +2611,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   </Link>
                   <div style={{
                     fontSize: '16px',
-                    color: '#9ca3af',
+                    color: '#fbbf24',
                     margin: '0',
                   }}>
                     ▾
