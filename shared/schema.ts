@@ -89,6 +89,7 @@ export const companies = pgTable("companies", {
   teamMembers: jsonb("team_members"),
   agreedToPlatformStandards: timestamp("agreed_to_platform_standards"),
   agreedToRequirements: timestamp("agreed_to_requirements"),
+  contactEmail: text("contact_email"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -142,6 +143,7 @@ export const insertCompanySchema = createInsertSchema(companies, {
   teamMembers: z.any().nullable().optional(),
   agreedToPlatformStandards: z.date().nullable().optional(),
   agreedToRequirements: z.date().nullable().optional(),
+  contactEmail: z.string().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;

@@ -44,6 +44,7 @@ export default function ProfileEditor() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    contactEmail: "",
     website: "",
     address: "",
     city: "",
@@ -78,6 +79,7 @@ export default function ProfileEditor() {
       setFormData({
         name: company.name || "",
         phone: company.phone || "",
+        contactEmail: company.contactEmail || "",
         website: company.website || "",
         address: company.address || "",
         city: company.city || "",
@@ -159,6 +161,7 @@ export default function ProfileEditor() {
     const payload = {
       name: formData.name,
       phone: formData.phone,
+      contactEmail: formData.contactEmail || null,
       website: formData.website,
       address: formData.address,
       city: formData.city,
@@ -363,6 +366,42 @@ export default function ProfileEditor() {
                 placeholder="(555) 123-4567"
               />
             </div>
+
+            {company?.subscriptionTier === 'featured' && (
+              <div>
+                <label style={labelStyle} htmlFor="contactEmail">
+                  Contact Email 
+                  <span style={{ 
+                    marginLeft: "8px", 
+                    fontSize: "12px", 
+                    color: "#16a34a", 
+                    fontWeight: "700",
+                    backgroundColor: "#dcfce7",
+                    padding: "2px 8px",
+                    borderRadius: "4px"
+                  }}>
+                    FEATURED ONLY
+                  </span>
+                </label>
+                <input
+                  id="contactEmail"
+                  data-testid="input-contact-email"
+                  type="email"
+                  style={inputStyle}
+                  value={formData.contactEmail}
+                  onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
+                  placeholder="contact@yourcompany.com"
+                />
+                <p style={{ 
+                  fontSize: "13px", 
+                  color: "#666", 
+                  marginTop: "6px",
+                  marginBottom: 0
+                }}>
+                  This email will be displayed to customers. Different from your login email.
+                </p>
+              </div>
+            )}
 
             <div>
               <label style={labelStyle} htmlFor="website">Website</label>
