@@ -3040,6 +3040,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
   };
   
   const displayCityName = formatCityName(city);
+  const formattedCity = formatCityName(city);
   
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
@@ -3047,9 +3048,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
   };
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
-    queryKey: ["/api/companies", { city, state }],
+    queryKey: ["/api/companies", { city: formattedCity, state }],
     queryFn: async () => {
-      const response = await fetch(`/api/companies?city=${city}&state=${state}`);
+      const response = await fetch(`/api/companies?city=${encodeURIComponent(formattedCity)}&state=${encodeURIComponent(state)}`);
       if (!response.ok) throw new Error('Failed to fetch');
       return response.json();
     },
