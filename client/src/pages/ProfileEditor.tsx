@@ -409,8 +409,8 @@ export default function ProfileEditor() {
             )}
 
             <div>
-              <label style={labelStyle} htmlFor="logoUrl">
-                Company Logo URL
+              <label style={labelStyle}>
+                Company Logo
                 <span style={{ 
                   marginLeft: "8px", 
                   fontSize: "11px", 
@@ -420,23 +420,81 @@ export default function ProfileEditor() {
                   (Displayed on quick view and expanded profile)
                 </span>
               </label>
-              <input
-                id="logoUrl"
-                data-testid="input-logo-url"
-                style={inputStyle}
-                value={formData.logoUrl}
-                onChange={(e) => setFormData(prev => ({ ...prev, logoUrl: e.target.value }))}
-                placeholder="https://yoursite.com/logo.png"
-              />
+              
+              <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+                <label htmlFor="logoFile" style={{
+                  display: "inline-block",
+                  padding: "12px 24px",
+                  backgroundColor: "#fbbf24",
+                  color: "#000",
+                  fontWeight: "600",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "16px",
+                  border: "none"
+                }}>
+                  Upload Logo
+                  <input
+                    id="logoFile"
+                    type="file"
+                    accept="image/*"
+                    data-testid="input-logo-file"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        if (file.size > 2 * 1024 * 1024) {
+                          alert("Image must be under 2MB");
+                          return;
+                        }
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setFormData(prev => ({ ...prev, logoUrl: reader.result as string }));
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                </label>
+                
+                {formData.logoUrl && (
+                  <button
+                    onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
+                    data-testid="button-remove-logo"
+                    style={{
+                      padding: "12px 24px",
+                      backgroundColor: "#fff",
+                      color: "#dc2626",
+                      fontWeight: "600",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontSize: "16px",
+                      border: "2px solid #dc2626"
+                    }}
+                  >
+                    Remove Logo
+                  </button>
+                )}
+              </div>
+              
+              <p style={{ 
+                fontSize: "13px", 
+                color: "#666", 
+                marginTop: "8px",
+                marginBottom: 0
+              }}>
+                Max file size: 2MB. Recommended: Square logo with transparent background
+              </p>
+
               {formData.logoUrl && (
                 <div style={{ 
-                  marginTop: "12px", 
-                  padding: "12px", 
+                  marginTop: "16px", 
+                  padding: "16px", 
                   border: "2px solid #e5e7eb", 
                   borderRadius: "8px",
                   backgroundColor: "#f9fafb"
                 }}>
-                  <p style={{ fontSize: "13px", fontWeight: "600", marginBottom: "8px", color: "#000" }}>Logo Preview:</p>
+                  <p style={{ fontSize: "14px", fontWeight: "600", marginBottom: "12px", color: "#000" }}>Logo Preview:</p>
                   <img 
                     src={formData.logoUrl} 
                     alt="Company logo preview" 
