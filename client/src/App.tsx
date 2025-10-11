@@ -1278,7 +1278,7 @@ function LandingPage() {
         <button
           onClick={() => setMenuOpen(true)}
           style={{
-            position: 'absolute',
+            position: 'fixed',
             top: '16px',
             left: '16px',
             backgroundColor: '#fbbf24',
@@ -1291,7 +1291,7 @@ function LandingPage() {
             alignItems: 'center',
             justifyContent: 'center',
             boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-            zIndex: 10,
+            zIndex: 1000,
           }}
           data-testid="button-menu"
         >
@@ -1316,13 +1316,17 @@ function LandingPage() {
       </header>
 
       <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '30px 20px',
+        position: 'sticky',
+        top: '0',
+        zIndex: 100,
+        backgroundColor: '#ffffff',
+        padding: '20px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
       }}>
         <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
           textAlign: 'center',
-          marginBottom: '48px',
         }}>
           <h2 style={{
             fontSize: '36px',
@@ -1412,7 +1416,13 @@ function LandingPage() {
             </button>
           </form>
         </div>
+      </div>
 
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '30px 20px',
+      }}>
         <div style={{
           textAlign: 'center',
           marginBottom: '60px',
