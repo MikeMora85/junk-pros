@@ -3473,19 +3473,43 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       }} data-testid={`text-company-name-${c.id}`}>
                         {c.name}
                       </h3>
-                      <div style={{ fontSize: '16px', color: '#666', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                      <div style={{ fontSize: '16px', color: '#666', marginBottom: '16px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
                         <Phone size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
                         {c.phone}
                       </div>
+                      
+                      <Link 
+                        href={`/signup?claim=true&name=${encodeURIComponent(c.name)}&phone=${encodeURIComponent(c.phone)}`}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <button
+                          style={{
+                            width: '100%',
+                            background: '#16a34a',
+                            color: '#fff',
+                            padding: '12px 20px',
+                            borderRadius: '8px',
+                            border: 'none',
+                            cursor: 'pointer',
+                            fontSize: '15px',
+                            fontWeight: '700',
+                            marginBottom: '12px',
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          }}
+                          data-testid={`button-claim-${c.id}`}
+                        >
+                          Claim Your Profile
+                        </button>
+                      </Link>
+                      
                       <div style={{
                         background: '#f5f5f5',
                         padding: '12px',
                         borderRadius: '6px',
                         fontSize: '13px',
                         color: '#666',
-                        marginTop: '16px',
                       }}>
-                        This business hasn't claimed their profile yet. Contact them directly for services.
+                        Is this your business? Claim your profile to add photos, pricing, and get more customers!
                       </div>
                     </div>
                   ) : (
