@@ -101,6 +101,8 @@ export default function AddBusiness() {
       state: formData.state,
       email: formData.email,
       password: formData.password,
+      agreedToPlatformStandards: new Date(),
+      agreedToRequirements: new Date(),
     };
 
     createBusinessMutation.mutate(companyData);
