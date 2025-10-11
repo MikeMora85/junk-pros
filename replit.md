@@ -63,6 +63,7 @@ I prefer detailed explanations.
         - Completion tracking with green checkmarks (#16a34a) for finished sections
         - 9 selectable service type icons (residential, commercial, furniture, appliances, electronics, yard waste, construction, moving, general junk)
         - Toggle switches for visibility settings (Show Pricing, Show Additional Costs)
+        - **Contact Email Feature**: Featured businesses can set a public-facing contact email separate from their login email
         - Save Progress and Go to Live Page buttons
         - Clean yellow and black design matching brand colors
     - **Approval System**: Automatic business approval upon signup.
