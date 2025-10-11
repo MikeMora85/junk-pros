@@ -64,6 +64,8 @@ I prefer detailed explanations.
         - 9 selectable service type icons (residential, commercial, furniture, appliances, electronics, yard waste, construction, moving, general junk)
         - Toggle switches for visibility settings (Show Pricing, Show Additional Costs)
         - **Contact Email Feature**: Featured businesses can set a public-facing contact email separate from their login email
+        - **Logo Upload**: Company logo URL field with live preview in Basic Information tab (displays on both quick view and expanded profile views)
+        - **Complete Field Editing**: All business details editable including logo, team members, gallery images, pricing, services, and contact information
         - Save Progress and Go to Live Page buttons
         - Clean yellow and black design matching brand colors
     - **Approval System**: Automatic business approval upon signup.
