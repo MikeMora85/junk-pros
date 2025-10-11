@@ -49,6 +49,7 @@ export default function ProfileEditor() {
     address: "",
     city: "",
     state: "",
+    logoUrl: "",
     selectedServices: [] as string[],
     specialties: [] as string[],
     aboutUs: "",
@@ -84,6 +85,7 @@ export default function ProfileEditor() {
         address: company.address || "",
         city: company.city || "",
         state: company.state || "",
+        logoUrl: company.logoUrl || "",
         selectedServices: company.services || [],
         specialties: company.specialties || [],
         aboutUs: company.aboutUs || "",
@@ -166,6 +168,7 @@ export default function ProfileEditor() {
       address: formData.address,
       city: formData.city,
       state: formData.state,
+      logoUrl: formData.logoUrl || null,
       services: formData.selectedServices,
       specialties: formData.specialties.filter(s => s.trim()),
       aboutUs: formData.aboutUs || null,
@@ -182,6 +185,8 @@ export default function ProfileEditor() {
       addOnCostsVisible: formData.addOnCostsVisible,
       hours: formData.hours || null,
       availability: formData.availability || null,
+      teamMembers: formData.teamMembers.length > 0 ? formData.teamMembers : null,
+      galleryImages: formData.galleryImages.length > 0 ? formData.galleryImages : null,
     };
     updateMutation.mutate(payload);
     checkCompletedTabs(payload);
@@ -402,6 +407,55 @@ export default function ProfileEditor() {
                 </p>
               </div>
             )}
+
+            <div>
+              <label style={labelStyle} htmlFor="logoUrl">
+                Company Logo URL
+                <span style={{ 
+                  marginLeft: "8px", 
+                  fontSize: "11px", 
+                  color: "#666", 
+                  fontWeight: "400"
+                }}>
+                  (Displayed on quick view and expanded profile)
+                </span>
+              </label>
+              <input
+                id="logoUrl"
+                data-testid="input-logo-url"
+                style={inputStyle}
+                value={formData.logoUrl}
+                onChange={(e) => setFormData(prev => ({ ...prev, logoUrl: e.target.value }))}
+                placeholder="https://yoursite.com/logo.png"
+              />
+              {formData.logoUrl && (
+                <div style={{ 
+                  marginTop: "12px", 
+                  padding: "12px", 
+                  border: "2px solid #e5e7eb", 
+                  borderRadius: "8px",
+                  backgroundColor: "#f9fafb"
+                }}>
+                  <p style={{ fontSize: "13px", fontWeight: "600", marginBottom: "8px", color: "#000" }}>Logo Preview:</p>
+                  <img 
+                    src={formData.logoUrl} 
+                    alt="Company logo preview" 
+                    style={{ 
+                      maxWidth: "200px", 
+                      maxHeight: "100px", 
+                      objectFit: "contain",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "4px",
+                      padding: "8px",
+                      backgroundColor: "#fff"
+                    }} 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+            </div>
 
             <div>
               <label style={labelStyle} htmlFor="website">Website</label>
