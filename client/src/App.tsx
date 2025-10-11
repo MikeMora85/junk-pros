@@ -1316,20 +1316,17 @@ function LandingPage() {
       </header>
 
       <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '30px 20px',
+        position: 'sticky',
+        top: '0',
+        zIndex: 100,
+        backgroundColor: '#ffffff',
+        padding: '20px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
       }}>
         <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
           textAlign: 'center',
-          marginBottom: '48px',
-          position: 'sticky',
-          top: '0',
-          zIndex: 100,
-          backgroundColor: '#ffffff',
-          padding: '20px',
-          margin: '0 -20px 48px -20px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
         }}>
           <h2 style={{
             fontSize: '36px',
@@ -1419,7 +1416,13 @@ function LandingPage() {
             </button>
           </form>
         </div>
+      </div>
 
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '30px 20px',
+      }}>
         <div style={{
           textAlign: 'center',
           marginBottom: '60px',
