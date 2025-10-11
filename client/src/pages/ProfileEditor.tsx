@@ -165,6 +165,41 @@ export default function ProfileEditor() {
     },
     onSuccess: async (updatedCompany) => {
       queryClient.setQueryData(["/api/business/profile"], updatedCompany);
+      
+      // Update form data with the saved values to reflect any backend transformations
+      setFormData({
+        name: updatedCompany.name || "",
+        phone: updatedCompany.phone || "",
+        contactEmail: updatedCompany.contactEmail || "",
+        website: updatedCompany.website || "",
+        address: updatedCompany.address || "",
+        city: updatedCompany.city || "",
+        state: updatedCompany.state || "",
+        logoUrl: updatedCompany.logoUrl || "",
+        selectedServices: updatedCompany.services || [],
+        specialties: updatedCompany.specialties || [],
+        aboutUs: updatedCompany.aboutUs || "",
+        whyChooseUs: updatedCompany.whyChooseUs || [""],
+        yearsInBusiness: updatedCompany.yearsInBusiness?.toString() || "",
+        insuranceInfo: updatedCompany.insuranceInfo || "",
+        minimumPrice: updatedCompany.minimumPrice || "",
+        quarterLoadPrice: updatedCompany.quarterLoadPrice || "",
+        halfLoadPrice: updatedCompany.halfLoadPrice || "",
+        threeQuarterLoadPrice: updatedCompany.threeQuarterLoadPrice || "",
+        fullLoadPrice: updatedCompany.fullLoadPrice || "",
+        singleItemMinimum: updatedCompany.singleItemMinimum || "",
+        priceSheetVisible: updatedCompany.priceSheetVisible ?? true,
+        addOnCostsVisible: updatedCompany.addOnCostsVisible ?? true,
+        teamMembers: (updatedCompany.teamMembers as TeamMember[]) || [],
+        galleryImages: updatedCompany.galleryImages || [],
+        hours: updatedCompany.hours || "",
+        availability: updatedCompany.availability || "",
+        businessHours: (updatedCompany.businessHours as BusinessHours) || getDefaultBusinessHours(),
+        googleRanking: updatedCompany.googleRanking?.toString() || "",
+        googleReviewCount: updatedCompany.googleReviewCount?.toString() || "",
+        googleFeaturedReviews: (updatedCompany.googleFeaturedReviews as FeaturedReview[]) || [],
+      });
+      
       setToastMessage("Profile updated successfully!");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
