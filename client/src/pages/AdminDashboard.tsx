@@ -188,28 +188,32 @@ export default function AdminDashboard() {
             position: 'absolute',
             top: '100%',
             right: '20px',
-            background: '#000',
+            background: '#fff',
+            border: '2px solid #fbbf24',
             borderRadius: '12px',
-            padding: '12px',
+            padding: '8px',
             marginTop: '8px',
             minWidth: '200px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           }}>
             <button
               onClick={() => { setLocation('/'); setMenuOpen(false); }}
               style={{
                 width: '100%',
                 background: 'transparent',
-                color: '#fbbf24',
+                color: '#000',
                 border: 'none',
                 padding: '12px',
                 textAlign: 'left',
                 cursor: 'pointer',
                 fontSize: '16px',
-                fontWeight: '600',
+                fontWeight: '700',
+                borderRadius: '6px',
               }}
+              onMouseEnter={(e) => e.currentTarget.style.background = '#fef3c7'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
-              🏠 Home
+              Home
             </button>
             <button
               onClick={async () => {
@@ -219,16 +223,19 @@ export default function AdminDashboard() {
               style={{
                 width: '100%',
                 background: 'transparent',
-                color: '#fbbf24',
+                color: '#000',
                 border: 'none',
                 padding: '12px',
                 textAlign: 'left',
                 cursor: 'pointer',
                 fontSize: '16px',
-                fontWeight: '600',
+                fontWeight: '700',
+                borderRadius: '6px',
               }}
+              onMouseEnter={(e) => e.currentTarget.style.background = '#fef3c7'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
             >
-              🚪 Logout
+              Logout
             </button>
           </div>
         )}
