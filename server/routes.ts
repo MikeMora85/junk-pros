@@ -878,10 +878,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   });
 
   // Serve uploaded logo images (public access)
-  app.get("/objects/:objectPath(*)", async (req, res) => {
+  app.get(/^\/objects\/(.*)$/, async (req, res) => {
     const objectStorageService = new ObjectStorageService();
     try {
-      const objectFile = await objectStorageService.getObjectEntityFile(req.path);
+      const objectPath = `/objects/${req.params[0]}`;
+      const objectFile = await objectStorageService.getObjectEntityFile(objectPath);
       objectStorageService.downloadObject(objectFile, res);
     } catch (error) {
       console.error("Error serving object:", error);
