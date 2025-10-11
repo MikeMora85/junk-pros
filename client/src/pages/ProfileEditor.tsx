@@ -333,7 +333,7 @@ export default function ProfileEditor() {
                 opacity: updateMutation.isPending ? 0.6 : 1,
               }}
             >
-              {updateMutation.isPending ? "Saving..." : "💾 Save Progress"}
+              {updateMutation.isPending ? "Saving..." : "Save Progress"}
             </button>
             
             <button
@@ -353,7 +353,7 @@ export default function ProfileEditor() {
                 opacity: updateMutation.isPending ? 0.6 : 1,
               }}
             >
-              🚀 Save & Go Live
+              Save & Go Live
             </button>
           </div>
         </div>
