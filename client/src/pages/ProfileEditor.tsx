@@ -273,7 +273,7 @@ export default function ProfileEditor() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", paddingBottom: "100px" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#fff", paddingBottom: "100px" }}>
       {/* Toast Notification */}
       {showToast && (
         <div style={{
@@ -312,9 +312,9 @@ export default function ProfileEditor() {
             style={{
               flex: "1 1 140px",
               padding: "12px 20px",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              border: "none",
+              backgroundColor: "#fff",
+              color: "#000",
+              border: "2px solid #fbbf24",
               borderRadius: "8px",
               fontSize: "16px",
               fontWeight: "600",
@@ -332,9 +332,9 @@ export default function ProfileEditor() {
             style={{
               flex: "1 1 140px",
               padding: "12px 20px",
-              backgroundColor: "#16a34a",
-              color: "#fff",
-              border: "none",
+              backgroundColor: "#fbbf24",
+              color: "#000",
+              border: "2px solid #fbbf24",
               borderRadius: "8px",
               fontSize: "16px",
               fontWeight: "600",
@@ -351,7 +351,7 @@ export default function ProfileEditor() {
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         
         {/* Section 1: Basic Information */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
@@ -617,7 +617,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 2: Services & Specialties */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
@@ -759,7 +759,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 3: About Your Business */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
@@ -1017,7 +1017,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 4: Pricing */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
@@ -1121,7 +1121,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 5: Team & Gallery */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
@@ -1433,7 +1433,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 6: Visibility Settings */}
-        <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+        <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
