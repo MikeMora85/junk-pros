@@ -57,11 +57,36 @@ I prefer detailed explanations.
         - Green checkmark completion indicators on section headers
         - Agreement timestamps saved to database (agreedToPlatformStandards, agreedToRequirements)
         - Admin visibility of agreement dates for compliance tracking
-    - **Profile Editing**: Simple, intuitive ProfileEditor page (/profile/edit) with:
+    - **Profile Editing**: **UPGRADED** Professional ProfileEditor page (/profile/edit) with:
         - Full-width yellow numbered tabs (#fbbf24 inactive, #f59e0b active)
         - 6 organized sections: Basic Information, Services & Specialties, About Your Business, Pricing, Team & Gallery, Visibility Settings
         - Completion tracking with green checkmarks (#16a34a) for finished sections
         - 9 selectable service type icons (residential, commercial, furniture, appliances, electronics, yard waste, construction, moving, general junk)
+        - **Business Hours Selector** (Tab 1):
+            - Visual day/time selector with dropdown menus for each day
+            - 30-minute interval time slots (00:00-23:30)
+            - "Closed" checkbox for each day
+            - Default: Mon-Fri 9AM-5PM, Sat-Sun closed
+            - Stores as structured JSON in `businessHours` field
+        - **Gallery Photo Upload** (Tab 5):
+            - Multi-photo uploader supporting up to 10 images
+            - Object storage integration with presigned URLs
+            - Responsive thumbnail grid with delete buttons
+            - Stores in `galleryImages` array field
+            - Upload path: `/objects/gallery/{uuid}`
+        - **Team Member Management** (Tab 5):
+            - Add/edit/delete team members with name, role, bio
+            - Individual photo upload for each team member
+            - Professional card layout with 200px photo column
+            - Object storage for team photos: `/objects/team/{uuid}`
+            - Stores in `teamMembers` jsonb field
+        - **Google Review Tracking** (Tab 3):
+            - Google Rating input (decimal 0.0-5.0)
+            - Google Review Count input (integer)
+            - Featured Reviews selector (up to 3 reviews)
+            - Reviewer name and review text inputs
+            - Stores in `googleRanking`, `googleReviewCount`, `googleFeaturedReviews` fields
+            - Admin can manually update to match Google Business Profile
         - Toggle switches for visibility settings (Show Pricing, Show Additional Costs)
         - **Contact Email Feature**: Featured businesses can set a public-facing contact email separate from their login email
         - **Logo Upload**: **UPGRADED to Replit Object Storage** for 30x faster saves (2 seconds vs 65 seconds)
@@ -72,7 +97,7 @@ I prefer detailed explanations.
             - Public ACL for logo visibility across all pages
             - Live preview in Basic Information tab
             - **Uppy Styles**: CDN-hosted (https://releases.transloadit.com/uppy/v3.25.3/uppy.min.css) loaded in index.html to avoid Vite module resolution issues
-        - **Complete Field Editing**: All business details editable including logo, team members, gallery images, pricing, services, and contact information
+        - **Complete Field Editing**: All business details editable including logo, team members with photos, gallery images, business hours, Google reviews, pricing, services, and contact information
         - Save Progress and Go to Live Page buttons
         - Clean yellow and black design matching brand colors
     - **Approval System**: Automatic business approval upon signup.
