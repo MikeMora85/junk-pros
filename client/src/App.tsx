@@ -3380,38 +3380,26 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       Unclaimed Listing - Basic Info Only
                     </div>
                   ) : (
-                    index === 0 && (
+                    c.badge && (
                       <>
                         <div style={{
                           display: 'inline-block',
-                          background: '#fbbf24',
-                          color: '#000',
-                          padding: '4px 10px',
+                          background: '#16a34a',
+                          color: '#fff',
+                          padding: '6px 12px',
                           borderRadius: '0',
-                          fontSize: '11px',
+                          fontSize: '12px',
                           fontWeight: '700',
                           marginBottom: '12px',
                           marginLeft: '0',
                           marginTop: '0',
                           boxShadow: 'none',
-                        }}>
-                          TOP RATED
-                        </div>
-                        <div style={{
-                          position: 'absolute',
-                          top: '8px',
-                          right: '8px',
-                          backgroundColor: '#16a34a',
-                          borderRadius: '50%',
-                          width: '32px',
-                          height: '32px',
                           display: 'flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: '0 2px 8px rgba(22, 163, 74, 0.4)',
-                          zIndex: 10,
+                          gap: '6px',
                         }}>
-                          <CheckCircle size={20} color="#fff" fill="#16a34a" />
+                          <CheckCircle size={16} color="#fff" fill="#16a34a" />
+                          {c.badge}
                         </div>
                       </>
                     )
