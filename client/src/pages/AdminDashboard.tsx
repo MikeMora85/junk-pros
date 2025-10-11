@@ -326,10 +326,10 @@ export default function AdminDashboard() {
 
       {/* Filters & Search */}
       {activeTab !== 'analytics' && (
-        <div style={{ padding: '20px', background: '#fef3c7', borderBottom: '2px solid #fbbf24' }}>
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
+        <div style={{ padding: '16px', background: '#fef3c7', borderBottom: '2px solid #fbbf24' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
             {/* Search */}
-            <div style={{ flex: '1 1 200px', position: 'relative' }}>
+            <div style={{ position: 'relative', width: '100%' }}>
               <Search size={20} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#666' }} />
               <input
                 type="text"
@@ -343,6 +343,7 @@ export default function AdminDashboard() {
                   borderRadius: '8px',
                   fontSize: '16px',
                   background: '#fff',
+                  boxSizing: 'border-box',
                 }}
                 data-testid="input-search"
               />
@@ -356,13 +357,14 @@ export default function AdminDashboard() {
                 setCityFilter('all');
               }}
               style={{
+                width: '100%',
                 padding: '12px',
                 border: '2px solid #000',
                 borderRadius: '8px',
                 fontSize: '16px',
                 background: '#fff',
                 fontWeight: '600',
-                minWidth: '150px',
+                boxSizing: 'border-box',
               }}
               data-testid="select-state"
             >
@@ -378,13 +380,14 @@ export default function AdminDashboard() {
                 value={cityFilter}
                 onChange={(e) => setCityFilter(e.target.value)}
                 style={{
+                  width: '100%',
                   padding: '12px',
                   border: '2px solid #000',
                   borderRadius: '8px',
                   fontSize: '16px',
                   background: '#fff',
                   fontWeight: '600',
-                  minWidth: '150px',
+                  boxSizing: 'border-box',
                 }}
                 data-testid="select-city"
               >
@@ -400,6 +403,7 @@ export default function AdminDashboard() {
           <button
             onClick={() => setShowAddUnclaimed(!showAddUnclaimed)}
             style={{
+              width: '100%',
               background: '#000',
               color: '#fbbf24',
               padding: '12px 20px',
@@ -410,7 +414,9 @@ export default function AdminDashboard() {
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '8px',
+              boxSizing: 'border-box',
             }}
             data-testid="button-add-unclaimed"
           >
