@@ -420,53 +420,53 @@ export default function ProfileEditor() {
                 )}
               </div>
 
-              {/* Business Name & Phone */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
-                <div>
-                  <label style={labelStyle}>Business Name *</label>
-                  <input
-                    data-testid="input-name"
-                    style={inputStyle}
-                    value={formData.name}
-                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    placeholder="Your Company Name"
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Phone Number *</label>
-                  <input
-                    data-testid="input-phone"
-                    style={inputStyle}
-                    value={formData.phone}
-                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                    placeholder="(555) 123-4567"
-                  />
-                </div>
+              {/* Business Name */}
+              <div>
+                <label style={labelStyle}>Business Name *</label>
+                <input
+                  data-testid="input-name"
+                  style={inputStyle}
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Your Company Name"
+                />
               </div>
 
-              {/* Contact Email & Website */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
-                <div>
-                  <label style={labelStyle}>Contact Email (Public)</label>
-                  <input
-                    data-testid="input-contact-email"
-                    type="email"
-                    style={inputStyle}
-                    value={formData.contactEmail}
-                    onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
-                    placeholder="contact@yourcompany.com"
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Website</label>
-                  <input
-                    data-testid="input-website"
-                    style={inputStyle}
-                    value={formData.website}
-                    onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
-                    placeholder="https://yourwebsite.com"
-                  />
-                </div>
+              {/* Phone */}
+              <div>
+                <label style={labelStyle}>Phone Number *</label>
+                <input
+                  data-testid="input-phone"
+                  style={inputStyle}
+                  value={formData.phone}
+                  onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+
+              {/* Contact Email */}
+              <div>
+                <label style={labelStyle}>Contact Email (Public)</label>
+                <input
+                  data-testid="input-contact-email"
+                  type="email"
+                  style={inputStyle}
+                  value={formData.contactEmail}
+                  onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
+                  placeholder="contact@yourcompany.com"
+                />
+              </div>
+
+              {/* Website */}
+              <div>
+                <label style={labelStyle}>Website</label>
+                <input
+                  data-testid="input-website"
+                  style={inputStyle}
+                  value={formData.website}
+                  onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
+                  placeholder="https://yourwebsite.com"
+                />
               </div>
 
               {/* Address */}
@@ -481,28 +481,28 @@ export default function ProfileEditor() {
                 />
               </div>
 
-              {/* City & State */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
-                <div>
-                  <label style={labelStyle}>City *</label>
-                  <input
-                    data-testid="input-city"
-                    style={inputStyle}
-                    value={formData.city}
-                    onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
-                    placeholder="Your City"
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>State *</label>
-                  <input
-                    data-testid="input-state"
-                    style={inputStyle}
-                    value={formData.state}
-                    onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
-                    placeholder="State"
-                  />
-                </div>
+              {/* City */}
+              <div>
+                <label style={labelStyle}>City *</label>
+                <input
+                  data-testid="input-city"
+                  style={inputStyle}
+                  value={formData.city}
+                  onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
+                  placeholder="Your City"
+                />
+              </div>
+
+              {/* State */}
+              <div>
+                <label style={labelStyle}>State *</label>
+                <input
+                  data-testid="input-state"
+                  style={inputStyle}
+                  value={formData.state}
+                  onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
+                  placeholder="State"
+                />
               </div>
 
               {/* Business Hours */}
