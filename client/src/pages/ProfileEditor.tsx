@@ -294,12 +294,12 @@ export default function ProfileEditor() {
       {/* Save Buttons */}
       <div style={{
         position: "sticky",
-        top: "20px",
+        top: "10px",
         display: "flex",
         justifyContent: "center",
         gap: "12px",
         zIndex: 50,
-        padding: "20px",
+        padding: "10px 20px",
         maxWidth: "900px",
         margin: "0 auto"
       }}>
