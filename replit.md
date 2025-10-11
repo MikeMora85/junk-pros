@@ -52,6 +52,13 @@ I prefer detailed explanations.
         - Clean yellow and black design matching brand colors
     - **Approval System**: Automatic business approval upon signup.
     - **Performance Tracking**: Automatic tracking of customer interactions (clicks, calls, photo quotes, in-person estimates) with an API endpoint `/api/track/event`.
+    - **Unclaimed Business Listings**:
+        - Businesses can be prefilled with just name and phone number
+        - Marked as "unclaimed" until business owner claims their profile
+        - Unclaimed listings display with limited information (name and phone only)
+        - Non-clickable gray cards with "Unclaimed Listing - Basic Info Only" badge
+        - Bulk import endpoint for admins: `POST /api/admin/companies/bulk-unclaimed`
+        - Database schema includes `claimed` boolean field (default: false)
 - **Admin Dashboard**:
     - Mobile-responsive design with a hamburger menu.
     - Tabs for Pending, Active, Payments, and Analytics.
