@@ -1231,7 +1231,8 @@ function LandingPage() {
     } else {
       // It's a city - search across all states to find which one has it
       try {
-        const response = await fetch(`/api/search-city?city=${encodeURIComponent(slug)}`);
+        // Pass the original query (with spaces) to the API, not the slug
+        const response = await fetch(`/api/search-city?city=${encodeURIComponent(query)}`);
         const result = await response.json();
         
         if (result.state) {

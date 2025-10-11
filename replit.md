@@ -39,6 +39,12 @@ I prefer detailed explanations.
     - Haversine formula for calculating distances between user location and haulers
     - Distance-based filtering showing haulers within 15-mile radius
     - Automatic sorting by proximity from user's zip code
+- **Search Functionality**:
+    - Homepage search bar supports zip codes, state names, and city names
+    - City search uses `/api/search-city` endpoint to find which state a city belongs to
+    - Automatically redirects to the correct state/city page (e.g., "San Francisco" → `/california/san-francisco`)
+    - URL slug formatting: city names with spaces are converted to hyphens for clean URLs
+    - City page routing handles both formats: converts URL slugs back to proper city names for database queries
 - **Visual Estimate Builder**: Interactive calculator with graphical representations of items and truck capacity.
 - **Business Management**:
     - **Signup**: Comprehensive full-page signup process with educational content, pricing tiers, and login creation.
