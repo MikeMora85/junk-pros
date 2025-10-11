@@ -3479,7 +3479,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       
                       <Link 
-                        href={`/signup?claim=true&name=${encodeURIComponent(c.name)}&phone=${encodeURIComponent(c.phone)}`}
+                        href={`/add-business?claim=true&name=${encodeURIComponent(c.name)}&phone=${encodeURIComponent(c.phone)}`}
                         style={{ textDecoration: 'none' }}
                       >
                         <button

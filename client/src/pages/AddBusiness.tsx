@@ -4,11 +4,16 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft } from "lucide-react";
 
 export default function AddBusiness() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const isClaiming = urlParams.get('claim') === 'true';
+  const prefilledName = urlParams.get('name') || '';
+  const prefilledPhone = urlParams.get('phone') || '';
+
   const [formData, setFormData] = useState({
-    businessName: "",
+    businessName: prefilledName,
     email: "",
     password: "",
-    phone: "",
+    phone: prefilledPhone,
     state: "",
     city: "",
     pricingTier: "",
@@ -135,7 +140,7 @@ export default function AddBusiness() {
           letterSpacing: '-0.02em',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
-          Join the Premier Junk Removal Directory
+          {isClaiming ? 'Claim Your Profile' : 'Join the Premier Junk Removal Directory'}
         </h1>
         <p style={{
           fontSize: '18px',
@@ -145,9 +150,45 @@ export default function AddBusiness() {
           lineHeight: '1.6',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
-          Connect with customers actively searching for professional junk removal services in your area. Built exclusively for independent, quality-focused operators.
+          {isClaiming 
+            ? 'Complete your business profile and start connecting with customers who are searching for your services!'
+            : 'Connect with customers actively searching for professional junk removal services in your area. Built exclusively for independent, quality-focused operators.'}
         </p>
       </div>
+
+      {/* Claiming Banner */}
+      {isClaiming && (
+        <div style={{
+          background: '#dcfce7',
+          border: '2px solid #16a34a',
+          padding: '16px',
+          margin: '20px auto',
+          maxWidth: '800px',
+          borderRadius: '8px',
+          textAlign: 'center',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            marginBottom: '8px',
+          }}>
+            <CheckCircle size={20} color="#16a34a" />
+            <strong style={{ color: '#16a34a', fontSize: '16px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+              Claiming Profile: {prefilledName}
+            </strong>
+          </div>
+          <p style={{ 
+            margin: 0, 
+            color: '#166534', 
+            fontSize: '14px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            We've prefilled your business name and phone. Complete the rest to activate your profile!
+          </p>
+        </div>
+      )}
 
       {/* Success Modal Popup */}
       {isSubmitted && (
