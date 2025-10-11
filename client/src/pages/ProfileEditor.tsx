@@ -132,8 +132,10 @@ export default function ProfileEditor() {
     enabled: !!user,
   });
 
+  const [formInitialized, setFormInitialized] = useState(false);
+
   useEffect(() => {
-    if (company) {
+    if (company && !formInitialized) {
       setFormData({
         name: company.name || "",
         phone: company.phone || "",
@@ -167,8 +169,9 @@ export default function ProfileEditor() {
         googleFeaturedReviews: (company.googleFeaturedReviews as FeaturedReview[]) || [],
       });
       checkCompletedTabs(company);
+      setFormInitialized(true);
     }
-  }, [company]);
+  }, [company, formInitialized]);
 
   const checkCompletedTabs = (data: any) => {
     const completed = new Set<number>();
@@ -203,9 +206,9 @@ export default function ProfileEditor() {
       console.log("Update successful, result:", result);
       return result;
     },
-    onSuccess: async () => {
-      console.log("Mutation success, invalidating cache");
-      await queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
+    onSuccess: async (updatedCompany) => {
+      console.log("Mutation success");
+      queryClient.setQueryData(["/api/business/profile"], updatedCompany);
       setToastMessage("Profile updated successfully!");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
