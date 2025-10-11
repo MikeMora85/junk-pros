@@ -313,23 +313,41 @@ export default function AddBusiness() {
               cursor: 'pointer',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               transition: 'all 0.2s',
+              position: 'sticky',
+              top: '0',
+              zIndex: 50,
             }}
             data-testid="button-toggle-why-us"
           >
-            <h2 style={{
-              fontSize: '22px',
-              fontWeight: '700',
-              color: '#000',
-              margin: 0,
-              letterSpacing: '-0.02em',
-            }}>
-              Why Independent Operators Choose Us
-            </h2>
-            {isWhyUsOpen ? (
-              <ChevronUp size={28} color="#000" />
-            ) : (
-              <ChevronDown size={28} color="#000" />
-            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <h2 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#000',
+                margin: 0,
+                letterSpacing: '-0.02em',
+              }}>
+                Why Independent Operators Choose Us
+              </h2>
+              {hasReadWhyUs && (
+                <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+              )}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ 
+                fontSize: '13px', 
+                fontWeight: '700', 
+                color: '#dc2626',
+                textTransform: 'uppercase',
+              }}>
+                Required Read
+              </span>
+              {isWhyUsOpen ? (
+                <ChevronUp size={28} color="#000" />
+              ) : (
+                <ChevronDown size={28} color="#000" />
+              )}
+            </div>
           </button>
           
           {isWhyUsOpen && (
@@ -405,7 +423,12 @@ export default function AddBusiness() {
                   <input
                     type="checkbox"
                     checked={hasReadWhyUs}
-                    onChange={(e) => setHasReadWhyUs(e.target.checked)}
+                    onChange={(e) => {
+                      setHasReadWhyUs(e.target.checked);
+                      if (e.target.checked) {
+                        setIsWhyUsOpen(false);
+                      }
+                    }}
                     style={{
                       width: '20px',
                       height: '20px',
@@ -444,7 +467,9 @@ export default function AddBusiness() {
               cursor: 'pointer',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               transition: 'all 0.2s',
-              position: 'relative',
+              position: 'sticky',
+              top: '0',
+              zIndex: 50,
             }}
             data-testid="button-toggle-requirements"
           >
@@ -614,7 +639,12 @@ export default function AddBusiness() {
                   <input
                     type="checkbox"
                     checked={hasReadRequirements}
-                    onChange={(e) => setHasReadRequirements(e.target.checked)}
+                    onChange={(e) => {
+                      setHasReadRequirements(e.target.checked);
+                      if (e.target.checked) {
+                        setIsRequirementsOpen(false);
+                      }
+                    }}
                     style={{
                       width: '20px',
                       height: '20px',
