@@ -2047,7 +2047,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '80px 16px 40px 16px',
+        padding: '16px 16px 40px 16px',
       }}>
         {/* Search Bar */}
         <div style={{
