@@ -92,6 +92,10 @@ export const companies = pgTable("companies", {
   contactEmail: text("contact_email"),
   displayOrder: integer("display_order").default(999),
   badge: text("badge"),
+  businessHours: jsonb("business_hours"),
+  googleRanking: decimal("google_ranking", { precision: 2, scale: 1 }),
+  googleReviewCount: integer("google_review_count"),
+  googleFeaturedReviews: jsonb("google_featured_reviews"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -148,6 +152,10 @@ export const insertCompanySchema = createInsertSchema(companies, {
   contactEmail: z.string().nullable().optional(),
   displayOrder: z.number().optional(),
   badge: z.string().nullable().optional(),
+  businessHours: z.any().nullable().optional(),
+  googleRanking: z.string().nullable().optional(),
+  googleReviewCount: z.number().nullable().optional(),
+  googleFeaturedReviews: z.any().nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;
