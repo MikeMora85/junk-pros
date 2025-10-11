@@ -85,13 +85,30 @@ I prefer detailed explanations.
         - Database schema includes `claimed` boolean field (default: false)
         - **Nationwide Expansion**: Successfully imported 135 vetted junk removal companies across all 45 states covering 675 cities, providing comprehensive national coverage for independent local operators
 - **Admin Dashboard**:
-    - Mobile-responsive design with a hamburger menu.
-    - Tabs for Pending, Active, Payments, and Analytics.
-    - Smart stats grid, expandable action menus for businesses.
-    - Advanced filtering and search capabilities.
-    - Payment tracking schema including subscription tier/status, payment dates, and warning system.
-    - Action template management system for creating custom email templates with variables and color coding.
-    - Comprehensive analytics system with geographic search, business statistics (Total, Active, Pending, Denied), subscription metrics (Featured/Free, Active/Past Due/Cancelled), and revenue analytics.
+    - **Yellow/White Branding**: Complete redesign with #fbbf24 (yellow) and black color scheme matching website aesthetics
+    - **Mobile-Responsive**: Hamburger menu navigation with sticky header
+    - **Comprehensive Tabs**: Active, Unclaimed, Featured, Analytics for organized business management
+    - **Smart Stats Grid**: Real-time metrics showing Active (953), Unclaimed, Featured, and States covered
+    - **Advanced Filtering**: 
+        - State dropdown with dynamic city sub-filtering
+        - Real-time search by name, city, or phone
+        - Filter persistence across tabs
+    - **Unclaimed Business Management**:
+        - Dedicated Unclaimed tab showing all unclaimed listings
+        - "Add Unclaimed Business" button with inline form
+        - Fields: Name, Phone, City, State, Address (optional)
+        - One-click bulk addition via API
+        - Mark unclaimed as claimed directly from admin
+    - **Business Actions**:
+        - Expandable action menus per business
+        - View Profile (opens in new tab)
+        - Mark as Claimed
+        - Delete Business (with confirmation)
+    - **Analytics Dashboard**:
+        - Platform-wide metrics
+        - State breakdown with business counts
+        - Featured rate calculations
+        - Geographic coverage statistics
 
 ### System Design Choices
 - **Modular Architecture**: Clear separation of concerns between frontend, backend, and shared schema.
