@@ -7,7 +7,6 @@ import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import AwsS3 from "@uppy/aws-s3";
 import type { UploadResult } from "@uppy/core";
-import { Button } from "@/components/ui/button";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
@@ -52,9 +51,9 @@ export function ObjectUploader({
 
   return (
     <div>
-      <Button onClick={() => setShowModal(true)} className={buttonClassName} type="button" data-testid="button-upload-logo">
+      <button onClick={() => setShowModal(true)} className={buttonClassName} type="button" data-testid="button-upload-logo">
         {children}
-      </Button>
+      </button>
 
       <DashboardModal
         uppy={uppy}

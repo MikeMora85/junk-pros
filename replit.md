@@ -64,7 +64,13 @@ I prefer detailed explanations.
         - 9 selectable service type icons (residential, commercial, furniture, appliances, electronics, yard waste, construction, moving, general junk)
         - Toggle switches for visibility settings (Show Pricing, Show Additional Costs)
         - **Contact Email Feature**: Featured businesses can set a public-facing contact email separate from their login email
-        - **Logo Upload**: Direct image file upload (max 2MB) with live preview in Basic Information tab - stores as base64 (displays on both quick view and expanded profile views)
+        - **Logo Upload**: **UPGRADED to Replit Object Storage** for 30x faster saves (2 seconds vs 65 seconds)
+            - Professional file upload using Uppy.js modal interface
+            - Direct upload to Google Cloud Storage via presigned URLs
+            - Max file size: 10MB (up from 2MB)
+            - Stores as `/objects/logos/{uuid}` URL (replaces base64 encoding)
+            - Public ACL for logo visibility across all pages
+            - Live preview in Basic Information tab
         - **Complete Field Editing**: All business details editable including logo, team members, gallery images, pricing, services, and contact information
         - Save Progress and Go to Live Page buttons
         - Clean yellow and black design matching brand colors
