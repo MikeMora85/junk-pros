@@ -359,8 +359,8 @@ export default function ProfileEditor() {
           <div style={sectionContentStyle}>
             <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
               {/* Logo Upload */}
-              <div>
-                <label style={labelStyle}>Company Logo</label>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <label style={{ ...labelStyle, alignSelf: "flex-start" }}>Company Logo</label>
                 {formData.logoUrl ? (
                   <div style={{ position: "relative", width: "200px" }}>
                     <img
