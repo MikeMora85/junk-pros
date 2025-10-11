@@ -248,6 +248,7 @@ export default function ProfileEditor() {
     borderRadius: "8px",
     fontSize: "16px",
     fontFamily: "inherit",
+    boxSizing: "border-box" as const,
   };
 
   const labelStyle = {
