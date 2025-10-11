@@ -60,7 +60,8 @@ app.use((req, res, next) => {
         middlewareMode: true,
         host: true,
         hmr: {
-          host: "localhost",
+          protocol: 'wss',
+          clientPort: 443,
         },
         allowedHosts: [
           '.replit.dev',
