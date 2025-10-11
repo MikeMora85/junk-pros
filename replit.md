@@ -42,6 +42,15 @@ I prefer detailed explanations.
 - **Visual Estimate Builder**: Interactive calculator with graphical representations of items and truck capacity.
 - **Business Management**:
     - **Signup**: Comprehensive full-page signup process with educational content, pricing tiers, and login creation.
+        - **Terms Agreement System**: Two collapsible sections with "REQUIRED READ" labels:
+            - "Why Independent Operators Choose Us" - Platform standards and benefits
+            - "Membership Requirements" - No franchises, pricing standards ($38 minimum, $45-$65 standard)
+        - Sticky section headers when scrolling within sections
+        - Auto-close dropdowns when agreement checkboxes are clicked
+        - Dual validation requiring both agreements before signup
+        - Green checkmark completion indicators on section headers
+        - Agreement timestamps saved to database (agreedToPlatformStandards, agreedToRequirements)
+        - Admin visibility of agreement dates for compliance tracking
     - **Profile Editing**: Simple, intuitive ProfileEditor page (/profile/edit) with:
         - Full-width yellow numbered tabs (#fbbf24 inactive, #f59e0b active)
         - 6 organized sections: Basic Information, Services & Specialties, About Your Business, Pricing, Team & Gallery, Visibility Settings
