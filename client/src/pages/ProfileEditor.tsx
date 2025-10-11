@@ -345,7 +345,7 @@ export default function ProfileEditor() {
       </div>
 
       {/* Continuous Sections */}
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 16px" }}>
         
         {/* Section 1: Basic Information */}
         <section style={{ marginTop: "20px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
