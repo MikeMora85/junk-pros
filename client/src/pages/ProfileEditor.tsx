@@ -320,7 +320,7 @@ export default function ProfileEditor() {
             boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
           }}
         >
-          {updateMutation.isPending ? "Saving..." : "Save Progress"}
+          {updateMutation.isPending ? "Saving..." : "Save"}
         </button>
         
         <button
@@ -340,7 +340,7 @@ export default function ProfileEditor() {
             boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
           }}
         >
-          Save & Go Live
+          Live
         </button>
       </div>
 
