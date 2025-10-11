@@ -444,7 +444,7 @@ export class MemStorage implements IStorage {
 }
 
 import { db } from './db';
-import { eq, and, gte, lte, sql } from 'drizzle-orm';
+import { eq, and, gte, lte, sql, asc } from 'drizzle-orm';
 import { companies, users, businessOwners, businessEvents } from '@shared/schema';
 
 export class DbStorage implements IStorage {
@@ -524,7 +524,7 @@ export class DbStorage implements IStorage {
         sql`LOWER(TRIM(${companies.state})) = LOWER(${state})`,
         eq(companies.status, 'approved')
       )
-    );
+    ).orderBy(asc(companies.displayOrder));
   }
 
   async getCitiesForState(state: string): Promise<string[]> {
