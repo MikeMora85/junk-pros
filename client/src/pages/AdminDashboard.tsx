@@ -240,9 +240,10 @@ export default function AdminDashboard() {
         gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '12px',
         padding: '16px',
+        background: '#fff',
       }}>
         <div style={{
-          background: '#fef3c7',
+          background: '#fff',
           border: '2px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
@@ -253,7 +254,7 @@ export default function AdminDashboard() {
           <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>Active</div>
         </div>
         <div style={{
-          background: '#fef3c7',
+          background: '#fff',
           border: '2px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
@@ -264,7 +265,7 @@ export default function AdminDashboard() {
           <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>Unclaimed</div>
         </div>
         <div style={{
-          background: '#fef3c7',
+          background: '#fff',
           border: '2px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
@@ -275,7 +276,7 @@ export default function AdminDashboard() {
           <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>Featured</div>
         </div>
         <div style={{
-          background: '#fef3c7',
+          background: '#fff',
           border: '2px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
@@ -289,12 +290,13 @@ export default function AdminDashboard() {
 
       {/* Tabs */}
       <div style={{
-        background: '#000',
+        background: '#fbbf24',
         display: 'flex',
         gap: '0',
         padding: '0',
         overflowX: 'auto',
         WebkitOverflowScrolling: 'touch',
+        borderBottom: '3px solid #000',
       }}>
         {[
           { id: 'active', label: 'Active', count: stats.active },
@@ -306,8 +308,8 @@ export default function AdminDashboard() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
             style={{
-              background: activeTab === tab.id ? '#fbbf24' : 'transparent',
-              color: activeTab === tab.id ? '#000' : '#fbbf24',
+              background: activeTab === tab.id ? '#fff' : 'transparent',
+              color: '#000',
               border: 'none',
               padding: '12px 16px',
               fontSize: '14px',
@@ -326,7 +328,7 @@ export default function AdminDashboard() {
 
       {/* Filters & Search */}
       {activeTab !== 'analytics' && (
-        <div style={{ padding: '16px', background: '#fef3c7', borderBottom: '2px solid #fbbf24' }}>
+        <div style={{ padding: '16px', background: '#fff', borderBottom: '2px solid #fbbf24' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
             {/* Search */}
             <div style={{ position: 'relative', width: '100%' }}>
@@ -404,8 +406,8 @@ export default function AdminDashboard() {
             onClick={() => setShowAddUnclaimed(!showAddUnclaimed)}
             style={{
               width: '100%',
-              background: '#000',
-              color: '#fbbf24',
+              background: '#fbbf24',
+              color: '#000',
               padding: '12px 20px',
               border: '2px solid #000',
               borderRadius: '8px',
@@ -580,7 +582,7 @@ export default function AdminDashboard() {
                     overflow: 'hidden',
                   }}
                 >
-                  <div style={{ padding: '16px', background: company.claimed ? '#fef3c7' : '#f3f4f6' }}>
+                  <div style={{ padding: '16px', background: '#fff' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                       <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
@@ -624,10 +626,10 @@ export default function AdminDashboard() {
                       <button
                         onClick={() => setExpandedCompany(expandedCompany === company.id ? null : company.id)}
                         style={{
-                          background: '#000',
-                          color: '#fbbf24',
+                          background: '#fbbf24',
+                          color: '#000',
                           padding: '8px 16px',
-                          border: 'none',
+                          border: '2px solid #000',
                           borderRadius: '8px',
                           fontSize: '14px',
                           fontWeight: '700',
@@ -726,7 +728,7 @@ export default function AdminDashboard() {
       {activeTab === 'analytics' && (
         <div style={{ padding: '20px' }}>
           <div style={{
-            background: '#fef3c7',
+            background: '#fff',
             border: '3px solid #fbbf24',
             borderRadius: '12px',
             padding: '20px',
@@ -772,7 +774,8 @@ export default function AdminDashboard() {
                 const stateCompanies = allCompanies.filter(c => c.state === state);
                 return (
                   <div key={state} style={{
-                    background: '#fef3c7',
+                    background: '#fff',
+                    border: '2px solid #fbbf24',
                     padding: '12px',
                     borderRadius: '8px',
                     display: 'flex',
