@@ -268,7 +268,7 @@ export default function ProfileEditor() {
   };
 
   const sectionContentStyle = {
-    padding: "24px 20px",
+    padding: "24px",
     backgroundColor: "#fff",
   };
 
