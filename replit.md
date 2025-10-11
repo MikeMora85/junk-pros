@@ -111,6 +111,8 @@ I prefer detailed explanations.
     - **Business Actions**:
         - Expandable action menus per business
         - View Profile (opens in new tab)
+        - **Display Order Control**: Set custom display order for businesses on city pages (lower numbers appear first, default 999)
+        - **Badge/Banner System**: Quick-add badges (TOP RATED, BEST VALUE, FASTEST, VERIFIED) or remove badges with one click
         - Mark as Claimed
         - Delete Business (with confirmation)
     - **Analytics Dashboard**:
