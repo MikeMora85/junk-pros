@@ -563,7 +563,7 @@ export default function AdminDashboard() {
             <div style={{
               textAlign: 'center',
               padding: '40px',
-              background: '#fef3c7',
+              background: '#fff',
               borderRadius: '12px',
               border: '2px solid #fbbf24',
             }}>
@@ -571,100 +571,113 @@ export default function AdminDashboard() {
               <p style={{ fontSize: '18px', color: '#000', margin: 0 }}>No businesses found</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {displayCompanies.map((company) => (
                 <div
                   key={company.id}
                   style={{
                     background: '#fff',
-                    border: company.claimed ? '3px solid #fbbf24' : '3px solid #d1d5db',
+                    border: '2px solid #fbbf24',
                     borderRadius: '12px',
                     overflow: 'hidden',
                   }}
                 >
-                  <div style={{ padding: '16px', background: '#fff' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                          <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: '#000' }}>
-                            {company.name}
-                          </h3>
-                          {company.subscriptionTier === 'featured' && (
-                            <span style={{
-                              background: '#fbbf24',
-                              color: '#000',
-                              padding: '4px 8px',
-                              borderRadius: '4px',
-                              fontSize: '12px',
-                              fontWeight: '700',
-                            }}>
-                              ⭐ FEATURED
-                            </span>
-                          )}
-                          {!company.claimed && (
-                            <span style={{
-                              background: '#d1d5db',
-                              color: '#000',
-                              padding: '4px 8px',
-                              borderRadius: '4px',
-                              fontSize: '12px',
-                              fontWeight: '700',
-                            }}>
-                              UNCLAIMED
-                            </span>
-                          )}
-                        </div>
-                        <div style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}>
-                          <MapPin size={16} style={{ display: 'inline', marginRight: '4px' }} />
-                          {company.city}, {company.state}
-                        </div>
-                        <div style={{ fontSize: '14px', color: '#666' }}>
-                          <Phone size={16} style={{ display: 'inline', marginRight: '4px' }} />
-                          {company.phone}
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => setExpandedCompany(expandedCompany === company.id ? null : company.id)}
-                        style={{
+                  <div style={{ padding: '16px' }}>
+                    {/* Company Name */}
+                    <h3 style={{ 
+                      margin: '0 0 8px 0', 
+                      fontSize: '20px', 
+                      fontWeight: '800', 
+                      color: '#000',
+                      lineHeight: 1.2,
+                    }}>
+                      {company.name}
+                    </h3>
+
+                    {/* Badges */}
+                    <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                      {company.subscriptionTier === 'featured' && (
+                        <span style={{
                           background: '#fbbf24',
                           color: '#000',
-                          padding: '8px 16px',
-                          border: 'none',
-                          borderRadius: '8px',
-                          fontSize: '14px',
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
                           fontWeight: '700',
-                          cursor: 'pointer',
-                        }}
-                        data-testid={`button-actions-${company.id}`}
-                      >
-                        {expandedCompany === company.id ? 'Close' : 'Actions'}
-                      </button>
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                        }}>
+                          ⭐ FEATURED
+                        </span>
+                      )}
+                      {!company.claimed && (
+                        <span style={{
+                          background: '#e5e7eb',
+                          color: '#000',
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                        }}>
+                          UNCLAIMED
+                        </span>
+                      )}
                     </div>
+
+                    {/* Location & Phone */}
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '4px' }}>
+                      <MapPin size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+                      {company.city}, {company.state}
+                    </div>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '16px' }}>
+                      <Phone size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+                      {company.phone}
+                    </div>
+
+                    {/* Actions Button - Full Width */}
+                    <button
+                      onClick={() => setExpandedCompany(expandedCompany === company.id ? null : company.id)}
+                      style={{
+                        width: '100%',
+                        background: '#fbbf24',
+                        color: '#000',
+                        padding: '12px',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                      }}
+                      data-testid={`button-actions-${company.id}`}
+                    >
+                      {expandedCompany === company.id ? 'Close' : 'Actions'}
+                    </button>
                   </div>
 
                   {/* Actions Menu */}
                   {expandedCompany === company.id && (
                     <div style={{
                       padding: '16px',
-                      background: '#fff',
-                      borderTop: '2px solid #fbbf24',
+                      paddingTop: '0',
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '8px',
+                      gap: '10px',
                     }}>
                       <button
                         onClick={() => window.open(`/${company.state.toLowerCase()}/${company.city.toLowerCase().replace(/\s+/g, '-')}`, '_blank')}
                         style={{
-                          background: '#fbbf24',
+                          background: '#fff',
                           color: '#000',
                           padding: '12px',
-                          border: '2px solid #000',
+                          border: '2px solid #fbbf24',
                           borderRadius: '8px',
                           fontSize: '16px',
                           fontWeight: '700',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
+                          justifyContent: 'center',
                           gap: '8px',
                         }}
                       >
@@ -678,13 +691,14 @@ export default function AdminDashboard() {
                             background: '#10b981',
                             color: '#fff',
                             padding: '12px',
-                            border: '2px solid #000',
+                            border: 'none',
                             borderRadius: '8px',
                             fontSize: '16px',
                             fontWeight: '700',
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
+                            justifyContent: 'center',
                             gap: '8px',
                           }}
                         >
@@ -702,13 +716,14 @@ export default function AdminDashboard() {
                           background: '#ef4444',
                           color: '#fff',
                           padding: '12px',
-                          border: '2px solid #000',
+                          border: 'none',
                           borderRadius: '8px',
                           fontSize: '16px',
                           fontWeight: '700',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
+                          justifyContent: 'center',
                           gap: '8px',
                         }}
                       >
@@ -729,7 +744,7 @@ export default function AdminDashboard() {
         <div style={{ padding: '20px' }}>
           <div style={{
             background: '#fff',
-            border: '3px solid #fbbf24',
+            border: '2px solid #fbbf24',
             borderRadius: '12px',
             padding: '20px',
           }}>
@@ -761,7 +776,7 @@ export default function AdminDashboard() {
           {/* State Breakdown */}
           <div style={{
             background: '#fff',
-            border: '3px solid #fbbf24',
+            border: '2px solid #fbbf24',
             borderRadius: '12px',
             padding: '20px',
             marginTop: '20px',
