@@ -57,6 +57,13 @@ I prefer detailed explanations.
         - Marked as "unclaimed" until business owner claims their profile
         - Unclaimed listings display with limited information (name and phone only)
         - Non-clickable gray cards with "Unclaimed Listing - Basic Info Only" badge
+        - Green "Claim Your Profile" button on each unclaimed listing
+        - **Claim Flow**:
+            - Clicking "Claim Your Profile" redirects to `/add-business?claim=true&name=[Business Name]&phone=[Phone]`
+            - AddBusiness page reads URL parameters and prefills business name and phone fields
+            - Shows "Claim Your Profile" heading instead of standard signup heading
+            - Displays green claiming banner with checkmark icon showing "Claiming Profile: [Business Name]"
+            - Banner message: "We've prefilled your business name and phone. Complete the rest to activate your profile!"
         - Bulk import endpoint for admins: `POST /api/admin/companies/bulk-unclaimed`
         - Required fields: name, phone, city, state (zip optional)
         - Address auto-generated from city, state, zip for search indexing
