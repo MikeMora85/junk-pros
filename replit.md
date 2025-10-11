@@ -71,6 +71,7 @@ I prefer detailed explanations.
             - Stores as `/objects/logos/{uuid}` URL (replaces base64 encoding)
             - Public ACL for logo visibility across all pages
             - Live preview in Basic Information tab
+            - **Uppy Styles**: CDN-hosted (https://releases.transloadit.com/uppy/v3.25.3/uppy.min.css) loaded in index.html to avoid Vite module resolution issues
         - **Complete Field Editing**: All business details editable including logo, team members, gallery images, pricing, services, and contact information
         - Save Progress and Go to Live Page buttons
         - Clean yellow and black design matching brand colors
