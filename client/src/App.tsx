@@ -1265,7 +1265,7 @@ function LandingPage() {
         height: '200px',
         width: '100%',
         backgroundImage: `url(${curbsideJunkHero})`,
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#ffffff',
