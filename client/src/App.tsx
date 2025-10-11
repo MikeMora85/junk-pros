@@ -1323,16 +1323,6 @@ function LandingPage() {
         <div style={{
           textAlign: 'center',
           marginBottom: '48px',
-          position: 'sticky',
-          top: '0',
-          zIndex: 100,
-          backgroundColor: '#ffffff',
-          padding: '20px 0',
-          marginLeft: '-20px',
-          marginRight: '-20px',
-          paddingLeft: '20px',
-          paddingRight: '20px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
         }}>
           <h2 style={{
             fontSize: '36px',
