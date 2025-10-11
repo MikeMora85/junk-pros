@@ -293,12 +293,15 @@ export default function ProfileEditor() {
 
       {/* Save Buttons */}
       <div style={{
-        position: "fixed",
+        position: "sticky",
         top: "20px",
-        right: "20px",
         display: "flex",
+        justifyContent: "center",
         gap: "12px",
-        zIndex: 50
+        zIndex: 50,
+        padding: "20px",
+        maxWidth: "900px",
+        margin: "0 auto"
       }}>
         <button
           onClick={handleSave}
@@ -345,7 +348,7 @@ export default function ProfileEditor() {
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         
         {/* Section 1: Basic Information */}
-        <section style={{ marginTop: "80px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "20px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
