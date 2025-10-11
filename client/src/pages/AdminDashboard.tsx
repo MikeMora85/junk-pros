@@ -142,24 +142,25 @@ export default function AdminDashboard() {
       <div style={{
         background: '#fbbf24',
         borderBottom: '4px solid #000',
-        padding: '20px',
+        padding: '16px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <h1 style={{ 
               margin: 0, 
-              fontSize: '28px', 
+              fontSize: 'clamp(18px, 5vw, 24px)',
               fontWeight: '800', 
               color: '#000',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif"
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              lineHeight: 1.2,
             }}>
-              Admin Control Center
+              Admin
             </h1>
-            <p style={{ margin: '4px 0 0 0', fontSize: '14px', color: '#000', opacity: 0.8 }}>
-              Manage {stats.total} businesses nationwide
+            <p style={{ margin: '2px 0 0 0', fontSize: 'clamp(11px, 3vw, 13px)', color: '#000', opacity: 0.8 }}>
+              {stats.total} businesses
             </p>
           </div>
           <button
@@ -167,17 +168,17 @@ export default function AdminDashboard() {
             style={{
               background: '#000',
               color: '#fbbf24',
-              padding: '12px',
+              padding: '10px',
               borderRadius: '8px',
               border: 'none',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
+              flexShrink: 0,
             }}
             data-testid="button-menu"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -236,53 +237,53 @@ export default function AdminDashboard() {
       {/* Stats Cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-        gap: '16px',
-        padding: '20px',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '12px',
+        padding: '16px',
       }}>
         <div style={{
           background: '#fef3c7',
-          border: '3px solid #fbbf24',
-          borderRadius: '12px',
-          padding: '20px',
+          border: '2px solid #fbbf24',
+          borderRadius: '8px',
+          padding: '12px',
           textAlign: 'center',
         }}>
-          <Building2 size={32} color="#000" style={{ margin: '0 auto 8px' }} />
-          <div style={{ fontSize: '32px', fontWeight: '800', color: '#000' }}>{stats.active}</div>
-          <div style={{ fontSize: '14px', color: '#000', fontWeight: '600' }}>Active</div>
+          <Building2 size={24} color="#000" style={{ margin: '0 auto 6px' }} />
+          <div style={{ fontSize: '24px', fontWeight: '800', color: '#000' }}>{stats.active}</div>
+          <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>Active</div>
         </div>
         <div style={{
           background: '#fef3c7',
-          border: '3px solid #fbbf24',
-          borderRadius: '12px',
-          padding: '20px',
+          border: '2px solid #fbbf24',
+          borderRadius: '8px',
+          padding: '12px',
           textAlign: 'center',
         }}>
-          <AlertCircle size={32} color="#000" style={{ margin: '0 auto 8px' }} />
-          <div style={{ fontSize: '32px', fontWeight: '800', color: '#000' }}>{stats.unclaimed}</div>
-          <div style={{ fontSize: '14px', color: '#000', fontWeight: '600' }}>Unclaimed</div>
+          <AlertCircle size={24} color="#000" style={{ margin: '0 auto 6px' }} />
+          <div style={{ fontSize: '24px', fontWeight: '800', color: '#000' }}>{stats.unclaimed}</div>
+          <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>Unclaimed</div>
         </div>
         <div style={{
           background: '#fef3c7',
-          border: '3px solid #fbbf24',
-          borderRadius: '12px',
-          padding: '20px',
+          border: '2px solid #fbbf24',
+          borderRadius: '8px',
+          padding: '12px',
           textAlign: 'center',
         }}>
-          <Star size={32} color="#000" style={{ margin: '0 auto 8px' }} />
-          <div style={{ fontSize: '32px', fontWeight: '800', color: '#000' }}>{stats.featured}</div>
-          <div style={{ fontSize: '14px', color: '#000', fontWeight: '600' }}>Featured</div>
+          <Star size={24} color="#000" style={{ margin: '0 auto 6px' }} />
+          <div style={{ fontSize: '24px', fontWeight: '800', color: '#000' }}>{stats.featured}</div>
+          <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>Featured</div>
         </div>
         <div style={{
           background: '#fef3c7',
-          border: '3px solid #fbbf24',
-          borderRadius: '12px',
-          padding: '20px',
+          border: '2px solid #fbbf24',
+          borderRadius: '8px',
+          padding: '12px',
           textAlign: 'center',
         }}>
-          <MapPin size={32} color="#000" style={{ margin: '0 auto 8px' }} />
-          <div style={{ fontSize: '32px', fontWeight: '800', color: '#000' }}>{states.length}</div>
-          <div style={{ fontSize: '14px', color: '#000', fontWeight: '600' }}>States</div>
+          <MapPin size={24} color="#000" style={{ margin: '0 auto 6px' }} />
+          <div style={{ fontSize: '24px', fontWeight: '800', color: '#000' }}>{states.length}</div>
+          <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>States</div>
         </div>
       </div>
 
@@ -291,8 +292,9 @@ export default function AdminDashboard() {
         background: '#000',
         display: 'flex',
         gap: '0',
-        padding: '0 20px',
+        padding: '0',
         overflowX: 'auto',
+        WebkitOverflowScrolling: 'touch',
       }}>
         {[
           { id: 'active', label: 'Active', count: stats.active },
@@ -307,12 +309,13 @@ export default function AdminDashboard() {
               background: activeTab === tab.id ? '#fbbf24' : 'transparent',
               color: activeTab === tab.id ? '#000' : '#fbbf24',
               border: 'none',
-              padding: '16px 24px',
-              fontSize: '16px',
+              padding: '12px 16px',
+              fontSize: '14px',
               fontWeight: '700',
               cursor: 'pointer',
-              borderBottom: activeTab === tab.id ? '4px solid #000' : '4px solid transparent',
+              borderBottom: activeTab === tab.id ? '3px solid #000' : '3px solid transparent',
               whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
             data-testid={`tab-${tab.id}`}
           >
