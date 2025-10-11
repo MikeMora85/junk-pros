@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "../lib/queryClient";
 import { useAuth } from "../hooks/useAuth";
 import { useLocation } from "wouter";
-import { CheckCircle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell, X, Upload, Plus, Trash2 } from "lucide-react";
+import { CheckCircle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell, X, Upload, Plus } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { ObjectUploader } from "../components/ObjectUploader";
 import type { UploadResult } from "@uppy/core";
@@ -436,8 +436,8 @@ export default function ProfileEditor() {
                       });
                       return await response.json();
                     }}
-                    onComplete={(result: UploadResult) => {
-                      if (result.successful.length > 0) {
+                    onComplete={(result: UploadResult<any, any>) => {
+                      if (result.successful && result.successful.length > 0) {
                         const url = result.successful[0].uploadURL;
                         if (url) {
                           setFormData(prev => ({ ...prev, logoUrl: url }));
@@ -1245,8 +1245,8 @@ export default function ProfileEditor() {
                               });
                               return await response.json();
                             }}
-                            onComplete={(result: UploadResult) => {
-                              if (result.successful.length > 0) {
+                            onComplete={(result: UploadResult<any, any>) => {
+                              if (result.successful && result.successful.length > 0) {
                                 const url = result.successful[0].uploadURL;
                                 if (url) {
                                   const newMembers = [...formData.teamMembers];
@@ -1366,11 +1366,11 @@ export default function ProfileEditor() {
                       });
                       return await response.json();
                     }}
-                    onComplete={(result: UploadResult) => {
-                      if (result.successful.length > 0) {
+                    onComplete={(result: UploadResult<any, any>) => {
+                      if (result.successful && result.successful.length > 0) {
                         const newUrls = result.successful
-                          .map(file => file.uploadURL)
-                          .filter((url): url is string => url !== undefined);
+                          .map((file: any) => file.uploadURL)
+                          .filter((url: any): url is string => url !== undefined);
                         setFormData(prev => ({
                           ...prev,
                           galleryImages: [...prev.galleryImages, ...newUrls]
