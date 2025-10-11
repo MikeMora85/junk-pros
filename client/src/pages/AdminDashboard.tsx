@@ -92,7 +92,7 @@ export default function AdminDashboard() {
               background: '#fbbf24',
               color: '#000',
               padding: '12px 24px',
-              border: '2px solid #000',
+              border: '1px solid #e5e7eb',
               borderRadius: '8px',
               fontSize: '16px',
               fontWeight: '700',
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
       {/* Header - Yellow/Black */}
       <div style={{
         background: '#fbbf24',
-        borderBottom: '4px solid #000',
+        borderBottom: '2px solid #e5e7eb',
         padding: '16px',
         position: 'sticky',
         top: 0,
@@ -166,8 +166,8 @@ export default function AdminDashboard() {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             style={{
-              background: '#000',
-              color: '#fbbf24',
+              background: '#f59e0b',
+              color: '#000',
               padding: '10px',
               borderRadius: '8px',
               border: 'none',
@@ -244,7 +244,7 @@ export default function AdminDashboard() {
       }}>
         <div style={{
           background: '#fff',
-          border: '2px solid #fbbf24',
+          border: '1px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
           textAlign: 'center',
@@ -255,7 +255,7 @@ export default function AdminDashboard() {
         </div>
         <div style={{
           background: '#fff',
-          border: '2px solid #fbbf24',
+          border: '1px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
           textAlign: 'center',
@@ -266,7 +266,7 @@ export default function AdminDashboard() {
         </div>
         <div style={{
           background: '#fff',
-          border: '2px solid #fbbf24',
+          border: '1px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
           textAlign: 'center',
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
         </div>
         <div style={{
           background: '#fff',
-          border: '2px solid #fbbf24',
+          border: '1px solid #fbbf24',
           borderRadius: '8px',
           padding: '12px',
           textAlign: 'center',
@@ -296,7 +296,7 @@ export default function AdminDashboard() {
         padding: '0',
         overflowX: 'auto',
         WebkitOverflowScrolling: 'touch',
-        borderBottom: '3px solid #000',
+        borderBottom: '2px solid #e5e7eb',
       }}>
         {[
           { id: 'active', label: 'Active', count: stats.active },
@@ -315,7 +315,7 @@ export default function AdminDashboard() {
               fontSize: '14px',
               fontWeight: '700',
               cursor: 'pointer',
-              borderBottom: activeTab === tab.id ? '3px solid #000' : '3px solid transparent',
+              borderBottom: activeTab === tab.id ? '2px solid #000' : '2px solid transparent',
               whiteSpace: 'nowrap',
               flexShrink: 0,
             }}
@@ -341,7 +341,7 @@ export default function AdminDashboard() {
                 style={{
                   width: '100%',
                   padding: '12px 12px 12px 44px',
-                  border: '2px solid #000',
+                  border: '1px solid #e5e7eb',
                   borderRadius: '8px',
                   fontSize: '16px',
                   background: '#fff',
@@ -361,7 +361,7 @@ export default function AdminDashboard() {
               style={{
                 width: '100%',
                 padding: '12px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
                 background: '#fff',
@@ -384,7 +384,7 @@ export default function AdminDashboard() {
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: '2px solid #000',
+                  border: '1px solid #e5e7eb',
                   borderRadius: '8px',
                   fontSize: '16px',
                   background: '#fff',
@@ -409,7 +409,7 @@ export default function AdminDashboard() {
               background: '#fbbf24',
               color: '#000',
               padding: '12px 20px',
-              border: '2px solid #000',
+              border: 'none',
               borderRadius: '8px',
               fontSize: '16px',
               fontWeight: '700',
@@ -448,7 +448,7 @@ export default function AdminDashboard() {
               onChange={(e) => setUnclaimedForm(prev => ({ ...prev, name: e.target.value }))}
               style={{
                 padding: '12px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
               }}
@@ -461,7 +461,7 @@ export default function AdminDashboard() {
               onChange={(e) => setUnclaimedForm(prev => ({ ...prev, phone: e.target.value }))}
               style={{
                 padding: '12px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
               }}
@@ -474,7 +474,7 @@ export default function AdminDashboard() {
               onChange={(e) => setUnclaimedForm(prev => ({ ...prev, city: e.target.value }))}
               style={{
                 padding: '12px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
               }}
@@ -487,7 +487,7 @@ export default function AdminDashboard() {
               onChange={(e) => setUnclaimedForm(prev => ({ ...prev, state: e.target.value }))}
               style={{
                 padding: '12px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
               }}
@@ -500,7 +500,7 @@ export default function AdminDashboard() {
               onChange={(e) => setUnclaimedForm(prev => ({ ...prev, address: e.target.value }))}
               style={{
                 padding: '12px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
               }}
@@ -521,7 +521,7 @@ export default function AdminDashboard() {
                 background: '#fbbf24',
                 color: '#000',
                 padding: '12px 24px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
                 fontWeight: '700',
@@ -540,7 +540,7 @@ export default function AdminDashboard() {
                 background: '#fff',
                 color: '#000',
                 padding: '12px 24px',
-                border: '2px solid #000',
+                border: '1px solid #e5e7eb',
                 borderRadius: '8px',
                 fontSize: '16px',
                 fontWeight: '700',
@@ -629,7 +629,7 @@ export default function AdminDashboard() {
                           background: '#fbbf24',
                           color: '#000',
                           padding: '8px 16px',
-                          border: '2px solid #000',
+                          border: 'none',
                           borderRadius: '8px',
                           fontSize: '14px',
                           fontWeight: '700',
