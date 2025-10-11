@@ -1302,7 +1302,7 @@ function LandingPage() {
       {/* Yellow Banner */}
       <header className="breathing-glow-banner" style={{
         background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
-        padding: '28px 16px',
+        padding: '14px 16px',
         position: 'relative',
         zIndex: 2,
       }}>
