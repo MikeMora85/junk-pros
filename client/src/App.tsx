@@ -2044,74 +2044,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         </button>
       </div>
 
-      {/* Hero Image - Clean without text overlay */}
-      {currentState.heroImage && (
-        <>
-          <div style={{
-            position: 'relative',
-            height: '400px',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundImage: `url(${currentState.heroImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }} />
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-            }} />
-          </div>
-          
-          {/* Info Bar Below Image */}
-          <div style={{
-            backgroundColor: '#fbbf24',
-            padding: '12px 20px',
-            borderBottom: '2px solid #fbbf24',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.1)',
-            transform: 'translateY(-1px)',
-          }}>
-            <div style={{
-              maxWidth: '1200px',
-              margin: '0 auto',
-              textAlign: 'center',
-            }}>
-              <h1 style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                color: '#000',
-                margin: '0 0 4px 0',
-                letterSpacing: '-0.02em',
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                whiteSpace: 'nowrap',
-              }}>
-                {stateName} Junk Removal
-              </h1>
-              <p style={{
-                fontSize: '13px',
-                color: '#000',
-                margin: '0',
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              }}>
-                Featuring the {currentState.landmark}
-              </p>
-            </div>
-          </div>
-        </>
-      )}
-
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '40px 16px',
+        padding: '80px 16px 40px 16px',
       }}>
         {/* Search Bar */}
         <div style={{
