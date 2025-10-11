@@ -781,6 +781,68 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Bulk add unclaimed businesses (admin only)
+  app.post("/api/admin/companies/bulk-unclaimed", requireSimpleAdmin, async (req, res) => {
+    try {
+      const { businesses } = req.body;
+      
+      if (!Array.isArray(businesses) || businesses.length === 0) {
+        return res.status(400).json({ error: "Businesses array is required" });
+      }
+
+      const results = [];
+      for (const biz of businesses) {
+        if (!biz.name || !biz.phone) {
+          results.push({ 
+            success: false, 
+            name: biz.name || "Unknown", 
+            error: "Name and phone are required" 
+          });
+          continue;
+        }
+
+        try {
+          const company = await storage.createCompany({
+            name: biz.name,
+            phone: biz.phone,
+            city: biz.city || "Unknown",
+            state: biz.state || "Arizona",
+            claimed: false,
+            status: "approved", // Unclaimed businesses are approved but not featured
+            subscriptionTier: "free",
+            subscriptionStatus: "active",
+            reviews: 0,
+            paymentWarnings: 0,
+            priceSheetVisible: false,
+            addOnCostsVisible: false,
+          } as any);
+
+          results.push({ 
+            success: true, 
+            name: biz.name, 
+            id: company.id 
+          });
+        } catch (error) {
+          results.push({ 
+            success: false, 
+            name: biz.name, 
+            error: error instanceof Error ? error.message : "Failed to create" 
+          });
+        }
+      }
+
+      const successCount = results.filter(r => r.success).length;
+      res.json({ 
+        success: true, 
+        message: `Added ${successCount} of ${businesses.length} businesses`,
+        results 
+      });
+    } catch (error) {
+      console.error("Error bulk adding businesses:", error);
+      res.status(500).json({ error: "Failed to bulk add businesses" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
