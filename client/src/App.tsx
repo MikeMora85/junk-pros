@@ -3334,69 +3334,89 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     Loading...
                   </div>
                 ) : (
-                  companies.map((c, index) => (
+                  companies.map((c, index) => {
+                    const isUnclaimed = !c.claimed;
+                    
+                    return (
                 <div 
                   key={c.id}
-                  onClick={() => {
+                  onClick={isUnclaimed ? undefined : () => {
                     trackBusinessEvent(c.id, 'click');
                     setSelectedCompanyId(c.id);
                   }} 
                   style={{
                     position: 'relative',
-                    backgroundColor: '#fff',
+                    backgroundColor: isUnclaimed ? '#f9f9f9' : '#fff',
                     borderRadius: '0',
                     padding: '16px',
                     marginBottom: '12px',
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
-                    border: '1px solid #fbbf24',
+                    border: isUnclaimed ? '1px solid #e5e5e5' : '1px solid #fbbf24',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
                     overflow: 'visible',
-                    cursor: 'pointer',
+                    cursor: isUnclaimed ? 'default' : 'pointer',
                     transition: 'background-color 0.2s',
+                    opacity: isUnclaimed ? 0.7 : 1,
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
-                  {index === 0 && (
-                    <>
-                      <div style={{
-                        display: 'inline-block',
-                        background: '#fbbf24',
-                        color: '#000',
-                        padding: '4px 10px',
-                        borderRadius: '0',
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        marginBottom: '12px',
-                        marginLeft: '0',
-                        marginTop: '0',
-                        boxShadow: 'none',
-                      }}>
-                        TOP RATED
-                      </div>
-                      <div style={{
-                        position: 'absolute',
-                        top: '8px',
-                        right: '8px',
-                        backgroundColor: '#16a34a',
-                        borderRadius: '50%',
-                        width: '32px',
-                        height: '32px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 2px 8px rgba(22, 163, 74, 0.4)',
-                        zIndex: 10,
-                      }}>
-                        <CheckCircle size={20} color="#fff" fill="#16a34a" />
-                      </div>
-                    </>
+                  {isUnclaimed ? (
+                    <div style={{
+                      background: '#f5f5f5',
+                      color: '#666',
+                      padding: '8px 12px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      marginBottom: '16px',
+                      textAlign: 'center',
+                    }}>
+                      Unclaimed Listing - Basic Info Only
+                    </div>
+                  ) : (
+                    index === 0 && (
+                      <>
+                        <div style={{
+                          display: 'inline-block',
+                          background: '#fbbf24',
+                          color: '#000',
+                          padding: '4px 10px',
+                          borderRadius: '0',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          marginBottom: '12px',
+                          marginLeft: '0',
+                          marginTop: '0',
+                          boxShadow: 'none',
+                        }}>
+                          TOP RATED
+                        </div>
+                        <div style={{
+                          position: 'absolute',
+                          top: '8px',
+                          right: '8px',
+                          backgroundColor: '#16a34a',
+                          borderRadius: '50%',
+                          width: '32px',
+                          height: '32px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(22, 163, 74, 0.4)',
+                          zIndex: 10,
+                        }}>
+                          <CheckCircle size={20} color="#fff" fill="#16a34a" />
+                        </div>
+                      </>
+                    )
                   )}
                   
-                  {/* Image Carousel */}
+                  {!isUnclaimed && (
+                  // Image Carousel
                   <div style={{
                     marginBottom: '16px',
                     marginTop: '0',
@@ -3440,7 +3460,35 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       })()}
                     </div>
                   </div>
+                  )}
                   
+                  {isUnclaimed ? (
+                    // Simplified unclaimed business display
+                    <div style={{ textAlign: 'center' }}>
+                      <h3 style={{
+                        fontSize: '20px',
+                        fontWeight: '700',
+                        margin: '0 0 12px 0',
+                        color: '#111827',
+                      }} data-testid={`text-company-name-${c.id}`}>
+                        {c.name}
+                      </h3>
+                      <div style={{ fontSize: '16px', color: '#666', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                        <Phone size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+                        {c.phone}
+                      </div>
+                      <div style={{
+                        background: '#f5f5f5',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        color: '#666',
+                        marginTop: '16px',
+                      }}>
+                        This business hasn't claimed their profile yet. Contact them directly for services.
+                      </div>
+                    </div>
+                  ) : (
                   <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
                     <div style={{
                       width: '60px',
@@ -3501,12 +3549,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             <Star
                               key={i}
                               size={14}
-                              fill={i < Math.floor(parseFloat(c.rating)) ? "#fbbf24" : "none"}
+                              fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
                               stroke="#fbbf24"
                             />
                           ))}
                         </div>
-                        <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating}</span>
+                        <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
                         <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
                         {c.local && (
                           <span style={{
@@ -3523,14 +3571,15 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       
                       <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
-                        <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>
+                        {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
                         <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                       </div>
                     </div>
                   </div>
+                  )}
                   
                   {/* Review Snippets */}
-                  {c.reviewSnippets && c.reviewSnippets.length > 0 && (
+                  {!isUnclaimed && c.reviewSnippets && c.reviewSnippets.length > 0 && (
                     <div style={{
                       backgroundColor: '#f5f5f5',
                       borderRadius: '0',
@@ -3558,6 +3607,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   )}
                   
                   {/* Quote Section */}
+                  {!isUnclaimed && (
                   <div style={{
                     backgroundColor: '#f5f5f5',
                     borderRadius: '0',
@@ -3711,8 +3761,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     )}
                   </div>
+                  )}
                 </div>
-                  ))
+                  );
+                  })
                 )}
               </div>
 
