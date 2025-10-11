@@ -1262,7 +1262,7 @@ function LandingPage() {
       {/* Hero Section */}
       <div style={{
         position: 'relative',
-        height: '300px',
+        height: '200px',
         width: '100%',
         backgroundImage: `url(${curbsideJunkHero})`,
         backgroundSize: 'cover',
