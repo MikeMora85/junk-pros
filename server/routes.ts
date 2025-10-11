@@ -653,6 +653,59 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  app.patch("/api/admin/companies/:id/display-order", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const { displayOrder } = req.body;
+      if (typeof displayOrder !== 'number') {
+        return res.status(400).json({ error: "Display order must be a number" });
+      }
+
+      const company = await storage.updateCompany(id, { displayOrder } as any);
+
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json({ 
+        success: true, 
+        message: `Display order updated for ${company.name}`,
+        company
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update display order" });
+    }
+  });
+
+  app.patch("/api/admin/companies/:id/badge", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const { badge } = req.body;
+
+      const company = await storage.updateCompany(id, { badge } as any);
+
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      res.json({ 
+        success: true, 
+        message: badge ? `Badge "${badge}" added to ${company.name}` : `Badge removed from ${company.name}`,
+        company
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update badge" });
+    }
+  });
+
   // Business owner profile endpoints
   app.get("/api/business/profile", async (req: any, res) => {
     try {
