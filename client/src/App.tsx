@@ -3975,8 +3975,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             justifyContent: 'center',
             flexShrink: 0,
             border: '2px solid #e5e7eb',
+            overflow: 'hidden',
           }}>
-            <Truck size={40} color="#6b7280" />
+            {company.logoUrl ? (
+              <img 
+                src={company.logoUrl} 
+                alt={`${company.name} logo`} 
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover' 
+                }} 
+              />
+            ) : (
+              <Truck size={40} color="#6b7280" />
+            )}
           </div>
           
           {/* Company name */}
