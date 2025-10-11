@@ -291,60 +291,54 @@ export default function ProfileEditor() {
         </div>
       )}
 
-      {/* Sticky Header with Save Buttons */}
+      {/* Save Buttons */}
       <div style={{
-        position: "sticky",
-        top: 0,
-        backgroundColor: "#fff",
-        borderBottom: "4px solid #000",
-        zIndex: 50,
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+        position: "fixed",
+        top: "20px",
+        right: "20px",
+        display: "flex",
+        gap: "12px",
+        zIndex: 50
       }}>
-        <div style={{
-          padding: "16px 20px",
-          display: "flex",
-          gap: "12px"
-        }}>
-          <button
-            onClick={handleSave}
-            disabled={updateMutation.isPending}
-            data-testid="button-save"
-            style={{
-              flex: "1 1 140px",
-              padding: "12px 20px",
-              backgroundColor: "#fbbf24",
-              color: "#000",
-              border: "2px solid #fbbf24",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "600",
-              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
-              opacity: updateMutation.isPending ? 0.6 : 1,
-            }}
-          >
-            {updateMutation.isPending ? "Saving..." : "Save Progress"}
-          </button>
-          
-          <button
-            onClick={handleGoLive}
-            disabled={updateMutation.isPending}
-            data-testid="button-go-live"
-            style={{
-              flex: "1 1 140px",
-              padding: "12px 20px",
-              backgroundColor: "#fbbf24",
-              color: "#000",
-              border: "2px solid #fbbf24",
-              borderRadius: "8px",
-              fontSize: "16px",
-              fontWeight: "600",
-              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
-              opacity: updateMutation.isPending ? 0.6 : 1,
-            }}
-          >
-            Save & Go Live
-          </button>
-        </div>
+        <button
+          onClick={handleSave}
+          disabled={updateMutation.isPending}
+          data-testid="button-save"
+          style={{
+            padding: "12px 20px",
+            backgroundColor: "#fbbf24",
+            color: "#000",
+            border: "2px solid #fbbf24",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "600",
+            cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+            opacity: updateMutation.isPending ? 0.6 : 1,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
+          }}
+        >
+          {updateMutation.isPending ? "Saving..." : "Save Progress"}
+        </button>
+        
+        <button
+          onClick={handleGoLive}
+          disabled={updateMutation.isPending}
+          data-testid="button-go-live"
+          style={{
+            padding: "12px 20px",
+            backgroundColor: "#fbbf24",
+            color: "#000",
+            border: "2px solid #fbbf24",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "600",
+            cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+            opacity: updateMutation.isPending ? 0.6 : 1,
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
+          }}
+        >
+          Save & Go Live
+        </button>
       </div>
 
       {/* Continuous Sections */}
