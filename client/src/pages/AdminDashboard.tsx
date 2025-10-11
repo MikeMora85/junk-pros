@@ -529,9 +529,23 @@ export default function AdminDashboard() {
                         <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '8px' }}>
                           {company.city}, {company.state}
                         </div>
-                        <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                        <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '8px' }}>
                           {company.phone}
                         </div>
+                        {(company.agreedToPlatformStandards || company.agreedToRequirements) && (
+                          <div style={{ fontSize: '12px', color: '#16a34a', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e5e7eb' }}>
+                            {company.agreedToPlatformStandards && (
+                              <div style={{ marginBottom: '4px' }}>
+                                ✓ Platform Standards: {new Date(company.agreedToPlatformStandards).toLocaleDateString()}
+                              </div>
+                            )}
+                            {company.agreedToRequirements && (
+                              <div>
+                                ✓ Requirements: {new Date(company.agreedToRequirements).toLocaleDateString()}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       {activeTab === 'active' && (
