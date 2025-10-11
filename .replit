@@ -85,4 +85,4 @@ deploymentTarget = "cloudrun"
 build = ["sh", "-c", "vite build --config vite.build.config.ts && npx esbuild server/index.ts --bundle --platform=node --format=esm --outfile=dist/server/index.js --packages=external"]
 
 [agent]
-integrations = ["javascript_log_in_with_replit:1.0.0"]
+integrations = ["javascript_log_in_with_replit:1.0.0", "javascript_object_storage:1.0.0"]
