@@ -356,7 +356,7 @@ export default function ProfileEditor() {
           </div>
           
           <div style={sectionContentStyle}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center" }}>
               {/* Logo Upload */}
               <div>
                 <label style={labelStyle}>Company Logo</label>
@@ -421,7 +421,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Business Name */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Business Name *</label>
                 <input
                   data-testid="input-name"
@@ -433,7 +433,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Phone */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Phone Number *</label>
                 <input
                   data-testid="input-phone"
@@ -445,7 +445,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Contact Email */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Contact Email (Public)</label>
                 <input
                   data-testid="input-contact-email"
@@ -458,7 +458,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Website */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Website</label>
                 <input
                   data-testid="input-website"
@@ -470,7 +470,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Address */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Street Address *</label>
                 <input
                   data-testid="input-address"
@@ -482,7 +482,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* City */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>City *</label>
                 <input
                   data-testid="input-city"
@@ -494,7 +494,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* State */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>State *</label>
                 <input
                   data-testid="input-state"
@@ -506,7 +506,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Business Hours */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Business Hours</label>
                 <div style={{ 
                   display: "flex", 
@@ -724,9 +724,9 @@ export default function ProfileEditor() {
           </div>
           
           <div style={sectionContentStyle}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center" }}>
               {/* About Us */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>About Your Company</label>
                 <textarea
                   data-testid="input-about-us"
@@ -738,7 +738,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Years in Business */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Years in Business</label>
                 <input
                   data-testid="input-years-in-business"
@@ -751,7 +751,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Insurance Info */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Insurance Information</label>
                 <textarea
                   data-testid="input-insurance-info"
@@ -763,7 +763,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Why Choose Us */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Why Choose Us? (Key Points)</label>
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   {formData.whyChooseUs.map((reason, index) => (
@@ -962,9 +962,9 @@ export default function ProfileEditor() {
           </div>
           
           <div style={sectionContentStyle}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center" }}>
               {/* Minimum Price */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Minimum Price</label>
                 <input
                   data-testid="input-minimum-price"
@@ -976,7 +976,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Truck Load Pricing */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Truck Load Pricing</label>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
                   <div>
@@ -1023,7 +1023,7 @@ export default function ProfileEditor() {
               </div>
 
               {/* Single Item Minimum */}
-              <div>
+              <div style={{ width: "100%", maxWidth: "600px" }}>
                 <label style={labelStyle}>Single Item Minimum</label>
                 <input
                   data-testid="input-single-item-minimum"
@@ -1338,9 +1338,11 @@ export default function ProfileEditor() {
           </div>
           
           <div style={sectionContentStyle}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center" }}>
               {/* Show Pricing */}
               <div style={{
+                width: "100%",
+                maxWidth: "600px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
@@ -1393,6 +1395,8 @@ export default function ProfileEditor() {
 
               {/* Show Add-on Costs */}
               <div style={{
+                width: "100%",
+                maxWidth: "600px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
