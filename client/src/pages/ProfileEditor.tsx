@@ -313,8 +313,7 @@ export default function ProfileEditor() {
           {/* Action Buttons */}
           <div style={{
             display: "flex",
-            gap: "12px",
-            flexWrap: "wrap"
+            gap: "12px"
           }}>
             <button
               onClick={handleSave}
