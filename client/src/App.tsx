@@ -3487,11 +3487,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <button
                           style={{
                             width: '100%',
-                            background: '#16a34a',
-                            color: '#fff',
+                            background: '#fbbf24',
+                            color: '#000',
                             padding: '12px 20px',
                             borderRadius: '8px',
-                            border: 'none',
+                            border: '2px solid #000',
                             cursor: 'pointer',
                             fontSize: '15px',
                             fontWeight: '700',

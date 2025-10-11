@@ -73,7 +73,7 @@ I prefer detailed explanations.
         - Marked as "unclaimed" until business owner claims their profile
         - Unclaimed listings display with limited information (name and phone only)
         - Non-clickable gray cards with "Unclaimed Listing - Basic Info Only" badge
-        - Green "Claim Your Profile" button on each unclaimed listing
+        - Yellow "Claim Your Profile" button on each unclaimed listing (matches brand colors)
         - **Claim Flow**:
             - Clicking "Claim Your Profile" redirects to `/add-business?claim=true&name=[Business Name]&phone=[Phone]`
             - AddBusiness page reads URL parameters and prefills business name and phone fields
