@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft } from "lucide-react";
+import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function AddBusiness() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -24,6 +24,8 @@ export default function AddBusiness() {
   const [checkCity, setCheckCity] = useState("");
   const [availabilityStatus, setAvailabilityStatus] = useState<'idle' | 'available' | 'taken'>('idle');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isWhyUsOpen, setIsWhyUsOpen] = useState(false);
+  const [hasReadWhyUs, setHasReadWhyUs] = useState(false);
 
   const createBusinessMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -64,6 +66,14 @@ export default function AddBusiness() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate that user has read and agreed to platform standards
+    if (!hasReadWhyUs) {
+      alert('Please read and agree to the platform standards and requirements before continuing.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsWhyUsOpen(true); // Auto-open the section
+      return;
+    }
     
     // Create company data from form
     const companyData = {
@@ -278,67 +288,135 @@ export default function AddBusiness() {
         padding: '40px 12px',
       }}>
         
-        {/* Why Join Section */}
+        {/* Why Join Section - Collapsible */}
         <div style={{ marginBottom: '48px' }}>
-          <h2 style={{
-            fontSize: '28px',
-            fontWeight: '700',
-            color: '#000',
-            marginBottom: '24px',
-            letterSpacing: '-0.02em',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}>
-            Why Independent Operators Choose Us
-          </h2>
+          <button
+            onClick={() => setIsWhyUsOpen(!isWhyUsOpen)}
+            style={{
+              width: '100%',
+              background: '#fbbf24',
+              border: '2px solid #000',
+              padding: '20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              cursor: 'pointer',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              transition: 'all 0.2s',
+            }}
+            data-testid="button-toggle-why-us"
+          >
+            <h2 style={{
+              fontSize: '22px',
+              fontWeight: '700',
+              color: '#000',
+              margin: 0,
+              letterSpacing: '-0.02em',
+            }}>
+              Why Independent Operators Choose Us
+            </h2>
+            {isWhyUsOpen ? (
+              <ChevronUp size={28} color="#000" />
+            ) : (
+              <ChevronDown size={28} color="#000" />
+            )}
+          </button>
           
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: '16px',
-            marginBottom: '32px',
-          }}>
+          {isWhyUsOpen && (
             <div style={{
-              background: '#f5f5f5',
-              padding: '20px',
-              border: '1px solid #e5e5e5',
+              border: '2px solid #000',
+              borderTop: 'none',
+              padding: '24px',
+              background: '#fff',
             }}>
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                <TrendingUp size={24} color="#fbbf24" />
-                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>High-Intent Traffic</h3>
-              </div>
-              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                Customers come to us ready to hire. They've already done their research and are comparing local options, not just browsing.
-              </p>
-            </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+                gap: '16px',
+                marginBottom: '24px',
+              }}>
+                <div style={{
+                  background: '#f5f5f5',
+                  padding: '20px',
+                  border: '1px solid #e5e5e5',
+                }}>
+                  <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                    <TrendingUp size={24} color="#fbbf24" />
+                    <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>High-Intent Traffic</h3>
+                  </div>
+                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                    Customers come to us ready to hire. They've already done their research and are comparing local options, not just browsing.
+                  </p>
+                </div>
 
-            <div style={{
-              background: '#f5f5f5',
-              padding: '20px',
-              border: '1px solid #e5e5e5',
-            }}>
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                <Users size={24} color="#fbbf24" />
-                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>No Franchise Competition</h3>
-              </div>
-              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                We only list independent operators. Customers find you, not big franchise chains with inflated pricing and corporate overhead.
-              </p>
-            </div>
+                <div style={{
+                  background: '#f5f5f5',
+                  padding: '20px',
+                  border: '1px solid #e5e5e5',
+                }}>
+                  <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                    <Users size={24} color="#fbbf24" />
+                    <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>No Franchise Competition</h3>
+                  </div>
+                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                    We only list independent operators. Customers find you, not big franchise chains with inflated pricing and corporate overhead.
+                  </p>
+                </div>
 
-            <div style={{
-              background: '#f5f5f5',
-              padding: '20px',
-              border: '1px solid #e5e5e5',
-            }}>
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
-                <Shield size={24} color="#fbbf24" />
-                <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>Quality Standards</h3>
+                <div style={{
+                  background: '#f5f5f5',
+                  padding: '20px',
+                  border: '1px solid #e5e5e5',
+                }}>
+                  <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+                    <Shield size={24} color="#fbbf24" />
+                    <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '18px', fontWeight: '700', color: '#000' }}>Quality Standards</h3>
+                  </div>
+                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                    We verify minimum pricing standards to protect the industry and ensure sustainable business practices for all operators.
+                  </p>
+                </div>
               </div>
-              <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                We verify minimum pricing standards to protect the industry and ensure sustainable business practices for all operators.
-              </p>
+
+              {/* Required Agreement Checkbox */}
+              <div style={{
+                background: '#fef3c7',
+                padding: '16px',
+                borderRadius: '6px',
+                border: '2px solid #fbbf24',
+              }}>
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '12px',
+                  cursor: 'pointer',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={hasReadWhyUs}
+                    onChange={(e) => setHasReadWhyUs(e.target.checked)}
+                    style={{
+                      width: '20px',
+                      height: '20px',
+                      cursor: 'pointer',
+                      flexShrink: 0,
+                      marginTop: '2px',
+                    }}
+                    data-testid="checkbox-read-agree"
+                  />
+                  <span style={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    color: '#000',
+                    lineHeight: '1.4',
+                  }}>
+                    I have read and agree to the platform standards and requirements outlined above
+                  </span>
+                </label>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Requirements Section */}
