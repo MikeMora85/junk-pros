@@ -295,7 +295,7 @@ export default function ProfileEditor() {
       <div style={{
         position: "sticky",
         top: 0,
-        backgroundColor: "#fbbf24",
+        backgroundColor: "#fff",
         borderBottom: "4px solid #000",
         zIndex: 50,
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
@@ -312,7 +312,7 @@ export default function ProfileEditor() {
             style={{
               flex: "1 1 140px",
               padding: "12px 20px",
-              backgroundColor: "#fff",
+              backgroundColor: "#fbbf24",
               color: "#000",
               border: "2px solid #fbbf24",
               borderRadius: "8px",
