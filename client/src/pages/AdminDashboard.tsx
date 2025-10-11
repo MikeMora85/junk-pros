@@ -240,7 +240,7 @@ export default function AdminDashboard() {
         gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '12px',
         padding: '16px',
-        background: '#fff',
+        background: '#f9fafb',
       }}>
         <div style={{
           background: '#fff',
@@ -555,7 +555,7 @@ export default function AdminDashboard() {
 
       {/* Companies List */}
       {activeTab !== 'analytics' && (
-        <div style={{ padding: '20px' }}>
+        <div style={{ padding: '20px', background: '#f9fafb', minHeight: 'calc(100vh - 300px)' }}>
           <div style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#000' }}>
             Showing {displayCompanies.length} businesses
           </div>
@@ -741,7 +741,7 @@ export default function AdminDashboard() {
 
       {/* Analytics Tab */}
       {activeTab === 'analytics' && (
-        <div style={{ padding: '20px' }}>
+        <div style={{ padding: '20px', background: '#f9fafb', minHeight: 'calc(100vh - 300px)' }}>
           <div style={{
             background: '#fff',
             border: '2px solid #fbbf24',
