@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "../lib/queryClient";
 import { useAuth } from "../hooks/useAuth";
 import { useLocation } from "wouter";
-import { CheckCircle, Circle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell, X, Upload, Plus, Trash2 } from "lucide-react";
+import { CheckCircle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell, X, Upload, Plus, Trash2 } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { ObjectUploader } from "../components/ObjectUploader";
 import type { UploadResult } from "@uppy/core";
@@ -18,21 +18,6 @@ const SERVICE_ICONS = [
   { id: "construction", icon: Dumbbell, label: "Construction" },
   { id: "moving", icon: Truck, label: "Moving/Hauling" },
   { id: "general", icon: Package, label: "General Junk" },
-];
-
-interface TabConfig {
-  id: number;
-  title: string;
-  description: string;
-}
-
-const TABS: TabConfig[] = [
-  { id: 1, title: "Basic Information", description: "Company name, contact, and location" },
-  { id: 2, title: "Services & Specialties", description: "What services do you offer?" },
-  { id: 3, title: "About Your Business", description: "Tell customers about your company" },
-  { id: 4, title: "Pricing", description: "Set your pricing and minimums" },
-  { id: 5, title: "Team & Gallery", description: "Show your team and work photos" },
-  { id: 6, title: "Visibility Settings", description: "Control what customers see" },
 ];
 
 const DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -79,8 +64,6 @@ interface FeaturedReview {
 export default function ProfileEditor() {
   const { user, isLoading: isAuthLoading } = useAuth();
   const [, navigate] = useLocation();
-  const [activeTab, setActiveTab] = useState(1);
-  const [completedTabs, setCompletedTabs] = useState<Set<number>>(new Set());
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
@@ -168,54 +151,25 @@ export default function ProfileEditor() {
         googleReviewCount: company.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (company.googleFeaturedReviews as FeaturedReview[]) || [],
       });
-      checkCompletedTabs(company);
       setFormInitialized(true);
     }
   }, [company, formInitialized]);
 
-  const checkCompletedTabs = (data: any) => {
-    const completed = new Set<number>();
-    
-    if (data.name && data.phone && data.address && data.city && data.state) {
-      completed.add(1);
-    }
-    if (data.services?.length > 0) {
-      completed.add(2);
-    }
-    if (data.aboutUs) {
-      completed.add(3);
-    }
-    if (data.minimumPrice || data.quarterLoadPrice) {
-      completed.add(4);
-    }
-    if (data.teamMembers?.length > 0 || data.galleryImages?.length > 0) {
-      completed.add(5);
-    }
-    completed.add(6);
-    
-    setCompletedTabs(completed);
-  };
-
   const updateMutation = useMutation({
     mutationFn: async (data: any) => {
-      console.log("Sending update with data:", data);
       const result = await apiRequest("/api/business/profile", {
         method: "PATCH",
         body: data,
       });
-      console.log("Update successful, result:", result);
       return result;
     },
     onSuccess: async (updatedCompany) => {
-      console.log("Mutation success");
       queryClient.setQueryData(["/api/business/profile"], updatedCompany);
       setToastMessage("Profile updated successfully!");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     },
     onError: (error: any) => {
-      console.error("Profile update error:", error);
-      console.error("Error details:", JSON.stringify(error, null, 2));
       setToastMessage(`Failed to update profile: ${error.message || 'Unknown error'}`);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 5000);
@@ -256,7 +210,6 @@ export default function ProfileEditor() {
       googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
     };
     updateMutation.mutate(payload);
-    checkCompletedTabs(payload);
   };
 
   const handleGoLive = () => {
@@ -305,8 +258,22 @@ export default function ProfileEditor() {
     color: "#000",
   };
 
+  const sectionHeaderStyle = {
+    backgroundColor: "#fbbf24",
+    padding: "20px",
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+    borderBottom: "3px solid #000",
+  };
+
+  const sectionContentStyle = {
+    padding: "24px 20px",
+    backgroundColor: "#fff",
+  };
+
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#fff" }}>
+    <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", paddingBottom: "100px" }}>
       {/* Toast Notification */}
       {showToast && (
         <div style={{
@@ -324,1307 +291,1295 @@ export default function ProfileEditor() {
         </div>
       )}
 
-      {/* Header */}
+      {/* Sticky Header with Save Buttons */}
       <div style={{
-        backgroundColor: "#000",
-        color: "#fff",
-        padding: "24px",
-        borderBottom: "4px solid #fbbf24"
-      }}>
-        <h1 style={{ fontSize: "32px", fontWeight: "700", margin: "0 0 8px 0" }}>
-          Edit Your Profile
-        </h1>
-        <p style={{ margin: 0, color: "#d1d5db" }}>
-          Complete each section to make your profile live
-        </p>
-      </div>
-
-      {/* Yellow Numbered Tabs */}
-      <div style={{
+        position: "sticky",
+        top: 0,
         backgroundColor: "#fbbf24",
-        padding: "0",
+        borderBottom: "4px solid #000",
+        zIndex: 50,
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
       }}>
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            data-testid={`tab-${tab.id}`}
-            style={{
-              width: "100%",
-              padding: "20px 24px",
-              border: "none",
-              borderBottom: "2px solid #000",
-              backgroundColor: activeTab === tab.id ? "#f59e0b" : "#fbbf24",
-              cursor: "pointer",
-              textAlign: "left",
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
-              transition: "all 0.2s"
-            }}
-          >
-            {/* Number Circle */}
+        <div style={{
+          padding: "16px 20px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "12px"
+        }}>
+          <h1 style={{ fontSize: "clamp(20px, 5vw, 28px)", fontWeight: "700", margin: 0, color: "#000" }}>
+            Edit Your Profile
+          </h1>
+          
+          {/* Action Buttons */}
+          <div style={{
+            display: "flex",
+            gap: "12px",
+            flexWrap: "wrap"
+          }}>
+            <button
+              onClick={handleSave}
+              disabled={updateMutation.isPending}
+              data-testid="button-save"
+              style={{
+                flex: "1 1 140px",
+                padding: "12px 20px",
+                backgroundColor: "#000",
+                color: "#fbbf24",
+                border: "none",
+                borderRadius: "8px",
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+                opacity: updateMutation.isPending ? 0.6 : 1,
+              }}
+            >
+              {updateMutation.isPending ? "Saving..." : "💾 Save Progress"}
+            </button>
+            
+            <button
+              onClick={handleGoLive}
+              disabled={updateMutation.isPending}
+              data-testid="button-go-live"
+              style={{
+                flex: "1 1 140px",
+                padding: "12px 20px",
+                backgroundColor: "#16a34a",
+                color: "#fff",
+                border: "none",
+                borderRadius: "8px",
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+                opacity: updateMutation.isPending ? 0.6 : 1,
+              }}
+            >
+              🚀 Save & Go Live
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Continuous Sections */}
+      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+        
+        {/* Section 1: Basic Information */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+          <div style={sectionHeaderStyle}>
             <div style={{
-              width: "40px",
-              height: "40px",
+              width: "48px",
+              height: "48px",
               borderRadius: "50%",
               backgroundColor: "#000",
               color: "#fbbf24",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "20px",
+              fontSize: "24px",
               fontWeight: "700",
               flexShrink: 0
             }}>
-              {tab.id}
+              1
             </div>
-
-            {/* Tab Content */}
-            <div style={{ flex: 1 }}>
-              <div style={{
-                fontSize: "18px",
-                fontWeight: "700",
-                color: "#000",
-                marginBottom: "4px"
-              }}>
-                {tab.title}
-              </div>
-              <div style={{ fontSize: "14px", color: "#000", opacity: 0.7 }}>
-                {tab.description}
-              </div>
-            </div>
-
-            {/* Checkmark */}
-            {completedTabs.has(tab.id) ? (
-              <CheckCircle size={32} color="#16a34a" strokeWidth={3} data-testid={`checkmark-${tab.id}`} />
-            ) : (
-              <Circle size={32} color="#000" strokeWidth={2} opacity={0.3} />
-            )}
-          </button>
-        ))}
-      </div>
-
-      {/* Content Area */}
-      <div style={{ padding: "40px 24px", maxWidth: "900px", margin: "0 auto" }}>
-        {/* Tab 1: Basic Information */}
-        {activeTab === 1 && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#000", margin: 0 }}>
-              Basic Information
-            </h2>
-            
             <div>
-              <label style={labelStyle} htmlFor="name">Company Name *</label>
-              <input
-                id="name"
-                data-testid="input-name"
-                style={inputStyle}
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Your Junk Removal Co."
-              />
+              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+                Basic Information
+              </h2>
+              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
+                Company name, contact, and location
+              </p>
             </div>
-
-            <div>
-              <label style={labelStyle} htmlFor="phone">Phone Number *</label>
-              <input
-                id="phone"
-                data-testid="input-phone"
-                style={inputStyle}
-                value={formData.phone}
-                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                placeholder="(555) 123-4567"
-              />
-            </div>
-
-            {company?.subscriptionTier === 'featured' && (
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* Logo Upload */}
               <div>
-                <label style={labelStyle} htmlFor="contactEmail">
-                  Contact Email 
-                  <span style={{ 
-                    marginLeft: "8px", 
-                    fontSize: "12px", 
-                    color: "#16a34a", 
-                    fontWeight: "700",
-                    backgroundColor: "#dcfce7",
-                    padding: "2px 8px",
-                    borderRadius: "4px"
-                  }}>
-                    FEATURED ONLY
-                  </span>
-                </label>
-                <input
-                  id="contactEmail"
-                  data-testid="input-contact-email"
-                  type="email"
-                  style={inputStyle}
-                  value={formData.contactEmail}
-                  onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
-                  placeholder="contact@yourcompany.com"
-                />
-                <p style={{ 
-                  fontSize: "13px", 
-                  color: "#666", 
-                  marginTop: "6px",
-                  marginBottom: 0
-                }}>
-                  This email will be displayed to customers. Different from your login email.
-                </p>
-              </div>
-            )}
-
-            <div>
-              <label style={labelStyle}>
-                Company Logo
-                <span style={{ 
-                  marginLeft: "8px", 
-                  fontSize: "11px", 
-                  color: "#666", 
-                  fontWeight: "400"
-                }}>
-                  (Displayed on quick view and expanded profile)
-                </span>
-              </label>
-              
-              <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                <ObjectUploader
-                  maxNumberOfFiles={1}
-                  maxFileSize={10485760}
-                  onGetUploadParameters={async () => {
-                    const token = localStorage.getItem('authToken');
-                    const response = await fetch('/api/objects/upload', {
-                      method: 'POST',
-                      headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                      },
-                    });
-                    const data = await response.json();
-                    return {
-                      method: 'PUT' as const,
-                      url: data.uploadURL,
-                    };
-                  }}
-                  onComplete={async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-                    if (result.successful && result.successful.length > 0) {
-                      const uploadURL = result.successful[0].uploadURL;
+                <label style={labelStyle}>Company Logo</label>
+                {formData.logoUrl ? (
+                  <div style={{ position: "relative", width: "200px" }}>
+                    <img
+                      src={formData.logoUrl}
+                      alt="Logo"
+                      style={{ width: "100%", height: "auto", borderRadius: "8px", border: "2px solid #e5e7eb" }}
+                    />
+                    <button
+                      onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
+                      data-testid="button-remove-logo"
+                      style={{
+                        position: "absolute",
+                        top: "8px",
+                        right: "8px",
+                        padding: "6px",
+                        backgroundColor: "#dc2626",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "50%",
+                        cursor: "pointer"
+                      }}
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                ) : (
+                  <ObjectUploader
+                    maxNumberOfFiles={1}
+                    maxFileSize={10485760}
+                    onGetUploadParameters={async () => {
                       const token = localStorage.getItem('authToken');
-                      const response = await fetch(`/api/companies/${company?.id}/logo`, {
-                        method: 'PUT',
+                      const response = await fetch('/api/objects/upload', {
+                        method: 'POST',
                         headers: {
                           'Authorization': `Bearer ${token}`,
                           'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ logoURL: uploadURL }),
+                        body: JSON.stringify({ path: `/objects/logos/${crypto.randomUUID()}` }),
                       });
-                      const data = await response.json();
-                      if (data.success) {
-                        setFormData(prev => ({ ...prev, logoUrl: data.logoPath }));
-                        queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
-                        setToastMessage("Logo uploaded successfully!");
-                        setShowToast(true);
-                        setTimeout(() => setShowToast(false), 3000);
-                      }
-                    }
-                  }}
-                  buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
-                >
-                  Upload Logo
-                </ObjectUploader>
-                
-                {formData.logoUrl && (
-                  <button
-                    onClick={() => setFormData(prev => ({ ...prev, logoUrl: "" }))}
-                    data-testid="button-remove-logo"
-                    style={{
-                      padding: "12px 24px",
-                      backgroundColor: "#fff",
-                      color: "#dc2626",
-                      fontWeight: "600",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      fontSize: "16px",
-                      border: "2px solid #dc2626"
+                      return await response.json();
                     }}
+                    onComplete={(result: UploadResult) => {
+                      if (result.successful.length > 0) {
+                        const url = result.successful[0].uploadURL;
+                        if (url) {
+                          setFormData(prev => ({ ...prev, logoUrl: url }));
+                          setToastMessage("Logo uploaded successfully!");
+                          setShowToast(true);
+                          setTimeout(() => setShowToast(false), 3000);
+                        }
+                      }
+                    }}
+                    buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
                   >
-                    Remove Logo
-                  </button>
+                    <Upload size={20} style={{ marginRight: "8px" }} />
+                    Upload Logo
+                  </ObjectUploader>
                 )}
               </div>
-              
-              <p style={{ 
-                fontSize: "13px", 
-                color: "#666", 
-                marginTop: "8px",
-                marginBottom: 0
-              }}>
-                Max file size: 10MB. Recommended: Square logo with transparent background
-              </p>
 
-              {formData.logoUrl && (
-                <div style={{ 
-                  marginTop: "16px", 
-                  padding: "16px", 
-                  border: "2px solid #e5e7eb", 
-                  borderRadius: "8px",
-                  backgroundColor: "#f9fafb"
-                }}>
-                  <p style={{ fontSize: "14px", fontWeight: "600", marginBottom: "12px", color: "#000" }}>Logo Preview:</p>
-                  <img 
-                    src={formData.logoUrl} 
-                    alt="Company logo preview" 
-                    style={{ 
-                      maxWidth: "200px", 
-                      maxHeight: "100px", 
-                      objectFit: "contain",
-                      border: "1px solid #e5e7eb",
-                      borderRadius: "4px",
-                      padding: "8px",
-                      backgroundColor: "#fff"
-                    }} 
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                    }}
+              {/* Business Name & Phone */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
+                <div>
+                  <label style={labelStyle}>Business Name *</label>
+                  <input
+                    data-testid="input-name"
+                    style={inputStyle}
+                    value={formData.name}
+                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Your Company Name"
                   />
                 </div>
-              )}
-            </div>
+                <div>
+                  <label style={labelStyle}>Phone Number *</label>
+                  <input
+                    data-testid="input-phone"
+                    style={inputStyle}
+                    value={formData.phone}
+                    onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                    placeholder="(555) 123-4567"
+                  />
+                </div>
+              </div>
 
-            <div>
-              <label style={labelStyle} htmlFor="website">Website</label>
-              <input
-                id="website"
-                data-testid="input-website"
-                style={inputStyle}
-                value={formData.website}
-                onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
-                placeholder="https://yourwebsite.com"
-              />
-            </div>
+              {/* Contact Email & Website */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
+                <div>
+                  <label style={labelStyle}>Contact Email (Public)</label>
+                  <input
+                    data-testid="input-contact-email"
+                    type="email"
+                    style={inputStyle}
+                    value={formData.contactEmail}
+                    onChange={(e) => setFormData(prev => ({ ...prev, contactEmail: e.target.value }))}
+                    placeholder="contact@yourcompany.com"
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>Website</label>
+                  <input
+                    data-testid="input-website"
+                    style={inputStyle}
+                    value={formData.website}
+                    onChange={(e) => setFormData(prev => ({ ...prev, website: e.target.value }))}
+                    placeholder="https://yourwebsite.com"
+                  />
+                </div>
+              </div>
 
-            <div>
-              <label style={labelStyle} htmlFor="address">Street Address *</label>
-              <input
-                id="address"
-                data-testid="input-address"
-                style={inputStyle}
-                value={formData.address}
-                onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
-                placeholder="123 Main St"
-              />
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              {/* Address */}
               <div>
-                <label style={labelStyle} htmlFor="city">City *</label>
+                <label style={labelStyle}>Street Address *</label>
                 <input
-                  id="city"
-                  data-testid="input-city"
+                  data-testid="input-address"
                   style={inputStyle}
-                  value={formData.city}
-                  onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
-                  placeholder="Phoenix"
+                  value={formData.address}
+                  onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
+                  placeholder="123 Main Street"
                 />
               </div>
 
-              <div>
-                <label style={labelStyle} htmlFor="state">State *</label>
-                <input
-                  id="state"
-                  data-testid="input-state"
-                  style={inputStyle}
-                  value={formData.state}
-                  onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
-                  placeholder="Arizona"
-                />
+              {/* City & State */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "16px" }}>
+                <div>
+                  <label style={labelStyle}>City *</label>
+                  <input
+                    data-testid="input-city"
+                    style={inputStyle}
+                    value={formData.city}
+                    onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
+                    placeholder="Your City"
+                  />
+                </div>
+                <div>
+                  <label style={labelStyle}>State *</label>
+                  <input
+                    data-testid="input-state"
+                    style={inputStyle}
+                    value={formData.state}
+                    onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
+                    placeholder="State"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label style={labelStyle}>Business Hours</label>
-              <div style={{
-                border: "2px solid #e5e7eb",
-                borderRadius: "8px",
-                padding: "16px",
-                backgroundColor: "#f9fafb"
-              }}>
-                {DAYS.map((day) => (
-                  <div
-                    key={day}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "120px 1fr 1fr auto",
-                      gap: "12px",
-                      alignItems: "center",
-                      padding: "12px 0",
-                      borderBottom: day !== "sunday" ? "1px solid #e5e7eb" : "none"
-                    }}
-                  >
-                    <div style={{ fontWeight: "600", color: "#000" }}>
-                      {DAY_LABELS[day]}
-                    </div>
-                    
-                    {!formData.businessHours[day].closed ? (
-                      <>
-                        <select
-                          data-testid={`select-${day}-open`}
-                          value={formData.businessHours[day].open}
-                          onChange={(e) => setFormData(prev => ({
-                            ...prev,
-                            businessHours: {
-                              ...prev.businessHours,
-                              [day]: { ...prev.businessHours[day], open: e.target.value }
-                            }
-                          }))}
-                          style={{
-                            padding: "8px",
-                            border: "1px solid #e5e7eb",
-                            borderRadius: "6px",
-                            fontSize: "14px",
-                            backgroundColor: "#fff"
-                          }}
-                        >
-                          {TIME_OPTIONS.map(time => (
-                            <option key={time} value={time}>{time}</option>
-                          ))}
-                        </select>
-                        
-                        <select
-                          data-testid={`select-${day}-close`}
-                          value={formData.businessHours[day].close}
-                          onChange={(e) => setFormData(prev => ({
-                            ...prev,
-                            businessHours: {
-                              ...prev.businessHours,
-                              [day]: { ...prev.businessHours[day], close: e.target.value }
-                            }
-                          }))}
-                          style={{
-                            padding: "8px",
-                            border: "1px solid #e5e7eb",
-                            borderRadius: "6px",
-                            fontSize: "14px",
-                            backgroundColor: "#fff"
-                          }}
-                        >
-                          {TIME_OPTIONS.map(time => (
-                            <option key={time} value={time}>{time}</option>
-                          ))}
-                        </select>
-                      </>
-                    ) : (
-                      <div style={{ gridColumn: "span 2", color: "#666", fontStyle: "italic" }}>
-                        Closed
+              {/* Business Hours */}
+              <div>
+                <label style={labelStyle}>Business Hours</label>
+                <div style={{ 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  gap: "12px",
+                  backgroundColor: "#f9fafb",
+                  padding: "16px",
+                  borderRadius: "8px",
+                  border: "2px solid #e5e7eb"
+                }}>
+                  {DAYS.map((day) => (
+                    <div key={day} style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                      <div style={{ width: "100px", fontWeight: "600", fontSize: "14px" }}>
+                        {DAY_LABELS[day]}
                       </div>
-                    )}
-                    
-                    <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
-                      <input
-                        type="checkbox"
-                        data-testid={`checkbox-${day}-closed`}
-                        checked={formData.businessHours[day].closed}
+                      <select
+                        data-testid={`select-${day}-open`}
+                        value={formData.businessHours[day].open}
                         onChange={(e) => setFormData(prev => ({
                           ...prev,
                           businessHours: {
                             ...prev.businessHours,
-                            [day]: { ...prev.businessHours[day], closed: e.target.checked }
+                            [day]: { ...prev.businessHours[day], open: e.target.value }
                           }
                         }))}
-                        style={{ width: "18px", height: "18px" }}
-                      />
-                      <span style={{ fontSize: "14px", color: "#666" }}>Closed</span>
-                    </label>
-                  </div>
-                ))}
-              </div>
-              <p style={{ fontSize: "13px", color: "#666", marginTop: "8px", marginBottom: 0 }}>
-                Set your regular business hours for each day of the week
-              </p>
-            </div>
-
-            <div>
-              <label style={labelStyle} htmlFor="availability">Availability</label>
-              <input
-                id="availability"
-                data-testid="input-availability"
-                style={inputStyle}
-                value={formData.availability}
-                onChange={(e) => setFormData(prev => ({ ...prev, availability: e.target.value }))}
-                placeholder="Same Day Service Available"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Tab 2: Services & Specialties */}
-        {activeTab === 2 && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#000", margin: 0 }}>
-              Services & Specialties
-            </h2>
-
-            <div>
-              <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "16px", color: "#000" }}>
-                Select Your Service Types
-              </h3>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-                gap: "16px"
-              }}>
-                {SERVICE_ICONS.map((service) => {
-                  const Icon = service.icon;
-                  const isSelected = formData.selectedServices.includes(service.id);
-                  return (
-                    <button
-                      key={service.id}
-                      onClick={() => toggleService(service.id)}
-                      data-testid={`service-${service.id}`}
-                      style={{
-                        padding: "20px",
-                        border: `3px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
-                        borderRadius: "8px",
-                        backgroundColor: isSelected ? "#fef3c7" : "#fff",
-                        cursor: "pointer",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: "12px",
-                        transition: "all 0.2s",
-                        position: "relative"
-                      }}
-                    >
-                      <Icon size={40} color={isSelected ? "#000" : "#666"} />
-                      <div style={{
-                        fontSize: "14px",
-                        fontWeight: isSelected ? "600" : "500",
-                        color: "#000",
-                        textAlign: "center"
-                      }}>
-                        {service.label}
-                      </div>
-                      {isSelected && (
-                        <CheckCircle
-                          size={24}
-                          color="#16a34a"
-                          style={{ position: "absolute", top: "8px", right: "8px" }}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div>
-              <label style={labelStyle} htmlFor="specialties">Additional Specialties (one per line)</label>
-              <textarea
-                id="specialties"
-                data-testid="input-specialties"
-                style={{ ...inputStyle, minHeight: "120px", fontFamily: "inherit", resize: "vertical" }}
-                value={formData.specialties.join("\n")}
-                onChange={(e) => setFormData(prev => ({
-                  ...prev,
-                  specialties: e.target.value.split("\n").filter(s => s.trim())
-                }))}
-                placeholder="Estate cleanouts&#10;Hoarding cleanup&#10;Foreclosure cleanups"
-              />
-            </div>
-
-            <div>
-              <label style={labelStyle} htmlFor="insurance">Insurance Information</label>
-              <input
-                id="insurance"
-                data-testid="input-insurance"
-                style={inputStyle}
-                value={formData.insuranceInfo}
-                onChange={(e) => setFormData(prev => ({ ...prev, insuranceInfo: e.target.value }))}
-                placeholder="Fully Licensed & Insured - $1M Liability"
-              />
-            </div>
-
-            <div>
-              <label style={labelStyle} htmlFor="years">Years in Business</label>
-              <input
-                id="years"
-                data-testid="input-years"
-                type="number"
-                style={inputStyle}
-                value={formData.yearsInBusiness}
-                onChange={(e) => setFormData(prev => ({ ...prev, yearsInBusiness: e.target.value }))}
-                placeholder="5"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Tab 3: About Your Business */}
-        {activeTab === 3 && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#000", margin: 0 }}>
-              About Your Business
-            </h2>
-
-            <div>
-              <label style={labelStyle} htmlFor="about">About Us</label>
-              <textarea
-                id="about"
-                data-testid="input-about"
-                style={{ ...inputStyle, minHeight: "180px", fontFamily: "inherit", resize: "vertical" }}
-                value={formData.aboutUs}
-                onChange={(e) => setFormData(prev => ({ ...prev, aboutUs: e.target.value }))}
-                placeholder="Tell customers about your business, your mission, and what makes you unique..."
-              />
-            </div>
-
-            <div>
-              <label style={labelStyle}>Why Choose Us? (Add up to 5 reasons)</label>
-              {formData.whyChooseUs.map((reason, index) => (
-                <div key={index} style={{ marginBottom: "12px" }}>
-                  <input
-                    data-testid={`input-why-${index}`}
-                    style={inputStyle}
-                    value={reason}
-                    onChange={(e) => {
-                      const newReasons = [...formData.whyChooseUs];
-                      newReasons[index] = e.target.value;
-                      setFormData(prev => ({ ...prev, whyChooseUs: newReasons }));
-                    }}
-                    placeholder={`Reason ${index + 1}`}
-                  />
-                </div>
-              ))}
-              {formData.whyChooseUs.length < 5 && (
-                <button
-                  onClick={() => setFormData(prev => ({
-                    ...prev,
-                    whyChooseUs: [...prev.whyChooseUs, ""]
-                  }))}
-                  data-testid="button-add-reason"
-                  style={{
-                    padding: "10px 20px",
-                    border: "2px solid #000",
-                    borderRadius: "6px",
-                    backgroundColor: "#fff",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                    fontWeight: "600"
-                  }}
-                >
-                  Add Another Reason
-                </button>
-              )}
-            </div>
-
-            <div style={{
-              padding: "24px",
-              backgroundColor: "#fef3c7",
-              borderRadius: "8px",
-              border: "2px solid #fbbf24",
-              marginTop: "16px"
-            }}>
-              <h3 style={{ fontSize: "20px", fontWeight: "700", color: "#000", marginBottom: "16px" }}>
-                Google Reviews & Ratings
-              </h3>
-              
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "24px" }}>
-                <div>
-                  <label style={labelStyle} htmlFor="googleRanking">Google Rating (0.0-5.0)</label>
-                  <input
-                    id="googleRanking"
-                    data-testid="input-google-ranking"
-                    type="number"
-                    step="0.1"
-                    min="0"
-                    max="5"
-                    style={inputStyle}
-                    value={formData.googleRanking}
-                    onChange={(e) => setFormData(prev => ({ ...prev, googleRanking: e.target.value }))}
-                    placeholder="4.8"
-                  />
-                </div>
-
-                <div>
-                  <label style={labelStyle} htmlFor="googleReviewCount">Number of Google Reviews</label>
-                  <input
-                    id="googleReviewCount"
-                    data-testid="input-google-review-count"
-                    type="number"
-                    min="0"
-                    style={inputStyle}
-                    value={formData.googleReviewCount}
-                    onChange={(e) => setFormData(prev => ({ ...prev, googleReviewCount: e.target.value }))}
-                    placeholder="127"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label style={{ ...labelStyle, marginBottom: "12px" }}>
-                  Featured Google Reviews (Up to 3)
-                </label>
-                
-                {formData.googleFeaturedReviews.map((review, index) => (
-                  <div
-                    key={review.id}
-                    style={{
-                      padding: "16px",
-                      backgroundColor: "#fff",
-                      borderRadius: "8px",
-                      marginBottom: "12px",
-                      border: "1px solid #e5e7eb"
-                    }}
-                  >
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-                      <span style={{ fontWeight: "600", color: "#000" }}>Review {index + 1}</span>
-                      <button
-                        onClick={() => setFormData(prev => ({
-                          ...prev,
-                          googleFeaturedReviews: prev.googleFeaturedReviews.filter((_, i) => i !== index)
-                        }))}
-                        data-testid={`button-remove-review-${index}`}
+                        disabled={formData.businessHours[day].closed}
                         style={{
-                          padding: "6px 12px",
-                          backgroundColor: "#fff",
-                          border: "1px solid #dc2626",
+                          padding: "8px",
+                          border: "1px solid #e5e7eb",
                           borderRadius: "6px",
-                          color: "#dc2626",
-                          cursor: "pointer",
                           fontSize: "14px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "4px"
+                          backgroundColor: formData.businessHours[day].closed ? "#f3f4f6" : "#fff"
                         }}
                       >
-                        <Trash2 size={16} /> Remove
+                        {TIME_OPTIONS.map(time => (
+                          <option key={time} value={time}>{time}</option>
+                        ))}
+                      </select>
+                      <span style={{ fontSize: "14px", fontWeight: "600" }}>to</span>
+                      <select
+                        data-testid={`select-${day}-close`}
+                        value={formData.businessHours[day].close}
+                        onChange={(e) => setFormData(prev => ({
+                          ...prev,
+                          businessHours: {
+                            ...prev.businessHours,
+                            [day]: { ...prev.businessHours[day], close: e.target.value }
+                          }
+                        }))}
+                        disabled={formData.businessHours[day].closed}
+                        style={{
+                          padding: "8px",
+                          border: "1px solid #e5e7eb",
+                          borderRadius: "6px",
+                          fontSize: "14px",
+                          backgroundColor: formData.businessHours[day].closed ? "#f3f4f6" : "#fff"
+                        }}
+                      >
+                        {TIME_OPTIONS.map(time => (
+                          <option key={time} value={time}>{time}</option>
+                        ))}
+                      </select>
+                      <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "14px", cursor: "pointer" }}>
+                        <input
+                          data-testid={`checkbox-${day}-closed`}
+                          type="checkbox"
+                          checked={formData.businessHours[day].closed}
+                          onChange={(e) => setFormData(prev => ({
+                            ...prev,
+                            businessHours: {
+                              ...prev.businessHours,
+                              [day]: { ...prev.businessHours[day], closed: e.target.checked }
+                            }
+                          }))}
+                          style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                        />
+                        Closed
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: Services & Specialties */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+          <div style={sectionHeaderStyle}>
+            <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "#000",
+              color: "#fbbf24",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              fontWeight: "700",
+              flexShrink: 0
+            }}>
+              2
+            </div>
+            <div>
+              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+                Services & Specialties
+              </h2>
+              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
+                What services do you offer?
+              </p>
+            </div>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+              {/* Service Icons */}
+              <div>
+                <label style={labelStyle}>Select Your Services</label>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+                  gap: "12px",
+                  marginTop: "12px"
+                }}>
+                  {SERVICE_ICONS.map(({ id, icon: Icon, label }) => {
+                    const isSelected = formData.selectedServices.includes(id);
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => toggleService(id)}
+                        data-testid={`service-${id}`}
+                        style={{
+                          padding: "16px",
+                          border: `3px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
+                          borderRadius: "12px",
+                          backgroundColor: isSelected ? "#fef3c7" : "#fff",
+                          cursor: "pointer",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "8px",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        <Icon size={32} color={isSelected ? "#000" : "#666"} />
+                        <span style={{
+                          fontSize: "13px",
+                          fontWeight: isSelected ? "600" : "500",
+                          color: "#000",
+                          textAlign: "center"
+                        }}>
+                          {label}
+                        </span>
+                        {isSelected && (
+                          <CheckCircle size={20} color="#16a34a" style={{ marginTop: "-4px" }} />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Specialties */}
+              <div>
+                <label style={labelStyle}>Specialties (Optional)</label>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {formData.specialties.map((specialty, index) => (
+                    <div key={index} style={{ display: "flex", gap: "8px" }}>
+                      <input
+                        data-testid={`input-specialty-${index}`}
+                        style={{ ...inputStyle, flex: 1 }}
+                        value={specialty}
+                        onChange={(e) => {
+                          const newSpecialties = [...formData.specialties];
+                          newSpecialties[index] = e.target.value;
+                          setFormData(prev => ({ ...prev, specialties: newSpecialties }));
+                        }}
+                        placeholder="e.g., Estate Cleanouts"
+                      />
+                      <button
+                        onClick={() => {
+                          const newSpecialties = formData.specialties.filter((_, i) => i !== index);
+                          setFormData(prev => ({ ...prev, specialties: newSpecialties }));
+                        }}
+                        data-testid={`button-remove-specialty-${index}`}
+                        style={{
+                          padding: "8px 16px",
+                          backgroundColor: "#dc2626",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "8px",
+                          cursor: "pointer",
+                          fontSize: "14px",
+                          fontWeight: "600"
+                        }}
+                      >
+                        Remove
                       </button>
                     </div>
-
-                    <div style={{ marginBottom: "12px" }}>
-                      <label style={{ ...labelStyle, fontSize: "12px" }}>Reviewer Name</label>
-                      <input
-                        data-testid={`input-review-name-${index}`}
-                        style={inputStyle}
-                        value={review.reviewerName}
-                        onChange={(e) => {
-                          const newReviews = [...formData.googleFeaturedReviews];
-                          newReviews[index] = { ...newReviews[index], reviewerName: e.target.value };
-                          setFormData(prev => ({ ...prev, googleFeaturedReviews: newReviews }));
-                        }}
-                        placeholder="John Smith"
-                      />
-                    </div>
-
-                    <div>
-                      <label style={{ ...labelStyle, fontSize: "12px" }}>Review Text</label>
-                      <textarea
-                        data-testid={`input-review-text-${index}`}
-                        style={{ ...inputStyle, minHeight: "100px", fontFamily: "inherit", resize: "vertical" }}
-                        value={review.reviewText}
-                        onChange={(e) => {
-                          const newReviews = [...formData.googleFeaturedReviews];
-                          newReviews[index] = { ...newReviews[index], reviewText: e.target.value };
-                          setFormData(prev => ({ ...prev, googleFeaturedReviews: newReviews }));
-                        }}
-                        placeholder="Great service! They were prompt, professional, and affordable..."
-                      />
-                    </div>
-                  </div>
-                ))}
-
-                {formData.googleFeaturedReviews.length < 3 && (
+                  ))}
                   <button
-                    onClick={() => setFormData(prev => ({
-                      ...prev,
-                      googleFeaturedReviews: [
-                        ...prev.googleFeaturedReviews,
-                        { id: Date.now().toString(), reviewerName: "", reviewText: "" }
-                      ]
-                    }))}
-                    data-testid="button-add-review"
+                    onClick={() => setFormData(prev => ({ ...prev, specialties: [...prev.specialties, ""] }))}
+                    data-testid="button-add-specialty"
                     style={{
-                      padding: "12px 24px",
-                      border: "2px solid #fbbf24",
+                      padding: "12px",
+                      backgroundColor: "#fbbf24",
+                      color: "#000",
+                      border: "none",
                       borderRadius: "8px",
-                      backgroundColor: "#fff",
                       cursor: "pointer",
                       fontSize: "14px",
                       fontWeight: "600",
                       display: "flex",
                       alignItems: "center",
+                      justifyContent: "center",
                       gap: "8px"
                     }}
                   >
-                    <Plus size={20} /> Add Featured Review
+                    <Plus size={16} />
+                    Add Specialty
                   </button>
-                )}
+                </div>
               </div>
             </div>
           </div>
-        )}
+        </section>
 
-        {/* Tab 4: Pricing */}
-        {activeTab === 4 && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#000", margin: 0 }}>
-              Pricing
-            </h2>
-
+        {/* Section 3: About Your Business */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+          <div style={sectionHeaderStyle}>
+            <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "#000",
+              color: "#fbbf24",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              fontWeight: "700",
+              flexShrink: 0
+            }}>
+              3
+            </div>
             <div>
-              <label style={labelStyle} htmlFor="minimum">Minimum Service Fee</label>
-              <input
-                id="minimum"
-                data-testid="input-minimum"
-                style={inputStyle}
-                value={formData.minimumPrice}
-                onChange={(e) => setFormData(prev => ({ ...prev, minimumPrice: e.target.value }))}
-                placeholder="$99"
-              />
-            </div>
-
-            <div>
-              <label style={labelStyle} htmlFor="singleItem">Single Item Minimum</label>
-              <input
-                id="singleItem"
-                data-testid="input-single-item"
-                style={inputStyle}
-                value={formData.singleItemMinimum}
-                onChange={(e) => setFormData(prev => ({ ...prev, singleItemMinimum: e.target.value }))}
-                placeholder="$75"
-              />
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              <div>
-                <label style={labelStyle} htmlFor="quarter">1/4 Load Price</label>
-                <input
-                  id="quarter"
-                  data-testid="input-quarter"
-                  style={inputStyle}
-                  value={formData.quarterLoadPrice}
-                  onChange={(e) => setFormData(prev => ({ ...prev, quarterLoadPrice: e.target.value }))}
-                  placeholder="$150"
-                />
-              </div>
-
-              <div>
-                <label style={labelStyle} htmlFor="half">1/2 Load Price</label>
-                <input
-                  id="half"
-                  data-testid="input-half"
-                  style={inputStyle}
-                  value={formData.halfLoadPrice}
-                  onChange={(e) => setFormData(prev => ({ ...prev, halfLoadPrice: e.target.value }))}
-                  placeholder="$250"
-                />
-              </div>
-            </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              <div>
-                <label style={labelStyle} htmlFor="threequarter">3/4 Load Price</label>
-                <input
-                  id="threequarter"
-                  data-testid="input-threequarter"
-                  style={inputStyle}
-                  value={formData.threeQuarterLoadPrice}
-                  onChange={(e) => setFormData(prev => ({ ...prev, threeQuarterLoadPrice: e.target.value }))}
-                  placeholder="$350"
-                />
-              </div>
-
-              <div>
-                <label style={labelStyle} htmlFor="full">Full Load Price</label>
-                <input
-                  id="full"
-                  data-testid="input-full"
-                  style={inputStyle}
-                  value={formData.fullLoadPrice}
-                  onChange={(e) => setFormData(prev => ({ ...prev, fullLoadPrice: e.target.value }))}
-                  placeholder="$450"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Tab 5: Team & Gallery */}
-        {activeTab === 5 && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#000", margin: 0 }}>
-              Team & Gallery
-            </h2>
-
-            {/* Gallery Images Section */}
-            <div>
-              <h3 style={{ fontSize: "20px", fontWeight: "600", color: "#000", marginBottom: "12px" }}>
-                Gallery Images
-              </h3>
-              <p style={{ fontSize: "14px", color: "#666", marginBottom: "16px" }}>
-                Showcase your work with up to 10 gallery images
+              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+                About Your Business
+              </h2>
+              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
+                Tell customers about your company
               </p>
-
-              <div style={{ marginBottom: "16px" }}>
-                <ObjectUploader
-                  maxNumberOfFiles={10 - formData.galleryImages.length}
-                  maxFileSize={10485760}
-                  onGetUploadParameters={async () => {
-                    const token = localStorage.getItem('authToken');
-                    const response = await fetch('/api/objects/upload', {
-                      method: 'POST',
-                      headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                      },
-                    });
-                    const data = await response.json();
-                    return {
-                      method: 'PUT' as const,
-                      url: data.uploadURL,
-                    };
-                  }}
-                  onComplete={async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-                    if (result.successful && result.successful.length > 0) {
-                      const newUrls = result.successful
-                        .map(file => file.uploadURL)
-                        .filter((url): url is string => url !== undefined);
-                      setFormData(prev => ({
-                        ...prev,
-                        galleryImages: [...prev.galleryImages, ...newUrls]
-                      }));
-                      setToastMessage(`${result.successful.length} image(s) uploaded successfully!`);
-                      setShowToast(true);
-                      setTimeout(() => setShowToast(false), 3000);
-                    }
-                  }}
-                  buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
-                >
-                  <Upload size={20} style={{ marginRight: "8px" }} />
-                  Upload Gallery Images ({formData.galleryImages.length}/10)
-                </ObjectUploader>
+            </div>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* About Us */}
+              <div>
+                <label style={labelStyle}>About Your Company</label>
+                <textarea
+                  data-testid="input-about-us"
+                  style={{ ...inputStyle, minHeight: "120px", resize: "vertical" }}
+                  value={formData.aboutUs}
+                  onChange={(e) => setFormData(prev => ({ ...prev, aboutUs: e.target.value }))}
+                  placeholder="Tell customers about your business, experience, and what makes you unique..."
+                />
               </div>
 
-              {formData.galleryImages.length > 0 && (
-                <div style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-                  gap: "16px",
-                  marginTop: "16px"
-                }}>
-                  {formData.galleryImages.map((url, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        position: "relative",
-                        paddingTop: "100%",
-                        border: "2px solid #e5e7eb",
-                        borderRadius: "8px",
-                        overflow: "hidden"
-                      }}
-                    >
-                      <img
-                        src={url}
-                        alt={`Gallery ${index + 1}`}
-                        data-testid={`gallery-image-${index}`}
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover"
+              {/* Years in Business */}
+              <div>
+                <label style={labelStyle}>Years in Business</label>
+                <input
+                  data-testid="input-years-in-business"
+                  type="number"
+                  style={inputStyle}
+                  value={formData.yearsInBusiness}
+                  onChange={(e) => setFormData(prev => ({ ...prev, yearsInBusiness: e.target.value }))}
+                  placeholder="e.g., 10"
+                />
+              </div>
+
+              {/* Insurance Info */}
+              <div>
+                <label style={labelStyle}>Insurance Information</label>
+                <textarea
+                  data-testid="input-insurance-info"
+                  style={{ ...inputStyle, minHeight: "80px", resize: "vertical" }}
+                  value={formData.insuranceInfo}
+                  onChange={(e) => setFormData(prev => ({ ...prev, insuranceInfo: e.target.value }))}
+                  placeholder="e.g., Fully insured and bonded - $2M general liability"
+                />
+              </div>
+
+              {/* Why Choose Us */}
+              <div>
+                <label style={labelStyle}>Why Choose Us? (Key Points)</label>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  {formData.whyChooseUs.map((reason, index) => (
+                    <div key={index} style={{ display: "flex", gap: "8px" }}>
+                      <input
+                        data-testid={`input-why-choose-${index}`}
+                        style={{ ...inputStyle, flex: 1 }}
+                        value={reason}
+                        onChange={(e) => {
+                          const newReasons = [...formData.whyChooseUs];
+                          newReasons[index] = e.target.value;
+                          setFormData(prev => ({ ...prev, whyChooseUs: newReasons }));
                         }}
+                        placeholder="e.g., Same-day service available"
                       />
+                      {formData.whyChooseUs.length > 1 && (
+                        <button
+                          onClick={() => {
+                            const newReasons = formData.whyChooseUs.filter((_, i) => i !== index);
+                            setFormData(prev => ({ ...prev, whyChooseUs: newReasons }));
+                          }}
+                          data-testid={`button-remove-reason-${index}`}
+                          style={{
+                            padding: "8px 16px",
+                            backgroundColor: "#dc2626",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "8px",
+                            cursor: "pointer",
+                            fontSize: "14px",
+                            fontWeight: "600"
+                          }}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => setFormData(prev => ({ ...prev, whyChooseUs: [...prev.whyChooseUs, ""] }))}
+                    data-testid="button-add-reason"
+                    style={{
+                      padding: "12px",
+                      backgroundColor: "#fbbf24",
+                      color: "#000",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px"
+                    }}
+                  >
+                    <Plus size={16} />
+                    Add Reason
+                  </button>
+                </div>
+              </div>
+
+              {/* Google Reviews */}
+              <div>
+                <label style={labelStyle}>Google Reviews</label>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
+                  <div>
+                    <label style={{ ...labelStyle, fontSize: "13px" }}>Google Rating (0.0 - 5.0)</label>
+                    <input
+                      data-testid="input-google-rating"
+                      type="number"
+                      step="0.1"
+                      min="0"
+                      max="5"
+                      style={inputStyle}
+                      value={formData.googleRanking}
+                      onChange={(e) => setFormData(prev => ({ ...prev, googleRanking: e.target.value }))}
+                      placeholder="4.8"
+                    />
+                  </div>
+                  <div>
+                    <label style={{ ...labelStyle, fontSize: "13px" }}>Total Review Count</label>
+                    <input
+                      data-testid="input-google-review-count"
+                      type="number"
+                      style={inputStyle}
+                      value={formData.googleReviewCount}
+                      onChange={(e) => setFormData(prev => ({ ...prev, googleReviewCount: e.target.value }))}
+                      placeholder="127"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Featured Reviews */}
+              <div>
+                <label style={labelStyle}>Featured Reviews (Up to 3)</label>
+                {formData.googleFeaturedReviews.map((review, index) => (
+                  <div key={review.id} style={{
+                    padding: "16px",
+                    backgroundColor: "#f9fafb",
+                    borderRadius: "8px",
+                    marginBottom: "12px",
+                    border: "2px solid #e5e7eb"
+                  }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "12px" }}>
+                      <h4 style={{ margin: 0, fontSize: "16px", fontWeight: "600" }}>Review {index + 1}</h4>
                       <button
-                        onClick={() => setFormData(prev => ({
-                          ...prev,
-                          galleryImages: prev.galleryImages.filter((_, i) => i !== index)
-                        }))}
-                        data-testid={`button-delete-gallery-${index}`}
+                        onClick={() => {
+                          const newReviews = formData.googleFeaturedReviews.filter((_, i) => i !== index);
+                          setFormData(prev => ({ ...prev, googleFeaturedReviews: newReviews }));
+                        }}
+                        data-testid={`button-remove-review-${index}`}
                         style={{
-                          position: "absolute",
-                          top: "8px",
-                          right: "8px",
-                          padding: "6px",
+                          padding: "4px 8px",
                           backgroundColor: "#dc2626",
                           color: "#fff",
                           border: "none",
                           borderRadius: "6px",
                           cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center"
+                          fontSize: "12px"
                         }}
                       >
-                        <X size={16} />
+                        <X size={14} />
                       </button>
                     </div>
-                  ))}
-                </div>
-              )}
+                    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                      <input
+                        data-testid={`input-reviewer-name-${index}`}
+                        style={inputStyle}
+                        value={review.reviewerName}
+                        onChange={(e) => {
+                          const newReviews = [...formData.googleFeaturedReviews];
+                          newReviews[index].reviewerName = e.target.value;
+                          setFormData(prev => ({ ...prev, googleFeaturedReviews: newReviews }));
+                        }}
+                        placeholder="Reviewer Name"
+                      />
+                      <textarea
+                        data-testid={`input-review-text-${index}`}
+                        style={{ ...inputStyle, minHeight: "80px", resize: "vertical" }}
+                        value={review.reviewText}
+                        onChange={(e) => {
+                          const newReviews = [...formData.googleFeaturedReviews];
+                          newReviews[index].reviewText = e.target.value;
+                          setFormData(prev => ({ ...prev, googleFeaturedReviews: newReviews }));
+                        }}
+                        placeholder="Review text..."
+                      />
+                    </div>
+                  </div>
+                ))}
+                {formData.googleFeaturedReviews.length < 3 && (
+                  <button
+                    onClick={() => {
+                      setFormData(prev => ({
+                        ...prev,
+                        googleFeaturedReviews: [
+                          ...prev.googleFeaturedReviews,
+                          { id: crypto.randomUUID(), reviewerName: "", reviewText: "" }
+                        ]
+                      }));
+                    }}
+                    data-testid="button-add-review"
+                    style={{
+                      padding: "12px",
+                      backgroundColor: "#fbbf24",
+                      color: "#000",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "8px",
+                      width: "100%"
+                    }}
+                  >
+                    <Plus size={16} />
+                    Add Featured Review
+                  </button>
+                )}
+              </div>
             </div>
+          </div>
+        </section>
 
-            {/* Team Members Section */}
+        {/* Section 4: Pricing */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+          <div style={sectionHeaderStyle}>
+            <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "#000",
+              color: "#fbbf24",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              fontWeight: "700",
+              flexShrink: 0
+            }}>
+              4
+            </div>
             <div>
-              <h3 style={{ fontSize: "20px", fontWeight: "600", color: "#000", marginBottom: "12px" }}>
-                Team Members
-              </h3>
-              <p style={{ fontSize: "14px", color: "#666", marginBottom: "16px" }}>
-                Introduce your team to build trust with customers
+              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+                Pricing
+              </h2>
+              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
+                Set your pricing and minimums
               </p>
+            </div>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* Minimum Price */}
+              <div>
+                <label style={labelStyle}>Minimum Price</label>
+                <input
+                  data-testid="input-minimum-price"
+                  style={inputStyle}
+                  value={formData.minimumPrice}
+                  onChange={(e) => setFormData(prev => ({ ...prev, minimumPrice: e.target.value }))}
+                  placeholder="e.g., $150"
+                />
+              </div>
 
-              {formData.teamMembers.map((member, index) => (
-                <div
-                  key={member.id}
-                  style={{
+              {/* Truck Load Pricing */}
+              <div>
+                <label style={labelStyle}>Truck Load Pricing</label>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
+                  <div>
+                    <label style={{ ...labelStyle, fontSize: "13px" }}>1/4 Load</label>
+                    <input
+                      data-testid="input-quarter-load"
+                      style={inputStyle}
+                      value={formData.quarterLoadPrice}
+                      onChange={(e) => setFormData(prev => ({ ...prev, quarterLoadPrice: e.target.value }))}
+                      placeholder="$200"
+                    />
+                  </div>
+                  <div>
+                    <label style={{ ...labelStyle, fontSize: "13px" }}>1/2 Load</label>
+                    <input
+                      data-testid="input-half-load"
+                      style={inputStyle}
+                      value={formData.halfLoadPrice}
+                      onChange={(e) => setFormData(prev => ({ ...prev, halfLoadPrice: e.target.value }))}
+                      placeholder="$350"
+                    />
+                  </div>
+                  <div>
+                    <label style={{ ...labelStyle, fontSize: "13px" }}>3/4 Load</label>
+                    <input
+                      data-testid="input-three-quarter-load"
+                      style={inputStyle}
+                      value={formData.threeQuarterLoadPrice}
+                      onChange={(e) => setFormData(prev => ({ ...prev, threeQuarterLoadPrice: e.target.value }))}
+                      placeholder="$500"
+                    />
+                  </div>
+                  <div>
+                    <label style={{ ...labelStyle, fontSize: "13px" }}>Full Load</label>
+                    <input
+                      data-testid="input-full-load"
+                      style={inputStyle}
+                      value={formData.fullLoadPrice}
+                      onChange={(e) => setFormData(prev => ({ ...prev, fullLoadPrice: e.target.value }))}
+                      placeholder="$650"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Single Item Minimum */}
+              <div>
+                <label style={labelStyle}>Single Item Minimum</label>
+                <input
+                  data-testid="input-single-item-minimum"
+                  style={inputStyle}
+                  value={formData.singleItemMinimum}
+                  onChange={(e) => setFormData(prev => ({ ...prev, singleItemMinimum: e.target.value }))}
+                  placeholder="e.g., $75 per item"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 5: Team & Gallery */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+          <div style={sectionHeaderStyle}>
+            <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "#000",
+              color: "#fbbf24",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "24px",
+              fontWeight: "700",
+              flexShrink: 0
+            }}>
+              5
+            </div>
+            <div>
+              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+                Team & Gallery
+              </h2>
+              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
+                Show your team and work photos
+              </p>
+            </div>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+              {/* Team Members */}
+              <div>
+                <label style={labelStyle}>Team Members</label>
+                {formData.teamMembers.map((member, index) => (
+                  <div key={member.id} style={{
                     padding: "20px",
                     backgroundColor: "#f9fafb",
                     borderRadius: "8px",
-                    border: "2px solid #e5e7eb",
-                    marginBottom: "16px"
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                    <h4 style={{ fontSize: "18px", fontWeight: "600", color: "#000", margin: 0 }}>
-                      Team Member {index + 1}
-                    </h4>
-                    <button
-                      onClick={() => setFormData(prev => ({
-                        ...prev,
-                        teamMembers: prev.teamMembers.filter((_, i) => i !== index)
-                      }))}
-                      data-testid={`button-remove-team-${index}`}
-                      style={{
-                        padding: "8px 16px",
-                        backgroundColor: "#fff",
-                        border: "2px solid #dc2626",
-                        borderRadius: "6px",
-                        color: "#dc2626",
-                        cursor: "pointer",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px"
-                      }}
-                    >
-                      <Trash2 size={16} /> Remove
-                    </button>
-                  </div>
-
-                  <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: "20px" }}>
-                    <div>
-                      <label style={{ ...labelStyle, marginBottom: "12px" }}>Team Member Photo</label>
-                      {member.photoUrl ? (
-                        <div style={{ position: "relative" }}>
-                          <img
-                            src={member.photoUrl}
-                            alt={member.name}
-                            data-testid={`team-photo-${index}`}
-                            style={{
-                              width: "100%",
-                              height: "200px",
-                              objectFit: "cover",
-                              borderRadius: "8px",
-                              border: "2px solid #e5e7eb"
-                            }}
-                          />
-                          <button
-                            onClick={() => {
-                              const newMembers = [...formData.teamMembers];
-                              newMembers[index] = { ...newMembers[index], photoUrl: "" };
-                              setFormData(prev => ({ ...prev, teamMembers: newMembers }));
-                            }}
-                            data-testid={`button-remove-team-photo-${index}`}
-                            style={{
-                              position: "absolute",
-                              top: "8px",
-                              right: "8px",
-                              padding: "6px",
-                              backgroundColor: "#dc2626",
-                              color: "#fff",
-                              border: "none",
-                              borderRadius: "6px",
-                              cursor: "pointer"
-                            }}
-                          >
-                            <X size={16} />
-                          </button>
-                        </div>
-                      ) : (
-                        <ObjectUploader
-                          maxNumberOfFiles={1}
-                          maxFileSize={10485760}
-                          onGetUploadParameters={async () => {
-                            const token = localStorage.getItem('authToken');
-                            const response = await fetch('/api/objects/upload', {
-                              method: 'POST',
-                              headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Content-Type': 'application/json',
-                              },
-                            });
-                            const data = await response.json();
-                            return {
-                              method: 'PUT' as const,
-                              url: data.uploadURL,
-                            };
-                          }}
-                          onComplete={async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
-                            if (result.successful && result.successful.length > 0) {
-                              const photoUrl = result.successful[0].uploadURL || "";
-                              const newMembers = [...formData.teamMembers];
-                              newMembers[index] = { ...newMembers[index], photoUrl };
-                              setFormData(prev => ({ ...prev, teamMembers: newMembers }));
-                              setToastMessage("Team member photo uploaded!");
-                              setShowToast(true);
-                              setTimeout(() => setShowToast(false), 3000);
-                            }
-                          }}
-                          buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg text-sm"
-                        >
-                          <Upload size={16} style={{ marginRight: "6px" }} />
-                          Upload Photo
-                        </ObjectUploader>
-                      )}
+                    marginBottom: "16px",
+                    border: "2px solid #e5e7eb"
+                  }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "16px" }}>
+                      <h4 style={{ margin: 0, fontSize: "16px", fontWeight: "600" }}>Team Member {index + 1}</h4>
+                      <button
+                        onClick={() => {
+                          const newMembers = formData.teamMembers.filter((_, i) => i !== index);
+                          setFormData(prev => ({ ...prev, teamMembers: newMembers }));
+                        }}
+                        data-testid={`button-remove-team-${index}`}
+                        style={{
+                          padding: "6px 12px",
+                          backgroundColor: "#dc2626",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontSize: "12px",
+                          fontWeight: "600"
+                        }}
+                      >
+                        Remove
+                      </button>
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                      {/* Photo Upload */}
                       <div>
-                        <label style={labelStyle}>Name</label>
-                        <input
-                          data-testid={`input-team-name-${index}`}
-                          style={inputStyle}
-                          value={member.name}
-                          onChange={(e) => {
-                            const newMembers = [...formData.teamMembers];
-                            newMembers[index] = { ...newMembers[index], name: e.target.value };
-                            setFormData(prev => ({ ...prev, teamMembers: newMembers }));
-                          }}
-                          placeholder="John Doe"
-                        />
+                        <label style={{ ...labelStyle, fontSize: "13px" }}>Photo</label>
+                        {member.photoUrl ? (
+                          <div style={{ position: "relative", width: "150px" }}>
+                            <img
+                              src={member.photoUrl}
+                              alt={member.name}
+                              style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "8px" }}
+                            />
+                            <button
+                              onClick={() => {
+                                const newMembers = [...formData.teamMembers];
+                                newMembers[index].photoUrl = "";
+                                setFormData(prev => ({ ...prev, teamMembers: newMembers }));
+                              }}
+                              data-testid={`button-remove-team-photo-${index}`}
+                              style={{
+                                position: "absolute",
+                                top: "8px",
+                                right: "8px",
+                                padding: "6px",
+                                backgroundColor: "#dc2626",
+                                color: "#fff",
+                                border: "none",
+                                borderRadius: "50%",
+                                cursor: "pointer"
+                              }}
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        ) : (
+                          <ObjectUploader
+                            maxNumberOfFiles={1}
+                            maxFileSize={10485760}
+                            onGetUploadParameters={async () => {
+                              const token = localStorage.getItem('authToken');
+                              const response = await fetch('/api/objects/upload', {
+                                method: 'POST',
+                                headers: {
+                                  'Authorization': `Bearer ${token}`,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ path: `/objects/team/${crypto.randomUUID()}` }),
+                              });
+                              return await response.json();
+                            }}
+                            onComplete={(result: UploadResult) => {
+                              if (result.successful.length > 0) {
+                                const url = result.successful[0].uploadURL;
+                                if (url) {
+                                  const newMembers = [...formData.teamMembers];
+                                  newMembers[index].photoUrl = url;
+                                  setFormData(prev => ({ ...prev, teamMembers: newMembers }));
+                                  setToastMessage("Team member photo uploaded!");
+                                  setShowToast(true);
+                                  setTimeout(() => setShowToast(false), 3000);
+                                }
+                              }
+                            }}
+                            buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg text-sm"
+                          >
+                            <Upload size={16} style={{ marginRight: "6px" }} />
+                            Upload Photo
+                          </ObjectUploader>
+                        )}
+                      </div>
+
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
+                        <div>
+                          <label style={{ ...labelStyle, fontSize: "13px" }}>Name</label>
+                          <input
+                            data-testid={`input-team-name-${index}`}
+                            style={inputStyle}
+                            value={member.name}
+                            onChange={(e) => {
+                              const newMembers = [...formData.teamMembers];
+                              newMembers[index].name = e.target.value;
+                              setFormData(prev => ({ ...prev, teamMembers: newMembers }));
+                            }}
+                            placeholder="John Doe"
+                          />
+                        </div>
+                        <div>
+                          <label style={{ ...labelStyle, fontSize: "13px" }}>Role</label>
+                          <input
+                            data-testid={`input-team-role-${index}`}
+                            style={inputStyle}
+                            value={member.role}
+                            onChange={(e) => {
+                              const newMembers = [...formData.teamMembers];
+                              newMembers[index].role = e.target.value;
+                              setFormData(prev => ({ ...prev, teamMembers: newMembers }));
+                            }}
+                            placeholder="Owner / Lead Technician"
+                          />
+                        </div>
                       </div>
 
                       <div>
-                        <label style={labelStyle}>Role/Title</label>
-                        <input
-                          data-testid={`input-team-role-${index}`}
-                          style={inputStyle}
-                          value={member.role}
-                          onChange={(e) => {
-                            const newMembers = [...formData.teamMembers];
-                            newMembers[index] = { ...newMembers[index], role: e.target.value };
-                            setFormData(prev => ({ ...prev, teamMembers: newMembers }));
-                          }}
-                          placeholder="Lead Technician"
-                        />
-                      </div>
-
-                      <div>
-                        <label style={labelStyle}>Bio</label>
+                        <label style={{ ...labelStyle, fontSize: "13px" }}>Bio</label>
                         <textarea
                           data-testid={`input-team-bio-${index}`}
-                          style={{ ...inputStyle, minHeight: "80px", fontFamily: "inherit", resize: "vertical" }}
+                          style={{ ...inputStyle, minHeight: "80px", resize: "vertical" }}
                           value={member.bio}
                           onChange={(e) => {
                             const newMembers = [...formData.teamMembers];
-                            newMembers[index] = { ...newMembers[index], bio: e.target.value };
+                            newMembers[index].bio = e.target.value;
                             setFormData(prev => ({ ...prev, teamMembers: newMembers }));
                           }}
-                          placeholder="Brief description of team member's experience and expertise..."
+                          placeholder="Brief bio about this team member..."
                         />
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              <button
-                onClick={() => setFormData(prev => ({
-                  ...prev,
-                  teamMembers: [
-                    ...prev.teamMembers,
-                    { id: Date.now().toString(), name: "", role: "", bio: "", photoUrl: "" }
-                  ]
-                }))}
-                data-testid="button-add-team-member"
-                style={{
-                  padding: "12px 24px",
-                  border: "2px solid #fbbf24",
-                  borderRadius: "8px",
-                  backgroundColor: "#fff",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px"
-                }}
-              >
-                <Plus size={20} /> Add Team Member
-              </button>
+                <button
+                  onClick={() => {
+                    setFormData(prev => ({
+                      ...prev,
+                      teamMembers: [
+                        ...prev.teamMembers,
+                        { id: crypto.randomUUID(), name: "", role: "", bio: "", photoUrl: "" }
+                      ]
+                    }));
+                  }}
+                  data-testid="button-add-team-member"
+                  style={{
+                    padding: "12px",
+                    backgroundColor: "#fbbf24",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    width: "100%"
+                  }}
+                >
+                  <Plus size={16} />
+                  Add Team Member
+                </button>
+              </div>
+
+              {/* Gallery Photos */}
+              <div>
+                <label style={labelStyle}>Gallery Photos (Up to 10)</label>
+                <div style={{ marginBottom: "16px" }}>
+                  <ObjectUploader
+                    maxNumberOfFiles={10 - formData.galleryImages.length}
+                    maxFileSize={10485760}
+                    onGetUploadParameters={async () => {
+                      const token = localStorage.getItem('authToken');
+                      const response = await fetch('/api/objects/upload', {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ path: `/objects/gallery/${crypto.randomUUID()}` }),
+                      });
+                      return await response.json();
+                    }}
+                    onComplete={(result: UploadResult) => {
+                      if (result.successful.length > 0) {
+                        const newUrls = result.successful
+                          .map(file => file.uploadURL)
+                          .filter((url): url is string => url !== undefined);
+                        setFormData(prev => ({
+                          ...prev,
+                          galleryImages: [...prev.galleryImages, ...newUrls]
+                        }));
+                        setToastMessage(`${result.successful.length} image(s) uploaded successfully!`);
+                        setShowToast(true);
+                        setTimeout(() => setShowToast(false), 3000);
+                      }
+                    }}
+                    buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
+                  >
+                    <Upload size={20} style={{ marginRight: "8px" }} />
+                    Upload Gallery Images ({formData.galleryImages.length}/10)
+                  </ObjectUploader>
+                </div>
+
+                {formData.galleryImages.length > 0 && (
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+                    gap: "12px",
+                  }}>
+                    {formData.galleryImages.map((url, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          position: "relative",
+                          paddingBottom: "100%",
+                          borderRadius: "8px",
+                          overflow: "hidden",
+                          backgroundColor: "#f3f4f6"
+                        }}
+                      >
+                        <img
+                          src={url}
+                          alt={`Gallery ${index + 1}`}
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover"
+                          }}
+                        />
+                        <button
+                          onClick={() => {
+                            const newImages = formData.galleryImages.filter((_, i) => i !== index);
+                            setFormData(prev => ({ ...prev, galleryImages: newImages }));
+                          }}
+                          data-testid={`button-remove-gallery-${index}`}
+                          style={{
+                            position: "absolute",
+                            top: "8px",
+                            right: "8px",
+                            padding: "6px",
+                            backgroundColor: "#dc2626",
+                            color: "#fff",
+                            border: "none",
+                            borderRadius: "50%",
+                            cursor: "pointer",
+                            zIndex: 10
+                          }}
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        )}
+        </section>
 
-        {/* Tab 6: Visibility Settings */}
-        {activeTab === 6 && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "700", color: "#000", margin: 0 }}>
-              Visibility Settings
-            </h2>
-
+        {/* Section 6: Visibility Settings */}
+        <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}>
+          <div style={sectionHeaderStyle}>
             <div style={{
+              width: "48px",
+              height: "48px",
+              borderRadius: "50%",
+              backgroundColor: "#000",
+              color: "#fbbf24",
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
-              padding: "20px",
-              border: "2px solid #e5e7eb",
-              borderRadius: "8px",
-              backgroundColor: "#fff"
-            }}>
-              <div>
-                <div style={{ fontSize: "16px", fontWeight: "600", color: "#000", marginBottom: "4px" }}>
-                  Show Pricing on Profile
-                </div>
-                <div style={{ fontSize: "14px", color: "#666" }}>
-                  Display your pricing information to customers
-                </div>
-              </div>
-              <label style={{ position: "relative", display: "inline-block", width: "60px", height: "34px" }}>
-                <input
-                  type="checkbox"
-                  checked={formData.priceSheetVisible}
-                  onChange={(e) => setFormData(prev => ({ ...prev, priceSheetVisible: e.target.checked }))}
-                  data-testid="toggle-pricing"
-                  style={{ opacity: 0, width: 0, height: 0 }}
-                />
-                <span style={{
-                  position: "absolute",
-                  cursor: "pointer",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: formData.priceSheetVisible ? "#fbbf24" : "#ccc",
-                  transition: "0.4s",
-                  borderRadius: "34px"
-                }}>
-                  <span style={{
-                    position: "absolute",
-                    height: "26px",
-                    width: "26px",
-                    left: formData.priceSheetVisible ? "30px" : "4px",
-                    bottom: "4px",
-                    backgroundColor: "white",
-                    transition: "0.4s",
-                    borderRadius: "50%"
-                  }} />
-                </span>
-              </label>
-            </div>
-
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "20px",
-              border: "2px solid #e5e7eb",
-              borderRadius: "8px",
-              backgroundColor: "#fff"
-            }}>
-              <div>
-                <div style={{ fontSize: "16px", fontWeight: "600", color: "#000", marginBottom: "4px" }}>
-                  Show Additional Costs
-                </div>
-                <div style={{ fontSize: "14px", color: "#666" }}>
-                  Display add-on fees and extra charges
-                </div>
-              </div>
-              <label style={{ position: "relative", display: "inline-block", width: "60px", height: "34px" }}>
-                <input
-                  type="checkbox"
-                  checked={formData.addOnCostsVisible}
-                  onChange={(e) => setFormData(prev => ({ ...prev, addOnCostsVisible: e.target.checked }))}
-                  data-testid="toggle-addon"
-                  style={{ opacity: 0, width: 0, height: 0 }}
-                />
-                <span style={{
-                  position: "absolute",
-                  cursor: "pointer",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: formData.addOnCostsVisible ? "#fbbf24" : "#ccc",
-                  transition: "0.4s",
-                  borderRadius: "34px"
-                }}>
-                  <span style={{
-                    position: "absolute",
-                    height: "26px",
-                    width: "26px",
-                    left: formData.addOnCostsVisible ? "30px" : "4px",
-                    bottom: "4px",
-                    backgroundColor: "white",
-                    transition: "0.4s",
-                    borderRadius: "50%"
-                  }} />
-                </span>
-              </label>
-            </div>
-          </div>
-        )}
-
-        {/* Action Buttons */}
-        <div style={{
-          marginTop: "48px",
-          display: "flex",
-          gap: "16px",
-          justifyContent: "flex-end",
-          paddingTop: "24px",
-          borderTop: "2px solid #e5e7eb"
-        }}>
-          <button
-            onClick={handleSave}
-            disabled={updateMutation.isPending}
-            data-testid="button-save"
-            style={{
-              fontSize: "16px",
-              padding: "12px 32px",
-              border: "2px solid #000",
-              borderRadius: "8px",
-              backgroundColor: "#fff",
-              color: "#000",
-              fontWeight: "600",
-              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
-              opacity: updateMutation.isPending ? 0.6 : 1
-            }}
-          >
-            {updateMutation.isPending ? "Saving..." : "Save Progress"}
-          </button>
-
-          <button
-            onClick={handleGoLive}
-            disabled={updateMutation.isPending}
-            data-testid="button-go-live"
-            style={{
-              fontSize: "16px",
-              padding: "12px 32px",
-              backgroundColor: "#fbbf24",
-              color: "#000",
+              justifyContent: "center",
+              fontSize: "24px",
               fontWeight: "700",
-              border: "none",
-              borderRadius: "8px",
-              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
-              opacity: updateMutation.isPending ? 0.6 : 1
-            }}
-          >
-            Go to Live Page
-          </button>
-        </div>
+              flexShrink: 0
+            }}>
+              6
+            </div>
+            <div>
+              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+                Visibility Settings
+              </h2>
+              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
+                Control what customers see
+              </p>
+            </div>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {/* Show Pricing */}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "16px",
+                backgroundColor: "#f9fafb",
+                borderRadius: "8px",
+                border: "2px solid #e5e7eb"
+              }}>
+                <div>
+                  <div style={{ fontWeight: "600", fontSize: "16px", marginBottom: "4px" }}>
+                    Show Pricing on Profile
+                  </div>
+                  <div style={{ fontSize: "14px", color: "#666" }}>
+                    Display your pricing information to customers
+                  </div>
+                </div>
+                <label style={{ position: "relative", display: "inline-block", width: "56px", height: "28px" }}>
+                  <input
+                    data-testid="toggle-pricing-visible"
+                    type="checkbox"
+                    checked={formData.priceSheetVisible}
+                    onChange={(e) => setFormData(prev => ({ ...prev, priceSheetVisible: e.target.checked }))}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <span style={{
+                    position: "absolute",
+                    cursor: "pointer",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: formData.priceSheetVisible ? "#16a34a" : "#ccc",
+                    borderRadius: "28px",
+                    transition: "0.3s"
+                  }}>
+                    <span style={{
+                      position: "absolute",
+                      content: "",
+                      height: "22px",
+                      width: "22px",
+                      left: formData.priceSheetVisible ? "30px" : "3px",
+                      bottom: "3px",
+                      backgroundColor: "white",
+                      borderRadius: "50%",
+                      transition: "0.3s"
+                    }} />
+                  </span>
+                </label>
+              </div>
+
+              {/* Show Add-on Costs */}
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "16px",
+                backgroundColor: "#f9fafb",
+                borderRadius: "8px",
+                border: "2px solid #e5e7eb"
+              }}>
+                <div>
+                  <div style={{ fontWeight: "600", fontSize: "16px", marginBottom: "4px" }}>
+                    Show Additional Costs Section
+                  </div>
+                  <div style={{ fontSize: "14px", color: "#666" }}>
+                    Display potential additional charges to customers
+                  </div>
+                </div>
+                <label style={{ position: "relative", display: "inline-block", width: "56px", height: "28px" }}>
+                  <input
+                    data-testid="toggle-addon-costs-visible"
+                    type="checkbox"
+                    checked={formData.addOnCostsVisible}
+                    onChange={(e) => setFormData(prev => ({ ...prev, addOnCostsVisible: e.target.checked }))}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <span style={{
+                    position: "absolute",
+                    cursor: "pointer",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: formData.addOnCostsVisible ? "#16a34a" : "#ccc",
+                    borderRadius: "28px",
+                    transition: "0.3s"
+                  }}>
+                    <span style={{
+                      position: "absolute",
+                      content: "",
+                      height: "22px",
+                      width: "22px",
+                      left: formData.addOnCostsVisible ? "30px" : "3px",
+                      bottom: "3px",
+                      backgroundColor: "white",
+                      borderRadius: "50%",
+                      transition: "0.3s"
+                    }} />
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
