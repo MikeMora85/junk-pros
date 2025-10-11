@@ -5,6 +5,8 @@ import { useAuth } from "../hooks/useAuth";
 import { useLocation } from "wouter";
 import { CheckCircle, Circle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell } from "lucide-react";
 import type { Company } from "@shared/schema";
+import { ObjectUploader } from "../components/ObjectUploader";
+import type { UploadResult } from "@uppy/core";
 
 const SERVICE_ICONS = [
   { id: "residential", icon: Home, label: "Residential" },
@@ -422,40 +424,50 @@ export default function ProfileEditor() {
               </label>
               
               <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
-                <label htmlFor="logoFile" style={{
-                  display: "inline-block",
-                  padding: "12px 24px",
-                  backgroundColor: "#fbbf24",
-                  color: "#000",
-                  fontWeight: "600",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  fontSize: "16px",
-                  border: "none"
-                }}>
-                  Upload Logo
-                  <input
-                    id="logoFile"
-                    type="file"
-                    accept="image/*"
-                    data-testid="input-logo-file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        if (file.size > 2 * 1024 * 1024) {
-                          alert("Image must be under 2MB");
-                          return;
-                        }
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                          setFormData(prev => ({ ...prev, logoUrl: reader.result as string }));
-                        };
-                        reader.readAsDataURL(file);
+                <ObjectUploader
+                  maxNumberOfFiles={1}
+                  maxFileSize={10485760}
+                  onGetUploadParameters={async () => {
+                    const token = localStorage.getItem('authToken');
+                    const response = await fetch('/api/objects/upload', {
+                      method: 'POST',
+                      headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                      },
+                    });
+                    const data = await response.json();
+                    return {
+                      method: 'PUT' as const,
+                      url: data.uploadURL,
+                    };
+                  }}
+                  onComplete={async (result: UploadResult<Record<string, unknown>, Record<string, unknown>>) => {
+                    if (result.successful && result.successful.length > 0) {
+                      const uploadURL = result.successful[0].uploadURL;
+                      const token = localStorage.getItem('authToken');
+                      const response = await fetch(`/api/companies/${company?.id}/logo`, {
+                        method: 'PUT',
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ logoURL: uploadURL }),
+                      });
+                      const data = await response.json();
+                      if (data.success) {
+                        setFormData(prev => ({ ...prev, logoUrl: data.logoPath }));
+                        queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
+                        setToastMessage("Logo uploaded successfully!");
+                        setShowToast(true);
+                        setTimeout(() => setShowToast(false), 3000);
                       }
-                    }}
-                  />
-                </label>
+                    }
+                  }}
+                  buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
+                >
+                  Upload Logo
+                </ObjectUploader>
                 
                 {formData.logoUrl && (
                   <button
@@ -483,7 +495,7 @@ export default function ProfileEditor() {
                 marginTop: "8px",
                 marginBottom: 0
               }}>
-                Max file size: 2MB. Recommended: Square logo with transparent background
+                Max file size: 10MB. Recommended: Square logo with transparent background
               </p>
 
               {formData.logoUrl && (
