@@ -350,29 +350,9 @@ export default function ProfileEditor() {
         {/* Section 1: Basic Information */}
         <section style={{ marginTop: "20px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "700",
-              flexShrink: 0
-            }}>
-              1
-            </div>
-            <div>
-              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-                Basic Information
-              </h2>
-              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
-                Company name, contact, and location
-              </p>
-            </div>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              Basic Information
+            </h2>
           </div>
           
           <div style={sectionContentStyle}>
@@ -616,29 +596,9 @@ export default function ProfileEditor() {
         {/* Section 2: Services & Specialties */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "700",
-              flexShrink: 0
-            }}>
-              2
-            </div>
-            <div>
-              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-                Services & Specialties
-              </h2>
-              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
-                What services do you offer?
-              </p>
-            </div>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              Services & Specialties
+            </h2>
           </div>
           
           <div style={sectionContentStyle}>
@@ -758,29 +718,9 @@ export default function ProfileEditor() {
         {/* Section 3: About Your Business */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "700",
-              flexShrink: 0
-            }}>
-              3
-            </div>
-            <div>
-              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-                About Your Business
-              </h2>
-              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
-                Tell customers about your company
-              </p>
-            </div>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              About Your Business
+            </h2>
           </div>
           
           <div style={sectionContentStyle}>
@@ -1016,29 +956,9 @@ export default function ProfileEditor() {
         {/* Section 4: Pricing */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "700",
-              flexShrink: 0
-            }}>
-              4
-            </div>
-            <div>
-              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-                Pricing
-              </h2>
-              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
-                Set your pricing and minimums
-              </p>
-            </div>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              Pricing
+            </h2>
           </div>
           
           <div style={sectionContentStyle}>
@@ -1120,29 +1040,9 @@ export default function ProfileEditor() {
         {/* Section 5: Team & Gallery */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "700",
-              flexShrink: 0
-            }}>
-              5
-            </div>
-            <div>
-              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-                Team & Gallery
-              </h2>
-              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
-                Show your team and work photos
-              </p>
-            </div>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              Team & Gallery
+            </h2>
           </div>
           
           <div style={sectionContentStyle}>
@@ -1432,29 +1332,9 @@ export default function ProfileEditor() {
         {/* Section 6: Visibility Settings */}
         <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
-            <div style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: "#000",
-              color: "#fbbf24",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "24px",
-              fontWeight: "700",
-              flexShrink: 0
-            }}>
-              6
-            </div>
-            <div>
-              <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-                Visibility Settings
-              </h2>
-              <p style={{ fontSize: "14px", margin: "4px 0 0 0", color: "#000", opacity: 0.7 }}>
-                Control what customers see
-              </p>
-            </div>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              Visibility Settings
+            </h2>
           </div>
           
           <div style={sectionContentStyle}>
