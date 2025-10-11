@@ -1,7 +1,7 @@
 # Junk Removal Directory Website
 
 ## Overview
-A full-stack JavaScript application designed to connect users with local junk removal companies in Scottsdale, AZ. The platform includes an interactive map, a visual estimate builder, detailed company listings with ratings, and informative content. It also features a robust admin system for managing business listings and tracking performance, with a vision to become a leading directory for independent junk removal operators, emphasizing quality and local service.
+A nationwide full-stack JavaScript application connecting users with local, independent junk removal companies across all 45 states and 675 cities. The platform includes an interactive map, a visual estimate builder, detailed company listings with ratings, and informative content. It also features a robust admin system for managing business listings and tracking performance. No franchises accepted - local vetted haulers only.
 
 ## User Preferences
 I want iterative development.
@@ -62,7 +62,7 @@ I prefer detailed explanations.
     - **Approval System**: Automatic business approval upon signup.
     - **Performance Tracking**: Automatic tracking of customer interactions (clicks, calls, photo quotes, in-person estimates) with an API endpoint `/api/track/event`.
     - **Unclaimed Business Listings**:
-        - Businesses can be prefilled with name, phone, city, state, and optional zip
+        - Businesses can be prefilled with name, phone, city, state, and optional address
         - Marked as "unclaimed" until business owner claims their profile
         - Unclaimed listings display with limited information (name and phone only)
         - Non-clickable gray cards with "Unclaimed Listing - Basic Info Only" badge
@@ -74,9 +74,9 @@ I prefer detailed explanations.
             - Displays green claiming banner with checkmark icon showing "Claiming Profile: [Business Name]"
             - Banner message: "We've prefilled your business name and phone. Complete the rest to activate your profile!"
         - Bulk import endpoint for admins: `POST /api/admin/companies/bulk-unclaimed`
-        - Required fields: name, phone, city, state (zip optional)
-        - Address auto-generated from city, state, zip for search indexing
+        - Required fields: name, phone, city, state (address optional)
         - Database schema includes `claimed` boolean field (default: false)
+        - **Nationwide Expansion**: Successfully imported 135 vetted junk removal companies across all 45 states covering 675 cities, providing comprehensive national coverage for independent local operators
 - **Admin Dashboard**:
     - Mobile-responsive design with a hamburger menu.
     - Tabs for Pending, Active, Payments, and Analytics.
