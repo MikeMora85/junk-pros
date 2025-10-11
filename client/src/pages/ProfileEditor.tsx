@@ -305,7 +305,7 @@ export default function ProfileEditor() {
           disabled={updateMutation.isPending}
           data-testid="button-save"
           style={{
-            padding: "12px 20px",
+            padding: "8px 20px",
             backgroundColor: "#fbbf24",
             color: "#000",
             border: "2px solid #fbbf24",
@@ -325,7 +325,7 @@ export default function ProfileEditor() {
           disabled={updateMutation.isPending}
           data-testid="button-go-live"
           style={{
-            padding: "12px 20px",
+            padding: "8px 20px",
             backgroundColor: "#fbbf24",
             color: "#000",
             border: "2px solid #fbbf24",
@@ -345,7 +345,7 @@ export default function ProfileEditor() {
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         
         {/* Section 1: Basic Information */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "80px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <div style={{
               width: "48px",
