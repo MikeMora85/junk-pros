@@ -77,6 +77,30 @@ export default function AdminDashboard() {
     },
   });
 
+  const updateDisplayOrderMutation = useMutation({
+    mutationFn: async ({ id, displayOrder }: { id: number; displayOrder: number }) => {
+      await apiRequest(`/api/admin/companies/${id}/display-order`, {
+        method: 'PATCH',
+        body: { displayOrder },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+    },
+  });
+
+  const updateBadgeMutation = useMutation({
+    mutationFn: async ({ id, badge }: { id: number; badge: string | null }) => {
+      await apiRequest(`/api/admin/companies/${id}/badge`, {
+        method: 'PATCH',
+        body: { badge },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+    },
+  });
+
   if (authLoading) {
     return <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>;
   }
@@ -603,6 +627,21 @@ export default function AdminDashboard() {
 
                     {/* Badges */}
                     <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                      {company.badge && (
+                        <span style={{
+                          background: '#16a34a',
+                          color: '#fff',
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                        }}>
+                          ✓ {company.badge}
+                        </span>
+                      )}
                       {company.subscriptionTier === 'featured' && (
                         <span style={{
                           background: '#fbbf24',
@@ -630,6 +669,16 @@ export default function AdminDashboard() {
                           UNCLAIMED
                         </span>
                       )}
+                      <span style={{
+                        background: '#e5e7eb',
+                        color: '#000',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                      }}>
+                        Order: {company.displayOrder ?? 999}
+                      </span>
                     </div>
 
                     {/* Location & Phone */}
@@ -691,6 +740,149 @@ export default function AdminDashboard() {
                         <Eye size={20} />
                         View Profile
                       </button>
+
+                      {/* Display Order Control */}
+                      <div style={{
+                        background: '#fff',
+                        padding: '12px',
+                        border: '2px solid #fbbf24',
+                        borderRadius: '8px',
+                      }}>
+                        <div style={{ fontSize: '14px', fontWeight: '700', marginBottom: '8px', color: '#000' }}>
+                          Display Order
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                          <input
+                            type="number"
+                            value={company.displayOrder ?? 999}
+                            onChange={(e) => {
+                              const newOrder = parseInt(e.target.value) || 999;
+                              updateDisplayOrderMutation.mutate({ id: company.id, displayOrder: newOrder });
+                            }}
+                            style={{
+                              flex: 1,
+                              padding: '8px',
+                              border: '2px solid #fbbf24',
+                              borderRadius: '6px',
+                              fontSize: '16px',
+                              fontWeight: '600',
+                            }}
+                            data-testid={`input-order-${company.id}`}
+                          />
+                          <button
+                            onClick={() => updateDisplayOrderMutation.mutate({ id: company.id, displayOrder: 1 })}
+                            style={{
+                              background: '#16a34a',
+                              color: '#fff',
+                              padding: '8px 16px',
+                              border: 'none',
+                              borderRadius: '6px',
+                              fontSize: '14px',
+                              fontWeight: '700',
+                              cursor: 'pointer',
+                            }}
+                            data-testid={`button-top-${company.id}`}
+                          >
+                            Move to Top
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Badge Control */}
+                      <div style={{
+                        background: '#fff',
+                        padding: '12px',
+                        border: '2px solid #fbbf24',
+                        borderRadius: '8px',
+                      }}>
+                        <div style={{ fontSize: '14px', fontWeight: '700', marginBottom: '8px', color: '#000' }}>
+                          Badge/Banner
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                            <button
+                              onClick={() => updateBadgeMutation.mutate({ id: company.id, badge: 'TOP RATED' })}
+                              style={{
+                                background: company.badge === 'TOP RATED' ? '#16a34a' : '#fff',
+                                color: company.badge === 'TOP RATED' ? '#fff' : '#000',
+                                padding: '8px',
+                                border: '2px solid #fbbf24',
+                                borderRadius: '6px',
+                                fontSize: '14px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                              }}
+                              data-testid={`button-badge-toprated-${company.id}`}
+                            >
+                              TOP RATED
+                            </button>
+                            <button
+                              onClick={() => updateBadgeMutation.mutate({ id: company.id, badge: 'BEST VALUE' })}
+                              style={{
+                                background: company.badge === 'BEST VALUE' ? '#16a34a' : '#fff',
+                                color: company.badge === 'BEST VALUE' ? '#fff' : '#000',
+                                padding: '8px',
+                                border: '2px solid #fbbf24',
+                                borderRadius: '6px',
+                                fontSize: '14px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                              }}
+                              data-testid={`button-badge-bestvalue-${company.id}`}
+                            >
+                              BEST VALUE
+                            </button>
+                            <button
+                              onClick={() => updateBadgeMutation.mutate({ id: company.id, badge: 'FASTEST' })}
+                              style={{
+                                background: company.badge === 'FASTEST' ? '#16a34a' : '#fff',
+                                color: company.badge === 'FASTEST' ? '#fff' : '#000',
+                                padding: '8px',
+                                border: '2px solid #fbbf24',
+                                borderRadius: '6px',
+                                fontSize: '14px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                              }}
+                              data-testid={`button-badge-fastest-${company.id}`}
+                            >
+                              FASTEST
+                            </button>
+                            <button
+                              onClick={() => updateBadgeMutation.mutate({ id: company.id, badge: 'VERIFIED' })}
+                              style={{
+                                background: company.badge === 'VERIFIED' ? '#16a34a' : '#fff',
+                                color: company.badge === 'VERIFIED' ? '#fff' : '#000',
+                                padding: '8px',
+                                border: '2px solid #fbbf24',
+                                borderRadius: '6px',
+                                fontSize: '14px',
+                                fontWeight: '700',
+                                cursor: 'pointer',
+                              }}
+                              data-testid={`button-badge-verified-${company.id}`}
+                            >
+                              VERIFIED
+                            </button>
+                          </div>
+                          <button
+                            onClick={() => updateBadgeMutation.mutate({ id: company.id, badge: null })}
+                            style={{
+                              background: '#ef4444',
+                              color: '#fff',
+                              padding: '8px',
+                              border: 'none',
+                              borderRadius: '6px',
+                              fontSize: '14px',
+                              fontWeight: '700',
+                              cursor: 'pointer',
+                            }}
+                            data-testid={`button-badge-remove-${company.id}`}
+                          >
+                            Remove Badge
+                          </button>
+                        </div>
+                      </div>
                       {!company.claimed && (
                         <button
                           onClick={() => claimMutation.mutate(company.id)}
