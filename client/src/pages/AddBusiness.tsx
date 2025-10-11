@@ -26,6 +26,8 @@ export default function AddBusiness() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isWhyUsOpen, setIsWhyUsOpen] = useState(false);
   const [hasReadWhyUs, setHasReadWhyUs] = useState(false);
+  const [isRequirementsOpen, setIsRequirementsOpen] = useState(false);
+  const [hasReadRequirements, setHasReadRequirements] = useState(false);
 
   const createBusinessMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -72,6 +74,14 @@ export default function AddBusiness() {
       alert('Please read and agree to the platform standards and requirements before continuing.');
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setIsWhyUsOpen(true); // Auto-open the section
+      return;
+    }
+    
+    // Validate that user has read and agreed to membership requirements
+    if (!hasReadRequirements) {
+      alert('Please read and agree to the membership requirements and pricing standards before continuing.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsRequirementsOpen(true); // Auto-open the section
       return;
     }
     
@@ -419,132 +429,213 @@ export default function AddBusiness() {
           )}
         </div>
 
-        {/* Requirements Section */}
-        <div style={{
-          background: '#fff',
-          border: '2px solid #000',
-          padding: '32px',
-          marginBottom: '48px',
-        }}>
-          <h2 style={{
-            fontSize: '24px',
-            fontWeight: '700',
-            color: '#000',
-            marginBottom: '24px',
-            letterSpacing: '-0.02em',
-          }}>
-            Membership Requirements
-          </h2>
-
-          <div style={{ marginBottom: '24px' }}>
-            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
-              <div>
-                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
-                  Independent Operators Only
-                </h4>
-                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                  We exclusively list locally-owned, independent junk removal companies. No franchises accepted.
-                </p>
-              </div>
+        {/* Requirements Section - Collapsible */}
+        <div style={{ marginBottom: '48px' }}>
+          <button
+            onClick={() => setIsRequirementsOpen(!isRequirementsOpen)}
+            style={{
+              width: '100%',
+              background: '#fff',
+              border: '2px solid #000',
+              padding: '20px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              cursor: 'pointer',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              transition: 'all 0.2s',
+              position: 'relative',
+            }}
+            data-testid="button-toggle-requirements"
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <h2 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#000',
+                margin: 0,
+                letterSpacing: '-0.02em',
+              }}>
+                Membership Requirements
+              </h2>
+              {hasReadRequirements && (
+                <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+              )}
             </div>
-
-            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
-              <div>
-                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
-                  Pricing Standards
-                </h4>
-                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                  Minimum <strong>$38 per cubic yard</strong> required. Established companies typically charge <strong>$45-$65 per cubic yard</strong>. Below-market pricing hurts the industry by setting unsustainable expectations and devaluing professional service.
-                </p>
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ 
+                fontSize: '13px', 
+                fontWeight: '700', 
+                color: '#dc2626',
+                textTransform: 'uppercase',
+              }}>
+                Required Read
+              </span>
+              {isRequirementsOpen ? (
+                <ChevronUp size={28} color="#000" />
+              ) : (
+                <ChevronDown size={28} color="#000" />
+              )}
             </div>
-
-            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
-              <div>
-                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
-                  Physical Location Requirement
-                </h4>
-                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                  Your business must be <strong>physically located in the city you select</strong>. We're hyperlocal—connecting customers with their neighborhood junk removal company. You cannot list a city just because you serve it; your business address must be within city limits.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div style={{
-            background: '#fef3c7',
-            padding: '16px',
-            border: '1px solid #fbbf24',
-          }}>
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <XCircle size={20} color="#000" />
-              <div>
-                <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
-                  We Do NOT Accept:
-                </h4>
-                <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
-                  <li>Franchise operations (1-800-GOT-JUNK, College Hunks, etc.)</li>
-                  <li>Companies charging below industry minimums (&lt;$38/cubic yard)</li>
-                  <li>Unlicensed or uninsured operators</li>
-                  <li>Businesses not physically located in the city they're listing (must be hyperlocal)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Industry Education */}
-        <div style={{
-          background: '#f5f5f5',
-          padding: '32px',
-          marginBottom: '48px',
-          border: '1px solid #e5e5e5',
-        }}>
-          <h2 style={{
-            fontSize: '24px',
-            fontWeight: '700',
-            color: '#000',
-            marginBottom: '16px',
-            letterSpacing: '-0.02em',
-          }}>
-            Industry Pricing Standards
-          </h2>
-          <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '20px' }}>
-            Understanding proper pricing ensures sustainable business operations and fair compensation for your work. While $38/cubic yard is our minimum requirement, established junk removal companies typically charge <strong>$45-$65 per cubic yard</strong>.
-          </p>
+          </button>
           
-          <div style={{ marginBottom: '16px' }}>
-            <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
-              Standard Load Pricing (Established Companies)
-            </h4>
-            <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
-              <li>Minimum load (¼ truck, ~3.5 cubic yards): $160-$230</li>
-              <li>Half truck (~7 cubic yards): $315-$455</li>
-              <li>¾ truck (~10 cubic yards): $450-$650</li>
-              <li>Full truck (~14 cubic yards): $630-$910</li>
-            </ul>
-            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '13px', color: '#000', marginTop: '8px', fontStyle: 'italic' }}>
-              Based on $45-$65 per cubic yard industry standard
-            </p>
-          </div>
+          {isRequirementsOpen && (
+            <div style={{
+              border: '2px solid #000',
+              borderTop: 'none',
+              padding: '24px',
+              background: '#fff',
+            }}>
+              {/* Membership Requirements */}
+              <div style={{ marginBottom: '24px' }}>
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                  <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+                  <div>
+                    <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                      Independent Operators Only
+                    </h4>
+                    <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                      We exclusively list locally-owned, independent junk removal companies. No franchises accepted.
+                    </p>
+                  </div>
+                </div>
 
-          <div style={{
-            background: '#fff',
-            padding: '16px',
-            border: '2px solid #fbbf24',
-            marginBottom: '16px',
-          }}>
-            <DollarSign size={20} color="#fbbf24" style={{ marginBottom: '8px' }} />
-            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '12px' }}>
-              <strong>Why the $45-$65 standard?</strong> Established companies charge this range to properly cover all business costs while maintaining quality service and sustainable operations.
-            </p>
-            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-              <strong>$38 minimum floor:</strong> This is the absolute minimum to cover truck costs, fuel, labor, disposal fees, insurance, and overhead. Charging less means working at a loss or cutting corners that hurt you long-term.
-            </p>
-          </div>
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                  <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+                  <div>
+                    <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                      Pricing Standards
+                    </h4>
+                    <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                      Minimum <strong>$38 per cubic yard</strong> required. Established companies typically charge <strong>$45-$65 per cubic yard</strong>. Below-market pricing hurts the industry by setting unsustainable expectations and devaluing professional service.
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+                  <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+                  <div>
+                    <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                      Physical Location Requirement
+                    </h4>
+                    <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                      Your business must be <strong>physically located in the city you select</strong>. We're hyperlocal—connecting customers with their neighborhood junk removal company. You cannot list a city just because you serve it; your business address must be within city limits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{
+                background: '#fef3c7',
+                padding: '16px',
+                border: '1px solid #fbbf24',
+                marginBottom: '24px',
+              }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <XCircle size={20} color="#000" />
+                  <div>
+                    <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '4px' }}>
+                      We Do NOT Accept:
+                    </h4>
+                    <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                      <li>Franchise operations (1-800-GOT-JUNK, College Hunks, etc.)</li>
+                      <li>Companies charging below industry minimums (&lt;$38/cubic yard)</li>
+                      <li>Unlicensed or uninsured operators</li>
+                      <li>Businesses not physically located in the city they're listing (must be hyperlocal)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Industry Pricing Standards */}
+              <div style={{
+                background: '#f5f5f5',
+                padding: '20px',
+                marginBottom: '24px',
+                border: '1px solid #e5e5e5',
+              }}>
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  color: '#000',
+                  marginBottom: '12px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Industry Pricing Standards
+                </h3>
+                <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '16px' }}>
+                  Understanding proper pricing ensures sustainable business operations and fair compensation for your work. While $38/cubic yard is our minimum requirement, established junk removal companies typically charge <strong>$45-$65 per cubic yard</strong>.
+                </p>
+                
+                <div style={{ marginBottom: '16px' }}>
+                  <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+                    Standard Load Pricing (Established Companies)
+                  </h4>
+                  <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+                    <li>Minimum load (¼ truck, ~3.5 cubic yards): $160-$230</li>
+                    <li>Half truck (~7 cubic yards): $315-$455</li>
+                    <li>¾ truck (~10 cubic yards): $450-$650</li>
+                    <li>Full truck (~14 cubic yards): $630-$910</li>
+                  </ul>
+                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '13px', color: '#000', marginTop: '8px', fontStyle: 'italic' }}>
+                    Based on $45-$65 per cubic yard industry standard
+                  </p>
+                </div>
+
+                <div style={{
+                  background: '#fff',
+                  padding: '16px',
+                  border: '2px solid #fbbf24',
+                }}>
+                  <DollarSign size={20} color="#fbbf24" style={{ marginBottom: '8px' }} />
+                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '12px' }}>
+                    <strong>Why the $45-$65 standard?</strong> Established companies charge this range to properly cover all business costs while maintaining quality service and sustainable operations.
+                  </p>
+                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
+                    <strong>$38 minimum floor:</strong> This is the absolute minimum to cover truck costs, fuel, labor, disposal fees, insurance, and overhead. Charging less means working at a loss or cutting corners that hurt you long-term.
+                  </p>
+                </div>
+              </div>
+
+              {/* Required Agreement Checkbox */}
+              <div style={{
+                background: '#fef3c7',
+                padding: '16px',
+                borderRadius: '6px',
+                border: '2px solid #fbbf24',
+              }}>
+                <label style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '12px',
+                  cursor: 'pointer',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <input
+                    type="checkbox"
+                    checked={hasReadRequirements}
+                    onChange={(e) => setHasReadRequirements(e.target.checked)}
+                    style={{
+                      width: '20px',
+                      height: '20px',
+                      cursor: 'pointer',
+                      flexShrink: 0,
+                      marginTop: '2px',
+                    }}
+                    data-testid="checkbox-read-requirements"
+                  />
+                  <span style={{
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    color: '#000',
+                    lineHeight: '1.4',
+                  }}>
+                    I have read and agree to all membership requirements and pricing standards outlined above
+                  </span>
+                </label>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Pricing Tiers */}
