@@ -263,7 +263,7 @@ export default function ProfileEditor() {
     padding: "20px",
     display: "flex",
     alignItems: "center",
-    gap: "16px",
+    justifyContent: "center",
     borderBottom: "3px solid #000",
   };
 
