@@ -5,6 +5,7 @@ import type { IStorage } from "./storage";
 import { insertCompanySchema } from "@shared/schema";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 import bcrypt from "bcryptjs";
+import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Setup auth but don't force it globally
@@ -182,6 +183,24 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       return next();
     }
     res.status(403).json({ error: 'Forbidden: Admin access required' });
+  };
+
+  const requireBusinessAuth = (req: any, res: any, next: any) => {
+    // Check Bearer token
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const decoded = Buffer.from(token, 'base64').toString();
+        const parts = decoded.split(':');
+        if (parts[0] === 'business' && parts.length >= 3) {
+          req.businessOwnerEmail = parts[1];
+          req.businessOwnerId = parseInt(parts[2]);
+          return next();
+        }
+      } catch (e) {}
+    }
+    res.status(401).json({ error: 'Unauthorized - Business owner access required' });
   };
 
   // Get cities with companies for a state
@@ -842,6 +861,76 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     } catch (error) {
       console.error("Error bulk adding businesses:", error);
       res.status(500).json({ error: "Failed to bulk add businesses" });
+    }
+  });
+
+  // Object Storage Routes for Logo Upload
+  // Get presigned URL for logo upload (business owners only)
+  app.post("/api/objects/upload", requireBusinessAuth, async (req, res) => {
+    try {
+      const objectStorageService = new ObjectStorageService();
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error getting upload URL:", error);
+      res.status(500).json({ error: "Failed to get upload URL" });
+    }
+  });
+
+  // Serve uploaded logo images (public access)
+  app.get("/objects/:objectPath(*)", async (req, res) => {
+    const objectStorageService = new ObjectStorageService();
+    try {
+      const objectFile = await objectStorageService.getObjectEntityFile(req.path);
+      objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error serving object:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
+    }
+  });
+
+  // Save logo URL after upload (business owners only)
+  app.put("/api/companies/:id/logo", requireBusinessAuth, async (req, res) => {
+    try {
+      const companyId = parseInt(req.params.id);
+      const { logoURL } = req.body;
+      
+      if (!logoURL) {
+        return res.status(400).json({ error: "logoURL is required" });
+      }
+
+      // Verify company ownership
+      const company = await storage.getCompanyById(companyId);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      const businessOwnerId = (req as any).businessOwnerId;
+      const owner = await storage.getBusinessOwnerById(businessOwnerId);
+      if (!owner || owner.companyId !== companyId) {
+        return res.status(403).json({ error: "Not authorized to update this company" });
+      }
+
+      // Set ACL policy and normalize path
+      const objectStorageService = new ObjectStorageService();
+      const logoPath = await objectStorageService.trySetObjectEntityAclPolicy(
+        logoURL,
+        {
+          owner: businessOwnerId.toString(),
+          visibility: "public", // Logos are public so everyone can see them
+        }
+      );
+
+      // Update company logo
+      const updatedCompany = await storage.updateCompany(companyId, { logoUrl: logoPath } as any);
+      
+      res.json({ success: true, logoPath, company: updatedCompany });
+    } catch (error) {
+      console.error("Error saving logo:", error);
+      res.status(500).json({ error: "Failed to save logo" });
     }
   });
 
