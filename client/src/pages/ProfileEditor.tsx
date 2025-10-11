@@ -204,9 +204,8 @@ export default function ProfileEditor() {
       return result;
     },
     onSuccess: async () => {
-      console.log("Mutation success, invalidating cache and refetching");
+      console.log("Mutation success, invalidating cache");
       await queryClient.invalidateQueries({ queryKey: ["/api/business/profile"] });
-      await queryClient.refetchQueries({ queryKey: ["/api/business/profile"] });
       setToastMessage("Profile updated successfully!");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);

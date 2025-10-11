@@ -708,6 +708,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
   // Business owner profile endpoints
   app.get("/api/business/profile", async (req: any, res) => {
+    const startTime = Date.now();
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -724,13 +725,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
 
       const ownerId = parseInt(parts[2]);
+      const ownerStart = Date.now();
       const owner = await storage.getBusinessOwnerById(ownerId);
+      console.log(`[PERF] getBusinessOwnerById took ${Date.now() - ownerStart}ms`);
       
       if (!owner || !owner.companyId) {
         return res.status(404).json({ error: "No company associated with this account" });
       }
 
+      const companyStart = Date.now();
       const company = await storage.getCompanyById(owner.companyId);
+      console.log(`[PERF] getCompanyById took ${Date.now() - companyStart}ms`);
+      console.log(`[PERF] Total GET profile fetch took ${Date.now() - startTime}ms`);
       res.json(company);
     } catch (error) {
       console.error("Error fetching business profile:", error);
@@ -739,6 +745,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   });
 
   app.patch("/api/business/profile", async (req: any, res) => {
+    const startTime = Date.now();
     try {
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -755,15 +762,20 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
 
       const ownerId = parseInt(parts[2]);
+      const ownerStart = Date.now();
       const owner = await storage.getBusinessOwnerById(ownerId);
+      console.log(`[PERF] getBusinessOwnerById (PATCH) took ${Date.now() - ownerStart}ms`);
       
       if (!owner || !owner.companyId) {
         return res.status(404).json({ error: "No company associated with this account" });
       }
 
-      console.log("Updating company:", owner.companyId, "with data:", req.body);
+      console.log("Updating company:", owner.companyId);
+      const updateStart = Date.now();
       const updatedCompany = await storage.updateCompany(owner.companyId, req.body as any);
-      console.log("Updated company result:", updatedCompany);
+      console.log(`[PERF] updateCompany took ${Date.now() - updateStart}ms`);
+      console.log(`[PERF] Total PATCH profile update took ${Date.now() - startTime}ms`);
+      console.log("Updated company result:", updatedCompany ? "Success" : "Failed");
       res.json(updatedCompany);
     } catch (error) {
       console.error("Error updating business profile:", error);
