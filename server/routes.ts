@@ -770,12 +770,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ error: "No company associated with this account" });
       }
 
-      console.log("Updating company:", owner.companyId);
-      const updateStart = Date.now();
+      console.log("Updating company:", owner.companyId, "with keys:", Object.keys(req.body).join(', '));
+      if (req.body.galleryImages) console.log("✓ galleryImages:", req.body.galleryImages.length, "items");
+      if (req.body.googleFeaturedReviews) console.log("✓ googleFeaturedReviews:", req.body.googleFeaturedReviews.length, "items");
+      
       const updatedCompany = await storage.updateCompany(owner.companyId, req.body as any);
-      console.log(`[PERF] updateCompany took ${Date.now() - updateStart}ms`);
-      console.log(`[PERF] Total PATCH profile update took ${Date.now() - startTime}ms`);
-      console.log("Updated company result:", updatedCompany ? "Success" : "Failed");
+      console.log(`[PERF] Total PATCH took ${Date.now() - startTime}ms`);
       res.json(updatedCompany);
     } catch (error) {
       console.error("Error updating business profile:", error);

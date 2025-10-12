@@ -618,22 +618,26 @@ export class DbStorage implements IStorage {
   }
 
   async updateCompany(id: number, data: Partial<InsertCompany>): Promise<Company | null> {
-    // Clean the data to ensure proper types and remove undefined
-    const cleanData: any = {};
+    // Build update object with only defined values, converting empty strings to null
+    const updateData: Partial<typeof companies.$inferInsert> = {};
     
-    Object.keys(data).forEach(key => {
-      const value = (data as any)[key];
+    for (const [key, value] of Object.entries(data)) {
       if (value !== undefined) {
-        cleanData[key] = value === '' ? null : value;
+        (updateData as any)[key] = value === '' ? null : value;
       }
-    });
+    }
     
-    const [updated] = await db
-      .update(companies)
-      .set(cleanData)
-      .where(eq(companies.id, id))
-      .returning();
-    return updated || null;
+    try {
+      const [updated] = await db
+        .update(companies)
+        .set(updateData)
+        .where(eq(companies.id, id))
+        .returning();
+      return updated || null;
+    } catch (error) {
+      console.error('Update error:', error);
+      throw error;
+    }
   }
 
   async updateCompanyStatus(id: number, status: string): Promise<Company | null> {
