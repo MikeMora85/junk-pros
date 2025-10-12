@@ -3419,9 +3419,23 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       transform: `translateX(-${(carouselOffsets[c.id] || 0) * 50}%)`,
                     }}>
                       {(() => {
-                        // Show placeholders for newly added businesses (no logo and no reviews)
-                        const hasImages = c.logoUrl || c.reviews > 0;
-                        const imagesToShow = hasImages ? [...defaultImages, ...defaultImages] : [0, 1];
+                        // Priority: Use gallery images if available, otherwise use logo or defaults
+                        const hasGallery = c.galleryImages && c.galleryImages.length > 0;
+                        const hasLogo = c.logoUrl;
+                        const hasReviews = c.reviews > 0;
+                        
+                        let imagesToShow: (string | number)[] = [];
+                        
+                        if (hasGallery) {
+                          // Use gallery images and duplicate them for continuous carousel
+                          imagesToShow = [...c.galleryImages, ...c.galleryImages];
+                        } else if (hasLogo || hasReviews) {
+                          // Use default images if they have a logo or reviews but no gallery
+                          imagesToShow = [...defaultImages, ...defaultImages];
+                        } else {
+                          // New businesses with nothing - show placeholder
+                          imagesToShow = [0, 1];
+                        }
                         
                         return imagesToShow.map((item, i) => (
                           <div
@@ -3431,9 +3445,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                               padding: '0',
                             }}
                           >
-                            {hasImages ? (
+                            {typeof item === 'string' ? (
                               <img
-                                src={item as string}
+                                src={item}
                                 alt="Service photo"
                                 style={{
                                   width: '100%',
@@ -3443,7 +3457,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 }}
                               />
                             ) : (
-                              <PlaceholderImage index={item as number} />
+                              <PlaceholderImage index={item} />
                             )}
                           </div>
                         ));
