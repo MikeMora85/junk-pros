@@ -935,7 +935,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     try {
       const objectStorageService = new ObjectStorageService();
       const uploadURL = await objectStorageService.getObjectEntityUploadURL();
-      res.json({ uploadURL });
+      res.json({ method: 'PUT', url: uploadURL });
     } catch (error) {
       console.error("Error getting upload URL:", error);
       res.status(500).json({ error: "Failed to get upload URL" });
