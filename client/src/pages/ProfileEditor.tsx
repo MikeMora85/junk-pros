@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "../lib/queryClient";
 import { useAuth } from "../hooks/useAuth";
@@ -66,6 +66,10 @@ export default function ProfileEditor() {
   const [, navigate] = useLocation();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  
+  const logoPathRef = useRef<string>('');
+  const teamPhotoPathRef = useRef<string>('');
+  const galleryPathsRef = useRef<string[]>([]);
 
   const getDefaultBusinessHours = (): BusinessHours => ({
     monday: { open: "09:00", close: "17:00", closed: false },
@@ -422,40 +426,35 @@ export default function ProfileEditor() {
                     </button>
                   </div>
                 ) : (
-                  {(() => {
-                    let logoPath = '';
-                    return (
-                      <ObjectUploader
-                        maxNumberOfFiles={1}
-                        maxFileSize={10485760}
-                        onGetUploadParameters={async () => {
-                          const token = localStorage.getItem('authToken');
-                          logoPath = `/objects/logos/${crypto.randomUUID()}`;
-                          const response = await fetch('/api/objects/upload', {
-                            method: 'POST',
-                            headers: {
-                              'Authorization': `Bearer ${token}`,
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ path: logoPath }),
-                          });
-                          return await response.json();
-                        }}
-                        onComplete={(result: UploadResult<any, any>) => {
-                          if (result.successful && result.successful.length > 0 && logoPath) {
-                            setFormData(prev => ({ ...prev, logoUrl: logoPath }));
-                            setToastMessage("Logo uploaded successfully!");
-                            setShowToast(true);
-                            setTimeout(() => setShowToast(false), 3000);
-                          }
-                        }}
-                        buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
-                      >
-                        <Upload size={20} style={{ marginRight: "8px" }} />
-                        Upload Logo
-                      </ObjectUploader>
-                    );
-                  })()}
+                  <ObjectUploader
+                    maxNumberOfFiles={1}
+                    maxFileSize={10485760}
+                    onGetUploadParameters={async () => {
+                      const token = localStorage.getItem('authToken');
+                      logoPathRef.current = `/objects/logos/${crypto.randomUUID()}`;
+                      const response = await fetch('/api/objects/upload', {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ path: logoPathRef.current }),
+                      });
+                      return await response.json();
+                    }}
+                    onComplete={(result: UploadResult<any, any>) => {
+                      if (result.successful && result.successful.length > 0 && logoPathRef.current) {
+                        setFormData(prev => ({ ...prev, logoUrl: logoPathRef.current }));
+                        setToastMessage("Logo uploaded successfully!");
+                        setShowToast(true);
+                        setTimeout(() => setShowToast(false), 3000);
+                      }
+                    }}
+                    buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
+                  >
+                    <Upload size={20} style={{ marginRight: "8px" }} />
+                    Upload Logo
+                  </ObjectUploader>
                 )}
               </div>
 
@@ -1154,42 +1153,37 @@ export default function ProfileEditor() {
                             </button>
                           </div>
                         ) : (
-                          {(() => {
-                            let teamPhotoPath = '';
-                            return (
-                              <ObjectUploader
-                                maxNumberOfFiles={1}
-                                maxFileSize={10485760}
-                                onGetUploadParameters={async () => {
-                                  const token = localStorage.getItem('authToken');
-                                  teamPhotoPath = `/objects/team/${crypto.randomUUID()}`;
-                                  const response = await fetch('/api/objects/upload', {
-                                    method: 'POST',
-                                    headers: {
-                                      'Authorization': `Bearer ${token}`,
-                                      'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({ path: teamPhotoPath }),
-                                  });
-                                  return await response.json();
-                                }}
-                                onComplete={(result: UploadResult<any, any>) => {
-                                  if (result.successful && result.successful.length > 0 && teamPhotoPath) {
-                                    const newMembers = [...formData.teamMembers];
-                                    newMembers[index].photoUrl = teamPhotoPath;
-                                    setFormData(prev => ({ ...prev, teamMembers: newMembers }));
-                                    setToastMessage("Team member photo uploaded!");
-                                    setShowToast(true);
-                                    setTimeout(() => setShowToast(false), 3000);
-                                  }
-                                }}
-                                buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg text-sm"
-                              >
-                                <Upload size={16} style={{ marginRight: "6px" }} />
-                                Upload Photo
-                              </ObjectUploader>
-                            );
-                          })()}
+                          <ObjectUploader
+                            maxNumberOfFiles={1}
+                            maxFileSize={10485760}
+                            onGetUploadParameters={async () => {
+                              const token = localStorage.getItem('authToken');
+                              teamPhotoPathRef.current = `/objects/team/${crypto.randomUUID()}`;
+                              const response = await fetch('/api/objects/upload', {
+                                method: 'POST',
+                                headers: {
+                                  'Authorization': `Bearer ${token}`,
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ path: teamPhotoPathRef.current }),
+                              });
+                              return await response.json();
+                            }}
+                            onComplete={(result: UploadResult<any, any>) => {
+                              if (result.successful && result.successful.length > 0 && teamPhotoPathRef.current) {
+                                const newMembers = [...formData.teamMembers];
+                                newMembers[index].photoUrl = teamPhotoPathRef.current;
+                                setFormData(prev => ({ ...prev, teamMembers: newMembers }));
+                                setToastMessage("Team member photo uploaded!");
+                                setShowToast(true);
+                                setTimeout(() => setShowToast(false), 3000);
+                              }
+                            }}
+                            buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-4 py-2 rounded-lg text-sm"
+                          >
+                            <Upload size={16} style={{ marginRight: "6px" }} />
+                            Upload Photo
+                          </ObjectUploader>
                         )}
                       </div>
 
@@ -1276,47 +1270,50 @@ export default function ProfileEditor() {
 
               {/* Gallery Photos */}
               <div>
-                <label style={labelStyle}>Gallery Photos (Up to 10)</label>
-                <div style={{ marginBottom: "16px" }}>
-                  {(() => {
-                    const galleryPaths: string[] = [];
-                    return (
-                      <ObjectUploader
-                        maxNumberOfFiles={10 - formData.galleryImages.length}
-                        maxFileSize={10485760}
-                        onGetUploadParameters={async () => {
-                          const token = localStorage.getItem('authToken');
-                          const path = `/objects/gallery/${crypto.randomUUID()}`;
-                          galleryPaths.push(path);
-                          const response = await fetch('/api/objects/upload', {
-                            method: 'POST',
-                            headers: {
-                              'Authorization': `Bearer ${token}`,
-                              'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ path }),
-                          });
-                          return await response.json();
-                        }}
-                        onComplete={(result: UploadResult<any, any>) => {
-                          if (result.successful && result.successful.length > 0 && galleryPaths.length > 0) {
-                            setFormData(prev => ({
-                              ...prev,
-                              galleryImages: [...prev.galleryImages, ...galleryPaths]
-                            }));
-                            setToastMessage(`${galleryPaths.length} image(s) uploaded successfully!`);
-                            setShowToast(true);
-                            setTimeout(() => setShowToast(false), 3000);
-                            galleryPaths.length = 0;
-                          }
-                        }}
-                        buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg"
-                      >
-                        <Upload size={20} style={{ marginRight: "8px" }} />
-                        Upload Gallery Images ({formData.galleryImages.length}/10)
-                      </ObjectUploader>
-                    );
-                  })()}
+                <label style={{...labelStyle, fontSize: "18px", fontWeight: "700", color: "#000", marginBottom: "16px", display: "block"}}>
+                  📸 Gallery Photos (Up to 10)
+                </label>
+                <div style={{ 
+                  marginBottom: "16px", 
+                  padding: "20px", 
+                  backgroundColor: "#fffbeb", 
+                  border: "3px solid #fbbf24", 
+                  borderRadius: "12px" 
+                }}>
+                  <ObjectUploader
+                    maxNumberOfFiles={10 - formData.galleryImages.length}
+                    maxFileSize={10485760}
+                    onGetUploadParameters={async () => {
+                      const token = localStorage.getItem('authToken');
+                      const path = `/objects/gallery/${crypto.randomUUID()}`;
+                      galleryPathsRef.current.push(path);
+                      const response = await fetch('/api/objects/upload', {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ path }),
+                      });
+                      return await response.json();
+                    }}
+                    onComplete={(result: UploadResult<any, any>) => {
+                      if (result.successful && result.successful.length > 0 && galleryPathsRef.current.length > 0) {
+                        setFormData(prev => ({
+                          ...prev,
+                          galleryImages: [...prev.galleryImages, ...galleryPathsRef.current]
+                        }));
+                        setToastMessage(`${galleryPathsRef.current.length} image(s) uploaded successfully!`);
+                        setShowToast(true);
+                        setTimeout(() => setShowToast(false), 3000);
+                        galleryPathsRef.current = [];
+                      }
+                    }}
+                    buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all w-full"
+                  >
+                    <Upload size={24} style={{ marginRight: "10px" }} />
+                    📤 UPLOAD GALLERY PHOTOS ({formData.galleryImages.length}/10)
+                  </ObjectUploader>
                 </div>
 
                 {formData.galleryImages.length > 0 && (
