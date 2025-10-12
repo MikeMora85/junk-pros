@@ -233,6 +233,8 @@ export default function ProfileEditor() {
   });
 
   const handleSave = () => {
+    console.log('🔵 SAVE BUTTON CLICKED - Handler executing');
+    
     const payload = {
       name: formData.name,
       phone: formData.phone,
@@ -241,7 +243,7 @@ export default function ProfileEditor() {
       address: formData.address,
       city: formData.city,
       state: formData.state,
-      logoUrl: formData.logoUrl || null,
+      logoUrl: logoPathRef.current || formData.logoUrl || null,
       services: formData.selectedServices,
       specialties: formData.specialties.filter(s => s.trim()),
       aboutUs: formData.aboutUs || null,
@@ -258,18 +260,28 @@ export default function ProfileEditor() {
       addOnCostsVisible: formData.addOnCostsVisible,
       hours: formData.hours || null,
       availability: formData.availability || null,
-      teamMembers: formData.teamMembers.length > 0 ? formData.teamMembers : null,
-      galleryImages: formData.galleryImages.length > 0 ? formData.galleryImages : null,
+      teamMembers: formData.teamMembers.map(tm => ({
+        ...tm,
+        photoUrl: teamPhotoPathRef.current || tm.photoUrl
+      })).length > 0 ? formData.teamMembers.map(tm => ({
+        ...tm,
+        photoUrl: teamPhotoPathRef.current || tm.photoUrl
+      })) : null,
+      galleryImages: galleryPathsRef.current.length > 0 ? galleryPathsRef.current : (formData.galleryImages.length > 0 ? formData.galleryImages : null),
       businessHours: formData.businessHours,
       googleRanking: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
       googleReviewCount: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
     };
-    console.log('💾 SAVING:', { 
+    
+    console.log('💾 SAVE PAYLOAD READY:', { 
+      logoUrl: payload.logoUrl,
       galleryImages: payload.galleryImages?.length || 0,
       googleFeaturedReviews: payload.googleFeaturedReviews?.length || 0,
       teamMembers: payload.teamMembers?.length || 0
     });
+    
+    console.log('📤 CALLING MUTATION...');
     updateMutation.mutate(payload);
   };
 
