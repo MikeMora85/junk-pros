@@ -224,7 +224,7 @@ export default function CompanyDetail() {
             )}
 
             {/* Photos */}
-            {company.galleryImages && company.galleryImages.length > 0 && (
+            {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
               <div style={{
                 backgroundColor: '#fff',
                 borderRadius: '12px',
@@ -245,19 +245,26 @@ export default function CompanyDetail() {
                   gridTemplateColumns: 'repeat(2, 1fr)',
                   gap: '12px',
                 }}>
-                  {company.galleryImages.slice(0, 4).map((img, i) => (
-                    <img
-                      key={i}
-                      src={img}
-                      alt={`Gallery ${i + 1}`}
-                      style={{
-                        width: '100%',
-                        height: '120px',
-                        objectFit: 'cover',
-                        borderRadius: '8px',
-                      }}
-                    />
-                  ))}
+                  {(() => {
+                    const hasGallery = company.galleryImages && company.galleryImages.length > 0;
+                    const imagesToShow = hasGallery 
+                      ? company.galleryImages!.slice(0, 4)
+                      : [1, 2, 3, 4];
+                    
+                    return imagesToShow.map((img, i) => (
+                      <img
+                        key={i}
+                        src={typeof img === 'string' ? img : `https://picsum.photos/400/300?random=${img}`}
+                        alt={`Gallery ${i + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '120px',
+                          objectFit: 'cover',
+                          borderRadius: '8px',
+                        }}
+                      />
+                    ));
+                  })()}
                 </div>
               </div>
             )}

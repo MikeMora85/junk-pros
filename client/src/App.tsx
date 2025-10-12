@@ -4008,6 +4008,59 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           </div>
         </div>
 
+        {/* Gallery Carousel */}
+        {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
+          <div style={{
+            marginBottom: '16px',
+            marginTop: '16px',
+            overflow: 'hidden',
+            borderRadius: '8px',
+            maxHeight: '300px',
+          }}>
+            <div style={{
+              display: 'flex',
+              gap: '8px',
+            }}>
+              {(() => {
+                const hasGallery = company.galleryImages && company.galleryImages.length > 0;
+                const hasLogo = company.logoUrl;
+                const hasReviews = company.reviews > 0;
+                
+                let imagesToShow: (string | number)[] = [];
+                
+                if (hasGallery) {
+                  imagesToShow = company.galleryImages!.slice(0, 3);
+                } else if (hasLogo || hasReviews) {
+                  imagesToShow = [1, 2, 3];
+                }
+                
+                return imagesToShow.map((img, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      flex: '0 0 calc(33.333% - 5.33px)',
+                      aspectRatio: '1',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      background: '#f3f4f6',
+                    }}
+                  >
+                    <img
+                      src={typeof img === 'string' ? img : `https://picsum.photos/400/400?random=${img}`}
+                      alt={`Gallery ${idx + 1}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                ));
+              })()}
+            </div>
+          </div>
+        )}
+
         {/* Rating */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
           {[1, 2, 3, 4, 5].map((star) => (
