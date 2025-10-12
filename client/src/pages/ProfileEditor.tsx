@@ -1329,15 +1329,25 @@ export default function ProfileEditor() {
                       return await response.json();
                     }}
                     onComplete={(result: UploadResult<any, any>) => {
+                      console.log('🖼️ GALLERY UPLOAD COMPLETE:', result);
+                      console.log('📁 Gallery paths ref:', galleryPathsRef.current);
                       if (result.successful && result.successful.length > 0 && galleryPathsRef.current.length > 0) {
-                        setFormData(prev => ({
-                          ...prev,
-                          galleryImages: [...prev.galleryImages, ...galleryPathsRef.current]
-                        }));
-                        setToastMessage(`${galleryPathsRef.current.length} image(s) uploaded successfully!`);
+                        const newImages = [...galleryPathsRef.current];
+                        console.log('✅ Adding gallery images to formData:', newImages);
+                        setFormData(prev => {
+                          const updated = {
+                            ...prev,
+                            galleryImages: [...prev.galleryImages, ...newImages]
+                          };
+                          console.log('📊 Updated formData.galleryImages:', updated.galleryImages);
+                          return updated;
+                        });
+                        setToastMessage(`${newImages.length} image(s) uploaded successfully!`);
                         setShowToast(true);
                         setTimeout(() => setShowToast(false), 3000);
                         galleryPathsRef.current = [];
+                      } else {
+                        console.log('❌ Gallery upload failed - conditions not met');
                       }
                     }}
                     buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all w-full"
