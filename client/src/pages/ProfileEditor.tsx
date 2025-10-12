@@ -161,14 +161,30 @@ export default function ProfileEditor() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: any) => {
+      console.log('📤 SENDING to API:', {
+        galleryImages: data.galleryImages?.length || 0,
+        googleFeaturedReviews: data.googleFeaturedReviews?.length || 0,
+        teamMembers: data.teamMembers?.length || 0
+      });
       const result = await apiRequest("/api/business/profile", {
         method: "PATCH",
         body: data,
+      });
+      console.log('📥 RECEIVED from API:', {
+        galleryImages: result.galleryImages?.length || 0,
+        googleFeaturedReviews: result.googleFeaturedReviews?.length || 0,
+        teamMembers: result.teamMembers?.length || 0
       });
       return result;
     },
     onSuccess: async (updatedCompany) => {
       queryClient.setQueryData(["/api/business/profile"], updatedCompany);
+      
+      console.log('✅ onSuccess - Updated Company Data:', {
+        galleryImages: updatedCompany.galleryImages?.length || 0,
+        googleFeaturedReviews: updatedCompany.googleFeaturedReviews?.length || 0,
+        teamMembers: updatedCompany.teamMembers?.length || 0
+      });
       
       // Update form data with the saved values to reflect any backend transformations
       setFormData({
@@ -209,6 +225,7 @@ export default function ProfileEditor() {
       setTimeout(() => setShowToast(false), 3000);
     },
     onError: (error: any) => {
+      console.error('❌ MUTATION ERROR:', error);
       setToastMessage(`Failed to update profile: ${error.message || 'Unknown error'}`);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 5000);
@@ -248,6 +265,11 @@ export default function ProfileEditor() {
       googleReviewCount: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
     };
+    console.log('💾 SAVING:', { 
+      galleryImages: payload.galleryImages?.length || 0,
+      googleFeaturedReviews: payload.googleFeaturedReviews?.length || 0,
+      teamMembers: payload.teamMembers?.length || 0
+    });
     updateMutation.mutate(payload);
   };
 
