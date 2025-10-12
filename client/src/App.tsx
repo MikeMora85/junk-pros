@@ -3428,7 +3428,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         
                         if (hasGallery) {
                           // Use gallery images and duplicate them for continuous carousel
-                          imagesToShow = [...c.galleryImages, ...c.galleryImages];
+                          imagesToShow = [...c.galleryImages!, ...c.galleryImages!];
                         } else if (hasLogo || hasReviews) {
                           // Use default images if they have a logo or reviews but no gallery
                           imagesToShow = [...defaultImages, ...defaultImages];

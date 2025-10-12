@@ -157,16 +157,13 @@ export default function ProfileEditor() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: any) => {
-      console.log('MUTATION: Starting API request with data:', data);
       const result = await apiRequest("/api/business/profile", {
         method: "PATCH",
         body: data,
       });
-      console.log('MUTATION: Received response:', result);
       return result;
     },
     onSuccess: async (updatedCompany) => {
-      console.log('MUTATION SUCCESS: Received updated company:', updatedCompany);
       queryClient.setQueryData(["/api/business/profile"], updatedCompany);
       
       // Update form data with the saved values to reflect any backend transformations
@@ -203,13 +200,11 @@ export default function ProfileEditor() {
         googleFeaturedReviews: (updatedCompany.googleFeaturedReviews as FeaturedReview[]) || [],
       });
       
-      console.log('MUTATION SUCCESS: Form data updated, showing toast');
       setToastMessage("Profile updated successfully!");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     },
     onError: (error: any) => {
-      console.error('MUTATION ERROR:', error);
       setToastMessage(`Failed to update profile: ${error.message || 'Unknown error'}`);
       setShowToast(true);
       setTimeout(() => setShowToast(false), 5000);
@@ -249,8 +244,6 @@ export default function ProfileEditor() {
       googleReviewCount: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
     };
-    console.log('SAVE: Sending payload:', payload);
-    console.log('SAVE: Gallery images count:', formData.galleryImages.length);
     updateMutation.mutate(payload);
   };
 
