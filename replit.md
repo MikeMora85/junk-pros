@@ -70,15 +70,19 @@ I prefer detailed explanations.
             - "Closed" checkbox for each day
             - Default: Mon-Fri 9AM-5PM, Sat-Sun closed
             - Stores as structured JSON in `businessHours` field
-        - **Gallery Photo Upload** (Tab 5):
+        - **Gallery Photo Upload** (Section 5):
+            - **PROMINENT UI**: Large yellow-bordered section with camera emoji, impossible to miss
+            - **BIG UPLOAD BUTTON**: Full-width button with emoji and hover effects for maximum visibility
             - Multi-photo uploader supporting up to 10 images
-            - Object storage integration with presigned URLs
+            - Object storage integration with presigned URLs (fixed upload persistence)
+            - **Fixed Upload Bug**: Photos now properly save using useRef to store file paths
             - Responsive thumbnail grid with delete buttons
             - Stores in `galleryImages` array field
             - Upload path: `/objects/gallery/{uuid}`
-        - **Team Member Management** (Tab 5):
+        - **Team Member Management** (Section 5):
             - Add/edit/delete team members with name, role, bio
             - Individual photo upload for each team member
+            - **Fixed Upload Bug**: Team photos now properly save using useRef to store file paths
             - Professional card layout with 200px photo column
             - Object storage for team photos: `/objects/team/{uuid}`
             - Stores in `teamMembers` jsonb field
@@ -94,6 +98,8 @@ I prefer detailed explanations.
         - **Logo Upload**: **UPGRADED to Replit Object Storage** for 30x faster saves (2 seconds vs 65 seconds)
             - Professional file upload using Uppy.js modal interface
             - Direct upload to Google Cloud Storage via presigned URLs
+            - **Fixed Upload Bug**: Logo now properly saves using useRef to store file path
+            - **Fixed API Response**: Changed `/api/objects/upload` to return `{ method: 'PUT', url: ... }` (Uppy AwsS3 format)
             - Max file size: 10MB (up from 2MB)
             - Stores as `/objects/logos/{uuid}` URL (replaces base64 encoding)
             - Public ACL for logo visibility across all pages
