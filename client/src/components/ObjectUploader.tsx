@@ -9,7 +9,7 @@ import type { UploadResult } from "@uppy/core";
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
   maxFileSize?: number;
-  onGetUploadParameters: () => Promise<{
+  onGetUploadParameters: (file: any) => Promise<{
     method: "PUT";
     url: string;
   }>;

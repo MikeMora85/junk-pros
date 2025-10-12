@@ -451,9 +451,10 @@ export default function ProfileEditor() {
                   <ObjectUploader
                     maxNumberOfFiles={1}
                     maxFileSize={10485760}
-                    onGetUploadParameters={async () => {
+                    onGetUploadParameters={async (file) => {
                       const token = localStorage.getItem('authToken');
-                      logoPathRef.current = `/objects/logos/${crypto.randomUUID()}`;
+                      const fileExt = file.name.split('.').pop() || 'jpg';
+                      logoPathRef.current = `/objects/logos/${crypto.randomUUID()}.${fileExt}`;
                       const response = await fetch('/api/objects/upload', {
                         method: 'POST',
                         headers: {
@@ -1178,9 +1179,10 @@ export default function ProfileEditor() {
                           <ObjectUploader
                             maxNumberOfFiles={1}
                             maxFileSize={10485760}
-                            onGetUploadParameters={async () => {
+                            onGetUploadParameters={async (file) => {
                               const token = localStorage.getItem('authToken');
-                              teamPhotoPathRef.current = `/objects/team/${crypto.randomUUID()}`;
+                              const fileExt = file.name.split('.').pop() || 'jpg';
+                              teamPhotoPathRef.current = `/objects/team/${crypto.randomUUID()}.${fileExt}`;
                               const response = await fetch('/api/objects/upload', {
                                 method: 'POST',
                                 headers: {
@@ -1305,9 +1307,10 @@ export default function ProfileEditor() {
                   <ObjectUploader
                     maxNumberOfFiles={10 - formData.galleryImages.length}
                     maxFileSize={10485760}
-                    onGetUploadParameters={async () => {
+                    onGetUploadParameters={async (file) => {
                       const token = localStorage.getItem('authToken');
-                      const path = `/objects/gallery/${crypto.randomUUID()}`;
+                      const fileExt = file.name.split('.').pop() || 'jpg';
+                      const path = `/objects/gallery/${crypto.randomUUID()}.${fileExt}`;
                       galleryPathsRef.current.push(path);
                       const response = await fetch('/api/objects/upload', {
                         method: 'POST',
