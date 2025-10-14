@@ -111,7 +111,7 @@ export class ObjectStorageService {
     }
   }
 
-  async getObjectEntityUploadURL(): Promise<string> {
+  async getObjectEntityUploadURL(customPath?: string): Promise<string> {
     const privateObjectDir = this.getPrivateObjectDir();
     if (!privateObjectDir) {
       throw new Error(
@@ -119,8 +119,7 @@ export class ObjectStorageService {
           "tool and set PRIVATE_OBJECT_DIR env var."
       );
     }
-    const objectId = randomUUID();
-    const fullPath = `${privateObjectDir}/logos/${objectId}`;
+    const fullPath = customPath || `${privateObjectDir}/logos/${randomUUID()}`;
     const { bucketName, objectName } = parseObjectPath(fullPath);
     return signObjectURL({
       bucketName,
