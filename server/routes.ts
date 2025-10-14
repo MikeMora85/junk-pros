@@ -933,8 +933,9 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Get presigned URL for logo upload (business owners only)
   app.post("/api/objects/upload", requireBusinessAuth, async (req, res) => {
     try {
+      const { path } = req.body;
       const objectStorageService = new ObjectStorageService();
-      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL(path);
       res.json({ method: 'PUT', url: uploadURL });
     } catch (error) {
       console.error("Error getting upload URL:", error);
