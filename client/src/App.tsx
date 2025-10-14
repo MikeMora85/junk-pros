@@ -139,6 +139,7 @@ function RotatingBanner() {
 
 // Hamburger Menu Component
 function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const { user, logout } = useAuth();
   const [stateSearch, setStateSearch] = useState('');
   const [citySearch, setCitySearch] = useState('');
   const [townSearch, setTownSearch] = useState('');
@@ -921,23 +922,67 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             Blog
           </a>
 
-          {/* Login */}
-          <Link
-            href="/login"
-            style={{
-              display: 'block',
-              padding: '16px',
-              color: '#000',
-              textDecoration: 'none',
-              fontSize: '18px',
-              fontWeight: '600',
-              borderBottom: '1px solid #e5e5e5',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}
-            data-testid="link-menu-login"
-          >
-            Login
-          </Link>
+          {/* Login/Profile/Logout */}
+          {user ? (
+            <>
+              <Link
+                href="/profile/edit"
+                style={{
+                  display: 'block',
+                  padding: '16px',
+                  color: '#000',
+                  textDecoration: 'none',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  borderBottom: '1px solid #e5e5e5',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                data-testid="link-menu-profile"
+              >
+                My Profile
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  onClose();
+                }}
+                style={{
+                  width: '100%',
+                  textAlign: 'left',
+                  display: 'block',
+                  padding: '16px',
+                  color: '#000',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  borderBottom: '1px solid #e5e5e5',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  cursor: 'pointer',
+                }}
+                data-testid="button-menu-logout"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              style={{
+                display: 'block',
+                padding: '16px',
+                color: '#000',
+                textDecoration: 'none',
+                fontSize: '18px',
+                fontWeight: '600',
+                borderBottom: '1px solid #e5e5e5',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              data-testid="link-menu-login"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </>
