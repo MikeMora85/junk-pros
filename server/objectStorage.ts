@@ -119,7 +119,16 @@ export class ObjectStorageService {
           "tool and set PRIVATE_OBJECT_DIR env var."
       );
     }
-    const fullPath = customPath || `${privateObjectDir}/logos/${randomUUID()}`;
+    
+    let fullPath: string;
+    if (customPath && customPath.startsWith('/objects/')) {
+      // Convert /objects/gallery/uuid.jpg to PRIVATE_DIR/gallery/uuid.jpg
+      const pathParts = customPath.slice('/objects/'.length);
+      fullPath = `${privateObjectDir}/${pathParts}`;
+    } else {
+      fullPath = customPath || `${privateObjectDir}/logos/${randomUUID()}`;
+    }
+    
     const { bucketName, objectName } = parseObjectPath(fullPath);
     return signObjectURL({
       bucketName,
