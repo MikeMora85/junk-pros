@@ -266,6 +266,11 @@ export default function ProfileEditor() {
       googleRanking: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
       googleReviewCount: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
+      reviewSnippets: formData.googleFeaturedReviews.length > 0 
+        ? formData.googleFeaturedReviews.map(r => r.reviewText)
+        : null,
+      rating: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
+      reviews: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
     };
     
     console.log('💾 SAVE PAYLOAD READY:', { 
