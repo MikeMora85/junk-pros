@@ -458,7 +458,7 @@ export default function ProfileEditor() {
                     maxNumberOfFiles={1}
                     maxFileSize={10485760}
                     onGetUploadParameters={async (file) => {
-                      const token = localStorage.getItem('authToken');
+                      const token = localStorage.getItem('auth_token');
                       const fileExt = file.name.split('.').pop() || 'jpg';
                       logoPathRef.current = `/objects/logos/${crypto.randomUUID()}.${fileExt}`;
                       const response = await fetch('/api/objects/upload', {
@@ -1186,7 +1186,7 @@ export default function ProfileEditor() {
                             maxNumberOfFiles={1}
                             maxFileSize={10485760}
                             onGetUploadParameters={async (file) => {
-                              const token = localStorage.getItem('authToken');
+                              const token = localStorage.getItem('auth_token');
                               const fileExt = file.name.split('.').pop() || 'jpg';
                               teamPhotoPathRef.current = `/objects/team/${crypto.randomUUID()}.${fileExt}`;
                               const response = await fetch('/api/objects/upload', {
@@ -1314,7 +1314,7 @@ export default function ProfileEditor() {
                     maxNumberOfFiles={10 - formData.galleryImages.length}
                     maxFileSize={10485760}
                     onGetUploadParameters={async (file) => {
-                      const token = localStorage.getItem('authToken');
+                      const token = localStorage.getItem('auth_token');
                       const fileExt = file.name.split('.').pop() || 'jpg';
                       const path = `/objects/gallery/${crypto.randomUUID()}.${fileExt}`;
                       galleryPathsRef.current.push(path);
