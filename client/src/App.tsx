@@ -3483,7 +3483,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     <div style={{
                       display: 'flex',
                       transition: 'transform 1.5s ease-in-out',
-                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (100 / 3)}%)`,
+                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5)}%)`,
                     }}>
                       {(() => {
                         // Priority: Use gallery images if available, otherwise use logo or defaults
