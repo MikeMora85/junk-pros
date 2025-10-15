@@ -3672,23 +3672,26 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       Ways To Get A Quote
                     </h4>
                     
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {/* Call Now Button */}
+                    <div style={{ 
+                      display: 'flex', 
+                      gap: '12px',
+                      justifyContent: 'center',
+                      padding: '0 20px',
+                    }}>
+                      {/* Call Now Icon */}
                       <button 
                         style={{
-                          width: '100%',
+                          flex: '1',
+                          maxWidth: '120px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
-                          padding: '12px 20px',
                           borderRadius: '8px',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '16px',
-                          fontWeight: '700',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '8px',
                           boxShadow: 'none',
                         }}
                         onClick={(e) => {
@@ -3698,25 +3701,23 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={18} />
-                        CALL NOW
+                        <Phone size={32} />
                       </button>
 
+                      {/* Send Photos Icon */}
                       <button
                         style={{
-                          width: '100%',
+                          flex: '1',
+                          maxWidth: '120px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
-                          padding: '12px 20px',
                           borderRadius: '8px',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '16px',
-                          fontWeight: '700',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '8px',
                           boxShadow: 'none',
                         }}
                         onClick={(e) => {
@@ -3726,26 +3727,24 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={18} />
-                        SEND PHOTOS
+                        <Camera size={32} />
                       </button>
                       
+                      {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          width: '100%',
+                          flex: '1',
+                          maxWidth: '120px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
-                          padding: '12px 20px',
                           borderRadius: '8px',
                           border: 'none',
                           cursor: 'pointer',
-                          fontSize: '16px',
-                          fontWeight: '700',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '8px',
-                          boxShadow: '0 2px 8px rgba(244,114,182,0.3)',
+                          boxShadow: 'none',
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -3754,8 +3753,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar size={18} />
-                        IN PERSON ESTIMATE
+                        <Calendar size={32} />
                       </button>
                     </div>
 
