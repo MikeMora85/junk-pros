@@ -4349,9 +4349,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   <div
                     key={idx}
                     style={{
-                      flex: '0 0 auto',
-                      width: '160px',
-                      height: '240px',
+                      flex: '0 0 100%',
+                      width: '100%',
+                      height: '400px',
                       borderRadius: '8px',
                       overflow: 'hidden',
                       background: '#f3f4f6',
