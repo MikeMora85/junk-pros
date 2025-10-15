@@ -4120,7 +4120,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     style={{
                       flex: '0 0 auto',
                       width: 'calc(100% / 4)',
-                      aspectRatio: '1',
+                      height: '100px',
                       borderRadius: '0',
                       overflow: 'hidden',
                       background: '#f3f4f6',
