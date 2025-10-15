@@ -17,27 +17,71 @@ interface EstimateBuilderInlineProps {
 }
 
 export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true, vehicleCapacity, singleItemMinimum }: EstimateBuilderInlineProps) {
-  const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
+  const [cubicYards, setCubicYards] = useState<string>("");
   
-  // Calculate price based on load size and company prices
+  // Extract truck capacity number from string like "13 cubic yards"
+  const getTruckCapacity = () => {
+    if (vehicleCapacity) {
+      const match = vehicleCapacity.match(/(\d+)/);
+      return match ? parseInt(match[1]) : 13;
+    }
+    return 13; // Default truck capacity
+  };
+  
+  const truckCapacity = getTruckCapacity();
+  
+  // Calculate percentage of truck filled
+  const getPercentage = () => {
+    const yards = parseFloat(cubicYards) || 0;
+    const percentage = (yards / truckCapacity) * 100;
+    return Math.min(Math.max(percentage, 0), 100); // Clamp between 0-100
+  };
+  
+  // Calculate price based on cubic yards
   const getPrice = () => {
+    const percentage = getPercentage();
+    const yards = parseFloat(cubicYards) || 0;
+    
+    // If no input, show minimum
+    if (yards === 0) {
+      return companyPrices?.minimum || 75;
+    }
+    
+    // Get prices with defaults
     const prices = {
       quarter: companyPrices?.quarterLoad || 150,
       half: companyPrices?.halfLoad || 500,
       threeQuarter: companyPrices?.threeQuarterLoad || 750,
       full: companyPrices?.fullLoad || 1000,
     };
-    return prices[loadSize];
+    
+    // Calculate price based on percentage
+    if (percentage <= 25) {
+      return prices.quarter;
+    } else if (percentage <= 50) {
+      // Interpolate between quarter and half
+      const ratio = (percentage - 25) / 25;
+      return Math.round(prices.quarter + (prices.half - prices.quarter) * ratio);
+    } else if (percentage <= 75) {
+      // Interpolate between half and three-quarter
+      const ratio = (percentage - 50) / 25;
+      return Math.round(prices.half + (prices.threeQuarter - prices.half) * ratio);
+    } else {
+      // Interpolate between three-quarter and full
+      const ratio = (percentage - 75) / 25;
+      return Math.round(prices.threeQuarter + (prices.full - prices.threeQuarter) * ratio);
+    }
   };
   
   const price = getPrice();
-  const percentage = loadSize === 'quarter' ? 25 : loadSize === 'half' ? 50 : loadSize === 'threeQuarter' ? 75 : 100;
+  const percentage = getPercentage();
 
+  // Quick preset buttons based on truck capacity
   const presets = [
-    { label: "¼", value: 'quarter' as const },
-    { label: "½", value: 'half' as const },
-    { label: "¾", value: 'threeQuarter' as const },
-    { label: "Full", value: 'full' as const },
+    { label: "¼", yards: Math.round(truckCapacity * 0.25) },
+    { label: "½", yards: Math.round(truckCapacity * 0.5) },
+    { label: "¾", yards: Math.round(truckCapacity * 0.75) },
+    { label: "Full", yards: truckCapacity },
   ];
 
   return (
@@ -84,38 +128,72 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         </div>
       )}
 
-      <p style={{ fontSize: '14px', marginBottom: '20px', color: '#333333', lineHeight: '1.5' }}>
-        {vehicleCapacity ? (
-          <>Send photos or book an in-person estimate to confirm your volume and final price.</>
-        ) : (
-          <>Get your estimate in seconds! Most trucks hold 12-15 cubic yards.</>
-        )}
+      <p style={{ fontSize: '14px', marginBottom: '16px', color: '#333333', lineHeight: '1.5' }}>
+        Enter how many cubic yards of junk you have for an instant estimate.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '24px' }}>
-        {presets.map((p) => (
-          <button
-            key={p.label}
-            onClick={() => setLoadSize(p.value)}
-            style={{
-              padding: '10px 4px',
-              borderRadius: '0',
-              fontSize: '14px',
-              fontWeight: '700',
-              backgroundColor: loadSize === p.value ? '#fbbf24' : '#ffffff',
-              color: loadSize === p.value ? '#000' : '#1a1a1a',
-              border: `2px solid ${loadSize === p.value ? '#fbbf24' : '#cccccc'}`,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              textTransform: 'uppercase',
-            }}
-            data-testid={`button-preset-${p.label.replace(/\s/g, '-')}`}
-          >
-            {p.label}
-          </button>
-        ))}
+      {/* Cubic Yards Input */}
+      <div style={{ marginBottom: '16px' }}>
+        <label style={{
+          display: 'block',
+          fontSize: '14px',
+          fontWeight: '600',
+          marginBottom: '8px',
+          color: '#000',
+        }}>
+          How many cubic yards?
+        </label>
+        <input
+          type="number"
+          value={cubicYards}
+          onChange={(e) => setCubicYards(e.target.value)}
+          placeholder={`Enter 1-${truckCapacity}`}
+          min="0"
+          max={truckCapacity}
+          step="0.5"
+          data-testid="input-cubic-yards"
+          style={{
+            width: '100%',
+            padding: '12px',
+            fontSize: '16px',
+            border: '2px solid #fbbf24',
+            borderRadius: '8px',
+            outline: 'none',
+            fontWeight: '600',
+          }}
+        />
       </div>
 
+      {/* Quick Preset Buttons */}
+      <div style={{ marginBottom: '20px' }}>
+        <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '8px', color: '#666' }}>
+          Quick Select:
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
+          {presets.map((p) => (
+            <button
+              key={p.label}
+              onClick={() => setCubicYards(p.yards.toString())}
+              style={{
+                padding: '8px 4px',
+                borderRadius: '0',
+                fontSize: '12px',
+                fontWeight: '700',
+                backgroundColor: cubicYards === p.yards.toString() ? '#fbbf24' : '#ffffff',
+                color: cubicYards === p.yards.toString() ? '#000' : '#1a1a1a',
+                border: `2px solid ${cubicYards === p.yards.toString() ? '#fbbf24' : '#cccccc'}`,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              data-testid={`button-preset-${p.label.replace(/\s/g, '-')}`}
+            >
+              {p.label} ({p.yards} yd³)
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Truck Fill Visual */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ 
           width: '100%',
@@ -145,11 +223,12 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
             color: '#000',
             zIndex: 1,
           }}>
-            Truck: {percentage}% Full
+            Truck: {Math.round(percentage)}% Full
           </div>
         </div>
       </div>
 
+      {/* Price Display */}
       <div style={{
         backgroundColor: '#f5f5f5',
         borderRadius: '0',
@@ -169,7 +248,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           ${price}
         </div>
         <div style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
-          For a {loadSize === 'quarter' ? '¼' : loadSize === 'half' ? '½' : loadSize === 'threeQuarter' ? '¾' : 'full'} load
+          {cubicYards ? `For ${cubicYards} cubic yards` : 'Enter cubic yards for estimate'}
         </div>
         {singleItemMinimum && (
           <div style={{ 
