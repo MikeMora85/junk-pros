@@ -120,31 +120,31 @@ export default function AddBusiness() {
         <button
           onClick={handleBack}
           style={{
-            backgroundColor: '#fbbf24',
-            color: '#000',
+            backgroundColor: 'transparent',
+            color: '#fbbf24',
             padding: '8px',
             borderRadius: '6px',
-            border: '1px solid #000',
+            border: '2px solid #fbbf24',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             textDecoration: 'none',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-            transform: 'translateY(-2px)',
+            boxShadow: 'none',
+            transform: 'translateY(0)',
             transition: 'all 0.2s',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-            e.currentTarget.style.transform = 'translateY(-3px)';
+            e.currentTarget.style.backgroundColor = '#fbbf24';
+            e.currentTarget.style.color = '#000';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.backgroundColor = 'transparent';
+            e.currentTarget.style.color = '#fbbf24';
           }}
           data-testid="button-back"
         >
-          <ArrowLeft size={18} color="#000" />
+          <ArrowLeft size={18} color="#fbbf24" />
         </button>
       </div>
 
