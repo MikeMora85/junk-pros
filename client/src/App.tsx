@@ -4141,31 +4141,42 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           📞 Call Now
         </button>
 
-        {/* Social Media Icons */}
+        {/* Sticky Social Media Sidebar */}
         {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
           <div style={{
+            position: 'fixed',
+            left: 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            backgroundColor: '#fbbf24',
+            borderRadius: '0 12px 12px 0',
+            padding: '16px 8px',
             display: 'flex',
-            justifyContent: 'center',
+            flexDirection: 'column',
             gap: '16px',
-            marginBottom: '24px',
+            zIndex: 999,
+            boxShadow: '2px 0 8px rgba(0,0,0,0.1)',
           }}>
             {company.website && (
               <a
-                href={company.website}
+                href={company.website.startsWith('http') ? company.website : `https://${company.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid={`link-website-modal-${company.id}`}
                 style={{
-                  color: '#6b7280',
-                  transition: 'transform 0.2s',
+                  color: '#000',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  transition: 'background 0.2s',
+                  cursor: 'pointer',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-website-modal-${company.id}`}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <Globe size={28} />
+                <Globe size={24} />
               </a>
             )}
             {company.facebookUrl && (
@@ -4173,18 +4184,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 href={company.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid={`link-facebook-modal-${company.id}`}
                 style={{
-                  color: '#1877f2',
-                  transition: 'transform 0.2s',
+                  color: '#000',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  transition: 'background 0.2s',
+                  cursor: 'pointer',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-facebook-modal-${company.id}`}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <FaFacebook size={28} />
+                <FaFacebook size={24} />
               </a>
             )}
             {company.instagramUrl && (
@@ -4192,18 +4206,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 href={company.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid={`link-instagram-modal-${company.id}`}
                 style={{
-                  color: '#E4405F',
-                  transition: 'transform 0.2s',
+                  color: '#000',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  transition: 'background 0.2s',
+                  cursor: 'pointer',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-instagram-modal-${company.id}`}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <FaInstagram size={28} />
+                <FaInstagram size={24} />
               </a>
             )}
             {company.gmbUrl && (
@@ -4211,18 +4228,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 href={company.gmbUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid={`link-gmb-modal-${company.id}`}
                 style={{
-                  color: '#4285F4',
-                  transition: 'transform 0.2s',
+                  color: '#000',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  transition: 'background 0.2s',
+                  cursor: 'pointer',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-gmb-modal-${company.id}`}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <FaGoogle size={28} />
+                <FaGoogle size={24} />
               </a>
             )}
             {company.youtubeUrl && (
@@ -4230,18 +4250,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 href={company.youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-testid={`link-youtube-modal-${company.id}`}
                 style={{
-                  color: '#FF0000',
-                  transition: 'transform 0.2s',
+                  color: '#000',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  padding: '8px',
+                  borderRadius: '8px',
+                  transition: 'background 0.2s',
+                  cursor: 'pointer',
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.15)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                data-testid={`link-youtube-modal-${company.id}`}
+                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
               >
-                <FaYoutube size={28} />
+                <FaYoutube size={24} />
               </a>
             )}
           </div>
