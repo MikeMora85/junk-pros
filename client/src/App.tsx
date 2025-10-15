@@ -3601,7 +3601,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       flexShrink: 0,
                       boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
                       padding: c.logoUrl ? '4px' : '0',
-                      border: c.logoUrl ? '1px solid #000' : '2px solid #fbbf24',
+                      border: c.logoUrl ? 'none' : '2px solid #fbbf24',
                       overflow: 'hidden',
                     }}>
                       {c.logoUrl ? (
@@ -4051,7 +4051,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            border: '2px solid #e5e7eb',
+            border: 'none',
             overflow: 'hidden',
           }}>
             {company.logoUrl ? (
