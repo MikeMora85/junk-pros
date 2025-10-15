@@ -4046,7 +4046,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             width: '80px',
             height: '80px',
             borderRadius: '10px',
-            background: '#f3f4f6',
+            background: 'transparent',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
