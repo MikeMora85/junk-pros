@@ -22,19 +22,19 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
   const [educationalOpen, setEducationalOpen] = useState(false);
   const [upchargesOpen, setUpchargesOpen] = useState(false);
   
-  // Calculate price based on load size and company prices
-  const getPrice = () => {
-    const prices = {
-      minimum: companyPrices?.minimum || singleItemMinimum || 120,
-      quarter: companyPrices?.quarterLoad || 240,
-      half: companyPrices?.halfLoad || 375,
-      threeQuarter: companyPrices?.threeQuarterLoad || 550,
-      full: companyPrices?.fullLoad || 725,
+  // Calculate price range based on load size
+  const getPriceRange = () => {
+    const ranges = {
+      minimum: '$89-$150+',
+      quarter: '$180-$300+',
+      half: '$300-$450+',
+      threeQuarter: '$450-$650+',
+      full: '$600-$850+',
     };
-    return prices[loadSize];
+    return ranges[loadSize];
   };
   
-  const price = getPrice();
+  const priceRange = getPriceRange();
   const percentage = loadSize === 'minimum' ? 10 : loadSize === 'quarter' ? 25 : loadSize === 'half' ? 50 : loadSize === 'threeQuarter' ? 75 : 100;
 
   const presets = [
@@ -293,10 +293,10 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           color: '#fbbf24',
           letterSpacing: '-0.02em',
         }} data-testid="text-estimated-cost">
-          ${price}
+          {priceRange}
         </div>
         <div style={{ fontSize: '12px', color: '#000', marginTop: '4px' }}>
-          For a {loadSize === 'quarter' ? '¼' : loadSize === 'half' ? '½' : loadSize === 'threeQuarter' ? '¾' : 'full'} load
+          For a {loadSize === 'minimum' ? 'single item pickup' : loadSize === 'quarter' ? '¼ truck' : loadSize === 'half' ? '½ truck' : loadSize === 'threeQuarter' ? '¾ truck' : 'full truck'}
         </div>
         {singleItemMinimum && (
           <div style={{ 
