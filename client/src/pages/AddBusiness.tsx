@@ -746,6 +746,9 @@ export default function AddBusiness() {
               placeholder="e.g., Quick Junk Removal LLC"
               style={{
                 width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto',
+                display: 'block',
                 padding: '12px',
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
@@ -768,6 +771,9 @@ export default function AddBusiness() {
               placeholder="your@email.com"
               style={{
                 width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto',
+                display: 'block',
                 padding: '12px',
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
@@ -790,6 +796,9 @@ export default function AddBusiness() {
               placeholder="Create a secure password"
               style={{
                 width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto',
+                display: 'block',
                 padding: '12px',
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
@@ -812,6 +821,9 @@ export default function AddBusiness() {
               placeholder="(555) 123-4567"
               style={{
                 width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto',
+                display: 'block',
                 padding: '12px',
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
@@ -832,6 +844,9 @@ export default function AddBusiness() {
               onChange={(e) => setFormData({ ...formData, state: e.target.value })}
               style={{
                 width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto',
+                display: 'block',
                 padding: '12px',
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
@@ -861,6 +876,9 @@ export default function AddBusiness() {
               placeholder="City where you operate"
               style={{
                 width: '100%',
+                maxWidth: '400px',
+                margin: '0 auto',
+                display: 'block',
                 padding: '12px',
                 border: '2px solid #e5e5e5',
                 fontSize: '16px',
