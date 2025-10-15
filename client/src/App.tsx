@@ -4034,25 +4034,25 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       </div>
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
-        {/* Logo and Header - Centered */}
+        {/* Logo and Header */}
         <div style={{
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
+          gap: '16px',
           marginBottom: '16px',
         }}>
-          {/* Logo - Large */}
+          {/* Logo */}
           <div style={{
-            width: '140px',
-            height: '140px',
+            width: '80px',
+            height: '80px',
             borderRadius: '10px',
             background: 'transparent',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            flexShrink: 0,
             border: 'none',
             overflow: 'hidden',
-            marginBottom: '12px',
           }}>
             {company.logoUrl ? (
               <img 
@@ -4061,38 +4061,40 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'contain' 
+                  objectFit: 'cover' 
                 }} 
               />
             ) : (
-              <Truck size={60} color="#6b7280" />
+              <Truck size={40} color="#6b7280" />
             )}
           </div>
           
-          {/* Company name - Below Logo */}
-          <h1 style={{
-            fontSize: '28px',
-            fontWeight: '700',
-            margin: 0,
-            color: '#000',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-            textAlign: 'center',
-          }} data-testid="text-company-name">
-            {company.name}
-          </h1>
+          {/* Company name */}
+          <div style={{ flex: 1 }}>
+            <h1 style={{
+              fontSize: '28px',
+              fontWeight: '700',
+              margin: 0,
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }} data-testid="text-company-name">
+              {company.name}
+            </h1>
+          </div>
         </div>
 
-        {/* Gallery Carousel - Small Full Width with Square Photos */}
+        {/* Gallery Carousel */}
         {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
           <div style={{
             marginBottom: '16px',
             marginTop: '16px',
             overflow: 'hidden',
-            borderRadius: '0',
+            borderRadius: '8px',
+            maxHeight: '280px',
           }}>
             <div style={{
               display: 'flex',
-              gap: '0',
+              gap: '8px',
               overflowX: 'auto',
               scrollBehavior: 'smooth',
               scrollbarWidth: 'none',
@@ -4119,12 +4121,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     key={idx}
                     style={{
                       flex: '0 0 auto',
-                      width: 'calc(100% / 4)',
-                      height: '100px',
-                      borderRadius: '0',
+                      width: '160px',
+                      height: '240px',
+                      borderRadius: '8px',
                       overflow: 'hidden',
                       background: '#f3f4f6',
-                      border: '2px solid #fbbf24',
                     }}
                   >
                     <img
