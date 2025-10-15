@@ -3520,7 +3520,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                   height: '100%',
                                   objectFit: 'cover',
                                   borderRadius: '0',
-                                  border: '1px solid #e5e7eb',
+                                  border: '1px solid #fbbf24',
                                 }}
                               />
                             ) : (
