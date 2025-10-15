@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
-import { ArrowLeft, Trash2, Home, Sofa, Phone, Mail } from "lucide-react";
+import { ArrowLeft, Trash2, Home, Sofa, Phone, Mail, Globe } from "lucide-react";
+import { FaFacebook, FaInstagram, FaGoogle, FaYoutube } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import { trackBusinessEvent } from "../lib/tracking";
 
@@ -60,7 +61,135 @@ export default function CompanyDetail() {
       minHeight: '100vh',
       background: '#f9fafb',
       paddingBottom: '40px',
+      position: 'relative',
     }}>
+      {/* Sticky Social Media Sidebar */}
+      <div style={{
+        position: 'fixed',
+        left: 0,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        backgroundColor: '#fbbf24',
+        borderRadius: '0 12px 12px 0',
+        padding: '16px 8px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        zIndex: 40,
+        boxShadow: '2px 0 8px rgba(0,0,0,0.1)',
+      }}>
+        {company.website && (
+          <a
+            href={company.website.startsWith('http') ? company.website : `https://${company.website}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-website"
+            style={{
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              borderRadius: '8px',
+              transition: 'background 0.2s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+          >
+            <Globe size={24} />
+          </a>
+        )}
+        {company.facebookUrl && (
+          <a
+            href={company.facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-facebook"
+            style={{
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              borderRadius: '8px',
+              transition: 'background 0.2s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+          >
+            <FaFacebook size={24} />
+          </a>
+        )}
+        {company.instagramUrl && (
+          <a
+            href={company.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-instagram"
+            style={{
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              borderRadius: '8px',
+              transition: 'background 0.2s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+          >
+            <FaInstagram size={24} />
+          </a>
+        )}
+        {company.gmbUrl && (
+          <a
+            href={company.gmbUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-google"
+            style={{
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              borderRadius: '8px',
+              transition: 'background 0.2s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+          >
+            <FaGoogle size={24} />
+          </a>
+        )}
+        {company.youtubeUrl && (
+          <a
+            href={company.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="link-youtube"
+            style={{
+              color: '#000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              borderRadius: '8px',
+              transition: 'background 0.2s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+          >
+            <FaYoutube size={24} />
+          </a>
+        )}
+      </div>
+
       {/* Header */}
       <header style={{
         background: '#fff',
