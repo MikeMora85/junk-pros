@@ -127,8 +127,8 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
               <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
                 <div style={{ marginBottom: '4px' }}>• Minimum (single item pickup): $89-$150+</div>
                 <div style={{ marginBottom: '4px' }}>• ¼ truck: $180-$300+</div>
-                <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
-                <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
+                <div style={{ marginBottom: '4px' }}>• ½ truck: $300-$450+</div>
+                <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650+</div>
                 <div>• Full truck: $600-$850+</div>
               </div>
             )}
