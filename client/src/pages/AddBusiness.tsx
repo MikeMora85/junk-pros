@@ -594,23 +594,15 @@ export default function AddBusiness() {
                   Industry Pricing Standards
                 </h3>
                 <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '16px' }}>
-                  Understanding proper pricing ensures sustainable business operations and fair compensation for your work. While $38/cubic yard is our minimum requirement, established junk removal companies typically charge <strong>$45-$65 per cubic yard</strong>.
+                  Understanding proper pricing ensures sustainable business operations and fair compensation for your work. Established companies typically charge <strong>$45-$65 per cubic yard</strong>, which translates to:
                 </p>
                 
-                <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '16px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
-                    Standard Load Pricing (Established Companies)
-                  </h4>
-                  <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
-                    <li>Minimum load (¼ truck, ~3.5 cubic yards): $160-$230</li>
-                    <li>Half truck (~7 cubic yards): $315-$455</li>
-                    <li>¾ truck (~10 cubic yards): $450-$650</li>
-                    <li>Full truck (~14 cubic yards): $630-$910</li>
-                  </ul>
-                  <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '13px', color: '#000', marginTop: '8px', fontStyle: 'italic' }}>
-                    Based on $45-$65 per cubic yard industry standard
-                  </p>
-                </div>
+                <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '16px' }}>
+                  <li>¼ truck (~3.5 cubic yards): $160-$230</li>
+                  <li>½ truck (~7 cubic yards): $315-$455</li>
+                  <li>¾ truck (~10 cubic yards): $450-$650</li>
+                  <li>Full truck (~14 cubic yards): $630-$910</li>
+                </ul>
 
                 <div style={{
                   background: '#fff',
@@ -619,10 +611,10 @@ export default function AddBusiness() {
                 }}>
                   <DollarSign size={20} color="#fbbf24" style={{ marginBottom: '8px' }} />
                   <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6', marginBottom: '12px' }}>
-                    <strong>Why the $45-$65 standard?</strong> Established companies charge this range to properly cover all business costs while maintaining quality service and sustainable operations.
+                    <strong>Our minimum: $38/cubic yard</strong> — This is the absolute floor to cover truck costs, fuel, labor, disposal fees, insurance, and overhead.
                   </p>
                   <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', lineHeight: '1.6' }}>
-                    <strong>$38 minimum floor:</strong> This is the absolute minimum to cover truck costs, fuel, labor, disposal fees, insurance, and overhead. Charging less means working at a loss or cutting corners that hurt you long-term.
+                    Charging less means working at a loss or cutting corners that hurt you long-term. Most successful operators charge the $45-$65 standard to maintain quality service and sustainable operations.
                   </p>
                 </div>
               </div>
