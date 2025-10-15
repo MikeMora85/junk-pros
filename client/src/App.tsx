@@ -3390,7 +3390,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '24px', padding: '0 16px', margin: '0 0 24px 0' }}>
+        <div style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
