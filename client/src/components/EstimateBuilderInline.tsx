@@ -55,18 +55,18 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
       overflow: 'hidden',
     }}>
       
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
-        <h3 style={{ 
-          fontSize: '22px', 
-          fontWeight: '700', 
-          margin: 0, 
-          color: '#1a1a1a',
-          letterSpacing: '-0.02em',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        }}>
-          How Much Is Junk Removal?
-        </h3>
-      </div>
+      <h3 style={{ 
+        fontSize: '19px', 
+        fontWeight: '700', 
+        margin: 0, 
+        marginBottom: '16px',
+        color: '#1a1a1a',
+        letterSpacing: '-0.01em',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        whiteSpace: 'nowrap',
+      }}>
+        How Much Is Junk Removal?
+      </h3>
       
       {vehicleCapacity && (
         <div style={{
