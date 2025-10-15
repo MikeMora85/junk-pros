@@ -3511,6 +3511,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             style={{
                               padding: '0',
                               aspectRatio: '1',
+                              height: '0',
+                              paddingBottom: '100%',
+                              position: 'relative',
                             }}
                           >
                             {typeof item === 'string' ? (
@@ -3518,6 +3521,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 src={item}
                                 alt="Service photo"
                                 style={{
+                                  position: 'absolute',
+                                  top: '0',
+                                  left: '0',
                                   width: '100%',
                                   height: '100%',
                                   objectFit: 'cover',
@@ -3526,7 +3532,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 }}
                               />
                             ) : (
-                              <PlaceholderImage index={item} />
+                              <div style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: '100%' }}>
+                                <PlaceholderImage index={item} />
+                              </div>
                             )}
                           </div>
                         ));
