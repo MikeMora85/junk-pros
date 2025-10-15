@@ -3600,7 +3600,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       flexShrink: 0,
                       boxShadow: c.logoUrl ? 'none' : '0 4px 12px rgba(168,85,247,0.3)',
                       padding: c.logoUrl ? '4px' : '0',
-                      border: c.logoUrl ? '2px solid #e5e5e5' : '2px solid #fbbf24',
+                      border: c.logoUrl ? '2px solid #fbbf24' : '2px solid #fbbf24',
                       overflow: 'hidden',
                     }}>
                       {c.logoUrl ? (
