@@ -283,12 +283,13 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         padding: '20px',
         marginBottom: '16px',
         border: '1px solid #cccccc',
+        textAlign: 'center',
       }}>
-        <div style={{ fontSize: '13px', color: '#000', fontWeight: '600', marginBottom: '4px' }}>
+        <div style={{ fontSize: '16px', color: '#000', fontWeight: '600', marginBottom: '8px' }}>
           Estimated Cost
         </div>
         <div style={{
-          fontSize: '32px',
+          fontSize: '36px',
           fontWeight: '700',
           color: '#fbbf24',
           letterSpacing: '-0.02em',
