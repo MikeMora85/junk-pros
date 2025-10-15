@@ -4006,57 +4006,31 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       zIndex: 1000,
       overflowY: 'auto',
     }}>
-      {/* Sticky Header with faint yellow background */}
-      <div style={{
-        position: 'sticky',
-        top: 0,
-        background: 'rgba(251, 191, 36, 0.15)',
-        backdropFilter: 'blur(10px)',
-        padding: '16px 20px',
-        borderBottom: '1px solid rgba(251, 191, 36, 0.3)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        zIndex: 10,
-      }}>
-        <button
-          onClick={onClose}
-          data-testid="button-close-profile"
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            fontSize: '20px',
-            padding: 0,
-            color: '#fbbf24',
-            fontWeight: '600',
-          }}
-        >
-          ← Back
-        </button>
-        
-        {/* Call Now Button */}
-        <button
-          style={{
-            padding: '12px 24px',
-            background: '#fbbf24',
-            color: '#000',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: '600',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-          }}
-          onClick={() => {
-            trackBusinessEvent(company.id, 'call');
-            window.open(`tel:${company.phone}`, '_self');
-          }}
-          data-testid="button-call-now"
-        >
-          Call Now
-        </button>
-      </div>
+      {/* Floating X Close Button */}
+      <button
+        onClick={onClose}
+        data-testid="button-close-profile"
+        style={{
+          position: 'fixed',
+          top: '16px',
+          right: '16px',
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%',
+          background: '#000',
+          color: '#fff',
+          border: 'none',
+          cursor: 'pointer',
+          fontSize: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 100,
+          fontWeight: '300',
+        }}
+      >
+        ×
+      </button>
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
         {/* Header with watermark logo */}
@@ -4108,7 +4082,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         </div>
 
         {/* Rating */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>
           {[1, 2, 3, 4, 5].map((star) => (
             <span key={star} style={{ color: '#fbbf24', fontSize: '20px' }}>★</span>
           ))}
@@ -4119,6 +4093,32 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             {company.reviews} reviews
           </span>
         </div>
+
+        {/* Call Now Button */}
+        <button
+          style={{
+            width: '100%',
+            maxWidth: '400px',
+            margin: '0 auto 24px',
+            padding: '16px 24px',
+            background: '#fbbf24',
+            color: '#000',
+            border: '2px solid #000',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '18px',
+            fontWeight: '700',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            display: 'block',
+          }}
+          onClick={() => {
+            trackBusinessEvent(company.id, 'call');
+            window.open(`tel:${company.phone}`, '_self');
+          }}
+          data-testid="button-call-now"
+        >
+          📞 Call Now
+        </button>
 
         {/* Social Media Icons */}
         {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
