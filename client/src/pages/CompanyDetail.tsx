@@ -151,20 +151,21 @@ export default function CompanyDetail() {
         </div>
 
         {/* Services Icons */}
-        <div style={{
-          backgroundColor: '#fff',
-          borderRadius: '12px',
-          padding: '20px',
-          marginBottom: '16px',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        }}>
+        {company.services && company.services.length > 0 && (
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
-            gap: '16px',
-            textAlign: 'center',
+            backgroundColor: '#fff',
+            borderRadius: '12px',
+            padding: '20px',
+            marginBottom: '16px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
           }}>
-            {company.services.slice(0, 4).map((service, i) => {
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+              gap: '16px',
+              textAlign: 'center',
+            }}>
+              {company.services.slice(0, 4).map((service, i) => {
               const icons = [Trash2, Home, Sofa, Sofa];
               const Icon = icons[i] || Trash2;
               return (
@@ -189,6 +190,7 @@ export default function CompanyDetail() {
             })}
           </div>
         </div>
+        )}
 
         {/* Two Column Layout */}
         <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
@@ -380,39 +382,56 @@ export default function CompanyDetail() {
             </div>
 
             {/* Payment Methods */}
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '16px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            }}>
-              <h2 style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#111827',
+            {company.paymentMethods && company.paymentMethods.length > 0 && (
+              <div style={{
+                backgroundColor: '#fff',
+                borderRadius: '12px',
+                padding: '20px',
+                marginBottom: '16px',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
               }}>
-                Payment Methods
-              </h2>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {['VISA', 'Mastercard', 'AmEx', 'Discover'].map((method) => (
-                  <div key={method} style={{
-                    padding: '4px 12px',
-                    background: '#f3f4f6',
-                    borderRadius: '4px',
-                    fontSize: '12px',
-                    fontWeight: '600',
-                    color: '#374151',
-                  }}>
-                    {method}
-                  </div>
-                ))}
+                <h2 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#111827',
+                }}>
+                  Payment Methods
+                </h2>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {company.paymentMethods.map((method) => {
+                    const icons: Record<string, string> = {
+                      'Cash': '💵',
+                      'Card': '💳',
+                      'Zelle': 'Z',
+                      'Venmo': 'V',
+                      'Apple Pay': '',
+                      'Cash App': '$',
+                      'Check': '📝',
+                    };
+                    return (
+                      <div key={method} style={{
+                        padding: '8px 16px',
+                        background: '#f3f4f6',
+                        borderRadius: '20px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#374151',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                      }}>
+                        <span>{icons[method] || ''}</span>
+                        <span>{method}</span>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Business Hours */}
-            {company.hours && (
+            {(company.businessHours || company.hours) && (
               <div style={{
                 backgroundColor: '#fff',
                 borderRadius: '12px',
@@ -429,7 +448,22 @@ export default function CompanyDetail() {
                   Business Hours
                 </h2>
                 <div style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.8' }}>
-                  {company.hours}
+                  {company.businessHours ? (
+                    <>
+                      {(Object.entries(company.businessHours as Record<string, { open: string; close: string; closed: boolean }>) as [string, { open: string; close: string; closed: boolean }][]).map(([day, hours]) => (
+                        <div key={day} style={{ marginBottom: '4px' }}>
+                          <span style={{ fontWeight: '600', textTransform: 'capitalize' }}>{day}: </span>
+                          {hours.closed ? (
+                            <span>Closed</span>
+                          ) : (
+                            <span>{hours.open} - {hours.close}</span>
+                          )}
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    company.hours
+                  )}
                 </div>
               </div>
             )}

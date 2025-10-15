@@ -109,6 +109,7 @@ export default function ProfileEditor() {
     hours: "",
     availability: "",
     businessHours: getDefaultBusinessHours(),
+    paymentMethods: [] as string[],
     googleRanking: "",
     googleReviewCount: "",
     googleFeaturedReviews: [] as FeaturedReview[],
@@ -151,6 +152,7 @@ export default function ProfileEditor() {
         hours: company.hours || "",
         availability: company.availability || "",
         businessHours: (company.businessHours as BusinessHours) || getDefaultBusinessHours(),
+        paymentMethods: company.paymentMethods || [],
         googleRanking: company.googleRanking?.toString() || "",
         googleReviewCount: company.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (company.googleFeaturedReviews as FeaturedReview[]) || [],
@@ -215,6 +217,7 @@ export default function ProfileEditor() {
         hours: updatedCompany.hours || "",
         availability: updatedCompany.availability || "",
         businessHours: (updatedCompany.businessHours as BusinessHours) || getDefaultBusinessHours(),
+        paymentMethods: updatedCompany.paymentMethods || [],
         googleRanking: updatedCompany.googleRanking?.toString() || "",
         googleReviewCount: updatedCompany.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (updatedCompany.googleFeaturedReviews as FeaturedReview[]) || [],
@@ -263,6 +266,7 @@ export default function ProfileEditor() {
       teamMembers: formData.teamMembers.length > 0 ? formData.teamMembers : null,
       galleryImages: formData.galleryImages.length > 0 ? formData.galleryImages : null,
       businessHours: formData.businessHours,
+      paymentMethods: formData.paymentMethods.length > 0 ? formData.paymentMethods : null,
       googleRanking: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
       googleReviewCount: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
@@ -659,6 +663,66 @@ export default function ProfileEditor() {
                       </label>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Payment Methods */}
+              <div>
+                <label style={labelStyle}>Payment Methods Accepted</label>
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+                  gap: "12px",
+                  marginTop: "12px"
+                }}>
+                  {[
+                    { id: 'Cash', label: 'Cash', icon: '💵' },
+                    { id: 'Card', label: 'Card', icon: '💳' },
+                    { id: 'Zelle', label: 'Zelle', icon: 'Z' },
+                    { id: 'Venmo', label: 'Venmo', icon: 'V' },
+                    { id: 'Apple Pay', label: 'Apple Pay', icon: '' },
+                    { id: 'Cash App', label: 'Cash App', icon: '$' },
+                    { id: 'Check', label: 'Check', icon: '📝' },
+                  ].map(({ id, label, icon }) => {
+                    const isSelected = formData.paymentMethods.includes(id);
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => setFormData(prev => ({
+                          ...prev,
+                          paymentMethods: prev.paymentMethods.includes(id)
+                            ? prev.paymentMethods.filter(m => m !== id)
+                            : [...prev.paymentMethods, id]
+                        }))}
+                        data-testid={`payment-${id.toLowerCase().replace(' ', '-')}`}
+                        style={{
+                          padding: "16px",
+                          border: `3px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
+                          borderRadius: "12px",
+                          backgroundColor: isSelected ? "#fef3c7" : "#fff",
+                          cursor: "pointer",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: "8px",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        <span style={{ fontSize: "28px" }}>{icon}</span>
+                        <span style={{
+                          fontSize: "13px",
+                          fontWeight: isSelected ? "600" : "500",
+                          color: "#000",
+                          textAlign: "center"
+                        }}>
+                          {label}
+                        </span>
+                        {isSelected && (
+                          <CheckCircle size={20} color="#16a34a" style={{ marginTop: "-4px" }} />
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
