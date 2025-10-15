@@ -55,7 +55,47 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
       overflow: 'hidden',
     }}>
       
-      {showDisclaimers && (
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
+        <Calculator size={24} color="#fbbf24" />
+        <h3 style={{ 
+          fontSize: '20px', 
+          fontWeight: '700', 
+          margin: 0, 
+          color: '#1a1a1a',
+          letterSpacing: '-0.02em',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
+          Example Pricing
+        </h3>
+      </div>
+      
+      {vehicleCapacity && (
+        <div style={{
+          backgroundColor: '#fbbf24',
+          borderRadius: '8px',
+          padding: '12px 16px',
+          marginBottom: '16px',
+          textAlign: 'center',
+          border: '2px solid #f59e0b',
+        }}>
+          <div style={{ fontSize: '13px', fontWeight: '600', color: '#000', marginBottom: '4px' }}>
+            Our Truck Capacity
+          </div>
+          <div style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>
+            {vehicleCapacity}
+          </div>
+        </div>
+      )}
+
+      <p style={{ fontSize: '14px', marginBottom: '20px', color: '#333333', lineHeight: '1.5' }}>
+        {vehicleCapacity ? (
+          <>Send photos or book an in-person estimate to confirm your volume and final price.</>
+        ) : (
+          <>Learn how most haulers price your job.</>
+        )}
+      </p>
+
+      {showDisclaimers && !vehicleCapacity && (
         <>
           {/* Industry Pricing Guide - Collapsible */}
           <div style={{
@@ -172,46 +212,6 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           </div>
         </>
       )}
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
-        <Calculator size={24} color="#fbbf24" />
-        <h3 style={{ 
-          fontSize: '20px', 
-          fontWeight: '700', 
-          margin: 0, 
-          color: '#1a1a1a',
-          letterSpacing: '-0.02em',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        }}>
-          Example Pricing
-        </h3>
-      </div>
-      
-      {vehicleCapacity && (
-        <div style={{
-          backgroundColor: '#fbbf24',
-          borderRadius: '8px',
-          padding: '12px 16px',
-          marginBottom: '16px',
-          textAlign: 'center',
-          border: '2px solid #f59e0b',
-        }}>
-          <div style={{ fontSize: '13px', fontWeight: '600', color: '#000', marginBottom: '4px' }}>
-            Our Truck Capacity
-          </div>
-          <div style={{ fontSize: '18px', fontWeight: '700', color: '#000' }}>
-            {vehicleCapacity}
-          </div>
-        </div>
-      )}
-
-      <p style={{ fontSize: '14px', marginBottom: '20px', color: '#333333', lineHeight: '1.5' }}>
-        {vehicleCapacity ? (
-          <>Send photos or book an in-person estimate to confirm your volume and final price.</>
-        ) : (
-          <>Learn how most haulers price your job.</>
-        )}
-      </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '24px' }}>
         {presets.map((p) => (
