@@ -3652,14 +3652,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
                   <div style={{
-                    backgroundColor: 'transparent',
-                    borderRadius: '8px',
-                    padding: '16px',
+                    backgroundColor: '#f5f5f5',
+                    borderRadius: '0',
+                    padding: '16px 0',
                     marginLeft: '0',
                     marginRight: '0',
                     marginBottom: '0',
-                    border: '2px solid #fbbf24',
-                    marginTop: '12px',
+                    border: 'none',
+                    borderTop: '1px solid #e5e5e5',
                   }}>
                     <h4 style={{
                       fontSize: '22px',

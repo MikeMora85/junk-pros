@@ -150,9 +150,12 @@ export default function AddBusiness() {
 
       {/* Hero Section */}
       <div style={{
-        background: '#fbbf24',
+        background: 'transparent',
+        border: '3px solid #fbbf24',
+        borderRadius: '8px',
         padding: '48px 16px',
         textAlign: 'center',
+        margin: '16px',
       }}>
         <h1 style={{
           fontSize: '36px',
