@@ -96,6 +96,7 @@ export const companies = pgTable("companies", {
   googleRanking: decimal("google_ranking", { precision: 2, scale: 1 }),
   googleReviewCount: integer("google_review_count"),
   googleFeaturedReviews: jsonb("google_featured_reviews"),
+  offersInPersonEstimates: boolean("offers_in_person_estimates").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
