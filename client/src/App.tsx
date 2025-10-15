@@ -3467,7 +3467,29 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
-                  {isUnclaimed ? (
+                  {/* Top Right Badge */}
+                  {isPremium && c.badge && !isUnclaimed && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '12px',
+                      background: '#16a34a',
+                      color: '#fff',
+                      padding: '6px 12px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      zIndex: 10,
+                    }}>
+                      <CheckCircle size={16} color="#fff" fill="#16a34a" />
+                      {c.badge}
+                    </div>
+                  )}
+                  
+                  {isUnclaimed && (
                     <div style={{
                       background: '#f5f5f5',
                       color: '#666',
@@ -3480,30 +3502,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     }}>
                       Unclaimed Listing - Basic Info Only
                     </div>
-                  ) : (
-                    isPremium && c.badge && (
-                      <>
-                        <div style={{
-                          display: 'inline-block',
-                          background: '#16a34a',
-                          color: '#fff',
-                          padding: '6px 12px',
-                          borderRadius: '0',
-                          fontSize: '12px',
-                          fontWeight: '700',
-                          marginBottom: '12px',
-                          marginLeft: '0',
-                          marginTop: '0',
-                          boxShadow: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                        }}>
-                          <CheckCircle size={16} color="#fff" fill="#16a34a" />
-                          {c.badge}
-                        </div>
-                      </>
-                    )
                   )}
                   
                   {hasFullFeatures && (
