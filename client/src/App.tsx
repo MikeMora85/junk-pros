@@ -4523,9 +4523,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                         justifyContent: 'center',
                         overflow: 'hidden',
                       }}>
-                        {member.imageUrl ? (
+                        {(member.photoUrl || member.imageUrl) ? (
                           <img 
-                            src={member.imageUrl} 
+                            src={member.photoUrl || member.imageUrl} 
                             alt={member.name}
                             style={{
                               width: '100%',
