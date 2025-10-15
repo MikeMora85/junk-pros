@@ -102,6 +102,7 @@ export default function ProfileEditor() {
     threeQuarterLoadPrice: "",
     fullLoadPrice: "",
     singleItemMinimum: "",
+    trailerSize: "",
     priceSheetVisible: true,
     addOnCostsVisible: true,
     teamMembers: [] as TeamMember[],
@@ -145,6 +146,7 @@ export default function ProfileEditor() {
         threeQuarterLoadPrice: company.threeQuarterLoadPrice || "",
         fullLoadPrice: company.fullLoadPrice || "",
         singleItemMinimum: company.singleItemMinimum || "",
+        trailerSize: company.trailerSize || "",
         priceSheetVisible: company.priceSheetVisible ?? true,
         addOnCostsVisible: company.addOnCostsVisible ?? true,
         teamMembers: (company.teamMembers as TeamMember[]) || [],
@@ -210,6 +212,7 @@ export default function ProfileEditor() {
         threeQuarterLoadPrice: updatedCompany.threeQuarterLoadPrice || "",
         fullLoadPrice: updatedCompany.fullLoadPrice || "",
         singleItemMinimum: updatedCompany.singleItemMinimum || "",
+        trailerSize: updatedCompany.trailerSize || "",
         priceSheetVisible: updatedCompany.priceSheetVisible ?? true,
         addOnCostsVisible: updatedCompany.addOnCostsVisible ?? true,
         teamMembers: (updatedCompany.teamMembers as TeamMember[]) || [],
@@ -259,6 +262,7 @@ export default function ProfileEditor() {
       threeQuarterLoadPrice: formData.threeQuarterLoadPrice || null,
       fullLoadPrice: formData.fullLoadPrice || null,
       singleItemMinimum: formData.singleItemMinimum || null,
+      trailerSize: formData.trailerSize || null,
       priceSheetVisible: formData.priceSheetVisible,
       addOnCostsVisible: formData.addOnCostsVisible,
       hours: formData.hours || null,
@@ -1168,6 +1172,21 @@ export default function ProfileEditor() {
                   onChange={(e) => setFormData(prev => ({ ...prev, singleItemMinimum: e.target.value }))}
                   placeholder="e.g., $75 per item"
                 />
+              </div>
+
+              {/* Truck Capacity */}
+              <div>
+                <label style={labelStyle}>Truck/Trailer Capacity (Cubic Yards)</label>
+                <input
+                  data-testid="input-trailer-size"
+                  style={inputStyle}
+                  value={formData.trailerSize}
+                  onChange={(e) => setFormData(prev => ({ ...prev, trailerSize: e.target.value }))}
+                  placeholder="e.g., 13 cubic yards"
+                />
+                <div style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
+                  This displays to customers in your price estimator
+                </div>
               </div>
             </div>
           </div>
