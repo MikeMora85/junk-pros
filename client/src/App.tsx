@@ -3886,6 +3886,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
+                      borderTop: '2px solid #000',
+                      paddingTop: '56px',
                     }}>
                       <h3 style={{ 
                         fontSize: '24px', 
@@ -3924,6 +3926,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       borderRadius: '0',
                       padding: '40px 20px',
                       textAlign: 'center',
+                      borderTop: '2px solid #000',
+                      paddingTop: '56px',
                     }}>
                       <h3 style={{ 
                         fontSize: '24px', 
