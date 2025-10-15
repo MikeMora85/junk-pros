@@ -3451,7 +3451,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   )}
                   
                   {!isUnclaimed && (
-                  // Image Carousel
+                  // Image Carousel - Manual Scroll, Vertical Format
                   <div style={{
                     marginBottom: '16px',
                     marginTop: '0',
@@ -3460,9 +3460,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }}>
                     <div style={{
                       display: 'flex',
-                      transition: 'transform 1.5s ease-in-out',
-                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * 50}%)`,
-                    }}>
+                      gap: '8px',
+                      overflowX: 'auto',
+                      scrollBehavior: 'smooth',
+                      scrollbarWidth: 'none',
+                      msOverflowStyle: 'none',
+                    }} className="hide-scrollbar">
+                      <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
                       {(() => {
                         // Priority: Use gallery images if available, otherwise use logo or defaults
                         const hasGallery = c.galleryImages && c.galleryImages.length > 0;
@@ -3472,22 +3476,26 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         let imagesToShow: (string | number)[] = [];
                         
                         if (hasGallery) {
-                          // Use gallery images and duplicate them for continuous carousel
-                          imagesToShow = [...c.galleryImages!, ...c.galleryImages!];
+                          // Duplicate 3x for endless scroll illusion
+                          imagesToShow = [...c.galleryImages!, ...c.galleryImages!, ...c.galleryImages!];
                         } else if (hasLogo || hasReviews) {
-                          // Use default images if they have a logo or reviews but no gallery
-                          imagesToShow = [...defaultImages, ...defaultImages];
+                          // Use default images 3x
+                          imagesToShow = [...defaultImages, ...defaultImages, ...defaultImages];
                         } else {
-                          // New businesses with nothing - show placeholder
-                          imagesToShow = [0, 1];
+                          // New businesses - show placeholders 3x
+                          imagesToShow = [0, 1, 2, 0, 1, 2, 0, 1, 2];
                         }
                         
                         return imagesToShow.map((item, i) => (
                           <div
                             key={i}
                             style={{
-                              minWidth: '50%',
-                              padding: '0',
+                              flex: '0 0 auto',
+                              width: '120px',
+                              height: '180px',
+                              borderRadius: '8px',
+                              overflow: 'hidden',
+                              background: '#f3f4f6',
                             }}
                           >
                             {typeof item === 'string' ? (
@@ -3496,9 +3504,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 alt="Service photo"
                                 style={{
                                   width: '100%',
-                                  height: '140px',
+                                  height: '100%',
                                   objectFit: 'cover',
-                                  borderRadius: '0',
                                 }}
                               />
                             ) : (
