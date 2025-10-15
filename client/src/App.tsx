@@ -4055,12 +4055,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         ×
       </button>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 16px 80px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 16px 80px' }}>
         {/* Header with watermark logo */}
         <div style={{
           position: 'relative',
           marginBottom: '16px',
-          minHeight: '80px',
+          minHeight: '100px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -4072,8 +4072,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '120px',
-              height: '120px',
+              width: '160px',
+              height: '160px',
               opacity: 0.15,
               zIndex: 0,
             }}>
@@ -4091,7 +4091,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           
           {/* Company name */}
           <h1 style={{
-            fontSize: '28px',
+            fontSize: '36px',
             fontWeight: '700',
             margin: 0,
             color: '#000',
