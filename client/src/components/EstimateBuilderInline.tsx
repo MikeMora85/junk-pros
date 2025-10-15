@@ -100,9 +100,9 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           {/* Industry Pricing Guide - Collapsible */}
           <div style={{
             backgroundColor: '#fbbf24',
-            borderRadius: '0',
+            borderRadius: '8px',
             marginBottom: '12px',
-            border: '2px solid #000',
+            border: 'none',
           }}>
             <button
               onClick={() => setPricingGuideOpen(!pricingGuideOpen)}
@@ -122,7 +122,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
               <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: 0 }}>
                 Industry Pricing Guide
               </h4>
-              {pricingGuideOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              {pricingGuideOpen ? <ChevronUp size={18} color="#000" /> : <ChevronDown size={18} color="#000" />}
             </button>
             {pricingGuideOpen && (
               <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
@@ -137,9 +137,9 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           {/* Educational Disclaimer - Collapsible */}
           <div style={{
             backgroundColor: '#fbbf24',
-            borderRadius: '0',
+            borderRadius: '8px',
             marginBottom: '12px',
-            border: '2px solid #000',
+            border: 'none',
           }}>
             <button
               onClick={() => setEducationalOpen(!educationalOpen)}
@@ -159,7 +159,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
               <div style={{ fontSize: '13px', fontWeight: '700', color: '#000', margin: 0 }}>
                 Educational Tool Only
               </div>
-              {educationalOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              {educationalOpen ? <ChevronUp size={18} color="#000" /> : <ChevronDown size={18} color="#000" />}
             </button>
             {educationalOpen && (
               <div style={{
@@ -176,9 +176,9 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           {/* Common Upcharges - Collapsible */}
           <div style={{
             backgroundColor: '#fbbf24',
-            borderRadius: '0',
+            borderRadius: '8px',
             marginBottom: '20px',
-            border: '2px solid #000',
+            border: 'none',
           }}>
             <button
               onClick={() => setUpchargesOpen(!upchargesOpen)}
@@ -198,7 +198,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
               <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: 0 }}>
                 Common Upcharges
               </h4>
-              {upchargesOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              {upchargesOpen ? <ChevronUp size={18} color="#000" /> : <ChevronDown size={18} color="#000" />}
             </button>
             {upchargesOpen && (
               <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
