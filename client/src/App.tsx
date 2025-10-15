@@ -3868,6 +3868,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
               {/* Estimator and Ads Section - Full Width */}
               <div style={{
                 gridColumn: 'span 2',
+                paddingTop: '16px',
+                borderTop: '2px solid #000',
               }}>
                 <div style={{
                   display: 'grid',
