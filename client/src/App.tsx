@@ -3467,6 +3467,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     marginTop: '0',
                     overflow: 'hidden',
                     borderRadius: '0',
+                    border: '2px solid #fbbf24',
                   }}>
                     <style dangerouslySetInnerHTML={{__html: `
                       .carousel-item-${c.id} {
