@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
-import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, ChevronUp, Trash2, Globe, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
 import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
@@ -4016,6 +4016,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
 }
 
 function CompanyDetailInline({ company, onClose }: { company: Company; onClose: () => void }) {
+  const [socialTabOpen, setSocialTabOpen] = useState(false);
+  
   return (
     <div style={{
       position: 'fixed',
@@ -4141,131 +4143,104 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           📞 Call Now
         </button>
 
-        {/* Sticky Social Media Sidebar */}
+        {/* Social Media Bottom Tab */}
         {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
           <div style={{
             position: 'fixed',
-            left: 0,
-            bottom: '20px',
-            backgroundColor: '#fbbf24',
-            borderRadius: '0 8px 8px 0',
-            padding: '6px 0',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
+            bottom: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
             zIndex: 999,
-            boxShadow: '2px 0 8px rgba(0,0,0,0.1)',
           }}>
-            {company.website && (
-              <a
-                href={company.website.startsWith('http') ? company.website : `https://${company.website}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`link-website-modal-${company.id}`}
-                style={{
-                  color: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px',
-                  borderRadius: '4px',
-                  transition: 'background 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                <Globe size={24} />
-              </a>
+            {/* Collapsible Icons Row */}
+            {socialTabOpen && (
+              <div style={{
+                display: 'flex',
+                gap: '12px',
+                padding: '12px 20px',
+                backgroundColor: '#fbbf24',
+                borderRadius: '12px 12px 0 0',
+                marginBottom: '-2px',
+              }}>
+                {company.website && (
+                  <a
+                    href={company.website.startsWith('http') ? company.website : `https://${company.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-website-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <Globe size={24} />
+                  </a>
+                )}
+                {company.facebookUrl && (
+                  <a
+                    href={company.facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-facebook-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaFacebook size={24} />
+                  </a>
+                )}
+                {company.instagramUrl && (
+                  <a
+                    href={company.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-instagram-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaInstagram size={24} />
+                  </a>
+                )}
+                {company.gmbUrl && (
+                  <a
+                    href={company.gmbUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-gmb-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaGoogle size={24} />
+                  </a>
+                )}
+                {company.youtubeUrl && (
+                  <a
+                    href={company.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-youtube-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaYoutube size={24} />
+                  </a>
+                )}
+              </div>
             )}
-            {company.facebookUrl && (
-              <a
-                href={company.facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`link-facebook-modal-${company.id}`}
-                style={{
-                  color: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px',
-                  borderRadius: '4px',
-                  transition: 'background 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                <FaFacebook size={24} />
-              </a>
-            )}
-            {company.instagramUrl && (
-              <a
-                href={company.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`link-instagram-modal-${company.id}`}
-                style={{
-                  color: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px',
-                  borderRadius: '4px',
-                  transition: 'background 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                <FaInstagram size={24} />
-              </a>
-            )}
-            {company.gmbUrl && (
-              <a
-                href={company.gmbUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`link-gmb-modal-${company.id}`}
-                style={{
-                  color: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px',
-                  borderRadius: '4px',
-                  transition: 'background 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                <FaGoogle size={24} />
-              </a>
-            )}
-            {company.youtubeUrl && (
-              <a
-                href={company.youtubeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`link-youtube-modal-${company.id}`}
-                style={{
-                  color: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '4px',
-                  borderRadius: '4px',
-                  transition: 'background 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(0,0,0,0.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-              >
-                <FaYoutube size={24} />
-              </a>
-            )}
+            
+            {/* Tab Button with Arrow */}
+            <button
+              onClick={() => setSocialTabOpen(!socialTabOpen)}
+              data-testid="button-social-tab"
+              style={{
+                backgroundColor: '#fbbf24',
+                border: 'none',
+                borderRadius: socialTabOpen ? '0' : '12px 12px 0 0',
+                padding: '8px 24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+              }}
+            >
+              <ChevronUp size={20} color="#000" style={{
+                transform: socialTabOpen ? 'rotate(0deg)' : 'rotate(180deg)',
+                transition: 'transform 0.2s',
+              }} />
+            </button>
           </div>
         )}
 
