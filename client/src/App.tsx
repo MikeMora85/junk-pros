@@ -4060,12 +4060,17 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             marginTop: '16px',
             overflow: 'hidden',
             borderRadius: '8px',
-            maxHeight: '300px',
+            maxHeight: '280px',
           }}>
             <div style={{
               display: 'flex',
               gap: '8px',
-            }}>
+              overflowX: 'auto',
+              scrollBehavior: 'smooth',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }} className="hide-scrollbar">
+              <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
               {(() => {
                 const hasGallery = company.galleryImages && company.galleryImages.length > 0;
                 const hasLogo = company.logoUrl;
@@ -4074,24 +4079,27 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 let imagesToShow: (string | number)[] = [];
                 
                 if (hasGallery) {
-                  imagesToShow = company.galleryImages!.slice(0, 3);
+                  // Create infinite loop by duplicating images 3x
+                  const originalImages = company.galleryImages!;
+                  imagesToShow = [...originalImages, ...originalImages, ...originalImages];
                 } else if (hasLogo || hasReviews) {
-                  imagesToShow = [1, 2, 3];
+                  imagesToShow = [1, 2, 3, 1, 2, 3, 1, 2, 3];
                 }
                 
                 return imagesToShow.map((img, idx) => (
                   <div
                     key={idx}
                     style={{
-                      flex: '0 0 calc(33.333% - 5.33px)',
-                      aspectRatio: '1',
+                      flex: '0 0 auto',
+                      width: '160px',
+                      height: '240px',
                       borderRadius: '8px',
                       overflow: 'hidden',
                       background: '#f3f4f6',
                     }}
                   >
                     <img
-                      src={typeof img === 'string' ? img : `https://picsum.photos/400/400?random=${img}`}
+                      src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
                       style={{
                         width: '100%',
