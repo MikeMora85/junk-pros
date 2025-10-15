@@ -303,7 +303,7 @@ export default function AddBusiness() {
         padding: '40px 12px',
       }}>
         
-        {/* Why Join Section - Collapsible */}
+        {/* Combined Platform Standards & Requirements - Collapsible */}
         <div style={{ marginBottom: '48px' }}>
           <button
             onClick={() => setIsWhyUsOpen(!isWhyUsOpen)}
@@ -322,7 +322,7 @@ export default function AddBusiness() {
               top: '0',
               zIndex: 50,
             }}
-            data-testid="button-toggle-why-us"
+            data-testid="button-toggle-requirements"
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <h2 style={{
@@ -332,9 +332,9 @@ export default function AddBusiness() {
                 margin: 0,
                 letterSpacing: '-0.02em',
               }}>
-                Why Independent Operators Choose Us
+                Platform Standards & Requirements
               </h2>
-              {hasReadWhyUs && (
+              {(hasReadWhyUs && hasReadRequirements) && (
                 <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
               )}
             </div>
@@ -362,6 +362,15 @@ export default function AddBusiness() {
               padding: '24px',
               background: '#fff',
             }}>
+              <h3 style={{ 
+                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+                fontSize: '16px', 
+                fontWeight: '700', 
+                color: '#000', 
+                marginBottom: '12px' 
+              }}>
+                Why Join:
+              </h3>
               <ul style={{ 
                 fontFamily: "'Helvetica Neue', Arial, sans-serif", 
                 fontSize: '15px', 
@@ -376,111 +385,6 @@ export default function AddBusiness() {
                 <li><strong>Local SEO</strong> — Optimized for city-specific searches</li>
               </ul>
 
-              {/* Required Agreement Checkbox */}
-              <div style={{
-                background: '#fef3c7',
-                padding: '16px',
-                borderRadius: '6px',
-                border: '2px solid #fbbf24',
-              }}>
-                <label style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '12px',
-                  cursor: 'pointer',
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                }}>
-                  <input
-                    type="checkbox"
-                    checked={hasReadWhyUs}
-                    onChange={(e) => {
-                      setHasReadWhyUs(e.target.checked);
-                      if (e.target.checked) {
-                        setIsWhyUsOpen(false);
-                      }
-                    }}
-                    style={{
-                      width: '20px',
-                      height: '20px',
-                      cursor: 'pointer',
-                      flexShrink: 0,
-                      marginTop: '2px',
-                    }}
-                    data-testid="checkbox-read-agree"
-                  />
-                  <span style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    color: '#000',
-                    lineHeight: '1.4',
-                  }}>
-                    I understand the platform benefits and standards
-                  </span>
-                </label>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Requirements Section - Collapsible */}
-        <div style={{ marginBottom: '48px' }}>
-          <button
-            onClick={() => setIsRequirementsOpen(!isRequirementsOpen)}
-            style={{
-              width: '100%',
-              background: '#fff',
-              border: '2px solid #000',
-              padding: '20px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              cursor: 'pointer',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              transition: 'all 0.2s',
-              position: 'sticky',
-              top: '0',
-              zIndex: 50,
-            }}
-            data-testid="button-toggle-requirements"
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <h2 style={{
-                fontSize: '22px',
-                fontWeight: '700',
-                color: '#000',
-                margin: 0,
-                letterSpacing: '-0.02em',
-              }}>
-                Membership Requirements
-              </h2>
-              {hasReadRequirements && (
-                <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
-              )}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ 
-                fontSize: '13px', 
-                fontWeight: '700', 
-                color: '#dc2626',
-                textTransform: 'uppercase',
-              }}>
-                Required Read
-              </span>
-              {isRequirementsOpen ? (
-                <ChevronUp size={28} color="#000" />
-              ) : (
-                <ChevronDown size={28} color="#000" />
-              )}
-            </div>
-          </button>
-          
-          {isRequirementsOpen && (
-            <div style={{
-              border: '2px solid #000',
-              borderTop: 'none',
-              padding: '24px',
-              background: '#fff',
-            }}>
               <h3 style={{ 
                 fontFamily: "'Helvetica Neue', Arial, sans-serif", 
                 fontSize: '16px', 
@@ -543,11 +447,12 @@ export default function AddBusiness() {
                 }}>
                   <input
                     type="checkbox"
-                    checked={hasReadRequirements}
+                    checked={hasReadWhyUs && hasReadRequirements}
                     onChange={(e) => {
+                      setHasReadWhyUs(e.target.checked);
                       setHasReadRequirements(e.target.checked);
                       if (e.target.checked) {
-                        setIsRequirementsOpen(false);
+                        setIsWhyUsOpen(false);
                       }
                     }}
                     style={{
@@ -565,7 +470,7 @@ export default function AddBusiness() {
                     color: '#000',
                     lineHeight: '1.4',
                   }}>
-                    I meet all requirements and agree to maintain these standards
+                    I understand the benefits and meet all requirements
                   </span>
                 </label>
               </div>
