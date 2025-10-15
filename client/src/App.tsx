@@ -3498,6 +3498,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             style={{
                               minWidth: 'calc(100% / 3)',
                               padding: '0',
+                              aspectRatio: '1',
                             }}
                           >
                             {typeof item === 'string' ? (
@@ -3506,7 +3507,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 alt="Service photo"
                                 style={{
                                   width: '100%',
-                                  height: '120px',
+                                  height: '100%',
                                   objectFit: 'cover',
                                   borderRadius: '0',
                                 }}
