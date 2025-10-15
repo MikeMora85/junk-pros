@@ -3701,7 +3701,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={32} style={{ transform: 'scaleX(-1)' }} />
+                        <Phone size={32} />
                       </button>
 
                       {/* Send Photos Icon */}
