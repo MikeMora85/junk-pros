@@ -4082,67 +4082,6 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           </h1>
         </div>
 
-        {/* Gallery Carousel */}
-        {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
-          <div style={{
-            marginBottom: '16px',
-            marginTop: '16px',
-            overflow: 'hidden',
-            borderRadius: '8px',
-            maxHeight: '280px',
-          }}>
-            <div style={{
-              display: 'flex',
-              gap: '8px',
-              overflowX: 'auto',
-              scrollBehavior: 'smooth',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }} className="hide-scrollbar">
-              <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
-              {(() => {
-                const hasGallery = company.galleryImages && company.galleryImages.length > 0;
-                const hasLogo = company.logoUrl;
-                const hasReviews = company.reviews > 0;
-                
-                let imagesToShow: (string | number)[] = [];
-                
-                if (hasGallery) {
-                  // Create infinite loop by duplicating images 3x
-                  const originalImages = company.galleryImages!;
-                  imagesToShow = [...originalImages, ...originalImages, ...originalImages];
-                } else if (hasLogo || hasReviews) {
-                  imagesToShow = [1, 2, 3, 1, 2, 3, 1, 2, 3];
-                }
-                
-                return imagesToShow.map((img, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      flex: '0 0 auto',
-                      width: '160px',
-                      height: '240px',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      background: '#f3f4f6',
-                    }}
-                  >
-                    <img
-                      src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
-                      alt={`Gallery ${idx + 1}`}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </div>
-                ));
-              })()}
-            </div>
-          </div>
-        )}
-
         {/* Rating */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
           {[1, 2, 3, 4, 5].map((star) => (
@@ -4339,40 +4278,141 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 </p>
               </div>
             )}
+          </div>
+        </div>
 
-            {/* Photos */}
-            <div style={{ marginBottom: '32px' }}>
-              <h2 style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Photos
-              </h2>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '12px',
-              }}>
-                {[profilePhoto1, profilePhoto2, profilePhoto3, profilePhoto4].map((photo, i) => (
-                  <img
-                    key={i}
-                    src={photo}
-                    alt={`Company photo ${i + 1}`}
+        {/* Full Width Photo Gallery with Navigation */}
+        {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
+          <div style={{
+            position: 'relative',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginBottom: '32px',
+            marginTop: '32px',
+          }}>
+            <div 
+              ref={(el) => {
+                if (el) (el as any).carouselScroll = el;
+              }}
+              style={{
+                display: 'flex',
+                gap: '8px',
+                overflowX: 'auto',
+                scrollBehavior: 'smooth',
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                padding: '0 16px',
+              }} 
+              className="hide-scrollbar"
+            >
+              <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
+              {(() => {
+                const hasGallery = company.galleryImages && company.galleryImages.length > 0;
+                const hasLogo = company.logoUrl;
+                const hasReviews = company.reviews > 0;
+                
+                let imagesToShow: (string | number)[] = [];
+                
+                if (hasGallery) {
+                  const originalImages = company.galleryImages!;
+                  imagesToShow = [...originalImages, ...originalImages, ...originalImages];
+                } else if (hasLogo || hasReviews) {
+                  imagesToShow = [1, 2, 3, 1, 2, 3, 1, 2, 3];
+                }
+                
+                return imagesToShow.map((img, idx) => (
+                  <div
+                    key={idx}
                     style={{
-                      width: '100%',
-                      height: '140px',
-                      objectFit: 'cover',
+                      flex: '0 0 auto',
+                      width: '160px',
+                      height: '240px',
                       borderRadius: '8px',
+                      overflow: 'hidden',
+                      background: '#f3f4f6',
+                      border: '2px solid #fbbf24',
                     }}
-                  />
-                ))}
-              </div>
+                  >
+                    <img
+                      src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
+                      alt={`Gallery ${idx + 1}`}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </div>
+                ));
+              })()}
             </div>
+            
+            {/* Navigation Arrows */}
+            <button
+              onClick={(e) => {
+                const carousel = e.currentTarget.parentElement?.querySelector('.hide-scrollbar') as HTMLElement;
+                if (carousel) carousel.scrollLeft -= 300;
+              }}
+              style={{
+                position: 'absolute',
+                left: '8px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'rgba(0, 0, 0, 0.6)',
+                border: 'none',
+                color: '#fff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '18px',
+                zIndex: 10,
+              }}
+              data-testid="button-carousel-prev"
+            >
+              ‹
+            </button>
+            
+            <button
+              onClick={(e) => {
+                const carousel = e.currentTarget.parentElement?.querySelector('.hide-scrollbar') as HTMLElement;
+                if (carousel) carousel.scrollLeft += 300;
+              }}
+              style={{
+                position: 'absolute',
+                right: '8px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'rgba(0, 0, 0, 0.6)',
+                border: 'none',
+                color: '#fff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '18px',
+                zIndex: 10,
+              }}
+              data-testid="button-carousel-next"
+            >
+              ›
+            </button>
+          </div>
+        )}
 
-            {/* Reviews */}
+        {/* Continue with Two Column Layout */}
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: window.innerWidth > 768 ? '1fr 300px' : '1fr', 
+          gap: '24px' 
+        }}>
+          <div>
             <div style={{ marginBottom: '32px' }}>
               <h2 style={{
                 fontSize: '24px',
