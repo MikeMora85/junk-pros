@@ -3107,9 +3107,19 @@ function CityPage({ city, state }: { city: string; state: string }) {
       setCarouselOffsets((prev) => {
         const next: Record<number, number> = {};
         companies.forEach((c) => {
-          // Only rotate if company has images (checking if it's from default data)
+          const hasGallery = c.galleryImages && c.galleryImages.length > 0;
           const hasImages = c.logoUrl || c.reviews > 0;
-          next[c.id] = hasImages ? ((prev[c.id] || 0) + 1) % defaultImages.length : 0;
+          
+          if (hasGallery) {
+            // Use actual gallery image count for endless loop
+            const imageCount = c.galleryImages!.length;
+            next[c.id] = ((prev[c.id] || 0) + 1) % imageCount;
+          } else if (hasImages) {
+            // Use default images count
+            next[c.id] = ((prev[c.id] || 0) + 1) % defaultImages.length;
+          } else {
+            next[c.id] = 0;
+          }
         });
         return next;
       });
