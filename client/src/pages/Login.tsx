@@ -12,7 +12,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBack = () => {
-    window.history.back();
+    window.location.href = '/';
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
