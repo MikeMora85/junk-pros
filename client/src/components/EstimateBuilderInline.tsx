@@ -62,7 +62,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           letterSpacing: '-0.02em',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
-          Instant Price Calculator
+          Example Pricing
         </h3>
       </div>
       
@@ -88,7 +88,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         {vehicleCapacity ? (
           <>Send photos or book an in-person estimate to confirm your volume and final price.</>
         ) : (
-          <>Get your estimate in seconds! Most trucks hold 12-15 cubic yards.</>
+          <>Learn how most haulers price your job.</>
         )}
       </p>
 
