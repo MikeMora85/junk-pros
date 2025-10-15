@@ -3468,6 +3468,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     overflow: 'hidden',
                     borderRadius: '0',
                   }}>
+                    <style dangerouslySetInnerHTML={{__html: `
+                      .carousel-item-${c.id} {
+                        min-width: calc(100% / 5.6);
+                      }
+                      @media (max-width: 768px) {
+                        .carousel-item-${c.id} {
+                          min-width: calc(100% / 4.67);
+                        }
+                      }
+                    `}} />
                     <div style={{
                       display: 'flex',
                       transition: 'transform 1.5s ease-in-out',
@@ -3495,8 +3505,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         return imagesToShow.map((item, i) => (
                           <div
                             key={i}
+                            className={`carousel-item-${c.id}`}
                             style={{
-                              minWidth: 'calc(100% / 5.6)',
                               padding: '0',
                               aspectRatio: '1',
                             }}
