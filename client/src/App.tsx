@@ -4034,53 +4034,52 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       </div>
 
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
-        {/* Logo and Header */}
+        {/* Header with watermark logo */}
         <div style={{
+          position: 'relative',
+          marginBottom: '16px',
+          minHeight: '80px',
           display: 'flex',
           alignItems: 'center',
-          gap: '16px',
-          marginBottom: '16px',
+          justifyContent: 'center',
         }}>
-          {/* Logo */}
-          <div style={{
-            width: '80px',
-            height: '80px',
-            borderRadius: '10px',
-            background: 'transparent',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-            border: 'none',
-            overflow: 'hidden',
-          }}>
-            {company.logoUrl ? (
+          {/* Watermark Logo Background */}
+          {company.logoUrl && (
+            <div style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '120px',
+              height: '120px',
+              opacity: 0.15,
+              zIndex: 0,
+            }}>
               <img 
                 src={company.logoUrl} 
-                alt={`${company.name} logo`} 
+                alt={`${company.name} logo watermark`} 
                 style={{ 
                   width: '100%', 
                   height: '100%', 
-                  objectFit: 'cover' 
+                  objectFit: 'contain' 
                 }} 
               />
-            ) : (
-              <Truck size={40} color="#6b7280" />
-            )}
-          </div>
+            </div>
+          )}
           
           {/* Company name */}
-          <div style={{ flex: 1 }}>
-            <h1 style={{
-              fontSize: '28px',
-              fontWeight: '700',
-              margin: 0,
-              color: '#000',
-              fontFamily: 'system-ui, -apple-system, sans-serif',
-            }} data-testid="text-company-name">
-              {company.name}
-            </h1>
-          </div>
+          <h1 style={{
+            fontSize: '28px',
+            fontWeight: '700',
+            margin: 0,
+            color: '#000',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            textAlign: 'center',
+            position: 'relative',
+            zIndex: 1,
+          }} data-testid="text-company-name">
+            {company.name}
+          </h1>
         </div>
 
         {/* Gallery Carousel */}
