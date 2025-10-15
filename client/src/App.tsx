@@ -3471,7 +3471,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {isPremium && c.badge && !isUnclaimed && (
                     <div style={{
                       position: 'absolute',
-                      top: '12px',
+                      top: '-2px',
                       right: '12px',
                       background: '#16a34a',
                       color: '#fff',
