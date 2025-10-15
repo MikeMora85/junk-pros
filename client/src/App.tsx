@@ -3474,7 +3474,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       }
                       @media (max-width: 768px) {
                         .carousel-item-${c.id} {
-                          min-width: calc(100% / 4.67);
+                          min-width: calc(100% / 3.5);
                         }
                       }
                     `}} />
