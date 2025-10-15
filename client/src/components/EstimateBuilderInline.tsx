@@ -143,11 +143,49 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
             )}
           </div>
 
-          {/* Educational Disclaimer - Collapsible */}
+          {/* Common Upcharges - Collapsible */}
           <div style={{
             backgroundColor: '#fbbf24',
             borderRadius: '8px',
             marginBottom: '12px',
+            border: 'none',
+          }}>
+            <button
+              onClick={() => setUpchargesOpen(!upchargesOpen)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '12px 14px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left',
+              }}
+              data-testid="button-upcharges"
+            >
+              <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: 0 }}>
+                Common Upcharges
+              </h4>
+              {upchargesOpen ? <ChevronUp size={18} color="#000" /> : <ChevronDown size={18} color="#000" />}
+            </button>
+            {upchargesOpen && (
+              <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+                <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
+                <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
+                <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
+                <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
+                <div>• Soiled or contaminated materials</div>
+              </div>
+            )}
+          </div>
+
+          {/* Educational Disclaimer - Collapsible */}
+          <div style={{
+            backgroundColor: '#fbbf24',
+            borderRadius: '8px',
+            marginBottom: '20px',
             border: 'none',
           }}>
             <button
@@ -178,44 +216,6 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
                 lineHeight: '1.6',
               }}>
                 This calculator provides estimates for <strong>basic junk removal</strong> to help you understand typical pricing. Contact companies directly for accurate quotes based on your specific situation.
-              </div>
-            )}
-          </div>
-
-          {/* Common Upcharges - Collapsible */}
-          <div style={{
-            backgroundColor: '#fbbf24',
-            borderRadius: '8px',
-            marginBottom: '20px',
-            border: 'none',
-          }}>
-            <button
-              onClick={() => setUpchargesOpen(!upchargesOpen)}
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '12px 14px',
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                textAlign: 'left',
-              }}
-              data-testid="button-upcharges"
-            >
-              <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: 0 }}>
-                Common Upcharges
-              </h4>
-              {upchargesOpen ? <ChevronUp size={18} color="#000" /> : <ChevronDown size={18} color="#000" />}
-            </button>
-            {upchargesOpen && (
-              <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
-                <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
-                <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
-                <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
-                <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
-                <div>• Soiled or contaminated materials</div>
               </div>
             )}
           </div>
