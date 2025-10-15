@@ -3451,7 +3451,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   )}
                   
                   {!isUnclaimed && (
-                  // Image Carousel - Manual Scroll, Vertical Format
+                  // Image Carousel - Auto-scrolling, Vertical Format
                   <div style={{
                     marginBottom: '16px',
                     marginTop: '0',
@@ -3460,13 +3460,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }}>
                     <div style={{
                       display: 'flex',
-                      gap: '8px',
-                      overflowX: 'auto',
-                      scrollBehavior: 'smooth',
-                      scrollbarWidth: 'none',
-                      msOverflowStyle: 'none',
-                    }} className="hide-scrollbar">
-                      <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
+                      transition: 'transform 1.5s ease-in-out',
+                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (100 / 3)}%)`,
+                    }}>
                       {(() => {
                         // Priority: Use gallery images if available, otherwise use logo or defaults
                         const hasGallery = c.galleryImages && c.galleryImages.length > 0;
@@ -3476,7 +3472,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         let imagesToShow: (string | number)[] = [];
                         
                         if (hasGallery) {
-                          // Duplicate 3x for endless scroll illusion
+                          // Duplicate 3x for endless loop
                           imagesToShow = [...c.galleryImages!, ...c.galleryImages!, ...c.galleryImages!];
                         } else if (hasLogo || hasReviews) {
                           // Use default images 3x
@@ -3490,12 +3486,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           <div
                             key={i}
                             style={{
-                              flex: '0 0 auto',
-                              width: '120px',
-                              height: '180px',
-                              borderRadius: '8px',
-                              overflow: 'hidden',
-                              background: '#f3f4f6',
+                              minWidth: 'calc(100% / 3)',
+                              padding: '0',
                             }}
                           >
                             {typeof item === 'string' ? (
@@ -3504,8 +3496,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 alt="Service photo"
                                 style={{
                                   width: '100%',
-                                  height: '100%',
+                                  height: '200px',
                                   objectFit: 'cover',
+                                  borderRadius: '0',
                                 }}
                               />
                             ) : (
