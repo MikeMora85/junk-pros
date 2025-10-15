@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calculator } from "lucide-react";
+import { Calculator, ChevronDown, ChevronUp } from "lucide-react";
 
 interface CompanyPrices {
   minimum?: number;
@@ -18,6 +18,9 @@ interface EstimateBuilderInlineProps {
 
 export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true, vehicleCapacity, singleItemMinimum }: EstimateBuilderInlineProps) {
   const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
+  const [pricingGuideOpen, setPricingGuideOpen] = useState(false);
+  const [educationalOpen, setEducationalOpen] = useState(false);
+  const [upchargesOpen, setUpchargesOpen] = useState(false);
   
   // Calculate price based on load size and company prices
   const getPrice = () => {
@@ -52,6 +55,124 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
       overflow: 'hidden',
     }}>
       
+      {showDisclaimers && (
+        <>
+          {/* Industry Pricing Guide - Collapsible */}
+          <div style={{
+            backgroundColor: '#f5f5f5',
+            borderRadius: '0',
+            marginBottom: '12px',
+            border: '1px solid #cccccc',
+          }}>
+            <button
+              onClick={() => setPricingGuideOpen(!pricingGuideOpen)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '12px 14px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left',
+              }}
+              data-testid="button-pricing-guide"
+            >
+              <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: 0 }}>
+                Industry Pricing Guide
+              </h4>
+              {pricingGuideOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </button>
+            {pricingGuideOpen && (
+              <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+                <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
+                <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
+                <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
+                <div>• Full truck: $600-$850+</div>
+              </div>
+            )}
+          </div>
+
+          {/* Educational Disclaimer - Collapsible */}
+          <div style={{
+            backgroundColor: '#fff3cd',
+            borderRadius: '0',
+            marginBottom: '12px',
+            border: '2px solid #fbbf24',
+          }}>
+            <button
+              onClick={() => setEducationalOpen(!educationalOpen)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '12px 16px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left',
+              }}
+              data-testid="button-educational"
+            >
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#000', margin: 0 }}>
+                Educational Tool Only
+              </div>
+              {educationalOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </button>
+            {educationalOpen && (
+              <div style={{
+                padding: '0 16px 16px 16px',
+                fontSize: '12px',
+                color: '#000',
+                lineHeight: '1.6',
+              }}>
+                This calculator provides estimates for <strong>basic junk removal</strong> to help you understand typical pricing. Contact companies directly for accurate quotes based on your specific situation.
+              </div>
+            )}
+          </div>
+
+          {/* Common Upcharges - Collapsible */}
+          <div style={{
+            backgroundColor: '#f5f5f5',
+            borderRadius: '0',
+            marginBottom: '20px',
+            border: '1px solid #cccccc',
+          }}>
+            <button
+              onClick={() => setUpchargesOpen(!upchargesOpen)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '12px 14px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'left',
+              }}
+              data-testid="button-upcharges"
+            >
+              <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: 0 }}>
+                Common Upcharges
+              </h4>
+              {upchargesOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </button>
+            {upchargesOpen && (
+              <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+                <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
+                <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
+                <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
+                <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
+                <div>• Soiled or contaminated materials</div>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
         <Calculator size={24} color="#fbbf24" />
         <h3 style={{ 
@@ -183,73 +304,6 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           </div>
         )}
       </div>
-
-      {showDisclaimers && (
-        <>
-          {/* Industry Pricing Info */}
-          <div style={{
-            backgroundColor: '#f5f5f5',
-            borderRadius: '0',
-            padding: '14px',
-            marginBottom: '16px',
-            border: '1px solid #cccccc',
-          }}>
-            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
-              Industry Pricing Guide
-            </h4>
-            <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
-              <div style={{ marginBottom: '4px' }}>• Minimum load (¼ truck): $150-$250</div>
-              <div style={{ marginBottom: '4px' }}>• Half truck: $300-$450</div>
-              <div style={{ marginBottom: '4px' }}>• ¾ truck: $450-$650</div>
-              <div>• Full truck: $600-$850+</div>
-            </div>
-          </div>
-
-          {/* Educational Disclaimer */}
-          <div style={{
-            backgroundColor: '#fff3cd',
-            borderRadius: '0',
-            padding: '16px',
-            marginBottom: '16px',
-            border: '2px solid #fbbf24',
-          }}>
-            <div style={{
-              fontSize: '13px',
-              fontWeight: '700',
-              color: '#000',
-              marginBottom: '8px',
-            }}>
-              Educational Tool Only
-            </div>
-            <div style={{
-              fontSize: '12px',
-              color: '#000',
-              lineHeight: '1.6',
-            }}>
-              This calculator provides estimates for <strong>basic junk removal</strong> to help you understand typical pricing. Contact companies directly for accurate quotes based on your specific situation.
-            </div>
-          </div>
-
-          {/* Common Upcharges */}
-          <div style={{
-            backgroundColor: '#f5f5f5',
-            borderRadius: '0',
-            padding: '14px',
-            border: '1px solid #cccccc',
-          }}>
-            <h4 style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 8px 0' }}>
-              Common Upcharges
-            </h4>
-            <div style={{ fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
-              <div style={{ marginBottom: '4px' }}>• Stairs and difficult access</div>
-              <div style={{ marginBottom: '4px' }}>• Estate cleanouts (additional labor)</div>
-              <div style={{ marginBottom: '4px' }}>• Obstacles or narrow pathways</div>
-              <div style={{ marginBottom: '4px' }}>• Hazardous items (paint, tires, bed bugs)</div>
-              <div>• Soiled or contaminated materials</div>
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 }
