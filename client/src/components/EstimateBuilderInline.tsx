@@ -17,7 +17,7 @@ interface EstimateBuilderInlineProps {
 }
 
 export default function EstimateBuilderInline({ companyPrices, showDisclaimers = true, vehicleCapacity, singleItemMinimum }: EstimateBuilderInlineProps) {
-  const [loadSize, setLoadSize] = useState<'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
+  const [loadSize, setLoadSize] = useState<'minimum' | 'quarter' | 'half' | 'threeQuarter' | 'full'>('half');
   const [pricingGuideOpen, setPricingGuideOpen] = useState(false);
   const [educationalOpen, setEducationalOpen] = useState(false);
   const [upchargesOpen, setUpchargesOpen] = useState(false);
@@ -25,18 +25,20 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
   // Calculate price based on load size and company prices
   const getPrice = () => {
     const prices = {
-      quarter: companyPrices?.quarterLoad || 150,
-      half: companyPrices?.halfLoad || 500,
-      threeQuarter: companyPrices?.threeQuarterLoad || 750,
-      full: companyPrices?.fullLoad || 1000,
+      minimum: companyPrices?.minimum || singleItemMinimum || 120,
+      quarter: companyPrices?.quarterLoad || 240,
+      half: companyPrices?.halfLoad || 375,
+      threeQuarter: companyPrices?.threeQuarterLoad || 550,
+      full: companyPrices?.fullLoad || 725,
     };
     return prices[loadSize];
   };
   
   const price = getPrice();
-  const percentage = loadSize === 'quarter' ? 25 : loadSize === 'half' ? 50 : loadSize === 'threeQuarter' ? 75 : 100;
+  const percentage = loadSize === 'minimum' ? 10 : loadSize === 'quarter' ? 25 : loadSize === 'half' ? 50 : loadSize === 'threeQuarter' ? 75 : 100;
 
   const presets = [
+    { label: "Min", value: 'minimum' as const },
     { label: "¼", value: 'quarter' as const },
     { label: "½", value: 'half' as const },
     { label: "¾", value: 'threeQuarter' as const },
@@ -217,7 +219,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         </>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', marginBottom: '24px' }}>
         {presets.map((p) => (
           <button
             key={p.label}
@@ -270,7 +272,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
             color: '#000',
             zIndex: 1,
           }}>
-            Truck: {percentage}% Full
+            {loadSize === 'minimum' ? 'Single Item' : `Truck: ${percentage}% Full`}
           </div>
         </div>
       </div>
