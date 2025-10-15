@@ -3416,13 +3416,33 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     Loading...
                   </div>
                 ) : (
-                  companies.map((c, index) => {
+                  companies
+                    .sort((a, b) => {
+                      // Tier-based sorting: premium > standard > basic (claimed) > unclaimed
+                      const getTierPriority = (company: any) => {
+                        if (!company.claimed) return 4; // Unclaimed last
+                        if (company.subscriptionTier === 'premium') return 1; // Premium first
+                        if (company.subscriptionTier === 'standard') return 2; // Standard second
+                        return 3; // Basic (claimed) third
+                      };
+                      
+                      const priorityDiff = getTierPriority(a) - getTierPriority(b);
+                      if (priorityDiff !== 0) return priorityDiff;
+                      
+                      // Within same tier, sort by displayOrder
+                      return (a.displayOrder || 999) - (b.displayOrder || 999);
+                    })
+                    .map((c, index) => {
                     const isUnclaimed = !c.claimed;
+                    const isPremium = c.subscriptionTier === 'premium';
+                    const isStandard = c.subscriptionTier === 'standard';
+                    const isBasic = c.claimed && c.subscriptionTier === 'basic';
+                    const hasFullFeatures = isPremium || isStandard; // Both get all features
                     
                     return (
                 <div 
                   key={c.id}
-                  onClick={isUnclaimed ? undefined : () => {
+                  onClick={!hasFullFeatures ? undefined : () => {
                     trackBusinessEvent(c.id, 'click');
                     setSelectedCompanyId(c.id);
                   }} 
@@ -3441,7 +3461,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     maxWidth: '100%',
                     boxSizing: 'border-box',
                     overflow: 'visible',
-                    cursor: isUnclaimed ? 'default' : 'pointer',
+                    cursor: hasFullFeatures ? 'pointer' : 'default',
                     transition: 'background-color 0.2s',
                     opacity: isUnclaimed ? 0.7 : 1,
                   }}
@@ -3461,7 +3481,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       Unclaimed Listing - Basic Info Only
                     </div>
                   ) : (
-                    c.badge && (
+                    isPremium && c.badge && (
                       <>
                         <div style={{
                           display: 'inline-block',
@@ -3486,8 +3506,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )
                   )}
                   
-                  {!isUnclaimed && (
-                  // Image Carousel - Auto-scrolling, Vertical Format
+                  {hasFullFeatures && (
+                  // Image Carousel - Auto-scrolling, Vertical Format (Premium & Standard only)
                   <div style={{
                     marginBottom: '16px',
                     marginTop: '0',
@@ -3728,8 +3748,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
-                  {/* Quote Section */}
-                  {!isUnclaimed && (
+                  {/* Quote Section - Premium & Standard only */}
+                  {hasFullFeatures && (
                   <div style={{
                     backgroundColor: '#f5f5f5',
                     borderRadius: '0',
