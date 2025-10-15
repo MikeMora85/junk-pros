@@ -4720,21 +4720,23 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             </div>
 
             {/* Location */}
-            <div style={{ marginBottom: '24px' }}>
-              <h2 style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Location
-              </h2>
-              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                <div>1234 Elm St</div>
-                <div>Springfield, IL 62701</div>
+            {company.address && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Location
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  <div>{company.address}</div>
+                  <div>{company.city}, {company.state}</div>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Contact Information */}
             <div>
