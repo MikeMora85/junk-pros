@@ -3506,7 +3506,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 alt="Service photo"
                                 style={{
                                   width: '100%',
-                                  height: '200px',
+                                  height: '120px',
                                   objectFit: 'cover',
                                   borderRadius: '0',
                                 }}
