@@ -3074,6 +3074,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  const [carouselTransitions, setCarouselTransitions] = useState<Record<number, boolean>>({});
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, isAuthenticated } = useAuth();
   
@@ -3111,12 +3112,36 @@ function CityPage({ city, state }: { city: string; state: string }) {
           const hasImages = c.logoUrl || c.reviews > 0;
           
           if (hasGallery) {
-            // Use actual gallery image count for endless loop
             const imageCount = c.galleryImages!.length;
-            next[c.id] = ((prev[c.id] || 0) + 1) % imageCount;
+            const currentOffset = prev[c.id] || 0;
+            const nextOffset = currentOffset + 1;
+            
+            // When we reach the end of the first set, reset to 0 without transition
+            if (nextOffset >= imageCount) {
+              next[c.id] = 0;
+              // Disable transition for this carousel
+              setCarouselTransitions(t => ({ ...t, [c.id]: false }));
+              // Re-enable transition after a brief moment
+              setTimeout(() => {
+                setCarouselTransitions(t => ({ ...t, [c.id]: true }));
+              }, 50);
+            } else {
+              next[c.id] = nextOffset;
+            }
           } else if (hasImages) {
-            // Use default images count
-            next[c.id] = ((prev[c.id] || 0) + 1) % defaultImages.length;
+            const imageCount = defaultImages.length;
+            const currentOffset = prev[c.id] || 0;
+            const nextOffset = currentOffset + 1;
+            
+            if (nextOffset >= imageCount) {
+              next[c.id] = 0;
+              setCarouselTransitions(t => ({ ...t, [c.id]: false }));
+              setTimeout(() => {
+                setCarouselTransitions(t => ({ ...t, [c.id]: true }));
+              }, 50);
+            } else {
+              next[c.id] = nextOffset;
+            }
           } else {
             next[c.id] = 0;
           }
@@ -3482,7 +3507,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     `}} />
                     <div style={{
                       display: 'flex',
-                      transition: 'transform 1.5s ease-in-out',
+                      transition: carouselTransitions[c.id] !== false ? 'transform 1.5s ease-in-out' : 'none',
                       transform: `translateX(-${(carouselOffsets[c.id] || 0) * (window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5)}%)`,
                     }}>
                       {(() => {
