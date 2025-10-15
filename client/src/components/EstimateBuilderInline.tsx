@@ -125,6 +125,10 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
             </button>
             {pricingGuideOpen && (
               <div style={{ padding: '0 14px 12px 14px', fontSize: '12px', color: '#333333', lineHeight: '1.6' }}>
+                <div style={{ marginBottom: '8px', fontWeight: '600' }}>Understanding Cubic Yards:</div>
+                <div style={{ marginBottom: '8px' }}>A cubic yard is 3 feet × 3 feet × 3 feet. Average dump trucks and trailers hold 12-15 cubic yards.</div>
+                
+                <div style={{ marginBottom: '8px', marginTop: '12px', fontWeight: '600' }}>Typical Pricing:</div>
                 <div style={{ marginBottom: '4px' }}>• Minimum (single item pickup): $89-$150+</div>
                 <div style={{ marginBottom: '4px' }}>• ¼ truck: $180-$300+</div>
                 <div style={{ marginBottom: '4px' }}>• ½ truck: $300-$450+</div>
