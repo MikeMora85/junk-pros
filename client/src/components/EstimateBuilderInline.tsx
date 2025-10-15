@@ -99,10 +99,10 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         <>
           {/* Industry Pricing Guide - Collapsible */}
           <div style={{
-            backgroundColor: '#f5f5f5',
+            backgroundColor: '#fbbf24',
             borderRadius: '0',
             marginBottom: '12px',
-            border: '1px solid #cccccc',
+            border: '2px solid #000',
           }}>
             <button
               onClick={() => setPricingGuideOpen(!pricingGuideOpen)}
@@ -136,10 +136,10 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
 
           {/* Educational Disclaimer - Collapsible */}
           <div style={{
-            backgroundColor: '#fff3cd',
+            backgroundColor: '#fbbf24',
             borderRadius: '0',
             marginBottom: '12px',
-            border: '2px solid #fbbf24',
+            border: '2px solid #000',
           }}>
             <button
               onClick={() => setEducationalOpen(!educationalOpen)}
@@ -175,10 +175,10 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
 
           {/* Common Upcharges - Collapsible */}
           <div style={{
-            backgroundColor: '#f5f5f5',
+            backgroundColor: '#fbbf24',
             borderRadius: '0',
             marginBottom: '20px',
-            border: '1px solid #cccccc',
+            border: '2px solid #000',
           }}>
             <button
               onClick={() => setUpchargesOpen(!upchargesOpen)}
