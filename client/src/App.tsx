@@ -4146,14 +4146,13 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <div style={{
             position: 'fixed',
             left: 0,
-            top: '50%',
-            transform: 'translateY(-50%)',
+            bottom: '20px',
             backgroundColor: '#fbbf24',
             borderRadius: '0 12px 12px 0',
-            padding: '16px 8px',
+            padding: '12px 6px',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px',
+            gap: '8px',
             zIndex: 999,
             boxShadow: '2px 0 8px rgba(0,0,0,0.1)',
           }}>
