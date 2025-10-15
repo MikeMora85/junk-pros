@@ -4055,7 +4055,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         ×
       </button>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 16px 80px' }}>
         {/* Header with watermark logo */}
         <div style={{
           position: 'relative',
