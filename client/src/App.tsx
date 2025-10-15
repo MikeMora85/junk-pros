@@ -3496,7 +3496,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           <div
                             key={i}
                             style={{
-                              minWidth: 'calc(100% / 4.5)',
+                              minWidth: 'calc(100% / 5.6)',
                               padding: '0',
                               aspectRatio: '1',
                             }}
