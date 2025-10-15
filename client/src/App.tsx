@@ -3784,18 +3784,19 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <button
                         style={{
                           width: '100%',
-                          backgroundColor: '#fff',
-                          color: '#374151',
+                          background: '#fbbf24',
+                          color: '#000',
                           padding: '12px 20px',
                           borderRadius: '8px',
-                          border: '2px solid #fbbf24',
+                          border: 'none',
                           cursor: 'pointer',
                           fontSize: '16px',
-                          fontWeight: '600',
+                          fontWeight: '700',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           gap: '8px',
+                          boxShadow: 'none',
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
