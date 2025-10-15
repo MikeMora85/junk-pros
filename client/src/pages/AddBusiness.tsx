@@ -735,7 +735,7 @@ export default function AddBusiness() {
           </h2>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Business Name *
             </label>
             <input
@@ -757,7 +757,7 @@ export default function AddBusiness() {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Email *
             </label>
             <input
@@ -779,7 +779,7 @@ export default function AddBusiness() {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Password *
             </label>
             <input
@@ -801,7 +801,7 @@ export default function AddBusiness() {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Phone Number *
             </label>
             <input
@@ -823,7 +823,7 @@ export default function AddBusiness() {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               State *
             </label>
             <select
@@ -850,7 +850,7 @@ export default function AddBusiness() {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Primary City *
             </label>
             <input
@@ -869,7 +869,7 @@ export default function AddBusiness() {
               }}
               data-testid="input-city"
             />
-            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '12px', color: '#000', marginTop: '4px' }}>
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '12px', color: '#000', marginTop: '4px', textAlign: 'center' }}>
               You can add more cities after signup
             </p>
           </div>
