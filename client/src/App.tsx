@@ -4313,7 +4313,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <div>
             {/* About Us */}
             {company.description && (
-              <div style={{ marginBottom: '32px' }}>
+              <div style={{ marginBottom: '32px', paddingBottom: '32px', borderBottom: '2px solid #000' }}>
                 <h2 style={{
                   fontSize: '24px',
                   fontWeight: '700',
@@ -4336,7 +4336,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             )}
 
             {/* Photos */}
-            <div style={{ marginBottom: '32px' }}>
+            <div style={{ marginBottom: '32px', paddingBottom: '32px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '24px',
                 fontWeight: '700',
@@ -4368,7 +4368,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             </div>
 
             {/* Reviews */}
-            <div style={{ marginBottom: '32px' }}>
+            <div style={{ marginBottom: '32px', paddingBottom: '32px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '24px',
                 fontWeight: '700',
@@ -4495,7 +4495,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           {/* Right Column */}
           <div>
             {/* Pricing Estimator */}
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '700',
@@ -4520,7 +4520,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             </div>
 
             {/* Amenities */}
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '700',
@@ -4538,7 +4538,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             </div>
 
             {/* Items We Don't Take */}
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '700',
@@ -4558,7 +4558,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
 
             {/* Payment Methods */}
             {company.paymentMethods && company.paymentMethods.length > 0 && (
-              <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '2px solid #000' }}>
                 <h2 style={{
                   fontSize: '20px',
                   fontWeight: '700',
@@ -4614,7 +4614,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             )}
 
             {/* Business Hours */}
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '700',
@@ -4632,7 +4632,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             </div>
 
             {/* Location */}
-            <div style={{ marginBottom: '24px' }}>
+            <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '2px solid #000' }}>
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '700',
