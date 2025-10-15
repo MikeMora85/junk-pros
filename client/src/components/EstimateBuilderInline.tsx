@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calculator, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface CompanyPrices {
   minimum?: number;
@@ -56,7 +56,6 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
     }}>
       
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', position: 'relative' }}>
-        <Calculator size={24} color="#fbbf24" />
         <h3 style={{ 
           fontSize: '20px', 
           fontWeight: '700', 
@@ -65,7 +64,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
           letterSpacing: '-0.02em',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
-          Example Pricing
+          How Much Is Junk Removal
         </h3>
       </div>
       
