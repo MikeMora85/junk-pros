@@ -4798,12 +4798,22 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   {company.phone}
                 </a>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-                <Globe size={16} color="#000" />
-                <span style={{ fontSize: '14px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                  1234@moras.com
-                </span>
-              </div>
+              {company.contactEmail && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <Mail size={16} color="#000" />
+                  <a href={`mailto:${company.contactEmail}`} style={{ fontSize: '14px', color: '#000', textDecoration: 'none', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    {company.contactEmail}
+                  </a>
+                </div>
+              )}
+              {company.website && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                  <Globe size={16} color="#000" />
+                  <a href={company.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: '#000', textDecoration: 'none', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                    Visit Website
+                  </a>
+                </div>
+              )}
               <button
                 style={{
                   width: '100%',
