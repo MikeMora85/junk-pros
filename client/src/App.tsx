@@ -3646,7 +3646,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         {c.address && <MapPin size={16} color="#000" />}
                         <Phone size={16} color="#000" />
                         {c.website && (
-                          <a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a>
+                          <a href={c.website} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                            <Globe size={16} color="#000" />
+                          </a>
                         )}
                       </div>
                     </div>
