@@ -3576,16 +3576,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                     
                     <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: isFirstPremium ? 'grid' : 'flex', gridTemplateColumns: isFirstPremium ? '220px 1fr' : 'auto', gap: isFirstPremium ? '32px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
+                      <div style={{ display: isFirstPremium ? 'grid' : 'flex', gridTemplateColumns: isFirstPremium ? '280px 1fr' : 'auto', gap: isFirstPremium ? '32px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
                         <div style={{
-                          width: isFirstPremium ? '220px' : '60px',
-                          height: isFirstPremium ? '220px' : '60px',
+                          width: isFirstPremium ? '280px' : '60px',
+                          height: isFirstPremium ? '280px' : '60px',
                           borderRadius: '10px',
                           background: c.logoUrl ? '#fff' : '#9ca3af',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: isFirstPremium ? '72px' : '24px',
+                          fontSize: isFirstPremium ? '96px' : '24px',
                           fontWeight: '800',
                           color: '#fff',
                           flexShrink: 0,
@@ -3622,9 +3622,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <h3 style={{
-                            fontSize: isFirstPremium ? '28px' : '18px',
+                            fontSize: isFirstPremium ? '22px' : '18px',
                             fontWeight: '700',
-                            margin: isFirstPremium ? '0 0 12px 0' : '0 0 8px 0',
+                            margin: isFirstPremium ? '0 0 10px 0' : '0 0 8px 0',
                             color: '#111827',
                           }} data-testid={`text-company-name-${c.id}`}>
                             {c.name}
