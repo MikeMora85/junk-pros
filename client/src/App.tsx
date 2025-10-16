@@ -3470,12 +3470,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
-                  {/* Top Right Badge */}
+                  {/* Top Right Badge - positioned to overlap top border */}
                   {isPremium && c.badge && !isUnclaimed && (
                     <div style={{
                       position: 'absolute',
-                      top: '-14px',
-                      right: '12px',
+                      top: '-16px',
+                      right: '16px',
                       background: '#16a34a',
                       color: '#fff',
                       padding: '6px 12px',
@@ -3486,6 +3486,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       alignItems: 'center',
                       gap: '6px',
                       zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                     }}>
                       <CheckCircle size={16} color="#fff" fill="#16a34a" />
                       {c.badge}
