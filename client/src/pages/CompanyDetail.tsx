@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import { ArrowLeft, Trash2, Home, Sofa, Phone, Mail, Globe } from "lucide-react";
-import { FaFacebook, FaInstagram, FaGoogle, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import { trackBusinessEvent } from "../lib/tracking";
 
@@ -639,14 +639,68 @@ export default function CompanyDetail() {
                   {company.phone}
                 </a>
               </div>
-              {company.website && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {company.contactEmail && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <Mail size={16} color="#6b7280" />
+                  <a href={`mailto:${company.contactEmail}`} style={{ fontSize: '14px', color: '#6b7280', textDecoration: 'none' }}>
+                    {company.contactEmail}
+                  </a>
+                </div>
+              )}
+              {company.website && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <Globe size={16} color="#6b7280" />
                   <a href={company.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: '#2563eb', textDecoration: 'none' }}>
                     Visit Website
                   </a>
                 </div>
               )}
+              
+              {/* Social Media Icons */}
+              {(company.facebookUrl || company.instagramUrl || company.youtubeUrl) && (
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '12px', 
+                  marginTop: '12px',
+                  paddingTop: '12px',
+                  borderTop: '1px solid #e5e7eb'
+                }}>
+                  {company.facebookUrl && (
+                    <a 
+                      href={company.facebookUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-testid="link-facebook"
+                      style={{ color: '#1877f2', fontSize: '24px' }}
+                    >
+                      <FaFacebook />
+                    </a>
+                  )}
+                  {company.instagramUrl && (
+                    <a 
+                      href={company.instagramUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-testid="link-instagram"
+                      style={{ color: '#E4405F', fontSize: '24px' }}
+                    >
+                      <FaInstagram />
+                    </a>
+                  )}
+                  {company.youtubeUrl && (
+                    <a 
+                      href={company.youtubeUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-testid="link-youtube"
+                      style={{ color: '#FF0000', fontSize: '24px' }}
+                    >
+                      <FaYoutube />
+                    </a>
+                  )}
+                </div>
+              )}
+              
               <button
                 style={{
                   width: '100%',

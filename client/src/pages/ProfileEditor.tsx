@@ -119,6 +119,13 @@ export default function ProfileEditor() {
     googleReviewCount: "",
     googleFeaturedReviews: [] as FeaturedReview[],
     faqs: [] as { question: string; answer: string; }[],
+    facebookUrl: "",
+    instagramUrl: "",
+    youtubeUrl: "",
+    showFacebook: false,
+    showInstagram: false,
+    showYoutube: false,
+    offersInPersonEstimates: true,
   });
 
   const { data: company, isLoading } = useQuery<Company>({
@@ -168,6 +175,13 @@ export default function ProfileEditor() {
         googleReviewCount: company.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (company.googleFeaturedReviews as FeaturedReview[]) || [],
         faqs: (company.faqs as { question: string; answer: string; }[]) || [],
+        facebookUrl: company.facebookUrl || "",
+        instagramUrl: company.instagramUrl || "",
+        youtubeUrl: company.youtubeUrl || "",
+        showFacebook: !!company.facebookUrl,
+        showInstagram: !!company.instagramUrl,
+        showYoutube: !!company.youtubeUrl,
+        offersInPersonEstimates: company.offersInPersonEstimates ?? true,
       });
       setFormInitialized(true);
     }
@@ -236,6 +250,13 @@ export default function ProfileEditor() {
         googleReviewCount: updatedCompany.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (updatedCompany.googleFeaturedReviews as FeaturedReview[]) || [],
         faqs: (updatedCompany.faqs as { question: string; answer: string; }[]) || [],
+        facebookUrl: updatedCompany.facebookUrl || "",
+        instagramUrl: updatedCompany.instagramUrl || "",
+        youtubeUrl: updatedCompany.youtubeUrl || "",
+        showFacebook: !!updatedCompany.facebookUrl,
+        showInstagram: !!updatedCompany.instagramUrl,
+        showYoutube: !!updatedCompany.youtubeUrl,
+        offersInPersonEstimates: updatedCompany.offersInPersonEstimates ?? true,
       });
       
       setToastMessage("Profile updated successfully!");
@@ -284,6 +305,7 @@ export default function ProfileEditor() {
       trailerSize: formData.trailerSize || null,
       priceSheetVisible: formData.priceSheetVisible,
       addOnCostsVisible: formData.addOnCostsVisible,
+      offersInPersonEstimates: formData.offersInPersonEstimates,
       hours: formData.hours || null,
       availability: formData.availability || null,
       teamMembers: formData.teamMembers.length > 0 ? formData.teamMembers : null,
@@ -301,6 +323,9 @@ export default function ProfileEditor() {
       faqs: formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()).length > 0 
         ? formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()) 
         : null,
+      facebookUrl: formData.showFacebook && formData.facebookUrl ? formData.facebookUrl : null,
+      instagramUrl: formData.showInstagram && formData.instagramUrl ? formData.instagramUrl : null,
+      youtubeUrl: formData.showYoutube && formData.youtubeUrl ? formData.youtubeUrl : null,
     };
     
     // Use appropriate payload based on subscription tier
@@ -592,6 +617,93 @@ export default function ProfileEditor() {
                 </p>
               </div>
               )}
+
+              {/* Social Media Links */}
+              <div style={{
+                padding: "16px",
+                backgroundColor: "#f9fafb",
+                borderRadius: "8px",
+                border: "2px solid #e5e7eb"
+              }}>
+                <h3 style={{ fontSize: "16px", fontWeight: "700", marginBottom: "16px", color: "#000" }}>
+                  Social Media Links
+                </h3>
+                
+                {/* Facebook */}
+                <div style={{ marginBottom: "16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                    <label style={labelStyle}>Facebook</label>
+                    <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                      <input
+                        type="checkbox"
+                        checked={formData.showFacebook}
+                        onChange={(e) => setFormData(prev => ({ ...prev, showFacebook: e.target.checked }))}
+                        data-testid="toggle-facebook"
+                        style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                      />
+                      Show on profile
+                    </label>
+                  </div>
+                  <input
+                    data-testid="input-facebook"
+                    style={inputStyle}
+                    value={formData.facebookUrl}
+                    onChange={(e) => setFormData(prev => ({ ...prev, facebookUrl: e.target.value }))}
+                    placeholder="https://facebook.com/yourpage"
+                    disabled={!formData.showFacebook}
+                  />
+                </div>
+
+                {/* Instagram */}
+                <div style={{ marginBottom: "16px" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                    <label style={labelStyle}>Instagram</label>
+                    <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                      <input
+                        type="checkbox"
+                        checked={formData.showInstagram}
+                        onChange={(e) => setFormData(prev => ({ ...prev, showInstagram: e.target.checked }))}
+                        data-testid="toggle-instagram"
+                        style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                      />
+                      Show on profile
+                    </label>
+                  </div>
+                  <input
+                    data-testid="input-instagram"
+                    style={inputStyle}
+                    value={formData.instagramUrl}
+                    onChange={(e) => setFormData(prev => ({ ...prev, instagramUrl: e.target.value }))}
+                    placeholder="https://instagram.com/yourpage"
+                    disabled={!formData.showInstagram}
+                  />
+                </div>
+
+                {/* YouTube */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                    <label style={labelStyle}>YouTube</label>
+                    <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                      <input
+                        type="checkbox"
+                        checked={formData.showYoutube}
+                        onChange={(e) => setFormData(prev => ({ ...prev, showYoutube: e.target.checked }))}
+                        data-testid="toggle-youtube"
+                        style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                      />
+                      Show on profile
+                    </label>
+                  </div>
+                  <input
+                    data-testid="input-youtube"
+                    style={inputStyle}
+                    value={formData.youtubeUrl}
+                    onChange={(e) => setFormData(prev => ({ ...prev, youtubeUrl: e.target.value }))}
+                    placeholder="https://youtube.com/@yourchannel"
+                    disabled={!formData.showYoutube}
+                  />
+                </div>
+              </div>
 
               {/* Address */}
               <div>
