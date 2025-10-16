@@ -70,6 +70,9 @@ export default function ProfileEditor() {
   const logoPathRef = useRef<string>('');
   const teamPhotoPathRef = useRef<string>('');
   const galleryPathsRef = useRef<string[]>([]);
+  
+  // Check subscription tier to limit editing for Basic/FREE tier
+  const [subscriptionTier, setSubscriptionTier] = useState<string>('basic');
 
   const getDefaultBusinessHours = (): BusinessHours => ({
     monday: { open: "09:00", close: "17:00", closed: false },
@@ -125,6 +128,9 @@ export default function ProfileEditor() {
 
   useEffect(() => {
     if (company && !formInitialized) {
+      // Set subscription tier for conditional rendering
+      setSubscriptionTier(company.subscriptionTier || 'basic');
+      
       setFormData({
         name: company.name || "",
         phone: company.phone || "",
@@ -524,7 +530,8 @@ export default function ProfileEditor() {
                 />
               </div>
 
-              {/* Contact Email */}
+              {/* Contact Email - Standard & Premium only */}
+              {subscriptionTier !== 'basic' && (
               <div>
                 <label style={labelStyle}>Contact Email (Public)</label>
                 <input
@@ -536,6 +543,7 @@ export default function ProfileEditor() {
                   placeholder="contact@yourcompany.com"
                 />
               </div>
+              )}
 
               {/* Website */}
               <div>
@@ -585,7 +593,8 @@ export default function ProfileEditor() {
                 />
               </div>
 
-              {/* Business Hours */}
+              {/* Business Hours - Standard & Premium only */}
+              {subscriptionTier !== 'basic' && (
               <div>
                 <label style={labelStyle}>Business Hours</label>
                 <div style={{ 
@@ -669,8 +678,10 @@ export default function ProfileEditor() {
                   ))}
                 </div>
               </div>
+              )}
 
-              {/* Payment Methods */}
+              {/* Payment Methods - Standard & Premium only */}
+              {subscriptionTier !== 'basic' && (
               <div>
                 <label style={labelStyle}>Payment Methods Accepted</label>
                 <div style={{
@@ -729,10 +740,14 @@ export default function ProfileEditor() {
                   })}
                 </div>
               </div>
+              )}
             </div>
           </div>
         </section>
 
+        {/* Section 2-6: Only for Standard & Premium tiers */}
+        {subscriptionTier !== 'basic' && (
+        <>
         {/* Section 2: Services & Specialties */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
@@ -1662,6 +1677,30 @@ export default function ProfileEditor() {
             </div>
           </div>
         </section>
+        </>
+        )}
+        
+        {/* Basic Tier Message */}
+        {subscriptionTier === 'basic' && (
+          <div style={{
+            marginTop: "24px",
+            padding: "20px",
+            backgroundColor: "#fef3c7",
+            border: "2px solid #fbbf24",
+            borderRadius: "8px",
+            textAlign: "center"
+          }}>
+            <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "8px", color: "#000" }}>
+              FREE Profile
+            </h3>
+            <p style={{ fontSize: "14px", color: "#666", marginBottom: "12px" }}>
+              You can edit: Logo, Name, Phone, Address, and Website
+            </p>
+            <p style={{ fontSize: "14px", color: "#666" }}>
+              Upgrade to <strong>Standard ($10/month)</strong> or <strong>Premium ($49/month)</strong> for full features including galleries, pricing tools, reviews, and more!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
