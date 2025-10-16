@@ -3571,21 +3571,66 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             gap: 24px !important;
                             margin-bottom: 16px !important;
                           }
+                          .premium-top-section-${c.id} > div:first-child {
+                            display: grid !important;
+                            grid-template-columns: 220px 1fr !important;
+                            gap: 32px !important;
+                            align-items: flex-start !important;
+                            margin-bottom: 0 !important;
+                          }
+                          .premium-logo-${c.id} {
+                            width: 220px !important;
+                            height: 220px !important;
+                            font-size: 80px !important;
+                          }
+                          .premium-business-info-${c.id} {
+                            padding-right: 32px !important;
+                          }
+                          .premium-business-name-${c.id} {
+                            font-size: 26px !important;
+                            margin-bottom: 10px !important;
+                          }
+                          .premium-rating-${c.id} {
+                            gap: 10px !important;
+                            margin-bottom: 14px !important;
+                          }
+                          .premium-rating-${c.id} .star {
+                            width: 18px !important;
+                            height: 18px !important;
+                          }
+                          .premium-rating-${c.id} .rating-number {
+                            font-size: 18px !important;
+                          }
+                          .premium-rating-${c.id} .review-count {
+                            font-size: 16px !important;
+                          }
+                          .premium-rating-${c.id} .local-badge {
+                            padding: 4px 10px !important;
+                            font-size: 13px !important;
+                          }
+                          .premium-contact-${c.id} {
+                            font-size: 16px !important;
+                            margin-bottom: 16px !important;
+                          }
+                          .premium-contact-${c.id} .icon {
+                            width: 18px !important;
+                            height: 18px !important;
+                          }
                         }
                       `}} />
                     )}
                     
                     <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: isFirstPremium ? 'grid' : 'flex', gridTemplateColumns: isFirstPremium ? '220px 1fr' : 'auto', gap: isFirstPremium ? '32px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
-                        <div style={{
-                          width: isFirstPremium ? '220px' : '60px',
-                          height: isFirstPremium ? '220px' : '60px',
+                      <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0', alignItems: 'center' }}>
+                        <div className={isFirstPremium ? `premium-logo-${c.id}` : ''} style={{
+                          width: '60px',
+                          height: '60px',
                           borderRadius: '10px',
                           background: c.logoUrl ? '#fff' : '#9ca3af',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: isFirstPremium ? '80px' : '24px',
+                          fontSize: '24px',
                           fontWeight: '800',
                           color: '#fff',
                           flexShrink: 0,
@@ -3620,37 +3665,38 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           )}
                         </div>
                         
-                        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: isFirstPremium ? '32px' : '0' }}>
-                          <h3 style={{
-                            fontSize: isFirstPremium ? '26px' : '18px',
+                        <div className={isFirstPremium ? `premium-business-info-${c.id}` : ''} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                          <h3 className={isFirstPremium ? `premium-business-name-${c.id}` : ''} style={{
+                            fontSize: '18px',
                             fontWeight: '700',
-                            margin: isFirstPremium ? '0 0 10px 0' : '0 0 8px 0',
+                            margin: '0 0 8px 0',
                             color: '#111827',
                           }} data-testid={`text-company-name-${c.id}`}>
                             {c.name}
                           </h3>
                           
                           {!isBasic && (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: isFirstPremium ? '10px' : '8px', marginBottom: isFirstPremium ? '14px' : '10px', flexWrap: 'wrap' }}>
+                          <div className={isFirstPremium ? `premium-rating-${c.id}` : ''} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                               {[...Array(5)].map((_, i) => (
                                 <Star
                                   key={i}
-                                  size={isFirstPremium ? 18 : 14}
+                                  size={14}
+                                  className="star"
                                   fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
                                   stroke="#fbbf24"
                                 />
                               ))}
                             </div>
-                            <span style={{ fontWeight: '600', fontSize: isFirstPremium ? '18px' : '14px' }}>{c.rating || "0"}</span>
-                            <span style={{ color: '#000', fontSize: isFirstPremium ? '16px' : '13px' }}>({c.reviews})</span>
+                            <span className="rating-number" style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
+                            <span className="review-count" style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
                             {c.local && (
-                              <span style={{
+                              <span className="local-badge" style={{
                                 background: '#fbbf24',
                                 color: '#000',
-                                padding: isFirstPremium ? '4px 10px' : '2px 8px',
+                                padding: '2px 8px',
                                 borderRadius: '4px',
-                                fontSize: isFirstPremium ? '13px' : '11px',
+                                fontSize: '11px',
                                 fontWeight: '700',
                               }}>
                                 LOCAL
@@ -3659,9 +3705,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           </div>
                           )}
                           
-                          <div style={{ fontSize: isFirstPremium ? '16px' : '14px', color: '#000', marginBottom: isFirstPremium ? '16px' : '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
-                            {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={isFirstPremium ? 18 : 14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
-                            <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={isFirstPremium ? 18 : 14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                          <div className={isFirstPremium ? `premium-contact-${c.id}` : ''} style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                            {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} className="icon" color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
+                            <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={14} className="icon" style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                             {c.website && (
                               <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
                             )}
