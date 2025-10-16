@@ -1341,7 +1341,7 @@ function LandingPage() {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '30px 20px',
+        padding: '80px 20px 30px 20px',
       }}>
         <div style={{
           textAlign: 'center',
