@@ -75,6 +75,15 @@ import profilePhoto4 from "@assets/stock_images/junk_removal_truck_l_163f0dce.jp
 
 const defaultImages = [img1, img2, img3, img4, img5, img6];
 
+// Format phone number to (XXX) XXX-XXXX
+const formatPhoneNumber = (phone: string) => {
+  const cleaned = phone.replace(/\D/g, '');
+  if (cleaned.length === 10) {
+    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
+  }
+  return phone;
+};
+
 // Grey placeholder component for companies without images
 const PlaceholderImage = ({ index }: { index: number }) => (
   <div style={{
@@ -3521,7 +3530,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </h3>
                       <div style={{ fontSize: '16px', color: '#666', marginBottom: '16px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
                         <Phone size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
-                        {c.phone}
+                        {formatPhoneNumber(c.phone)}
                       </div>
                       
                       <Link 
@@ -3631,7 +3640,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       ) : (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <Phone size={16} color="#000" />
-                        <a href={`tel:${c.phone}`} style={{ fontSize: '16px', fontWeight: '600', color: '#000', textDecoration: 'none' }}>{c.phone}</a>
+                        <a href={`tel:${c.phone}`} style={{ fontSize: '16px', fontWeight: '600', color: '#000', textDecoration: 'none' }}>{formatPhoneNumber(c.phone)}</a>
                       </div>
                       )}
                     </div>
