@@ -3314,9 +3314,24 @@ function CityPage({ city, state }: { city: string; state: string }) {
           <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
-                <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
+                <style dangerouslySetInnerHTML={{__html: `
+                  .company-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 12px;
+                  }
+                  @media (min-width: 1024px) {
+                    .company-grid {
+                      grid-template-columns: 1fr 1fr;
+                    }
+                    .full-width-card {
+                      grid-column: span 2;
+                    }
+                  }
+                `}} />
+                <div className="company-grid">
                 {isLoading ? (
-                  <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280' }} data-testid="text-loading">
+                  <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280', gridColumn: 'span 2' }} data-testid="text-loading">
                     Loading...
                   </div>
                 ) : (
@@ -3342,6 +3357,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     const isStandard = c.subscriptionTier === 'standard';
                     const isBasic = c.claimed && c.subscriptionTier === 'basic';
                     const hasFullFeatures = isPremium || isStandard; // Both get all features
+                    const isFirstPremium = index === 0 && isPremium; // First profile and is premium
                     
                     return (
                 <div 
@@ -3350,12 +3366,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     trackBusinessEvent(c.id, 'click');
                     setSelectedCompanyId(c.id);
                   }} 
+                  className={isFirstPremium ? 'full-width-card' : ''}
                   style={{
                     position: 'relative',
                     backgroundColor: isUnclaimed ? '#f9f9f9' : '#fff',
                     borderRadius: '0',
                     padding: '16px',
-                    marginBottom: '12px',
+                    marginBottom: '0',
                     marginLeft: '0',
                     marginRight: '0',
                     boxShadow: 'none',
