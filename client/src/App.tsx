@@ -3567,8 +3567,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         @media (min-width: 1024px) {
                           .premium-top-section-${c.id} {
                             display: grid !important;
-                            grid-template-columns: 1.5fr 1fr !important;
-                            gap: 20px !important;
+                            grid-template-columns: 2fr 1fr !important;
+                            gap: 24px !important;
                             margin-bottom: 16px !important;
                           }
                         }
@@ -3576,10 +3576,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                     
                     <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: 'flex', gap: isFirstPremium ? '24px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
+                      <div style={{ display: 'flex', gap: isFirstPremium ? '32px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
                         <div style={{
-                          width: isFirstPremium ? '140px' : '60px',
-                          height: isFirstPremium ? '140px' : '60px',
+                          width: isFirstPremium ? '180px' : '60px',
+                          height: isFirstPremium ? '180px' : '60px',
                           borderRadius: '10px',
                           background: c.logoUrl ? '#fff' : '#9ca3af',
                           display: 'flex',
