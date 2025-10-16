@@ -93,6 +93,7 @@ export default function ProfileEditor() {
     city: "",
     state: "",
     logoUrl: "",
+    videoUrl: "",
     selectedServices: [] as string[],
     specialties: [] as string[],
     aboutUs: "",
@@ -140,6 +141,7 @@ export default function ProfileEditor() {
         city: company.city || "",
         state: company.state || "",
         logoUrl: company.logoUrl || "",
+        videoUrl: company.videoUrl || "",
         selectedServices: company.services || [],
         specialties: company.specialties || [],
         aboutUs: company.aboutUs || "",
@@ -206,6 +208,7 @@ export default function ProfileEditor() {
         city: updatedCompany.city || "",
         state: updatedCompany.state || "",
         logoUrl: updatedCompany.logoUrl || "",
+        videoUrl: updatedCompany.videoUrl || "",
         selectedServices: updatedCompany.services || [],
         specialties: updatedCompany.specialties || [],
         aboutUs: updatedCompany.aboutUs || "",
@@ -262,6 +265,7 @@ export default function ProfileEditor() {
     const fullPayload = {
       ...basicPayload,
       contactEmail: formData.contactEmail || null,
+      videoUrl: formData.videoUrl || null,
       services: formData.selectedServices,
       specialties: formData.specialties.filter(s => s.trim()),
       aboutUs: formData.aboutUs || null,
@@ -567,6 +571,23 @@ export default function ProfileEditor() {
                   placeholder="https://yourwebsite.com"
                 />
               </div>
+
+              {/* Video URL - Standard & Premium only */}
+              {subscriptionTier !== 'basic' && (
+              <div>
+                <label style={labelStyle}>Video URL (YouTube or Vimeo)</label>
+                <input
+                  data-testid="input-video-url"
+                  style={inputStyle}
+                  value={formData.videoUrl}
+                  onChange={(e) => setFormData(prev => ({ ...prev, videoUrl: e.target.value }))}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+                <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "4px" }}>
+                  Add a video to showcase your services (displays on desktop only)
+                </p>
+              </div>
+              )}
 
               {/* Address */}
               <div>
