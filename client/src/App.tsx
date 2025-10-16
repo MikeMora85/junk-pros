@@ -3327,6 +3327,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     .full-width-card {
                       grid-column: span 2;
                     }
+                    .video-thumbnail-desktop {
+                      display: block !important;
+                    }
                   }
                 `}} />
                 <div className="company-grid">
@@ -3642,6 +3645,74 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       })()}
                     </div>
                   </div>
+                  )}
+                  
+                  {/* Video Thumbnail - Desktop Only, Premium & Standard only */}
+                  {!isUnclaimed && !isBasic && c.videoUrl && (
+                    <div style={{
+                      display: 'none',
+                      marginBottom: '12px',
+                      position: 'relative',
+                    }}
+                    className="video-thumbnail-desktop"
+                    >
+                      <div 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedCompanyId(c.id);
+                        }}
+                        style={{
+                          position: 'relative',
+                          width: '100%',
+                          paddingBottom: '56.25%', // 16:9 aspect ratio
+                          backgroundColor: '#000',
+                          borderRadius: '8px',
+                          overflow: 'hidden',
+                          cursor: 'pointer',
+                          border: '2px solid #fbbf24',
+                        }}
+                      >
+                        {/* Video Thumbnail - Extract from YouTube/Vimeo URL or use placeholder */}
+                        <div style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          background: c.videoUrl.includes('youtube') || c.videoUrl.includes('youtu.be')
+                            ? `url(https://img.youtube.com/vi/${c.videoUrl.split('v=')[1]?.split('&')[0] || c.videoUrl.split('youtu.be/')[1]?.split('?')[0]}/maxresdefault.jpg) center/cover`
+                            : '#1a1a1a',
+                        }} />
+                        
+                        {/* Play Icon Overlay */}
+                        <div style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '60px',
+                          height: '60px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(251, 191, 36, 0.9)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'transform 0.2s',
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)'}
+                        >
+                          <div style={{
+                            width: 0,
+                            height: 0,
+                            borderLeft: '20px solid #000',
+                            borderTop: '12px solid transparent',
+                            borderBottom: '12px solid transparent',
+                            marginLeft: '4px',
+                          }} />
+                        </div>
+                      </div>
+                    </div>
                   )}
                   
                   {/* Review Snippets - Premium & Standard only */}
