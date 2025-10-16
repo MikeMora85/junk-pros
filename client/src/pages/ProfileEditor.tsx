@@ -118,6 +118,7 @@ export default function ProfileEditor() {
     googleRanking: "",
     googleReviewCount: "",
     googleFeaturedReviews: [] as FeaturedReview[],
+    faqs: [] as { question: string; answer: string; }[],
   });
 
   const { data: company, isLoading } = useQuery<Company>({
@@ -166,6 +167,7 @@ export default function ProfileEditor() {
         googleRanking: company.googleRanking?.toString() || "",
         googleReviewCount: company.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (company.googleFeaturedReviews as FeaturedReview[]) || [],
+        faqs: (company.faqs as { question: string; answer: string; }[]) || [],
       });
       setFormInitialized(true);
     }
@@ -233,6 +235,7 @@ export default function ProfileEditor() {
         googleRanking: updatedCompany.googleRanking?.toString() || "",
         googleReviewCount: updatedCompany.googleReviewCount?.toString() || "",
         googleFeaturedReviews: (updatedCompany.googleFeaturedReviews as FeaturedReview[]) || [],
+        faqs: (updatedCompany.faqs as { question: string; answer: string; }[]) || [],
       });
       
       setToastMessage("Profile updated successfully!");
@@ -295,6 +298,9 @@ export default function ProfileEditor() {
         : null,
       rating: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
       reviews: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
+      faqs: formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()).length > 0 
+        ? formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()) 
+        : null,
     };
     
     // Use appropriate payload based on subscription tier
@@ -545,8 +551,7 @@ export default function ProfileEditor() {
                 />
               </div>
 
-              {/* Contact Email - Standard & Premium only */}
-              {subscriptionTier !== 'basic' && (
+              {/* Contact Email */}
               <div>
                 <label style={labelStyle}>Contact Email (Public)</label>
                 <input
@@ -558,7 +563,6 @@ export default function ProfileEditor() {
                   placeholder="contact@yourcompany.com"
                 />
               </div>
-              )}
 
               {/* Website */}
               <div>
@@ -1541,7 +1545,108 @@ export default function ProfileEditor() {
           </div>
         </section>
 
-        {/* Section 6: Visibility Settings */}
+        {/* Section 6: FAQs */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+          <div style={sectionHeaderStyle}>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              ❓ Frequently Asked Questions
+            </h2>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              <p style={{ fontSize: "14px", color: "#666", marginBottom: "8px" }}>
+                Add common questions and answers to help customers learn more about your services
+              </p>
+              
+              {formData.faqs.map((faq, index) => (
+                <div key={index} style={{
+                  padding: "16px",
+                  backgroundColor: "#f9fafb",
+                  borderRadius: "8px",
+                  border: "2px solid #e5e7eb"
+                }}>
+                  <div style={{ marginBottom: "12px" }}>
+                    <label style={{...labelStyle, marginBottom: "8px"}}>Question</label>
+                    <input
+                      data-testid={`input-faq-question-${index}`}
+                      style={inputStyle}
+                      value={faq.question}
+                      onChange={(e) => {
+                        const newFaqs = [...formData.faqs];
+                        newFaqs[index] = { ...newFaqs[index], question: e.target.value };
+                        setFormData(prev => ({ ...prev, faqs: newFaqs }));
+                      }}
+                      placeholder="e.g., Do you offer same-day service?"
+                    />
+                  </div>
+                  <div style={{ marginBottom: "12px" }}>
+                    <label style={{...labelStyle, marginBottom: "8px"}}>Answer</label>
+                    <textarea
+                      data-testid={`textarea-faq-answer-${index}`}
+                      style={{...inputStyle, minHeight: "80px", resize: "vertical"}}
+                      value={faq.answer}
+                      onChange={(e) => {
+                        const newFaqs = [...formData.faqs];
+                        newFaqs[index] = { ...newFaqs[index], answer: e.target.value };
+                        setFormData(prev => ({ ...prev, faqs: newFaqs }));
+                      }}
+                      placeholder="e.g., Yes! We offer same-day junk removal service in most cases. Contact us early in the day for best availability."
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      const newFaqs = formData.faqs.filter((_, i) => i !== index);
+                      setFormData(prev => ({ ...prev, faqs: newFaqs }));
+                    }}
+                    data-testid={`button-remove-faq-${index}`}
+                    style={{
+                      padding: "8px 16px",
+                      backgroundColor: "#dc2626",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "600"
+                    }}
+                  >
+                    Remove FAQ
+                  </button>
+                </div>
+              ))}
+              
+              <button
+                onClick={() => {
+                  setFormData(prev => ({ 
+                    ...prev, 
+                    faqs: [...prev.faqs, { question: "", answer: "" }] 
+                  }));
+                }}
+                data-testid="button-add-faq"
+                style={{
+                  padding: "12px",
+                  backgroundColor: "#fbbf24",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
+                }}
+              >
+                <Plus size={16} />
+                Add FAQ
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 7: Visibility Settings */}
         <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
