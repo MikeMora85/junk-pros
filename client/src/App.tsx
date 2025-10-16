@@ -4076,27 +4076,27 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         data-testid="button-close-profile"
         style={{
           position: 'fixed',
-          top: '16px',
-          right: '16px',
-          width: '40px',
-          height: '40px',
+          top: '12px',
+          right: '12px',
+          width: '24px',
+          height: '24px',
           borderRadius: '50%',
           background: '#000',
           color: '#fff',
           border: 'none',
           cursor: 'pointer',
-          fontSize: '24px',
+          fontSize: '16px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 1001,
+          zIndex: 100,
           fontWeight: '300',
         }}
       >
         ×
       </button>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 16px 120px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 16px 80px' }}>
         {/* Header with watermark logo */}
         <div style={{
           position: 'relative',
@@ -4189,11 +4189,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <div style={{
             position: 'fixed',
             bottom: 0,
-            left: 0,
-            right: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
             zIndex: 999,
-            display: 'flex',
-            justifyContent: 'center',
           }}>
             {/* Collapsible Icons Row */}
             {socialTabOpen && (
@@ -4204,7 +4202,6 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 backgroundColor: '#fbbf24',
                 borderRadius: '12px 12px 0 0',
                 marginBottom: '-2px',
-                justifyContent: 'center',
               }}>
                 {company.website && (
                   <a
