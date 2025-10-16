@@ -334,7 +334,7 @@ export default function AddBusiness() {
                 margin: 0,
                 letterSpacing: '-0.02em',
               }}>
-                Platform Standards & Requirements
+                Required Read
               </h2>
               {(hasReadWhyUs && hasReadRequirements) && (
                 <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
