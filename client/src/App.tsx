@@ -3631,7 +3631,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       ) : (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <Phone size={16} color="#000" />
-                        <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>{c.phone}</span>
+                        <a href={`tel:${c.phone}`} style={{ fontSize: '16px', fontWeight: '600', color: '#000', textDecoration: 'none' }}>{c.phone}</a>
                       </div>
                       )}
                     </div>
