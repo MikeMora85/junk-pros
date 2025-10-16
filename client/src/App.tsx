@@ -3576,10 +3576,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                     
                     <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: 'flex', gap: '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0' }}>
+                      <div style={{ display: 'flex', gap: isFirstPremium ? '24px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0' }}>
                         <div style={{
-                          width: '60px',
-                          height: '60px',
+                          width: isFirstPremium ? '100px' : '60px',
+                          height: isFirstPremium ? '100px' : '60px',
                           borderRadius: '10px',
                           background: c.logoUrl ? '#fff' : '#9ca3af',
                           display: 'flex',
@@ -3622,35 +3622,35 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <h3 style={{
-                            fontSize: '18px',
+                            fontSize: isFirstPremium ? '28px' : '18px',
                             fontWeight: '700',
-                            margin: '0 0 8px 0',
+                            margin: isFirstPremium ? '0 0 12px 0' : '0 0 8px 0',
                             color: '#111827',
                           }} data-testid={`text-company-name-${c.id}`}>
                             {c.name}
                           </h3>
                           
                           {!isBasic && (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: isFirstPremium ? '10px' : '8px', marginBottom: isFirstPremium ? '14px' : '10px', flexWrap: 'wrap' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                               {[...Array(5)].map((_, i) => (
                                 <Star
                                   key={i}
-                                  size={14}
+                                  size={isFirstPremium ? 18 : 14}
                                   fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
                                   stroke="#fbbf24"
                                 />
                               ))}
                             </div>
-                            <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
-                            <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
+                            <span style={{ fontWeight: '600', fontSize: isFirstPremium ? '18px' : '14px' }}>{c.rating || "0"}</span>
+                            <span style={{ color: '#000', fontSize: isFirstPremium ? '16px' : '13px' }}>({c.reviews})</span>
                             {c.local && (
                               <span style={{
                                 background: '#fbbf24',
                                 color: '#000',
-                                padding: '2px 8px',
+                                padding: isFirstPremium ? '4px 10px' : '2px 8px',
                                 borderRadius: '4px',
-                                fontSize: '11px',
+                                fontSize: isFirstPremium ? '13px' : '11px',
                                 fontWeight: '700',
                               }}>
                                 LOCAL
@@ -3659,9 +3659,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           </div>
                           )}
                           
-                          <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
-                            {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
-                            <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                          <div style={{ fontSize: isFirstPremium ? '16px' : '14px', color: '#000', marginBottom: isFirstPremium ? '16px' : '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                            {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={isFirstPremium ? 18 : 14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
+                            <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={isFirstPremium ? 18 : 14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                             {c.website && (
                               <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
                             )}
