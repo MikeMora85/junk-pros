@@ -4792,7 +4792,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               }}>
                 Contact Information
               </h2>
-              <div 
+              <a 
+                href={`tel:${company.phone}`}
                 style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
@@ -4800,19 +4801,17 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   marginBottom: '8px',
                   fontSize: '14px', 
                   color: '#000', 
+                  textDecoration: 'none',
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   cursor: 'pointer'
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  window.location.href = `tel:${company.phone}`;
                 }}
               >
                 <Phone size={16} color="#000" />
                 <span>{company.phone}</span>
-              </div>
+              </a>
               {company.contactEmail && (
-                <div 
+                <a 
+                  href={`mailto:${company.contactEmail}`}
                   style={{ 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -4820,38 +4819,35 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     marginBottom: '8px',
                     fontSize: '14px', 
                     color: '#000', 
+                    textDecoration: 'none',
                     fontFamily: 'system-ui, -apple-system, sans-serif',
                     cursor: 'pointer'
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.location.href = `mailto:${company.contactEmail}`;
                   }}
                 >
                   <Mail size={16} color="#000" />
                   <span>{company.contactEmail}</span>
-                </div>
+                </a>
               )}
               {company.website && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                <a 
+                  href={company.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    marginBottom: '16px',
+                    fontSize: '14px', 
+                    color: '#000', 
+                    textDecoration: 'none', 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    cursor: 'pointer'
+                  }}
+                >
                   <Globe size={16} color="#000" />
-                  <a 
-                    href={company.website} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    style={{ 
-                      fontSize: '14px', 
-                      color: '#000', 
-                      textDecoration: 'none', 
-                      fontFamily: 'system-ui, -apple-system, sans-serif',
-                      cursor: 'pointer',
-                      pointerEvents: 'auto'
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    Visit Website
-                  </a>
-                </div>
+                  <span>Visit Website</span>
+                </a>
               )}
               <button
                 style={{
