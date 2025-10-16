@@ -1338,22 +1338,6 @@ function LandingPage() {
         <Menu size={24} color="#000" />
       </button>
 
-      {/* Yellow Banner */}
-      <header className="breathing-glow-banner" style={{
-        background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
-        padding: '14px 16px',
-        position: 'relative',
-        zIndex: 2,
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          textAlign: 'center',
-        }}>
-          <RotatingBanner />
-        </div>
-      </header>
-
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
