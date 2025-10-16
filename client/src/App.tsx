@@ -3470,21 +3470,24 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
-                  {/* Top Right Badge - moved inline with better spacing */}
+                  {/* Top Right Badge */}
                   {isPremium && c.badge && !isUnclaimed && (
                     <div style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
+                      position: 'absolute',
+                      top: '12px',
+                      right: '12px',
                       background: '#16a34a',
                       color: '#fff',
-                      padding: '4px 10px',
+                      padding: '6px 12px',
                       borderRadius: '4px',
-                      fontSize: '11px',
+                      fontSize: '12px',
                       fontWeight: '700',
-                      marginBottom: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      zIndex: 10,
                     }}>
-                      <CheckCircle size={14} color="#fff" fill="#16a34a" />
+                      <CheckCircle size={16} color="#fff" fill="#16a34a" />
                       {c.badge}
                     </div>
                   )}
