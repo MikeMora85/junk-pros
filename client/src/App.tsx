@@ -4907,7 +4907,7 @@ function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div>
+    <div style={{ paddingLeft: '16px', paddingRight: '16px' }}>
       <h2 style={{
         fontSize: '24px',
         fontWeight: '700',
