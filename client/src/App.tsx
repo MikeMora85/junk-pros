@@ -3620,19 +3620,20 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           )}
                         </div>
                         
-                        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: isFirstPremium ? '32px' : '0' }}>
+                        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: isFirstPremium ? '32px' : '0', alignItems: isFirstPremium ? 'center' : 'flex-start' }}>
                           <h3 style={{
                             fontSize: isFirstPremium ? '26px' : '18px',
                             fontWeight: '700',
                             margin: isFirstPremium ? '0 0 10px 0' : '0 0 8px 0',
                             color: '#111827',
                             display: 'block',
+                            textAlign: isFirstPremium ? 'center' : 'left',
                           }} data-testid={`text-company-name-${c.id}`}>
                             {c.name}
                           </h3>
                           
                           {!isBasic && (
-                          <div style={{ display: 'flex', alignItems: 'center', gap: isFirstPremium ? '10px' : '8px', marginBottom: isFirstPremium ? '14px' : '10px', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: isFirstPremium ? '10px' : '8px', marginBottom: isFirstPremium ? '14px' : '10px', flexWrap: 'wrap', justifyContent: isFirstPremium ? 'center' : 'flex-start' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                               {[...Array(5)].map((_, i) => (
                                 <Star
@@ -3660,7 +3661,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           </div>
                           )}
                           
-                          <div style={{ fontSize: isFirstPremium ? '16px' : '14px', color: '#000', marginBottom: isFirstPremium ? '16px' : '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                          <div style={{ fontSize: isFirstPremium ? '16px' : '14px', color: '#000', marginBottom: isFirstPremium ? '16px' : '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif", textAlign: isFirstPremium ? 'center' : 'left' }}>
                             {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={isFirstPremium ? 18 : 14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
                             <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={isFirstPremium ? 18 : 14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
                             {c.website && (
@@ -3681,6 +3682,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 fontSize: '14px',
                                 fontWeight: '700',
                                 marginTop: '8px',
+                                width: isFirstPremium ? 'fit-content' : 'auto',
+                                display: isFirstPremium ? 'block' : 'inline-block',
                               }}
                               onClick={() => {
                                 trackBusinessEvent(c.id, 'click');
