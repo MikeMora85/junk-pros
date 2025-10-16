@@ -3388,10 +3388,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
           </p>
         </div>
 
-        {/* Two Column Layout - Stacks on Mobile */}
+        {/* Company Listings - Full Width */}
         <div style={{ padding: '0', margin: '0', width: '100%' }}>
-          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
-              {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
                   /* Desktop 2-column grid layout - v2 */
@@ -4084,7 +4082,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   </div>
                 </div>
               </div>
-          </div>
         </div>
       </div>
     </div>
