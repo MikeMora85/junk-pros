@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { X } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function Login() {
@@ -86,7 +86,7 @@ export default function Login() {
           }}
           data-testid="button-back"
         >
-          <ArrowLeft size={18} color="#000" />
+          <X size={18} color="#000" />
         </button>
       </div>
 
