@@ -1434,6 +1434,14 @@ function LandingPage() {
               <Search size={18} />
             </button>
           </form>
+          
+          {/* Rotating message below search */}
+          <div style={{
+            marginTop: '24px',
+            textAlign: 'center',
+          }}>
+            <RotatingBanner />
+          </div>
         </div>
 
         <div style={{
