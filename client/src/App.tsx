@@ -3351,7 +3351,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }} 
                   style={{
                     position: 'relative',
-                    backgroundColor: isUnclaimed ? '#f9f9f9' : '#fff',
+                    backgroundColor: isUnclaimed ? '#f9f9f9' : '#f5f5f5',
                     borderRadius: '0',
                     padding: '16px',
                     marginBottom: '12px',
