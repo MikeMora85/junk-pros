@@ -3627,6 +3627,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         </div>
                         <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
                         <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
+                      </div>
+                      )}
+                      
+                      <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif", display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                         {c.local && (
                           <span style={{
                             background: '#fbbf24',
@@ -3639,14 +3643,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             LOCAL
                           </span>
                         )}
-                      </div>
-                      )}
-                      
-                      <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif", display: 'flex', alignItems: 'center', gap: '12px' }}>
                         {c.address && <MapPin size={16} color="#000" />}
                         <Phone size={16} color="#000" />
                         {c.website && (
-                          <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
+                          <a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a>
                         )}
                       </div>
                     </div>
