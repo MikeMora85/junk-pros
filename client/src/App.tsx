@@ -3775,33 +3775,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
-                  {/* Review Snippets - Premium & Standard only */}
-                  {!isUnclaimed && !isBasic && c.reviewSnippets && c.reviewSnippets.length > 0 && (
-                    <div style={{
-                      backgroundColor: '#f5f5f5',
-                      borderRadius: '0',
-                      padding: '12px',
-                      marginBottom: '12px',
-                      marginLeft: '0',
-                      marginRight: '0',
-                      border: 'none',
-                      borderTop: '1px solid #e5e5e5',
-                      borderBottom: '1px solid #e5e5e5',
-                    }}>
-                      {c.reviewSnippets.slice(0, 2).map((review, i) => (
-                        <div key={i} style={{
-                          fontSize: '13px',
-                          color: '#000',
-                          marginBottom: i < c.reviewSnippets!.slice(0, 2).length - 1 ? '8px' : '0',
-                          fontStyle: 'italic',
-                          lineHeight: '1.5',
-                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                        }}>
-                          "{review}"
-                        </div>
-                      ))}
-                    </div>
-                  )}
                   
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
