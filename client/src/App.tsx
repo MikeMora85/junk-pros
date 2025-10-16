@@ -3560,33 +3560,22 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     </div>
                   ) : (
-                  <div className={isFirstPremium ? `premium-first-wrapper-${c.id}` : 'standard-layout'}>
-                    {/* Premium #1 Desktop 2-Column Layout Wrapper */}
+                  <div>
+                    {/* Premium #1 Desktop 2-Column Layout for top section only */}
                     {isFirstPremium && (
                       <style dangerouslySetInnerHTML={{__html: `
                         @media (min-width: 1024px) {
-                          .premium-first-wrapper-${c.id} {
+                          .premium-top-section-${c.id} {
                             display: grid !important;
                             grid-template-columns: 1.5fr 1fr !important;
                             gap: 20px !important;
                             margin-bottom: 16px !important;
                           }
-                          .premium-first-wrapper-${c.id} .quote-section-move {
-                            order: 2 !important;
-                            margin: 0 !important;
-                            border: none !important;
-                            border-left: 2px solid #e5e5e5 !important;
-                            padding: 0 0 0 20px !important;
-                            background: transparent !important;
-                          }
-                          .premium-first-wrapper-${c.id} .quote-section-move h4 {
-                            text-align: left !important;
-                            font-size: 18px !important;
-                          }
                         }
                       `}} />
                     )}
                     
+                    <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
                       <div style={{ display: 'flex', gap: '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0' }}>
                         <div style={{
                           width: '60px',
@@ -3703,8 +3692,115 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           )}
                         </div>
                       </div>
+                      
+                      {/* Ways to Get Quote - On right side for Premium #1 on desktop */}
+                      {isFirstPremium && hasFullFeatures && (
+                        <div style={{
+                          backgroundColor: '#f5f5f5',
+                          borderRadius: '8px',
+                          padding: '16px',
+                          border: '2px solid #fbbf24',
+                        }}>
+                          <h4 style={{
+                            fontSize: '18px',
+                            fontWeight: '700',
+                            margin: '0 0 16px 0',
+                            color: '#374151',
+                          }}>
+                            Ways To Get A Quote
+                          </h4>
+                          
+                          <div style={{ 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            gap: '10px',
+                          }}>
+                            {/* Call Now */}
+                            <button 
+                              style={{
+                                background: '#fbbf24',
+                                color: '#000',
+                                borderRadius: '8px',
+                                border: '2px solid #000',
+                                cursor: 'pointer',
+                                padding: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                fontSize: '15px',
+                                fontWeight: '600',
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                trackBusinessEvent(c.id, 'call');
+                                window.open(`tel:${c.phone}`, '_self');
+                              }}
+                              data-testid={`button-call-premium-${c.id}`}
+                            >
+                              <Phone size={20} />
+                              Call Now
+                            </button>
+
+                            {/* Send Photos */}
+                            <button
+                              style={{
+                                background: '#fbbf24',
+                                color: '#000',
+                                borderRadius: '8px',
+                                border: '2px solid #000',
+                                cursor: 'pointer',
+                                padding: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                fontSize: '15px',
+                                fontWeight: '600',
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                trackBusinessEvent(c.id, 'photo_quote');
+                                alert('Photo upload feature coming soon!');
+                              }}
+                              data-testid={`button-send-photos-premium-${c.id}`}
+                            >
+                              <Camera size={20} />
+                              Send Photos
+                            </button>
+                            
+                            {/* In Person Estimate */}
+                            <button
+                              style={{
+                                background: '#fbbf24',
+                                color: '#000',
+                                borderRadius: '8px',
+                                border: '2px solid #000',
+                                cursor: 'pointer',
+                                padding: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px',
+                                fontSize: '15px',
+                                fontWeight: '600',
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                trackBusinessEvent(c.id, 'book_quote');
+                                setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                              }}
+                              data-testid={`button-in-person-premium-${c.id}`}
+                            >
+                              <Calendar size={20} />
+                              In-Person Estimate
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   
-                  {/* Image Carousel - Premium & Standard only (moved below contact info) */}
+                  {/* Image Carousel - Premium & Standard only (full width below) */}
                   {hasFullFeatures && (
                   <div style={{
                     marginBottom: '16px',
@@ -3874,11 +3970,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
-                  {/* Quote Section - Premium & Standard only */}
-                  {hasFullFeatures && (
-                  <div 
-                    className={isFirstPremium ? 'quote-section-move' : ''}
-                    style={{
+                  {/* Quote Section - Premium & Standard only (hidden for premium #1 on desktop, shown for others) */}
+                  {hasFullFeatures && !isFirstPremium && (
+                  <div style={{
                     backgroundColor: '#f5f5f5',
                     borderRadius: '0',
                     padding: '16px 0',
@@ -4032,7 +4126,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   </div>
                   )}
                   </div>
-                  )}
                 </div>
                   );
                   })
