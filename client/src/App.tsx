@@ -4925,6 +4925,7 @@ function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }
             border: '1px solid #e5e7eb',
             borderRadius: '8px',
             overflow: 'hidden',
+            boxSizing: 'border-box',
           }}>
             <button
               onClick={() => setOpenIndex(isOpen ? null : i)}
@@ -4938,6 +4939,7 @@ function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 textAlign: 'left',
+                boxSizing: 'border-box',
               }}
               data-testid={`button-faq-${i}`}
             >
