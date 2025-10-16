@@ -3698,13 +3698,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <div style={{
                           backgroundColor: '#f5f5f5',
                           borderRadius: '8px',
-                          padding: '16px',
+                          padding: '16px 16px 12px 16px',
                           border: '2px solid #fbbf24',
+                          alignSelf: 'start',
                         }}>
                           <h4 style={{
                             fontSize: '18px',
                             fontWeight: '700',
-                            margin: '0 0 16px 0',
+                            margin: '0 0 12px 0',
                             color: '#374151',
                           }}>
                             Ways To Get A Quote
@@ -3713,7 +3714,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           <div style={{ 
                             display: 'flex', 
                             flexDirection: 'column',
-                            gap: '10px',
+                            gap: '8px',
                           }}>
                             {/* Call Now */}
                             <button 
@@ -3723,7 +3724,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 borderRadius: '8px',
                                 border: '2px solid #000',
                                 cursor: 'pointer',
-                                padding: '12px',
+                                padding: '10px 12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -3750,7 +3751,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 borderRadius: '8px',
                                 border: '2px solid #000',
                                 cursor: 'pointer',
-                                padding: '12px',
+                                padding: '10px 12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
@@ -3777,7 +3778,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                                 borderRadius: '8px',
                                 border: '2px solid #000',
                                 cursor: 'pointer',
-                                padding: '12px',
+                                padding: '10px 12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
