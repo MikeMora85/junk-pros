@@ -4069,6 +4069,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       background: '#fff',
       zIndex: 1000,
       overflowY: 'auto',
+      overflowX: 'hidden',
     }}>
       {/* Floating X Close Button */}
       <button
