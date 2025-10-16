@@ -4624,7 +4624,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           </div>
 
           {/* Right Column */}
-          <div>
+          <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
             {/* Pricing Estimator */}
             <div style={{ marginBottom: '24px' }}>
               <h2 style={{
@@ -4816,6 +4816,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   fontSize: '14px',
                   fontWeight: '600',
                   fontFamily: 'system-ui, -apple-system, sans-serif',
+                  boxSizing: 'border-box',
                 }}
                 onClick={() => {
                   trackBusinessEvent(company.id, 'call');
