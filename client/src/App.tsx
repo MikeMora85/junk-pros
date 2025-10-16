@@ -4380,12 +4380,10 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               }}
               style={{
                 display: 'flex',
-                gap: '8px',
-                overflowX: 'auto',
+                overflowX: 'hidden',
                 scrollBehavior: 'smooth',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
-                padding: '0 16px',
               }} 
               className="hide-scrollbar"
             >
@@ -4496,7 +4494,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           gridTemplateColumns: window.innerWidth > 768 ? '1fr 300px' : '1fr', 
           gap: '24px' 
         }}>
-          <div>
+          <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
             <div style={{ marginBottom: '32px' }}>
               <h2 style={{
                 fontSize: '24px',
@@ -4512,19 +4510,19 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 { name: 'Sarah M.', location: 'Tempe', text: "Very professional and reasonably priced. Will definitely use them again for future junk removal projects." },
                 { name: 'John R.', location: 'Old Town Scottsdale', text: "Excellent service from start to finish! The crew was courteous and efficient." }
               ].map((review, i) => (
-                <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < 2 ? '1px solid #e5e7eb' : 'none' }}>
+                <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < 2 ? '1px solid #e5e7eb' : 'none', maxWidth: '100%', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.name}</div>
                       <div style={{ fontSize: '13px', color: '#6b7280', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.location}</div>
                     </div>
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', flexShrink: 0 }}>
                       {[1, 2, 3, 4, 5].map((star) => (
                         <span key={star} style={{ color: '#fbbf24', fontSize: '14px' }}>★</span>
                       ))}
                     </div>
                   </div>
-                  <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
                     {review.text}
                   </p>
                 </div>
