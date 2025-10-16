@@ -4381,10 +4381,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               }}
               style={{
                 display: 'flex',
-                overflowX: 'hidden',
+                gap: '8px',
+                overflowX: 'auto',
                 scrollBehavior: 'smooth',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
+                padding: '0 16px',
               }} 
               className="hide-scrollbar"
             >
@@ -4493,7 +4495,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: window.innerWidth > 768 ? '1fr 300px' : '1fr', 
-          gap: '24px' 
+          gap: '24px',
+          maxWidth: '100%',
         }}>
           <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
             <div style={{ marginBottom: '32px' }}>
