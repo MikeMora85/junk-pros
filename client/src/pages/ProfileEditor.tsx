@@ -274,10 +274,11 @@ export default function ProfileEditor() {
   const handleSave = () => {
     console.log('🔵 SAVE BUTTON CLICKED - Handler executing');
     
-    // Basic tier: Only save logo, name, phone, website, address, city, state
+    // Basic tier: Only save logo, name, phone, website, address, city, state, contactEmail
     const basicPayload = {
       name: formData.name,
       phone: formData.phone,
+      contactEmail: formData.contactEmail || null,
       website: formData.website,
       address: formData.address,
       city: formData.city,
