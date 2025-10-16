@@ -3470,15 +3470,15 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   }}
                   data-testid={`card-company-${c.id}`}
                 >
-                  {/* Top Right Badge - positioned to overlap top border */}
+                  {/* Top Right Badge - positioned to straddle top border */}
                   {isPremium && c.badge && !isUnclaimed && (
                     <div style={{
                       position: 'absolute',
-                      top: '-16px',
+                      top: '-13px',
                       right: '16px',
                       background: '#16a34a',
                       color: '#fff',
-                      padding: '6px 12px',
+                      padding: '5px 12px',
                       borderRadius: '4px',
                       fontSize: '12px',
                       fontWeight: '700',
