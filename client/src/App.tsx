@@ -3521,7 +3521,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     // Simplified unclaimed business display
                     <div style={{ textAlign: 'center' }}>
                       <h3 style={{
-                        fontSize: '20px',
+                        fontSize: '18px',
                         fontWeight: '700',
                         margin: '0 0 12px 0',
                         color: '#111827',
