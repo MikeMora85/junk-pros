@@ -3559,7 +3559,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     </div>
                   ) : (
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0', alignItems: 'flex-end' }}>
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
                     <div style={{
                       width: '60px',
                       height: '60px',
@@ -3603,11 +3603,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       )}
                     </div>
                     
-                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '60px' }}>
                       <h3 style={{
                         fontSize: '18px',
                         fontWeight: '700',
-                        margin: '0 0 4px 0',
+                        margin: '0',
                         color: '#111827',
                       }} data-testid={`text-company-name-${c.id}`}>
                         {c.name}
