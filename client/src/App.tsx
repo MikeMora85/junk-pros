@@ -3076,6 +3076,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
   const [carouselTransitions, setCarouselTransitions] = useState<Record<number, boolean>>({});
   const [menuOpen, setMenuOpen] = useState(false);
+  const [videoModalUrl, setVideoModalUrl] = useState<string | null>(null);
   const { user, isAuthenticated } = useAuth();
   
   // Helper function to format city name: remove dashes and capitalize each word
@@ -3155,9 +3156,87 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
   const selectedCompany = companies.find(c => c.id === selectedCompanyId);
 
+  // Helper function to convert YouTube URL to embed URL
+  const getVideoEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/watch?v=')) {
+      const videoId = url.split('v=')[1]?.split('&')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (url.includes('vimeo.com/')) {
+      const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
+      return `https://player.vimeo.com/video/${videoId}`;
+    }
+    return url; // Return as-is if format not recognized
+  };
+
   return (
     <>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      {/* Video Modal */}
+      {videoModalUrl && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            zIndex: 3000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+          }} 
+          onClick={() => setVideoModalUrl(null)}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '1200px',
+              aspectRatio: '16/9',
+            }}
+          >
+            <button
+              onClick={() => setVideoModalUrl(null)}
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '0',
+                background: 'transparent',
+                border: 'none',
+                color: '#fff',
+                fontSize: '32px',
+                cursor: 'pointer',
+                padding: '8px',
+                zIndex: 1,
+              }}
+              data-testid="button-close-video"
+            >
+              ×
+            </button>
+            <iframe
+              src={getVideoEmbedUrl(videoModalUrl)}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                borderRadius: '8px',
+              }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
+      
       {selectedCompany && (
         <div style={{
           position: 'fixed',
@@ -3659,7 +3738,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <div 
                         onClick={(e) => {
                           e.stopPropagation();
-                          setSelectedCompanyId(c.id);
+                          setVideoModalUrl(c.videoUrl || null);
                         }}
                         style={{
                           position: 'relative',
