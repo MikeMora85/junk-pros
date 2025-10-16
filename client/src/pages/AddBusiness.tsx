@@ -315,7 +315,7 @@ export default function AddBusiness() {
               border: '2px solid #000',
               padding: '20px',
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               alignItems: 'center',
               cursor: 'pointer',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -323,38 +323,26 @@ export default function AddBusiness() {
               position: 'sticky',
               top: '0',
               zIndex: 50,
+              gap: '12px',
             }}
             data-testid="button-toggle-requirements"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <h2 style={{
-                fontSize: '22px',
-                fontWeight: '700',
-                color: '#000',
-                margin: 0,
-                letterSpacing: '-0.02em',
-              }}>
-                Required Read
-              </h2>
-              {(hasReadWhyUs && hasReadRequirements) && (
-                <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
-              )}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ 
-                fontSize: '13px', 
-                fontWeight: '700', 
-                color: '#dc2626',
-                textTransform: 'uppercase',
-              }}>
-                Required Read
-              </span>
-              {isWhyUsOpen ? (
-                <ChevronUp size={28} color="#000" />
-              ) : (
-                <ChevronDown size={28} color="#000" />
-              )}
-            </div>
+            {(hasReadWhyUs && hasReadRequirements) && (
+              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
+            )}
+            <span style={{ 
+              fontSize: '22px', 
+              fontWeight: '700', 
+              color: '#dc2626',
+              textTransform: 'uppercase',
+            }}>
+              Required Read
+            </span>
+            {isWhyUsOpen ? (
+              <ChevronUp size={28} color="#000" />
+            ) : (
+              <ChevronDown size={28} color="#000" />
+            )}
           </button>
           
           {isWhyUsOpen && (
