@@ -3614,7 +3614,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </h3>
                       
                       {!isBasic && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                           {[...Array(5)].map((_, i) => (
                             <Star
@@ -3629,28 +3629,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
                       </div>
                       )}
-                      
-                      <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif", display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-                        {c.local && (
-                          <span style={{
-                            background: '#fbbf24',
-                            color: '#000',
-                            padding: '2px 8px',
-                            borderRadius: '4px',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                          }}>
-                            LOCAL
-                          </span>
-                        )}
-                        {c.address && <MapPin size={16} color="#000" />}
-                        <Phone size={16} color="#000" />
-                        {c.website && (
-                          <a href={c.website} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center' }}>
-                            <Globe size={16} color="#000" />
-                          </a>
-                        )}
-                      </div>
                     </div>
                   </div>
                   )}
