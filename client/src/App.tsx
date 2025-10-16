@@ -1398,7 +1398,7 @@ function LandingPage() {
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            For Your Local Hauler Closest To You. No National Franchises, Local Vetted Junk Haulers Only.
+            No National Franchises, Local Vetted Junk Haulers Only.
           </p>
 
           <form onSubmit={handleSearch} style={{
