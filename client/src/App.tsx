@@ -3257,7 +3257,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           zIndex: 2000,
           overflow: 'auto',
         }} onClick={() => setSelectedCompanyId(null)}>
-          <div onClick={(e) => e.stopPropagation()}>
+          <div>
             <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} />
           </div>
         </div>
@@ -4060,17 +4060,19 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
   const [socialTabOpen, setSocialTabOpen] = useState(false);
   
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: '#fff',
-      zIndex: 1000,
-      overflowY: 'auto',
-      overflowX: 'hidden',
-    }}>
+    <div 
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: '#fff',
+        zIndex: 1000,
+        overflowY: 'auto',
+        overflowX: 'hidden',
+      }}>
       {/* Floating X Close Button */}
       <button
         onClick={onClose}
