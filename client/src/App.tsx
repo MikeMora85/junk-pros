@@ -3394,6 +3394,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
+                  /* Desktop 2-column grid layout - v2 */
                   @media (min-width: 1024px) {
                     .company-grid-desktop {
                       display: grid !important;
