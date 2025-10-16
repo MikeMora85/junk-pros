@@ -3608,6 +3608,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         fontWeight: '700',
                         margin: '0 0 8px 0',
                         color: '#111827',
+                        paddingRight: (isPremium && c.badge) ? '140px' : '0',
                       }} data-testid={`text-company-name-${c.id}`}>
                         {c.name}
                       </h3>
