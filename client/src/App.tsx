@@ -3407,80 +3407,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
-                  {hasFullFeatures && (
-                  // Image Carousel - Auto-scrolling, Vertical Format (Premium & Standard only)
-                  <div style={{
-                    marginBottom: '16px',
-                    marginTop: '0',
-                    overflow: 'hidden',
-                    borderRadius: '0',
-                    border: '2px solid #fbbf24',
-                  }}>
-                    <style dangerouslySetInnerHTML={{__html: `
-                      .carousel-item-${c.id} {
-                        min-width: calc(100% / 5.6);
-                      }
-                      @media (max-width: 768px) {
-                        .carousel-item-${c.id} {
-                          min-width: calc(100% / 3.5);
-                        }
-                      }
-                    `}} />
-                    <div style={{
-                      display: 'flex',
-                      transition: carouselTransitions[c.id] !== false ? 'transform 1.5s ease-in-out' : 'none',
-                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5)}%)`,
-                    }}>
-                      {(() => {
-                        // Priority: Use gallery images if available, otherwise use logo or defaults
-                        const hasGallery = c.galleryImages && c.galleryImages.length > 0;
-                        const hasLogo = c.logoUrl;
-                        const hasReviews = c.reviews > 0;
-                        
-                        let imagesToShow: (string | number)[] = [];
-                        
-                        if (hasGallery) {
-                          // Duplicate 3x for endless loop
-                          imagesToShow = [...c.galleryImages!, ...c.galleryImages!, ...c.galleryImages!];
-                        } else if (hasLogo || hasReviews) {
-                          // Use default images 3x
-                          imagesToShow = [...defaultImages, ...defaultImages, ...defaultImages];
-                        } else {
-                          // New businesses - show placeholders 3x
-                          imagesToShow = [0, 1, 2, 0, 1, 2, 0, 1, 2];
-                        }
-                        
-                        return imagesToShow.map((item, i) => (
-                          <div
-                            key={i}
-                            className={`carousel-item-${c.id}`}
-                            style={{
-                              padding: '0',
-                              aspectRatio: '1',
-                            }}
-                          >
-                            {typeof item === 'string' ? (
-                              <img
-                                src={item}
-                                alt="Service photo"
-                                style={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover',
-                                  borderRadius: '0',
-                                  border: '2px solid #fbbf24',
-                                }}
-                              />
-                            ) : (
-                              <PlaceholderImage index={item} />
-                            )}
-                          </div>
-                        ));
-                      })()}
-                    </div>
-                  </div>
-                  )}
-                  
                   {isUnclaimed ? (
                     // Simplified unclaimed business display
                     <div style={{ textAlign: 'center' }}>
@@ -3622,6 +3548,80 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
                         )}
                       </div>
+                    </div>
+                  </div>
+                  )}
+                  
+                  {/* Image Carousel - Premium & Standard only (moved below contact info) */}
+                  {hasFullFeatures && (
+                  <div style={{
+                    marginBottom: '16px',
+                    marginTop: '0',
+                    overflow: 'hidden',
+                    borderRadius: '0',
+                    border: '2px solid #fbbf24',
+                  }}>
+                    <style dangerouslySetInnerHTML={{__html: `
+                      .carousel-item-${c.id} {
+                        min-width: calc(100% / 5.6);
+                      }
+                      @media (max-width: 768px) {
+                        .carousel-item-${c.id} {
+                          min-width: calc(100% / 3.5);
+                        }
+                      }
+                    `}} />
+                    <div style={{
+                      display: 'flex',
+                      transition: carouselTransitions[c.id] !== false ? 'transform 1.5s ease-in-out' : 'none',
+                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5)}%)`,
+                    }}>
+                      {(() => {
+                        // Priority: Use gallery images if available, otherwise use logo or defaults
+                        const hasGallery = c.galleryImages && c.galleryImages.length > 0;
+                        const hasLogo = c.logoUrl;
+                        const hasReviews = c.reviews > 0;
+                        
+                        let imagesToShow: (string | number)[] = [];
+                        
+                        if (hasGallery) {
+                          // Duplicate 3x for endless loop
+                          imagesToShow = [...c.galleryImages!, ...c.galleryImages!, ...c.galleryImages!];
+                        } else if (hasLogo || hasReviews) {
+                          // Use default images 3x
+                          imagesToShow = [...defaultImages, ...defaultImages, ...defaultImages];
+                        } else {
+                          // New businesses - show placeholders 3x
+                          imagesToShow = [0, 1, 2, 0, 1, 2, 0, 1, 2];
+                        }
+                        
+                        return imagesToShow.map((item, i) => (
+                          <div
+                            key={i}
+                            className={`carousel-item-${c.id}`}
+                            style={{
+                              padding: '0',
+                              aspectRatio: '1',
+                            }}
+                          >
+                            {typeof item === 'string' ? (
+                              <img
+                                src={item}
+                                alt="Service photo"
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover',
+                                  borderRadius: '0',
+                                  border: '2px solid #fbbf24',
+                                }}
+                              />
+                            ) : (
+                              <PlaceholderImage index={item} />
+                            )}
+                          </div>
+                        ));
+                      })()}
                     </div>
                   </div>
                   )}
