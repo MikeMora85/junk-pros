@@ -4794,14 +4794,36 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               </h2>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                 <Phone size={16} color="#000" />
-                <a href={`tel:${company.phone}`} style={{ fontSize: '14px', color: '#000', textDecoration: 'none', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                <a 
+                  href={`tel:${company.phone}`} 
+                  style={{ 
+                    fontSize: '14px', 
+                    color: '#000', 
+                    textDecoration: 'none', 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    cursor: 'pointer',
+                    pointerEvents: 'auto'
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   {company.phone}
                 </a>
               </div>
               {company.contactEmail && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <Mail size={16} color="#000" />
-                  <a href={`mailto:${company.contactEmail}`} style={{ fontSize: '14px', color: '#000', textDecoration: 'none', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  <a 
+                    href={`mailto:${company.contactEmail}`} 
+                    style={{ 
+                      fontSize: '14px', 
+                      color: '#000', 
+                      textDecoration: 'none', 
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      cursor: 'pointer',
+                      pointerEvents: 'auto'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     {company.contactEmail}
                   </a>
                 </div>
@@ -4809,7 +4831,20 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               {company.website && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
                   <Globe size={16} color="#000" />
-                  <a href={company.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: '#000', textDecoration: 'none', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  <a 
+                    href={company.website} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style={{ 
+                      fontSize: '14px', 
+                      color: '#000', 
+                      textDecoration: 'none', 
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      cursor: 'pointer',
+                      pointerEvents: 'auto'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     Visit Website
                   </a>
                 </div>
