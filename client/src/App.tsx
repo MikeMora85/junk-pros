@@ -3586,6 +3586,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         {c.name}
                       </h3>
                       
+                      {!isBasic && (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
                           {[...Array(5)].map((_, i) => (
@@ -3612,17 +3613,21 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           </span>
                         )}
                       </div>
+                      )}
                       
                       <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
                         {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
-                        <div><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                        <div style={{ marginBottom: isBasic ? '4px' : '0' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                        {isBasic && c.website && (
+                          <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
+                        )}
                       </div>
                     </div>
                   </div>
                   )}
                   
-                  {/* Review Snippets */}
-                  {!isUnclaimed && c.reviewSnippets && c.reviewSnippets.length > 0 && (
+                  {/* Review Snippets - Premium & Standard only */}
+                  {!isUnclaimed && !isBasic && c.reviewSnippets && c.reviewSnippets.length > 0 && (
                     <div style={{
                       backgroundColor: '#f5f5f5',
                       borderRadius: '0',
