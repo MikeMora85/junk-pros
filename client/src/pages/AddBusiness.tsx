@@ -515,12 +515,33 @@ export default function AddBusiness() {
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Get discovered by local customers searching for junk removal
               </p>
-              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '16px' }}>
                 <li>Profile page with business details</li>
                 <li>Contact information display</li>
                 <li>Service area coverage</li>
                 <li>Customer reviews</li>
               </ul>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFormData({ ...formData, pricingTier: 'basic' });
+                }}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: formData.pricingTier === 'basic' ? '#166534' : '#fbbf24',
+                  color: formData.pricingTier === 'basic' ? '#fff' : '#000',
+                  border: '2px solid #000',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                data-testid="button-select-basic"
+              >
+                {formData.pricingTier === 'basic' ? 'SELECTED' : 'SELECT'}
+              </button>
             </div>
 
             <div
@@ -566,7 +587,7 @@ export default function AddBusiness() {
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Full landing page experience with booking and quoting tools
               </p>
-              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '16px' }}>
                 <li>Everything in Basic</li>
                 <li>Full-blown landing page profile</li>
                 <li>Integrated quoting tool</li>
@@ -574,6 +595,27 @@ export default function AddBusiness() {
                 <li>Active calendar with availability</li>
                 <li>Photo gallery (up to 5 images)</li>
               </ul>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFormData({ ...formData, pricingTier: 'professional' });
+                }}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: formData.pricingTier === 'professional' ? '#166534' : '#fbbf24',
+                  color: formData.pricingTier === 'professional' ? '#fff' : '#000',
+                  border: '2px solid #000',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                data-testid="button-select-professional"
+              >
+                {formData.pricingTier === 'professional' ? 'SELECTED' : 'SELECT'}
+              </button>
             </div>
 
             <div
@@ -704,6 +746,28 @@ export default function AddBusiness() {
                   </div>
                 )}
               </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFormData({ ...formData, pricingTier: 'featured' });
+                }}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: formData.pricingTier === 'featured' ? '#166534' : '#fbbf24',
+                  color: formData.pricingTier === 'featured' ? '#fff' : '#000',
+                  border: '2px solid #000',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  marginTop: '16px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                data-testid="button-select-featured"
+              >
+                {formData.pricingTier === 'featured' ? 'SELECTED' : 'SELECT'}
+              </button>
             </div>
           </div>
         </div>
