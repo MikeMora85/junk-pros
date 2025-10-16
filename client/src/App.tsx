@@ -3613,7 +3613,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         {c.name}
                       </h3>
                       
-                      {!isBasic && (
+                      {!isBasic ? (
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                           {[...Array(5)].map((_, i) => (
@@ -3627,6 +3627,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         </div>
                         <span style={{ fontWeight: '600', fontSize: '16px' }}>{c.rating || "0"}</span>
                         <span style={{ color: '#000', fontSize: '15px' }}>({c.reviews})</span>
+                      </div>
+                      ) : (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Phone size={16} color="#000" />
+                        <span style={{ fontSize: '16px', fontWeight: '600', color: '#000' }}>{c.phone}</span>
                       </div>
                       )}
                     </div>
