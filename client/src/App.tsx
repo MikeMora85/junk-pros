@@ -1314,45 +1314,29 @@ function LandingPage() {
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-      {/* Hero Section */}
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-      }}>
-        <img 
-          src={curbsideJunkHero} 
-          alt="My Local Junk Hauler" 
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-          }}
-        />
-        {/* Hamburger Menu Button */}
-        <button
-          onClick={() => setMenuOpen(true)}
-          style={{
-            position: 'fixed',
-            top: '16px',
-            left: '16px',
-            backgroundColor: '#fbbf24',
-            color: '#000',
-            padding: '8px',
-            borderRadius: '6px',
-            border: '1px solid #000',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-            zIndex: 1000,
-          }}
-          data-testid="button-menu"
-        >
-          <Menu size={24} color="#000" />
-        </button>
-      </div>
+      {/* Hamburger Menu Button */}
+      <button
+        onClick={() => setMenuOpen(true)}
+        style={{
+          position: 'fixed',
+          top: '16px',
+          left: '16px',
+          backgroundColor: '#fbbf24',
+          color: '#000',
+          padding: '8px',
+          borderRadius: '6px',
+          border: '1px solid #000',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          zIndex: 1000,
+        }}
+        data-testid="button-menu"
+      >
+        <Menu size={24} color="#000" />
+      </button>
 
       {/* Yellow Banner */}
       <header className="breathing-glow-banner" style={{
