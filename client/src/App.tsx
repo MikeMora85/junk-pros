@@ -4794,8 +4794,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               }}>
                 Contact Information
               </h2>
-              <a 
-                href={`tel:${company.phone}`}
+              <button
+                onClick={() => window.location.href = `tel:${company.phone}`}
                 style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
@@ -4805,15 +4805,19 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   color: '#000', 
                   textDecoration: 'none',
                   fontFamily: 'system-ui, -apple-system, sans-serif',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
                 }}
+                data-testid="button-call-phone"
               >
                 <Phone size={16} color="#000" />
                 <span>{company.phone}</span>
-              </a>
+              </button>
               {company.contactEmail && (
-                <a 
-                  href={`mailto:${company.contactEmail}`}
+                <button
+                  onClick={() => window.location.href = `mailto:${company.contactEmail}`}
                   style={{ 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -4823,12 +4827,16 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     color: '#000', 
                     textDecoration: 'none',
                     fontFamily: 'system-ui, -apple-system, sans-serif',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
                   }}
+                  data-testid="button-email"
                 >
                   <Mail size={16} color="#000" />
                   <span>{company.contactEmail}</span>
-                </a>
+                </button>
               )}
               {company.website && (
                 <a 
