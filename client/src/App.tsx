@@ -3703,8 +3703,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           )}
                         </div>
                       </div>
-                  </>
-                  )}
                   
                   {/* Image Carousel - Premium & Standard only (moved below contact info) */}
                   {hasFullFeatures && (
