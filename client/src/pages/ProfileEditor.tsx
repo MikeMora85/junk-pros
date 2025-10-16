@@ -247,15 +247,21 @@ export default function ProfileEditor() {
   const handleSave = () => {
     console.log('🔵 SAVE BUTTON CLICKED - Handler executing');
     
-    const payload = {
+    // Basic tier: Only save logo, name, phone, website, address, city, state
+    const basicPayload = {
       name: formData.name,
       phone: formData.phone,
-      contactEmail: formData.contactEmail || null,
       website: formData.website,
       address: formData.address,
       city: formData.city,
       state: formData.state,
       logoUrl: formData.logoUrl || null,
+    };
+    
+    // Standard & Premium: Full payload
+    const fullPayload = {
+      ...basicPayload,
+      contactEmail: formData.contactEmail || null,
       services: formData.selectedServices,
       specialties: formData.specialties.filter(s => s.trim()),
       aboutUs: formData.aboutUs || null,
@@ -287,11 +293,16 @@ export default function ProfileEditor() {
       reviews: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
     };
     
+    // Use appropriate payload based on subscription tier
+    const payload = subscriptionTier === 'basic' ? basicPayload : fullPayload;
+    
     console.log('💾 SAVE PAYLOAD READY:', { 
+      tier: subscriptionTier,
+      isBasicPayload: subscriptionTier === 'basic',
       logoUrl: payload.logoUrl,
-      galleryImages: payload.galleryImages?.length || 0,
-      googleFeaturedReviews: payload.googleFeaturedReviews?.length || 0,
-      teamMembers: payload.teamMembers?.length || 0
+      name: payload.name,
+      phone: payload.phone,
+      website: payload.website,
     });
     
     console.log('📤 CALLING MUTATION...');
