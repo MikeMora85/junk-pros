@@ -3576,7 +3576,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                     
                     <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: isFirstPremium ? 'grid' : 'flex', gridTemplateColumns: isFirstPremium ? '220px 1fr' : 'auto', gap: isFirstPremium ? '40px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
+                      <div style={{ display: isFirstPremium ? 'grid' : 'flex', gridTemplateColumns: isFirstPremium ? '220px 1fr' : 'auto', gap: isFirstPremium ? '32px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
                         <div style={{
                           width: isFirstPremium ? '220px' : '60px',
                           height: isFirstPremium ? '220px' : '60px',
@@ -3620,7 +3620,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           )}
                         </div>
                         
-                        <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: isFirstPremium ? '32px' : '0' }}>
                           <h3 style={{
                             fontSize: isFirstPremium ? '22px' : '18px',
                             fontWeight: '700',
