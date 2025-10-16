@@ -3560,96 +3560,172 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     </div>
                   ) : (
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
-                    <div style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '10px',
-                      background: c.logoUrl ? '#fff' : '#9ca3af',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '24px',
-                      fontWeight: '800',
-                      color: '#fff',
-                      flexShrink: 0,
-                      boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
-                      padding: c.logoUrl ? '4px' : '0',
-                      border: c.logoUrl ? 'none' : '2px solid #fbbf24',
-                      overflow: 'hidden',
-                    }}>
-                      {c.logoUrl ? (
-                        <img
-                          src={c.logoUrl}
-                          alt={`${c.name} logo`}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                          }}
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                            const parent = e.currentTarget.parentElement;
-                            if (parent) {
-                              parent.style.background = '#fbbf24';
-                              parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
-                              parent.style.border = '2px solid #fbbf24';
-                              parent.style.padding = '0';
-                              parent.textContent = c.name.charAt(0);
-                            }
-                          }}
-                        />
-                      ) : (
-                        c.name.charAt(0)
-                      )}
-                    </div>
+                  <div>
+                    {/* Premium #1 Desktop Horizontal Layout */}
+                    {isFirstPremium && (
+                      <style dangerouslySetInnerHTML={{__html: `
+                        @media (min-width: 1024px) {
+                          .premium-first-layout {
+                            display: grid !important;
+                            grid-template-columns: 120px 1fr auto !important;
+                            gap: 20px !important;
+                            align-items: start !important;
+                          }
+                        }
+                      `}} />
+                    )}
                     
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <h3 style={{
-                        fontSize: '18px',
-                        fontWeight: '700',
-                        margin: '0 0 8px 0',
-                        color: '#111827',
-                      }} data-testid={`text-company-name-${c.id}`}>
-                        {c.name}
-                      </h3>
+                    <div className={isFirstPremium ? 'premium-first-layout' : ''} style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
+                      <div style={{
+                        width: isFirstPremium ? '120px' : '60px',
+                        height: isFirstPremium ? '120px' : '60px',
+                        borderRadius: '10px',
+                        background: c.logoUrl ? '#fff' : '#9ca3af',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: isFirstPremium ? '48px' : '24px',
+                        fontWeight: '800',
+                        color: '#fff',
+                        flexShrink: 0,
+                        boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
+                        padding: c.logoUrl ? '8px' : '0',
+                        border: c.logoUrl ? 'none' : '2px solid #fbbf24',
+                        overflow: 'hidden',
+                      }}>
+                        {c.logoUrl ? (
+                          <img
+                            src={c.logoUrl}
+                            alt={`${c.name} logo`}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain',
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              const parent = e.currentTarget.parentElement;
+                              if (parent) {
+                                parent.style.background = '#fbbf24';
+                                parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
+                                parent.style.border = '2px solid #fbbf24';
+                                parent.style.padding = '0';
+                                parent.textContent = c.name.charAt(0);
+                              }
+                            }}
+                          />
+                        ) : (
+                          c.name.charAt(0)
+                        )}
+                      </div>
                       
-                      {!isBasic && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={14}
-                              fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
-                              stroke="#fbbf24"
-                            />
-                          ))}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <h3 style={{
+                          fontSize: isFirstPremium ? '24px' : '18px',
+                          fontWeight: '700',
+                          margin: '0 0 8px 0',
+                          color: '#111827',
+                        }} data-testid={`text-company-name-${c.id}`}>
+                          {c.name}
+                        </h3>
+                        
+                        {!isBasic && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                size={isFirstPremium ? 18 : 14}
+                                fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
+                                stroke="#fbbf24"
+                              />
+                            ))}
+                          </div>
+                          <span style={{ fontWeight: '600', fontSize: isFirstPremium ? '16px' : '14px' }}>{c.rating || "0"}</span>
+                          <span style={{ color: '#000', fontSize: isFirstPremium ? '15px' : '13px' }}>({c.reviews})</span>
+                          {c.local && (
+                            <span style={{
+                              background: '#fbbf24',
+                              color: '#000',
+                              padding: '4px 10px',
+                              borderRadius: '4px',
+                              fontSize: isFirstPremium ? '13px' : '11px',
+                              fontWeight: '700',
+                            }}>
+                              LOCAL
+                            </span>
+                          )}
                         </div>
-                        <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
-                        <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
-                        {c.local && (
-                          <span style={{
-                            background: '#fbbf24',
-                            color: '#000',
-                            padding: '2px 8px',
-                            borderRadius: '4px',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                          }}>
-                            LOCAL
-                          </span>
                         )}
+                        
+                        <div style={{ fontSize: isFirstPremium ? '15px' : '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                          {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={isFirstPremium ? 16 : 14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
+                          <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={isFirstPremium ? 16 : 14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                          {c.website && (
+                            <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
+                          )}
+                        </div>
                       </div>
-                      )}
                       
-                      <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
-                        {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
-                        <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
-                        {c.website && (
-                          <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
-                        )}
-                      </div>
+                      {/* Quick Actions on Right for Premium #1 on Desktop */}
+                      {isFirstPremium && (
+                        <div className="premium-first-actions" style={{ display: 'none' }}>
+                          <style dangerouslySetInnerHTML={{__html: `
+                            @media (min-width: 1024px) {
+                              .premium-first-actions {
+                                display: flex !important;
+                                flex-direction: column !important;
+                                gap: 8px !important;
+                              }
+                            }
+                          `}} />
+                          <button
+                            style={{
+                              background: '#16a34a',
+                              color: '#fff',
+                              padding: '12px 24px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              cursor: 'pointer',
+                              fontSize: '15px',
+                              fontWeight: '700',
+                              whiteSpace: 'nowrap',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              trackBusinessEvent(c.id, 'call');
+                              window.open(`tel:${c.phone}`, '_self');
+                            }}
+                            data-testid={`button-call-quick-${c.id}`}
+                          >
+                            <Phone size={18} />
+                            Call Now
+                          </button>
+                          <button
+                            style={{
+                              background: '#fbbf24',
+                              color: '#000',
+                              padding: '12px 24px',
+                              borderRadius: '8px',
+                              border: 'none',
+                              cursor: 'pointer',
+                              fontSize: '15px',
+                              fontWeight: '700',
+                              whiteSpace: 'nowrap',
+                            }}
+                            onClick={() => {
+                              trackBusinessEvent(c.id, 'click');
+                              setSelectedCompanyId(c.id);
+                            }}
+                            data-testid={`button-view-quick-${c.id}`}
+                          >
+                            View Profile
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                   )}
