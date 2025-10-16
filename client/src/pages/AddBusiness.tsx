@@ -101,6 +101,8 @@ export default function AddBusiness() {
       state: formData.state,
       email: formData.email,
       password: formData.password,
+      claimed: true, // User is signing up, so this is a claimed profile
+      subscriptionTier: 'basic', // FREE tier
       agreedToPlatformStandards: new Date(),
       agreedToRequirements: new Date(),
     };
