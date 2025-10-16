@@ -3543,8 +3543,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       
                       <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
                         {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
-                        <div style={{ marginBottom: isBasic ? '4px' : '0' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
-                        {isBasic && c.website && (
+                        <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                        {c.website && (
                           <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
                         )}
                       </div>
