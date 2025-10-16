@@ -3313,7 +3313,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
         <div style={{ padding: '0', margin: '0', width: '100%' }}>
           <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
               {/* Left - Company Listings */}
-              <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0', padding: '0' }}>
+              <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
+                <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
                 {isLoading ? (
                   <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280' }} data-testid="text-loading">
                     Loading...
@@ -3813,6 +3814,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   );
                   })
                 )}
+                </div>
               </div>
 
               {/* Estimator and Ads Section - Full Width */}
