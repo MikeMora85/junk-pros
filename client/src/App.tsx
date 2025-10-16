@@ -3620,12 +3620,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           )}
                         </div>
                         
-                        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: isFirstPremium ? '32px' : '0' }}>
+                        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingRight: isFirstPremium ? '32px' : '0', maxWidth: isFirstPremium ? '400px' : 'none' }}>
                           <h3 style={{
                             fontSize: isFirstPremium ? '22px' : '18px',
                             fontWeight: '700',
                             margin: isFirstPremium ? '0 0 10px 0' : '0 0 8px 0',
                             color: '#111827',
+                            width: isFirstPremium ? '100%' : 'auto',
                           }} data-testid={`text-company-name-${c.id}`}>
                             {c.name}
                           </h3>
