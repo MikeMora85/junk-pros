@@ -4792,8 +4792,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               }}>
                 Contact Information
               </h2>
-              <a 
-                href={`tel:${company.phone}`}
+              <div 
                 style={{ 
                   display: 'flex', 
                   alignItems: 'center', 
@@ -4801,18 +4800,19 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   marginBottom: '8px',
                   fontSize: '14px', 
                   color: '#000', 
-                  textDecoration: 'none', 
                   fontFamily: 'system-ui, -apple-system, sans-serif',
                   cursor: 'pointer'
                 }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = `tel:${company.phone}`;
+                }}
               >
                 <Phone size={16} color="#000" />
                 <span>{company.phone}</span>
-              </a>
+              </div>
               {company.contactEmail && (
-                <a 
-                  href={`mailto:${company.contactEmail}`}
+                <div 
                   style={{ 
                     display: 'flex', 
                     alignItems: 'center', 
@@ -4820,15 +4820,17 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     marginBottom: '8px',
                     fontSize: '14px', 
                     color: '#000', 
-                    textDecoration: 'none', 
                     fontFamily: 'system-ui, -apple-system, sans-serif',
                     cursor: 'pointer'
                   }}
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    window.location.href = `mailto:${company.contactEmail}`;
+                  }}
                 >
                   <Mail size={16} color="#000" />
                   <span>{company.contactEmail}</span>
-                </a>
+                </div>
               )}
               {company.website && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
