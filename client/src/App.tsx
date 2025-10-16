@@ -4792,41 +4792,43 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               }}>
                 Contact Information
               </h2>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <a 
+                href={`tel:${company.phone}`}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  marginBottom: '8px',
+                  fontSize: '14px', 
+                  color: '#000', 
+                  textDecoration: 'none', 
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  cursor: 'pointer'
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <Phone size={16} color="#000" />
+                <span>{company.phone}</span>
+              </a>
+              {company.contactEmail && (
                 <a 
-                  href={`tel:${company.phone}`} 
+                  href={`mailto:${company.contactEmail}`}
                   style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    marginBottom: '8px',
                     fontSize: '14px', 
                     color: '#000', 
                     textDecoration: 'none', 
                     fontFamily: 'system-ui, -apple-system, sans-serif',
-                    cursor: 'pointer',
-                    pointerEvents: 'auto'
+                    cursor: 'pointer'
                   }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {company.phone}
-                </a>
-              </div>
-              {company.contactEmail && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <Mail size={16} color="#000" />
-                  <a 
-                    href={`mailto:${company.contactEmail}`} 
-                    style={{ 
-                      fontSize: '14px', 
-                      color: '#000', 
-                      textDecoration: 'none', 
-                      fontFamily: 'system-ui, -apple-system, sans-serif',
-                      cursor: 'pointer',
-                      pointerEvents: 'auto'
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {company.contactEmail}
-                  </a>
-                </div>
+                  <span>{company.contactEmail}</span>
+                </a>
               )}
               {company.website && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
