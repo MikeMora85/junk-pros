@@ -524,7 +524,7 @@ export default function AddBusiness() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setFormData({ ...formData, pricingTier: 'basic' });
+                  setFormData({ ...formData, pricingTier: formData.pricingTier === 'basic' ? '' : 'basic' });
                 }}
                 style={{
                   width: '100%',
@@ -598,7 +598,7 @@ export default function AddBusiness() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setFormData({ ...formData, pricingTier: 'professional' });
+                  setFormData({ ...formData, pricingTier: formData.pricingTier === 'professional' ? '' : 'professional' });
                 }}
                 style={{
                   width: '100%',
@@ -749,7 +749,7 @@ export default function AddBusiness() {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setFormData({ ...formData, pricingTier: 'featured' });
+                  setFormData({ ...formData, pricingTier: formData.pricingTier === 'featured' ? '' : 'featured' });
                 }}
                 style={{
                   width: '100%',
