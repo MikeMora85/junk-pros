@@ -3474,7 +3474,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {isPremium && c.badge && !isUnclaimed && (
                     <div style={{
                       position: 'absolute',
-                      top: '12px',
+                      top: '-2px',
                       right: '12px',
                       background: '#16a34a',
                       color: '#fff',
@@ -3608,7 +3608,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         fontWeight: '700',
                         margin: '0 0 8px 0',
                         color: '#111827',
-                        paddingRight: (isPremium && c.badge) ? '140px' : '0',
                       }} data-testid={`text-company-name-${c.id}`}>
                         {c.name}
                       </h3>
