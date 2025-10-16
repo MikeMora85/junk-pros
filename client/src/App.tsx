@@ -3388,32 +3388,30 @@ function CityPage({ city, state }: { city: string; state: string }) {
           </p>
         </div>
 
-        {/* Company Listings - Full Width */}
+        {/* Two Column Layout - Stacks on Mobile */}
         <div style={{ padding: '0', margin: '0', width: '100%' }}>
+          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
+              {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
-                  /* Desktop 2-column grid layout - v2 */
+                  .company-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 12px;
+                  }
                   @media (min-width: 1024px) {
-                    .company-grid-desktop {
-                      display: grid !important;
-                      grid-template-columns: repeat(2, 1fr) !important;
-                      gap: 0 !important;
-                      width: 100% !important;
+                    .company-grid {
+                      grid-template-columns: 1fr 1fr;
                     }
-                    .company-grid-desktop > div.full-width-card {
-                      grid-column: 1 / -1 !important;
+                    .full-width-card {
+                      grid-column: span 2;
                     }
                     .video-thumbnail-desktop {
                       display: block !important;
                     }
                   }
-                  @media (max-width: 1023px) {
-                    .company-grid-desktop {
-                      display: block !important;
-                    }
-                  }
                 `}} />
-                <div className="company-grid-desktop">
+                <div className="company-grid">
                 {isLoading ? (
                   <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280', gridColumn: 'span 2' }} data-testid="text-loading">
                     Loading...
@@ -3560,294 +3558,101 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     </div>
                   ) : (
-                  <div>
-                    {/* Premium #1 Desktop 2-Column Layout for top section only */}
-                    {isFirstPremium && (
-                      <style dangerouslySetInnerHTML={{__html: `
-                        @media (min-width: 1024px) {
-                          .premium-top-section-${c.id} {
-                            display: grid !important;
-                            grid-template-columns: 2fr 1fr !important;
-                            gap: 24px !important;
-                            margin-bottom: 16px !important;
-                          }
-                          .premium-top-section-${c.id} > div:first-child {
-                            display: grid !important;
-                            grid-template-columns: 220px 1fr !important;
-                            gap: 32px !important;
-                            align-items: flex-start !important;
-                            margin-bottom: 0 !important;
-                          }
-                          .premium-logo-${c.id} {
-                            width: 220px !important;
-                            height: 220px !important;
-                            font-size: 80px !important;
-                          }
-                          .premium-business-info-${c.id} {
-                            padding-right: 32px !important;
-                          }
-                          .premium-business-name-${c.id} {
-                            font-size: 26px !important;
-                            margin-bottom: 10px !important;
-                          }
-                          .premium-rating-${c.id} {
-                            gap: 10px !important;
-                            margin-bottom: 14px !important;
-                          }
-                          .premium-rating-${c.id} .star {
-                            width: 18px !important;
-                            height: 18px !important;
-                          }
-                          .premium-rating-${c.id} .rating-number {
-                            font-size: 18px !important;
-                          }
-                          .premium-rating-${c.id} .review-count {
-                            font-size: 16px !important;
-                          }
-                          .premium-rating-${c.id} .local-badge {
-                            padding: 4px 10px !important;
-                            font-size: 13px !important;
-                          }
-                          .premium-contact-${c.id} {
-                            font-size: 16px !important;
-                            margin-bottom: 16px !important;
-                          }
-                          .premium-contact-${c.id} .icon {
-                            width: 18px !important;
-                            height: 18px !important;
-                          }
-                        }
-                      `}} />
-                    )}
-                    
-                    <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0', alignItems: 'center' }}>
-                        <div className={isFirstPremium ? `premium-logo-${c.id}` : ''} style={{
-                          width: '60px',
-                          height: '60px',
-                          borderRadius: '10px',
-                          background: c.logoUrl ? '#fff' : '#9ca3af',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          fontSize: '24px',
-                          fontWeight: '800',
-                          color: '#fff',
-                          flexShrink: 0,
-                          boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
-                          padding: c.logoUrl ? '4px' : '0',
-                          border: c.logoUrl ? 'none' : '2px solid #fbbf24',
-                          overflow: 'hidden',
-                        }}>
-                          {c.logoUrl ? (
-                            <img
-                              src={c.logoUrl}
-                              alt={`${c.name} logo`}
-                              style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'contain',
-                              }}
-                              onError={(e) => {
-                                e.currentTarget.style.display = 'none';
-                                const parent = e.currentTarget.parentElement;
-                                if (parent) {
-                                  parent.style.background = '#fbbf24';
-                                  parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
-                                  parent.style.border = '2px solid #fbbf24';
-                                  parent.style.padding = '0';
-                                  parent.textContent = c.name.charAt(0);
-                                }
-                              }}
-                            />
-                          ) : (
-                            c.name.charAt(0)
-                          )}
-                        </div>
-                        
-                        <div className={isFirstPremium ? `premium-business-info-${c.id}` : ''} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                          <h3 className={isFirstPremium ? `premium-business-name-${c.id}` : ''} style={{
-                            fontSize: '18px',
-                            fontWeight: '700',
-                            margin: '0 0 8px 0',
-                            color: '#111827',
-                          }} data-testid={`text-company-name-${c.id}`}>
-                            {c.name}
-                          </h3>
-                          
-                          {!isBasic && (
-                          <div className={isFirstPremium ? `premium-rating-${c.id}` : ''} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                              {[...Array(5)].map((_, i) => (
-                                <Star
-                                  key={i}
-                                  size={14}
-                                  className="star"
-                                  fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
-                                  stroke="#fbbf24"
-                                />
-                              ))}
-                            </div>
-                            <span className="rating-number" style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
-                            <span className="review-count" style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
-                            {c.local && (
-                              <span className="local-badge" style={{
-                                background: '#fbbf24',
-                                color: '#000',
-                                padding: '2px 8px',
-                                borderRadius: '4px',
-                                fontSize: '11px',
-                                fontWeight: '700',
-                              }}>
-                                LOCAL
-                              </span>
-                            )}
-                          </div>
-                          )}
-                          
-                          <div className={isFirstPremium ? `premium-contact-${c.id}` : ''} style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
-                            {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} className="icon" color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
-                            <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={14} className="icon" style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
-                            {c.website && (
-                              <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
-                            )}
-                          </div>
-                          
-                          {/* View Profile Button - Paid businesses only */}
-                          {hasFullFeatures && (
-                            <button
-                              style={{
-                                background: '#fbbf24',
-                                color: '#000',
-                                padding: '10px 20px',
-                                borderRadius: '8px',
-                                border: '2px solid #000',
-                                cursor: 'pointer',
-                                fontSize: '14px',
-                                fontWeight: '700',
-                                marginTop: '8px',
-                              }}
-                              onClick={() => {
-                                trackBusinessEvent(c.id, 'click');
-                                setSelectedCompanyId(c.id);
-                              }}
-                              data-testid={`button-view-profile-${c.id}`}
-                            >
-                              View Full Profile
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {/* Ways to Get Quote - On right side for Premium #1 on desktop */}
-                      {isFirstPremium && hasFullFeatures && (
-                        <div style={{
-                          backgroundColor: '#f5f5f5',
-                          borderRadius: '8px',
-                          padding: '16px 16px 12px 16px',
-                          border: '2px solid #fbbf24',
-                          alignSelf: 'start',
-                        }}>
-                          <h4 style={{
-                            fontSize: '18px',
-                            fontWeight: '700',
-                            margin: '0 0 12px 0',
-                            color: '#374151',
-                          }}>
-                            Ways To Get A Quote
-                          </h4>
-                          
-                          <div style={{ 
-                            display: 'flex', 
-                            flexDirection: 'column',
-                            gap: '8px',
-                          }}>
-                            {/* Call Now */}
-                            <button 
-                              style={{
-                                background: '#fbbf24',
-                                color: '#000',
-                                borderRadius: '8px',
-                                border: '2px solid #000',
-                                cursor: 'pointer',
-                                padding: '10px 12px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                trackBusinessEvent(c.id, 'call');
-                                window.open(`tel:${c.phone}`, '_self');
-                              }}
-                              data-testid={`button-call-premium-${c.id}`}
-                            >
-                              <Phone size={20} />
-                              Call Now
-                            </button>
-
-                            {/* Send Photos */}
-                            <button
-                              style={{
-                                background: '#fbbf24',
-                                color: '#000',
-                                borderRadius: '8px',
-                                border: '2px solid #000',
-                                cursor: 'pointer',
-                                padding: '10px 12px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                trackBusinessEvent(c.id, 'photo_quote');
-                                alert('Photo upload feature coming soon!');
-                              }}
-                              data-testid={`button-send-photos-premium-${c.id}`}
-                            >
-                              <Camera size={20} />
-                              Send Photos
-                            </button>
-                            
-                            {/* In Person Estimate */}
-                            <button
-                              style={{
-                                background: '#fbbf24',
-                                color: '#000',
-                                borderRadius: '8px',
-                                border: '2px solid #000',
-                                cursor: 'pointer',
-                                padding: '10px 12px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                trackBusinessEvent(c.id, 'book_quote');
-                                setExpandedQuote(expandedQuote === c.id ? null : c.id);
-                              }}
-                              data-testid={`button-in-person-premium-${c.id}`}
-                            >
-                              <Calendar size={20} />
-                              In-Person Estimate
-                            </button>
-                          </div>
-                        </div>
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
+                    <div style={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '10px',
+                      background: c.logoUrl ? '#fff' : '#9ca3af',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '24px',
+                      fontWeight: '800',
+                      color: '#fff',
+                      flexShrink: 0,
+                      boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
+                      padding: c.logoUrl ? '4px' : '0',
+                      border: c.logoUrl ? 'none' : '2px solid #fbbf24',
+                      overflow: 'hidden',
+                    }}>
+                      {c.logoUrl ? (
+                        <img
+                          src={c.logoUrl}
+                          alt={`${c.name} logo`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'contain',
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const parent = e.currentTarget.parentElement;
+                            if (parent) {
+                              parent.style.background = '#fbbf24';
+                              parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
+                              parent.style.border = '2px solid #fbbf24';
+                              parent.style.padding = '0';
+                              parent.textContent = c.name.charAt(0);
+                            }
+                          }}
+                        />
+                      ) : (
+                        c.name.charAt(0)
                       )}
                     </div>
+                    
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: '700',
+                        margin: '0 0 8px 0',
+                        color: '#111827',
+                      }} data-testid={`text-company-name-${c.id}`}>
+                        {c.name}
+                      </h3>
+                      
+                      {!isBasic && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
+                              stroke="#fbbf24"
+                            />
+                          ))}
+                        </div>
+                        <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
+                        <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
+                        {c.local && (
+                          <span style={{
+                            background: '#fbbf24',
+                            color: '#000',
+                            padding: '2px 8px',
+                            borderRadius: '4px',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                          }}>
+                            LOCAL
+                          </span>
+                        )}
+                      </div>
+                      )}
+                      
+                      <div style={{ fontSize: '14px', color: '#000', marginBottom: '12px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                        {c.address && <div style={{ marginBottom: '4px' }}><MapPin size={14} color="#000" style={{ display: 'inline', marginRight: '4px' }} />{c.address}</div>}
+                        <div style={{ marginBottom: c.website ? '4px' : '0' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }} />{c.phone}</div>
+                        {c.website && (
+                          <div><a href={c.website} target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'none' }} onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'} onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}>Visit Website</a></div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  )}
                   
-                  {/* Image Carousel - Premium & Standard only (full width below) */}
+                  {/* Image Carousel - Premium & Standard only (moved below contact info) */}
                   {hasFullFeatures && (
                   <div style={{
                     marginBottom: '16px',
@@ -4017,8 +3822,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
-                  {/* Quote Section - Premium & Standard only (hidden for premium #1 on desktop, shown for others) */}
-                  {hasFullFeatures && !isFirstPremium && (
+                  {/* Quote Section - Premium & Standard only */}
+                  {hasFullFeatures && (
                   <div style={{
                     backgroundColor: '#f5f5f5',
                     borderRadius: '0',
@@ -4172,8 +3977,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                   </div>
                   )}
-                  </div>
-                  )}
                 </div>
                   );
                   })
@@ -4277,6 +4080,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   </div>
                 </div>
               </div>
+          </div>
         </div>
       </div>
     </div>
