@@ -4044,7 +4044,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           }}
           data-testid="button-call-now"
         >
-          📞 Call Now
+          Call Now
         </button>
 
         {/* Social Media Bottom Tab */}
