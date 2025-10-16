@@ -3394,24 +3394,27 @@ function CityPage({ city, state }: { city: string; state: string }) {
               {/* Left - Company Listings */}
               <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
-                  .company-grid {
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 12px;
-                  }
                   @media (min-width: 1024px) {
-                    .company-grid {
-                      grid-template-columns: 1fr 1fr;
+                    .company-grid-desktop {
+                      display: grid !important;
+                      grid-template-columns: repeat(2, 1fr) !important;
+                      gap: 0 !important;
+                      width: 100% !important;
                     }
-                    .full-width-card {
-                      grid-column: span 2;
+                    .company-grid-desktop > div.full-width-card {
+                      grid-column: 1 / -1 !important;
                     }
                     .video-thumbnail-desktop {
                       display: block !important;
                     }
                   }
+                  @media (max-width: 1023px) {
+                    .company-grid-desktop {
+                      display: block !important;
+                    }
+                  }
                 `}} />
-                <div className="company-grid">
+                <div className="company-grid-desktop">
                 {isLoading ? (
                   <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280', gridColumn: 'span 2' }} data-testid="text-loading">
                     Loading...
