@@ -3392,7 +3392,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         <div style={{ padding: '0', margin: '0', width: '100%' }}>
           <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
               {/* Left - Company Listings */}
-              <div style={{ width: '100%', maxWidth: '100%', overflow: 'hidden', margin: '0 auto', padding: '0' }}>
+              <div style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
                   .company-grid {
                     display: grid;
