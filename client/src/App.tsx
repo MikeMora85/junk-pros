@@ -3559,7 +3559,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     </div>
                   ) : (
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
+                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0', alignItems: 'flex-end' }}>
                     <div style={{
                       width: '60px',
                       height: '60px',
@@ -3603,30 +3603,30 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       )}
                     </div>
                     
-                    <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                       <h3 style={{
                         fontSize: '18px',
                         fontWeight: '700',
-                        margin: '0 0 8px 0',
+                        margin: '0 0 4px 0',
                         color: '#111827',
                       }} data-testid={`text-company-name-${c.id}`}>
                         {c.name}
                       </h3>
                       
                       {!isBasic && (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                           {[...Array(5)].map((_, i) => (
                             <Star
                               key={i}
-                              size={14}
+                              size={16}
                               fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
                               stroke="#fbbf24"
                             />
                           ))}
                         </div>
-                        <span style={{ fontWeight: '600', fontSize: '14px' }}>{c.rating || "0"}</span>
-                        <span style={{ color: '#000', fontSize: '13px' }}>({c.reviews})</span>
+                        <span style={{ fontWeight: '600', fontSize: '16px' }}>{c.rating || "0"}</span>
+                        <span style={{ color: '#000', fontSize: '15px' }}>({c.reviews})</span>
                       </div>
                       )}
                     </div>
