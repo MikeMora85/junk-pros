@@ -3576,16 +3576,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                     
                     <div className={isFirstPremium ? `premium-top-section-${c.id}` : ''}>
-                      <div style={{ display: 'flex', gap: isFirstPremium ? '24px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0' }}>
+                      <div style={{ display: 'flex', gap: isFirstPremium ? '24px' : '16px', marginBottom: isFirstPremium ? '0' : '16px', padding: '0', alignItems: isFirstPremium ? 'flex-start' : 'center' }}>
                         <div style={{
-                          width: isFirstPremium ? '100px' : '60px',
-                          height: isFirstPremium ? '100px' : '60px',
+                          width: isFirstPremium ? '140px' : '60px',
+                          height: isFirstPremium ? '140px' : '60px',
                           borderRadius: '10px',
                           background: c.logoUrl ? '#fff' : '#9ca3af',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          fontSize: '24px',
+                          fontSize: isFirstPremium ? '48px' : '24px',
                           fontWeight: '800',
                           color: '#fff',
                           flexShrink: 0,
