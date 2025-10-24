@@ -342,7 +342,14 @@ export default function ProfileEditor() {
       name: payload.name,
       phone: payload.phone,
       website: payload.website,
+      businessHours: payload.businessHours ? 'INCLUDED' : 'NOT INCLUDED',
     });
+    
+    if (payload.businessHours) {
+      console.log('📅 BusinessHours in payload:', JSON.stringify(payload.businessHours));
+    } else {
+      console.log('⚠️ BusinessHours NOT in payload - Tier:', subscriptionTier);
+    }
     
     console.log('📤 CALLING MUTATION...');
     updateMutation.mutate(payload);
