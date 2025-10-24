@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { CheckCircle, XCircle, TrendingUp, Users, Shield, DollarSign, Award, Search, X, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
+import { CheckCircle, XCircle, Award, Search, X, ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function AddBusiness() {
   const urlParams = new URLSearchParams(window.location.search);
