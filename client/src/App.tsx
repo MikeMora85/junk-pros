@@ -4240,7 +4240,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           style={{
             width: '100%',
             maxWidth: '400px',
-            margin: '0 auto 24px',
+            margin: '0 auto 16px',
             padding: '16px 24px',
             background: '#fbbf24',
             color: '#000',
@@ -4260,6 +4260,39 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         >
           Call Now
         </button>
+
+        {/* View on Google Button */}
+        {company.gmbUrl && (
+          <a
+            href={company.gmbUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              width: '100%',
+              maxWidth: '400px',
+              margin: '0 auto 24px',
+              padding: '12px 24px',
+              backgroundColor: '#fff',
+              color: '#000',
+              border: '2px solid #000',
+              borderRadius: '8px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              textDecoration: 'none',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}
+            onClick={() => trackBusinessEvent(company.id, 'google_reviews')}
+            data-testid="button-view-on-google"
+          >
+            <FaGoogle size={18} />
+            View Reviews on Google
+          </a>
+        )}
 
         {/* Social Media Bottom Tab */}
         {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (

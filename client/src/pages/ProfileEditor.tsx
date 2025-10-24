@@ -122,9 +122,11 @@ export default function ProfileEditor() {
     facebookUrl: "",
     instagramUrl: "",
     youtubeUrl: "",
+    gmbUrl: "",
     showFacebook: false,
     showInstagram: false,
     showYoutube: false,
+    showGmb: false,
     offersInPersonEstimates: true,
   });
 
@@ -178,9 +180,11 @@ export default function ProfileEditor() {
         facebookUrl: company.facebookUrl || "",
         instagramUrl: company.instagramUrl || "",
         youtubeUrl: company.youtubeUrl || "",
+        gmbUrl: company.gmbUrl || "",
         showFacebook: !!company.facebookUrl,
         showInstagram: !!company.instagramUrl,
         showYoutube: !!company.youtubeUrl,
+        showGmb: !!company.gmbUrl,
         offersInPersonEstimates: company.offersInPersonEstimates ?? true,
       });
       setFormInitialized(true);
@@ -259,9 +263,11 @@ export default function ProfileEditor() {
         facebookUrl: updatedCompany.facebookUrl || "",
         instagramUrl: updatedCompany.instagramUrl || "",
         youtubeUrl: updatedCompany.youtubeUrl || "",
+        gmbUrl: updatedCompany.gmbUrl || "",
         showFacebook: !!updatedCompany.facebookUrl,
         showInstagram: !!updatedCompany.instagramUrl,
         showYoutube: !!updatedCompany.youtubeUrl,
+        showGmb: !!updatedCompany.gmbUrl,
         offersInPersonEstimates: updatedCompany.offersInPersonEstimates ?? true,
       });
       
@@ -333,6 +339,7 @@ export default function ProfileEditor() {
       facebookUrl: formData.showFacebook && formData.facebookUrl ? formData.facebookUrl : null,
       instagramUrl: formData.showInstagram && formData.instagramUrl ? formData.instagramUrl : null,
       youtubeUrl: formData.showYoutube && formData.youtubeUrl ? formData.youtubeUrl : null,
+      gmbUrl: formData.showGmb && formData.gmbUrl ? formData.gmbUrl : null,
     };
     
     // Use appropriate payload based on subscription tier
@@ -739,6 +746,34 @@ export default function ProfileEditor() {
                     placeholder="https://youtube.com/@yourchannel"
                     disabled={!formData.showYoutube}
                   />
+                </div>
+
+                {/* Google Business Profile */}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
+                    <label style={labelStyle}>Google Business Profile</label>
+                    <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px" }}>
+                      <input
+                        type="checkbox"
+                        checked={formData.showGmb}
+                        onChange={(e) => setFormData(prev => ({ ...prev, showGmb: e.target.checked }))}
+                        data-testid="toggle-gmb"
+                        style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                      />
+                      Show "View on Google" button
+                    </label>
+                  </div>
+                  <input
+                    data-testid="input-gmb"
+                    style={inputStyle}
+                    value={formData.gmbUrl}
+                    onChange={(e) => setFormData(prev => ({ ...prev, gmbUrl: e.target.value }))}
+                    placeholder="https://maps.google.com/?cid=..."
+                    disabled={!formData.showGmb}
+                  />
+                  <p style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
+                    Add your Google Business Profile link to show a "View Reviews on Google" button
+                  </p>
                 </div>
               </div>
 
