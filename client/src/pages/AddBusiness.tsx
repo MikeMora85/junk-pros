@@ -398,29 +398,6 @@ export default function AddBusiness() {
                 <li><strong>Licensed and insured</strong></li>
               </ul>
 
-              <h3 style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '16px', 
-                fontWeight: '700', 
-                color: '#000', 
-                marginBottom: '12px' 
-              }}>
-                Typical Pricing ($45-$65/cubic yard):
-              </h3>
-              <ul style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '15px', 
-                color: '#000', 
-                paddingLeft: '20px', 
-                lineHeight: '2',
-                marginBottom: '24px',
-              }}>
-                <li>¼ truck (~3.5 cyds): $160-$230</li>
-                <li>½ truck (~7 cyds): $315-$455</li>
-                <li>¾ truck (~10 cyds): $450-$650</li>
-                <li>Full truck (~14 cyds): $630-$910</li>
-              </ul>
-
               {/* Required Agreement Checkbox */}
               <div style={{
                 background: '#fef3c7',
