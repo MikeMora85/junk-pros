@@ -3530,6 +3530,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     trackBusinessEvent(c.id, 'click');
                     setSelectedCompanyId(c.id);
                   }} 
+                  id={`company-${c.id}`}
                   className={isFirstPremium ? 'full-width-card' : ''}
                   style={{
                     position: 'relative',
