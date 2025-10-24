@@ -4737,7 +4737,10 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
                   {company.businessHours ? (
                     <>
-                      {(Object.entries(company.businessHours as Record<string, { open: string; close: string; closed: boolean }>) as [string, { open: string; close: string; closed: boolean }][]).map(([day, hours]) => {
+                      {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => {
+                        const hours = (company.businessHours as Record<string, { open: string; close: string; closed: boolean }>)[day];
+                        if (!hours) return null;
+                        
                         const formatTime = (time: string) => {
                           const [h, m] = time.split(':');
                           const hour = parseInt(h);
