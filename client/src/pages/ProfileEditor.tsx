@@ -362,6 +362,11 @@ export default function ProfileEditor() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    window.location.href = '/';
+  };
+
   const toggleService = (serviceId: string) => {
     setFormData(prev => ({
       ...prev,
@@ -485,6 +490,24 @@ export default function ProfileEditor() {
           }}
         >
           Live
+        </button>
+        
+        <button
+          onClick={handleLogout}
+          data-testid="button-logout"
+          style={{
+            padding: "8px 20px",
+            backgroundColor: "#fff",
+            color: "#000",
+            border: "2px solid #000",
+            borderRadius: "8px",
+            fontSize: "16px",
+            fontWeight: "600",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
+          }}
+        >
+          Logout
         </button>
       </div>
 
