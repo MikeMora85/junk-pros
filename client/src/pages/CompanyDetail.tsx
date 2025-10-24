@@ -578,31 +578,62 @@ export default function CompanyDetail() {
                 </h2>
                 <div style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.8' }}>
                   {company.businessHours ? (
-                    <>
-                      {['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].map((day) => {
-                        const hours = (company.businessHours as Record<string, { open: string; close: string; closed: boolean }>)[day];
-                        if (!hours) return null;
-                        
-                        const formatTime = (time: string) => {
-                          const [h, m] = time.split(':');
-                          const hour = parseInt(h);
-                          const ampm = hour >= 12 ? 'PM' : 'AM';
-                          const hour12 = hour % 12 || 12;
-                          return `${hour12}:${m} ${ampm}`;
-                        };
-                        
-                        return (
-                          <div key={day} style={{ marginBottom: '4px' }}>
-                            <span style={{ fontWeight: '600', textTransform: 'capitalize' }}>{day}: </span>
-                            {hours.closed ? (
-                              <span>Closed</span>
-                            ) : (
-                              <span>{formatTime(hours.open)} - {formatTime(hours.close)}</span>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </>
+                    (() => {
+                      const formatTime = (time: string) => {
+                        const [h, m] = time.split(':');
+                        const hour = parseInt(h);
+                        const ampm = hour >= 12 ? 'PM' : 'AM';
+                        const hour12 = hour % 12 || 12;
+                        return `${hour12}:${m} ${ampm}`;
+                      };
+                      
+                      const bh = company.businessHours as Record<string, { open: string; close: string; closed: boolean }>;
+                      const mon = bh.monday;
+                      const tue = bh.tuesday;
+                      const wed = bh.wednesday;
+                      const thu = bh.thursday;
+                      const fri = bh.friday;
+                      const sat = bh.saturday;
+                      const sun = bh.sunday;
+                      
+                      const isSame = (a: any, b: any) => 
+                        a && b && a.open === b.open && a.close === b.close && a.closed === b.closed;
+                      
+                      const weekdaysSame = mon && tue && wed && thu && fri &&
+                        isSame(mon, tue) && isSame(mon, wed) && isSame(mon, thu) && isSame(mon, fri);
+                      
+                      return (
+                        <>
+                          {weekdaysSame && mon && (
+                            <div style={{ marginBottom: '4px' }}>
+                              <span style={{ fontWeight: '600' }}>Monday - Friday: </span>
+                              <span>{mon.closed ? 'Closed' : `${formatTime(mon.open)} - ${formatTime(mon.close)}`}</span>
+                            </div>
+                          )}
+                          {!weekdaysSame && (
+                            <>
+                              {mon && <div style={{ marginBottom: '4px' }}><span style={{ fontWeight: '600' }}>Monday: </span><span>{mon.closed ? 'Closed' : `${formatTime(mon.open)} - ${formatTime(mon.close)}`}</span></div>}
+                              {tue && <div style={{ marginBottom: '4px' }}><span style={{ fontWeight: '600' }}>Tuesday: </span><span>{tue.closed ? 'Closed' : `${formatTime(tue.open)} - ${formatTime(tue.close)}`}</span></div>}
+                              {wed && <div style={{ marginBottom: '4px' }}><span style={{ fontWeight: '600' }}>Wednesday: </span><span>{wed.closed ? 'Closed' : `${formatTime(wed.open)} - ${formatTime(wed.close)}`}</span></div>}
+                              {thu && <div style={{ marginBottom: '4px' }}><span style={{ fontWeight: '600' }}>Thursday: </span><span>{thu.closed ? 'Closed' : `${formatTime(thu.open)} - ${formatTime(thu.close)}`}</span></div>}
+                              {fri && <div style={{ marginBottom: '4px' }}><span style={{ fontWeight: '600' }}>Friday: </span><span>{fri.closed ? 'Closed' : `${formatTime(fri.open)} - ${formatTime(fri.close)}`}</span></div>}
+                            </>
+                          )}
+                          {sat && (
+                            <div style={{ marginBottom: '4px' }}>
+                              <span style={{ fontWeight: '600' }}>Saturday: </span>
+                              <span>{sat.closed ? 'Closed' : `${formatTime(sat.open)} - ${formatTime(sat.close)}`}</span>
+                            </div>
+                          )}
+                          {sun && (
+                            <div style={{ marginBottom: '4px' }}>
+                              <span style={{ fontWeight: '600' }}>Sunday: </span>
+                              <span>{sun.closed ? 'Closed' : `${formatTime(sun.open)} - ${formatTime(sun.close)}`}</span>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()
                   ) : (
                     company.hours
                   )}
