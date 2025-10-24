@@ -1253,6 +1253,7 @@ function BlogPage() {
 
 // Landing Page Component
 function LandingPage() {
+  const { user, isAuthenticated } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -3908,11 +3909,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           boxShadow: 'none',
+                          position: 'relative',
+                          zIndex: 10,
                         }}
                         onClick={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
-                          window.open(`tel:${c.phone}`, '_self');
+                          window.location.href = `tel:${c.phone}`;
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
@@ -3934,8 +3938,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           boxShadow: 'none',
+                          position: 'relative',
+                          zIndex: 10,
                         }}
                         onClick={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
                           alert('Photo upload feature coming soon!');
