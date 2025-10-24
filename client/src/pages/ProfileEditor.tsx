@@ -342,11 +342,11 @@ export default function ProfileEditor() {
       name: payload.name,
       phone: payload.phone,
       website: payload.website,
-      businessHours: payload.businessHours ? 'INCLUDED' : 'NOT INCLUDED',
+      businessHours: subscriptionTier !== 'basic' ? 'INCLUDED' : 'NOT INCLUDED',
     });
     
-    if (payload.businessHours) {
-      console.log('📅 BusinessHours in payload:', JSON.stringify(payload.businessHours));
+    if (subscriptionTier !== 'basic') {
+      console.log('📅 BusinessHours in payload:', JSON.stringify(fullPayload.businessHours));
     } else {
       console.log('⚠️ BusinessHours NOT in payload - Tier:', subscriptionTier);
     }
