@@ -358,7 +358,7 @@ export default function ProfileEditor() {
   const handleGoLive = () => {
     handleSave();
     if (company) {
-      navigate(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}`);
+      navigate(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}#company-${company.id}`);
     }
   };
 
