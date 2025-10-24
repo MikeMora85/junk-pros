@@ -1314,29 +1314,58 @@ function LandingPage() {
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-      {/* Hamburger Menu Button */}
-      <button
-        onClick={() => setMenuOpen(true)}
-        style={{
-          position: 'fixed',
-          top: '16px',
-          left: '16px',
-          backgroundColor: '#fbbf24',
-          color: '#000',
-          padding: '8px',
-          borderRadius: '6px',
-          border: '1px solid #000',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          zIndex: 1000,
-        }}
-        data-testid="button-menu"
-      >
-        <Menu size={24} color="#000" />
-      </button>
+      {/* Header Buttons */}
+      <div style={{
+        position: 'fixed',
+        top: '16px',
+        left: '16px',
+        display: 'flex',
+        gap: '12px',
+        zIndex: 1000,
+      }}>
+        <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          }}
+          data-testid="button-menu"
+        >
+          <Menu size={24} color="#000" />
+        </button>
+        
+        {isAuthenticated && user && (
+          <button
+            onClick={() => window.location.href = '/profile/edit'}
+            style={{
+              backgroundColor: '#166534',
+              color: '#fff',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              border: '1px solid #000',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+              fontSize: '14px',
+              fontWeight: '600',
+            }}
+            data-testid="button-profile"
+          >
+            <UserCircle size={18} />
+            Profile
+          </button>
+        )}
+      </div>
 
       <div style={{
         maxWidth: '1200px',
@@ -2073,6 +2102,40 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         >
           <Menu size={18} color="#000" />
         </button>
+        
+        {isAuthenticated && user && (
+          <button
+            onClick={() => window.location.href = '/profile/edit'}
+            style={{
+              backgroundColor: '#166534',
+              color: '#fff',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              border: '1px solid #000',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+              transform: 'translateY(-2px)',
+              transition: 'all 0.2s',
+              fontSize: '14px',
+              fontWeight: '600',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+              e.currentTarget.style.transform = 'translateY(-3px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            data-testid="button-profile-state"
+          >
+            <UserCircle size={16} />
+            Profile
+          </button>
+        )}
       </div>
 
       <div style={{
@@ -3321,6 +3384,40 @@ function CityPage({ city, state }: { city: string; state: string }) {
         </button>
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {isAuthenticated && user && (
+            <button
+              onClick={() => window.location.href = '/profile/edit'}
+              style={{
+                backgroundColor: '#166534',
+                color: '#fff',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                border: '1px solid #000',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+                transform: 'translateY(-2px)',
+                transition: 'all 0.2s',
+                fontSize: '14px',
+                fontWeight: '600',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+                e.currentTarget.style.transform = 'translateY(-3px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              data-testid="button-profile-city"
+            >
+              <UserCircle size={16} />
+              Profile
+            </button>
+          )}
+          
           <button
             onClick={() => window.location.href = '/add-business'}
             className="breathing-button"
