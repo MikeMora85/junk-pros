@@ -4723,22 +4723,42 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             )}
 
             {/* Business Hours */}
-            <div style={{ marginBottom: '24px' }}>
-              <h2 style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Business Hours
-              </h2>
-              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                <div><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</div>
-                <div><strong>Saturday:</strong> 8:00 AM - 4:00 PM</div>
-                <div><strong>Sunday:</strong> Closed</div>
+            {(company.businessHours || company.hours) && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Business Hours
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.businessHours ? (
+                    <>
+                      {(Object.entries(company.businessHours as Record<string, { open: string; close: string; closed: boolean }>) as [string, { open: string; close: string; closed: boolean }][]).map(([day, hours]) => {
+                        const formatTime = (time: string) => {
+                          const [h, m] = time.split(':');
+                          const hour = parseInt(h);
+                          const ampm = hour >= 12 ? 'PM' : 'AM';
+                          const hour12 = hour % 12 || 12;
+                          return `${hour12}:${m} ${ampm}`;
+                        };
+                        
+                        return (
+                          <div key={day} style={{ marginBottom: '4px' }}>
+                            <strong style={{ textTransform: 'capitalize' }}>{day}:</strong> {hours.closed ? 'Closed' : `${formatTime(hours.open)} - ${formatTime(hours.close)}`}
+                          </div>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    company.hours
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Location */}
             {company.address && (
