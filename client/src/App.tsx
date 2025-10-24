@@ -4371,7 +4371,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             marginBottom: '32px',
             textAlign: 'center',
           }}>
-            {company.services.slice(0, 6).map((serviceId, i) => {
+            {company.services.map((serviceId, i) => {
               // Map service IDs to icons and labels
               const serviceMap: Record<string, { icon: any; label: string }> = {
                 'residential': { icon: <Home size={40} />, label: 'Residential' },
