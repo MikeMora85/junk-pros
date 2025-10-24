@@ -4369,6 +4369,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '20px',
             marginBottom: '32px',
+            padding: '0 16px',
             textAlign: 'center',
           }}>
             {company.services.map((serviceId, i) => {
@@ -4401,7 +4402,15 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                   }}>
                     {service.icon}
                   </div>
-                  <div style={{ fontSize: '14px', fontWeight: '500', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  <div style={{ 
+                    fontSize: '14px', 
+                    fontWeight: '500', 
+                    color: '#000', 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    hyphens: 'auto',
+                  }}>
                     {service.label}
                   </div>
                 </div>
