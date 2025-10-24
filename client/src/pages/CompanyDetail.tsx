@@ -579,16 +579,26 @@ export default function CompanyDetail() {
                 <div style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.8' }}>
                   {company.businessHours ? (
                     <>
-                      {(Object.entries(company.businessHours as Record<string, { open: string; close: string; closed: boolean }>) as [string, { open: string; close: string; closed: boolean }][]).map(([day, hours]) => (
-                        <div key={day} style={{ marginBottom: '4px' }}>
-                          <span style={{ fontWeight: '600', textTransform: 'capitalize' }}>{day}: </span>
-                          {hours.closed ? (
-                            <span>Closed</span>
-                          ) : (
-                            <span>{hours.open} - {hours.close}</span>
-                          )}
-                        </div>
-                      ))}
+                      {(Object.entries(company.businessHours as Record<string, { open: string; close: string; closed: boolean }>) as [string, { open: string; close: string; closed: boolean }][]).map(([day, hours]) => {
+                        const formatTime = (time: string) => {
+                          const [h, m] = time.split(':');
+                          const hour = parseInt(h);
+                          const ampm = hour >= 12 ? 'PM' : 'AM';
+                          const hour12 = hour % 12 || 12;
+                          return `${hour12}:${m} ${ampm}`;
+                        };
+                        
+                        return (
+                          <div key={day} style={{ marginBottom: '4px' }}>
+                            <span style={{ fontWeight: '600', textTransform: 'capitalize' }}>{day}: </span>
+                            {hours.closed ? (
+                              <span>Closed</span>
+                            ) : (
+                              <span>{formatTime(hours.open)} - {formatTime(hours.close)}</span>
+                            )}
+                          </div>
+                        );
+                      })}
                     </>
                   ) : (
                     company.hours
