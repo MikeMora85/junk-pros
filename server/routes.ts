@@ -773,6 +773,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       console.log("Updating company:", owner.companyId, "with keys:", Object.keys(req.body).join(', '));
       if (req.body.galleryImages) console.log("✓ galleryImages:", req.body.galleryImages.length, "items");
       if (req.body.googleFeaturedReviews) console.log("✓ googleFeaturedReviews:", req.body.googleFeaturedReviews.length, "items");
+      if (req.body.businessHours) console.log("✓ businessHours:", JSON.stringify(req.body.businessHours));
       
       const updatedCompany = await storage.updateCompany(owner.companyId, req.body as any);
       console.log(`[PERF] Total PATCH took ${Date.now() - startTime}ms`);
