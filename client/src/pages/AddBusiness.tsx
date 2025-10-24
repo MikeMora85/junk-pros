@@ -55,7 +55,11 @@ export default function AddBusiness() {
   });
 
   const handleBack = () => {
-    window.history.back();
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = '/';
+    }
   };
 
   const handleCheckAvailability = (e: React.FormEvent) => {
