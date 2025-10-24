@@ -3895,7 +3895,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       padding: '0 20px',
                     }}>
                       {/* Call Now Icon */}
-                      <button 
+                      <a 
+                        href={`tel:${c.phone}`}
                         style={{
                           flex: '1',
                           maxWidth: '120px',
@@ -3911,20 +3912,20 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           boxShadow: 'none',
                           position: 'relative',
                           zIndex: 10,
+                          textDecoration: 'none',
                         }}
                         onClick={(e) => {
-                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
-                          window.location.href = `tel:${c.phone}`;
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
                         <Phone size={32} />
-                      </button>
+                      </a>
 
                       {/* Send Photos Icon */}
-                      <button
+                      <a
+                        href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         style={{
                           flex: '1',
                           maxWidth: '120px',
@@ -3940,17 +3941,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           boxShadow: 'none',
                           position: 'relative',
                           zIndex: 10,
+                          textDecoration: 'none',
                         }}
                         onClick={(e) => {
-                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
-                          alert('Photo upload feature coming soon!');
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={32} />
-                      </button>
+                      </a>
                       
                       {/* In Person Estimate Icon */}
                       <button
