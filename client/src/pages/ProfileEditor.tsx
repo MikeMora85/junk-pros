@@ -210,6 +210,9 @@ export default function ProfileEditor() {
     onSuccess: async (updatedCompany) => {
       queryClient.setQueryData(["/api/business/profile"], updatedCompany);
       
+      // Invalidate companies cache so city pages show updated data
+      await queryClient.invalidateQueries({ queryKey: ["/api/companies"] });
+      
       console.log('✅ onSuccess - Updated Company Data:', {
         galleryImages: updatedCompany.galleryImages?.length || 0,
         googleFeaturedReviews: updatedCompany.googleFeaturedReviews?.length || 0,
