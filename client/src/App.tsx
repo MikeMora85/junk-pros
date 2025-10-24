@@ -4371,19 +4371,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             marginBottom: '32px',
             textAlign: 'center',
           }}>
-            {company.services.slice(0, 6).map((service, i) => {
-              const getIcon = () => {
-                const serviceLower = service.toLowerCase();
-                if (serviceLower.includes('junk')) return <Trash2 size={40} />;
-                if (serviceLower.includes('cleanout')) return <Home size={40} />;
-                if (serviceLower.includes('appliance')) return <Refrigerator size={40} />;
-                if (serviceLower.includes('furniture')) return <Sofa size={40} />;
-                if (serviceLower.includes('estate')) return <Package size={40} />;
-                if (serviceLower.includes('construction')) return <HardHat size={40} />;
-                if (serviceLower.includes('yard')) return <Trees size={40} />;
-                if (serviceLower.includes('electronic')) return <Tv size={40} />;
-                return <Trash2 size={40} />;
+            {company.services.slice(0, 6).map((serviceId, i) => {
+              // Map service IDs to icons and labels
+              const serviceMap: Record<string, { icon: any; label: string }> = {
+                'residential': { icon: <Home size={40} />, label: 'Residential' },
+                'commercial': { icon: <Building2 size={40} />, label: 'Commercial' },
+                'furniture': { icon: <Sofa size={40} />, label: 'Furniture Removal' },
+                'appliances': { icon: <Refrigerator size={40} />, label: 'Appliance Removal' },
+                'electronics': { icon: <Tv size={40} />, label: 'Electronics' },
+                'yard-waste': { icon: <Trees size={40} />, label: 'Yard Waste' },
+                'construction': { icon: <Dumbbell size={40} />, label: 'Construction' },
+                'moving': { icon: <Truck size={40} />, label: 'Moving/Hauling' },
+                'general': { icon: <Package size={40} />, label: 'General Junk' },
               };
+              
+              const service = serviceMap[serviceId] || { icon: <Trash2 size={40} />, label: serviceId };
               
               return (
                 <div key={i}>
@@ -4397,10 +4399,10 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     border: '2px solid #000',
                     borderRadius: '50%',
                   }}>
-                    {getIcon()}
+                    {service.icon}
                   </div>
                   <div style={{ fontSize: '14px', fontWeight: '500', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                    {service}
+                    {service.label}
                   </div>
                 </div>
               );
