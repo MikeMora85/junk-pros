@@ -192,7 +192,8 @@ export default function ProfileEditor() {
       console.log('📤 SENDING to API:', {
         galleryImages: data.galleryImages?.length || 0,
         googleFeaturedReviews: data.googleFeaturedReviews?.length || 0,
-        teamMembers: data.teamMembers?.length || 0
+        teamMembers: data.teamMembers?.length || 0,
+        businessHours: data.businessHours ? JSON.stringify(data.businessHours) : 'null'
       });
       const result = await apiRequest("/api/business/profile", {
         method: "PATCH",
@@ -201,7 +202,8 @@ export default function ProfileEditor() {
       console.log('📥 RECEIVED from API:', {
         galleryImages: result.galleryImages?.length || 0,
         googleFeaturedReviews: result.googleFeaturedReviews?.length || 0,
-        teamMembers: result.teamMembers?.length || 0
+        teamMembers: result.teamMembers?.length || 0,
+        businessHours: result.businessHours ? JSON.stringify(result.businessHours) : 'null'
       });
       return result;
     },
@@ -211,7 +213,8 @@ export default function ProfileEditor() {
       console.log('✅ onSuccess - Updated Company Data:', {
         galleryImages: updatedCompany.galleryImages?.length || 0,
         googleFeaturedReviews: updatedCompany.googleFeaturedReviews?.length || 0,
-        teamMembers: updatedCompany.teamMembers?.length || 0
+        teamMembers: updatedCompany.teamMembers?.length || 0,
+        businessHours: updatedCompany.businessHours ? JSON.stringify(updatedCompany.businessHours) : 'null'
       });
       
       // Update form data with the saved values to reflect any backend transformations
