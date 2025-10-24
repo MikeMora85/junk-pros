@@ -4367,33 +4367,33 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '20px',
+            gap: '12px',
             marginBottom: '32px',
-            padding: '0 16px',
+            padding: '0 12px',
             textAlign: 'center',
           }}>
             {company.services.map((serviceId, i) => {
               // Map service IDs to icons and labels
               const serviceMap: Record<string, { icon: any; label: string }> = {
-                'residential': { icon: <Home size={40} />, label: 'Residential' },
-                'commercial': { icon: <Building2 size={40} />, label: 'Commercial' },
-                'furniture': { icon: <Sofa size={40} />, label: 'Furniture Removal' },
-                'appliances': { icon: <Refrigerator size={40} />, label: 'Appliance Removal' },
-                'electronics': { icon: <Tv size={40} />, label: 'Electronics' },
-                'yard-waste': { icon: <Trees size={40} />, label: 'Yard Waste' },
-                'construction': { icon: <Dumbbell size={40} />, label: 'Construction' },
-                'moving': { icon: <Truck size={40} />, label: 'Moving/Hauling' },
-                'general': { icon: <Package size={40} />, label: 'General Junk' },
+                'residential': { icon: <Home size={32} />, label: 'Residential' },
+                'commercial': { icon: <Building2 size={32} />, label: 'Commercial' },
+                'furniture': { icon: <Sofa size={32} />, label: 'Furniture Removal' },
+                'appliances': { icon: <Refrigerator size={32} />, label: 'Appliance Removal' },
+                'electronics': { icon: <Tv size={32} />, label: 'Electronics' },
+                'yard-waste': { icon: <Trees size={32} />, label: 'Yard Waste' },
+                'construction': { icon: <Dumbbell size={32} />, label: 'Construction' },
+                'moving': { icon: <Truck size={32} />, label: 'Moving/Hauling' },
+                'general': { icon: <Package size={32} />, label: 'General Junk' },
               };
               
-              const service = serviceMap[serviceId] || { icon: <Trash2 size={40} />, label: serviceId };
+              const service = serviceMap[serviceId] || { icon: <Trash2 size={32} />, label: serviceId };
               
               return (
                 <div key={i}>
                   <div style={{
-                    width: '80px',
-                    height: '80px',
-                    margin: '0 auto 12px',
+                    width: '70px',
+                    height: '70px',
+                    margin: '0 auto 8px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -4403,13 +4403,14 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     {service.icon}
                   </div>
                   <div style={{ 
-                    fontSize: '14px', 
+                    fontSize: '12px', 
                     fontWeight: '500', 
                     color: '#000', 
                     fontFamily: 'system-ui, -apple-system, sans-serif',
                     wordWrap: 'break-word',
                     overflowWrap: 'break-word',
                     hyphens: 'auto',
+                    lineHeight: '1.3',
                   }}>
                     {service.label}
                   </div>
