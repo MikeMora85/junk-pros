@@ -3493,8 +3493,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     display: grid;
                     grid-template-columns: 1fr;
                     gap: 12px;
-                    padding-left: 16px;
-                    padding-right: 16px;
+                    padding-left: 0;
+                    padding-right: 0;
                   }
                   
                   .city-sidebar {
@@ -3528,6 +3528,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     .company-grid {
                       grid-template-columns: 1fr;
                       gap: 16px;
+                      padding-left: 16px;
+                      padding-right: 16px;
                     }
                     
                     .full-width-card {
