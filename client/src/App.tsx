@@ -2477,32 +2477,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Furniture Removal
                     </h4>
                   </Link>
-                  <details>
-                    <summary style={{
-                      fontSize: '16px',
-                      color: '#fbbf24',
-                      cursor: 'pointer',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      listStyle: 'none',
-                      margin: '0',
-                    }}>
-                      ▾
-                    </summary>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', textAlign: 'left' }}>
-                      {['Sofa', 'Bed', 'Dresser', 'Table', 'Desk', 'Recliner'].map((item) => (
-                        <Link key={item} href={`/items/${item.toLowerCase()}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase()}`}>
-                          <span style={{ fontSize: '14px', color: '#6b7280', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </details>
                 </div>
 
                 {/* Appliance Disposal */}
@@ -2519,32 +2500,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Appliance Disposal
                     </h4>
                   </Link>
-                  <details>
-                    <summary style={{
-                      fontSize: '16px',
-                      color: '#fbbf24',
-                      cursor: 'pointer',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      listStyle: 'none',
-                      margin: '0',
-                    }}>
-                      ▾
-                    </summary>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', textAlign: 'left' }}>
-                      {['Refrigerator', 'Washer', 'Dryer', 'Stove', 'Dishwasher', 'Freezer'].map((item) => (
-                        <Link key={item} href={`/items/${item.toLowerCase()}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase()}`}>
-                          <span style={{ fontSize: '14px', color: '#6b7280', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </details>
                 </div>
 
                 {/* Electronics Recycling */}
@@ -2561,32 +2523,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Electronics Recycling
                     </h4>
                   </Link>
-                  <details>
-                    <summary style={{
-                      fontSize: '16px',
-                      color: '#fbbf24',
-                      cursor: 'pointer',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      listStyle: 'none',
-                      margin: '0',
-                    }}>
-                      ▾
-                    </summary>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', textAlign: 'left' }}>
-                      {['TV', 'Computer', 'Laptop', 'Monitor', 'Printer', 'Phone'].map((item) => (
-                        <Link key={item} href={`/items/${item.toLowerCase()}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase()}`}>
-                          <span style={{ fontSize: '14px', color: '#6b7280', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </details>
                 </div>
 
                 {/* Yard Waste Removal */}
@@ -2603,32 +2546,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Yard Waste Removal
                     </h4>
                   </Link>
-                  <details>
-                    <summary style={{
-                      fontSize: '16px',
-                      color: '#fbbf24',
-                      cursor: 'pointer',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      listStyle: 'none',
-                      margin: '0',
-                    }}>
-                      ▾
-                    </summary>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '12px', textAlign: 'left' }}>
-                      {['Branches', 'Leaves', 'Grass', 'Tree Stumps', 'Bushes'].map((item) => (
-                        <Link key={item} href={`/items/${item.toLowerCase().replace(/\s+/g, '-')}`} style={{ textDecoration: 'none' }} data-testid={`link-item-${item.toLowerCase().replace(/\s+/g, '-')}`}>
-                          <span style={{ fontSize: '14px', color: '#6b7280', fontFamily: "'Helvetica Neue', Arial, sans-serif", cursor: 'pointer' }}>• {item}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </details>
                 </div>
 
                 {/* Garage Cleanouts */}
@@ -2645,20 +2569,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Garage Cleanouts
                     </h4>
                   </Link>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#fbbf24',
-                    margin: '0',
-                  }}>
-                    ▾
-                  </div>
                 </div>
 
                 {/* Estate Cleanouts */}
@@ -2675,20 +2592,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Estate Cleanouts
                     </h4>
                   </Link>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#fbbf24',
-                    margin: '0',
-                  }}>
-                    ▾
-                  </div>
                 </div>
 
                 {/* Office Cleanouts */}
@@ -2705,20 +2615,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Office Cleanouts
                     </h4>
                   </Link>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#fbbf24',
-                    margin: '0',
-                  }}>
-                    ▾
-                  </div>
                 </div>
 
                 {/* Construction Debris */}
@@ -2735,21 +2638,90 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontSize: '16px',
                       fontWeight: '700',
                       color: '#000',
-                      margin: '0 0 6px 0',
+                      margin: '0',
                       fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       cursor: 'pointer',
                     }}>
                       Construction Debris
                     </h4>
                   </Link>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#fbbf24',
-                    margin: '0',
-                  }}>
-                    ▾
-                  </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Common Items Junk Haulers Remove */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '20px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Common Items Junk Haulers Remove
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                gap: '12px',
+              }}>
+                {[
+                  { name: 'Sofa', href: '/items/sofa' },
+                  { name: 'Bed', href: '/items/bed' },
+                  { name: 'Dresser', href: '/items/dresser' },
+                  { name: 'Table', href: '/items/table' },
+                  { name: 'Desk', href: '/items/desk' },
+                  { name: 'Recliner', href: '/items/recliner' },
+                  { name: 'Refrigerator', href: '/items/refrigerator' },
+                  { name: 'Washer', href: '/items/washer' },
+                  { name: 'Dryer', href: '/items/dryer' },
+                  { name: 'Stove', href: '/items/stove' },
+                  { name: 'Dishwasher', href: '/items/dishwasher' },
+                  { name: 'Freezer', href: '/items/freezer' },
+                  { name: 'TV', href: '/items/tv' },
+                  { name: 'Computer', href: '/items/computer' },
+                  { name: 'Laptop', href: '/items/laptop' },
+                  { name: 'Monitor', href: '/items/monitor' },
+                  { name: 'Printer', href: '/items/printer' },
+                  { name: 'Phone', href: '/items/phone' },
+                  { name: 'Branches', href: '/items/branches' },
+                  { name: 'Leaves', href: '/items/leaves' },
+                  { name: 'Grass', href: '/items/grass' },
+                  { name: 'Tree Stumps', href: '/items/tree-stumps' },
+                  { name: 'Bushes', href: '/items/bushes' },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    style={{ textDecoration: 'none' }}
+                    data-testid={`link-item-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
+                    <div style={{
+                      padding: '12px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '8px',
+                      border: '1px solid #e5e7eb',
+                      textAlign: 'center',
+                      transition: 'all 0.2s',
+                      cursor: 'pointer',
+                    }}>
+                      <span style={{
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#374151',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        {item.name}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
 
