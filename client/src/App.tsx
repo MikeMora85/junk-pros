@@ -3502,6 +3502,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     .full-width-card {
                       grid-column: span 2;
                     }
+                    .estimator-section {
+                      max-width: 1200px;
+                      margin-left: auto !important;
+                      margin-right: auto !important;
+                      padding-left: 12px !important;
+                      padding-right: 12px !important;
+                    }
                     .video-thumbnail-desktop {
                       display: block !important;
                     }
@@ -4057,7 +4064,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
               </div>
 
               {/* Estimator and Ads Section - Full Width */}
-              <div style={{
+              <div className="estimator-section" style={{
                 gridColumn: 'span 2',
                 paddingTop: '16px',
                 borderTop: '2px solid #000',
