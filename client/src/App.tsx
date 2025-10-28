@@ -3468,7 +3468,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             letterSpacing: '-0.02em',
             lineHeight: '1.2',
           }} data-testid="text-page-title">
-            {displayCityName}<br className="mobile-break" />Junk Removal
+            {displayCityName}<br className="mobile-break" /> Junk Removal
           </h2>
           <p className="city-subtitle" style={{ fontSize: '15px', color: '#000', margin: 0 }}>
             {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {displayCityName}
