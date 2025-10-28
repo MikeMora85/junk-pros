@@ -3505,6 +3505,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     width: 100%;
                     padding-left: 16px;
                     padding-right: 16px;
+                    margin-top: 24px;
                   }
                   
                   @media (min-width: 1024px) {
@@ -3558,6 +3559,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       height: fit-content;
                       max-height: calc(100vh - 40px);
                       overflow-y: auto;
+                      margin-top: 0;
                     }
                     
                     .video-thumbnail-desktop {
