@@ -1320,10 +1320,21 @@ function LandingPage() {
     }}>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
-      <div style={{
+      <div className="homepage-container" style={{
         background: '#ffffff',
         minHeight: '100vh',
       }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-container > div:not(:first-child) {
+              max-width: 1200px !important;
+              margin-left: auto !important;
+              margin-right: auto !important;
+              padding-left: 40px !important;
+              padding-right: 40px !important;
+            }
+          }
+        `}} />
       {/* Header Buttons */}
       <div style={{
         position: 'fixed',
