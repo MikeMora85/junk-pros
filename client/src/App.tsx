@@ -1325,7 +1325,7 @@ function LandingPage() {
         minHeight: '100vh',
       }}>
       {/* Header Buttons */}
-      <div style={{
+      <div className="homepage-header-buttons" style={{
         position: 'fixed',
         top: '16px',
         left: '16px',
@@ -1333,6 +1333,13 @@ function LandingPage() {
         gap: '12px',
         zIndex: 1000,
       }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-header-buttons {
+              left: calc((100vw - 1400px) / 2 + 40px) !important;
+            }
+          }
+        `}} />
         <button
           onClick={() => setMenuOpen(true)}
           style={{
