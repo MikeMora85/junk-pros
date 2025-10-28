@@ -3868,6 +3868,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
                   <div 
+                    onClick={(e) => e.stopPropagation()}
                     style={{
                       backgroundColor: '#f5f5f5',
                       borderRadius: '0',
@@ -3898,9 +3899,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* Call Now Icon */}
                       <a
                         href={`tel:${c.phone}`}
-                        onClick={(e) => {
-                          trackBusinessEvent(c.id, 'call');
-                        }}
                         style={{
                           width: '75px',
                           height: '75px',
@@ -3921,9 +3919,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* Send Photos Icon */}
                       <a
                         href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
-                        onClick={(e) => {
-                          trackBusinessEvent(c.id, 'photo_quote');
-                        }}
                         style={{
                           width: '75px',
                           height: '75px',
