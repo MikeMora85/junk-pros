@@ -169,6 +169,9 @@ export default function AddBusiness() {
               max-width: 1400px !important;
               margin-left: auto !important;
               margin-right: auto !important;
+              margin: 16px auto !important;
+              padding-left: 40px !important;
+              padding-right: 40px !important;
             }
           }
         `}} />
