@@ -3337,6 +3337,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
         .main-grid > div:last-child {
           display: none;
         }
+        .header-container {
+          display: contents;
+        }
+        .page-title-container {
+          margin: 0 0 12px 0;
+        }
         @media (min-width: 1024px) {
           .main-grid {
             grid-template-columns: 2fr 1fr;
@@ -3344,6 +3350,20 @@ function CityPage({ city, state }: { city: string; state: string }) {
           }
           .main-grid > div:last-child {
             display: flex;
+          }
+          .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .page-title-container {
+            max-width: 1400px;
+            margin: 0 auto 12px auto;
+            width: 100%;
+            box-sizing: border-box;
           }
         }
         @media (max-width: 768px) {
@@ -3364,13 +3384,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
       }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+        <div className="header-container" style={{
+          display: 'contents',
         }}>
         <button
           onClick={() => setMenuOpen(true)}
@@ -3473,13 +3492,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div style={{ 
+        <div className="page-title-container" style={{ 
           marginBottom: '12px', 
           padding: '0 16px', 
-          margin: '0 auto 12px auto',
-          maxWidth: '1400px',
-          width: '100%',
-          boxSizing: 'border-box',
+          margin: '0 0 12px 0',
         }}>
           <h2 style={{
             fontSize: '28px',
