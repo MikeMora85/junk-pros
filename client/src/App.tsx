@@ -3904,6 +3904,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* Call Now Icon */}
                       <a
                         href={`tel:${c.phone}`}
+                        onClick={(e) => {
+                          console.log('CALL BUTTON CLICKED!', c.phone);
+                        }}
+                        onTouchStart={(e) => {
+                          console.log('CALL BUTTON TOUCHED!', c.phone);
+                        }}
                         style={{
                           width: '75px',
                           height: '75px',
@@ -3915,6 +3921,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
+                          position: 'relative',
+                          zIndex: 9999,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
@@ -3924,6 +3932,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* Send Photos Icon */}
                       <a
                         href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                        onClick={(e) => {
+                          console.log('SMS BUTTON CLICKED!', c.phone);
+                        }}
+                        onTouchStart={(e) => {
+                          console.log('SMS BUTTON TOUCHED!', c.phone);
+                        }}
                         style={{
                           width: '75px',
                           height: '75px',
@@ -3935,6 +3949,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
+                          position: 'relative',
+                          zIndex: 9999,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
