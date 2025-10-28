@@ -3797,6 +3797,47 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   </div>
                   )}
                   
+                  {/* CTA Button for Basic Tier - matches unclaimed height */}
+                  {isBasic && (
+                    <div style={{ marginTop: '16px' }}>
+                      <a href={`tel:${c.phone}`} style={{ textDecoration: 'none' }}>
+                        <button
+                          style={{
+                            width: '100%',
+                            background: '#fbbf24',
+                            color: '#000',
+                            padding: '12px 20px',
+                            borderRadius: '8px',
+                            border: '2px solid #000',
+                            cursor: 'pointer',
+                            fontSize: '15px',
+                            fontWeight: '700',
+                            marginBottom: '12px',
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`button-call-${c.id}`}
+                        >
+                          <Phone size={18} />
+                          Call Now
+                        </button>
+                      </a>
+                      <div style={{
+                        background: '#f5f5f5',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        color: '#666',
+                        textAlign: 'center',
+                      }}>
+                        Upgrade to show photos, videos, and get more leads!
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* Image Carousel - Premium & Standard only (moved below contact info) */}
                   {hasFullFeatures && (
                   <div style={{
