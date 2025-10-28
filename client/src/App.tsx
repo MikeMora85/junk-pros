@@ -3578,18 +3578,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       margin-bottom: 0 !important;
                       display: flex;
                       gap: 16px;
-                      height: 140px;
+                      height: 100px;
                     }
                     
                     .company-logo {
-                      width: 140px !important;
-                      height: 140px !important;
-                      font-size: 56px !important;
+                      width: 100px !important;
+                      height: 100px !important;
+                      font-size: 40px !important;
                       flex-shrink: 0 !important;
                     }
                     
                     .logo-info-section > div:last-child {
-                      height: 140px !important;
+                      height: 100px !important;
                       justify-content: space-between !important;
                       display: flex !important;
                       flex-direction: column !important;
@@ -3612,19 +3612,19 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       display: flex !important;
                       gap: 12px;
                       flex-shrink: 0;
-                      height: 140px;
+                      height: 100px;
                       align-items: stretch;
                     }
                     
                     .quote-buttons-inline .quote-button {
-                      width: 140px !important;
-                      height: 140px !important;
+                      width: 100px !important;
+                      height: 100px !important;
                       flex-shrink: 0 !important;
                     }
                     
                     .quote-buttons-inline .quote-icon {
-                      width: 52px !important;
-                      height: 52px !important;
+                      width: 40px !important;
+                      height: 40px !important;
                     }
                     
                     .quote-section {
