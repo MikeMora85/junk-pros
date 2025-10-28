@@ -117,12 +117,19 @@ export default function AddBusiness() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff', fontFamily: "'Helvetica Neue', Arial, sans-serif", overflowX: 'hidden' }}>
       {/* Back Button */}
-      <div style={{
+      <div className="back-button-container" style={{
         position: 'fixed',
         top: '16px',
         left: '16px',
         zIndex: 100,
       }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .back-button-container {
+              left: calc((100vw - 900px) / 2) !important;
+            }
+          }
+        `}} />
         <button
           onClick={handleBack}
           style={{
