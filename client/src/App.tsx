@@ -3513,7 +3513,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       max-width: 1400px;
                       margin-left: auto !important;
                       margin-right: auto !important;
-                      padding-left: 24px !important;
+                      padding-left: 40px !important;
                       padding-right: 24px !important;
                     }
                     
