@@ -1704,6 +1704,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const { user, isAuthenticated } = useAuth();
 
   const stateData: Record<string, { 
@@ -3034,29 +3035,60 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   <div
                     key={i}
                     style={{
-                      padding: '20px',
                       backgroundColor: '#f9fafb',
                       borderRadius: '8px',
+                      overflow: 'hidden',
                     }}
                   >
-                    <h4 style={{
-                      fontSize: '16px',
-                      fontWeight: '700',
-                      color: '#fbbf24',
-                      marginBottom: '8px',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      {faq.q}
-                    </h4>
-                    <p style={{
-                      fontSize: '14px',
-                      color: '#000',
-                      margin: '0',
-                      lineHeight: '1.6',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      {faq.a}
-                    </p>
+                    <button
+                      onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
+                      style={{
+                        width: '100%',
+                        padding: '20px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '12px',
+                        textAlign: 'left',
+                      }}
+                      data-testid={`button-faq-${i}`}
+                    >
+                      <h4 style={{
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        color: '#374151',
+                        margin: '0',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        {faq.q}
+                      </h4>
+                      <ChevronDown
+                        size={20}
+                        style={{
+                          flexShrink: 0,
+                          transform: expandedFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.2s',
+                        }}
+                      />
+                    </button>
+                    {expandedFaq === i && (
+                      <div style={{
+                        padding: '0 20px 20px 20px',
+                      }}>
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#000',
+                          margin: '0',
+                          lineHeight: '1.6',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        }}>
+                          {faq.a}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
