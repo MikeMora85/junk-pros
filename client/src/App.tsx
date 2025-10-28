@@ -3898,23 +3898,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       maxWidth: '100%',
                     }}>
                       {/* Call Now Icon */}
-                      <button 
-                        onTouchEnd={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          trackBusinessEvent(c.id, 'call');
-                          window.location.href = `tel:${c.phone}`;
-                        }}
+                      <a
+                        href={`tel:${c.phone}`}
                         onClick={(e) => {
-                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
-                          window.location.href = `tel:${c.phone}`;
                         }}
                         style={{
-                          flex: '1',
-                          maxWidth: '90px',
-                          aspectRatio: '1',
+                          flex: '0 0 auto',
+                          width: '110px',
+                          height: '110px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3924,30 +3917,25 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           padding: 0,
+                          textDecoration: 'none',
+                          WebkitTapHighlightColor: 'transparent',
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={26} />
-                      </button>
+                        <Phone size={30} />
+                      </a>
 
                       {/* Send Photos Icon */}
-                      <button
-                        onTouchEnd={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          trackBusinessEvent(c.id, 'photo_quote');
-                          window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
-                        }}
+                      <a
+                        href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         onClick={(e) => {
-                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
-                          window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
                         }}
                         style={{
-                          flex: '1',
-                          maxWidth: '90px',
-                          aspectRatio: '1',
+                          flex: '0 0 auto',
+                          width: '110px',
+                          height: '110px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3957,18 +3945,25 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           padding: 0,
+                          textDecoration: 'none',
+                          WebkitTapHighlightColor: 'transparent',
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={26} />
-                      </button>
+                        <Camera size={30} />
+                      </a>
                       
                       {/* In Person Estimate Icon */}
                       <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'book_quote');
+                          setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                        }}
                         style={{
-                          flex: '1',
-                          maxWidth: '90px',
-                          aspectRatio: '1',
+                          flex: '0 0 auto',
+                          width: '110px',
+                          height: '110px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3978,21 +3973,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           padding: 0,
-                        }}
-                        onTouchEnd={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          trackBusinessEvent(c.id, 'book_quote');
-                          setExpandedQuote(expandedQuote === c.id ? null : c.id);
-                        }}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          trackBusinessEvent(c.id, 'book_quote');
-                          setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                          WebkitTapHighlightColor: 'transparent',
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar size={26} />
+                        <Calendar size={30} />
                       </button>
                     </div>
 
