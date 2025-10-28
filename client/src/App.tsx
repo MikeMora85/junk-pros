@@ -3904,50 +3904,56 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         padding: '0',
                       }}>
                       {/* Call Now Icon */}
-                      <a
-                        href={`tel:${c.phone}`}
-                        onMouseDown={(e) => e.stopPropagation()}
-                        onTouchStart={(e) => e.stopPropagation()}
-                        onClick={(e) => e.stopPropagation()}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          window.location.href = `tel:${c.phone}`;
+                        }}
                         style={{
                           width: '75px',
                           height: '75px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
+                          padding: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={26} style={{ pointerEvents: 'none' }} />
-                      </a>
+                        <Phone size={26} />
+                      </button>
 
                       {/* Send Photos Icon */}
-                      <a
-                        href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
-                        onMouseDown={(e) => e.stopPropagation()}
-                        onTouchStart={(e) => e.stopPropagation()}
-                        onClick={(e) => e.stopPropagation()}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                        }}
                         style={{
                           width: '75px',
                           height: '75px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
+                          padding: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={26} style={{ pointerEvents: 'none' }} />
-                      </a>
+                        <Camera size={26} />
+                      </button>
                       
                       {/* In Person Estimate Icon */}
                       <button
