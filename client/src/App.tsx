@@ -3906,6 +3906,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* Call Now Icon */}
                       <a
                         href={`tel:${c.phone}`}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onTouchStart={(e) => e.stopPropagation()}
                         onClick={(e) => e.stopPropagation()}
                         style={{
                           width: '75px',
@@ -3921,12 +3923,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={26} />
+                        <Phone size={26} style={{ pointerEvents: 'none' }} />
                       </a>
 
                       {/* Send Photos Icon */}
                       <a
                         href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                        onMouseDown={(e) => e.stopPropagation()}
+                        onTouchStart={(e) => e.stopPropagation()}
                         onClick={(e) => e.stopPropagation()}
                         style={{
                           width: '75px',
@@ -3942,7 +3946,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={26} />
+                        <Camera size={26} style={{ pointerEvents: 'none' }} />
                       </a>
                       
                       {/* In Person Estimate Icon */}
