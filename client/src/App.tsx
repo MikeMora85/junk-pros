@@ -3528,11 +3528,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 <div 
                   key={c.id}
                   onClick={!hasFullFeatures ? undefined : (e) => {
-                    // Don't open modal if clicking on a link or button
-                    if ((e.target as HTMLElement).tagName === 'A' || 
-                        (e.target as HTMLElement).closest('a') ||
-                        (e.target as HTMLElement).tagName === 'BUTTON' ||
-                        (e.target as HTMLElement).closest('button')) {
+                    // Don't open modal if clicking inside quote section
+                    if ((e.target as HTMLElement).closest('[data-quote-section]')) {
                       return;
                     }
                     trackBusinessEvent(c.id, 'click');
@@ -3875,15 +3872,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
                   <div 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                    onMouseDown={(e) => {
-                      e.stopPropagation();
-                    }}
-                    onTouchStart={(e) => {
-                      e.stopPropagation();
-                    }}
+                    data-quote-section="true"
                     style={{
                       backgroundColor: '#f5f5f5',
                       borderRadius: '0',
@@ -3913,56 +3902,44 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         padding: '0',
                       }}>
                       {/* Call Now Icon */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          window.location.href = `tel:${c.phone}`;
-                        }}
+                      <a
+                        href={`tel:${c.phone}`}
                         style={{
                           width: '75px',
                           height: '75px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
-                          padding: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
                         <Phone size={26} />
-                      </button>
+                      </a>
 
                       {/* Send Photos Icon */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
-                        }}
+                      <a
+                        href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         style={{
                           width: '75px',
                           height: '75px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
-                          padding: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={26} />
-                      </button>
+                      </a>
                       
                       {/* In Person Estimate Icon */}
                       <button
