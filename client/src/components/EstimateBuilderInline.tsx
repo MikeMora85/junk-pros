@@ -65,7 +65,7 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
         color: '#1a1a1a',
         letterSpacing: '-0.01em',
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        whiteSpace: 'nowrap',
+        textAlign: 'center',
       }}>
         How Much Is Junk Removal?
       </h3>
