@@ -3898,20 +3898,21 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     }}>
                       {/* Call Now Icon */}
                       <div 
-                        onClick={() => window.location.href = `tel:${c.phone}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'call');
+                          window.location.href = `tel:${c.phone}`;
+                        }}
                         style={{
-                          flex: '1',
-                          maxWidth: '120px',
-                          aspectRatio: '1',
+                          width: '95px',
+                          height: '95px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: 'none',
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
@@ -3920,20 +3921,21 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
                       {/* Send Photos Icon */}
                       <div
-                        onClick={() => window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'photo_quote');
+                          window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                        }}
                         style={{
-                          flex: '1',
-                          maxWidth: '120px',
-                          aspectRatio: '1',
+                          width: '95px',
+                          height: '95px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: 'none',
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
@@ -3941,20 +3943,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                       
                       {/* In Person Estimate Icon */}
-                      <button
+                      <div
                         style={{
-                          flex: '1',
-                          maxWidth: '120px',
-                          aspectRatio: '1',
+                          width: '95px',
+                          height: '95px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          boxShadow: 'none',
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -3964,7 +3963,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         data-testid={`button-in-person-${c.id}`}
                       >
                         <Calendar size={32} />
-                      </button>
+                      </div>
                     </div>
 
                     {/* Calendar/Availability Section */}
