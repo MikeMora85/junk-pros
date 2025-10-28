@@ -155,7 +155,7 @@ export default function AddBusiness() {
       </div>
 
       {/* Hero Section */}
-      <div style={{
+      <div className="add-business-hero" style={{
         background: 'transparent',
         border: '3px solid #fbbf24',
         borderRadius: '8px',
@@ -163,6 +163,15 @@ export default function AddBusiness() {
         textAlign: 'center',
         margin: '16px',
       }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .add-business-hero {
+              max-width: 1400px !important;
+              margin-left: auto !important;
+              margin-right: auto !important;
+            }
+          }
+        `}} />
         <h1 style={{
           fontSize: '36px',
           fontWeight: '700',
