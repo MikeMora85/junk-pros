@@ -3892,20 +3892,28 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     
                     <div style={{ 
                       display: 'flex', 
-                      gap: '8px',
+                      gap: '10px',
                       justifyContent: 'center',
-                      padding: '0 12px',
+                      padding: '0',
+                      maxWidth: '100%',
                     }}>
                       {/* Call Now Icon */}
                       <a 
                         href={`tel:${c.phone}`}
+                        onMouseDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onTouchStart={(e) => {
+                          e.stopPropagation();
+                        }}
                         onClick={(e) => {
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
                         }}
                         style={{
-                          width: '80px',
-                          height: '80px',
+                          flex: '1',
+                          maxWidth: '90px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3914,23 +3922,29 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
-                          flexShrink: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={28} />
+                        <Phone size={26} />
                       </a>
 
                       {/* Send Photos Icon */}
                       <a
                         href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                        onMouseDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onTouchStart={(e) => {
+                          e.stopPropagation();
+                        }}
                         onClick={(e) => {
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
                         }}
                         style={{
-                          width: '80px',
-                          height: '80px',
+                          flex: '1',
+                          maxWidth: '90px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3939,18 +3953,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
-                          flexShrink: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={28} />
+                        <Camera size={26} />
                       </a>
                       
                       {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          width: '80px',
-                          height: '80px',
+                          flex: '1',
+                          maxWidth: '90px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3960,7 +3974,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           padding: 0,
-                          flexShrink: 0,
+                        }}
+                        onMouseDown={(e) => {
+                          e.stopPropagation();
+                        }}
+                        onTouchStart={(e) => {
+                          e.stopPropagation();
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -3969,7 +3988,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar size={28} />
+                        <Calendar size={26} />
                       </button>
                     </div>
 
