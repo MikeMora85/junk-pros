@@ -3456,7 +3456,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
         <div className="page-title-container" style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
-          <h2 style={{
+          <h2 className="city-title" style={{
             fontSize: '28px',
             fontWeight: '700',
             margin: '0 0 8px 0',
@@ -3464,9 +3464,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
             letterSpacing: '-0.02em',
             lineHeight: '1.2',
           }} data-testid="text-page-title">
-            {displayCityName}<br />Junk Removal
+            {displayCityName}<br className="mobile-break" />Junk Removal
           </h2>
-          <p style={{ fontSize: '15px', color: '#000', margin: 0 }}>
+          <p className="city-subtitle" style={{ fontSize: '15px', color: '#000', margin: 0 }}>
             {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {displayCityName}
           </p>
         </div>
@@ -3510,6 +3510,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       margin-right: auto !important;
                       padding-left: 24px !important;
                       padding-right: 24px !important;
+                    }
+                    
+                    .city-title {
+                      font-size: 42px !important;
+                    }
+                    
+                    .city-subtitle {
+                      font-size: 18px !important;
+                    }
+                    
+                    .mobile-break {
+                      display: none;
                     }
                     
                     .city-page-layout {
