@@ -3332,6 +3332,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
             grid-template-columns: 2fr 1fr;
             gap: 20px;
           }
+          .city-nav-header {
+            padding-left: calc((100vw - 1400px) / 2 + 24px) !important;
+            padding-right: calc((100vw - 1400px) / 2 + 24px) !important;
+          }
         }
         @media (max-width: 768px) {
           .header-title-responsive {
@@ -3342,7 +3346,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         }
       `}} />
       {/* Sticky Navigation Header */}
-      <div style={{
+      <div className="city-nav-header" style={{
         position: 'sticky',
         top: 0,
         left: 0,
