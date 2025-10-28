@@ -3894,17 +3894,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       display: 'flex', 
                       gap: '8px',
                       justifyContent: 'center',
-                      padding: '0 16px',
+                      padding: '0 12px',
                     }}>
                       {/* Call Now Icon */}
                       <a 
                         href={`tel:${c.phone}`}
                         onClick={(e) => {
+                          e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
                         }}
                         style={{
-                          width: '85px',
-                          height: '85px',
+                          width: '80px',
+                          height: '80px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3924,11 +3925,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a
                         href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         onClick={(e) => {
+                          e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
                         }}
                         style={{
-                          width: '85px',
-                          height: '85px',
+                          width: '80px',
+                          height: '80px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3947,8 +3949,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          width: '85px',
-                          height: '85px',
+                          width: '80px',
+                          height: '80px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
