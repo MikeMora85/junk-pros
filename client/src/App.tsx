@@ -3455,7 +3455,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
+        <div className="page-title-container" style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
@@ -3475,7 +3475,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         <div style={{ padding: '0', margin: '0', width: '100%' }}>
           <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
               {/* Left - Company Listings */}
-              <div style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
+              <div className="company-listings-container" style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
                   .company-grid {
                     display: grid;
@@ -3483,8 +3483,21 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     gap: 12px;
                   }
                   @media (min-width: 1024px) {
+                    .page-title-container {
+                      max-width: 1200px;
+                      margin-left: auto !important;
+                      margin-right: auto !important;
+                      padding-left: 24px !important;
+                      padding-right: 24px !important;
+                    }
+                    .company-listings-container {
+                      max-width: 1200px !important;
+                      padding-left: 12px !important;
+                      padding-right: 12px !important;
+                    }
                     .company-grid {
                       grid-template-columns: 1fr 1fr;
+                      gap: 16px;
                     }
                     .full-width-card {
                       grid-column: span 2;
