@@ -126,7 +126,7 @@ export default function AddBusiness() {
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 1024px) {
             .back-button-container {
-              left: calc((100vw - 900px) / 2 - 8px) !important;
+              left: calc((100vw - 900px) / 2 - 16px) !important;
             }
           }
         `}} />
