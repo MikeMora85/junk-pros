@@ -3475,12 +3475,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
         <div className="city-page-layout">
           {/* Main Content - Company Listings */}
           <div className="city-main">
-            <div className="company-listings-container" style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0', padding: '0 16px' }}>
+            <div className="company-listings-container" style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
                   .city-page-layout {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
+                    padding: 0 16px;
                   }
                   
                   .company-grid {
@@ -4089,7 +4090,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
           {/* Sidebar - Estimator and Ads */}
           <aside className="city-sidebar">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '0 16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '0' }}>
               <EstimateBuilderInline />
                   
               {/* Ad Placeholder 1 */}
