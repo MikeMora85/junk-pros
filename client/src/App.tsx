@@ -2263,7 +2263,6 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           {[
             { id: 'overview', label: 'Overview' },
             { id: 'cities', label: 'Cities' },
-            { id: 'pricing', label: 'Pricing Guide' },
             { id: 'tips', label: 'Tips & Advice' },
           ].map((tab) => (
             <button
@@ -2900,96 +2899,6 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                   {city}
                 </a>
               ))}
-            </div>
-          </section>
-        )}
-
-        {/* Pricing Tab */}
-        {activeTab === 'pricing' && (
-          <section style={{ marginBottom: '48px' }}>
-            <div style={{
-              backgroundColor: '#fff',
-              padding: '32px',
-              borderRadius: '12px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-            }}>
-              <h3 style={{
-                fontSize: '22px',
-                fontWeight: '700',
-                color: '#374151',
-                marginBottom: '20px',
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              }}>
-                {stateName} Junk Removal Pricing Guide
-              </h3>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '16px',
-                marginBottom: '24px',
-              }}>
-                {[
-                  { size: '1/8 Truck Load', price: '$100-$200', items: 'Single item or small pile' },
-                  { size: '1/4 Truck Load', price: '$200-$350', items: 'Several items or room cleanout' },
-                  { size: '1/2 Truck Load', price: '$350-$550', items: 'Multiple rooms or garage' },
-                  { size: 'Full Truck Load', price: '$550-$800', items: 'Whole house or large project' },
-                ].map((tier, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: '14px',
-                      backgroundColor: '#f9fafb',
-                      borderRadius: '10px',
-                      border: '2px solid #fbbf24',
-                      width: '100%',
-                      maxWidth: '360px',
-                    }}
-                  >
-                    <h4 style={{
-                      fontSize: '26px',
-                      fontWeight: '700',
-                      color: '#fbbf24',
-                      marginBottom: '12px',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      {tier.size}
-                    </h4>
-                    <div style={{
-                      fontSize: '24px',
-                      fontWeight: '800',
-                      color: '#374151',
-                      marginBottom: '8px',
-                    }}>
-                      {tier.price}
-                    </div>
-                    <p style={{
-                      fontSize: '14px',
-                      color: '#000',
-                      margin: '0',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      {tier.items}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div style={{
-                padding: '16px',
-                backgroundColor: '#f5f5f5',
-                borderRadius: '8px',
-                borderLeft: '4px solid #fbbf24',
-              }}>
-                <p style={{
-                  fontSize: '14px',
-                  color: '#000',
-                  margin: '0',
-                  lineHeight: '1.6',
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                }}>
-                  <strong>💡 Pro Tip:</strong> Most {stateName} companies offer free, no-obligation estimates. Get quotes from 2-3 companies to compare pricing and services.
-                </p>
-              </div>
             </div>
           </section>
         )}
