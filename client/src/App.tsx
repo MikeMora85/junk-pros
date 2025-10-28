@@ -3877,7 +3877,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   <div 
                     onClick={(e) => {
                       e.stopPropagation();
-                      e.preventDefault();
                     }}
                     onMouseDown={(e) => {
                       e.stopPropagation();
