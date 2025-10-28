@@ -3569,28 +3569,30 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     .company-header-section {
                       display: flex;
                       justify-content: space-between;
-                      align-items: center;
+                      align-items: flex-start;
                       gap: 24px;
+                      margin-bottom: 24px !important;
                     }
                     
                     .logo-info-section {
                       margin-bottom: 0 !important;
+                      display: flex;
+                      gap: 16px;
+                      height: 140px;
                     }
                     
                     .company-logo {
                       width: 140px !important;
                       height: 140px !important;
                       font-size: 56px !important;
+                      flex-shrink: 0 !important;
                     }
                     
                     .logo-info-section > div:last-child {
                       height: 140px !important;
                       justify-content: space-between !important;
-                    }
-                    
-                    .company-header-section {
-                      margin-bottom: 24px !important;
-                      align-items: flex-end !important;
+                      display: flex !important;
+                      flex-direction: column !important;
                     }
                     
                     .logo-info-section h3 {
@@ -3610,11 +3612,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       display: flex !important;
                       gap: 12px;
                       flex-shrink: 0;
+                      height: 140px;
+                      align-items: stretch;
                     }
                     
                     .quote-buttons-inline .quote-button {
                       width: 140px !important;
                       height: 140px !important;
+                      flex-shrink: 0 !important;
                     }
                     
                     .quote-buttons-inline .quote-icon {
