@@ -166,7 +166,7 @@ export default function AddBusiness() {
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 1024px) {
             .add-business-hero {
-              max-width: 900px !important;
+              max-width: 876px !important;
               margin: 16px auto !important;
             }
           }
