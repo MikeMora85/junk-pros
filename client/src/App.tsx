@@ -3855,27 +3855,20 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           {c.name}
                         </h3>
                         
-                        {!isBasic ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
                             {[...Array(5)].map((_, i) => (
                               <Star
                                 key={i}
                                 size={16}
-                                fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
+                                fill={i < Math.floor(parseFloat(isBasic && (!c.reviews || c.reviews === 0) ? "5" : (c.rating || "0"))) ? "#fbbf24" : "none"}
                                 stroke="#fbbf24"
                               />
                             ))}
                           </div>
-                          <span style={{ fontWeight: '600', fontSize: '16px' }}>{c.rating || "0"}</span>
-                          <span style={{ color: '#000', fontSize: '15px' }}>({c.reviews})</span>
+                          <span style={{ fontWeight: '600', fontSize: '16px' }}>{isBasic && (!c.reviews || c.reviews === 0) ? "5.0" : (c.rating || "0")}</span>
+                          <span style={{ color: '#000', fontSize: '15px' }}>({isBasic && (!c.reviews || c.reviews === 0) ? 1 : c.reviews})</span>
                         </div>
-                        ) : (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <Phone size={16} color="#000" />
-                          <a href={`tel:${c.phone}`} style={{ fontSize: '16px', fontWeight: '600', color: '#000', textDecoration: 'none' }}>{formatPhoneNumber(c.phone)}</a>
-                        </div>
-                        )}
                       </div>
                     </div>
                     
