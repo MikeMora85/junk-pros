@@ -2458,11 +2458,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               }}>
                 Common Junk Removal Services in {stateName}
               </h3>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-              }}>
+              <div className="services-grid">
                 {/* Furniture Removal */}
                 <div style={{
                   padding: '14px',

@@ -107,3 +107,15 @@ div {
     transform: rotate(360deg);
   }
 }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
