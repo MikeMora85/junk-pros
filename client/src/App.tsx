@@ -2104,17 +2104,19 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       {/* Sticky Navigation Header */}
-      <div className="state-page-nav" style={{
+      <div style={{
         position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
         zIndex: 100,
-        padding: '16px',
-        display: 'flex',
-        gap: '12px',
       }}>
-        <button
+        <div className="state-page-nav" style={{
+          padding: '16px',
+          display: 'flex',
+          gap: '12px',
+        }}>
+          <button
           onClick={() => setMenuOpen(true)}
           style={{
             backgroundColor: '#fbbf24',
@@ -2176,6 +2178,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             Profile
           </button>
         )}
+        </div>
       </div>
 
       <div style={{
