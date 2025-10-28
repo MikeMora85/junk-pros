@@ -3527,7 +3527,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     return (
                 <div 
                   key={c.id}
-                  onClick={!hasFullFeatures ? undefined : () => {
+                  onClick={!hasFullFeatures ? undefined : (e) => {
+                    // Don't open modal if clicking on a link or button
+                    if ((e.target as HTMLElement).tagName === 'A' || 
+                        (e.target as HTMLElement).closest('a') ||
+                        (e.target as HTMLElement).tagName === 'BUTTON' ||
+                        (e.target as HTMLElement).closest('button')) {
+                      return;
+                    }
                     trackBusinessEvent(c.id, 'click');
                     setSelectedCompanyId(c.id);
                   }} 
