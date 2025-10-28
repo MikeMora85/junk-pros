@@ -3897,11 +3897,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       padding: '0 20px',
                     }}>
                       {/* Call Now Icon */}
-                      <a 
-                        href={`tel:${c.phone}`}
+                      <div 
+                        onClick={() => window.location.href = `tel:${c.phone}`}
                         style={{
-                          width: '100px',
-                          height: '100px',
+                          flex: '1',
+                          maxWidth: '120px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3911,20 +3912,19 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           boxShadow: 'none',
-                          textDecoration: 'none',
-                          flexShrink: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
                         <Phone size={32} />
-                      </a>
+                      </div>
 
                       {/* Send Photos Icon */}
-                      <a
-                        href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                      <div
+                        onClick={() => window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         style={{
-                          width: '100px',
-                          height: '100px',
+                          flex: '1',
+                          maxWidth: '120px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3934,19 +3934,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           boxShadow: 'none',
-                          textDecoration: 'none',
-                          flexShrink: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={32} />
-                      </a>
+                      </div>
                       
                       {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          width: '100px',
-                          height: '100px',
+                          flex: '1',
+                          maxWidth: '120px',
+                          aspectRatio: '1',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3956,7 +3955,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           boxShadow: 'none',
-                          flexShrink: 0,
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
