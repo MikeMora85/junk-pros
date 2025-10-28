@@ -3867,16 +3867,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
-                  <div style={{
-                    backgroundColor: '#f5f5f5',
-                    borderRadius: '0',
-                    padding: '16px 0',
-                    marginLeft: '0',
-                    marginRight: '0',
-                    marginBottom: '0',
-                    border: 'none',
-                    borderTop: '1px solid #e5e5e5',
-                  }}>
+                  <div 
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      backgroundColor: '#f5f5f5',
+                      borderRadius: '0',
+                      padding: '16px 0',
+                      marginLeft: '0',
+                      marginRight: '0',
+                      marginBottom: '0',
+                      border: 'none',
+                      borderTop: '1px solid #e5e5e5',
+                    }}>
                     <h4 style={{
                       fontSize: '22px',
                       fontWeight: '700',
@@ -3898,10 +3900,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a 
                         href={`tel:${c.phone}`}
                         style={{
-                          flex: '1',
+                          flex: '1 1 0',
                           maxWidth: '120px',
-                          width: '100%',
-                          height: '100px',
+                          minHeight: '100px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3922,10 +3923,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a
                         href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         style={{
-                          flex: '1',
+                          flex: '1 1 0',
                           maxWidth: '120px',
-                          width: '100%',
-                          height: '100px',
+                          minHeight: '100px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3945,10 +3945,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          flex: '1',
+                          flex: '1 1 0',
                           maxWidth: '120px',
-                          width: '100%',
-                          height: '100px',
+                          minHeight: '100px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
