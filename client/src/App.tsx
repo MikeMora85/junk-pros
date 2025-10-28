@@ -1336,7 +1336,7 @@ function LandingPage() {
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 1024px) {
             .homepage-header-buttons {
-              left: calc((100vw - 1400px) / 2 + 40px) !important;
+              left: calc((100vw - 1400px) / 2 + 8px) !important;
             }
           }
         `}} />
