@@ -3569,7 +3569,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     .company-header-section {
                       display: flex;
                       justify-content: space-between;
-                      align-items: flex-start;
+                      align-items: flex-end;
                       gap: 24px;
                       margin-bottom: 24px !important;
                     }
