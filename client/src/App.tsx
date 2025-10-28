@@ -3578,13 +3578,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     }
                     
                     .company-logo {
-                      width: 100px !important;
-                      height: 100px !important;
-                      font-size: 42px !important;
+                      width: 140px !important;
+                      height: 140px !important;
+                      font-size: 56px !important;
                     }
                     
                     .logo-info-section > div:last-child {
-                      height: 100px !important;
+                      height: 140px !important;
+                    }
+                    
+                    .company-header-section {
+                      margin-bottom: 24px !important;
                     }
                     
                     .logo-info-section h3 {
@@ -3607,13 +3611,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     }
                     
                     .quote-buttons-inline .quote-button {
-                      width: 100px !important;
-                      height: 100px !important;
+                      width: 120px !important;
+                      height: 120px !important;
                     }
                     
                     .quote-buttons-inline .quote-icon {
-                      width: 42px !important;
-                      height: 42px !important;
+                      width: 48px !important;
+                      height: 48px !important;
                     }
                     
                     .quote-section {
