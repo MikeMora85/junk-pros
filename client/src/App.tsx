@@ -276,6 +276,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
       {/* Side Menu */}
       <div
+        className="hamburger-menu-panel"
         style={{
           position: 'fixed',
           top: 0,
@@ -290,6 +291,14 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
         }}
         data-testid="side-menu"
       >
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .hamburger-menu-panel {
+              width: 37.5% !important;
+              max-width: 300px !important;
+            }
+          }
+        `}} />
         {/* Header */}
         <div style={{
           padding: '20px',
