@@ -120,10 +120,9 @@ div {
   }
   
   .state-page-nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    left: 0 !important;
+    right: 0 !important;
+    padding-left: calc((100% - 1200px) / 2 + 16px) !important;
+    padding-right: calc((100% - 1200px) / 2 + 16px) !important;
   }
 }
