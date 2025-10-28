@@ -3543,14 +3543,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     }
                     
                     .company-grid {
-                      grid-template-columns: 1fr;
+                      grid-template-columns: 1fr 1fr;
                       gap: 16px;
                       padding-left: 16px;
                       padding-right: 16px;
                     }
                     
                     .full-width-card {
-                      grid-column: span 1;
+                      grid-column: span 2;
                     }
                     
                     .city-sidebar {
