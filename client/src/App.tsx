@@ -3892,68 +3892,74 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     
                     <div style={{ 
                       display: 'flex', 
-                      gap: '12px',
+                      gap: '10px',
                       justifyContent: 'center',
-                      padding: '0 20px',
+                      padding: '0 16px',
                     }}>
                       {/* Call Now Icon */}
-                      <div 
+                      <button 
                         onClick={(e) => {
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
-                          window.location.href = `tel:${c.phone}`;
+                          window.open(`tel:${c.phone}`, '_self');
                         }}
                         style={{
-                          width: '95px',
-                          height: '95px',
+                          width: '90px',
+                          height: '90px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
+                          padding: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
                         <Phone size={32} />
-                      </div>
+                      </button>
 
                       {/* Send Photos Icon */}
-                      <div
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
-                          window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                          window.open(`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`, '_self');
                         }}
                         style={{
-                          width: '95px',
-                          height: '95px',
+                          width: '90px',
+                          height: '90px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
+                          padding: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={32} />
-                      </div>
+                      </button>
                       
                       {/* In Person Estimate Icon */}
-                      <div
+                      <button
                         style={{
-                          width: '95px',
-                          height: '95px',
+                          width: '90px',
+                          height: '90px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
+                          padding: 0,
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -3963,7 +3969,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         data-testid={`button-in-person-${c.id}`}
                       >
                         <Calendar size={32} />
-                      </div>
+                      </button>
                     </div>
 
                     {/* Calendar/Availability Section */}
