@@ -3612,19 +3612,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       display: flex !important;
                       gap: 12px;
                       flex-shrink: 0;
-                      height: 120px;
-                      align-items: stretch;
                     }
                     
                     .quote-buttons-inline .quote-button {
-                      width: 120px !important;
-                      height: 120px !important;
+                      width: 100px !important;
+                      height: 100px !important;
                       flex-shrink: 0 !important;
                     }
                     
                     .quote-buttons-inline .quote-icon {
-                      width: 48px !important;
-                      height: 48px !important;
+                      width: 40px !important;
+                      height: 40px !important;
                     }
                     
                     .quote-section {
