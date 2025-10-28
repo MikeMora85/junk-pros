@@ -3585,7 +3585,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     
                     .logo-info-section > div:last-child {
                       height: 140px !important;
-                      justify-content: flex-end !important;
+                      justify-content: space-between !important;
                     }
                     
                     .company-header-section {
