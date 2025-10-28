@@ -3565,6 +3565,25 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     .video-thumbnail-desktop {
                       display: block !important;
                     }
+                    
+                    .quote-section {
+                      padding: 32px 0 !important;
+                    }
+                    
+                    .quote-title {
+                      font-size: 32px !important;
+                      margin-bottom: 24px !important;
+                    }
+                    
+                    .quote-button {
+                      width: 120px !important;
+                      height: 120px !important;
+                    }
+                    
+                    .quote-icon {
+                      width: 48px !important;
+                      height: 48px !important;
+                    }
                   }
                 `}} />
                 <div className="company-grid">
@@ -4002,6 +4021,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {hasFullFeatures && (
                   <div 
                     data-quote-section="true"
+                    className="quote-section"
                     style={{
                       backgroundColor: '#f5f5f5',
                       borderRadius: '0',
@@ -4012,7 +4032,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       border: 'none',
                       borderTop: '1px solid #e5e5e5',
                     }}>
-                    <h4 style={{
+                    <h4 className="quote-title" style={{
                       fontSize: '22px',
                       fontWeight: '700',
                       margin: '0 0 16px 0',
@@ -4042,6 +4062,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           e.preventDefault();
                           window.location.href = `tel:${c.phone}`;
                         }}
+                        className="quote-button"
                         style={{
                           width: '75px',
                           height: '75px',
@@ -4058,7 +4079,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={26} />
+                        <Phone className="quote-icon" size={26} />
                       </a>
 
                       {/* Send Photos Icon */}
@@ -4073,6 +4094,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           e.preventDefault();
                           window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
                         }}
+                        className="quote-button"
                         style={{
                           width: '75px',
                           height: '75px',
@@ -4089,7 +4111,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={26} />
+                        <Camera className="quote-icon" size={26} />
                       </a>
                       
                       {/* In Person Estimate Icon */}
@@ -4099,6 +4121,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           trackBusinessEvent(c.id, 'book_quote');
                           setExpandedQuote(expandedQuote === c.id ? null : c.id);
                         }}
+                        className="quote-button"
                         style={{
                           width: '75px',
                           height: '75px',
@@ -4114,7 +4137,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar size={26} />
+                        <Calendar className="quote-icon" size={26} />
                       </button>
                     </div>
 
