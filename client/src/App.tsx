@@ -3334,10 +3334,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
           grid-template-columns: 1fr;
           gap: 0;
         }
+        .main-grid > div:last-child {
+          display: none;
+        }
         @media (min-width: 1024px) {
           .main-grid {
             grid-template-columns: 2fr 1fr;
             gap: 20px;
+          }
+          .main-grid > div:last-child {
+            display: flex;
           }
         }
         @media (max-width: 768px) {
@@ -3479,10 +3485,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0', margin: '0', width: '100%' }}>
-          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
+        <div style={{ padding: '0 16px', margin: '0', width: '100%', maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' }}>
+          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '20px' }}>
               {/* Left - Company Listings */}
-              <div style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
+              <div style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
                   .company-grid {
                     display: grid;
@@ -4050,99 +4056,85 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 </div>
               </div>
 
-              {/* Estimator and Ads Section - Full Width */}
-              <div style={{
-                gridColumn: 'span 2',
-                paddingTop: '16px',
-                borderTop: '2px solid #000',
-              }}>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
-                  gap: '16px',
-                }}>
+              {/* Right Sidebar - Estimator and Ads (Desktop Only, Sticky) */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ position: 'sticky', top: '80px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <EstimateBuilderInline />
                   
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                    {/* Ad Placeholder 1 */}
-                    <div style={{
-                      backgroundColor: '#f5f5f5',
-                      border: '2px solid #fbbf24',
-                      borderRadius: '0',
-                      padding: '40px 20px',
-                      textAlign: 'center',
-                      borderTop: '2px solid #000',
-                      paddingTop: '56px',
+                  {/* Ad Placeholder 1 */}
+                  <div style={{
+                    backgroundColor: '#f5f5f5',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '8px',
+                    padding: '32px 20px',
+                    textAlign: 'center',
+                  }}>
+                    <h3 style={{ 
+                      fontSize: '20px', 
+                      fontWeight: '700', 
+                      margin: '0 0 12px 0',
+                      color: '#1a1a1a',
+                      letterSpacing: '-0.02em',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
-                      <h3 style={{ 
-                        fontSize: '24px', 
-                        fontWeight: '700', 
-                        margin: '0 0 16px 0',
-                        color: '#1a1a1a',
-                        letterSpacing: '-0.02em',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        ADVERTISE HERE
-                      </h3>
-                      <p style={{ 
-                        fontSize: '16px', 
-                        margin: '0 0 12px 0', 
-                        lineHeight: '1.5', 
-                        color: '#333333',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        Reach thousands of customers looking for junk removal services
-                      </p>
-                      <p style={{ 
-                        fontSize: '14px', 
-                        margin: 0, 
-                        color: '#fbbf24',
-                        fontWeight: '700',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        morasjunk@gmail.com
-                      </p>
-                    </div>
+                      ADVERTISE HERE
+                    </h3>
+                    <p style={{ 
+                      fontSize: '14px', 
+                      margin: '0 0 10px 0', 
+                      lineHeight: '1.5', 
+                      color: '#333333',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      Reach local customers
+                    </p>
+                    <p style={{ 
+                      fontSize: '13px', 
+                      margin: 0, 
+                      color: '#fbbf24',
+                      fontWeight: '700',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      morasjunk@gmail.com
+                    </p>
+                  </div>
 
-                    {/* Ad Placeholder 2 */}
-                    <div style={{
-                      backgroundColor: '#f5f5f5',
-                      border: '2px solid #fbbf24',
-                      borderRadius: '0',
-                      padding: '40px 20px',
-                      textAlign: 'center',
-                      borderTop: '2px solid #000',
-                      paddingTop: '56px',
+                  {/* Ad Placeholder 2 */}
+                  <div style={{
+                    backgroundColor: '#f5f5f5',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '8px',
+                    padding: '32px 20px',
+                    textAlign: 'center',
+                  }}>
+                    <h3 style={{ 
+                      fontSize: '20px', 
+                      fontWeight: '700', 
+                      margin: '0 0 12px 0',
+                      color: '#1a1a1a',
+                      letterSpacing: '-0.02em',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
-                      <h3 style={{ 
-                        fontSize: '24px', 
-                        fontWeight: '700', 
-                        margin: '0 0 16px 0',
-                        color: '#1a1a1a',
-                        letterSpacing: '-0.02em',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        ADVERTISE HERE
-                      </h3>
-                      <p style={{ 
-                        fontSize: '16px', 
-                        margin: '0 0 12px 0', 
-                        lineHeight: '1.5', 
-                        color: '#333333',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        Promote your business to local customers
-                      </p>
-                      <p style={{ 
-                        fontSize: '14px', 
-                        margin: 0, 
-                        color: '#fbbf24',
-                        fontWeight: '700',
-                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                      }}>
-                        morasjunk@gmail.com
-                      </p>
-                    </div>
+                      ADVERTISE HERE
+                    </h3>
+                    <p style={{ 
+                      fontSize: '14px', 
+                      margin: '0 0 10px 0', 
+                      lineHeight: '1.5', 
+                      color: '#333333',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      Promote your business
+                    </p>
+                    <p style={{ 
+                      fontSize: '13px', 
+                      margin: 0, 
+                      color: '#fbbf24',
+                      fontWeight: '700',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      morasjunk@gmail.com
+                    </p>
                   </div>
                 </div>
               </div>
