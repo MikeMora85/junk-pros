@@ -3900,9 +3900,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a 
                         href={`tel:${c.phone}`}
                         style={{
-                          flex: '1 1 0',
-                          maxWidth: '120px',
-                          minHeight: '100px',
+                          width: '100px',
+                          height: '100px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3913,6 +3912,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           justifyContent: 'center',
                           boxShadow: 'none',
                           textDecoration: 'none',
+                          flexShrink: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
@@ -3923,9 +3923,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a
                         href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         style={{
-                          flex: '1 1 0',
-                          maxWidth: '120px',
-                          minHeight: '100px',
+                          width: '100px',
+                          height: '100px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3936,6 +3935,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           justifyContent: 'center',
                           boxShadow: 'none',
                           textDecoration: 'none',
+                          flexShrink: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
@@ -3945,9 +3945,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          flex: '1 1 0',
-                          maxWidth: '120px',
-                          minHeight: '100px',
+                          width: '100px',
+                          height: '100px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3957,6 +3956,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           boxShadow: 'none',
+                          flexShrink: 0,
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
