@@ -1319,10 +1319,15 @@ function LandingPage() {
       <div style={{
         position: 'fixed',
         top: '16px',
-        left: '16px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        maxWidth: '1400px',
+        width: '100%',
+        padding: '0 40px',
         display: 'flex',
         gap: '12px',
         zIndex: 1000,
+        boxSizing: 'border-box',
       }}>
         <button
           onClick={() => setMenuOpen(true)}
