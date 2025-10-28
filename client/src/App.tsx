@@ -3482,7 +3482,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     flex-direction: column;
                     width: 100%;
                     padding: 0 16px;
-                    overflow-x: hidden;
                     box-sizing: border-box;
                   }
                   
@@ -3490,19 +3489,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     display: grid;
                     grid-template-columns: 1fr;
                     gap: 12px;
-                    width: 100%;
-                    box-sizing: border-box;
                   }
                   
                   .city-sidebar {
                     width: 100%;
-                    box-sizing: border-box;
-                    overflow-x: hidden;
-                  }
-                  
-                  .city-sidebar > div {
-                    width: 100%;
-                    box-sizing: border-box;
                   }
                   
                   @media (min-width: 1024px) {
