@@ -3477,24 +3477,28 @@ function CityPage({ city, state }: { city: string; state: string }) {
           <div className="city-main">
             <div className="company-listings-container" style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
+                  * {
+                    box-sizing: border-box;
+                  }
+                  
                   .city-page-layout {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
-                    max-width: 100%;
-                    padding: 0 16px;
-                    margin: 0 auto;
-                    box-sizing: border-box;
+                    padding: 0;
+                    margin: 0;
                   }
                   
                   .company-grid {
                     display: grid;
                     grid-template-columns: 1fr;
                     gap: 12px;
+                    padding: 0 16px;
                   }
                   
                   .city-sidebar {
                     width: 100%;
+                    padding: 0 16px;
                   }
                   
                   @media (min-width: 1024px) {
