@@ -3337,11 +3337,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
         .main-grid > div:last-child {
           display: none;
         }
-        .header-container {
-          display: contents;
-        }
-        .page-title-container {
-          margin: 0 0 12px 0;
+        .header-inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
         }
         @media (min-width: 1024px) {
           .main-grid {
@@ -3351,19 +3350,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
           .main-grid > div:last-child {
             display: flex;
           }
-          .header-container {
+          .header-inner {
             max-width: 1400px;
             margin: 0 auto;
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            align-items: center;
           }
-          .page-title-container {
+          .page-title-section {
             max-width: 1400px;
-            margin: 0 auto 12px auto;
-            width: 100%;
-            box-sizing: border-box;
+            margin: 0 auto 12px auto !important;
           }
         }
         @media (max-width: 768px) {
@@ -3384,13 +3377,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
       }}>
-        <div className="header-container" style={{
-          display: 'contents',
-        }}>
+        <div className="header-inner">
         <button
           onClick={() => setMenuOpen(true)}
           style={{
@@ -3492,10 +3480,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div className="page-title-container" style={{ 
+        <div className="page-title-section" style={{ 
           marginBottom: '12px', 
           padding: '0 16px', 
-          margin: '0 0 12px 0',
         }}>
           <h2 style={{
             fontSize: '28px',
