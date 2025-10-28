@@ -3481,7 +3481,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
+                    max-width: 100%;
                     padding: 0 16px;
+                    margin: 0 auto;
                     box-sizing: border-box;
                   }
                   
