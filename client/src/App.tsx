@@ -3493,12 +3493,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     display: grid;
                     grid-template-columns: 1fr;
                     gap: 12px;
-                    padding: 0 16px;
+                    padding-left: 16px;
+                    padding-right: 16px;
                   }
                   
                   .city-sidebar {
                     width: 100%;
-                    padding: 0 16px;
+                    padding-left: 16px;
+                    padding-right: 16px;
                   }
                   
                   @media (min-width: 1024px) {
