@@ -118,4 +118,12 @@ div {
   .services-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+  
+  .state-page-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
 }

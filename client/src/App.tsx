@@ -2104,7 +2104,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       {/* Sticky Navigation Header */}
-      <div style={{
+      <div className="state-page-nav" style={{
         position: 'fixed',
         top: 0,
         left: 0,
