@@ -3906,9 +3906,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         href={`tel:${c.phone}`}
                         onClick={(e) => {
                           console.log('CALL BUTTON CLICKED!', c.phone);
+                          window.location.href = `tel:${c.phone}`;
                         }}
                         onTouchStart={(e) => {
                           console.log('CALL BUTTON TOUCHED!', c.phone);
+                          e.preventDefault();
+                          window.location.href = `tel:${c.phone}`;
                         }}
                         style={{
                           width: '75px',
@@ -3934,9 +3937,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         onClick={(e) => {
                           console.log('SMS BUTTON CLICKED!', c.phone);
+                          window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
                         }}
                         onTouchStart={(e) => {
                           console.log('SMS BUTTON TOUCHED!', c.phone);
+                          e.preventDefault();
+                          window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
                         }}
                         style={{
                           width: '75px',
