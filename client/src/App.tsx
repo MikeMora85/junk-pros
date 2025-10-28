@@ -3892,65 +3892,63 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     
                     <div style={{ 
                       display: 'flex', 
-                      gap: '10px',
+                      gap: '8px',
                       justifyContent: 'center',
                       padding: '0 16px',
                     }}>
                       {/* Call Now Icon */}
-                      <button 
+                      <a 
+                        href={`tel:${c.phone}`}
                         onClick={(e) => {
-                          e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
-                          window.open(`tel:${c.phone}`, '_self');
                         }}
                         style={{
-                          width: '90px',
-                          height: '90px',
+                          width: '85px',
+                          height: '85px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          padding: 0,
+                          textDecoration: 'none',
+                          flexShrink: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
-                        <Phone size={32} />
-                      </button>
+                        <Phone size={28} />
+                      </a>
 
                       {/* Send Photos Icon */}
-                      <button
+                      <a
+                        href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         onClick={(e) => {
-                          e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
-                          window.open(`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`, '_self');
                         }}
                         style={{
-                          width: '90px',
-                          height: '90px',
+                          width: '85px',
+                          height: '85px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
-                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          padding: 0,
+                          textDecoration: 'none',
+                          flexShrink: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
-                        <Camera size={32} />
-                      </button>
+                        <Camera size={28} />
+                      </a>
                       
                       {/* In Person Estimate Icon */}
                       <button
                         style={{
-                          width: '90px',
-                          height: '90px',
+                          width: '85px',
+                          height: '85px',
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
@@ -3960,6 +3958,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           padding: 0,
+                          flexShrink: 0,
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -3968,7 +3967,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar size={32} />
+                        <Calendar size={28} />
                       </button>
                     </div>
 
