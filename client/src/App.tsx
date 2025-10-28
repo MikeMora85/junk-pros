@@ -3585,10 +3585,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     
                     .logo-info-section > div:last-child {
                       height: 140px !important;
+                      justify-content: flex-end !important;
                     }
                     
                     .company-header-section {
                       margin-bottom: 24px !important;
+                      align-items: flex-end !important;
                     }
                     
                     .logo-info-section h3 {
@@ -3611,13 +3613,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     }
                     
                     .quote-buttons-inline .quote-button {
-                      width: 120px !important;
-                      height: 120px !important;
+                      width: 140px !important;
+                      height: 140px !important;
                     }
                     
                     .quote-buttons-inline .quote-icon {
-                      width: 48px !important;
-                      height: 48px !important;
+                      width: 52px !important;
+                      height: 52px !important;
                     }
                     
                     .quote-section {
