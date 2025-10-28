@@ -3667,6 +3667,21 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
                   
+                  {isBasic && (
+                    <div style={{
+                      background: '#fff3cd',
+                      color: '#856404',
+                      padding: '8px 12px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      marginBottom: '16px',
+                      textAlign: 'center',
+                    }}>
+                      Free Listing
+                    </div>
+                  )}
+                  
                   {isUnclaimed ? (
                     // Simplified unclaimed business display
                     <div style={{ textAlign: 'center' }}>
