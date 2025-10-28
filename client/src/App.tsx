@@ -3364,10 +3364,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
       }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
         <button
           onClick={() => setMenuOpen(true)}
           style={{
@@ -3463,12 +3467,20 @@ function CityPage({ city, state }: { city: string; state: string }) {
           </button>
 
         </div>
+        </div>
       </div>
 
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
+        <div style={{ 
+          marginBottom: '12px', 
+          padding: '0 16px', 
+          margin: '0 auto 12px auto',
+          maxWidth: '1400px',
+          width: '100%',
+          boxSizing: 'border-box',
+        }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
