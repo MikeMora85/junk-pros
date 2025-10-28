@@ -3900,6 +3900,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a
                         href={`tel:${c.phone}`}
                         onClick={(e) => {
+                          e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
                         }}
                         style={{
@@ -3913,7 +3914,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
-                          pointerEvents: 'auto',
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
@@ -3924,6 +3924,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       <a
                         href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                         onClick={(e) => {
+                          e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
                         }}
                         style={{
@@ -3937,7 +3938,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           alignItems: 'center',
                           justifyContent: 'center',
                           textDecoration: 'none',
-                          pointerEvents: 'auto',
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
