@@ -3593,6 +3593,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       justify-content: space-between !important;
                       display: flex !important;
                       flex-direction: column !important;
+                      padding-bottom: 10px;
                     }
                     
                     .logo-info-section h3 {
@@ -3612,6 +3613,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       display: flex !important;
                       gap: 12px;
                       flex-shrink: 0;
+                      margin-bottom: 10px;
                     }
                     
                     .quote-buttons-inline .quote-button {
