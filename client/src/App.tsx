@@ -3875,6 +3875,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
                   <div 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                    }}
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                    }}
+                    onTouchStart={(e) => {
+                      e.stopPropagation();
+                    }}
                     style={{
                       backgroundColor: '#f5f5f5',
                       borderRadius: '0',
