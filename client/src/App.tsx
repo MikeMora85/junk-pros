@@ -1320,21 +1320,10 @@ function LandingPage() {
     }}>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
-      <div className="homepage-container" style={{
+      <div style={{
         background: '#ffffff',
         minHeight: '100vh',
       }}>
-        <style dangerouslySetInnerHTML={{__html: `
-          @media (min-width: 1024px) {
-            .homepage-container > div:not(:first-child) {
-              max-width: 1200px !important;
-              margin-left: auto !important;
-              margin-right: auto !important;
-              padding-left: 40px !important;
-              padding-right: 40px !important;
-            }
-          }
-        `}} />
       {/* Header Buttons */}
       <div style={{
         position: 'fixed',
@@ -1388,12 +1377,34 @@ function LandingPage() {
         )}
       </div>
 
-      <div style={{
+      <div className="homepage-content" style={{
         maxWidth: '1200px',
         margin: '0 auto',
         padding: '80px 20px 30px 20px',
       }}>
-        <div style={{
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-content {
+              max-width: 1400px !important;
+              padding: 80px 40px 30px 40px !important;
+            }
+            
+            .state-grid {
+              grid-template-columns: repeat(4, 1fr) !important;
+              max-width: 100% !important;
+              gap: 16px !important;
+            }
+            
+            .homepage-hero h2 {
+              font-size: 48px !important;
+            }
+            
+            .homepage-hero p {
+              font-size: 24px !important;
+            }
+          }
+        `}} />
+        <div className="homepage-hero" style={{
           textAlign: 'center',
           marginBottom: '48px',
         }}>
@@ -1507,7 +1518,7 @@ function LandingPage() {
           }}>
             Browse by State
           </h3>
-          <div style={{
+          <div className="state-grid" style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '10px',
