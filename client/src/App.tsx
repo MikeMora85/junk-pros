@@ -2974,6 +2974,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontWeight: '700',
                       color: '#374151',
                       marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {tip.title}
                     </h4>
@@ -3003,6 +3004,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                 fontWeight: '700',
                 color: '#374151',
                 marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Frequently Asked Questions
               </h3>
@@ -3042,6 +3044,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       fontWeight: '700',
                       color: '#fbbf24',
                       marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
                     }}>
                       {faq.q}
                     </h4>
