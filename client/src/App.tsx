@@ -3898,17 +3898,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       maxWidth: '100%',
                     }}>
                       {/* Call Now Icon */}
-                      <a 
-                        href={`tel:${c.phone}`}
-                        onMouseDown={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onTouchStart={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onClick={(e) => {
+                      <button 
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'call');
+                          window.location.href = `tel:${c.phone}`;
+                        }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'call');
+                          window.location.href = `tel:${c.phone}`;
                         }}
                         style={{
                           flex: '1',
@@ -3917,29 +3918,31 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          textDecoration: 'none',
+                          padding: 0,
                         }}
                         data-testid={`button-call-${c.id}`}
                       >
                         <Phone size={26} />
-                      </a>
+                      </button>
 
                       {/* Send Photos Icon */}
-                      <a
-                        href={`sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
-                        onMouseDown={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onTouchStart={(e) => {
-                          e.stopPropagation();
-                        }}
-                        onClick={(e) => {
+                      <button
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
                           trackBusinessEvent(c.id, 'photo_quote');
+                          window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                        }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'photo_quote');
+                          window.location.href = `sms:${c.phone}${/iPhone|iPad|iPod/.test(navigator.userAgent) ? '&' : '?'}body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
                         }}
                         style={{
                           flex: '1',
@@ -3948,16 +3951,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           background: '#fbbf24',
                           color: '#000',
                           borderRadius: '8px',
+                          border: 'none',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          textDecoration: 'none',
+                          padding: 0,
                         }}
                         data-testid={`button-send-photos-${c.id}`}
                       >
                         <Camera size={26} />
-                      </a>
+                      </button>
                       
                       {/* In Person Estimate Icon */}
                       <button
@@ -3975,11 +3979,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           justifyContent: 'center',
                           padding: 0,
                         }}
-                        onMouseDown={(e) => {
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
                           e.stopPropagation();
-                        }}
-                        onTouchStart={(e) => {
-                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'book_quote');
+                          setExpandedQuote(expandedQuote === c.id ? null : c.id);
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
