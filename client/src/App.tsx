@@ -3620,6 +3620,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     marginRight: '0',
                     boxShadow: 'none',
                     border: isUnclaimed ? '1px solid #e5e5e5' : '1px solid #fbbf24',
+                    borderBottom: '2px solid #000',
                     width: '100%',
                     maxWidth: '100%',
                     boxSizing: 'border-box',
