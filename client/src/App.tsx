@@ -3503,8 +3503,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   
                   .city-sidebar {
                     width: 100%;
-                    padding-left: 16px;
-                    padding-right: 16px;
+                    padding-left: 0;
+                    padding-right: 0;
                     margin-top: 24px;
                   }
                   
@@ -3560,6 +3560,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       max-height: calc(100vh - 40px);
                       overflow-y: auto;
                       margin-top: 0;
+                      padding-left: 16px;
+                      padding-right: 16px;
                     }
                     
                     .video-thumbnail-desktop {
