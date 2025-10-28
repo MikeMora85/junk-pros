@@ -1319,15 +1319,10 @@ function LandingPage() {
       <div style={{
         position: 'fixed',
         top: '16px',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        maxWidth: '1400px',
-        width: '100%',
-        padding: '0 40px',
+        left: '16px',
         display: 'flex',
         gap: '12px',
         zIndex: 1000,
-        boxSizing: 'border-box',
       }}>
         <button
           onClick={() => setMenuOpen(true)}
@@ -1374,16 +1369,16 @@ function LandingPage() {
       </div>
 
       <div style={{
-        maxWidth: '1400px',
+        maxWidth: '1200px',
         margin: '0 auto',
-        padding: '80px 40px 60px 40px',
+        padding: '80px 20px 30px 20px',
       }}>
         <div style={{
           textAlign: 'center',
           marginBottom: '48px',
         }}>
           <h2 style={{
-            fontSize: 'clamp(28px, 5vw, 48px)',
+            fontSize: '36px',
             fontWeight: '700',
             color: '#1a1a1a',
             margin: '0 0 16px 0',
@@ -1393,10 +1388,10 @@ function LandingPage() {
             Search Your Zip Code
           </h2>
           <p style={{
-            fontSize: 'clamp(16px, 2.5vw, 22px)',
+            fontSize: '20px',
             color: '#6b7280',
             margin: '0 0 40px 0',
-            maxWidth: '800px',
+            maxWidth: '700px',
             marginLeft: 'auto',
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
@@ -1406,13 +1401,13 @@ function LandingPage() {
 
           <form onSubmit={handleSearch} style={{
             width: '100%',
-            maxWidth: '600px',
+            maxWidth: '500px',
             margin: '0 auto',
             display: 'flex',
-            gap: '8px',
+            gap: '6px',
             backgroundColor: '#fff',
-            padding: '6px',
-            borderRadius: '12px',
+            padding: '5px',
+            borderRadius: '10px',
             boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
             transform: 'translateY(-1px)',
             border: '2px solid transparent',
@@ -1434,7 +1429,7 @@ function LandingPage() {
                 flex: 1,
                 minWidth: '0',
                 width: '1px',
-                padding: '14px 16px',
+                padding: '10px 8px',
                 border: 'none',
                 outline: 'none',
                 fontSize: '16px',
@@ -1449,7 +1444,7 @@ function LandingPage() {
             <button
               type="submit"
               style={{
-                padding: '14px 18px',
+                padding: '10px 14px',
                 background: '#fbbf24',
                 color: '#000',
                 border: 'none',
@@ -1466,7 +1461,7 @@ function LandingPage() {
               }}
               data-testid="button-homepage-search"
             >
-              <Search size={20} />
+              <Search size={18} />
             </button>
           </form>
           
@@ -1494,9 +1489,9 @@ function LandingPage() {
           </h3>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+            gridTemplateColumns: 'repeat(2, 1fr)',
             gap: '10px',
-            maxWidth: '1200px',
+            maxWidth: '600px',
             margin: '0 auto',
           }}>
             {[
@@ -1589,11 +1584,9 @@ function LandingPage() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '24px',
           marginTop: '48px',
-          maxWidth: '1200px',
-          margin: '48px auto 0',
         }}>
           {[
             {
@@ -3334,29 +3327,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
           grid-template-columns: 1fr;
           gap: 0;
         }
-        .main-grid > div:last-child {
-          display: none;
-        }
-        .header-inner {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
         @media (min-width: 1024px) {
           .main-grid {
             grid-template-columns: 2fr 1fr;
             gap: 20px;
-          }
-          .main-grid > div:last-child {
-            display: flex;
-          }
-          .header-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-          }
-          .page-title-section {
-            max-width: 1400px;
-            margin: 0 auto 12px auto !important;
           }
         }
         @media (max-width: 768px) {
@@ -3377,8 +3351,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
       }}>
-        <div className="header-inner">
         <button
           onClick={() => setMenuOpen(true)}
           style={{
@@ -3474,16 +3450,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
           </button>
 
         </div>
-        </div>
       </div>
 
       {/* Main Content */}
       <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
         {/* Page Title */}
-        <div className="page-title-section" style={{ 
-          marginBottom: '12px', 
-          padding: '0 16px', 
-        }}>
+        <div style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
           <h2 style={{
             fontSize: '28px',
             fontWeight: '700',
@@ -3500,10 +3472,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
         </div>
 
         {/* Two Column Layout - Stacks on Mobile */}
-        <div style={{ padding: '0 16px', margin: '0', width: '100%', maxWidth: '1400px', marginLeft: 'auto', marginRight: 'auto', boxSizing: 'border-box' }}>
-          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '20px' }}>
+        <div style={{ padding: '0', margin: '0', width: '100%' }}>
+          <div className="main-grid" style={{ margin: '0', padding: '0', width: '100%', gap: '0' }}>
               {/* Left - Company Listings */}
-              <div style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0', padding: '0' }}>
+              <div style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
                 <style dangerouslySetInnerHTML={{__html: `
                   .company-grid {
                     display: grid;
@@ -4071,85 +4043,99 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 </div>
               </div>
 
-              {/* Right Sidebar - Estimator and Ads (Desktop Only, Sticky) */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ position: 'sticky', top: '80px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Estimator and Ads Section - Full Width */}
+              <div style={{
+                gridColumn: 'span 2',
+                paddingTop: '16px',
+                borderTop: '2px solid #000',
+              }}>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))',
+                  gap: '16px',
+                }}>
                   <EstimateBuilderInline />
                   
-                  {/* Ad Placeholder 1 */}
-                  <div style={{
-                    backgroundColor: '#f5f5f5',
-                    border: '2px solid #fbbf24',
-                    borderRadius: '8px',
-                    padding: '32px 20px',
-                    textAlign: 'center',
-                  }}>
-                    <h3 style={{ 
-                      fontSize: '20px', 
-                      fontWeight: '700', 
-                      margin: '0 0 12px 0',
-                      color: '#1a1a1a',
-                      letterSpacing: '-0.02em',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    {/* Ad Placeholder 1 */}
+                    <div style={{
+                      backgroundColor: '#f5f5f5',
+                      border: '2px solid #fbbf24',
+                      borderRadius: '0',
+                      padding: '40px 20px',
+                      textAlign: 'center',
+                      borderTop: '2px solid #000',
+                      paddingTop: '56px',
                     }}>
-                      ADVERTISE HERE
-                    </h3>
-                    <p style={{ 
-                      fontSize: '14px', 
-                      margin: '0 0 10px 0', 
-                      lineHeight: '1.5', 
-                      color: '#333333',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      Reach local customers
-                    </p>
-                    <p style={{ 
-                      fontSize: '13px', 
-                      margin: 0, 
-                      color: '#fbbf24',
-                      fontWeight: '700',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      morasjunk@gmail.com
-                    </p>
-                  </div>
+                      <h3 style={{ 
+                        fontSize: '24px', 
+                        fontWeight: '700', 
+                        margin: '0 0 16px 0',
+                        color: '#1a1a1a',
+                        letterSpacing: '-0.02em',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        ADVERTISE HERE
+                      </h3>
+                      <p style={{ 
+                        fontSize: '16px', 
+                        margin: '0 0 12px 0', 
+                        lineHeight: '1.5', 
+                        color: '#333333',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        Reach thousands of customers looking for junk removal services
+                      </p>
+                      <p style={{ 
+                        fontSize: '14px', 
+                        margin: 0, 
+                        color: '#fbbf24',
+                        fontWeight: '700',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        morasjunk@gmail.com
+                      </p>
+                    </div>
 
-                  {/* Ad Placeholder 2 */}
-                  <div style={{
-                    backgroundColor: '#f5f5f5',
-                    border: '2px solid #fbbf24',
-                    borderRadius: '8px',
-                    padding: '32px 20px',
-                    textAlign: 'center',
-                  }}>
-                    <h3 style={{ 
-                      fontSize: '20px', 
-                      fontWeight: '700', 
-                      margin: '0 0 12px 0',
-                      color: '#1a1a1a',
-                      letterSpacing: '-0.02em',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    {/* Ad Placeholder 2 */}
+                    <div style={{
+                      backgroundColor: '#f5f5f5',
+                      border: '2px solid #fbbf24',
+                      borderRadius: '0',
+                      padding: '40px 20px',
+                      textAlign: 'center',
+                      borderTop: '2px solid #000',
+                      paddingTop: '56px',
                     }}>
-                      ADVERTISE HERE
-                    </h3>
-                    <p style={{ 
-                      fontSize: '14px', 
-                      margin: '0 0 10px 0', 
-                      lineHeight: '1.5', 
-                      color: '#333333',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      Promote your business
-                    </p>
-                    <p style={{ 
-                      fontSize: '13px', 
-                      margin: 0, 
-                      color: '#fbbf24',
-                      fontWeight: '700',
-                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                    }}>
-                      morasjunk@gmail.com
-                    </p>
+                      <h3 style={{ 
+                        fontSize: '24px', 
+                        fontWeight: '700', 
+                        margin: '0 0 16px 0',
+                        color: '#1a1a1a',
+                        letterSpacing: '-0.02em',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        ADVERTISE HERE
+                      </h3>
+                      <p style={{ 
+                        fontSize: '16px', 
+                        margin: '0 0 12px 0', 
+                        lineHeight: '1.5', 
+                        color: '#333333',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        Promote your business to local customers
+                      </p>
+                      <p style={{ 
+                        fontSize: '14px', 
+                        margin: 0, 
+                        color: '#fbbf24',
+                        fontWeight: '700',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        morasjunk@gmail.com
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
