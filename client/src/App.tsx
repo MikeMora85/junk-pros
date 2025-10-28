@@ -3566,23 +3566,58 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       display: block !important;
                     }
                     
+                    .company-header-section {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      gap: 24px;
+                    }
+                    
+                    .logo-info-section {
+                      margin-bottom: 0 !important;
+                    }
+                    
+                    .company-logo {
+                      width: 100px !important;
+                      height: 100px !important;
+                      font-size: 42px !important;
+                    }
+                    
+                    .logo-info-section > div:last-child {
+                      height: 100px !important;
+                    }
+                    
+                    .logo-info-section h3 {
+                      font-size: 24px !important;
+                    }
+                    
+                    .logo-info-section span {
+                      font-size: 18px !important;
+                    }
+                    
+                    .logo-info-section svg {
+                      width: 20px !important;
+                      height: 20px !important;
+                    }
+                    
+                    .quote-buttons-inline {
+                      display: flex !important;
+                      gap: 12px;
+                      flex-shrink: 0;
+                    }
+                    
+                    .quote-buttons-inline .quote-button {
+                      width: 100px !important;
+                      height: 100px !important;
+                    }
+                    
+                    .quote-buttons-inline .quote-icon {
+                      width: 42px !important;
+                      height: 42px !important;
+                    }
+                    
                     .quote-section {
-                      padding: 32px 0 !important;
-                    }
-                    
-                    .quote-title {
-                      font-size: 32px !important;
-                      margin-bottom: 24px !important;
-                    }
-                    
-                    .quote-button {
-                      width: 120px !important;
-                      height: 120px !important;
-                    }
-                    
-                    .quote-icon {
-                      width: 48px !important;
-                      height: 48px !important;
+                      display: none !important;
                     }
                   }
                 `}} />
@@ -3754,82 +3789,176 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     </div>
                   ) : (
-                  <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
-                    <div style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '10px',
-                      background: c.logoUrl ? '#fff' : '#9ca3af',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '24px',
-                      fontWeight: '800',
-                      color: '#fff',
-                      flexShrink: 0,
-                      boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
-                      padding: c.logoUrl ? '4px' : '0',
-                      border: c.logoUrl ? 'none' : '2px solid #fbbf24',
-                      overflow: 'hidden',
-                    }}>
-                      {c.logoUrl ? (
-                        <img
-                          src={c.logoUrl}
-                          alt={`${c.name} logo`}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                          }}
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                            const parent = e.currentTarget.parentElement;
-                            if (parent) {
-                              parent.style.background = '#fbbf24';
-                              parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
-                              parent.style.border = '2px solid #fbbf24';
-                              parent.style.padding = '0';
-                              parent.textContent = c.name.charAt(0);
-                            }
-                          }}
-                        />
-                      ) : (
-                        c.name.charAt(0)
-                      )}
+                  <div className="company-header-section">
+                    <div className="logo-info-section" style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
+                      <div className="company-logo" style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '10px',
+                        background: c.logoUrl ? '#fff' : '#9ca3af',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px',
+                        fontWeight: '800',
+                        color: '#fff',
+                        flexShrink: 0,
+                        boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
+                        padding: c.logoUrl ? '4px' : '0',
+                        border: c.logoUrl ? 'none' : '2px solid #fbbf24',
+                        overflow: 'hidden',
+                      }}>
+                        {c.logoUrl ? (
+                          <img
+                            src={c.logoUrl}
+                            alt={`${c.name} logo`}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain',
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              const parent = e.currentTarget.parentElement;
+                              if (parent) {
+                                parent.style.background = '#fbbf24';
+                                parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
+                                parent.style.border = '2px solid #fbbf24';
+                                parent.style.padding = '0';
+                                parent.textContent = c.name.charAt(0);
+                              }
+                            }}
+                          />
+                        ) : (
+                          c.name.charAt(0)
+                        )}
+                      </div>
+                      
+                      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '60px' }}>
+                        <h3 style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          margin: '0',
+                          color: '#111827',
+                        }} data-testid={`text-company-name-${c.id}`}>
+                          {c.name}
+                        </h3>
+                        
+                        {!isBasic ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                size={16}
+                                fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
+                                stroke="#fbbf24"
+                              />
+                            ))}
+                          </div>
+                          <span style={{ fontWeight: '600', fontSize: '16px' }}>{c.rating || "0"}</span>
+                          <span style={{ color: '#000', fontSize: '15px' }}>({c.reviews})</span>
+                        </div>
+                        ) : (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <Phone size={16} color="#000" />
+                          <a href={`tel:${c.phone}`} style={{ fontSize: '16px', fontWeight: '600', color: '#000', textDecoration: 'none' }}>{formatPhoneNumber(c.phone)}</a>
+                        </div>
+                        )}
+                      </div>
                     </div>
                     
-                    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '60px' }}>
-                      <h3 style={{
-                        fontSize: '18px',
-                        fontWeight: '700',
-                        margin: '0',
-                        color: '#111827',
-                      }} data-testid={`text-company-name-${c.id}`}>
-                        {c.name}
-                      </h3>
-                      
-                      {!isBasic ? (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              size={16}
-                              fill={i < Math.floor(parseFloat(c.rating || "0")) ? "#fbbf24" : "none"}
-                              stroke="#fbbf24"
-                            />
-                          ))}
-                        </div>
-                        <span style={{ fontWeight: '600', fontSize: '16px' }}>{c.rating || "0"}</span>
-                        <span style={{ color: '#000', fontSize: '15px' }}>({c.reviews})</span>
+                    {/* Quote buttons inline for desktop */}
+                    {hasFullFeatures && (
+                      <div className="quote-buttons-inline" style={{ display: 'none' }}>
+                        <a
+                          href={`tel:${c.phone}`}
+                          onClick={(e) => {
+                            console.log('CALL BUTTON CLICKED!', c.phone);
+                            window.location.href = `tel:${c.phone}`;
+                          }}
+                          onTouchStart={(e) => {
+                            console.log('CALL BUTTON TOUCHED!', c.phone);
+                            e.preventDefault();
+                            window.location.href = `tel:${c.phone}`;
+                          }}
+                          className="quote-button"
+                          style={{
+                            width: '75px',
+                            height: '75px',
+                            background: '#fbbf24',
+                            color: '#000',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textDecoration: 'none',
+                            position: 'relative',
+                            zIndex: 9999,
+                          }}
+                          data-testid={`button-call-inline-${c.id}`}
+                        >
+                          <Phone className="quote-icon" size={26} />
+                        </a>
+
+                        <a
+                          href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                          onClick={(e) => {
+                            console.log('SMS BUTTON CLICKED!', c.phone);
+                            window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                          }}
+                          onTouchStart={(e) => {
+                            console.log('SMS BUTTON TOUCHED!', c.phone);
+                            e.preventDefault();
+                            window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                          }}
+                          className="quote-button"
+                          style={{
+                            width: '75px',
+                            height: '75px',
+                            background: '#fbbf24',
+                            color: '#000',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textDecoration: 'none',
+                            position: 'relative',
+                            zIndex: 9999,
+                          }}
+                          data-testid={`button-send-photos-inline-${c.id}`}
+                        >
+                          <Camera className="quote-icon" size={26} />
+                        </a>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            trackBusinessEvent(c.id, 'book_quote');
+                            setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                          }}
+                          className="quote-button"
+                          style={{
+                            width: '75px',
+                            height: '75px',
+                            background: '#fbbf24',
+                            color: '#000',
+                            borderRadius: '8px',
+                            border: 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 0,
+                          }}
+                          data-testid={`button-in-person-inline-${c.id}`}
+                        >
+                          <Calendar className="quote-icon" size={26} />
+                        </button>
                       </div>
-                      ) : (
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <Phone size={16} color="#000" />
-                        <a href={`tel:${c.phone}`} style={{ fontSize: '16px', fontWeight: '600', color: '#000', textDecoration: 'none' }}>{formatPhoneNumber(c.phone)}</a>
-                      </div>
-                      )}
-                    </div>
+                    )}
                   </div>
                   )}
                   
