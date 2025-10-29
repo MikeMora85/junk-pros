@@ -366,10 +366,81 @@ export default function ProfileEditor() {
     updateMutation.mutate(payload);
   };
 
-  const handleGoLive = () => {
-    handleSave();
-    if (company) {
-      navigate(`/${company.state.toLowerCase()}/${company.city.toLowerCase()}#company-${company.id}`);
+  const handleGoLive = async () => {
+    console.log('🟢 GO LIVE BUTTON CLICKED');
+    
+    // Prepare the payload (same logic as handleSave)
+    const basicPayload = {
+      name: formData.name,
+      phone: formData.phone,
+      contactEmail: formData.contactEmail || null,
+      website: formData.website,
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      logoUrl: formData.logoUrl || null,
+      claimed: true,
+    };
+    
+    const fullPayload = {
+      ...basicPayload,
+      contactEmail: formData.contactEmail || null,
+      videoUrl: formData.videoUrl || null,
+      services: formData.selectedServices,
+      specialties: formData.specialties.filter(s => s.trim()),
+      aboutUs: formData.aboutUs || null,
+      whyChooseUs: formData.whyChooseUs.filter(r => r.trim()),
+      yearsInBusiness: formData.yearsInBusiness ? parseInt(formData.yearsInBusiness) : null,
+      insuranceInfo: formData.insuranceInfo || null,
+      minimumPrice: formData.minimumPrice || null,
+      quarterLoadPrice: formData.quarterLoadPrice || null,
+      halfLoadPrice: formData.halfLoadPrice || null,
+      threeQuarterLoadPrice: formData.threeQuarterLoadPrice || null,
+      fullLoadPrice: formData.fullLoadPrice || null,
+      singleItemMinimum: formData.singleItemMinimum || null,
+      trailerSize: formData.trailerSize || null,
+      priceSheetVisible: formData.priceSheetVisible,
+      addOnCostsVisible: formData.addOnCostsVisible,
+      offersInPersonEstimates: formData.offersInPersonEstimates,
+      hours: formData.hours || null,
+      availability: formData.availability || null,
+      teamMembers: formData.teamMembers.length > 0 ? formData.teamMembers : null,
+      galleryImages: formData.galleryImages.length > 0 ? formData.galleryImages : null,
+      businessHours: formData.businessHours,
+      paymentMethods: formData.paymentMethods.length > 0 ? formData.paymentMethods : null,
+      googleRanking: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
+      googleReviewCount: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
+      googleFeaturedReviews: formData.googleFeaturedReviews.length > 0 ? formData.googleFeaturedReviews : null,
+      reviewSnippets: formData.googleFeaturedReviews.length > 0 
+        ? formData.googleFeaturedReviews.map(r => r.reviewText)
+        : null,
+      rating: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
+      reviews: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
+      faqs: formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()).length > 0 
+        ? formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()) 
+        : null,
+      facebookUrl: formData.showFacebook && formData.facebookUrl ? formData.facebookUrl : null,
+      instagramUrl: formData.showInstagram && formData.instagramUrl ? formData.instagramUrl : null,
+      youtubeUrl: formData.showYoutube && formData.youtubeUrl ? formData.youtubeUrl : null,
+      gmbUrl: formData.showGmb && formData.gmbUrl ? formData.gmbUrl : null,
+    };
+    
+    const payload = subscriptionTier === 'basic' ? basicPayload : fullPayload;
+    
+    try {
+      console.log('💾 Saving before navigation...');
+      // Use mutateAsync to wait for the save to complete
+      await updateMutation.mutateAsync(payload);
+      console.log('✅ Save completed, navigating...');
+      
+      // Now navigate after save is complete
+      if (company) {
+        const targetUrl = `/${company.state.toLowerCase()}/${company.city.toLowerCase()}#company-${company.id}`;
+        console.log('🎯 Navigating to:', targetUrl);
+        navigate(targetUrl);
+      }
+    } catch (error) {
+      console.error('❌ Save failed, not navigating:', error);
     }
   };
 
