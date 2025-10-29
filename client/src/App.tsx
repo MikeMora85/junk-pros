@@ -2111,7 +2111,10 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         right: 0,
         zIndex: 100,
       }}>
-        <div className="state-page-nav" style={{
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '16px',
           display: 'flex',
           gap: '12px',
         }}>
