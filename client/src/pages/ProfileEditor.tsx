@@ -296,6 +296,7 @@ export default function ProfileEditor() {
       city: formData.city,
       state: formData.state,
       logoUrl: formData.logoUrl || null,
+      claimed: true, // Mark as claimed when user edits profile
     };
     
     // Standard & Premium: Full payload
