@@ -2665,7 +2665,11 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               }}>
                 Common Items Junk Haulers Remove
               </h3>
-              <div className="services-grid">
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                gap: '12px',
+              }}>
                 {[
                   { name: 'Sofa', href: '/items/sofa' },
                   { name: 'Bed', href: '/items/bed' },
