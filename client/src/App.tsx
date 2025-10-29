@@ -2717,7 +2717,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       <span style={{
                         fontSize: '16px',
                         fontWeight: '600',
-                        color: '#374151',
+                        color: '#000',
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
                       }}>
                         {item.name}
