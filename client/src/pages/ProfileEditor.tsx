@@ -431,10 +431,20 @@ export default function ProfileEditor() {
       console.log('💾 Saving before navigation...');
       // Use mutateAsync to wait for the save to complete
       await updateMutation.mutateAsync(payload);
-      console.log('✅ Save completed, navigating...');
+      console.log('✅ Save completed');
       
-      // Now navigate after save is complete
+      // Force refetch the city companies data before navigating
       if (company) {
+        console.log('🔄 Refetching city data...');
+        await queryClient.refetchQueries({ 
+          queryKey: ["/api/companies"],
+          type: 'active'
+        });
+        console.log('✅ Refetch completed');
+        
+        // Small delay to ensure cache is updated
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
         const targetUrl = `/${company.state.toLowerCase()}/${company.city.toLowerCase()}#company-${company.id}`;
         console.log('🎯 Navigating to:', targetUrl);
         navigate(targetUrl);
