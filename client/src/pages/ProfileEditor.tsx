@@ -445,7 +445,10 @@ export default function ProfileEditor() {
         // Small delay to ensure cache is updated
         await new Promise(resolve => setTimeout(resolve, 100));
         
-        const targetUrl = `/${company.state.toLowerCase()}/${company.city.toLowerCase()}#company-${company.id}`;
+        // Build URL with explicit trimming to avoid any whitespace issues
+        const state = company.state.toLowerCase().trim();
+        const city = company.city.toLowerCase().trim();
+        const targetUrl = `/${state}/${city}#company-${company.id}`;
         console.log('🎯 Navigating to:', targetUrl);
         navigate(targetUrl);
       }
