@@ -2715,7 +2715,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       cursor: 'pointer',
                     }}>
                       <span style={{
-                        fontSize: '14px',
+                        fontSize: '16px',
                         fontWeight: '600',
                         color: '#374151',
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
