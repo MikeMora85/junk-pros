@@ -620,6 +620,9 @@ export default function ProfileEditor() {
                 />
               </div>
 
+              {/* Paid Plans Only - Contact Email, Website, Social Media, Address */}
+              {subscriptionTier !== 'basic' && (
+              <>
               {/* Contact Email */}
               <div>
                 <label style={labelStyle}>Contact Email (Public)</label>
@@ -644,9 +647,12 @@ export default function ProfileEditor() {
                   placeholder="https://yourwebsite.com"
                 />
               </div>
+              </>
+              )}
 
               {/* Video URL - Standard & Premium only */}
               {subscriptionTier !== 'basic' && (
+              <>
               <div>
                 <label style={labelStyle}>Video URL (YouTube or Vimeo)</label>
                 <input
@@ -660,7 +666,6 @@ export default function ProfileEditor() {
                   Add a video to showcase your services (displays on desktop only)
                 </p>
               </div>
-              )}
 
               {/* Social Media Links */}
               <div style={{
@@ -814,7 +819,6 @@ export default function ProfileEditor() {
               </div>
 
               {/* Business Hours - Standard & Premium only */}
-              {subscriptionTier !== 'basic' && (
               <div>
                 <label style={labelStyle}>Business Hours</label>
                 <div style={{ 
@@ -898,10 +902,8 @@ export default function ProfileEditor() {
                   ))}
                 </div>
               </div>
-              )}
 
               {/* Payment Methods - Standard & Premium only */}
-              {subscriptionTier !== 'basic' && (
               <div>
                 <label style={labelStyle}>Payment Methods Accepted</label>
                 <div style={{
@@ -959,6 +961,37 @@ export default function ProfileEditor() {
                     );
                   })}
                 </div>
+              </div>
+              </>
+              )}
+
+              {/* Free Plan Upgrade Message */}
+              {subscriptionTier === 'basic' && (
+              <div style={{
+                padding: "20px",
+                backgroundColor: "#fef3c7",
+                borderRadius: "12px",
+                border: "2px solid #fbbf24",
+                marginTop: "8px"
+              }}>
+                <p style={{
+                  fontSize: "15px",
+                  lineHeight: "1.6",
+                  margin: 0,
+                  color: "#000",
+                  fontWeight: "500"
+                }}>
+                  🆓 <strong>Free Profile:</strong> You can edit your logo, business name, and phone number.
+                </p>
+                <p style={{
+                  fontSize: "15px",
+                  lineHeight: "1.6",
+                  margin: "8px 0 0 0",
+                  color: "#000",
+                  fontWeight: "500"
+                }}>
+                  💎 <strong>Upgrade to add:</strong> photos, address, reviews, social media links, and more!
+                </p>
               </div>
               )}
             </div>
