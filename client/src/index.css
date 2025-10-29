@@ -114,6 +114,10 @@ div {
   gap: 12px;
 }
 
+.state-page-nav {
+  padding: 16px;
+}
+
 @media (min-width: 1024px) {
   .services-grid {
     grid-template-columns: repeat(4, 1fr) !important;
