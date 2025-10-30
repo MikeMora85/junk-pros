@@ -731,6 +731,14 @@ export class DbStorage implements IStorage {
       }
     }
     
+    // Sync googleReviewCount -> reviews and googleRanking -> rating
+    if (updateData.googleReviewCount !== undefined) {
+      updateData.reviews = updateData.googleReviewCount || 0;
+    }
+    if (updateData.googleRanking !== undefined) {
+      updateData.rating = updateData.googleRanking;
+    }
+    
     console.log('🔧 Updating company', id);
     console.log('Keys:', Object.keys(updateData).join(', '));
     console.log('Data types:', Object.entries(updateData).map(([k, v]) => `${k}:${typeof v}`).join(', '));
