@@ -3087,6 +3087,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [videoModalUrl, setVideoModalUrl] = useState<string | null>(null);
   const { user, isAuthenticated } = useAuth();
   
+  // Fetch user's company profile if authenticated
+  const { data: userCompany } = useQuery<Company>({
+    queryKey: ["/api/business/profile"],
+    enabled: !!user && isAuthenticated,
+    retry: false,
+  });
+  
   // Helper function to format city name: remove dashes and capitalize each word
   const formatCityName = (citySlug: string) => {
     return citySlug
@@ -3350,7 +3357,15 @@ function CityPage({ city, state }: { city: string; state: string }) {
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           {isAuthenticated && user && (
             <button
-              onClick={() => window.location.href = '/profile/edit'}
+              onClick={() => {
+                if (userCompany) {
+                  const citySlug = userCompany.city.toLowerCase().replace(/\s+/g, '-');
+                  const stateSlug = userCompany.state.toLowerCase().trim();
+                  window.location.href = `/${stateSlug}/${citySlug}#company-${userCompany.id}`;
+                } else {
+                  window.location.href = '/profile/edit';
+                }
+              }}
               style={{
                 backgroundColor: '#166534',
                 color: '#fff',
