@@ -731,7 +731,20 @@ export class DbStorage implements IStorage {
       }
     }
     
-    console.log('🔧 Updating company', id, 'with keys:', Object.keys(updateData));
+    console.log('🔧 Updating company', id);
+    console.log('Keys:', Object.keys(updateData).join(', '));
+    console.log('Data types:', Object.entries(updateData).map(([k, v]) => `${k}:${typeof v}`).join(', '));
+    
+    // Log specific problematic fields
+    if (updateData.galleryImages !== undefined) {
+      console.log('galleryImages:', typeof updateData.galleryImages, Array.isArray(updateData.galleryImages), updateData.galleryImages);
+    }
+    if (updateData.teamMembers !== undefined) {
+      console.log('teamMembers:', typeof updateData.teamMembers, Array.isArray(updateData.teamMembers), updateData.teamMembers);
+    }
+    if (updateData.googleFeaturedReviews !== undefined) {
+      console.log('googleFeaturedReviews:', typeof updateData.googleFeaturedReviews, Array.isArray(updateData.googleFeaturedReviews), updateData.googleFeaturedReviews);
+    }
     
     try {
       const [updated] = await db
@@ -750,7 +763,7 @@ export class DbStorage implements IStorage {
         hint: error.hint,
         position: error.position
       });
-      console.error('Full error:', error);
+      console.error('Data being sent:', JSON.stringify(updateData, null, 2));
       throw error;
     }
   }
