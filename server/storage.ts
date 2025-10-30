@@ -731,15 +731,26 @@ export class DbStorage implements IStorage {
       }
     }
     
+    console.log('🔧 Updating company', id, 'with keys:', Object.keys(updateData));
+    
     try {
       const [updated] = await db
         .update(companies)
         .set(updateData)
         .where(eq(companies.id, id))
         .returning();
+      console.log('✅ Update successful for company', id);
       return updated || null;
-    } catch (error) {
-      console.error('Update error:', error);
+    } catch (error: any) {
+      console.error('❌ Update error for company', id);
+      console.error('Error details:', {
+        message: error.message,
+        code: error.code,
+        detail: error.detail,
+        hint: error.hint,
+        position: error.position
+      });
+      console.error('Full error:', error);
       throw error;
     }
   }
