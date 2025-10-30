@@ -333,7 +333,6 @@ export default function ProfileEditor() {
         ? formData.googleFeaturedReviews.map(r => r.reviewText)
         : null,
       rating: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
-      reviews: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       faqs: formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()).length > 0 
         ? formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()) 
         : null,
@@ -415,7 +414,6 @@ export default function ProfileEditor() {
         ? formData.googleFeaturedReviews.map(r => r.reviewText)
         : null,
       rating: formData.googleRanking ? parseFloat(formData.googleRanking) : null,
-      reviews: formData.googleReviewCount ? parseInt(formData.googleReviewCount) : null,
       faqs: formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()).length > 0 
         ? formData.faqs.filter(faq => faq.question.trim() && faq.answer.trim()) 
         : null,
