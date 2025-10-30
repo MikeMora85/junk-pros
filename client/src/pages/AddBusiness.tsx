@@ -89,6 +89,13 @@ export default function AddBusiness() {
       return;
     }
     
+    // Map form tier names to database tier names
+    const tierMapping: Record<string, string> = {
+      'basic': 'basic',           // Free ($0)
+      'professional': 'standard', // Standard ($10)
+      'featured': 'premium',      // Premium ($49)
+    };
+    
     // Create company data from form
     const companyData = {
       name: formData.businessName,
@@ -106,7 +113,7 @@ export default function AddBusiness() {
       email: formData.email,
       password: formData.password,
       claimed: true, // User is signing up, so this is a claimed profile
-      subscriptionTier: 'basic', // FREE tier
+      subscriptionTier: tierMapping[formData.pricingTier] || 'basic', // Use selected tier
       agreedToPlatformStandards: new Date(),
       agreedToRequirements: new Date(),
     };
