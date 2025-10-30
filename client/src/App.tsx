@@ -3310,7 +3310,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 100,
+        zIndex: 10002,
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
         padding: '16px',
