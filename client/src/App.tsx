@@ -3658,7 +3658,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   data-testid={`card-company-${c.id}`}
                 >
                   {/* Top Right Badge - sits on top of card border */}
-                  {isPremium && c.badge && !isUnclaimed && (
+                  {isPremium && !isUnclaimed && (
                     <div style={{
                       position: 'absolute',
                       top: '-12px',
@@ -3676,7 +3676,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
                     }}>
                       <CheckCircle size={14} color="#fff" fill="#16a34a" />
-                      {c.badge}
+                      Top Rated
                     </div>
                   )}
                   
