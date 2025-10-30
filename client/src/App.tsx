@@ -268,7 +268,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          zIndex: 9998,
+          zIndex: 10000,
         }}
         onClick={onClose}
         data-testid="menu-overlay"
@@ -285,7 +285,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
           width: '75%',
           maxWidth: '600px',
           backgroundColor: '#ffffff',
-          zIndex: 9999,
+          zIndex: 10001,
           overflowY: 'auto',
           boxShadow: '4px 0 16px rgba(0,0,0,0.2)',
         }}
