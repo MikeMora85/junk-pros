@@ -62,12 +62,29 @@ export default function AddBusiness() {
     }
   };
 
-  const handleCheckAvailability = (e: React.FormEvent) => {
+  const handleCheckAvailability = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For now, simulate check - in real app would call API
-    // Randomly return available/taken for demo
-    const isAvailable = Math.random() > 0.3;
-    setAvailabilityStatus(isAvailable ? 'available' : 'taken');
+    
+    if (!checkCity.trim()) {
+      return;
+    }
+    
+    try {
+      // Check if any Premium profile exists in this city
+      const response = await fetch(`/api/companies?city=${encodeURIComponent(checkCity)}&state=all`);
+      const companies = await response.json();
+      
+      // Check if any company in this city has Premium tier
+      const hasPremium = companies.some((c: any) => 
+        c.city.toLowerCase() === checkCity.toLowerCase() && 
+        c.subscriptionTier === 'premium'
+      );
+      
+      setAvailabilityStatus(hasPremium ? 'taken' : 'available');
+    } catch (error) {
+      console.error('Failed to check availability:', error);
+      alert('Failed to check availability. Please try again.');
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
