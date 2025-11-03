@@ -829,8 +829,11 @@ export default function AdminDashboard() {
                         border: '2px solid #fbbf24',
                         borderRadius: '8px',
                       }}>
-                        <div style={{ fontSize: '14px', fontWeight: '700', marginBottom: '8px', color: '#000' }}>
-                          Display Order
+                        <div style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', color: '#000' }}>
+                          Display Order in {company.city}
+                        </div>
+                        <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
+                          Lower numbers appear first within the same tier
                         </div>
                         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                           <input
@@ -851,7 +854,17 @@ export default function AdminDashboard() {
                             data-testid={`input-order-${company.id}`}
                           />
                           <button
-                            onClick={() => updateDisplayOrderMutation.mutate({ id: company.id, displayOrder: 1 })}
+                            onClick={() => {
+                              // Find minimum displayOrder in this city (same tier)
+                              const sameCityCompanies = displayCompanies.filter(c => 
+                                c.city === company.city && 
+                                c.state === company.state &&
+                                c.subscriptionTier === company.subscriptionTier
+                              );
+                              const minOrder = Math.min(...sameCityCompanies.map(c => c.displayOrder ?? 999));
+                              const topOrder = Math.max(1, minOrder - 1);
+                              updateDisplayOrderMutation.mutate({ id: company.id, displayOrder: topOrder });
+                            }}
                             style={{
                               background: '#16a34a',
                               color: '#fff',
@@ -861,10 +874,11 @@ export default function AdminDashboard() {
                               fontSize: '14px',
                               fontWeight: '700',
                               cursor: 'pointer',
+                              whiteSpace: 'nowrap',
                             }}
                             data-testid={`button-top-${company.id}`}
                           >
-                            Move to Top
+                            Top in City
                           </button>
                         </div>
                       </div>
