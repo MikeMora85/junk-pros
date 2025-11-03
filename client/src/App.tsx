@@ -1361,7 +1361,13 @@ function LandingPage() {
         
         {isAuthenticated && user && (
           <button
-            onClick={() => window.location.href = '/profile/edit'}
+            onClick={() => {
+              if ((user as any)?.isAdmin) {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/profile/edit';
+              }
+            }}
             style={{
               backgroundColor: '#166534',
               color: '#fff',
@@ -2149,7 +2155,13 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         
         {isAuthenticated && user && (
           <button
-            onClick={() => window.location.href = '/profile/edit'}
+            onClick={() => {
+              if ((user as any)?.isAdmin) {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/profile/edit';
+              }
+            }}
             style={{
               backgroundColor: '#166534',
               color: '#fff',
@@ -3358,7 +3370,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
           {isAuthenticated && user && (
             <button
               onClick={() => {
-                if (userCompany) {
+                // Check if user is admin first
+                if ((user as any)?.isAdmin) {
+                  window.location.href = '/admin';
+                } else if (userCompany) {
                   const citySlug = userCompany.city.toLowerCase().replace(/\s+/g, '-');
                   const stateSlug = userCompany.state.toLowerCase().trim();
                   window.location.href = `/${stateSlug}/${citySlug}#company-${userCompany.id}`;
