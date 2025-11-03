@@ -1,4 +1,4 @@
-import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent, BusinessOwner, InsertBusinessOwner } from "@shared/schema";
+import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent, BusinessOwner, InsertBusinessOwner, Notification, InsertNotification } from "@shared/schema";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -38,12 +38,20 @@ export interface IStorage {
     photoQuotes: number;
     totalEvents: number;
   }>;
+  
+  // Notification operations
+  createNotification(data: Omit<InsertNotification, 'id' | 'createdAt'>): Promise<Notification>;
+  getNotificationsByCompany(companyId: number): Promise<Notification[]>;
+  getUnreadNotificationsByCompany(companyId: number): Promise<Notification[]>;
+  markNotificationAsRead(id: number): Promise<Notification | null>;
+  markAllNotificationsAsRead(companyId: number): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
   private users: User[] = [];
   private businessEvents: BusinessEvent[] = [];
   private businessOwners: BusinessOwner[] = [];
+  private notifications: Notification[] = [];
   private companies: Company[] = [
     {
       id: 1,
@@ -545,11 +553,54 @@ export class MemStorage implements IStorage {
     this.businessOwners[index].companyId = companyId;
     return this.businessOwners[index];
   }
+
+  async createNotification(data: Omit<InsertNotification, 'id' | 'createdAt'>): Promise<Notification> {
+    const newId = Math.max(...this.notifications.map(n => n.id), 0) + 1;
+    const notification: Notification = {
+      id: newId,
+      companyId: data.companyId,
+      type: data.type,
+      title: data.title,
+      message: data.message,
+      isRead: data.isRead ?? false,
+      createdAt: new Date(),
+      metadata: data.metadata ?? null,
+    };
+    this.notifications.push(notification);
+    return notification;
+  }
+
+  async getNotificationsByCompany(companyId: number): Promise<Notification[]> {
+    return this.notifications
+      .filter(n => n.companyId === companyId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getUnreadNotificationsByCompany(companyId: number): Promise<Notification[]> {
+    return this.notifications
+      .filter(n => n.companyId === companyId && !n.isRead)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async markNotificationAsRead(id: number): Promise<Notification | null> {
+    const notification = this.notifications.find(n => n.id === id);
+    if (notification) {
+      notification.isRead = true;
+      return notification;
+    }
+    return null;
+  }
+
+  async markAllNotificationsAsRead(companyId: number): Promise<void> {
+    this.notifications
+      .filter(n => n.companyId === companyId && !n.isRead)
+      .forEach(n => n.isRead = true);
+  }
 }
 
 import { db } from './db';
-import { eq, and, gte, lte, sql, asc } from 'drizzle-orm';
-import { companies, users, businessOwners, businessEvents } from '@shared/schema';
+import { eq, and, gte, lte, sql, asc, desc } from 'drizzle-orm';
+import { companies, users, businessOwners, businessEvents, notifications } from '@shared/schema';
 
 export class DbStorage implements IStorage {
   // User operations
@@ -886,6 +937,54 @@ export class DbStorage implements IStorage {
       photoQuotes: events.filter(e => e.eventType === 'photo_quote').length,
       totalEvents: events.length,
     };
+  }
+
+  // Notification operations
+  async createNotification(data: Omit<InsertNotification, 'id' | 'createdAt'>): Promise<Notification> {
+    const [notification] = await db
+      .insert(notifications)
+      .values({
+        companyId: data.companyId,
+        type: data.type,
+        title: data.title,
+        message: data.message,
+        isRead: data.isRead ?? false,
+        metadata: data.metadata ?? null,
+      })
+      .returning();
+    return notification;
+  }
+
+  async getNotificationsByCompany(companyId: number): Promise<Notification[]> {
+    return await db
+      .select()
+      .from(notifications)
+      .where(eq(notifications.companyId, companyId))
+      .orderBy(desc(notifications.createdAt));
+  }
+
+  async getUnreadNotificationsByCompany(companyId: number): Promise<Notification[]> {
+    return await db
+      .select()
+      .from(notifications)
+      .where(and(eq(notifications.companyId, companyId), eq(notifications.isRead, false)))
+      .orderBy(desc(notifications.createdAt));
+  }
+
+  async markNotificationAsRead(id: number): Promise<Notification | null> {
+    const [notification] = await db
+      .update(notifications)
+      .set({ isRead: true })
+      .where(eq(notifications.id, id))
+      .returning();
+    return notification || null;
+  }
+
+  async markAllNotificationsAsRead(companyId: number): Promise<void> {
+    await db
+      .update(notifications)
+      .set({ isRead: true })
+      .where(and(eq(notifications.companyId, companyId), eq(notifications.isRead, false)));
   }
 }
 

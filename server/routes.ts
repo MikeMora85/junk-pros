@@ -570,6 +570,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.post("/api/admin/companies/:id/send-warning", requireSimpleAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      const { message: customMessage } = req.body;
       if (isNaN(id)) {
         return res.status(400).json({ error: "Invalid company ID" });
       }
@@ -586,8 +587,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         subscriptionStatus: 'past_due' as any
       } as any);
 
-      // TODO: Implement actual email/SMS sending
-      console.log(`Sending warning #${warnings} to ${company.name}`);
+      // Create notification for business owner
+      const warningMessage = customMessage || `This is warning #${warnings} regarding your account status. Please address the issues to avoid service interruption.`;
+      await storage.createNotification({
+        companyId: id,
+        type: 'warning',
+        title: `Warning #${warnings}`,
+        message: warningMessage,
+        isRead: false,
+        metadata: { warningCount: warnings },
+      });
+
+      console.log(`Warning #${warnings} sent to ${company.name}`);
       
       res.json({ 
         success: true, 
@@ -595,7 +606,47 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         warnings
       });
     } catch (error) {
+      console.error("Error sending warning:", error);
       res.status(500).json({ error: "Failed to send warning" });
+    }
+  });
+
+  app.post("/api/admin/companies/:id/confirm-review-count", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ error: "Invalid company ID" });
+      }
+
+      const company = await storage.getCompanyById(id);
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      // Create notification for business owner
+      await storage.createNotification({
+        companyId: id,
+        type: 'review_confirmation',
+        title: 'Review Count Confirmed',
+        message: `Your review count has been verified and confirmed at ${company.reviews} reviews with a ${company.rating} rating. Keep up the great work!`,
+        isRead: false,
+        metadata: { 
+          reviewCount: company.reviews,
+          rating: company.rating,
+          confirmedAt: new Date().toISOString(),
+        },
+      });
+
+      console.log(`Review count confirmed for ${company.name}: ${company.reviews} reviews`);
+      
+      res.json({ 
+        success: true, 
+        message: `Review count confirmed for ${company.name}`,
+        company
+      });
+    } catch (error) {
+      console.error("Error confirming review count:", error);
+      res.status(500).json({ error: "Failed to confirm review count" });
     }
   });
 
@@ -741,6 +792,37 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     } catch (error) {
       console.error("Error fetching business profile:", error);
       res.status(500).json({ error: "Failed to fetch profile" });
+    }
+  });
+
+  app.get("/api/business/notifications", async (req: any, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const token = authHeader.substring(7);
+      const decoded = Buffer.from(token, 'base64').toString();
+      const parts = decoded.split(':');
+      const type = parts[0];
+
+      if (type !== 'business') {
+        return res.status(403).json({ error: "Only business owners can access this" });
+      }
+
+      const ownerId = parseInt(parts[2]);
+      const owner = await storage.getBusinessOwnerById(ownerId);
+      
+      if (!owner || !owner.companyId) {
+        return res.status(404).json({ error: "No company associated with this account" });
+      }
+
+      const notifications = await storage.getNotificationsByCompany(owner.companyId);
+      res.json(notifications);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+      res.status(500).json({ error: "Failed to fetch notifications" });
     }
   });
 

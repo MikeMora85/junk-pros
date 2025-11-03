@@ -189,3 +189,21 @@ export const insertBusinessEventSchema = createInsertSchema(businessEvents, {
 
 export type InsertBusinessEvent = z.infer<typeof insertBusinessEventSchema>;
 export type BusinessEvent = typeof businessEvents.$inferSelect;
+
+export const notifications = pgTable("notifications", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  companyId: integer("company_id").notNull().references(() => companies.id),
+  type: text("type").notNull(), // 'warning', 'review_confirmation', 'payment_reminder', 'general'
+  title: text("title").notNull(),
+  message: text("message").notNull(),
+  isRead: boolean("is_read").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  metadata: jsonb("metadata"),
+});
+
+export const insertNotificationSchema = createInsertSchema(notifications, {
+  metadata: z.any().nullable().optional(),
+});
+
+export type InsertNotification = z.infer<typeof insertNotificationSchema>;
+export type Notification = typeof notifications.$inferSelect;

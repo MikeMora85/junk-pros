@@ -101,6 +101,37 @@ export default function AdminDashboard() {
     },
   });
 
+  const sendWarningMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest(`/api/admin/companies/${id}/send-warning`, {
+        method: 'POST',
+        body: {},
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+      alert('Warning sent successfully!');
+    },
+    onError: () => {
+      alert('Failed to send warning');
+    },
+  });
+
+  const confirmReviewCountMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest(`/api/admin/companies/${id}/confirm-review-count`, {
+        method: 'POST',
+        body: {},
+      });
+    },
+    onSuccess: () => {
+      alert('Review count confirmed and notification sent!');
+    },
+    onError: () => {
+      alert('Failed to confirm review count');
+    },
+  });
+
   if (authLoading) {
     return <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>;
   }
@@ -739,6 +770,56 @@ export default function AdminDashboard() {
                       >
                         <Eye size={20} />
                         View Profile
+                      </button>
+
+                      {/* Warning Button */}
+                      <button
+                        onClick={() => {
+                          if (confirm(`Send payment warning to ${company.name}? This will increment their warning count and send a notification.`)) {
+                            sendWarningMutation.mutate(company.id);
+                          }
+                        }}
+                        style={{
+                          background: '#f97316',
+                          color: '#fff',
+                          padding: '12px',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: '16px',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                        }}
+                        data-testid={`button-warning-${company.id}`}
+                      >
+                        <AlertCircle size={20} />
+                        Send Warning {company.paymentWarnings ? `(${company.paymentWarnings})` : ''}
+                      </button>
+
+                      {/* Confirm Review Count Button */}
+                      <button
+                        onClick={() => confirmReviewCountMutation.mutate(company.id)}
+                        style={{
+                          background: '#10b981',
+                          color: '#fff',
+                          padding: '12px',
+                          border: 'none',
+                          borderRadius: '8px',
+                          fontSize: '16px',
+                          fontWeight: '700',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                        }}
+                        data-testid={`button-confirm-reviews-${company.id}`}
+                      >
+                        <CheckCircle size={20} />
+                        Confirm Review Count ({company.reviews || 0})
                       </button>
 
                       {/* Display Order Control */}
