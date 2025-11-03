@@ -3875,7 +3875,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             justifyContent: 'center',
                             textDecoration: 'none',
                             position: 'relative',
-                            zIndex: 9999,
+                            zIndex: 1,
                           }}
                           data-testid={`button-call-inline-${c.id}`}
                         >
@@ -3906,7 +3906,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                             justifyContent: 'center',
                             textDecoration: 'none',
                             position: 'relative',
-                            zIndex: 9999,
+                            zIndex: 1,
                           }}
                           data-testid={`button-send-photos-inline-${c.id}`}
                         >
@@ -4441,7 +4441,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         ×
       </button>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 16px 80px' }}>
+      <div style={{ 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '60px 16px 80px',
+      }}>
         {/* Header with watermark logo */}
         <div style={{
           position: 'relative',
@@ -4667,11 +4671,13 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         {company.services && company.services.length > 0 && (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '12px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+            gap: '16px',
             marginBottom: '32px',
             padding: '0 12px',
             textAlign: 'center',
+            maxWidth: '800px',
+            margin: '0 auto 32px',
           }}>
             {company.services.map((serviceId, i) => {
               // Map service IDs to icons and labels
@@ -4721,39 +4727,29 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           </div>
         )}
 
-        {/* Two Column Layout */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: window.innerWidth > 768 ? '1fr 300px' : '1fr', 
-          gap: '24px' 
-        }}>
-          {/* Left Column */}
-          <div>
-            {/* About Us */}
-            {company.description && (
-              <div style={{ marginBottom: '32px' }}>
-                <h2 style={{
-                  fontSize: '24px',
-                  fontWeight: '700',
-                  marginBottom: '12px',
-                  color: '#000',
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
-                }}>
-                  About Us
-                </h2>
-                <p style={{
-                  fontSize: '16px',
-                  color: '#000',
-                  lineHeight: '1.6',
-                  margin: 0,
-                  fontFamily: 'system-ui, -apple-system, sans-serif',
-                }}>
-                  {company.description}
-                </p>
-              </div>
-            )}
+        {/* About Us - Full Width Above Gallery */}
+        {company.description && (
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: '700',
+              marginBottom: '12px',
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}>
+              About Us
+            </h2>
+            <p style={{
+              fontSize: '16px',
+              color: '#000',
+              lineHeight: '1.6',
+              margin: 0,
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}>
+              {company.description}
+            </p>
           </div>
-        </div>
+        )}
 
         {/* Full Width Photo Gallery with Navigation */}
         {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
@@ -4881,12 +4877,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
 
         {/* Continue with Two Column Layout */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: window.innerWidth > 768 ? '1fr 300px' : '1fr', 
-          gap: '24px',
-          maxWidth: '100%',
-        }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          .expanded-two-column {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 100%;
+          }
+          @media (min-width: 1024px) {
+            .expanded-two-column {
+              grid-template-columns: 1fr 350px;
+              gap: 40px;
+            }
+          }
+        `}} />
+        <div className="expanded-two-column">
           <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
             <div style={{ marginBottom: '32px' }}>
               <h2 style={{
