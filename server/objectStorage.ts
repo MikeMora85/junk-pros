@@ -207,6 +207,38 @@ export class ObjectStorageService {
       requestedPermission: requestedPermission ?? ObjectPermission.READ,
     });
   }
+
+  async getPublicObjectURL(objectPath: string, ttlSec: number = 604800): Promise<string> {
+    // 7 days default TTL for public images
+    try {
+      const objectFile = await this.getObjectEntityFile(objectPath);
+      const { bucketName, objectName } = parseObjectPath(objectFile.name);
+      return signObjectURL({
+        bucketName,
+        objectName,
+        method: "GET",
+        ttlSec,
+      });
+    } catch (error) {
+      console.error(`Error getting public URL for ${objectPath}:`, error);
+      return objectPath; // Fallback to original path
+    }
+  }
+
+  async convertObjectPathsToPublicURLs(paths: string[] | null | undefined): Promise<string[]> {
+    if (!paths || !Array.isArray(paths) || paths.length === 0) {
+      return [];
+    }
+    
+    const urlPromises = paths.map(async (path) => {
+      if (!path || !path.startsWith('/objects/')) {
+        return path; // Return as-is if not an object storage path
+      }
+      return this.getPublicObjectURL(path);
+    });
+    
+    return Promise.all(urlPromises);
+  }
 }
 
 function parseObjectPath(path: string): {
