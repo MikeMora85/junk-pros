@@ -4268,15 +4268,24 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
                     {/* Quote Request Form */}
                     {expandedQuote === c.id && (
-                      <QuoteRequestForm
-                        companyId={c.id}
-                        companyName={c.name}
-                        onSuccess={() => {
-                          alert('Quote request sent successfully! The business will contact you soon.');
-                          setExpandedQuote(null);
-                        }}
-                        onCancel={() => setExpandedQuote(null)}
-                      />
+                      <div style={{
+                        marginTop: '16px',
+                        backgroundColor: '#f0f9ff',
+                        padding: '16px',
+                        borderRadius: '12px',
+                        border: '3px solid #2563eb',
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                      }}>
+                        <QuoteRequestForm
+                          companyId={c.id}
+                          companyName={c.name}
+                          onSuccess={() => {
+                            alert('Quote request sent successfully! The business will contact you soon.');
+                            setExpandedQuote(null);
+                          }}
+                          onCancel={() => setExpandedQuote(null)}
+                        />
+                      </div>
                     )}
                   </div>
                   )}
