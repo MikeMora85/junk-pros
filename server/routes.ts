@@ -251,22 +251,22 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         companies = await storage.getApprovedCompanies();
       }
       
-      // Convert object storage paths to direct signed URLs for better performance
-      const objectStorageService = new ObjectStorageService();
-      const companiesWithSignedURLs = await Promise.all(companies.map(async (company) => {
-        const [logoUrl, galleryUrls] = await Promise.all([
-          company.logoUrl ? objectStorageService.getPublicObjectURL(company.logoUrl) : null,
-          objectStorageService.convertObjectPathsToPublicURLs(company.galleryImages)
-        ]);
-        
-        return {
-          ...company,
-          logoUrl,
-          galleryImages: galleryUrls
-        };
-      }));
+      // Temporarily disabled image URL conversion - serving via server proxy for now
+      // const objectStorageService = new ObjectStorageService();
+      // const companiesWithSignedURLs = await Promise.all(companies.map(async (company) => {
+      //   const [logoUrl, galleryUrls] = await Promise.all([
+      //     company.logoUrl ? objectStorageService.getPublicObjectURL(company.logoUrl) : null,
+      //     objectStorageService.convertObjectPathsToPublicURLs(company.galleryImages)
+      //   ]);
+      //   
+      //   return {
+      //     ...company,
+      //     logoUrl,
+      //     galleryImages: galleryUrls
+      //   };
+      // }));
       
-      res.json(companiesWithSignedURLs);
+      res.json(companies);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch companies" });
     }
