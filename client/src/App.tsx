@@ -5692,12 +5692,12 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
               <X size={24} color="#000" />
             </button>
 
-            {/* Congratulations Header */}
+            {/* Success Header */}
             <div style={{
-              background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+              background: '#fbbf24',
               padding: '40px 20px',
               textAlign: 'center',
-              color: '#fff',
+              color: '#000',
             }}>
               <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎉</div>
               <h1 style={{
@@ -5705,13 +5705,13 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                 fontWeight: '700',
                 marginBottom: '12px',
               }}>
-                Congratulations!
+                Success!
               </h1>
               <p style={{
                 fontSize: '20px',
-                opacity: 0.95,
+                fontWeight: '600',
               }}>
-                You found your local vetted hauler
+                Here's your closest junk removal company
               </p>
             </div>
 
