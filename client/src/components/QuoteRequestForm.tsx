@@ -87,7 +87,7 @@ export default function QuoteRequestForm({ companyId, companyName, onSuccess, on
       padding: '16px',
       backgroundColor: '#fff',
       borderRadius: '8px',
-      border: '2px solid #2563eb',
+      border: '2px solid #fbbf24',
     }}>
       <h5 style={{
         fontSize: '16px',
