@@ -162,35 +162,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
-  // Geocode zip code endpoint (keeps API key secure on server)
-  app.get('/api/geocode/:zipCode', async (req, res) => {
-    try {
-      const { zipCode } = req.params;
-      const apiKey = process.env.VITE_GOOGLE_MAPS_API_KEY;
-      
-      if (!apiKey) {
-        return res.status(500).json({ error: 'Google Maps API key not configured' });
-      }
-      
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`
-      );
-      
-      const data = await response.json();
-      
-      if (data.status === 'OK' && data.results.length > 0) {
-        const location = data.results[0].geometry.location;
-        return res.json({
-          latitude: location.lat,
-          longitude: location.lng,
-        });
-      }
-      
-      res.status(404).json({ error: 'Location not found' });
-    } catch (error) {
-      console.error('Geocoding error:', error);
-      res.status(500).json({ error: 'Geocoding failed' });
-    }
+  // Config endpoint - exposes referer-restricted API key to frontend
+  app.get('/api/config', (req, res) => {
+    res.json({
+      googleMapsApiKey: process.env.VITE_GOOGLE_MAPS_API_KEY || '',
+    });
   });
 
   // Simple auth middleware

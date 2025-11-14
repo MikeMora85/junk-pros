@@ -36,25 +36,39 @@ function toRad(degrees: number): number {
   return degrees * (Math.PI / 180);
 }
 
-// Geocode zip code to coordinates using backend API (keeps API key secure)
+// Geocode zip code to coordinates using Google Maps API (frontend with referer-restricted key)
 export async function geocodeZipCode(zipCode: string): Promise<Coordinates | null> {
   try {
-    const response = await fetch(`/api/geocode/${zipCode}`);
+    // Get API key from backend config endpoint
+    const configResponse = await fetch('/api/config');
+    const config = await configResponse.json();
+    const apiKey = config.googleMapsApiKey;
     
-    if (response.ok) {
-      const data = await response.json();
-      return {
-        latitude: data.latitude,
-        longitude: data.longitude,
-      };
-    }
-    
-    if (response.status === 404) {
-      console.warn(`Location not found for zip code: ${zipCode}`);
+    if (!apiKey) {
+      console.warn('Google Maps API key not configured');
       return null;
     }
     
-    console.error('Geocoding failed:', await response.text());
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`
+    );
+    
+    const data = await response.json();
+    
+    if (data.status === 'OK' && data.results.length > 0) {
+      const location = data.results[0].geometry.location;
+      return {
+        latitude: location.lat,
+        longitude: location.lng,
+      };
+    }
+    
+    if (data.status === 'REQUEST_DENIED') {
+      console.error('Google Maps API error:', data.error_message);
+      return null;
+    }
+    
+    console.warn(`Location not found for zip code: ${zipCode}`);
     return null;
   } catch (error) {
     console.error('Geocoding error:', error);
