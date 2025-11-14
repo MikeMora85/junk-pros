@@ -462,8 +462,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         try {
           const resend = new Resend(process.env.RESEND_API_KEY);
           
-          // Get business email (use contactEmail or phone as fallback)
-          const businessEmail = company.contactEmail || company.email || `${company.phone}@example.com`;
+          // Get business email (use contactEmail or default)
+          const businessEmail = company.contactEmail || 'noreply@example.com';
           
           // Build email content
           let emailHtml = `
@@ -506,7 +506,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           `;
           
           await resend.emails.send({
-            from: 'JunkRemoval Directory <noreply@yourdomain.com>',
+            from: 'Junk Removal Directory <onboarding@resend.dev>',
             to: businessEmail,
             subject: `New Quote Request from ${customerName}`,
             html: emailHtml,
