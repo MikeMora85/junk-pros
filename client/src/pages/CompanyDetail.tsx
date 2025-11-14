@@ -322,7 +322,20 @@ export default function CompanyDetail() {
         )}
 
         {/* Two Column Layout */}
-        <div style={{ display: 'flex', gap: '16px', flexDirection: 'column' }}>
+        <style>{`
+          .company-detail-layout {
+            display: flex;
+            gap: 16px;
+            flex-direction: column;
+          }
+          @media (min-width: 900px) {
+            .company-detail-layout {
+              flex-direction: row;
+              align-items: flex-start;
+            }
+          }
+        `}</style>
+        <div className="company-detail-layout">
           {/* Left Column */}
           <div style={{ flex: 1 }}>
             {/* About Us */}
@@ -371,32 +384,46 @@ export default function CompanyDetail() {
                 }}>
                   Photos
                 </h2>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '12px',
-                }}>
-                  {(() => {
-                    const hasGallery = company.galleryImages && company.galleryImages.length > 0;
-                    const imagesToShow = hasGallery 
-                      ? company.galleryImages!.slice(0, 4)
-                      : [1, 2, 3, 4];
-                    
-                    return imagesToShow.map((img, i) => (
-                      <img
-                        key={i}
-                        src={typeof img === 'string' ? img : `https://picsum.photos/400/300?random=${img}`}
-                        alt={`Gallery ${i + 1}`}
-                        style={{
-                          width: '100%',
-                          height: '120px',
-                          objectFit: 'cover',
-                          borderRadius: '8px',
-                        }}
-                      />
-                    ));
-                  })()}
-                </div>
+                <>
+                  <style>{`
+                    @media (min-width: 768px) {
+                      .photo-gallery-grid {
+                        grid-template-columns: repeat(3, 1fr) !important;
+                      }
+                    }
+                    @media (min-width: 1024px) {
+                      .photo-gallery-grid {
+                        grid-template-columns: repeat(4, 1fr) !important;
+                      }
+                    }
+                  `}</style>
+                  <div className="photo-gallery-grid" style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(2, 1fr)',
+                    gap: '12px',
+                  }}>
+                    {(() => {
+                      const hasGallery = company.galleryImages && company.galleryImages.length > 0;
+                      const imagesToShow = hasGallery 
+                        ? company.galleryImages!.slice(0, 8)
+                        : [1, 2, 3, 4, 5, 6, 7, 8];
+                      
+                      return imagesToShow.map((img, i) => (
+                        <img
+                          key={i}
+                          src={typeof img === 'string' ? img : `https://picsum.photos/400/300?random=${img}`}
+                          alt={`Gallery ${i + 1}`}
+                          style={{
+                            width: '100%',
+                            height: '160px',
+                            objectFit: 'cover',
+                            borderRadius: '8px',
+                          }}
+                        />
+                      ));
+                    })()}
+                  </div>
+                </>
               </div>
             )}
 
