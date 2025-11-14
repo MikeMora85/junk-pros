@@ -3870,10 +3870,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <a
                           href={`tel:${c.phone}`}
                           onClick={(e) => {
+                            e.stopPropagation();
                             console.log('CALL BUTTON CLICKED!', c.phone);
                             window.location.href = `tel:${c.phone}`;
                           }}
                           onTouchStart={(e) => {
+                            e.stopPropagation();
                             console.log('CALL BUTTON TOUCHED!', c.phone);
                             e.preventDefault();
                             window.location.href = `tel:${c.phone}`;
@@ -3901,10 +3903,12 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         <a
                           href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
                           onClick={(e) => {
+                            e.stopPropagation();
                             console.log('SMS BUTTON CLICKED!', c.phone);
                             window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
                           }}
                           onTouchStart={(e) => {
+                            e.stopPropagation();
                             console.log('SMS BUTTON TOUCHED!', c.phone);
                             e.preventDefault();
                             window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
