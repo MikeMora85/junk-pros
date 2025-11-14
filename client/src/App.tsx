@@ -3951,7 +3951,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           }}
                           data-testid={`button-in-person-inline-${c.id}`}
                         >
-                          <Calendar className="quote-icon" size={26} />
+                          <FileText className="quote-icon" size={26} />
                         </button>
                       </div>
                     )}
@@ -4262,7 +4262,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         }}
                         data-testid={`button-in-person-${c.id}`}
                       >
-                        <Calendar className="quote-icon" size={26} />
+                        <FileText className="quote-icon" size={26} />
                       </button>
                     </div>
 
