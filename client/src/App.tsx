@@ -5750,8 +5750,8 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                       flex: 1,
                       minWidth: '200px',
                       padding: '14px 20px',
-                      backgroundColor: '#16a34a',
-                      color: '#fff',
+                      backgroundColor: '#fbbf24',
+                      color: '#000',
                       textDecoration: 'none',
                       borderRadius: '8px',
                       fontSize: '16px',
@@ -5760,11 +5760,10 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '8px',
                     }}
                     data-testid="button-call-closest"
                   >
-                    <Phone size={20} /> Call Now
+                    Call Now
                   </a>
                   <Link
                     href={`/company/${closestHauler.company.id}`}
@@ -5782,11 +5781,10 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '8px',
                     }}
                     data-testid="button-view-profile-closest"
                   >
-                    <FileText size={20} /> View Full Profile
+                    View Full Profile
                   </Link>
                 </div>
               </div>
