@@ -203,7 +203,7 @@ export default function CompanyDetail() {
         zIndex: 50,
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <Link href={`/${company.state.toLowerCase().replace(/\s+/g, '-')}/${company.city.toLowerCase()}`}>
+          <Link href={company.state && company.city ? `/${company.state.toLowerCase().replace(/\s+/g, '-')}/${company.city.toLowerCase()}` : '/'}>
             <button style={{
               padding: '8px 16px',
               background: '#f3f4f6',
