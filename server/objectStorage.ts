@@ -212,10 +212,9 @@ export class ObjectStorageService {
     // 7 days default TTL for public images
     try {
       const objectFile = await this.getObjectEntityFile(objectPath);
-      const { bucketName, objectName } = parseObjectPath(objectFile.name);
       return signObjectURL({
-        bucketName,
-        objectName,
+        bucketName: objectFile.bucket.name,
+        objectName: objectFile.name,
         method: "GET",
         ttlSec,
       });
