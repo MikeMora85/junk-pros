@@ -3954,28 +3954,28 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           <FileText className="quote-icon" size={26} />
                         </button>
                       </div>
+                    )}
 
-                      {/* Quote Request Form - Desktop Inline */}
-                      {expandedQuote === c.id && (
-                        <div style={{
-                          marginTop: '16px',
-                          backgroundColor: '#fffbeb',
-                          padding: '16px',
-                          borderRadius: '12px',
-                          border: '3px solid #fbbf24',
-                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                        }}>
-                          <QuoteRequestForm
-                            companyId={c.id}
-                            companyName={c.name}
-                            onSuccess={() => {
-                              alert('Quote request sent successfully! The business will contact you soon.');
-                              setExpandedQuote(null);
-                            }}
-                            onCancel={() => setExpandedQuote(null)}
-                          />
-                        </div>
-                      )}
+                    {/* Quote Request Form - Desktop Inline */}
+                    {expandedQuote === c.id && hasFullFeatures && (
+                      <div style={{
+                        marginTop: '16px',
+                        backgroundColor: '#fffbeb',
+                        padding: '16px',
+                        borderRadius: '12px',
+                        border: '3px solid #fbbf24',
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                      }}>
+                        <QuoteRequestForm
+                          companyId={c.id}
+                          companyName={c.name}
+                          onSuccess={() => {
+                            alert('Quote request sent successfully! The business will contact you soon.');
+                            setExpandedQuote(null);
+                          }}
+                          onCancel={() => setExpandedQuote(null)}
+                        />
+                      </div>
                     )}
                   </div>
                   )}
