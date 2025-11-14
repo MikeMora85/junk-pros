@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import { ArrowLeft, Trash2, Home, Sofa, Phone, Mail, Globe } from "lucide-react";
 import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import { trackBusinessEvent } from "../lib/tracking";
+import QuoteRequestForm from "../components/QuoteRequestForm";
 
 export default function CompanyDetail() {
   const [, params] = useRoute("/company/:id");
   const companyId = params?.id ? parseInt(params.id) : null;
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
 
   const { data: company, isLoading } = useQuery<Company>({
     queryKey: ["/api/companies", companyId],
@@ -270,8 +273,8 @@ export default function CompanyDetail() {
               gap: '8px',
             }}
             onClick={() => {
-              trackBusinessEvent(company.id, 'call');
-              window.open(`tel:${company.phone}`, '_self');
+              trackBusinessEvent(company.id, 'quote_request');
+              setShowQuoteForm(true);
             }}
             data-testid="button-request-quote"
           >
@@ -786,8 +789,8 @@ export default function CompanyDetail() {
                   fontWeight: '600',
                 }}
                 onClick={() => {
-                  trackBusinessEvent(company.id, 'call');
-                  window.open(`tel:${company.phone}`, '_self');
+                  trackBusinessEvent(company.id, 'quote_request');
+                  setShowQuoteForm(true);
                 }}
                 data-testid="button-request-quote-bottom"
               >
@@ -797,6 +800,42 @@ export default function CompanyDetail() {
           </div>
         </div>
       </div>
+
+      {/* Quote Request Form Modal */}
+      {showQuoteForm && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '20px',
+        }}>
+          <div style={{
+            backgroundColor: '#fff',
+            borderRadius: '12px',
+            maxWidth: '500px',
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto',
+          }}>
+            <QuoteRequestForm
+              companyId={company.id}
+              companyName={company.name}
+              onSuccess={() => {
+                setShowQuoteForm(false);
+                alert('Quote request submitted successfully! The business will contact you soon.');
+              }}
+              onCancel={() => setShowQuoteForm(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
