@@ -6,6 +6,7 @@ import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Hom
 import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import QuoteRequestForm from "./components/QuoteRequestForm";
 import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
@@ -4265,50 +4266,17 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </button>
                     </div>
 
-                    {/* Calendar/Availability Section */}
+                    {/* Quote Request Form */}
                     {expandedQuote === c.id && (
-                      <div style={{
-                        marginTop: '16px',
-                        padding: '16px',
-                        backgroundColor: '#fff',
-                        borderRadius: '8px',
-                        border: '2px solid #2563eb',
-                      }}>
-                        <h5 style={{
-                          fontSize: '14px',
-                          fontWeight: '700',
-                          margin: '0 0 12px 0',
-                          color: '#fbbf24',
-                        }}>
-                          Available Times
-                        </h5>
-                        
-                        <div style={{ display: 'grid', gap: '8px' }}>
-                          {['Today 2:00 PM', 'Tomorrow 10:00 AM', 'Tomorrow 3:00 PM', 'Friday 9:00 AM'].map((time, i) => (
-                            <button
-                              key={i}
-                              style={{
-                                padding: '10px 16px',
-                                backgroundColor: '#f5f5f5',
-                                border: '2px solid #e5e5e5',
-                                borderRadius: '6px',
-                                cursor: 'pointer',
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                color: '#fbbf24',
-                                textAlign: 'left',
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                alert(`Appointment scheduled for ${time}`);
-                              }}
-                              data-testid={`button-time-slot-${c.id}-${i}`}
-                            >
-                              {time}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                      <QuoteRequestForm
+                        companyId={c.id}
+                        companyName={c.name}
+                        onSuccess={() => {
+                          alert('Quote request sent successfully! The business will contact you soon.');
+                          setExpandedQuote(null);
+                        }}
+                        onCancel={() => setExpandedQuote(null)}
+                      />
                     )}
                   </div>
                   )}
