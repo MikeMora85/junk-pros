@@ -1,4 +1,4 @@
-import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent, BusinessOwner, InsertBusinessOwner, Notification, InsertNotification } from "@shared/schema";
+import type { Company, InsertCompany, User, UpsertUser, BusinessEvent, InsertBusinessEvent, BusinessOwner, InsertBusinessOwner, Notification, InsertNotification, Quote, InsertQuote } from "@shared/schema";
 
 export interface IStorage {
   // User operations (required for Replit Auth)
@@ -45,6 +45,10 @@ export interface IStorage {
   getUnreadNotificationsByCompany(companyId: number): Promise<Notification[]>;
   markNotificationAsRead(id: number): Promise<Notification | null>;
   markAllNotificationsAsRead(companyId: number): Promise<void>;
+  
+  // Quote operations
+  createQuote(data: import("@shared/schema").InsertQuote): Promise<import("@shared/schema").Quote>;
+  getQuotesByCompany(companyId: number): Promise<import("@shared/schema").Quote[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -596,11 +600,19 @@ export class MemStorage implements IStorage {
       .filter(n => n.companyId === companyId && !n.isRead)
       .forEach(n => n.isRead = true);
   }
+
+  async createQuote(data: InsertQuote): Promise<Quote> {
+    throw new Error("Quotes are not supported in MemStorage. Use DbStorage instead.");
+  }
+
+  async getQuotesByCompany(companyId: number): Promise<Quote[]> {
+    throw new Error("Quotes are not supported in MemStorage. Use DbStorage instead.");
+  }
 }
 
 import { db } from './db';
 import { eq, and, gte, lte, sql, asc, desc } from 'drizzle-orm';
-import { companies, users, businessOwners, businessEvents, notifications } from '@shared/schema';
+import { companies, users, businessOwners, businessEvents, notifications, quotes } from '@shared/schema';
 
 export class DbStorage implements IStorage {
   // User operations
@@ -985,6 +997,30 @@ export class DbStorage implements IStorage {
       .update(notifications)
       .set({ isRead: true })
       .where(and(eq(notifications.companyId, companyId), eq(notifications.isRead, false)));
+  }
+
+  async createQuote(data: InsertQuote): Promise<Quote> {
+    const [quote] = await db
+      .insert(quotes)
+      .values({
+        companyId: data.companyId,
+        customerName: data.customerName,
+        customerEmail: data.customerEmail,
+        customerPhone: data.customerPhone,
+        message: data.message ?? null,
+        photoUrls: data.photoUrls ?? [],
+        status: data.status ?? 'new',
+      })
+      .returning();
+    return quote;
+  }
+
+  async getQuotesByCompany(companyId: number): Promise<Quote[]> {
+    return await db
+      .select()
+      .from(quotes)
+      .where(eq(quotes.companyId, companyId))
+      .orderBy(desc(quotes.createdAt));
   }
 }
 
