@@ -76,7 +76,7 @@ export async function geocodeZipCode(zipCode: string): Promise<Coordinates | nul
   }
 }
 
-// Sort companies by distance from coordinates
+// Sort companies by tier first, then distance within each tier
 export function sortCompaniesByDistance(
   companies: any[],
   userCoordinates: Coordinates
@@ -91,7 +91,25 @@ export function sortCompaniesByDistance(
         company.longitude
       )
     }))
-    .sort((a, b) => a.distance - b.distance);
+    .sort((a, b) => {
+      // Helper function to get tier priority (lower = higher priority)
+      const getTierPriority = (company: any) => {
+        if (!company.claimed) return 4; // Unclaimed
+        if (company.subscription_tier === 'premium') return 1;
+        if (company.subscription_tier === 'standard') return 2;
+        return 3; // basic or free
+      };
+      
+      const tierDiff = getTierPriority(a.company) - getTierPriority(b.company);
+      
+      // If same tier, sort by distance
+      if (tierDiff === 0) {
+        return a.distance - b.distance;
+      }
+      
+      // Otherwise sort by tier
+      return tierDiff;
+    });
 }
 
 // Filter companies within a radius
