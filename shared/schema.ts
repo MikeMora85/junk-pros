@@ -207,3 +207,24 @@ export const insertNotificationSchema = createInsertSchema(notifications, {
 
 export type InsertNotification = z.infer<typeof insertNotificationSchema>;
 export type Notification = typeof notifications.$inferSelect;
+
+export const quotes = pgTable("quotes", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  companyId: integer("company_id").notNull().references(() => companies.id),
+  customerName: text("customer_name").notNull(),
+  customerEmail: text("customer_email").notNull(),
+  customerPhone: text("customer_phone").notNull(),
+  message: text("message"),
+  photoUrls: text("photo_urls").array(),
+  status: text("status").notNull().default("new"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertQuoteSchema = createInsertSchema(quotes, {
+  message: z.string().nullable().optional(),
+  photoUrls: z.array(z.string()).nullable().optional(),
+  status: z.string().optional(),
+}).omit({ id: true, createdAt: true });
+
+export type InsertQuote = z.infer<typeof insertQuoteSchema>;
+export type Quote = typeof quotes.$inferSelect;
