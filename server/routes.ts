@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import multer from "multer";
 import path from "path";
+import { Resend } from 'resend';
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Setup auth but don't force it globally
@@ -456,8 +457,67 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       const quote = await storage.createQuote(quoteData);
 
-      // TODO: Send email to business
-      // This will be implemented after setting up email service
+      // Send email to business
+      if (process.env.RESEND_API_KEY) {
+        try {
+          const resend = new Resend(process.env.RESEND_API_KEY);
+          
+          // Get business email (use contactEmail or phone as fallback)
+          const businessEmail = company.contactEmail || company.email || `${company.phone}@example.com`;
+          
+          // Build email content
+          let emailHtml = `
+            <h2>New Quote Request</h2>
+            <p>You have received a new quote request from a customer!</p>
+            
+            <h3>Customer Information:</h3>
+            <ul>
+              <li><strong>Name:</strong> ${customerName}</li>
+              <li><strong>Email:</strong> ${customerEmail}</li>
+              <li><strong>Phone:</strong> ${customerPhone}</li>
+            </ul>
+          `;
+          
+          if (message) {
+            emailHtml += `
+              <h3>Customer Message:</h3>
+              <p>${message}</p>
+            `;
+          }
+          
+          if (photoUrls.length > 0) {
+            emailHtml += `
+              <h3>Photos:</h3>
+              <p>The customer included ${photoUrls.length} photo(s) with their request.</p>
+              <p><em>Photos are stored securely and can be viewed in your business dashboard.</em></p>
+            `;
+          }
+          
+          emailHtml += `
+            <hr>
+            <p><strong>Next Steps:</strong></p>
+            <ol>
+              <li>Review the customer's request</li>
+              <li>Contact them at ${customerPhone} or ${customerEmail}</li>
+              <li>Provide them with a detailed quote</li>
+            </ol>
+            
+            <p>Thank you for using our platform!</p>
+          `;
+          
+          await resend.emails.send({
+            from: 'JunkRemoval Directory <noreply@yourdomain.com>',
+            to: businessEmail,
+            subject: `New Quote Request from ${customerName}`,
+            html: emailHtml,
+          });
+          
+          console.log(`Quote request email sent to ${businessEmail}`);
+        } catch (emailError) {
+          console.error('Error sending email:', emailError);
+          // Don't fail the request if email fails
+        }
+      }
 
       res.status(201).json({ 
         success: true,
