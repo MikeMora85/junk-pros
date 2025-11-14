@@ -2,14 +2,33 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { z } from "zod";
 import type { IStorage } from "./storage";
-import { insertCompanySchema } from "@shared/schema";
+import { insertCompanySchema, insertQuoteSchema } from "@shared/schema";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 import bcrypt from "bcryptjs";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
+import multer from "multer";
+import path from "path";
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Setup auth but don't force it globally
   await setupAuth(app, storage);
+
+  // Configure multer for file uploads
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 10 * 1024 * 1024, // 10MB limit
+      files: 5, // Max 5 files
+    },
+    fileFilter: (req, file, cb) => {
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+      } else {
+        cb(new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.'));
+      }
+    },
+  });
 
   // Diagnostic endpoint to check auth state
   app.get('/api/auth/debug', async (req: any, res) => {
@@ -391,6 +410,66 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
       console.error("Server error:", error);
       res.status(500).json({ error: "Failed to create company" });
+    }
+  });
+
+  // Quote submission route
+  app.post("/api/quotes", upload.array('photos', 5), async (req, res) => {
+    try {
+      const { companyId, customerName, customerEmail, customerPhone, message } = req.body;
+      
+      // Validate required fields
+      if (!companyId || !customerName || !customerEmail || !customerPhone) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+
+      // Validate company exists
+      const company = await storage.getCompanyById(parseInt(companyId));
+      if (!company) {
+        return res.status(404).json({ error: "Company not found" });
+      }
+
+      // Upload photos to object storage
+      const photoUrls: string[] = [];
+      if (req.files && Array.isArray(req.files)) {
+        const objectStorage = new ObjectStorageService();
+        
+        for (const file of req.files) {
+          const filename = `quote-${Date.now()}-${Math.random().toString(36).substring(7)}${path.extname(file.originalname)}`;
+          const objectPath = `/.private/quotes/${filename}`;
+          
+          // Upload to object storage
+          await objectStorage.uploadObject(objectPath, file.buffer);
+          photoUrls.push(objectPath);
+        }
+      }
+
+      // Create quote in database
+      const quoteData = insertQuoteSchema.parse({
+        companyId: parseInt(companyId),
+        customerName,
+        customerEmail,
+        customerPhone,
+        message: message || null,
+        photoUrls: photoUrls.length > 0 ? photoUrls : null,
+      });
+
+      const quote = await storage.createQuote(quoteData);
+
+      // TODO: Send email to business
+      // This will be implemented after setting up email service
+
+      res.status(201).json({ 
+        success: true,
+        quote,
+        message: "Quote request submitted successfully" 
+      });
+    } catch (error) {
+      console.error("Quote submission error:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: "Invalid quote data", details: error.issues });
+      }
+      res.status(500).json({ error: "Failed to submit quote request" });
     }
   });
 
