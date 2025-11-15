@@ -1425,18 +1425,17 @@ function LandingPage() {
         }}>
           {/* Hero Image */}
           <div style={{
-            display: 'flex',
-            justifyContent: 'center',
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
             marginBottom: '32px',
           }}>
             <img 
               src={heroTruck} 
               alt="Junk removal truck with US map" 
               style={{
-                maxWidth: '100%',
-                width: '500px',
+                width: '100%',
                 height: 'auto',
-                borderRadius: '12px',
+                display: 'block',
               }}
             />
           </div>
