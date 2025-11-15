@@ -1318,15 +1318,18 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: 'linear-gradient(180deg, #fbbf24 0%, #fcd34d 100%)',
+      background: '#F7C948',
     }}>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
-      {/* White Header */}
+      {/* White Header - Fixed/Sticky */}
       <div style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
         background: '#ffffff',
         padding: '16px',
-        borderBottom: '1px solid #e5e5e5',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
       }}>
         <div style={{
           maxWidth: '1400px',
@@ -1338,20 +1341,18 @@ function LandingPage() {
           <button
             onClick={() => setMenuOpen(true)}
             style={{
-              backgroundColor: '#fbbf24',
+              backgroundColor: 'transparent',
               color: '#000',
-              padding: '10px',
-              borderRadius: '8px',
-              border: '2px solid #000',
+              padding: '8px',
+              border: 'none',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
             }}
             data-testid="button-menu"
           >
-            <Menu size={24} color="#000" />
+            <Menu size={28} color="#000" />
           </button>
           
           {isAuthenticated && user && (
@@ -1364,22 +1365,21 @@ function LandingPage() {
                 }
               }}
               style={{
-                backgroundColor: '#fbbf24',
+                marginLeft: 'auto',
+                backgroundColor: 'transparent',
                 color: '#000',
-                padding: '10px 16px',
-                borderRadius: '8px',
-                border: '2px solid #000',
+                padding: '8px 12px',
+                border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '6px',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
                 fontSize: '14px',
                 fontWeight: '600',
               }}
               data-testid="button-profile"
             >
-              <UserCircle size={18} />
+              <UserCircle size={20} />
               Profile
             </button>
           )}
@@ -1389,12 +1389,12 @@ function LandingPage() {
       {/* Hero Section with USA Silhouette and Dump Truck */}
       <div style={{
         position: 'relative',
-        minHeight: '75vh',
+        minHeight: '85vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '60px 20px',
+        padding: '60px 16px',
         overflow: 'hidden',
       }}>
         {/* USA Silhouette Background */}
@@ -1403,10 +1403,9 @@ function LandingPage() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '90%',
-          maxWidth: '800px',
+          width: '80%',
+          maxWidth: '700px',
           height: 'auto',
-          opacity: 0.25,
           zIndex: 0,
         }}>
           <img 
@@ -1415,7 +1414,9 @@ function LandingPage() {
             style={{
               width: '100%',
               height: 'auto',
-              filter: 'brightness(1.3) drop-shadow(0 0 3px rgba(0,0,0,0.3))',
+              filter: 'brightness(1.15) contrast(0.9)',
+              opacity: 0.4,
+              mixBlendMode: 'multiply',
             }}
           />
         </div>
@@ -1424,9 +1425,9 @@ function LandingPage() {
         <div style={{
           position: 'relative',
           zIndex: 1,
-          maxWidth: '500px',
+          maxWidth: '360px',
           width: '90%',
-          marginBottom: '40px',
+          marginBottom: '32px',
         }}>
           <img 
             src={curbsideJunkHero} 
@@ -1434,51 +1435,80 @@ function LandingPage() {
             style={{
               width: '100%',
               height: 'auto',
-              borderRadius: '12px',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
+              filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.20))',
             }}
           />
         </div>
+
+        {/* Headline */}
+        <h1 style={{
+          position: 'relative',
+          zIndex: 1,
+          fontSize: '34px',
+          fontWeight: '700',
+          color: '#000000',
+          margin: '0 0 12px 0',
+          textAlign: 'center',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
+          Search Your Zip Code
+        </h1>
+
+        {/* Subheadline */}
+        <p style={{
+          position: 'relative',
+          zIndex: 1,
+          fontSize: '18px',
+          fontWeight: '400',
+          color: '#000000',
+          margin: '0 0 32px 0',
+          textAlign: 'center',
+          maxWidth: '85%',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
+          No National Franchises.<br />
+          Local Vetted Junk Haulers Only.
+        </p>
 
         {/* Search Bar */}
         <form onSubmit={handleSearch} style={{
           position: 'relative',
           zIndex: 1,
-          width: '100%',
+          width: 'calc(100% - 32px)',
           maxWidth: '600px',
           display: 'flex',
-          gap: '10px',
-          backgroundColor: '#fff',
-          padding: '10px',
+          gap: '0',
+          backgroundColor: '#ffffff',
+          padding: '6px',
           borderRadius: '50px',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-          border: '2px solid #000',
+          border: '3px solid #000000',
         }}>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="search by zip code, city, state…"
+            placeholder="search by zip code, city, state..."
             style={{
               flex: 1,
               minWidth: '0',
-              padding: '16px 24px',
+              padding: '14px 20px',
               border: 'none',
               outline: 'none',
               fontSize: '16px',
               borderRadius: '50px',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               backgroundColor: 'transparent',
+              color: '#000000',
             }}
             data-testid="input-homepage-search"
           />
           <button
             type="submit"
             style={{
-              padding: '16px 28px',
-              background: '#fbbf24',
-              color: '#000',
-              border: '2px solid #000',
+              padding: '14px 24px',
+              background: '#F7C948',
+              color: '#000000',
+              border: '2px solid #000000',
               borderRadius: '50px',
               fontSize: '16px',
               fontWeight: '700',
@@ -1489,25 +1519,24 @@ function LandingPage() {
               whiteSpace: 'nowrap',
               flexShrink: 0,
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
             }}
             data-testid="button-homepage-search"
           >
-            <Search size={20} />
+            <Search size={20} color="#000000" />
           </button>
         </form>
       </div>
 
       {/* Three Feature Cards */}
       <div style={{
-        maxWidth: '1200px',
+        maxWidth: '600px',
         margin: '0 auto',
-        padding: '0 20px 80px 20px',
+        padding: '0 16px 60px 16px',
       }}>
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
         }}>
           {[
             {
@@ -1526,29 +1555,29 @@ function LandingPage() {
             <div
               key={i}
               style={{
-                backgroundColor: '#fff',
-                padding: '32px 28px',
-                borderRadius: '12px',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.15)',
-                border: '2px solid #000',
+                backgroundColor: '#ffffff',
+                padding: '28px 24px',
+                borderRadius: '20px',
+                boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+                border: '2px solid #000000',
                 textAlign: 'center',
               }}
               data-testid={`card-feature-${i}`}
             >
               <h3 style={{
-                fontSize: '22px',
+                fontSize: '24px',
                 fontWeight: '700',
-                color: '#000',
-                margin: '0 0 12px 0',
+                color: '#000000',
+                margin: '0 0 10px 0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.title}
               </h3>
               <p style={{
                 fontSize: '16px',
-                color: '#4b5563',
+                color: '#000000',
                 margin: '0',
-                lineHeight: '1.6',
+                lineHeight: '1.5',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.description}

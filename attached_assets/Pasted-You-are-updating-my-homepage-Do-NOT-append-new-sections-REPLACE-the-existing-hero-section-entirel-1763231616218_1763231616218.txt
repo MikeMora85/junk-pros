@@ -1,0 +1,83 @@
+You are updating my homepage. Do NOT append new sections — REPLACE the existing hero section entirely.
+
+Here is what I want the homepage to look like exactly:
+
+1. WHITE HEADER (Option 1)
+- Background: white (#ffffff)
+- Elements: my hamburger menu on the left, centered logo if applicable.
+- A subtle bottom shadow: 0 1px 3px rgba(0,0,0,0.08)
+- Make sure the header is fixed/sticky so it stays at the top.
+
+2. HERO SECTION (REPLACE THE OLD HERO)
+- Background: solid yellow (#F7C948 or the yellow in my current site)
+- Add a USA silhouette behind the hero content:
+  - Color: slightly lighter yellow (#F9D96C)
+  - Add a very subtle black outline at 10% opacity
+  - The silhouette should be centered and fill about 80% of the hero width.
+
+- Add the NPR dump truck image with tall walls (I will upload image as hero-truck.png)
+  - Center it horizontally
+  - Position it slightly overlapping the USA silhouette
+  - Size: about 300–360px wide on mobile
+  - Add a mild drop shadow: 0 15px 30px rgba(0,0,0,0.20)
+
+- HEADLINE:
+  Search Your Zip Code
+  - Color: black
+  - Weight: 700
+  - Size: 34px on mobile
+  - Center aligned
+
+- SUBHEADLINE:
+  No National Franchises.
+  Local Vetted Junk Haulers Only.
+  - Color: black
+  - Weight: 400
+  - Size: 18px
+  - Center aligned
+  - Max width: 85%
+
+- SEARCH BAR:
+  - White pill-shaped container
+  - Border: 3px solid black
+  - Full width minus 32px padding
+  - Inside placeholder text: “search by zip code, city, state...”
+    in #999999
+  - Yellow search button on the right (#F7C948)
+    with a black border
+    and a black search icon inside.
+
+3. REMOVE THIS SECTION COMPLETELY:
+- State buttons
+- State selection grid
+- Any old hero image
+- Any overlapping promotional cards
+- ANYTHING ABOVE THE “Local & Independent” cards EXCEPT the new hero.
+
+4. FEATURE CARDS — KEEP THESE EXACTLY LIKE MY MOCKUP:
+- Three white cards stacked vertically
+- Rounded corners: 20px
+- Border: 2px solid black
+- Drop shadow: 0 5px 15px rgba(0,0,0,0.1)
+- Titles:
+  Local & Independent
+  Instant Quotes
+  Your Neighborhood Crew
+- Font sizes: Title 24px, Body 16px
+- Color: black text
+
+5. SPACING:
+- Large spacing between sections (50–60px)
+- Consistent mobile-friendly padding
+- No overlapping elements
+
+6. VERY IMPORTANT:
+- Only use my ORIGINAL BRAND COLORS:
+  Yellow: #F7C948 (primary)
+  Black: #000000
+  White: #ffffff
+  Light Yellow Accent: #F9D96C
+- NO blue anywhere.
+
+Please update the HTML + CSS so the homepage EXACTLY matches this design.
+Do NOT preserve the old hero section. Fully replace it.
