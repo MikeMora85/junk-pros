@@ -69,7 +69,7 @@ import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
 import usaSilhouette from "@assets/IMG_7010_1761810264346.png";
-import cleanTruckHero from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
+import cleanTruckHero from "@assets/stock_images/dump_truck_junk_remo_35a3ebaf.jpg";
 import profilePhoto1 from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
 import profilePhoto2 from "@assets/stock_images/junk_removal_truck_l_d830abe1.jpg";
 import profilePhoto3 from "@assets/stock_images/junk_removal_truck_l_edd9160e.jpg";
