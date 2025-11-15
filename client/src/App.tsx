@@ -68,8 +68,7 @@ import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg
 import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
-import usaSilhouette from "@assets/IMG_7010_1761810264346.png";
-import cleanTruckHero from "@assets/stock_images/white_dump_truck_wit_bbb2cb6c.jpg";
+import curbsideJunkHero from "@assets/662A4A2C-FCD0-43E0-9DC4-2ABCD8C1DC69_1759626202147.png";
 import profilePhoto1 from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
 import profilePhoto2 from "@assets/stock_images/junk_removal_truck_l_d830abe1.jpg";
 import profilePhoto3 from "@assets/stock_images/junk_removal_truck_l_edd9160e.jpg";
@@ -150,7 +149,7 @@ function RotatingBanner() {
 
 // Hamburger Menu Component
 function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [stateSearch, setStateSearch] = useState('');
   const [citySearch, setCitySearch] = useState('');
   const [townSearch, setTownSearch] = useState('');
@@ -1318,236 +1317,335 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#F7C948',
+      background: '#d3d3d3',
     }}>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
-      {/* White Header - Fixed/Sticky */}
       <div style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 1000,
         background: '#ffffff',
-        padding: '16px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+        minHeight: '100vh',
       }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
-        }}>
+      {/* Header Buttons */}
+      <div className="homepage-header-buttons" style={{
+        position: 'fixed',
+        top: '16px',
+        left: '16px',
+        display: 'flex',
+        gap: '12px',
+        zIndex: 1000,
+      }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-header-buttons {
+              left: calc((100vw - 1400px) / 2 - 8px) !important;
+            }
+          }
+        `}} />
+        <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          }}
+          data-testid="button-menu"
+        >
+          <Menu size={24} color="#000" />
+        </button>
+        
+        {isAuthenticated && user && (
           <button
-            onClick={() => setMenuOpen(true)}
+            onClick={() => {
+              if ((user as any)?.isAdmin) {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/profile/edit';
+              }
+            }}
             style={{
-              backgroundColor: 'transparent',
-              color: '#000',
-              padding: '8px',
-              border: 'none',
+              backgroundColor: '#166534',
+              color: '#fff',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              border: '1px solid #000',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              gap: '6px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+              fontSize: '14px',
+              fontWeight: '600',
             }}
-            data-testid="button-menu"
+            data-testid="button-profile"
           >
-            <Menu size={28} color="#000" />
+            <UserCircle size={18} />
+            Profile
           </button>
-          
-          {isAuthenticated && user && (
-            <button
-              onClick={() => {
-                if ((user as any)?.isAdmin) {
-                  window.location.href = '/admin';
-                } else {
-                  window.location.href = '/profile/edit';
-                }
-              }}
+        )}
+      </div>
+
+      <div className="homepage-content" style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '80px 20px 30px 20px',
+      }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-content {
+              max-width: 1400px !important;
+              padding: 80px 40px 30px 40px !important;
+            }
+            
+            .state-grid {
+              grid-template-columns: repeat(4, 1fr) !important;
+              max-width: 100% !important;
+              gap: 16px !important;
+            }
+            
+            .homepage-hero h2 {
+              font-size: 48px !important;
+            }
+            
+            .homepage-hero p {
+              font-size: 24px !important;
+            }
+          }
+        `}} />
+        <div className="homepage-hero" style={{
+          textAlign: 'center',
+          marginBottom: '48px',
+        }}>
+          <h2 style={{
+            fontSize: '36px',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            margin: '0 0 16px 0',
+            letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Search Your Zip Code
+          </h2>
+          <p style={{
+            fontSize: '20px',
+            color: '#6b7280',
+            margin: '0 0 40px 0',
+            maxWidth: '700px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            No National Franchises, Local Vetted Junk Haulers Only.
+          </p>
+
+          <form onSubmit={handleSearch} style={{
+            width: '100%',
+            maxWidth: '500px',
+            margin: '0 auto',
+            display: 'flex',
+            gap: '6px',
+            backgroundColor: '#fff',
+            padding: '5px',
+            borderRadius: '10px',
+            boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+            transform: 'translateY(-1px)',
+            border: '2px solid transparent',
+            boxSizing: 'border-box',
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.border = '2px solid #fbbf24';
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.border = '2px solid transparent';
+          }}
+          >
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="search by zip code, city, state"
               style={{
-                marginLeft: 'auto',
-                backgroundColor: 'transparent',
-                color: '#000',
-                padding: '8px 12px',
+                flex: 1,
+                minWidth: '0',
+                width: '1px',
+                padding: '10px 8px',
                 border: 'none',
+                outline: 'none',
+                fontSize: '16px',
+                borderRadius: '8px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                backgroundColor: 'transparent',
+                WebkitTextSizeAdjust: '100%',
+                touchAction: 'manipulation',
+              }}
+              data-testid="input-homepage-search"
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '10px 14px',
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '700',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                fontSize: '14px',
-                fontWeight: '600',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}
-              data-testid="button-profile"
+              data-testid="button-homepage-search"
             >
-              <UserCircle size={20} />
-              Profile
+              <Search size={18} />
             </button>
-          )}
+          </form>
+          
+          {/* Rotating message below search */}
+          <div style={{
+            marginTop: '24px',
+            textAlign: 'center',
+          }}>
+            <RotatingBanner />
+          </div>
         </div>
-      </div>
 
-      {/* Hero Section with USA Silhouette and Dump Truck */}
-      <div style={{
-        position: 'relative',
-        minHeight: '85vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '60px 16px',
-        overflow: 'hidden',
-      }}>
-        {/* USA Silhouette Background */}
         <div style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '80%',
-          maxWidth: '700px',
-          height: 'auto',
-          zIndex: 0,
-        }}>
-          <img 
-            src={usaSilhouette} 
-            alt="USA" 
-            style={{
-              width: '100%',
-              height: 'auto',
-              filter: 'brightness(1.15) contrast(0.9)',
-              opacity: 0.4,
-              mixBlendMode: 'multiply',
-            }}
-          />
-        </div>
-
-        {/* Headline */}
-        <h1 style={{
-          position: 'relative',
-          zIndex: 1,
-          fontSize: '38px',
-          fontWeight: '700',
-          color: '#000000',
-          margin: '0 0 16px 0',
           textAlign: 'center',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          marginBottom: '60px',
         }}>
-          Search Your Zip Code
-        </h1>
-
-        {/* Subheadline */}
-        <p style={{
-          position: 'relative',
-          zIndex: 1,
-          fontSize: '19px',
-          fontWeight: '400',
-          color: '#000000',
-          margin: '0 0 40px 0',
-          textAlign: 'center',
-          maxWidth: '85%',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        }}>
-          No National Franchises.<br />
-          Local Vetted Junk Haulers Only
-        </p>
-
-        {/* NPR Dump Truck Image */}
-        <div style={{
-          position: 'relative',
-          zIndex: 1,
-          maxWidth: '420px',
-          width: '90%',
-          marginBottom: '40px',
-        }}>
-          <img 
-            src={cleanTruckHero} 
-            alt="Junk Removal Truck" 
-            style={{
-              width: '100%',
-              height: 'auto',
-              filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.20))',
-            }}
-          />
+          <h3 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#374151',
+            marginBottom: '20px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Browse by State
+          </h3>
+          <div className="state-grid" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '10px',
+            maxWidth: '600px',
+            margin: '0 auto',
+          }}>
+            {[
+              { name: 'Alabama', slug: 'alabama' },
+              { name: 'Alaska', slug: 'alaska' },
+              { name: 'Arizona', slug: 'arizona' },
+              { name: 'Arkansas', slug: 'arkansas' },
+              { name: 'California', slug: 'california' },
+              { name: 'Colorado', slug: 'colorado' },
+              { name: 'Connecticut', slug: 'connecticut' },
+              { name: 'Delaware', slug: 'delaware' },
+              { name: 'Florida', slug: 'florida' },
+              { name: 'Georgia', slug: 'georgia' },
+              { name: 'Hawaii', slug: 'hawaii' },
+              { name: 'Idaho', slug: 'idaho' },
+              { name: 'Illinois', slug: 'illinois' },
+              { name: 'Indiana', slug: 'indiana' },
+              { name: 'Iowa', slug: 'iowa' },
+              { name: 'Kansas', slug: 'kansas' },
+              { name: 'Kentucky', slug: 'kentucky' },
+              { name: 'Louisiana', slug: 'louisiana' },
+              { name: 'Maine', slug: 'maine' },
+              { name: 'Maryland', slug: 'maryland' },
+              { name: 'Massachusetts', slug: 'massachusetts' },
+              { name: 'Michigan', slug: 'michigan' },
+              { name: 'Minnesota', slug: 'minnesota' },
+              { name: 'Mississippi', slug: 'mississippi' },
+              { name: 'Missouri', slug: 'missouri' },
+              { name: 'Montana', slug: 'montana' },
+              { name: 'Nebraska', slug: 'nebraska' },
+              { name: 'Nevada', slug: 'nevada' },
+              { name: 'New Hampshire', slug: 'new-hampshire' },
+              { name: 'New Jersey', slug: 'new-jersey' },
+              { name: 'New Mexico', slug: 'new-mexico' },
+              { name: 'New York', slug: 'new-york' },
+              { name: 'North Carolina', slug: 'north-carolina' },
+              { name: 'North Dakota', slug: 'north-dakota' },
+              { name: 'Ohio', slug: 'ohio' },
+              { name: 'Oklahoma', slug: 'oklahoma' },
+              { name: 'Oregon', slug: 'oregon' },
+              { name: 'Pennsylvania', slug: 'pennsylvania' },
+              { name: 'Rhode Island', slug: 'rhode-island' },
+              { name: 'South Carolina', slug: 'south-carolina' },
+              { name: 'South Dakota', slug: 'south-dakota' },
+              { name: 'Tennessee', slug: 'tennessee' },
+              { name: 'Texas', slug: 'texas' },
+              { name: 'Utah', slug: 'utah' },
+              { name: 'Vermont', slug: 'vermont' },
+              { name: 'Virginia', slug: 'virginia' },
+              { name: 'Washington', slug: 'washington' },
+              { name: 'West Virginia', slug: 'west-virginia' },
+              { name: 'Wisconsin', slug: 'wisconsin' },
+              { name: 'Wyoming', slug: 'wyoming' },
+            ].map((state) => (
+              <a
+                key={state.slug}
+                href={`/${state.slug}`}
+                style={{
+                  padding: '12px 8px',
+                  backgroundColor: '#fff',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  transform: 'translateY(-1px)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
+                }}
+                data-testid={`link-state-${state.slug}`}
+              >
+                {state.name}
+              </a>
+            ))}
+          </div>
         </div>
 
-        {/* Search Bar */}
-        <form onSubmit={handleSearch} style={{
-          position: 'relative',
-          zIndex: 1,
-          width: 'calc(100% - 32px)',
-          maxWidth: '600px',
-          display: 'flex',
-          gap: '0',
-          backgroundColor: '#ffffff',
-          padding: '6px',
-          borderRadius: '50px',
-          border: '3px solid #000000',
-        }}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="search by zip code, city, state..."
-            style={{
-              flex: 1,
-              minWidth: '0',
-              padding: '14px 20px',
-              border: 'none',
-              outline: 'none',
-              fontSize: '16px',
-              borderRadius: '50px',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              backgroundColor: 'transparent',
-              color: '#000000',
-            }}
-            data-testid="input-homepage-search"
-          />
-          <button
-            type="submit"
-            style={{
-              padding: '14px 24px',
-              background: '#F7C948',
-              color: '#000000',
-              border: '2px solid #000000',
-              borderRadius: '50px',
-              fontSize: '16px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              whiteSpace: 'nowrap',
-              flexShrink: 0,
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            }}
-            data-testid="button-homepage-search"
-          >
-            <Search size={20} color="#000000" />
-          </button>
-        </form>
-      </div>
-
-      {/* Three Feature Cards */}
-      <div style={{
-        maxWidth: '600px',
-        margin: '0 auto',
-        padding: '0 16px 60px 16px',
-      }}>
         <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '20px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '24px',
+          marginTop: '48px',
         }}>
           {[
             {
+              icon: <Star size={32} />,
               title: 'Local & Independent',
               description: 'Only locally-owned companies based in your city - no franchises',
             },
             {
+              icon: <TrendingUp size={32} />,
               title: 'Instant Quotes',
               description: 'Get free estimates from multiple local companies in minutes',
             },
             {
+              icon: <MapPin size={32} color="#fbbf24" />,
               title: 'Your Neighborhood Crew',
               description: 'Support independent businesses located right in your community',
             },
@@ -1555,29 +1653,46 @@ function LandingPage() {
             <div
               key={i}
               style={{
-                backgroundColor: '#ffffff',
-                padding: '28px 24px',
-                borderRadius: '20px',
-                boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-                border: '2px solid #000000',
+                backgroundColor: '#fff',
+                padding: '32px',
+                borderRadius: '12px',
                 textAlign: 'center',
+                boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                transform: 'translateY(-1px)',
+                transition: 'all 0.2s',
               }}
-              data-testid={`card-feature-${i}`}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
             >
-              <h3 style={{
-                fontSize: '24px',
+              <div style={{
+                display: 'inline-flex',
+                padding: '16px',
+                background: '#f5f5f5',
+                borderRadius: '12px',
+                color: '#fbbf24',
+                marginBottom: '16px',
+              }}>
+                {feature.icon}
+              </div>
+              <h4 style={{
+                fontSize: '20px',
                 fontWeight: '700',
-                color: '#000000',
-                margin: '0 0 10px 0',
+                color: '#374151',
+                margin: '0 0 8px 0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.title}
-              </h3>
+              </h4>
               <p style={{
-                fontSize: '16px',
-                color: '#000000',
+                fontSize: '15px',
+                color: '#6b7280',
                 margin: '0',
-                lineHeight: '1.5',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.description}
@@ -1585,6 +1700,7 @@ function LandingPage() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
