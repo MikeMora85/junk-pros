@@ -23,7 +23,7 @@ import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
 import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
 import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
 import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
-import heroTruck from "@assets/FA37EE97-A54B-474B-858D-8079543096ED_1763237583977.png";
+import heroTruck from "@assets/D7C214E3-66B6-4E91-AC55-328BC4C0447C_1763237856895.png";
 import arizonaHero from "@assets/stock_images/grand_canyon_arizona_c5218ef2.jpg";
 import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.jpg";
 import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
