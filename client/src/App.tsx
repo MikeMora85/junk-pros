@@ -23,6 +23,7 @@ import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
 import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
 import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
 import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
+import heroTruck from "@assets/FA37EE97-A54B-474B-858D-8079543096ED_1763237583977.png";
 import arizonaHero from "@assets/stock_images/grand_canyon_arizona_c5218ef2.jpg";
 import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.jpg";
 import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
@@ -1422,6 +1423,24 @@ function LandingPage() {
           textAlign: 'center',
           marginBottom: '48px',
         }}>
+          {/* Hero Image */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '32px',
+          }}>
+            <img 
+              src={heroTruck} 
+              alt="Junk removal truck with US map" 
+              style={{
+                maxWidth: '100%',
+                width: '500px',
+                height: 'auto',
+                borderRadius: '12px',
+              }}
+            />
+          </div>
+          
           <h2 style={{
             fontSize: '36px',
             fontWeight: '700',
