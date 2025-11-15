@@ -149,7 +149,7 @@ function RotatingBanner() {
 
 // Hamburger Menu Component
 function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [stateSearch, setStateSearch] = useState('');
   const [citySearch, setCitySearch] = useState('');
   const [townSearch, setTownSearch] = useState('');
