@@ -1317,164 +1317,164 @@ function LandingPage() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#d3d3d3',
+      background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
     }}>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
+      {/* Header with translucent overlay */}
       <div style={{
-        background: '#ffffff',
-        minHeight: '100vh',
-      }}>
-      {/* Header Buttons */}
-      <div className="homepage-header-buttons" style={{
         position: 'fixed',
-        top: '16px',
-        left: '16px',
-        display: 'flex',
-        gap: '12px',
+        top: 0,
+        left: 0,
+        right: 0,
+        background: 'rgba(0, 0, 0, 0.3)',
+        padding: '16px',
         zIndex: 1000,
+        backdropFilter: 'blur(8px)',
       }}>
-        <style dangerouslySetInnerHTML={{__html: `
-          @media (min-width: 1024px) {
-            .homepage-header-buttons {
-              left: calc((100vw - 1400px) / 2 - 8px) !important;
-            }
-          }
-        `}} />
-        <button
-          onClick={() => setMenuOpen(true)}
-          style={{
-            backgroundColor: '#fbbf24',
-            color: '#000',
-            padding: '8px',
-            borderRadius: '6px',
-            border: '1px solid #000',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          }}
-          data-testid="button-menu"
-        >
-          <Menu size={24} color="#000" />
-        </button>
-        
-        {isAuthenticated && user && (
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          display: 'flex',
+          gap: '12px',
+        }}>
           <button
-            onClick={() => {
-              if ((user as any)?.isAdmin) {
-                window.location.href = '/admin';
-              } else {
-                window.location.href = '/profile/edit';
-              }
-            }}
+            onClick={() => setMenuOpen(true)}
             style={{
-              backgroundColor: '#166534',
-              color: '#fff',
-              padding: '8px 16px',
+              backgroundColor: '#fbbf24',
+              color: '#000',
+              padding: '8px',
               borderRadius: '6px',
               border: '1px solid #000',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-              fontSize: '14px',
-              fontWeight: '600',
             }}
-            data-testid="button-profile"
+            data-testid="button-menu"
           >
-            <UserCircle size={18} />
-            Profile
+            <Menu size={24} color="#000" />
           </button>
-        )}
+          
+          {isAuthenticated && user && (
+            <button
+              onClick={() => {
+                if ((user as any)?.isAdmin) {
+                  window.location.href = '/admin';
+                } else {
+                  window.location.href = '/profile/edit';
+                }
+              }}
+              style={{
+                backgroundColor: '#fbbf24',
+                color: '#000',
+                padding: '8px 16px',
+                borderRadius: '6px',
+                border: '1px solid #000',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                fontSize: '14px',
+                fontWeight: '600',
+              }}
+              data-testid="button-profile"
+            >
+              <UserCircle size={18} />
+              Profile
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="homepage-content" style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '80px 20px 30px 20px',
+      {/* Hero Section with USA Silhouette */}
+      <div style={{
+        position: 'relative',
+        minHeight: '70vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingTop: '80px',
+        paddingBottom: '60px',
+        overflow: 'hidden',
       }}>
-        <style dangerouslySetInnerHTML={{__html: `
-          @media (min-width: 1024px) {
-            .homepage-content {
-              max-width: 1400px !important;
-              padding: 80px 40px 30px 40px !important;
-            }
-            
-            .state-grid {
-              grid-template-columns: repeat(4, 1fr) !important;
-              max-width: 100% !important;
-              gap: 16px !important;
-            }
-            
-            .homepage-hero h2 {
-              font-size: 48px !important;
-            }
-            
-            .homepage-hero p {
-              font-size: 24px !important;
-            }
-          }
-        `}} />
-        <div className="homepage-hero" style={{
-          textAlign: 'center',
-          marginBottom: '48px',
+        {/* USA Silhouette Background */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '80%',
+          maxWidth: '600px',
+          height: 'auto',
+          opacity: 0.15,
+          zIndex: 0,
         }}>
-          <h2 style={{
-            fontSize: '36px',
+          <svg viewBox="0 0 100 60" style={{filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.25))'}}>
+            <path d="M10,30 L15,25 L20,28 L25,22 L30,25 L35,20 L40,23 L45,18 L50,21 L55,19 L60,22 L65,18 L70,21 L75,25 L80,22 L85,27 L90,25 L90,45 L10,45 Z" 
+              fill="rgba(255,255,255,0.3)" 
+              stroke="rgba(0,0,0,0.25)" 
+              strokeWidth="0.5"/>
+          </svg>
+        </div>
+
+        {/* Content */}
+        <div style={{
+          position: 'relative',
+          zIndex: 1,
+          maxWidth: '900px',
+          margin: '0 auto',
+          padding: '0 20px',
+          textAlign: 'center',
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(32px, 6vw, 56px)',
             fontWeight: '700',
-            color: '#1a1a1a',
+            color: '#ffffff',
             margin: '0 0 16px 0',
             letterSpacing: '-0.02em',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
           }}>
             Search Your Zip Code
-          </h2>
+          </h1>
           <p style={{
-            fontSize: '20px',
-            color: '#6b7280',
-            margin: '0 0 40px 0',
+            fontSize: 'clamp(18px, 3vw, 24px)',
+            color: '#e0e7ff',
+            margin: '0 0 48px 0',
             maxWidth: '700px',
             marginLeft: 'auto',
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            textShadow: '0 1px 2px rgba(0,0,0,0.2)',
           }}>
-            No National Franchises, Local Vetted Junk Haulers Only.
+            No National Franchises. Local Vetted Junk Haulers Only.
           </p>
 
           <form onSubmit={handleSearch} style={{
             width: '100%',
-            maxWidth: '500px',
+            maxWidth: '600px',
             margin: '0 auto',
             display: 'flex',
-            gap: '6px',
+            gap: '8px',
             backgroundColor: '#fff',
-            padding: '5px',
-            borderRadius: '10px',
-            boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-            transform: 'translateY(-1px)',
+            padding: '8px',
+            borderRadius: '12px',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
             border: '2px solid transparent',
             boxSizing: 'border-box',
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.border = '2px solid #fbbf24';
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.border = '2px solid transparent';
-          }}
-          >
+          }}>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="search by zip code, city, state"
+              placeholder="search by zip code, city, state…"
               style={{
                 flex: 1,
                 minWidth: '0',
-                width: '1px',
-                padding: '10px 8px',
+                padding: '14px 16px',
                 border: 'none',
                 outline: 'none',
                 fontSize: '16px',
@@ -1482,19 +1482,18 @@ function LandingPage() {
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 backgroundColor: 'transparent',
                 WebkitTextSizeAdjust: '100%',
-                touchAction: 'manipulation',
               }}
               data-testid="input-homepage-search"
             />
             <button
               type="submit"
               style={{
-                padding: '10px 14px',
+                padding: '14px 20px',
                 background: '#fbbf24',
                 color: '#000',
                 border: 'none',
                 borderRadius: '8px',
-                fontSize: '14px',
+                fontSize: '16px',
                 fontWeight: '700',
                 cursor: 'pointer',
                 display: 'flex',
@@ -1503,149 +1502,37 @@ function LandingPage() {
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                boxShadow: '0 2px 8px rgba(251,191,36,0.3)',
               }}
               data-testid="button-homepage-search"
             >
-              <Search size={18} />
+              <Search size={20} />
             </button>
           </form>
-          
-          {/* Rotating message below search */}
-          <div style={{
-            marginTop: '24px',
-            textAlign: 'center',
-          }}>
-            <RotatingBanner />
-          </div>
         </div>
+      </div>
 
+      {/* Value Props Section */}
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '32px 20px 60px 20px',
+      }}>
         <div style={{
-          textAlign: 'center',
-          marginBottom: '60px',
-        }}>
-          <h3 style={{
-            fontSize: '24px',
-            fontWeight: '700',
-            color: '#374151',
-            marginBottom: '20px',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}>
-            Browse by State
-          </h3>
-          <div className="state-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '10px',
-            maxWidth: '600px',
-            margin: '0 auto',
-          }}>
-            {[
-              { name: 'Alabama', slug: 'alabama' },
-              { name: 'Alaska', slug: 'alaska' },
-              { name: 'Arizona', slug: 'arizona' },
-              { name: 'Arkansas', slug: 'arkansas' },
-              { name: 'California', slug: 'california' },
-              { name: 'Colorado', slug: 'colorado' },
-              { name: 'Connecticut', slug: 'connecticut' },
-              { name: 'Delaware', slug: 'delaware' },
-              { name: 'Florida', slug: 'florida' },
-              { name: 'Georgia', slug: 'georgia' },
-              { name: 'Hawaii', slug: 'hawaii' },
-              { name: 'Idaho', slug: 'idaho' },
-              { name: 'Illinois', slug: 'illinois' },
-              { name: 'Indiana', slug: 'indiana' },
-              { name: 'Iowa', slug: 'iowa' },
-              { name: 'Kansas', slug: 'kansas' },
-              { name: 'Kentucky', slug: 'kentucky' },
-              { name: 'Louisiana', slug: 'louisiana' },
-              { name: 'Maine', slug: 'maine' },
-              { name: 'Maryland', slug: 'maryland' },
-              { name: 'Massachusetts', slug: 'massachusetts' },
-              { name: 'Michigan', slug: 'michigan' },
-              { name: 'Minnesota', slug: 'minnesota' },
-              { name: 'Mississippi', slug: 'mississippi' },
-              { name: 'Missouri', slug: 'missouri' },
-              { name: 'Montana', slug: 'montana' },
-              { name: 'Nebraska', slug: 'nebraska' },
-              { name: 'Nevada', slug: 'nevada' },
-              { name: 'New Hampshire', slug: 'new-hampshire' },
-              { name: 'New Jersey', slug: 'new-jersey' },
-              { name: 'New Mexico', slug: 'new-mexico' },
-              { name: 'New York', slug: 'new-york' },
-              { name: 'North Carolina', slug: 'north-carolina' },
-              { name: 'North Dakota', slug: 'north-dakota' },
-              { name: 'Ohio', slug: 'ohio' },
-              { name: 'Oklahoma', slug: 'oklahoma' },
-              { name: 'Oregon', slug: 'oregon' },
-              { name: 'Pennsylvania', slug: 'pennsylvania' },
-              { name: 'Rhode Island', slug: 'rhode-island' },
-              { name: 'South Carolina', slug: 'south-carolina' },
-              { name: 'South Dakota', slug: 'south-dakota' },
-              { name: 'Tennessee', slug: 'tennessee' },
-              { name: 'Texas', slug: 'texas' },
-              { name: 'Utah', slug: 'utah' },
-              { name: 'Vermont', slug: 'vermont' },
-              { name: 'Virginia', slug: 'virginia' },
-              { name: 'Washington', slug: 'washington' },
-              { name: 'West Virginia', slug: 'west-virginia' },
-              { name: 'Wisconsin', slug: 'wisconsin' },
-              { name: 'Wyoming', slug: 'wyoming' },
-            ].map((state) => (
-              <a
-                key={state.slug}
-                href={`/${state.slug}`}
-                style={{
-                  padding: '12px 8px',
-                  backgroundColor: '#fff',
-                  borderRadius: '8px',
-                  textDecoration: 'none',
-                  color: '#374151',
-                  fontWeight: '600',
-                  fontSize: '14px',
-                  boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-                  transition: 'all 0.2s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px',
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                  transform: 'translateY(-1px)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                }}
-                data-testid={`link-state-${state.slug}`}
-              >
-                {state.name}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          display: 'flex',
+          flexDirection: 'column',
           gap: '24px',
-          marginTop: '48px',
         }}>
           {[
             {
-              icon: <Star size={32} />,
               title: 'Local & Independent',
               description: 'Only locally-owned companies based in your city - no franchises',
             },
             {
-              icon: <TrendingUp size={32} />,
               title: 'Instant Quotes',
               description: 'Get free estimates from multiple local companies in minutes',
             },
             {
-              icon: <MapPin size={32} color="#fbbf24" />,
               title: 'Your Neighborhood Crew',
               description: 'Support independent businesses located right in your community',
             },
@@ -1654,45 +1541,25 @@ function LandingPage() {
               key={i}
               style={{
                 backgroundColor: '#fff',
-                padding: '32px',
-                borderRadius: '12px',
-                textAlign: 'center',
-                boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-                transform: 'translateY(-1px)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
-                e.currentTarget.style.transform = 'translateY(-1px)';
+                padding: '24px',
+                borderRadius: '8px',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
               }}
             >
-              <div style={{
-                display: 'inline-flex',
-                padding: '16px',
-                background: '#f5f5f5',
-                borderRadius: '12px',
-                color: '#fbbf24',
-                marginBottom: '16px',
-              }}>
-                {feature.icon}
-              </div>
-              <h4 style={{
+              <h3 style={{
                 fontSize: '20px',
                 fontWeight: '700',
-                color: '#374151',
+                color: '#1a1a1a',
                 margin: '0 0 8px 0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.title}
-              </h4>
+              </h3>
               <p style={{
                 fontSize: '15px',
                 color: '#6b7280',
                 margin: '0',
+                lineHeight: '1.6',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 {feature.description}
@@ -1700,7 +1567,6 @@ function LandingPage() {
             </div>
           ))}
         </div>
-      </div>
       </div>
     </div>
   );
