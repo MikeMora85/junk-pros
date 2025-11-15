@@ -68,8 +68,8 @@ import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg
 import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
 import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
 import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
-import curbsideJunkHero from "@assets/662A4A2C-FCD0-43E0-9DC4-2ABCD8C1DC69_1759626202147.png";
 import usaSilhouette from "@assets/IMG_7010_1761810264346.png";
+import cleanTruckHero from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
 import profilePhoto1 from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
 import profilePhoto2 from "@assets/stock_images/junk_removal_truck_l_d830abe1.jpg";
 import profilePhoto3 from "@assets/stock_images/junk_removal_truck_l_edd9160e.jpg";
@@ -1430,7 +1430,7 @@ function LandingPage() {
           marginBottom: '32px',
         }}>
           <img 
-            src={curbsideJunkHero} 
+            src={cleanTruckHero} 
             alt="Junk Removal Truck" 
             style={{
               width: '100%',
