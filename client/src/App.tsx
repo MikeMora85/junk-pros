@@ -1421,13 +1421,43 @@ function LandingPage() {
           />
         </div>
 
+        {/* Headline */}
+        <h1 style={{
+          position: 'relative',
+          zIndex: 1,
+          fontSize: '38px',
+          fontWeight: '700',
+          color: '#000000',
+          margin: '0 0 16px 0',
+          textAlign: 'center',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
+          Search Your Zip Code
+        </h1>
+
+        {/* Subheadline */}
+        <p style={{
+          position: 'relative',
+          zIndex: 1,
+          fontSize: '19px',
+          fontWeight: '400',
+          color: '#000000',
+          margin: '0 0 40px 0',
+          textAlign: 'center',
+          maxWidth: '85%',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
+          No National Franchises.<br />
+          Local Vetted Junk Haulers Only
+        </p>
+
         {/* NPR Dump Truck Image */}
         <div style={{
           position: 'relative',
           zIndex: 1,
-          maxWidth: '360px',
+          maxWidth: '420px',
           width: '90%',
-          marginBottom: '32px',
+          marginBottom: '40px',
         }}>
           <img 
             src={cleanTruckHero} 
@@ -1439,36 +1469,6 @@ function LandingPage() {
             }}
           />
         </div>
-
-        {/* Headline */}
-        <h1 style={{
-          position: 'relative',
-          zIndex: 1,
-          fontSize: '34px',
-          fontWeight: '700',
-          color: '#000000',
-          margin: '0 0 12px 0',
-          textAlign: 'center',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        }}>
-          Search Your Zip Code
-        </h1>
-
-        {/* Subheadline */}
-        <p style={{
-          position: 'relative',
-          zIndex: 1,
-          fontSize: '18px',
-          fontWeight: '400',
-          color: '#000000',
-          margin: '0 0 32px 0',
-          textAlign: 'center',
-          maxWidth: '85%',
-          fontFamily: "'Helvetica Neue', Arial, sans-serif",
-        }}>
-          No National Franchises.<br />
-          Local Vetted Junk Haulers Only.
-        </p>
 
         {/* Search Bar */}
         <form onSubmit={handleSearch} style={{
