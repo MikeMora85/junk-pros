@@ -1,0 +1,52 @@
+Update my entire homepage hero section to match this exact design:
+
+— A solid bright yellow background (#F7C948 or my existing site yellow).
+— A large USA silhouette in a slightly lighter yellow behind the truck with a thin, subtle black outline (1–2px, low opacity).
+— Place the USA silhouette centered and wide (full width on mobile).
+— Place a tall-side-wall Isuzu NPR dump truck centered over the silhouette (use the same truck orientation as the mockup).
+— Remove ANY old banner or hero images currently in the code.
+— Remove the “SELECT” dropdown or anything left over from the old hero.
+— The top headline should be large, bold, centered, and exactly:
+
+Search Your Zip Code
+
+— The sub-headline under it should be:
+
+No National Franchises.
+Local Vetted Junk Haulers Only.
+
+Both in my original dark text color (almost black).
+
+— Below that, include a large rounded search bar exactly like the mockup:
+    • White background
+    • Thick black outline
+    • Gray placeholder text
+    • A round yellow search button on the right, outlined in black
+    • Add a slight shadow (subtle)
+
+— After the search bar, rebuild my three feature cards to match the mockup:
+    • White cards
+    • Rounded large corners
+    • Thin black outline (same as truck outline thickness)
+    • Clean spacing and padding
+    • Titles bold and centered
+    • Sub-text centered, soft gray
+
+Card Titles:
+1. Local & Independent
+2. Instant Quotes
+3. Your Neighborhood Crew
+
+Remove any icons or unnecessary graphics.
+
+— Also REMOVE the state cards from the homepage entirely.
+They should NOT appear anywhere on the homepage.
+
+— Keep the menu icon/header EXACTLY as it is and DO NOT modify the navigation structure.
+
+— Ensure perfect mobile responsiveness:
+    • No horizontal scroll
+    • Proper spacing above/below the hero section
+    • Text centered and proportional like the mockup.
+
+This new hero should match the provided yellow NPR truck + USA silhouette design visually and structurally. Use only native HTML/CSS already in the project, don’t add frameworks.
