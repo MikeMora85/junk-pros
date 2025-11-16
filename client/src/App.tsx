@@ -5763,66 +5763,69 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
             {/* Success Header */}
             <div style={{
               background: '#fbbf24',
-              padding: '40px 20px',
+              padding: '20px 16px',
               textAlign: 'center',
               color: '#000',
             }}>
-              <div style={{ fontSize: '60px', marginBottom: '20px' }}>🎉</div>
               <h1 style={{
-                fontSize: '32px',
+                fontSize: '24px',
                 fontWeight: '700',
-                marginBottom: '12px',
+                marginBottom: '4px',
+                margin: 0,
               }}>
                 Success!
               </h1>
               <p style={{
-                fontSize: '20px',
+                fontSize: '16px',
                 fontWeight: '600',
+                margin: 0,
               }}>
                 Here's your closest junk removal company
               </p>
             </div>
 
             {/* Closest Hauler Info */}
-            <div style={{ padding: '32px 20px' }}>
+            <div style={{ padding: '20px 16px' }}>
               <div style={{
                 backgroundColor: '#f9fafb',
-                padding: '24px',
+                padding: '16px',
                 borderRadius: '12px',
-                marginBottom: '24px',
+                marginBottom: '16px',
               }}>
                 <h2 style={{
-                  fontSize: '28px',
+                  fontSize: '24px',
                   fontWeight: '700',
                   color: '#1a1a1a',
-                  marginBottom: '8px',
+                  marginBottom: '4px',
+                  margin: 0,
                 }}>
                   {closestHauler.company.name}
                 </h2>
                 <p style={{
-                  fontSize: '16px',
+                  fontSize: '14px',
                   color: '#6b7280',
-                  marginBottom: '16px',
+                  marginBottom: '12px',
+                  marginTop: '4px',
                 }}>
                   📍 {closestHauler.distance} miles away
                 </p>
                 <div style={{
                   display: 'flex',
-                  gap: '12px',
-                  marginTop: '20px',
+                  gap: '8px',
+                  marginTop: '12px',
                   flexWrap: 'wrap',
                 }}>
                   <a
                     href={`tel:${closestHauler.company.phone}`}
                     style={{
                       flex: 1,
-                      minWidth: '200px',
-                      padding: '14px 20px',
+                      minWidth: '120px',
+                      padding: '12px 16px',
                       backgroundColor: '#fbbf24',
                       color: '#000',
                       textDecoration: 'none',
                       borderRadius: '8px',
-                      fontSize: '16px',
+                      fontSize: '15px',
                       fontWeight: '700',
                       textAlign: 'center',
                       display: 'flex',
@@ -5837,13 +5840,13 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                     href={`/company/${closestHauler.company.id}`}
                     style={{
                       flex: 1,
-                      minWidth: '200px',
-                      padding: '14px 20px',
+                      minWidth: '120px',
+                      padding: '12px 16px',
                       backgroundColor: '#fbbf24',
                       color: '#000',
                       textDecoration: 'none',
                       borderRadius: '8px',
-                      fontSize: '16px',
+                      fontSize: '15px',
                       fontWeight: '700',
                       textAlign: 'center',
                       display: 'flex',
