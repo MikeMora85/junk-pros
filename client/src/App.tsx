@@ -1428,7 +1428,7 @@ function LandingPage() {
           <div style={{
             width: '100vw',
             marginLeft: 'calc(-50vw + 50%)',
-            marginBottom: '16px',
+            marginBottom: '0',
           }}>
             <img 
               src={heroTruck} 
