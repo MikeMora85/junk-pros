@@ -1538,6 +1538,16 @@ function LandingPage() {
           </div>
         </div>
 
+        <style dangerouslySetInnerHTML={{__html: `
+          .feature-card {
+            padding: 40px 50px !important;
+          }
+          @media (max-width: 640px) {
+            .feature-card {
+              padding: 32px 32px !important;
+            }
+          }
+        `}} />
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -1561,9 +1571,9 @@ function LandingPage() {
           ].map((feature, i) => (
             <div
               key={i}
+              className="feature-card"
               style={{
                 backgroundColor: '#fff',
-                padding: '40px 50px',
                 borderRadius: '12px',
                 textAlign: 'center',
                 boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
