@@ -1449,7 +1449,7 @@ function LandingPage() {
             letterSpacing: '-0.02em',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            Search Your Zip Code
+            Search by City
           </h2>
           <p style={{
             fontSize: '20px',
