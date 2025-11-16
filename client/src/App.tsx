@@ -5800,7 +5800,7 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                   marginBottom: '12px',
                   marginTop: '4px',
                 }}>
-                  📍 {closestHauler.distance} miles away
+                  {closestHauler.distance} miles away
                 </p>
                 <div style={{
                   display: 'flex',
