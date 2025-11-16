@@ -1460,7 +1460,7 @@ function LandingPage() {
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            No National Franchises, Local Vetted Junk Haulers Only.
+            No National Franchises, Local Junk Pros Only.
           </p>
 
           <form onSubmit={handleSearch} style={{
