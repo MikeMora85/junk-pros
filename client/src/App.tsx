@@ -1544,6 +1544,7 @@ function LandingPage() {
           gap: '24px',
           marginTop: '48px',
           marginBottom: '60px',
+          padding: '0 8px',
         }}>
           {[
             {
