@@ -1542,16 +1542,21 @@ function LandingPage() {
           .feature-card {
             padding: 40px 50px !important;
           }
+          .feature-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+          }
           @media (max-width: 640px) {
             .feature-card {
               padding: 32px 32px !important;
             }
+            .feature-cards-grid {
+              grid-template-columns: 1fr !important;
+            }
           }
         `}} />
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px',
+        <div className="feature-cards-grid" style={{
           marginTop: '48px',
           marginBottom: '60px',
         }}>
