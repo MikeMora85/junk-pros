@@ -1563,15 +1563,12 @@ function LandingPage() {
               key={i}
               style={{
                 backgroundColor: '#fff',
-                padding: '32px',
+                padding: '40px 50px',
                 borderRadius: '12px',
+                textAlign: 'center',
                 boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
                 transform: 'translateY(-1px)',
                 transition: 'all 0.2s',
-                boxSizing: 'border-box',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
@@ -1582,29 +1579,23 @@ function LandingPage() {
                 e.currentTarget.style.transform = 'translateY(-1px)';
               }}
             >
-              <div style={{
-                width: '100%',
-                maxWidth: '240px',
-                textAlign: 'center',
+              <h4 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: '#374151',
+                margin: '0 0 8px 0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
-                <h4 style={{
-                  fontSize: '20px',
-                  fontWeight: '700',
-                  color: '#374151',
-                  margin: '0 0 8px 0',
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                }}>
-                  {feature.title}
-                </h4>
-                <p style={{
-                  fontSize: '15px',
-                  color: '#6b7280',
-                  margin: '0',
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
-                }}>
-                  {feature.description}
-                </p>
-              </div>
+                {feature.title}
+              </h4>
+              <p style={{
+                fontSize: '15px',
+                color: '#6b7280',
+                margin: '0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
