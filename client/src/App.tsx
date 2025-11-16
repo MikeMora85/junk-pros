@@ -5919,46 +5919,39 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                   boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                 }}
               >
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  gap: '16px',
-                  flexWrap: 'wrap',
-                }}>
-                  <div style={{ flex: 1, minWidth: '0' }}>
-                    <h3 style={{
-                      fontSize: '22px',
-                      fontWeight: '700',
-                      color: '#1a1a1a',
-                      marginBottom: '8px',
-                    }}>
-                      {item.company.name}
-                    </h3>
-                    <p style={{
-                      fontSize: '14px',
-                      color: '#6b7280',
-                      marginBottom: '12px',
-                    }}>
-                      {item.distance} miles away
-                    </p>
+                <div>
+                  <h3 style={{
+                    fontSize: '22px',
+                    fontWeight: '700',
+                    color: '#1a1a1a',
+                    marginBottom: '8px',
+                  }}>
+                    {item.company.name}
+                  </h3>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#6b7280',
+                    marginBottom: '12px',
+                  }}>
+                    {item.distance} miles away
+                  </p>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '16px',
+                  }}>
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '8px',
-                      marginBottom: '16px',
+                      gap: '4px',
                     }}>
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '4px',
-                      }}>
-                        <Star size={16} fill="#fbbf24" color="#fbbf24" />
-                        <span style={{ fontWeight: '600' }}>{item.company.rating}</span>
-                      </div>
-                      <span style={{ color: '#6b7280' }}>({item.company.reviews} reviews)</span>
+                      <Star size={16} fill="#fbbf24" color="#fbbf24" />
+                      <span style={{ fontWeight: '600' }}>{item.company.rating}</span>
                     </div>
+                    <span style={{ color: '#6b7280' }}>({item.company.reviews} reviews)</span>
                   </div>
+                  
                   <div style={{
                     display: 'flex',
                     gap: '12px',
