@@ -1544,7 +1544,6 @@ function LandingPage() {
           gap: '24px',
           marginTop: '48px',
           marginBottom: '60px',
-          padding: '0 8px',
         }}>
           {[
             {
@@ -1564,7 +1563,7 @@ function LandingPage() {
               key={i}
               style={{
                 backgroundColor: '#fff',
-                padding: '32px',
+                padding: '32px 40px',
                 borderRadius: '12px',
                 textAlign: 'center',
                 boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
