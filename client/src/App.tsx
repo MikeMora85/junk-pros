@@ -1539,6 +1539,68 @@ function LandingPage() {
         </div>
 
         <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '24px',
+          marginTop: '48px',
+          marginBottom: '60px',
+        }}>
+          {[
+            {
+              title: 'Local & Independent',
+              description: 'Only locally-owned companies based in your city - no franchises',
+            },
+            {
+              title: 'Instant Quotes',
+              description: 'Get free estimates from multiple local companies in minutes',
+            },
+            {
+              title: 'Your Neighborhood Crew',
+              description: 'Support independent businesses located right in your community',
+            },
+          ].map((feature, i) => (
+            <div
+              key={i}
+              style={{
+                backgroundColor: '#fff',
+                padding: '32px',
+                borderRadius: '12px',
+                textAlign: 'center',
+                boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                transform: 'translateY(-1px)',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+            >
+              <h4 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: '#374151',
+                margin: '0 0 8px 0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                {feature.title}
+              </h4>
+              <p style={{
+                fontSize: '15px',
+                color: '#6b7280',
+                margin: '0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{
           textAlign: 'center',
           marginBottom: '60px',
         }}>
