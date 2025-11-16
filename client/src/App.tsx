@@ -1454,7 +1454,7 @@ function LandingPage() {
           <p style={{
             fontSize: '20px',
             color: '#6b7280',
-            margin: '0 0 40px 0',
+            margin: '0 0 24px 0',
             maxWidth: '700px',
             marginLeft: 'auto',
             marginRight: 'auto',
