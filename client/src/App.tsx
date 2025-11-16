@@ -5940,7 +5940,7 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                       color: '#6b7280',
                       marginBottom: '12px',
                     }}>
-                      📍 {item.distance} miles away
+                      {item.distance} miles away
                     </p>
                     <div style={{
                       display: 'flex',
