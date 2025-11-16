@@ -1654,17 +1654,14 @@ function LandingPage() {
         }}>
           {[
             {
-              icon: <Star size={32} />,
               title: 'Local & Independent',
               description: 'Only locally-owned companies based in your city - no franchises',
             },
             {
-              icon: <TrendingUp size={32} />,
               title: 'Instant Quotes',
               description: 'Get free estimates from multiple local companies in minutes',
             },
             {
-              icon: <MapPin size={32} color="#fbbf24" />,
               title: 'Your Neighborhood Crew',
               description: 'Support independent businesses located right in your community',
             },
@@ -1689,16 +1686,6 @@ function LandingPage() {
                 e.currentTarget.style.transform = 'translateY(-1px)';
               }}
             >
-              <div style={{
-                display: 'inline-flex',
-                padding: '16px',
-                background: '#f5f5f5',
-                borderRadius: '12px',
-                color: '#fbbf24',
-                marginBottom: '16px',
-              }}>
-                {feature.icon}
-              </div>
               <h4 style={{
                 fontSize: '20px',
                 fontWeight: '700',
