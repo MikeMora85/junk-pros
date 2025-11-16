@@ -5728,6 +5728,7 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          padding: '20px 0',
         }}>
           <div style={{
             maxWidth: '900px',
@@ -5763,22 +5764,15 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
             {/* Success Header */}
             <div style={{
               background: '#fbbf24',
-              padding: '20px 16px',
+              padding: '24px 16px 16px 16px',
               textAlign: 'center',
               color: '#000',
             }}>
-              <h1 style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                marginBottom: '4px',
-                margin: 0,
-              }}>
-                Success!
-              </h1>
               <p style={{
-                fontSize: '16px',
-                fontWeight: '600',
+                fontSize: '18px',
+                fontWeight: '700',
                 margin: 0,
+                lineHeight: '1.3',
               }}>
                 Here's your closest junk removal company
               </p>
