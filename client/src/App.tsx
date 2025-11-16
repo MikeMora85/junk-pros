@@ -5731,7 +5731,7 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
         }}>
           <div style={{
             maxWidth: '900px',
-            width: '100%',
+            width: 'calc(100% - 40px)',
             margin: '20px',
             backgroundColor: '#fff',
             borderRadius: '16px',
