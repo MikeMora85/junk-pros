@@ -1422,7 +1422,7 @@ function LandingPage() {
         <div className="homepage-hero" style={{
           textAlign: 'center',
           marginBottom: '48px',
-          marginTop: '80px',
+          marginTop: '60px',
         }}>
           {/* Hero Image */}
           <div style={{
