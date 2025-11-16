@@ -1327,21 +1327,29 @@ function LandingPage() {
         minHeight: '100vh',
       }}>
       {/* Header Buttons */}
-      <div className="homepage-header-buttons" style={{
+      <div style={{
         position: 'fixed',
-        top: '16px',
-        left: '16px',
-        display: 'flex',
-        gap: '12px',
+        top: 0,
+        left: 0,
+        right: 0,
         zIndex: 1000,
+        background: 'rgba(251, 191, 36, 0.15)',
+        backdropFilter: 'blur(10px)',
+        padding: '16px',
       }}>
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 1024px) {
             .homepage-header-buttons {
-              left: calc((100vw - 1400px) / 2 - 8px) !important;
+              max-width: 1400px !important;
             }
           }
         `}} />
+      <div className="homepage-header-buttons" style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        display: 'flex',
+        gap: '12px',
+      }}>
         <button
           onClick={() => setMenuOpen(true)}
           style={{
@@ -1390,6 +1398,7 @@ function LandingPage() {
             Profile
           </button>
         )}
+      </div>
       </div>
 
       <div className="homepage-content" style={{
