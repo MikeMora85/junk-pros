@@ -1395,13 +1395,13 @@ function LandingPage() {
       <div className="homepage-content" style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '80px 20px 30px 20px',
+        padding: '0 20px 30px 20px',
       }}>
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 1024px) {
             .homepage-content {
               max-width: 1400px !important;
-              padding: 80px 40px 30px 40px !important;
+              padding: 0 40px 30px 40px !important;
             }
             
             .state-grid {
@@ -1422,6 +1422,7 @@ function LandingPage() {
         <div className="homepage-hero" style={{
           textAlign: 'center',
           marginBottom: '48px',
+          marginTop: '-80px',
         }}>
           {/* Hero Image */}
           <div style={{
