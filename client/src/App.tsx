@@ -5728,12 +5728,11 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '20px 0',
         }}>
           <div style={{
             maxWidth: '900px',
             width: 'calc(100% - 16px)',
-            margin: '8px',
+            margin: 'auto',
             backgroundColor: '#fff',
             borderRadius: '16px',
             overflow: 'hidden',
@@ -5764,18 +5763,18 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
             {/* Success Header */}
             <div style={{
               background: '#fbbf24',
-              padding: '24px 16px 16px 16px',
+              padding: '32px 20px 20px 20px',
               textAlign: 'center',
               color: '#000',
             }}>
-              <p style={{
-                fontSize: '18px',
+              <h1 style={{
+                fontSize: '20px',
                 fontWeight: '700',
                 margin: 0,
-                lineHeight: '1.3',
+                lineHeight: '1.4',
               }}>
                 Here's your closest junk removal company
-              </p>
+              </h1>
             </div>
 
             {/* Closest Hauler Info */}
