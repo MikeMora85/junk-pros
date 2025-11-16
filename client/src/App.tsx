@@ -1335,7 +1335,7 @@ function LandingPage() {
         zIndex: 1000,
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
-        padding: '16px',
+        padding: '10px 16px',
       }}>
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 1024px) {
@@ -2154,7 +2154,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '16px',
+          padding: '10px 16px',
           display: 'flex',
           gap: '12px',
         }}>
@@ -3366,7 +3366,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
         zIndex: 10002,
         background: 'rgba(251, 191, 36, 0.15)',
         backdropFilter: 'blur(10px)',
-        padding: '16px',
+        padding: '10px 16px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
