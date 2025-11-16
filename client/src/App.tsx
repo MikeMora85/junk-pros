@@ -5976,11 +5976,11 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                         fontWeight: '700',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        justifyContent: 'center',
                       }}
                       data-testid={`button-call-${index}`}
                     >
-                      <Phone size={16} /> Call
+                      Call
                     </a>
                     <Link
                       href={`/company/${item.company.id}`}
@@ -5994,11 +5994,11 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                         fontWeight: '700',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        justifyContent: 'center',
                       }}
                       data-testid={`button-view-${index}`}
                     >
-                      <FileText size={16} /> View Profile
+                      View Profile
                     </Link>
                   </div>
                 </div>
