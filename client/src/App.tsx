@@ -1563,7 +1563,10 @@ function LandingPage() {
               key={i}
               style={{
                 backgroundColor: '#fff',
-                padding: '40px 15%',
+                paddingTop: '40px',
+                paddingBottom: '40px',
+                paddingLeft: '50px',
+                paddingRight: '50px',
                 borderRadius: '12px',
                 textAlign: 'center',
                 boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
