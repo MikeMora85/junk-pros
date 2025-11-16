@@ -5879,7 +5879,7 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
-        padding: '40px 20px',
+        padding: '40px 16px',
       }}>
         {/* Header */}
         <div style={{
@@ -5915,7 +5915,7 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                   backgroundColor: '#fff',
                   border: '1px solid #e5e7eb',
                   borderRadius: '12px',
-                  padding: '24px',
+                  padding: '20px',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
                 }}
               >
@@ -5923,10 +5923,10 @@ function ZipSearchPage({ zipCode }: { zipCode: string }) {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'flex-start',
-                  gap: '20px',
+                  gap: '16px',
                   flexWrap: 'wrap',
                 }}>
-                  <div style={{ flex: 1, minWidth: '250px' }}>
+                  <div style={{ flex: 1, minWidth: '0' }}>
                     <h3 style={{
                       fontSize: '22px',
                       fontWeight: '700',
