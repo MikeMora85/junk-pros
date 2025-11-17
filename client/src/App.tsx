@@ -5007,6 +5007,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               width: 100%;
               height: 300px;
             }
+            .photo-gallery-img {
+              object-fit: cover;
+            }
           }
         `}} />
         {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
