@@ -4452,11 +4452,13 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
 // Google Map Component
 function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number | null; lng?: number | null }) {
-  const mapRef = useState<HTMLDivElement | null>(null);
+  const [mapElement, setMapElement] = useState<HTMLDivElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
   useEffect(() => {
+    if (!mapElement) return;
+    
     const initMap = async () => {
       try {
         // Fetch API key
@@ -4478,8 +4480,6 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
         
         await loader.load();
         
-        if (!mapRef[0]) return;
-        
         // Use provided coordinates or geocode address
         let coordinates = { lat: lat || 0, lng: lng || 0 };
         
@@ -4496,7 +4496,7 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
         }
         
         // Create map
-        const map = new google.maps.Map(mapRef[0], {
+        const map = new google.maps.Map(mapElement, {
           center: coordinates,
           zoom: 15,
           mapTypeControl: false,
@@ -4520,7 +4520,7 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
     };
     
     initMap();
-  }, [address, lat, lng]);
+  }, [mapElement, address, lat, lng]);
   
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -4549,7 +4549,7 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
         </div>
       )}
       <div
-        ref={(el) => mapRef[1](el)}
+        ref={setMapElement}
         style={{ width: '100%', height: '100%', borderRadius: '12px' }}
       />
     </div>
