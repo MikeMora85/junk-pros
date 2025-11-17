@@ -1559,7 +1559,7 @@ function LandingPage() {
 
         <style dangerouslySetInnerHTML={{__html: `
           .feature-card {
-            padding: 40px 50px !important;
+            padding: 20px 28px !important;
           }
           .feature-cards-grid {
             display: grid;
@@ -1568,7 +1568,7 @@ function LandingPage() {
           }
           @media (max-width: 640px) {
             .feature-card {
-              padding: 32px 32px !important;
+              padding: 20px 24px !important;
             }
             .feature-cards-grid {
               grid-template-columns: 1fr !important;
@@ -1641,8 +1641,14 @@ function LandingPage() {
       <footer style={{
         backgroundColor: '#fbbf24',
         color: '#000',
-        padding: '60px 20px 30px',
-        width: '100%',
+        padding: '30px 20px 20px',
+        width: '100vw',
+        margin: 0,
+        position: 'relative',
+        left: '50%',
+        right: '50%',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
       }}>
         <div style={{
           maxWidth: '1400px',
