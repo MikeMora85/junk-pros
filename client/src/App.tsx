@@ -4852,8 +4852,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
             .service-icons-container {
               grid-template-columns: repeat(5, 1fr);
-              max-width: 1200px;
-              padding: 0 16px;
+              max-width: none;
+              padding: 0;
               gap: 20px;
             }
           }
@@ -4881,11 +4881,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           }
           @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
             .service-icon-circle {
-              width: 110px;
-              height: 110px;
+              width: 130px;
+              height: 130px;
             }
             .service-icon-svg {
-              transform: scale(1.7);
+              transform: scale(2);
             }
           }
         `}} />
