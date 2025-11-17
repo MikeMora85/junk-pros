@@ -3306,7 +3306,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(0,0,0,0.8)',
-          zIndex: 2000,
+          zIndex: 20000,
           overflow: 'auto',
         }} onClick={() => setSelectedCompanyId(null)}>
           <div>
@@ -4462,7 +4462,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         right: 0,
         bottom: 0,
         background: '#fff',
-        zIndex: 1000,
+        zIndex: 20001,
         overflowY: 'auto',
         overflowX: 'hidden',
       }}>
@@ -4722,12 +4722,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         {company.services && company.services.length > 0 && (
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+            gap: '24px',
             marginBottom: '32px',
-            padding: '0 12px',
+            padding: '0 20px',
             textAlign: 'center',
-            maxWidth: '800px',
+            maxWidth: '900px',
             margin: '0 auto 32px',
           }}>
             {company.services.map((serviceId, i) => {
@@ -4849,21 +4849,25 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     style={{
                       flex: '0 0 100%',
                       width: '100%',
-                      height: '400px',
+                      height: '500px',
                       borderRadius: '8px',
                       overflow: 'hidden',
                       background: '#f3f4f6',
                       border: '2px solid #fbbf24',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                     }}
                   >
                     <img
                       src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
                       style={{
-                        width: '100%',
-                        height: '100%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        width: 'auto',
+                        height: 'auto',
                         objectFit: 'contain',
-                        backgroundColor: '#f3f4f6',
                       }}
                     />
                   </div>
