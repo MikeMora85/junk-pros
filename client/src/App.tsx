@@ -1718,7 +1718,7 @@ function LandingPage() {
                 padding: 0,
                 margin: 0,
               }}>
-                <li style={{ marginBottom: '6px' }}>
+                <li style={{ marginBottom: '2px' }}>
                   <a href="/" style={{
                     color: '#000',
                     textDecoration: 'none',
@@ -1763,7 +1763,7 @@ function LandingPage() {
                 padding: 0,
                 margin: 0,
               }}>
-                <li style={{ marginBottom: '6px' }}>
+                <li style={{ marginBottom: '2px' }}>
                   <a href="/services/residential" style={{
                     color: '#000',
                     textDecoration: 'none',
@@ -1776,7 +1776,7 @@ function LandingPage() {
                     Residential
                   </a>
                 </li>
-                <li style={{ marginBottom: '6px' }}>
+                <li style={{ marginBottom: '2px' }}>
                   <a href="/services/commercial" style={{
                     color: '#000',
                     textDecoration: 'none',
