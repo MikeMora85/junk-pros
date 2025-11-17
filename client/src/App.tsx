@@ -1731,7 +1731,7 @@ function LandingPage() {
                     Home
                   </a>
                 </li>
-                <li style={{ marginBottom: '6px' }}>
+                <li style={{ marginBottom: '0' }}>
                   <a href="/add-business" style={{
                     color: '#000',
                     textDecoration: 'none',
@@ -1789,7 +1789,7 @@ function LandingPage() {
                     Commercial
                   </a>
                 </li>
-                <li style={{ marginBottom: '6px' }}>
+                <li style={{ marginBottom: '0' }}>
                   <a href="/services/estate-cleanouts" style={{
                     color: '#000',
                     textDecoration: 'none',
