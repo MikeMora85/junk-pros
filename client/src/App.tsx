@@ -4610,6 +4610,69 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         margin: '0 auto', 
         padding: '100px 16px 80px',
       }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          .company-header-logo {
+            position: 'absolute';
+            top: '50%';
+            left: '50%';
+            transform: 'translate(-50%, -50%)';
+            width: 160px;
+            height: 160px;
+            opacity: 0.15;
+            z-index: 0;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .company-header-logo {
+              width: 300px;
+              height: 300px;
+            }
+          }
+          .company-name-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            color: #000;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .company-name-title {
+              font-size: 64px;
+            }
+          }
+          .rating-star {
+            color: #fbbf24;
+            font-size: 20px;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .rating-star {
+              font-size: 32px;
+            }
+          }
+          .rating-number {
+            font-weight: 700;
+            font-size: 18px;
+            color: #000;
+            font-family: system-ui, -apple-system, sans-serif;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .rating-number {
+              font-size: 28px;
+            }
+          }
+          .rating-reviews {
+            color: #6b7280;
+            font-size: 14px;
+            font-family: system-ui, -apple-system, sans-serif;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .rating-reviews {
+              font-size: 22px;
+            }
+          }
+        `}} />
         {/* Header with watermark logo */}
         <div style={{
           position: 'relative',
@@ -4621,13 +4684,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         }}>
           {/* Watermark Logo Background */}
           {company.logoUrl && (
-            <div style={{
+            <div className="company-header-logo" style={{
               position: 'absolute',
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '160px',
-              height: '160px',
               opacity: 0.15,
               zIndex: 0,
             }}>
@@ -4644,16 +4705,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           )}
           
           {/* Company name */}
-          <h1 style={{
-            fontSize: '36px',
-            fontWeight: '700',
-            margin: 0,
-            color: '#000',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-            textAlign: 'center',
-            position: 'relative',
-            zIndex: 1,
-          }} data-testid="text-company-name">
+          <h1 className="company-name-title" data-testid="text-company-name">
             {company.name}
           </h1>
         </div>
@@ -4661,12 +4713,12 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         {/* Rating */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>
           {[1, 2, 3, 4, 5].map((star) => (
-            <span key={star} style={{ color: '#fbbf24', fontSize: '20px' }}>★</span>
+            <span key={star} className="rating-star">★</span>
           ))}
-          <span style={{ fontWeight: '700', fontSize: '18px', color: '#000', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <span className="rating-number">
             {company.rating}
           </span>
-          <span style={{ color: '#6b7280', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          <span className="rating-reviews">
             {company.reviews} reviews
           </span>
         </div>
