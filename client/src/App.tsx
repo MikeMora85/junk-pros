@@ -4722,13 +4722,22 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         <style dangerouslySetInnerHTML={{__html: `
           .service-icons-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 16px;
             margin-bottom: 32px;
             padding: 0 12px;
             text-align: center;
             max-width: 800px;
             margin: 0 auto 32px;
+          }
+          @media (max-width: 1023px) {
+            .service-icons-container {
+              grid-template-columns: repeat(3, 1fr);
+            }
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .service-icons-container {
+              grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
           }
           .service-icon-circle {
             width: 90px;
