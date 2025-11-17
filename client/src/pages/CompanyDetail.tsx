@@ -224,7 +224,7 @@ export default function CompanyDetail() {
         </div>
       </header>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '80px 20px 20px 20px' }}>
         {/* Company Header */}
         <div style={{
           backgroundColor: '#fff',
