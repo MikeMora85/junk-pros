@@ -1643,7 +1643,7 @@ function LandingPage() {
       <footer style={{
         backgroundColor: '#fbbf24',
         color: '#000',
-        padding: '30px 20px 20px',
+        padding: '20px 20px 15px',
         width: '100%',
         margin: 0,
         boxSizing: 'border-box',
@@ -1655,8 +1655,8 @@ function LandingPage() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '40px',
-            marginBottom: '40px',
+            gap: '30px',
+            marginBottom: '20px',
           }}>
             {/* About Section */}
             <div>
@@ -1810,7 +1810,7 @@ function LandingPage() {
           {/* Bottom Bar */}
           <div style={{
             borderTop: '1px solid #000',
-            paddingTop: '24px',
+            paddingTop: '15px',
             textAlign: 'center',
           }}>
             <p style={{
