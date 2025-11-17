@@ -197,12 +197,12 @@ export default function CompanyDetail() {
       <header style={{
         background: '#fff',
         borderBottom: '1px solid #e5e7eb',
-        padding: '16px',
+        padding: '16px 20px',
         position: 'sticky',
         top: 0,
         zIndex: 50,
       }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0' }}>
           <Link href={company.state && company.city ? `/${company.state.toLowerCase().replace(/\s+/g, '-')}/${company.city.toLowerCase()}` : '/'}>
             <button style={{
               padding: '8px 16px',
@@ -224,7 +224,7 @@ export default function CompanyDetail() {
         </div>
       </header>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '16px' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
         {/* Company Header */}
         <div style={{
           backgroundColor: '#fff',
@@ -293,8 +293,8 @@ export default function CompanyDetail() {
           }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
-              gap: '16px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+              gap: '20px',
               textAlign: 'center',
             }}>
               {company.services.slice(0, 4).map((service, i) => {
@@ -303,18 +303,18 @@ export default function CompanyDetail() {
               return (
                 <div key={i}>
                   <div style={{
-                    width: '60px',
-                    height: '60px',
-                    margin: '0 auto 8px',
+                    width: '80px',
+                    height: '80px',
+                    margin: '0 auto 12px',
                     background: '#f3f4f6',
                     borderRadius: '12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                    <Icon size={32} color="#374151" />
+                    <Icon size={40} color="#374151" />
                   </div>
-                  <div style={{ fontSize: '13px', fontWeight: '500', color: '#111827' }}>
+                  <div style={{ fontSize: '14px', fontWeight: '500', color: '#111827' }}>
                     {service}
                   </div>
                 </div>
@@ -418,9 +418,10 @@ export default function CompanyDetail() {
                           alt={`Gallery ${i + 1}`}
                           style={{
                             width: '100%',
-                            height: '160px',
-                            objectFit: 'cover',
+                            height: '200px',
+                            objectFit: 'contain',
                             borderRadius: '8px',
+                            backgroundColor: '#f3f4f6',
                           }}
                         />
                       ));
