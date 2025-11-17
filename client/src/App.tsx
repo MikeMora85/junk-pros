@@ -5083,14 +5083,14 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           }
           @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
             .photo-gallery-scroll {
-              display: grid;
-              grid-template-columns: repeat(4, 1fr);
+              display: flex;
               gap: 16px;
-              overflow-x: visible;
+              overflow-x: auto;
+              padding: 0;
             }
             .photo-gallery-item {
-              flex: none;
-              width: 100%;
+              flex: 0 0 calc(25% - 12px);
+              width: calc(25% - 12px);
               height: 300px;
             }
             .photo-gallery-img {
