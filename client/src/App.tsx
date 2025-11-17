@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, Route, Router, Switch } from "wouter";
+import { Link, Route, Router, Switch, useLocation } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
 import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, ChevronUp, Trash2, Globe, Mail, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
 import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
@@ -5911,7 +5911,6 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={LandingPage} />
         <Route path="/login" component={Login} />
         <Route path="/add-business" component={AddBusiness} />
         <Route path="/profile/edit" component={ProfileEditor} />
@@ -5928,6 +5927,7 @@ function App() {
         <Route path="/:state">
           {(params) => <StatePage stateName={stateNames[params.state] || 'Unknown'} stateSlug={params.state} />}
         </Route>
+        <Route path="/" component={LandingPage} />
         <Route>404 - Page Not Found</Route>
       </Switch>
     </Router>
