@@ -4495,7 +4495,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       <div style={{ 
         maxWidth: '1200px', 
         margin: '0 auto', 
-        padding: '60px 16px 80px',
+        padding: '80px 20px 80px',
       }}>
         {/* Header with watermark logo */}
         <div style={{
@@ -4749,19 +4749,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               return (
                 <div key={i}>
                   <div style={{
-                    width: '70px',
-                    height: '70px',
-                    margin: '0 auto 8px',
+                    width: '90px',
+                    height: '90px',
+                    margin: '0 auto 12px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     border: '2px solid #000',
                     borderRadius: '50%',
                   }}>
-                    {service.icon}
+                    <div style={{ transform: 'scale(1.4)' }}>
+                      {service.icon}
+                    </div>
                   </div>
                   <div style={{ 
-                    fontSize: '12px', 
+                    fontSize: '13px', 
                     fontWeight: '500', 
                     color: '#000', 
                     fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -4860,7 +4862,8 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                       style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
+                        objectFit: 'contain',
+                        backgroundColor: '#f3f4f6',
                       }}
                     />
                   </div>
