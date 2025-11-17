@@ -4844,13 +4844,25 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         <style dangerouslySetInnerHTML={{__html: `
           .photo-gallery-container {
             position: relative;
-            margin-bottom: 32px;
-            margin-top: 32px;
+            margin-bottom: 32px !important;
+            margin-top: 32px !important;
+          }
+          .photo-gallery-item {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f3f4f6;
+            border: 2px solid #fbbf24;
           }
           @media (max-width: 1023px) {
             .photo-gallery-container {
-              margin-bottom: 16px;
-              margin-top: 16px;
+              margin-bottom: 12px !important;
+              margin-top: 12px !important;
+            }
+            .photo-gallery-item {
+              height: 300px;
             }
           }
         `}} />
@@ -4889,15 +4901,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                 return imagesToShow.map((img, idx) => (
                   <div
                     key={idx}
-                    style={{
-                      flex: '0 0 100%',
-                      width: '100%',
-                      height: '400px',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                      background: '#f3f4f6',
-                      border: '2px solid #fbbf24',
-                    }}
+                    className="photo-gallery-item"
                   >
                     <img
                       src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
