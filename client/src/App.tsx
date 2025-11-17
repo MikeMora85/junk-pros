@@ -4495,7 +4495,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       <div style={{ 
         maxWidth: '1200px', 
         margin: '0 auto', 
-        padding: '60px 16px 80px',
+        padding: '100px 16px 80px',
       }}>
         {/* Header with watermark logo */}
         <div style={{
