@@ -1636,7 +1636,6 @@ function LandingPage() {
 
       </div>
       </div>
-      </div>
       
       {/* Footer */}
       <footer style={{
