@@ -4580,27 +4580,35 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         overflowX: 'hidden',
       }}>
       {/* Floating X Close Button */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .close-button-profile {
+          position: fixed;
+          top: 12px;
+          right: 12px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: #000;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 100;
+          font-weight: 300;
+        }
+        @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+          .close-button-profile {
+            right: calc((100vw - 1200px) / 2 + 16px);
+          }
+        }
+      `}} />
       <button
         onClick={onClose}
         data-testid="button-close-profile"
-        style={{
-          position: 'fixed',
-          top: '12px',
-          right: '12px',
-          width: '24px',
-          height: '24px',
-          borderRadius: '50%',
-          background: '#000',
-          color: '#fff',
-          border: 'none',
-          cursor: 'pointer',
-          fontSize: '16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 100,
-          fontWeight: '300',
-        }}
+        className="close-button-profile"
       >
         ×
       </button>
