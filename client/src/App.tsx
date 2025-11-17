@@ -4672,16 +4672,22 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               font-size: 22px;
             }
           }
+          .company-header-container {
+            position: relative;
+            margin-bottom: 16px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .company-header-container {
+              padding-top: 60px;
+            }
+          }
         `}} />
         {/* Header with watermark logo */}
-        <div style={{
-          position: 'relative',
-          marginBottom: '16px',
-          minHeight: '100px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+        <div className="company-header-container">
           {/* Watermark Logo Background */}
           {company.logoUrl && (
             <div className="company-header-logo" style={{
