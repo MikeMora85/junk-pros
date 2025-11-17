@@ -1648,18 +1648,39 @@ function LandingPage() {
         margin: 0,
         boxSizing: 'border-box',
       }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+          }
+          .footer-about {
+            grid-column: 1 / -1;
+          }
+          .footer-contact {
+            grid-column: 1 / -1;
+          }
+          @media (min-width: 768px) {
+            .footer-grid {
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 30px;
+            }
+            .footer-about {
+              grid-column: auto;
+            }
+            .footer-contact {
+              grid-column: auto;
+            }
+          }
+        `}} />
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
         }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '30px',
-            marginBottom: '20px',
-          }}>
+          <div className="footer-grid">
             {/* About Section */}
-            <div>
+            <div className="footer-about">
               <h4 style={{
                 fontSize: '18px',
                 fontWeight: '700',
@@ -1785,7 +1806,7 @@ function LandingPage() {
             </div>
 
             {/* Contact */}
-            <div>
+            <div className="footer-contact">
               <h4 style={{
                 fontSize: '18px',
                 fontWeight: '700',
