@@ -4478,7 +4478,7 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
           version: 'weekly',
         });
         
-        await loader.load();
+        const google = await loader.load();
         
         // Use provided coordinates or geocode address
         let coordinates = { lat: lat || 0, lng: lng || 0 };
@@ -4514,6 +4514,7 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
         setIsLoading(false);
       } catch (err) {
         console.error('Map error:', err);
+        console.error('Error details:', err instanceof Error ? err.message : JSON.stringify(err));
         setError('Failed to load map');
         setIsLoading(false);
       }
