@@ -17,7 +17,6 @@ import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
-import { Loader } from '@googlemaps/js-api-loader';
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -4472,13 +4471,19 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
           return;
         }
         
-        // Load Google Maps
-        const loader = new Loader({
-          apiKey,
-          version: 'weekly',
-        });
-        
-        const google = await loader.load();
+        // Load Google Maps using dynamic script injection (only if not already loaded)
+        if (!window.google?.maps) {
+          const script = document.createElement('script');
+          script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+          script.async = true;
+          script.defer = true;
+          
+          await new Promise<void>((resolve, reject) => {
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load Google Maps'));
+            document.head.appendChild(script);
+          });
+        }
         
         // Use provided coordinates or geocode address
         let coordinates = { lat: lat || 0, lng: lng || 0 };
