@@ -3410,7 +3410,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           overflow: 'auto',
         }} onClick={() => setSelectedCompanyId(null)}>
           <div>
-            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} />
+            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} setVideoModalUrl={setVideoModalUrl} />
           </div>
         </div>
       )}
@@ -4232,74 +4232,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   </div>
                   )}
                   
-                  {/* Video Thumbnail - Premium & Standard only */}
-                  {!isUnclaimed && !isBasic && c.videoUrl && (
-                    <div style={{
-                      marginBottom: '12px',
-                      position: 'relative',
-                    }}
-                    className="video-thumbnail-desktop"
-                    >
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setVideoModalUrl(c.videoUrl || null);
-                        }}
-                        style={{
-                          position: 'relative',
-                          width: '100%',
-                          paddingBottom: '56.25%', // 16:9 aspect ratio
-                          backgroundColor: '#000',
-                          borderRadius: '8px',
-                          overflow: 'hidden',
-                          cursor: 'pointer',
-                          border: '2px solid #fbbf24',
-                        }}
-                      >
-                        {/* Video Thumbnail - Extract from YouTube/Vimeo URL or use placeholder */}
-                        <div style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          background: c.videoUrl.includes('youtube') || c.videoUrl.includes('youtu.be')
-                            ? `url(https://img.youtube.com/vi/${c.videoUrl.split('v=')[1]?.split('&')[0] || c.videoUrl.split('youtu.be/')[1]?.split('?')[0]}/maxresdefault.jpg) center/cover`
-                            : '#1a1a1a',
-                        }} />
-                        
-                        {/* Play Icon Overlay */}
-                        <div style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          width: '60px',
-                          height: '60px',
-                          borderRadius: '50%',
-                          backgroundColor: 'rgba(251, 191, 36, 0.9)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'transform 0.2s',
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)'}
-                        >
-                          <div style={{
-                            width: 0,
-                            height: 0,
-                            borderLeft: '20px solid #000',
-                            borderTop: '12px solid transparent',
-                            borderBottom: '12px solid transparent',
-                            marginLeft: '4px',
-                          }} />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  
                   {/* Quote Section - Premium & Standard only */}
                   {hasFullFeatures && (
                   <div 
@@ -4661,7 +4593,7 @@ function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number |
   );
 }
 
-function CompanyDetailInline({ company, onClose }: { company: Company; onClose: () => void }) {
+function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: Company; onClose: () => void; setVideoModalUrl: (url: string | null) => void }) {
   const [socialTabOpen, setSocialTabOpen] = useState(false);
   
   return (
@@ -5135,6 +5067,75 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             }}>
               {company.description}
             </p>
+          </div>
+        )}
+
+        {/* Video Section - Premium & Standard only */}
+        {company.videoUrl && (
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: '700',
+              marginBottom: '12px',
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}>
+              Watch Our Video
+            </h2>
+            <div 
+              onClick={(e) => {
+                e.stopPropagation();
+                setVideoModalUrl(company.videoUrl || null);
+              }}
+              style={{
+                position: 'relative',
+                width: '100%',
+                paddingBottom: '56.25%',
+                backgroundColor: '#000',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                cursor: 'pointer',
+                border: '2px solid #fbbf24',
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: company.videoUrl.includes('youtube') || company.videoUrl.includes('youtu.be')
+                  ? `url(https://img.youtube.com/vi/${company.videoUrl.split('v=')[1]?.split('&')[0] || company.videoUrl.split('youtu.be/')[1]?.split('?')[0]}/maxresdefault.jpg) center/cover`
+                  : '#1a1a1a',
+              }} />
+              
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(251, 191, 36, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)'}
+              >
+                <div style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: '28px solid #000',
+                  borderTop: '16px solid transparent',
+                  borderBottom: '16px solid transparent',
+                  marginLeft: '6px',
+                }} />
+              </div>
+            </div>
           </div>
         )}
 
