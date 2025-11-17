@@ -3348,7 +3348,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
             right: 0,
             bottom: 0,
             backgroundColor: 'rgba(0,0,0,0.9)',
-            zIndex: 3000,
+            zIndex: 999999,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -5097,6 +5097,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                 cursor: 'pointer',
                 border: '2px solid #fbbf24',
               }}
+              data-testid="button-play-video"
             >
               <div style={{
                 position: 'absolute',
@@ -5107,6 +5108,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                 background: company.videoUrl.includes('youtube') || company.videoUrl.includes('youtu.be')
                   ? `url(https://img.youtube.com/vi/${company.videoUrl.split('v=')[1]?.split('&')[0] || company.videoUrl.split('youtu.be/')[1]?.split('?')[0]}/maxresdefault.jpg) center/cover`
                   : '#1a1a1a',
+                pointerEvents: 'none',
               }} />
               
               <div style={{
@@ -5122,9 +5124,8 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                 alignItems: 'center',
                 justifyContent: 'center',
                 transition: 'transform 0.2s',
+                pointerEvents: 'none',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)'}
               >
                 <div style={{
                   width: 0,
