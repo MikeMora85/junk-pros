@@ -3306,7 +3306,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(0,0,0,0.8)',
-          zIndex: 20000,
+          zIndex: 10002,
           overflow: 'auto',
         }} onClick={() => setSelectedCompanyId(null)}>
           <div>
@@ -4462,7 +4462,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         right: 0,
         bottom: 0,
         background: '#fff',
-        zIndex: 20001,
+        zIndex: 10003,
         overflowY: 'auto',
         overflowX: 'hidden',
       }}>
@@ -4495,7 +4495,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
       <div style={{ 
         maxWidth: '1200px', 
         margin: '0 auto', 
-        padding: '80px 20px 80px',
+        padding: '60px 16px 80px',
       }}>
         {/* Header with watermark logo */}
         <div style={{
@@ -4719,48 +4719,56 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
 
         {/* Services Icons */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .service-icons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+            padding: 0 12px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 32px;
+          }
+          .service-icon-circle {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justifyContent: center;
+            border: 2px solid #000;
+            border-radius: 50%;
+          }
+          @media (min-width: 768px) {
+            .service-icon-circle {
+              width: 110px;
+              height: 110px;
+            }
+          }
+        `}} />
         {company.services && company.services.length > 0 && (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-            gap: '24px',
-            marginBottom: '32px',
-            padding: '0 20px',
-            textAlign: 'center',
-            maxWidth: '900px',
-            margin: '0 auto 32px',
-          }}>
+          <div className="service-icons-container">
             {company.services.map((serviceId, i) => {
               // Map service IDs to icons and labels
               const serviceMap: Record<string, { icon: any; label: string }> = {
-                'residential': { icon: <Home size={32} />, label: 'Residential' },
-                'commercial': { icon: <Building2 size={32} />, label: 'Commercial' },
-                'furniture': { icon: <Sofa size={32} />, label: 'Furniture Removal' },
-                'appliances': { icon: <Refrigerator size={32} />, label: 'Appliance Removal' },
-                'electronics': { icon: <Tv size={32} />, label: 'Electronics' },
-                'yard-waste': { icon: <Trees size={32} />, label: 'Yard Waste' },
-                'construction': { icon: <Dumbbell size={32} />, label: 'Construction' },
-                'moving': { icon: <Truck size={32} />, label: 'Moving/Hauling' },
-                'general': { icon: <Package size={32} />, label: 'General Junk' },
+                'residential': { icon: <Home size={42} />, label: 'Residential' },
+                'commercial': { icon: <Building2 size={42} />, label: 'Commercial' },
+                'furniture': { icon: <Sofa size={42} />, label: 'Furniture Removal' },
+                'appliances': { icon: <Refrigerator size={42} />, label: 'Appliance Removal' },
+                'electronics': { icon: <Tv size={42} />, label: 'Electronics' },
+                'yard-waste': { icon: <Trees size={42} />, label: 'Yard Waste' },
+                'construction': { icon: <Dumbbell size={42} />, label: 'Construction' },
+                'moving': { icon: <Truck size={42} />, label: 'Moving/Hauling' },
+                'general': { icon: <Package size={42} />, label: 'General Junk' },
               };
               
-              const service = serviceMap[serviceId] || { icon: <Trash2 size={32} />, label: serviceId };
+              const service = serviceMap[serviceId] || { icon: <Trash2 size={42} />, label: serviceId };
               
               return (
                 <div key={i}>
-                  <div style={{
-                    width: '90px',
-                    height: '90px',
-                    margin: '0 auto 12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    border: '2px solid #000',
-                    borderRadius: '50%',
-                  }}>
-                    <div style={{ transform: 'scale(1.4)' }}>
-                      {service.icon}
-                    </div>
+                  <div className="service-icon-circle">
+                    {service.icon}
                   </div>
                   <div style={{ 
                     fontSize: '13px', 
@@ -4808,8 +4816,6 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
           <div style={{
             position: 'relative',
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)',
             marginBottom: '32px',
             marginTop: '32px',
           }}>
@@ -4849,24 +4855,19 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     style={{
                       flex: '0 0 100%',
                       width: '100%',
-                      height: '500px',
+                      height: '400px',
                       borderRadius: '8px',
                       overflow: 'hidden',
                       background: '#f3f4f6',
                       border: '2px solid #fbbf24',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
                     }}
                   >
                     <img
                       src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
                       style={{
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                        width: 'auto',
-                        height: 'auto',
+                        width: '100%',
+                        height: '100%',
                         objectFit: 'contain',
                       }}
                     />
