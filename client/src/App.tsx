@@ -5653,6 +5653,22 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         </div>
 
         {/* Map Location */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .map-container {
+            width: 100%;
+            height: 250px;
+            background: #e8f0e3;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #d1d5db;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .map-container {
+              height: 500px;
+            }
+          }
+        `}} />
         <div style={{ marginTop: '32px' }}>
           <h2 style={{
             fontSize: '24px',
@@ -5663,15 +5679,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           }}>
             Map
           </h2>
-          <div style={{
-            width: '100%',
-            height: '250px',
-            background: '#e8f0e3',
-            borderRadius: '8px',
-            position: 'relative',
-            overflow: 'hidden',
-            border: '1px solid #d1d5db',
-          }}>
+          <div className="map-container">
             <GoogleMapEmbed 
               address={company.address || `${company.city}, ${company.state}`}
               lat={company.latitude}
