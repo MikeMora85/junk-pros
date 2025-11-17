@@ -1316,13 +1316,11 @@ function LandingPage() {
   };
 
   return (
-    <>
+    <div style={{ width: '100%', overflowX: 'hidden' }}>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <div style={{
         background: '#ffffff',
-        overflowX: 'hidden',
-        width: '100%',
       }}>
       {/* Header Buttons */}
       <div style={{
@@ -1846,7 +1844,7 @@ function LandingPage() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
 
