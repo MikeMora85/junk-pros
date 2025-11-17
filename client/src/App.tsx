@@ -1434,11 +1434,26 @@ function LandingPage() {
           marginTop: '60px',
         }}>
           {/* Hero Image */}
-          <div style={{
+          <div className="hero-image-container" style={{
             width: '100vw',
             marginLeft: 'calc(-50vw + 50%)',
             marginBottom: '0',
           }}>
+            <style dangerouslySetInnerHTML={{__html: `
+              @media (min-width: 1024px) {
+                .hero-image-container img {
+                  max-height: 400px !important;
+                  width: auto !important;
+                  margin: 0 auto !important;
+                }
+                .hero-image-container {
+                  display: flex !important;
+                  justify-content: center !important;
+                  width: 100% !important;
+                  margin-left: 0 !important;
+                }
+              }
+            `}} />
             <img 
               src={heroTruck} 
               alt="Junk removal truck with US map" 
