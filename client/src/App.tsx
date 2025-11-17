@@ -4736,14 +4736,20 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             margin: 0 auto 12px;
             display: flex;
             align-items: center;
-            justifyContent: center;
+            justify-content: center;
             border: 2px solid #000;
             border-radius: 50%;
           }
-          @media (min-width: 768px) {
+          .service-icon-svg {
+            transform: scale(1.4);
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
             .service-icon-circle {
-              width: 110px;
-              height: 110px;
+              width: 120px;
+              height: 120px;
+            }
+            .service-icon-svg {
+              transform: scale(1.8);
             }
           }
         `}} />
@@ -4752,23 +4758,25 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             {company.services.map((serviceId, i) => {
               // Map service IDs to icons and labels
               const serviceMap: Record<string, { icon: any; label: string }> = {
-                'residential': { icon: <Home size={42} />, label: 'Residential' },
-                'commercial': { icon: <Building2 size={42} />, label: 'Commercial' },
-                'furniture': { icon: <Sofa size={42} />, label: 'Furniture Removal' },
-                'appliances': { icon: <Refrigerator size={42} />, label: 'Appliance Removal' },
-                'electronics': { icon: <Tv size={42} />, label: 'Electronics' },
-                'yard-waste': { icon: <Trees size={42} />, label: 'Yard Waste' },
-                'construction': { icon: <Dumbbell size={42} />, label: 'Construction' },
-                'moving': { icon: <Truck size={42} />, label: 'Moving/Hauling' },
-                'general': { icon: <Package size={42} />, label: 'General Junk' },
+                'residential': { icon: <Home size={32} />, label: 'Residential' },
+                'commercial': { icon: <Building2 size={32} />, label: 'Commercial' },
+                'furniture': { icon: <Sofa size={32} />, label: 'Furniture Removal' },
+                'appliances': { icon: <Refrigerator size={32} />, label: 'Appliance Removal' },
+                'electronics': { icon: <Tv size={32} />, label: 'Electronics' },
+                'yard-waste': { icon: <Trees size={32} />, label: 'Yard Waste' },
+                'construction': { icon: <Dumbbell size={32} />, label: 'Construction' },
+                'moving': { icon: <Truck size={32} />, label: 'Moving/Hauling' },
+                'general': { icon: <Package size={32} />, label: 'General Junk' },
               };
               
-              const service = serviceMap[serviceId] || { icon: <Trash2 size={42} />, label: serviceId };
+              const service = serviceMap[serviceId] || { icon: <Trash2 size={32} />, label: serviceId };
               
               return (
                 <div key={i}>
                   <div className="service-icon-circle">
-                    {service.icon}
+                    <div className="service-icon-svg">
+                      {service.icon}
+                    </div>
                   </div>
                   <div style={{ 
                     fontSize: '13px', 
