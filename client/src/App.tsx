@@ -1316,15 +1316,11 @@ function LandingPage() {
   };
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: '#d3d3d3',
-    }}>
+    <>
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <div style={{
         background: '#ffffff',
-        minHeight: '100vh',
       }}>
       {/* Header Buttons */}
       <div style={{
@@ -1646,7 +1642,6 @@ function LandingPage() {
         backgroundColor: '#fbbf24',
         color: '#000',
         padding: '60px 20px 30px',
-        marginTop: '80px',
         width: '100%',
       }}>
         <div style={{
@@ -1825,7 +1820,7 @@ function LandingPage() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
 
