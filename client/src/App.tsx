@@ -4232,10 +4232,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   </div>
                   )}
                   
-                  {/* Video Thumbnail - Desktop Only, Premium & Standard only */}
+                  {/* Video Thumbnail - Premium & Standard only */}
                   {!isUnclaimed && !isBasic && c.videoUrl && (
                     <div style={{
-                      display: 'none',
                       marginBottom: '12px',
                       position: 'relative',
                     }}
