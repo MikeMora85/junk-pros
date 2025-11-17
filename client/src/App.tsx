@@ -1643,7 +1643,7 @@ function LandingPage() {
       <footer style={{
         backgroundColor: '#fbbf24',
         color: '#000',
-        padding: '20px 20px 15px',
+        padding: '15px 20px 12px',
         width: '100%',
         margin: 0,
         boxSizing: 'border-box',
@@ -1652,8 +1652,8 @@ function LandingPage() {
           .footer-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 12px;
           }
           .footer-about {
             grid-column: 1 / -1;
@@ -1682,18 +1682,18 @@ function LandingPage() {
             {/* About Section */}
             <div className="footer-about">
               <h4 style={{
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: '700',
-                marginBottom: '16px',
+                marginBottom: '8px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 color: '#000',
               }}>
                 About Us
               </h4>
               <p style={{
-                fontSize: '14px',
+                fontSize: '13px',
                 color: '#000',
-                lineHeight: '1.6',
+                lineHeight: '1.4',
                 margin: '0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
@@ -1705,9 +1705,9 @@ function LandingPage() {
             {/* Quick Links */}
             <div>
               <h4 style={{
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: '700',
-                marginBottom: '16px',
+                marginBottom: '6px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 color: '#000',
               }}>
@@ -1718,11 +1718,11 @@ function LandingPage() {
                 padding: 0,
                 margin: 0,
               }}>
-                <li style={{ marginBottom: '12px' }}>
+                <li style={{ marginBottom: '6px' }}>
                   <a href="/" style={{
                     color: '#000',
                     textDecoration: 'none',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
@@ -1731,11 +1731,11 @@ function LandingPage() {
                     Home
                   </a>
                 </li>
-                <li style={{ marginBottom: '12px' }}>
+                <li style={{ marginBottom: '6px' }}>
                   <a href="/add-business" style={{
                     color: '#000',
                     textDecoration: 'none',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
@@ -1750,9 +1750,9 @@ function LandingPage() {
             {/* Services */}
             <div>
               <h4 style={{
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: '700',
-                marginBottom: '16px',
+                marginBottom: '6px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 color: '#000',
               }}>
@@ -1763,11 +1763,11 @@ function LandingPage() {
                 padding: 0,
                 margin: 0,
               }}>
-                <li style={{ marginBottom: '12px' }}>
+                <li style={{ marginBottom: '6px' }}>
                   <a href="/services/residential" style={{
                     color: '#000',
                     textDecoration: 'none',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
@@ -1776,11 +1776,11 @@ function LandingPage() {
                     Residential
                   </a>
                 </li>
-                <li style={{ marginBottom: '12px' }}>
+                <li style={{ marginBottom: '6px' }}>
                   <a href="/services/commercial" style={{
                     color: '#000',
                     textDecoration: 'none',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
@@ -1789,11 +1789,11 @@ function LandingPage() {
                     Commercial
                   </a>
                 </li>
-                <li style={{ marginBottom: '12px' }}>
+                <li style={{ marginBottom: '6px' }}>
                   <a href="/services/estate-cleanouts" style={{
                     color: '#000',
                     textDecoration: 'none',
-                    fontSize: '14px',
+                    fontSize: '13px',
                     fontFamily: "'Helvetica Neue', Arial, sans-serif",
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
@@ -1808,19 +1808,19 @@ function LandingPage() {
             {/* Contact */}
             <div className="footer-contact">
               <h4 style={{
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: '700',
-                marginBottom: '16px',
+                marginBottom: '6px',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 color: '#000',
               }}>
                 Contact
               </h4>
               <p style={{
-                fontSize: '14px',
+                fontSize: '13px',
                 color: '#000',
-                lineHeight: '1.6',
-                margin: '0 0 12px 0',
+                lineHeight: '1.4',
+                margin: '0',
                 fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
                 Find local junk removal pros in your area using our search tool above.
@@ -1831,11 +1831,11 @@ function LandingPage() {
           {/* Bottom Bar */}
           <div style={{
             borderTop: '1px solid #000',
-            paddingTop: '15px',
+            paddingTop: '10px',
             textAlign: 'center',
           }}>
             <p style={{
-              fontSize: '14px',
+              fontSize: '12px',
               color: '#000',
               margin: '0',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
