@@ -1643,7 +1643,7 @@ function LandingPage() {
       <footer style={{
         backgroundColor: '#fbbf24',
         color: '#000',
-        padding: '15px 20px 12px',
+        padding: '15px 0 12px',
         width: '100%',
         margin: 0,
         boxSizing: 'border-box',
@@ -1677,6 +1677,7 @@ function LandingPage() {
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
+          padding: '0 20px',
         }}>
           <div className="footer-grid">
             {/* About Section */}
