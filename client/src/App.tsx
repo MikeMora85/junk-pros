@@ -1461,8 +1461,6 @@ function LandingPage() {
                 width: '100%',
                 height: 'auto',
                 display: 'block',
-                boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-                transform: 'translateY(-1px)',
               }}
             />
           </div>
