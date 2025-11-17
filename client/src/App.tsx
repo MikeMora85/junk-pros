@@ -4841,12 +4841,21 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
         )}
 
         {/* Full Width Photo Gallery with Navigation */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .photo-gallery-container {
+            position: relative;
+            margin-bottom: 32px;
+            margin-top: 32px;
+          }
+          @media (max-width: 1023px) {
+            .photo-gallery-container {
+              margin-bottom: 16px;
+              margin-top: 16px;
+            }
+          }
+        `}} />
         {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
-          <div style={{
-            position: 'relative',
-            marginBottom: '32px',
-            marginTop: '32px',
-          }}>
+          <div className="photo-gallery-container">
             <div 
               ref={(el) => {
                 if (el) (el as any).carouselScroll = el;
