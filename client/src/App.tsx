@@ -4960,6 +4960,15 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             margin-bottom: 32px !important;
             margin-top: 32px !important;
           }
+          .photo-gallery-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 16px;
+          }
           .photo-gallery-item {
             flex: 0 0 100%;
             width: 100%;
@@ -4986,6 +4995,19 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               object-fit: cover;
             }
           }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .photo-gallery-scroll {
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 16px;
+              overflow-x: visible;
+            }
+            .photo-gallery-item {
+              flex: none;
+              width: 100%;
+              height: 300px;
+            }
+          }
         `}} />
         {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
           <div className="photo-gallery-container">
@@ -4993,16 +5015,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               ref={(el) => {
                 if (el) (el as any).carouselScroll = el;
               }}
-              style={{
-                display: 'flex',
-                gap: '8px',
-                overflowX: 'auto',
-                scrollBehavior: 'smooth',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                padding: '0 16px',
-              }} 
-              className="hide-scrollbar"
+              className="photo-gallery-scroll hide-scrollbar"
             >
               <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
               {(() => {
