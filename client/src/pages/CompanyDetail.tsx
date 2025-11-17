@@ -197,7 +197,7 @@ export default function CompanyDetail() {
       <header style={{
         background: '#fff',
         borderBottom: '1px solid #e5e7eb',
-        padding: '16px',
+        padding: '12px 16px',
         position: 'sticky',
         top: 0,
         zIndex: 50,
@@ -224,14 +224,35 @@ export default function CompanyDetail() {
         </div>
       </header>
 
-      <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
+      <style>{`
+        .company-detail-main {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 12px;
+        }
+        @media (min-width: 640px) {
+          .company-detail-main {
+            padding: 20px;
+          }
+        }
+        .company-card {
+          background-color: #fff;
+          border-radius: 12px;
+          padding: 16px;
+          margin-bottom: 12px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 640px) {
+          .company-card {
+            padding: 20px;
+            margin-bottom: 16px;
+          }
+        }
+      `}</style>
+      <div className="company-detail-main">
         {/* Company Header */}
-        <div style={{
-          backgroundColor: '#fff',
-          borderRadius: '12px',
-          padding: '24px',
-          marginBottom: '16px',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        <div className="company-card" style={{
+          padding: '20px',
         }}>
           <h1 style={{
             fontSize: '28px',
@@ -284,13 +305,7 @@ export default function CompanyDetail() {
 
         {/* Services Icons */}
         {company.services && company.services.length > 0 && (
-          <div style={{
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            padding: '20px',
-            marginBottom: '16px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          }}>
+          <div className="company-card">
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
@@ -343,13 +358,7 @@ export default function CompanyDetail() {
           <div style={{ flex: 1 }}>
             {/* About Us */}
             {company.aboutUs && (
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '20px',
-                marginBottom: '16px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              }}>
+              <div className="company-card">
                 <h2 style={{
                   fontSize: '18px',
                   fontWeight: '700',
@@ -372,13 +381,7 @@ export default function CompanyDetail() {
 
             {/* Photos */}
             {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '20px',
-                marginBottom: '16px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              }}>
+              <div className="company-card">
                 <h2 style={{
                   fontSize: '18px',
                   fontWeight: '700',
@@ -432,13 +435,7 @@ export default function CompanyDetail() {
 
             {/* Reviews */}
             {company.reviewSnippets && company.reviewSnippets.length > 0 && (
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '20px',
-                marginBottom: '16px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              }}>
+              <div className="company-card">
                 <h2 style={{
                   fontSize: '18px',
                   fontWeight: '700',
@@ -494,13 +491,7 @@ export default function CompanyDetail() {
           <div style={{ width: '100%', maxWidth: '300px' }}>
             {/* Pricing - if available */}
             {company.priceSheetData && (
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '20px',
-                marginBottom: '16px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              }}>
+              <div className="company-card">
                 <h2 style={{
                   fontSize: '18px',
                   fontWeight: '700',
@@ -518,13 +509,7 @@ export default function CompanyDetail() {
             )}
 
             {/* Amenities */}
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '16px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            }}>
+            <div className="company-card">
               <h2 style={{
                 fontSize: '18px',
                 fontWeight: '700',
@@ -542,13 +527,7 @@ export default function CompanyDetail() {
 
             {/* Payment Methods */}
             {company.paymentMethods && company.paymentMethods.length > 0 && (
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '20px',
-                marginBottom: '16px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              }}>
+              <div className="company-card">
                 <h2 style={{
                   fontSize: '18px',
                   fontWeight: '700',
@@ -591,13 +570,7 @@ export default function CompanyDetail() {
 
             {/* Business Hours */}
             {(company.businessHours || company.hours) && (
-              <div style={{
-                backgroundColor: '#fff',
-                borderRadius: '12px',
-                padding: '20px',
-                marginBottom: '16px',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-              }}>
+              <div className="company-card">
                 <h2 style={{
                   fontSize: '18px',
                   fontWeight: '700',
@@ -672,13 +645,7 @@ export default function CompanyDetail() {
             )}
 
             {/* Location */}
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              marginBottom: '16px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-            }}>
+            <div className="company-card">
               <h2 style={{
                 fontSize: '18px',
                 fontWeight: '700',
@@ -693,11 +660,8 @@ export default function CompanyDetail() {
             </div>
 
             {/* Contact Information */}
-            <div style={{
-              backgroundColor: '#fff',
-              borderRadius: '12px',
-              padding: '20px',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            <div className="company-card" style={{
+              marginBottom: '0',
             }}>
               <h2 style={{
                 fontSize: '18px',
