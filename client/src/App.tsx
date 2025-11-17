@@ -4856,6 +4856,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             background: #f3f4f6;
             border: 2px solid #fbbf24;
           }
+          .photo-gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
           @media (max-width: 1023px) {
             .photo-gallery-container {
               margin-bottom: 12px !important;
@@ -4863,6 +4868,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             }
             .photo-gallery-item {
               height: 300px;
+            }
+            .photo-gallery-img {
+              object-fit: cover;
             }
           }
         `}} />
@@ -4906,11 +4914,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
                     <img
                       src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                      }}
+                      className="photo-gallery-img"
                     />
                   </div>
                 ));
