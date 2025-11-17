@@ -4690,7 +4690,7 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
           }
           @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
             .company-header-container {
-              padding-top: 30px;
+              padding-top: 60px;
             }
           }
         `}} />
