@@ -17,6 +17,7 @@ import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
+import { Loader } from '@googlemaps/js-api-loader';
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -4449,6 +4450,112 @@ function CityPage({ city, state }: { city: string; state: string }) {
   );
 }
 
+// Google Map Component
+function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number | null; lng?: number | null }) {
+  const mapRef = useState<HTMLDivElement | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const initMap = async () => {
+      try {
+        // Fetch API key
+        const configResponse = await fetch('/api/config');
+        const config = await configResponse.json();
+        const apiKey = config.googleMapsApiKey;
+        
+        if (!apiKey) {
+          setError('Map unavailable');
+          setIsLoading(false);
+          return;
+        }
+        
+        // Load Google Maps
+        const loader = new Loader({
+          apiKey,
+          version: 'weekly',
+        });
+        
+        await loader.load();
+        
+        if (!mapRef[0]) return;
+        
+        // Use provided coordinates or geocode address
+        let coordinates = { lat: lat || 0, lng: lng || 0 };
+        
+        if (!lat || !lng) {
+          // Geocode the address
+          const geocoder = new google.maps.Geocoder();
+          const result = await geocoder.geocode({ address });
+          if (result.results[0]) {
+            coordinates = {
+              lat: result.results[0].geometry.location.lat(),
+              lng: result.results[0].geometry.location.lng(),
+            };
+          }
+        }
+        
+        // Create map
+        const map = new google.maps.Map(mapRef[0], {
+          center: coordinates,
+          zoom: 15,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false,
+        });
+        
+        // Add marker
+        new google.maps.Marker({
+          position: coordinates,
+          map,
+          title: address,
+        });
+        
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Map error:', err);
+        setError('Failed to load map');
+        setIsLoading(false);
+      }
+    };
+    
+    initMap();
+  }, [address, lat, lng]);
+  
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {isLoading && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '14px',
+          color: '#6b7280',
+        }}>
+          Loading map...
+        </div>
+      )}
+      {error && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '14px',
+          color: '#6b7280',
+        }}>
+          {error}
+        </div>
+      )}
+      <div
+        ref={(el) => mapRef[1](el)}
+        style={{ width: '100%', height: '100%', borderRadius: '12px' }}
+      />
+    </div>
+  );
+}
+
 function CompanyDetailInline({ company, onClose }: { company: Company; onClose: () => void }) {
   const [socialTabOpen, setSocialTabOpen] = useState(false);
   
@@ -5457,38 +5564,11 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
             overflow: 'hidden',
             border: '1px solid #d1d5db',
           }}>
-            {/* Map background with streets */}
-            <svg style={{ position: 'absolute', width: '100%', height: '100%' }}>
-              {/* Park/green space */}
-              <rect x="60" y="40" width="80" height="70" fill="#c7e6bd" />
-              {/* Streets - horizontal */}
-              <rect x="0" y="80" width="100%" height="4" fill="#fff" />
-              <rect x="0" y="160" width="100%" height="4" fill="#fff" />
-              {/* Streets - vertical */}
-              <rect x="120" y="0" width="4" height="100%" fill="#fff" />
-              <rect x="240" y="0" width="4" height="100%" fill="#fff" />
-              <rect x="360" y="0" width="4" height="100%" fill="#fff" />
-              {/* Street labels */}
-              <text x="10" y="75" fontSize="10" fill="#6b7280" fontFamily="system-ui">Main St</text>
-              <text x="10" y="155" fontSize="10" fill="#6b7280" fontFamily="system-ui">Elm St</text>
-              <text x="128" y="20" fontSize="10" fill="#6b7280" fontFamily="system-ui">1st Ave</text>
-              {/* Buildings */}
-              <rect x="30" y="90" width="25" height="30" fill="#d1d5db" opacity="0.7" />
-              <rect x="140" y="90" width="30" height="35" fill="#d1d5db" opacity="0.7" />
-              <rect x="250" y="100" width="28" height="30" fill="#d1d5db" opacity="0.7" />
-              <rect x="150" y="175" width="35" height="40" fill="#d1d5db" opacity="0.7" />
-            </svg>
-            
-            {/* Location marker */}
-            <div style={{
-              position: 'absolute',
-              top: '45%',
-              left: '55%',
-              transform: 'translate(-50%, -100%)',
-              zIndex: 10,
-            }}>
-              <MapPin size={40} color="#ef4444" fill="#ef4444" strokeWidth={2} />
-            </div>
+            <GoogleMapEmbed 
+              address={company.address || `${company.city}, ${company.state}`}
+              lat={company.latitude}
+              lng={company.longitude}
+            />
             
             {/* Address label */}
             <div style={{
@@ -5503,8 +5583,9 @@ function CompanyDetailInline({ company, onClose }: { company: Company; onClose: 
               color: '#374151',
               fontFamily: 'system-ui, -apple-system, sans-serif',
               boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              zIndex: 10,
             }}>
-              {company.address || '1234 Elm St, Springfield, IL 62701'}
+              {company.address || `${company.city}, ${company.state}`}
             </div>
           </div>
         </div>
