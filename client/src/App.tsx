@@ -1321,6 +1321,8 @@ function LandingPage() {
       
       <div style={{
         background: '#ffffff',
+        overflowX: 'hidden',
+        width: '100%',
       }}>
       {/* Header Buttons */}
       <div style={{
@@ -1642,13 +1644,9 @@ function LandingPage() {
         backgroundColor: '#fbbf24',
         color: '#000',
         padding: '30px 20px 20px',
-        width: '100vw',
+        width: '100%',
         margin: 0,
-        position: 'relative',
-        left: '50%',
-        right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
+        boxSizing: 'border-box',
       }}>
         <div style={{
           maxWidth: '1400px',
