@@ -1638,6 +1638,186 @@ function LandingPage() {
           ))}
         </div>
 
+        {/* Footer */}
+        <footer style={{
+          backgroundColor: '#1a1a1a',
+          color: '#ffffff',
+          padding: '60px 20px 30px',
+          marginTop: '80px',
+        }}>
+          <div style={{
+            maxWidth: '1400px',
+            margin: '0 auto',
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '40px',
+              marginBottom: '40px',
+            }}>
+              {/* About Section */}
+              <div>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  marginBottom: '16px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  About Us
+                </h4>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#9ca3af',
+                  lineHeight: '1.6',
+                  margin: '0',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Connecting you with trusted local junk removal professionals across all 50 states. 
+                  No national franchises, just quality independent companies.
+                </p>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  marginBottom: '16px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Quick Links
+                </h4>
+                <ul style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                }}>
+                  <li style={{ marginBottom: '12px' }}>
+                    <a href="/" style={{
+                      color: '#9ca3af',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+                    data-testid="link-footer-home">
+                      Home
+                    </a>
+                  </li>
+                  <li style={{ marginBottom: '12px' }}>
+                    <a href="/add-business" style={{
+                      color: '#9ca3af',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+                    data-testid="link-footer-add-business">
+                      Add Your Business
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Services */}
+              <div>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  marginBottom: '16px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Services
+                </h4>
+                <ul style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                }}>
+                  <li style={{ marginBottom: '12px' }}>
+                    <a href="/services/residential" style={{
+                      color: '#9ca3af',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+                    data-testid="link-footer-residential">
+                      Residential
+                    </a>
+                  </li>
+                  <li style={{ marginBottom: '12px' }}>
+                    <a href="/services/commercial" style={{
+                      color: '#9ca3af',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+                    data-testid="link-footer-commercial">
+                      Commercial
+                    </a>
+                  </li>
+                  <li style={{ marginBottom: '12px' }}>
+                    <a href="/services/estate-cleanouts" style={{
+                      color: '#9ca3af',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#fbbf24'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+                    data-testid="link-footer-estate">
+                      Estate Cleanouts
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div>
+                <h4 style={{
+                  fontSize: '18px',
+                  fontWeight: '700',
+                  marginBottom: '16px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Contact
+                </h4>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#9ca3af',
+                  lineHeight: '1.6',
+                  margin: '0 0 12px 0',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Find local junk removal pros in your area using our search tool above.
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom Bar */}
+            <div style={{
+              borderTop: '1px solid #374151',
+              paddingTop: '24px',
+              textAlign: 'center',
+            }}>
+              <p style={{
+                fontSize: '14px',
+                color: '#6b7280',
+                margin: '0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                © {new Date().getFullYear()} Junk Removal Directory. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
+
       </div>
       </div>
     </div>
