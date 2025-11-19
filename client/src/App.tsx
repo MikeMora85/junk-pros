@@ -6,6 +6,7 @@ import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Hom
 import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import EstimateBuilder from "./components/EstimateBuilder";
 import QuoteRequestForm from "./components/QuoteRequestForm";
 import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -1635,6 +1636,46 @@ function LandingPage() {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* How Much Is Junk Removal Section */}
+        <div style={{
+          backgroundColor: '#fff',
+          borderRadius: '12px',
+          padding: '40px 20px',
+          marginBottom: '60px',
+          boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+        }}>
+          <h2 style={{
+            fontSize: '32px',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            margin: '0 0 12px 0',
+            textAlign: 'center',
+            letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            How Much Is Junk Removal?
+          </h2>
+          <p style={{
+            fontSize: '16px',
+            color: '#6b7280',
+            margin: '0 0 32px 0',
+            textAlign: 'center',
+            maxWidth: '600px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Use our interactive calculator to estimate your junk removal cost based on load size
+          </p>
+          
+          <div style={{
+            maxWidth: '600px',
+            margin: '0 auto',
+          }}>
+            <EstimateBuilder />
+          </div>
         </div>
 
       </div>
