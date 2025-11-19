@@ -1013,6 +1013,9 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 // Blog Page Component
 function BlogPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  // SEO
+  useSEO(buildBlogPageSEO());
 
   const blogPosts = [
     {
@@ -3245,6 +3248,10 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [videoModalUrl, setVideoModalUrl] = useState<string | null>(null);
   const { user, isAuthenticated } = useAuth();
+  
+  // SEO
+  const stateName = stateNames[state] || state;
+  useSEO(buildCityPageSEO(city, state, stateName));
   
   // Fetch user's company profile if authenticated
   const { data: userCompany } = useQuery<Company>({

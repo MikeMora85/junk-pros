@@ -1,6 +1,7 @@
 import { useRoute, Link, useLocation } from 'wouter';
 import { CheckCircle2, Search, Home, ArrowLeft, Building2, Users, Truck, Recycle } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useSEO, buildServicePageSEO, buildWebPageSchema, buildBreadcrumbSchema } from '../lib/seo';
 
 const serviceDetails: Record<string, {
   title: string;
@@ -542,22 +543,15 @@ export default function ServicePage() {
   const serviceSlug = params?.service || '';
   const serviceInfo = serviceDetails[serviceSlug];
   
+  // SEO
+  if (serviceInfo) {
+    useSEO(buildServicePageSEO(serviceSlug, serviceInfo.title, serviceInfo.description));
+  }
+  
   // Scroll to top when page loads
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-  
-  // Set page title and meta tags for SEO
-  useEffect(() => {
-    if (serviceInfo) {
-      document.title = `${serviceInfo.title} - Local Vetted Junk Haulers | BestJunkRemovalCompanies.com`;
-      
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', `${serviceInfo.description} Find trusted local junk haulers for ${serviceInfo.title.toLowerCase()} near you.`);
-      }
-    }
-  }, [serviceInfo]);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

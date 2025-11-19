@@ -6,6 +6,7 @@ import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
 import type { Company } from "@shared/schema";
 import { trackBusinessEvent } from "../lib/tracking";
 import QuoteRequestForm from "../components/QuoteRequestForm";
+import { useSEO, buildCompanyPageSEO, buildLocalBusinessSchema } from "../lib/seo";
 
 export default function CompanyDetail() {
   const [, params] = useRoute("/company/:id");
@@ -16,6 +17,17 @@ export default function CompanyDetail() {
     queryKey: ["/api/companies", companyId],
     enabled: !!companyId,
   });
+  
+  // SEO
+  if (company) {
+    useSEO(buildCompanyPageSEO(
+      company.name,
+      company.city,
+      company.state,
+      company.state.toUpperCase(),
+      company.description
+    ));
+  }
 
   if (isLoading) {
     return (

@@ -1,6 +1,7 @@
 import { useRoute, Link, useLocation } from 'wouter';
 import { CheckCircle2, Search, Home, ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useSEO, buildItemPageSEO, buildWebPageSchema, buildBreadcrumbSchema } from '../lib/seo';
 
 const itemDetails: Record<string, {
   title: string;
@@ -261,21 +262,13 @@ export default function ItemRemovalPage() {
   const itemSlug = params?.item || '';
   const itemInfo = itemDetails[itemSlug] || generateGenericItem(itemSlug);
   
+  // SEO
+  useSEO(buildItemPageSEO(itemSlug, itemInfo.title, itemInfo.description));
+  
   // Scroll to top when page loads or item changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-  
-  // Set page title and meta tags for SEO
-  useEffect(() => {
-    document.title = `${itemInfo.title} - Local Vetted Junk Haulers | BestJunkRemovalCompanies.com`;
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', `${itemInfo.description} Find trusted local junk haulers for ${itemInfo.title.toLowerCase()} near you. No franchises - just vetted local pros.`);
-    }
-  }, [itemInfo.title, itemInfo.description]);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
