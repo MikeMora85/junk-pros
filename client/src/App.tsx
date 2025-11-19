@@ -18,7 +18,7 @@ import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
-import { useSEO, buildLandingPageSEO, buildStatePageSEO, buildCityPageSEO, buildOrganizationSchema, buildWebPageSchema, buildBreadcrumbSchema } from "./lib/seo";
+import { useSEO, buildLandingPageSEO, buildStatePageSEO, buildCityPageSEO, buildBlogPageSEO, buildOrganizationSchema, buildWebPageSchema, buildBreadcrumbSchema } from "./lib/seo";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
