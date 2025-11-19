@@ -512,7 +512,7 @@ function addCityLinks(text: string) {
             key={`${name}-${match.index}`}
             href={url}
             style={{
-              color: '#166534',
+              color: '#000',
               fontWeight: '600',
               textDecoration: 'underline',
             }}
@@ -795,7 +795,7 @@ export default function ServicePage() {
                 <CheckCircle2 
                   size={24} 
                   style={{ 
-                    color: '#166534', 
+                    color: '#fbbf24', 
                     flexShrink: 0,
                     marginTop: '2px' 
                   }} 
@@ -849,7 +849,7 @@ export default function ServicePage() {
                   gap: '16px',
                 }}
               >
-                <CheckCircle2 size={24} color="#166534" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <CheckCircle2 size={24} color="#fbbf24" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <p style={{
                   margin: 0,
                   fontSize: '16px',
@@ -961,7 +961,7 @@ export default function ServicePage() {
                   textAlign: 'center',
                   fontWeight: '600',
                   fontSize: '15px',
-                  color: '#166534',
+                  color: '#000',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}
               >
@@ -1061,8 +1061,8 @@ export default function ServicePage() {
       {/* CTA Section */}
       <section style={{
         padding: '60px 16px',
-        backgroundColor: '#166534',
-        color: '#fff',
+        backgroundColor: '#fbbf24',
+        color: '#000',
         textAlign: 'center',
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -1077,7 +1077,6 @@ export default function ServicePage() {
           <p style={{
             fontSize: 'clamp(16px, 3vw, 18px)',
             margin: '0 0 24px 0',
-            opacity: 0.9,
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
             Find trusted, local, vetted junk haulers in your area. No national franchises - just quality local service.
@@ -1087,8 +1086,8 @@ export default function ServicePage() {
             style={{
               display: 'inline-block',
               padding: '14px 32px',
-              backgroundColor: '#fbbf24',
-              color: '#000',
+              backgroundColor: '#000',
+              color: '#fff',
               textDecoration: 'none',
               borderRadius: '8px',
               fontSize: 'clamp(16px, 3vw, 18px)',
