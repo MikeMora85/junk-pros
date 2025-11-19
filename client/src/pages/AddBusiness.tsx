@@ -702,6 +702,7 @@ export default function AddBusiness() {
                       type="text"
                       value={checkCity}
                       onChange={(e) => setCheckCity(e.target.value)}
+                      onClick={(e) => e.stopPropagation()}
                       placeholder="Enter city, state (e.g., Scottsdale, Arizona)"
                       style={{
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
