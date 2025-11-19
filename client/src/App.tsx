@@ -5230,7 +5230,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                     className="photo-gallery-item"
                   >
                     <img
-                      src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
+                      src={typeof img === 'string' ? img : `https://picsum.photos/200/300?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
                       className="photo-gallery-img"
                     />
