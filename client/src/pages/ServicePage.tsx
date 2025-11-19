@@ -694,7 +694,7 @@ export default function ServicePage() {
               type="text"
               value={zipCode}
               onChange={(e) => setZipCode(e.target.value)}
-              placeholder="Enter your zip code"
+              placeholder="Enter your city"
               style={{
                 flex: 1,
                 padding: '14px 16px',

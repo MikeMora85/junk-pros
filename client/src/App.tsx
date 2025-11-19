@@ -1499,6 +1499,7 @@ function LandingPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter your city"
               style={{
                 flex: 1,
                 minWidth: '0',
