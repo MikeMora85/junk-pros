@@ -4407,6 +4407,24 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     )}
                   </div>
                   )}
+                  
+                  {/* Expand Indicator - Premium & Standard only */}
+                  {hasFullFeatures && (
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '12px 0 8px 0',
+                      marginTop: '8px',
+                    }}>
+                      <ChevronDown 
+                        size={24} 
+                        color="#000"
+                        style={{ opacity: 0.5 }}
+                        data-testid={`icon-expand-${c.id}`}
+                      />
+                    </div>
+                  )}
                 </div>
                   );
                   })
