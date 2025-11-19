@@ -5270,10 +5270,18 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             {/* Navigation Arrows */}
             <button
               onClick={(e) => {
-                const carousel = e.currentTarget.parentElement?.querySelector('.hide-scrollbar') as HTMLElement;
+                const carousel = e.currentTarget.parentElement?.querySelector('.photo-gallery-scroll') as HTMLElement;
                 if (carousel) {
-                  const scrollAmount = carousel.clientWidth;
-                  carousel.scrollLeft -= scrollAmount;
+                  const firstItem = carousel.querySelector('.photo-gallery-item') as HTMLElement;
+                  if (firstItem) {
+                    const computed = getComputedStyle(carousel);
+                    const gapValue = computed.columnGap || computed.gap;
+                    const gap = gapValue && gapValue !== 'normal' ? parseFloat(gapValue) : 0;
+                    const scrollAmount = firstItem.offsetWidth + (Number.isFinite(gap) ? gap : 0);
+                    carousel.scrollLeft -= scrollAmount;
+                  } else {
+                    carousel.scrollLeft -= carousel.clientWidth;
+                  }
                 }
               }}
               style={{
@@ -5301,10 +5309,18 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             
             <button
               onClick={(e) => {
-                const carousel = e.currentTarget.parentElement?.querySelector('.hide-scrollbar') as HTMLElement;
+                const carousel = e.currentTarget.parentElement?.querySelector('.photo-gallery-scroll') as HTMLElement;
                 if (carousel) {
-                  const scrollAmount = carousel.clientWidth;
-                  carousel.scrollLeft += scrollAmount;
+                  const firstItem = carousel.querySelector('.photo-gallery-item') as HTMLElement;
+                  if (firstItem) {
+                    const computed = getComputedStyle(carousel);
+                    const gapValue = computed.columnGap || computed.gap;
+                    const gap = gapValue && gapValue !== 'normal' ? parseFloat(gapValue) : 0;
+                    const scrollAmount = firstItem.offsetWidth + (Number.isFinite(gap) ? gap : 0);
+                    carousel.scrollLeft += scrollAmount;
+                  } else {
+                    carousel.scrollLeft += carousel.clientWidth;
+                  }
                 }
               }}
               style={{
