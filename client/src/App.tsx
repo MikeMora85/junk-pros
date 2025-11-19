@@ -1855,6 +1855,9 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const { user, isAuthenticated } = useAuth();
+  
+  // SEO
+  useSEO(buildStatePageSEO(stateName, stateSlug));
 
   const stateData: Record<string, { 
     cities: string[];
