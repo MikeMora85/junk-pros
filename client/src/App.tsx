@@ -5180,6 +5180,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             gap: 8px;
             overflow-x: auto;
             scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
             scrollbar-width: none;
             -ms-overflow-style: none;
             padding: 0 16px;
@@ -5192,6 +5193,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             overflow: hidden;
             background: #f3f4f6;
             border: 2px solid #fbbf24;
+            scroll-snap-align: start;
           }
           .photo-gallery-img {
             width: 100%;
@@ -5269,7 +5271,10 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             <button
               onClick={(e) => {
                 const carousel = e.currentTarget.parentElement?.querySelector('.hide-scrollbar') as HTMLElement;
-                if (carousel) carousel.scrollLeft -= 300;
+                if (carousel) {
+                  const scrollAmount = carousel.clientWidth;
+                  carousel.scrollLeft -= scrollAmount;
+                }
               }}
               style={{
                 position: 'absolute',
@@ -5297,7 +5302,10 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             <button
               onClick={(e) => {
                 const carousel = e.currentTarget.parentElement?.querySelector('.hide-scrollbar') as HTMLElement;
-                if (carousel) carousel.scrollLeft += 300;
+                if (carousel) {
+                  const scrollAmount = carousel.clientWidth;
+                  carousel.scrollLeft += scrollAmount;
+                }
               }}
               style={{
                 position: 'absolute',
