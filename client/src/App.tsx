@@ -3950,6 +3950,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           <img
                             src={c.logoUrl}
                             alt={`${c.name} logo`}
+                            loading="lazy"
                             style={{
                               width: '100%',
                               height: '100%',
@@ -4216,6 +4217,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                               <img
                                 src={item}
                                 alt="Service photo"
+                                loading="lazy"
                                 style={{
                                   width: '100%',
                                   height: '100%',
@@ -4741,7 +4743,8 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             }}>
               <img 
                 src={company.logoUrl} 
-                alt={`${company.name} logo watermark`} 
+                alt={`${company.name} logo watermark`}
+                loading="lazy"
                 style={{ 
                   width: '100%', 
                   height: '100%', 
@@ -5232,6 +5235,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                     <img
                       src={typeof img === 'string' ? img : `https://picsum.photos/400/600?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
+                      loading="lazy"
                       className="photo-gallery-img"
                     />
                   </div>
@@ -5388,6 +5392,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                           <img 
                             src={member.photoUrl || member.imageUrl} 
                             alt={member.name}
+                            loading="lazy"
                             style={{
                               width: '100%',
                               height: '100%',
