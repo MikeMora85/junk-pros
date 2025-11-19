@@ -3190,6 +3190,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
                       </h4>
                       <ChevronDown
                         size={20}
+                        color="#fbbf24"
                         style={{
                           flexShrink: 0,
                           transform: expandedFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
