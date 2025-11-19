@@ -1245,6 +1245,134 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // SEO Routes - Sitemap.xml
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      const companies = await storage.getAllCompanies();
+      const baseUrl = 'https://findjunkpros.com';
+      
+      // US States list
+      const states = [
+        'alabama', 'alaska', 'arizona', 'arkansas', 'california', 'colorado', 'connecticut',
+        'delaware', 'florida', 'georgia', 'hawaii', 'idaho', 'illinois', 'indiana', 'iowa',
+        'kansas', 'kentucky', 'louisiana', 'maine', 'maryland', 'massachusetts', 'michigan',
+        'minnesota', 'mississippi', 'missouri', 'montana', 'nebraska', 'nevada', 'new-hampshire',
+        'new-jersey', 'new-mexico', 'new-york', 'north-carolina', 'north-dakota', 'ohio',
+        'oklahoma', 'oregon', 'pennsylvania', 'rhode-island', 'south-carolina', 'south-dakota',
+        'tennessee', 'texas', 'utah', 'vermont', 'virginia', 'washington', 'west-virginia',
+        'wisconsin', 'wyoming'
+      ];
+      
+      // Service slugs
+      const services = [
+        'office-cleanouts', 'warehouse-clearing', 'retail-space', 'restaurant-equipment',
+        'construction-debris', 'foreclosure-cleanouts', 'estate-cleanouts', 'hoarding-cleanup',
+        'yard-waste', 'appliance-removal', 'furniture-removal', 'electronics-recycling'
+      ];
+      
+      // Item slugs
+      const items = [
+        'refrigerator', 'sofa', 'mattress', 'hot-tub', 'piano', 'washing-machine',
+        'dryer', 'dishwasher', 'oven', 'freezer', 'treadmill', 'elliptical'
+      ];
+      
+      let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+      xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+      
+      // Homepage
+      xml += '  <url>\n';
+      xml += `    <loc>${baseUrl}/</loc>\n`;
+      xml += '    <changefreq>daily</changefreq>\n';
+      xml += '    <priority>1.0</priority>\n';
+      xml += '  </url>\n';
+      
+      // State pages
+      for (const state of states) {
+        xml += '  <url>\n';
+        xml += `    <loc>${baseUrl}/${state}</loc>\n`;
+        xml += '    <changefreq>weekly</changefreq>\n';
+        xml += '    <priority>0.8</priority>\n';
+        xml += '  </url>\n';
+      }
+      
+      // City pages - get unique city/state combinations from companies
+      const cityStateSet = new Set<string>();
+      for (const company of companies) {
+        if (company.city && company.state) {
+          cityStateSet.add(`${company.state}/${company.city}`);
+        }
+      }
+      
+      for (const cityState of Array.from(cityStateSet)) {
+        xml += '  <url>\n';
+        xml += `    <loc>${baseUrl}/${cityState}</loc>\n`;
+        xml += '    <changefreq>daily</changefreq>\n';
+        xml += '    <priority>0.9</priority>\n';
+        xml += '  </url>\n';
+      }
+      
+      // Company pages
+      for (const company of companies) {
+        if (company.city && company.state) {
+          xml += '  <url>\n';
+          xml += `    <loc>${baseUrl}/${company.state}/${company.city}/${company.id}</loc>\n`;
+          xml += '    <changefreq>weekly</changefreq>\n';
+          xml += '    <priority>0.7</priority>\n';
+          xml += '  </url>\n';
+        }
+      }
+      
+      // Service pages
+      for (const service of services) {
+        xml += '  <url>\n';
+        xml += `    <loc>${baseUrl}/services/${service}</loc>\n`;
+        xml += '    <changefreq>monthly</changefreq>\n';
+        xml += '    <priority>0.6</priority>\n';
+        xml += '  </url>\n';
+      }
+      
+      // Item pages
+      for (const item of items) {
+        xml += '  <url>\n';
+        xml += `    <loc>${baseUrl}/items/${item}</loc>\n`;
+        xml += '    <changefreq>monthly</changefreq>\n';
+        xml += '    <priority>0.6</priority>\n';
+        xml += '  </url>\n';
+      }
+      
+      // Blog page
+      xml += '  <url>\n';
+      xml += `    <loc>${baseUrl}/blog</loc>\n`;
+      xml += '    <changefreq>weekly</changefreq>\n';
+      xml += '    <priority>0.5</priority>\n';
+      xml += '  </url>\n';
+      
+      xml += '</urlset>';
+      
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (error) {
+      console.error('Error generating sitemap:', error);
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
+  // SEO Routes - Robots.txt
+  app.get('/robots.txt', (req, res) => {
+    const robotsTxt = `User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /add-business
+Disallow: /profile/edit
+Disallow: /api/
+
+Sitemap: https://findjunkpros.com/sitemap.xml
+`;
+    res.header('Content-Type', 'text/plain');
+    res.send(robotsTxt);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
