@@ -696,13 +696,15 @@ export default function AddBusiness() {
                   The Featured tier is exclusive - only one company per city. Check if your city is available:
                 </p>
                 
-                <form onSubmit={handleCheckAvailability}>
+                <form onSubmit={handleCheckAvailability} onClick={(e) => e.stopPropagation()}>
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
                     <input
                       type="text"
                       value={checkCity}
                       onChange={(e) => setCheckCity(e.target.value)}
                       onClick={(e) => e.stopPropagation()}
+                      onFocus={(e) => e.stopPropagation()}
+                      onTouchStart={(e) => e.stopPropagation()}
                       placeholder="Enter city, state (e.g., Scottsdale, Arizona)"
                       style={{
                         fontFamily: "'Helvetica Neue', Arial, sans-serif",
