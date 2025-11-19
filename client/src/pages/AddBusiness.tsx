@@ -639,7 +639,10 @@ export default function AddBusiness() {
             </div>
 
             <div
-              onClick={() => setFormData({ ...formData, pricingTier: 'featured' })}
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest('[data-city-checker]')) return;
+                setFormData({ ...formData, pricingTier: 'featured' });
+              }}
               style={{
                 background: formData.pricingTier === 'featured' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'featured' ? '#fbbf24' : '#e5e5e5'}`,
@@ -677,7 +680,7 @@ export default function AddBusiness() {
               </ul>
 
               {/* City Availability Checker */}
-              <div onClick={(e) => e.stopPropagation()} style={{
+              <div data-city-checker onClick={(e) => e.stopPropagation()} style={{
                 background: '#fff',
                 border: '2px solid #fbbf24',
                 padding: '16px',
