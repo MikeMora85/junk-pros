@@ -18,16 +18,22 @@ export default function CompanyDetail() {
     enabled: !!companyId,
   });
   
-  // SEO
-  if (company) {
-    useSEO(buildCompanyPageSEO(
-      company.name,
-      company.city,
-      company.state,
-      company.state.toUpperCase(),
-      company.description
-    ));
-  }
+  // SEO - must be called unconditionally (Rules of Hooks)
+  useSEO(
+    company
+      ? buildCompanyPageSEO(
+          company.name,
+          company.city,
+          company.state,
+          company.state.toUpperCase(),
+          company.description
+        )
+      : {
+          title: 'Company Profile | Find Junk Pros',
+          description: 'View company profile and details',
+          canonical: '/company',
+        }
+  );
 
   if (isLoading) {
     return (

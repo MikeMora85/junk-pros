@@ -543,10 +543,16 @@ export default function ServicePage() {
   const serviceSlug = params?.service || '';
   const serviceInfo = serviceDetails[serviceSlug];
   
-  // SEO
-  if (serviceInfo) {
-    useSEO(buildServicePageSEO(serviceSlug, serviceInfo.title, serviceInfo.description));
-  }
+  // SEO - must be called unconditionally (Rules of Hooks)
+  useSEO(
+    serviceInfo
+      ? buildServicePageSEO(serviceSlug, serviceInfo.title, serviceInfo.description)
+      : {
+          title: 'Service Information | Find Junk Pros',
+          description: 'Service information',
+          canonical: '/services',
+        }
+  );
   
   // Scroll to top when page loads
   useEffect(() => {
