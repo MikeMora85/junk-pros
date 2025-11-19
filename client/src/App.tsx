@@ -17,6 +17,7 @@ import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
+import { useSEO, buildLandingPageSEO, buildStatePageSEO, buildCityPageSEO, buildOrganizationSchema, buildWebPageSchema, buildBreadcrumbSchema } from "./lib/seo";
 import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
 import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
 import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
@@ -1267,6 +1268,9 @@ function LandingPage() {
   const { user, isAuthenticated } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // SEO
+  useSEO(buildLandingPageSEO());
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1308,6 +1312,10 @@ function LandingPage() {
 
   return (
     <div style={{ width: '100%', overflowX: 'hidden' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema()) }}
+      />
       <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       
       <div style={{
