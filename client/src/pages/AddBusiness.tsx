@@ -1075,7 +1075,7 @@ export default function AddBusiness() {
                 color: '#666',
                 marginBottom: '16px',
               }}>
-                Payment collection will be set up after account creation. You'll receive an invoice via email to complete your subscription.
+                After creating your account, you'll be redirected to our secure payment page to complete your subscription. Your listing will be activated immediately upon successful payment.
               </p>
               <div style={{
                 background: '#f3f4f6',
