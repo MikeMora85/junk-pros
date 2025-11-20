@@ -2,7 +2,6 @@ import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-
 import { loadStripe } from '@stripe/stripe-js';
 import { useEffect, useState } from 'react';
 import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
 import { useLocation } from 'wouter';
 
 if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
@@ -10,10 +9,9 @@ if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
 }
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-function CheckoutForm({ tier, onSuccess }: { tier: string; onSuccess: () => void }) {
+function CheckoutForm({ tier, onSuccess, onError }: { tier: string; onSuccess: () => void; onError: (message: string) => void }) {
   const stripe = useStripe();
   const elements = useElements();
-  const { toast } = useToast();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -35,11 +33,7 @@ function CheckoutForm({ tier, onSuccess }: { tier: string; onSuccess: () => void
     setIsProcessing(false);
 
     if (error) {
-      toast({
-        title: "Payment Failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      onError(`Payment Failed: ${error.message}`);
     } else {
       onSuccess();
     }
@@ -96,12 +90,17 @@ function CheckoutForm({ tier, onSuccess }: { tier: string; onSuccess: () => void
 
 export default function StripeCheckout({ tier, businessOwnerId }: { tier: string; businessOwnerId: number }) {
   const [clientSecret, setClientSecret] = useState("");
-  const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     // Create subscription as soon as the page loads
-    apiRequest("POST", "/api/create-subscription", { tier, businessOwnerId })
+    apiRequest("/api/create-subscription", {
+      method: "POST",
+      body: JSON.stringify({ tier, businessOwnerId }),
+      headers: { 'Content-Type': 'application/json' }
+    } as any)
       .then((data) => {
         if (data.clientSecret) {
           setClientSecret(data.clientSecret);
@@ -110,11 +109,9 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
         }
       })
       .catch((error) => {
-        toast({
-          title: "Setup Error",
-          description: error.message || "Failed to initialize payment. Please try again.",
-          variant: "destructive",
-        });
+        setToastMessage(`Setup Error: ${error.message || 'Failed to initialize payment. Please try again.'}`);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
       });
   }, [tier, businessOwnerId]);
 
@@ -156,15 +153,41 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
       background: '#fff',
       padding: '40px 16px',
     }}>
+      {/* Toast Notification */}
+      {showToast && (
+        <div style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: '#000',
+          color: '#fff',
+          padding: '16px 24px',
+          borderRadius: '8px',
+          border: '2px solid #fbbf24',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          zIndex: 1000,
+          maxWidth: '400px',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}>
+          {toastMessage}
+        </div>
+      )}
+
       <Elements stripe={stripePromise} options={{ clientSecret }}>
         <CheckoutForm
           tier={tier}
           onSuccess={() => {
-            toast({
-              title: "Payment Successful!",
-              description: "Your subscription is now active.",
-            });
-            setLocation('/profile/edit');
+            setToastMessage("Payment Successful! Your subscription is now active.");
+            setShowToast(true);
+            setTimeout(() => {
+              setShowToast(false);
+              setLocation('/profile/edit');
+            }, 2000);
+          }}
+          onError={(message) => {
+            setToastMessage(message);
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 5000);
           }}
         />
       </Elements>
