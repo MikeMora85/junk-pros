@@ -29,6 +29,8 @@ export const businessOwners = pgTable("business_owners", {
   email: varchar("email").unique().notNull(),
   passwordHash: varchar("password_hash").notNull(),
   companyId: integer("company_id").references(() => companies.id),
+  stripeCustomerId: varchar("stripe_customer_id"),
+  stripeSubscriptionId: varchar("stripe_subscription_id"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
