@@ -172,6 +172,8 @@ export const insertBusinessOwnerSchema = z.object({
   email: z.string().email(),
   passwordHash: z.string(),
   companyId: z.number().nullable().optional(),
+  stripeCustomerId: z.string().nullable().optional(),
+  stripeSubscriptionId: z.string().nullable().optional(),
 });
 
 export type InsertBusinessOwner = z.infer<typeof insertBusinessOwnerSchema>;

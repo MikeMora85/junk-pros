@@ -15,6 +15,7 @@ import CompanyDetail from "./pages/CompanyDetail";
 import ProfileEditor from "./pages/ProfileEditor";
 import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
+import StripeCheckout from "./pages/StripeCheckout";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import { useSEO, buildLandingPageSEO, buildStatePageSEO, buildCityPageSEO, buildBlogPageSEO, buildOrganizationSchema, buildWebPageSchema, buildBreadcrumbSchema } from "./lib/seo";
@@ -5985,6 +5986,14 @@ function App() {
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/add-business" component={AddBusiness} />
+        <Route path="/stripe-checkout">
+          {() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tier = urlParams.get('tier') || '';
+            const businessOwnerId = parseInt(urlParams.get('businessOwnerId') || '0');
+            return <StripeCheckout tier={tier} businessOwnerId={businessOwnerId} />;
+          }}
+        </Route>
         <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/example-profile" component={ExampleProfile} />

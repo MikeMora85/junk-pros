@@ -26,7 +26,9 @@ export interface IStorage {
   getBusinessOwnerByEmail(email: string): Promise<BusinessOwner | null>;
   getBusinessOwnerById(id: number): Promise<BusinessOwner | null>;
   getBusinessOwnerByCompanyId(companyId: number): Promise<BusinessOwner | null>;
+  getBusinessOwnerByStripeCustomerId(stripeCustomerId: string): Promise<BusinessOwner | null>;
   updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null>;
+  updateBusinessOwner(id: number, data: Partial<InsertBusinessOwner>): Promise<BusinessOwner | null>;
   
   // Business event tracking
   trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent>;
@@ -532,6 +534,8 @@ export class MemStorage implements IStorage {
       email: data.email,
       passwordHash: data.passwordHash,
       companyId: data.companyId || null,
+      stripeCustomerId: data.stripeCustomerId || null,
+      stripeSubscriptionId: data.stripeSubscriptionId || null,
       createdAt: new Date(),
     };
     this.businessOwners.push(newOwner);
@@ -550,11 +554,26 @@ export class MemStorage implements IStorage {
     return this.businessOwners.find(o => o.companyId === companyId) || null;
   }
 
+  async getBusinessOwnerByStripeCustomerId(stripeCustomerId: string): Promise<BusinessOwner | null> {
+    return this.businessOwners.find(o => o.stripeCustomerId === stripeCustomerId) || null;
+  }
+
   async updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null> {
     const index = this.businessOwners.findIndex(o => o.id === id);
     if (index === -1) return null;
 
     this.businessOwners[index].companyId = companyId;
+    return this.businessOwners[index];
+  }
+
+  async updateBusinessOwner(id: number, data: Partial<InsertBusinessOwner>): Promise<BusinessOwner | null> {
+    const index = this.businessOwners.findIndex(o => o.id === id);
+    if (index === -1) return null;
+
+    this.businessOwners[index] = {
+      ...this.businessOwners[index],
+      ...data,
+    };
     return this.businessOwners[index];
   }
 
@@ -895,10 +914,24 @@ export class DbStorage implements IStorage {
     return result[0] || null;
   }
 
+  async getBusinessOwnerByStripeCustomerId(stripeCustomerId: string): Promise<BusinessOwner | null> {
+    const result = await db.select().from(businessOwners).where(eq(businessOwners.stripeCustomerId, stripeCustomerId)).limit(1);
+    return result[0] || null;
+  }
+
   async updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null> {
     const [updated] = await db
       .update(businessOwners)
       .set({ companyId })
+      .where(eq(businessOwners.id, id))
+      .returning();
+    return updated || null;
+  }
+
+  async updateBusinessOwner(id: number, data: Partial<InsertBusinessOwner>): Promise<BusinessOwner | null> {
+    const [updated] = await db
+      .update(businessOwners)
+      .set(data)
       .where(eq(businessOwners.id, id))
       .returning();
     return updated || null;

@@ -30,6 +30,22 @@ Key functionalities include:
 ### System Design Choices
 The architecture is modular, separating frontend, backend, and shared schema. Database queries for city/state are case-insensitive and trim whitespace for flexibility. Distinct user roles with access control are implemented for business owners and administrators. All critical data is persisted in PostgreSQL.
 
+## Payment Processing
+The platform integrates **Stripe** for subscription payment processing with the following features:
+- **Subscription Tiers**: Basic (free), Standard ($10/month), Premium ($49/month)
+- **Payment Flow**: Signup → Stripe Checkout (for paid tiers) → Profile Editor
+- **Database Tracking**: Stripe customer ID and subscription ID stored in `business_owners` table
+- **Subscription Lifecycle**: 
+  - Paid tier companies start with 'pending' status until payment succeeds
+  - Webhook handlers activate subscriptions on successful payment
+  - Failed payments trigger 'past_due' status
+  - Canceled subscriptions downgrade companies to basic tier
+- **Security**: API keys managed via Replit Secrets (STRIPE_SECRET_KEY, VITE_STRIPE_PUBLIC_KEY, STRIPE_WEBHOOK_SECRET)
+- **Components**: 
+  - `/stripe-checkout` route for payment collection using Stripe Elements
+  - `/api/create-subscription` endpoint for subscription creation
+  - `/api/stripe-webhook` endpoint for handling Stripe events
+
 ## External Dependencies
 - **PostgreSQL**: Primary database.
 - **Mapbox GL / react-map-gl**: Interactive maps.
@@ -40,3 +56,4 @@ The architecture is modular, separating frontend, backend, and shared schema. Da
 - **Tailwind CSS**: Styling.
 - **Replit Auth**: Admin authentication.
 - **bcrypt**: Password hashing.
+- **Stripe**: Subscription payment processing.

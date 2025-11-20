@@ -384,9 +384,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         }
       }
       
+      // For paid tiers, set subscription status to 'pending' until payment succeeds
+      const isPaidTier = companyData.subscriptionTier === 'standard' || companyData.subscriptionTier === 'premium';
       const data = insertCompanySchema.parse({
         ...companyData,
         userId,
+        subscriptionStatus: isPaidTier ? 'pending' : 'active',
       });
       
       const company = await storage.createCompany(data);
@@ -1248,7 +1251,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // SEO Routes - Sitemap.xml
   app.get('/sitemap.xml', async (req, res) => {
     try {
-      const companies = await storage.getAllCompanies();
+      const companies = await storage.getCompanies();
       const baseUrl = 'https://findjunkpros.com';
       
       // US States list
@@ -1371,6 +1374,169 @@ Sitemap: https://findjunkpros.com/sitemap.xml
 `;
     res.header('Content-Type', 'text/plain');
     res.send(robotsTxt);
+  });
+
+  // Stripe Subscription Routes
+  app.post("/api/create-subscription", async (req, res) => {
+    try {
+      const { tier, businessOwnerId } = req.body;
+      
+      if (!tier || !businessOwnerId) {
+        return res.status(400).json({ error: "tier and businessOwnerId are required" });
+      }
+
+      // Get business owner to check if they already have a customer ID
+      const owner = await storage.getBusinessOwnerById(businessOwnerId);
+      if (!owner) {
+        return res.status(404).json({ error: "Business owner not found" });
+      }
+
+      // Import Stripe (lazy load to avoid initialization issues)
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2025-11-17.clover',
+      });
+
+      // Define price IDs based on tier
+      const priceIds: Record<string, string> = {
+        professional: process.env.STRIPE_PROFESSIONAL_PRICE_ID || 'price_professional', // $10/month
+        featured: process.env.STRIPE_FEATURED_PRICE_ID || 'price_featured', // $49/month
+      };
+
+      const priceId = priceIds[tier];
+      if (!priceId) {
+        return res.status(400).json({ error: "Invalid tier" });
+      }
+
+      // Create or retrieve Stripe customer
+      let customerId = owner.stripeCustomerId;
+      if (!customerId) {
+        const customer = await stripe.customers.create({
+          email: owner.email,
+          metadata: {
+            businessOwnerId: businessOwnerId.toString(),
+          },
+        });
+        customerId = customer.id;
+        
+        // Save customer ID to database
+        await storage.updateBusinessOwner(businessOwnerId, { stripeCustomerId: customerId } as any);
+      }
+
+      // Create subscription
+      const subscription = await stripe.subscriptions.create({
+        customer: customerId,
+        items: [{ price: priceId }],
+        payment_behavior: 'default_incomplete',
+        payment_settings: { save_default_payment_method: 'on_subscription' },
+        expand: ['latest_invoice.payment_intent'],
+      });
+
+      const invoice = subscription.latest_invoice as any;
+      const paymentIntent = invoice?.payment_intent;
+
+      if (!paymentIntent || !paymentIntent.client_secret) {
+        return res.status(500).json({ error: "Failed to create payment intent" });
+      }
+
+      // Save subscription ID to database
+      await storage.updateBusinessOwner(businessOwnerId, { stripeSubscriptionId: subscription.id } as any);
+
+      res.json({
+        subscriptionId: subscription.id,
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (error) {
+      console.error("Error creating subscription:", error);
+      res.status(500).json({ error: "Failed to create subscription" });
+    }
+  });
+
+  // Stripe Webhook Handler
+  app.post("/api/stripe-webhook", async (req, res) => {
+    try {
+      const sig = req.headers['stripe-signature'];
+      
+      if (!sig) {
+        return res.status(400).send('Missing stripe-signature header');
+      }
+
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2025-11-17.clover',
+      });
+
+      const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+      if (!webhookSecret) {
+        console.error('STRIPE_WEBHOOK_SECRET not configured');
+        return res.status(500).send('Webhook secret not configured');
+      }
+
+      const event = stripe.webhooks.constructEvent(
+        req.body,
+        sig,
+        webhookSecret
+      );
+
+      // Handle different event types
+      switch (event.type) {
+        case 'customer.subscription.updated':
+        case 'customer.subscription.deleted':
+          const subscription = event.data.object as any;
+          const customerId = subscription.customer;
+          
+          // Find business owner by customer ID
+          const owner = await storage.getBusinessOwnerByStripeCustomerId(customerId);
+          if (owner && owner.companyId) {
+            // Update company subscription status based on Stripe subscription status
+            const isActive = subscription.status === 'active';
+            const subscriptionStatus = isActive ? 'active' : 'inactive';
+            
+            // If subscription becomes inactive, downgrade to basic tier
+            if (!isActive) {
+              await storage.updateCompany(owner.companyId, { 
+                subscriptionTier: 'basic',
+                subscriptionStatus 
+              } as any);
+            } else {
+              await storage.updateCompany(owner.companyId, { subscriptionStatus } as any);
+            }
+          }
+          break;
+
+        case 'invoice.payment_succeeded':
+          // Payment succeeded - activate subscription
+          const invoice = event.data.object as any;
+          const invoiceCustomerId = invoice.customer;
+          
+          const invoiceOwner = await storage.getBusinessOwnerByStripeCustomerId(invoiceCustomerId);
+          if (invoiceOwner && invoiceOwner.companyId) {
+            // Activate the subscription status
+            await storage.updateCompany(invoiceOwner.companyId, { 
+              subscriptionStatus: 'active' 
+            } as any);
+          }
+          break;
+
+        case 'invoice.payment_failed':
+          // Payment failed - mark subscription as past_due
+          const failedInvoice = event.data.object as any;
+          const failedCustomerId = failedInvoice.customer;
+          
+          const failedOwner = await storage.getBusinessOwnerByStripeCustomerId(failedCustomerId);
+          if (failedOwner && failedOwner.companyId) {
+            await storage.updateCompany(failedOwner.companyId, { 
+              subscriptionStatus: 'past_due' 
+            } as any);
+          }
+          break;
+      }
+
+      res.json({ received: true });
+    } catch (error) {
+      console.error('Webhook error:', error);
+      res.status(400).send(`Webhook Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
   });
 
   const httpServer = createServer(app);
