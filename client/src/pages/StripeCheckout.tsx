@@ -93,15 +93,27 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
   const [, setLocation] = useLocation();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    console.log('StripeCheckout mounted with:', { tier, businessOwnerId });
+    
+    // Validate parameters
+    if (!tier || !businessOwnerId || businessOwnerId === 0) {
+      const errorMsg = 'Invalid payment parameters. Please go back and try again.';
+      setError(errorMsg);
+      setToastMessage(errorMsg);
+      setShowToast(true);
+      return;
+    }
+    
     // Create subscription as soon as the page loads
     apiRequest("/api/create-subscription", {
       method: "POST",
-      body: JSON.stringify({ tier, businessOwnerId }),
-      headers: { 'Content-Type': 'application/json' }
+      body: { tier, businessOwnerId }
     } as any)
       .then((data) => {
+        console.log('Subscription response:', data);
         if (data.clientSecret) {
           setClientSecret(data.clientSecret);
         } else {
@@ -109,9 +121,11 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
         }
       })
       .catch((error) => {
-        setToastMessage(`Setup Error: ${error.message || 'Failed to initialize payment. Please try again.'}`);
+        console.error('Subscription error:', error);
+        const errorMsg = `Setup Error: ${error.message || 'Failed to initialize payment. Please try again.'}`;
+        setError(errorMsg);
+        setToastMessage(errorMsg);
         setShowToast(true);
-        setTimeout(() => setShowToast(false), 5000);
       });
   }, [tier, businessOwnerId]);
 
@@ -123,20 +137,61 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        padding: '20px',
       }}>
         <div style={{
           textAlign: 'center',
+          maxWidth: '500px',
         }}>
-          <div style={{
-            width: '48px',
-            height: '48px',
-            border: '4px solid #fbbf24',
-            borderTopColor: 'transparent',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 16px',
-          }} />
-          <p style={{ color: '#666', fontSize: '16px' }}>Setting up payment...</p>
+          {error ? (
+            <>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                background: '#000',
+                color: '#fbbf24',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '32px',
+                margin: '0 auto 16px',
+                border: '3px solid #fbbf24',
+              }}>!</div>
+              <p style={{ color: '#000', fontSize: '18px', fontWeight: '700', marginBottom: '12px' }}>Payment Setup Failed</p>
+              <p style={{ color: '#666', fontSize: '16px', marginBottom: '24px' }}>{error}</p>
+              <button
+                onClick={() => window.history.back()}
+                style={{
+                  padding: '12px 24px',
+                  background: '#fbbf24',
+                  color: '#000',
+                  border: '2px solid #000',
+                  borderRadius: '8px',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                data-testid="button-go-back"
+              >
+                Go Back
+              </button>
+            </>
+          ) : (
+            <>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                border: '4px solid #fbbf24',
+                borderTopColor: 'transparent',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                margin: '0 auto 16px',
+              }} />
+              <p style={{ color: '#666', fontSize: '16px' }}>Setting up payment...</p>
+            </>
+          )}
         </div>
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes spin {
