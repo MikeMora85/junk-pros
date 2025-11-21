@@ -1377,6 +1377,76 @@ Sitemap: https://findjunkpros.com/sitemap.xml
   });
 
   // Stripe Subscription Routes
+  // New endpoint: Create payment intent BEFORE account creation
+  app.post("/api/create-payment-setup", async (req, res) => {
+    try {
+      const { tier } = req.body;
+      
+      if (!tier) {
+        return res.status(400).json({ error: "tier is required" });
+      }
+
+      // Import Stripe
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2025-11-17.clover',
+      });
+
+      // Define price IDs based on tier
+      const priceIds: Record<string, string | undefined> = {
+        professional: process.env.STRIPE_PROFESSIONAL_PRICE_ID,
+        featured: process.env.STRIPE_FEATURED_PRICE_ID,
+      };
+
+      const priceId = priceIds[tier];
+      if (!priceId) {
+        return res.status(400).json({ 
+          error: "Invalid tier or missing price ID configuration",
+          tier,
+          hasProfessionalPrice: !!process.env.STRIPE_PROFESSIONAL_PRICE_ID,
+          hasFeaturedPrice: !!process.env.STRIPE_FEATURED_PRICE_ID
+        });
+      }
+
+      // Get price to determine amount
+      const price = await stripe.prices.retrieve(priceId);
+      const amount = price.unit_amount!;
+
+      // Create a payment intent (no customer yet since account doesn't exist)
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'usd',
+        automatic_payment_methods: {
+          enabled: true,
+        },
+        metadata: {
+          tier,
+          priceId,
+        },
+      });
+
+      console.log('Payment Intent created for new signup:', paymentIntent.id);
+
+      if (!paymentIntent.client_secret) {
+        console.error('Missing client secret');
+        return res.status(500).json({ 
+          error: "Failed to create payment intent",
+          paymentIntentId: paymentIntent.id
+        });
+      }
+
+      res.json({
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (error: any) {
+      console.error("Error creating payment setup:", error);
+      res.status(500).json({ 
+        error: "Failed to create payment setup",
+        details: error.message || error.toString()
+      });
+    }
+  });
+
   app.post("/api/create-subscription", async (req, res) => {
     try {
       const { tier, businessOwnerId } = req.body;
