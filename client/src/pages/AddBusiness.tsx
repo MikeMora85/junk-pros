@@ -35,6 +35,9 @@ export default function AddBusiness() {
   const [hasReadWhyUs, setHasReadWhyUs] = useState(false);
   const [isRequirementsOpen, setIsRequirementsOpen] = useState(false);
   const [hasReadRequirements, setHasReadRequirements] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+  const [paymentError, setPaymentError] = useState("");
 
   const createBusinessMutation = useMutation({
     mutationFn: async (data: any) => {
