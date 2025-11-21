@@ -22,6 +22,8 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
+  console.log('PaymentFormInline mounted', { stripe: !!stripe, elements: !!elements, isReady });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -33,6 +35,8 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
     setIsProcessing(true);
 
     try {
+      console.log('Confirming payment...');
+      
       // Confirm payment
       const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
         elements,
@@ -40,12 +44,17 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
       });
 
       if (confirmError) {
+        console.error('Payment confirmation error:', confirmError);
         onError(`Payment Failed: ${confirmError.message}`);
         setIsProcessing(false);
         return;
       }
 
+      console.log('Payment status:', paymentIntent?.status);
+
       if (paymentIntent?.status === 'succeeded') {
+        console.log('Payment succeeded! Creating account...');
+        
         // Payment succeeded! Now create the account
         const tierMapping: Record<string, string> = {
           'basic': 'basic',
@@ -81,6 +90,8 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
           body: companyData,
         });
 
+        console.log('Account created:', response);
+
         if (response.token) {
           localStorage.setItem('auth_token', response.token);
           onSuccess();
@@ -89,6 +100,7 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
         }
       }
     } catch (err: any) {
+      console.error('Payment error:', err);
       onError(`Error: ${err.message || 'Unknown error'}`);
       setIsProcessing(false);
     }
@@ -116,8 +128,14 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
 
       <div style={{ marginBottom: '24px' }}>
         <PaymentElement 
-          onReady={() => setIsReady(true)}
-          onLoadError={(error) => onError(`Failed to load payment form: ${error.message}`)}
+          onReady={() => {
+            console.log('PaymentElement ready');
+            setIsReady(true);
+          }}
+          onLoadError={(error) => {
+            console.error('PaymentElement load error:', error);
+            onError(`Failed to load payment form: ${error.message}`);
+          }}
         />
       </div>
 
@@ -208,20 +226,16 @@ export default function AddBusiness() {
       // If we got a token back, save it
       if (response.token) {
         localStorage.setItem('auth_token', response.token);
-        
-        // Check if this is a paid tier - if so, redirect to Stripe checkout
-        const tier = formData.pricingTier;
-        if (tier === 'professional' || tier === 'featured') {
-          // Redirect to Stripe checkout with tier and business owner ID
-          window.location.href = `/stripe-checkout?tier=${tier}&businessOwnerId=${response.user.ownerId}`;
-        } else {
-          // For free tier, go directly to profile editor
-          window.location.href = '/profile/edit';
-        }
-      } else {
-        setIsSubmitted(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
+      
+      // Show success message and redirect to profile editor
+      setIsSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // After showing success, redirect to profile editor
+      setTimeout(() => {
+        window.location.href = '/profile/edit';
+      }, 2000);
     },
     onError: (error: any) => {
       console.error('Failed to create business:', error);
@@ -537,7 +551,7 @@ export default function AddBusiness() {
       )}
 
       {/* Payment Modal */}
-      {showPayment && clientSecret && (
+      {showPayment && (
         <div 
           style={{
             position: 'fixed',
@@ -567,23 +581,34 @@ export default function AddBusiness() {
               borderRadius: '8px',
             }}
           >
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <PaymentFormInline 
-                tier={formData.pricingTier}
-                formData={formData}
-                onSuccess={() => {
-                  window.location.href = '/profile/edit';
-                }}
-                onError={(err) => {
-                  setPaymentError(err);
-                  alert(err);
-                }}
-                onCancel={() => {
-                  setShowPayment(false);
-                  setClientSecret("");
-                }}
-              />
-            </Elements>
+            {!clientSecret ? (
+              <div style={{ textAlign: 'center', padding: '40px' }}>
+                <p style={{ fontSize: '18px', color: '#000', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                  Setting up payment...
+                </p>
+              </div>
+            ) : (
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <PaymentFormInline 
+                  tier={formData.pricingTier}
+                  formData={formData}
+                  onSuccess={() => {
+                    console.log('Payment success, redirecting to profile editor');
+                    window.location.href = '/profile/edit';
+                  }}
+                  onError={(err) => {
+                    console.error('Payment error callback:', err);
+                    setPaymentError(err);
+                    alert(err);
+                  }}
+                  onCancel={() => {
+                    console.log('Payment cancelled');
+                    setShowPayment(false);
+                    setClientSecret("");
+                  }}
+                />
+              </Elements>
+            )}
           </div>
         </div>
       )}
