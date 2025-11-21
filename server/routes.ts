@@ -1398,14 +1398,19 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       });
 
       // Define price IDs based on tier
-      const priceIds: Record<string, string> = {
-        professional: process.env.STRIPE_PROFESSIONAL_PRICE_ID || 'price_professional', // $10/month
-        featured: process.env.STRIPE_FEATURED_PRICE_ID || 'price_featured', // $49/month
+      const priceIds: Record<string, string | undefined> = {
+        professional: process.env.STRIPE_PROFESSIONAL_PRICE_ID,
+        featured: process.env.STRIPE_FEATURED_PRICE_ID,
       };
 
       const priceId = priceIds[tier];
       if (!priceId) {
-        return res.status(400).json({ error: "Invalid tier" });
+        return res.status(400).json({ 
+          error: "Invalid tier or missing price ID configuration",
+          tier,
+          hasProfessionalPrice: !!process.env.STRIPE_PROFESSIONAL_PRICE_ID,
+          hasFeaturedPrice: !!process.env.STRIPE_FEATURED_PRICE_ID
+        });
       }
 
       // Create or retrieve Stripe customer
@@ -1423,27 +1428,44 @@ Sitemap: https://findjunkpros.com/sitemap.xml
         await storage.updateBusinessOwner(businessOwnerId, { stripeCustomerId: customerId } as any);
       }
 
-      // Create subscription
-      const subscription = await stripe.subscriptions.create({
+      // Get price to determine amount
+      const price = await stripe.prices.retrieve(priceId);
+      const amount = price.unit_amount!;
+
+      // Create a payment intent for the first payment
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount,
+        currency: 'usd',
         customer: customerId,
-        items: [{ price: priceId }],
-        payment_behavior: 'default_incomplete',
-        payment_settings: { save_default_payment_method: 'on_subscription' },
-        expand: ['latest_invoice.payment_intent'],
+        setup_future_usage: 'off_session',
+        automatic_payment_methods: {
+          enabled: true,
+        },
+        metadata: {
+          businessOwnerId: businessOwnerId.toString(),
+          tier,
+          priceId,
+        },
       });
 
-      const invoice = subscription.latest_invoice as any;
-      const paymentIntent = invoice?.payment_intent;
+      console.log('Payment Intent created:', paymentIntent.id);
+      console.log('Client Secret exists:', !!paymentIntent.client_secret);
 
-      if (!paymentIntent || !paymentIntent.client_secret) {
-        return res.status(500).json({ error: "Failed to create payment intent" });
+      if (!paymentIntent.client_secret) {
+        console.error('Missing client secret');
+        return res.status(500).json({ 
+          error: "Failed to create payment intent",
+          paymentIntentId: paymentIntent.id
+        });
       }
 
-      // Save subscription ID to database
-      await storage.updateBusinessOwner(businessOwnerId, { stripeSubscriptionId: subscription.id } as any);
+      // Store the payment intent ID so we can create the subscription later after payment
+      await storage.updateBusinessOwner(businessOwnerId, { 
+        stripeCustomerId: customerId,
+      } as any);
 
       res.json({
-        subscriptionId: subscription.id,
+        paymentIntentId: paymentIntent.id,
         clientSecret: paymentIntent.client_secret,
       });
     } catch (error: any) {
@@ -1484,6 +1506,52 @@ Sitemap: https://findjunkpros.com/sitemap.xml
 
       // Handle different event types
       switch (event.type) {
+        case 'payment_intent.succeeded':
+          // Payment succeeded - create subscription and activate company
+          const pi = event.data.object as any;
+          const piCustomerId = pi.customer;
+          const metadata = pi.metadata;
+          
+          console.log('Payment succeeded for customer:', piCustomerId);
+          console.log('Metadata:', metadata);
+          
+          if (metadata.businessOwnerId && metadata.tier && metadata.priceId) {
+            const businessOwnerId = parseInt(metadata.businessOwnerId);
+            const owner = await storage.getBusinessOwnerById(businessOwnerId);
+            
+            if (owner && owner.companyId) {
+              // Create the subscription now that payment is complete
+              const subscription = await stripe.subscriptions.create({
+                customer: piCustomerId,
+                items: [{ price: metadata.priceId }],
+                default_payment_method: pi.payment_method,
+              });
+              
+              console.log('Subscription created:', subscription.id);
+              
+              // Map frontend tier names to database tier names
+              const tierMap: Record<string, string> = {
+                'professional': 'standard',
+                'featured': 'premium'
+              };
+              const dbTier = tierMap[metadata.tier] || metadata.tier;
+              
+              // Update company with subscription and activate
+              await storage.updateCompany(owner.companyId, { 
+                subscriptionTier: dbTier,
+                subscriptionStatus: 'active'
+              } as any);
+              
+              // Update owner with subscription ID
+              await storage.updateBusinessOwner(businessOwnerId, {
+                stripeSubscriptionId: subscription.id
+              } as any);
+              
+              console.log('Company activated with tier:', dbTier);
+            }
+          }
+          break;
+
         case 'customer.subscription.updated':
         case 'customer.subscription.deleted':
           const subscription = event.data.object as any;
