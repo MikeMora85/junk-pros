@@ -3814,7 +3814,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     const isStandard = c.subscriptionTier === 'standard';
                     const isBasic = c.claimed && c.subscriptionTier === 'basic';
                     const hasFullFeatures = isPremium || isStandard; // Both get all features
-                    const isFirstPremium = index === 0 && isPremium; // First profile and is premium
                     
                     return (
                 <div 
@@ -3828,7 +3827,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     setSelectedCompanyId(c.id);
                   }} 
                   id={`company-${c.id}`}
-                  className={isFirstPremium ? 'full-width-card' : ''}
                   style={{
                     position: 'relative',
                     backgroundColor: isUnclaimed ? '#f9f9f9' : '#fff',
