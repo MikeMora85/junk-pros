@@ -1,6 +1,6 @@
 import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { apiRequest } from "@/lib/queryClient";
 import { useLocation } from 'wouter';
 
@@ -13,29 +13,39 @@ function CheckoutForm({ tier, onSuccess, onError }: { tier: string; onSuccess: (
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
+      console.error('Stripe or Elements not loaded');
+      onError('Payment system not ready. Please wait a moment and try again.');
       return;
     }
 
     setIsProcessing(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/profile/edit`,
-      },
-    });
+    try {
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/profile/edit`,
+        },
+      });
 
-    setIsProcessing(false);
+      setIsProcessing(false);
 
-    if (error) {
-      onError(`Payment Failed: ${error.message}`);
-    } else {
-      onSuccess();
+      if (error) {
+        console.error('Payment error:', error);
+        onError(`Payment Failed: ${error.message}`);
+      } else {
+        onSuccess();
+      }
+    } catch (err: any) {
+      console.error('Payment exception:', err);
+      setIsProcessing(false);
+      onError(`Payment Failed: ${err.message || 'Unknown error'}`);
     }
   };
 
@@ -62,11 +72,18 @@ function CheckoutForm({ tier, onSuccess, onError }: { tier: string; onSuccess: (
         {tier === 'professional' ? '$10/month' : '$49/month'} - Cancel anytime
       </p>
       
-      <PaymentElement />
+      <div style={{ marginBottom: '24px' }}>
+        <PaymentElement 
+          onReady={() => {
+            console.log('PaymentElement ready');
+            setIsReady(true);
+          }}
+        />
+      </div>
       
       <button
         type="submit"
-        disabled={!stripe || isProcessing}
+        disabled={!stripe || !isReady || isProcessing}
         style={{
           width: '100%',
           padding: '16px',
@@ -94,8 +111,15 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [error, setError] = useState("");
+  const hasCreatedPayment = useRef(false);
 
   useEffect(() => {
+    // Prevent double API calls in React strict mode
+    if (hasCreatedPayment.current) {
+      console.log('Payment already created, skipping...');
+      return;
+    }
+    
     console.log('StripeCheckout mounted with:', { tier, businessOwnerId });
     
     // Validate parameters
@@ -106,6 +130,8 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
       setShowToast(true);
       return;
     }
+    
+    hasCreatedPayment.current = true;
     
     // Create subscription as soon as the page loads
     apiRequest("/api/create-subscription", {
@@ -126,6 +152,7 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
         setError(errorMsg);
         setToastMessage(errorMsg);
         setShowToast(true);
+        hasCreatedPayment.current = false; // Allow retry
       });
   }, [tier, businessOwnerId]);
 
