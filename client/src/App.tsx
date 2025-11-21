@@ -4188,7 +4188,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   )}
                   
                   {/* Image Carousel - Premium & Standard only (moved below contact info) */}
-                  {hasFullFeatures && (
+                  {hasFullFeatures && ((c.galleryImages && c.galleryImages.length > 0) || c.logoUrl || c.reviews > 0) && (
                   <div style={{
                     marginBottom: '16px',
                     marginTop: '0',
@@ -4225,9 +4225,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                         } else if (hasLogo || hasReviews) {
                           // Use default images 3x
                           imagesToShow = [...defaultImages, ...defaultImages, ...defaultImages];
-                        } else {
-                          // New businesses - show placeholders 3x
-                          imagesToShow = [0, 1, 2, 0, 1, 2, 0, 1, 2];
                         }
                         
                         return imagesToShow.map((item, i) => (
