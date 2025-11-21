@@ -1446,9 +1446,13 @@ Sitemap: https://findjunkpros.com/sitemap.xml
         subscriptionId: subscription.id,
         clientSecret: paymentIntent.client_secret,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creating subscription:", error);
-      res.status(500).json({ error: "Failed to create subscription" });
+      console.error("Error details:", error.message, error.stack);
+      res.status(500).json({ 
+        error: "Failed to create subscription",
+        details: error.message || error.toString()
+      });
     }
   });
 
