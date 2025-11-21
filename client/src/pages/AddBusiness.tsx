@@ -10,6 +10,162 @@ if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
 }
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
+function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: { 
+  tier: string; 
+  formData: any; 
+  onSuccess: () => void; 
+  onError: (message: string) => void;
+  onCancel: () => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      onError('Payment system not ready. Please wait a moment.');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      // Confirm payment
+      const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        redirect: 'if_required',
+      });
+
+      if (confirmError) {
+        onError(`Payment Failed: ${confirmError.message}`);
+        setIsProcessing(false);
+        return;
+      }
+
+      if (paymentIntent?.status === 'succeeded') {
+        // Payment succeeded! Now create the account
+        const tierMapping: Record<string, string> = {
+          'basic': 'basic',
+          'professional': 'standard',
+          'featured': 'premium',
+        };
+
+        const companyData = {
+          name: formData.businessName,
+          address: `${formData.city}, ${formData.state}`,
+          phone: formData.phone,
+          website: formData.email,
+          rating: "0.0",
+          reviews: 0,
+          services: ["Junk Removal"],
+          longitude: -111.9,
+          latitude: 33.4,
+          local: true,
+          city: formData.city,
+          state: formData.state,
+          email: formData.email,
+          password: formData.password,
+          claimed: true,
+          subscriptionTier: tierMapping[tier] || 'basic',
+          agreedToPlatformStandards: new Date(),
+          agreedToRequirements: new Date(),
+          stripePaymentIntentId: paymentIntent.id,
+        };
+
+        // Create account after successful payment
+        const response = await apiRequest('/api/companies', {
+          method: 'POST',
+          body: companyData,
+        });
+
+        if (response.token) {
+          localStorage.setItem('auth_token', response.token);
+          onSuccess();
+        } else {
+          onError('Account created but login failed. Please try logging in.');
+        }
+      }
+    } catch (err: any) {
+      onError(`Error: ${err.message || 'Unknown error'}`);
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2 style={{
+        fontSize: '24px',
+        fontWeight: '700',
+        marginBottom: '8px',
+        color: '#000',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+      }}>
+        Complete Your {tier === 'professional' ? 'Professional' : 'Featured'} Subscription
+      </h2>
+      <p style={{
+        fontSize: '16px',
+        marginBottom: '24px',
+        color: '#666',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+      }}>
+        {tier === 'professional' ? '$10/month' : '$49/month'} - Cancel anytime
+      </p>
+
+      <div style={{ marginBottom: '24px' }}>
+        <PaymentElement 
+          onReady={() => setIsReady(true)}
+          onLoadError={(error) => onError(`Failed to load payment form: ${error.message}`)}
+        />
+      </div>
+
+      <div style={{ display: 'flex', gap: '12px' }}>
+        <button
+          type="button"
+          onClick={onCancel}
+          disabled={isProcessing}
+          style={{
+            flex: 1,
+            padding: '16px',
+            background: '#fff',
+            color: '#000',
+            border: '2px solid #000',
+            borderRadius: '8px',
+            fontSize: '16px',
+            fontWeight: '700',
+            cursor: isProcessing ? 'not-allowed' : 'pointer',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+          data-testid="button-cancel-payment"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          disabled={!stripe || !isReady || isProcessing}
+          style={{
+            flex: 2,
+            padding: '16px',
+            background: isProcessing || !isReady ? '#ccc' : '#fbbf24',
+            color: '#000',
+            border: '2px solid #000',
+            borderRadius: '8px',
+            fontSize: '18px',
+            fontWeight: '700',
+            cursor: isProcessing || !isReady ? 'not-allowed' : 'pointer',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+          data-testid="button-complete-payment"
+        >
+          {isProcessing ? 'Processing...' : !isReady ? 'Loading...' : 'Complete Payment'}
+        </button>
+      </div>
+    </form>
+  );
+}
+
 export default function AddBusiness() {
   const urlParams = new URLSearchParams(window.location.search);
   const isClaiming = urlParams.get('claim') === 'true';
@@ -106,7 +262,7 @@ export default function AddBusiness() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate that user has read and agreed to platform standards
@@ -125,31 +281,51 @@ export default function AddBusiness() {
       return;
     }
     
-    // Map form tier names to database tier names
+    const tier = formData.pricingTier;
+    
+    // For paid tiers, show payment form first
+    if (tier === 'professional' || tier === 'featured') {
+      try {
+        // Create payment intent
+        const response = await apiRequest('/api/create-payment-setup', {
+          method: 'POST',
+          body: { tier }
+        } as any);
+        
+        setClientSecret(response.clientSecret);
+        setShowPayment(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (error: any) {
+        alert('Failed to initialize payment. Please try again.');
+        console.error('Payment setup error:', error);
+      }
+      return;
+    }
+    
+    // For free tier, create account immediately
     const tierMapping: Record<string, string> = {
-      'basic': 'basic',           // Free ($0)
-      'professional': 'standard', // Standard ($10)
-      'featured': 'premium',      // Premium ($49)
+      'basic': 'basic',
+      'professional': 'standard',
+      'featured': 'premium',
     };
     
-    // Create company data from form
     const companyData = {
       name: formData.businessName,
       address: `${formData.city}, ${formData.state}`,
       phone: formData.phone,
-      website: formData.email, // Using email as placeholder for website
+      website: formData.email,
       rating: "0.0",
       reviews: 0,
       services: ["Junk Removal"],
-      longitude: -111.9, // Default coordinates, would need geocoding in real app
+      longitude: -111.9,
       latitude: 33.4,
       local: true,
       city: formData.city,
       state: formData.state,
       email: formData.email,
       password: formData.password,
-      claimed: true, // User is signing up, so this is a claimed profile
-      subscriptionTier: tierMapping[formData.pricingTier] || 'basic', // Use selected tier
+      claimed: true,
+      subscriptionTier: tierMapping[formData.pricingTier] || 'basic',
       agreedToPlatformStandards: new Date(),
       agreedToRequirements: new Date(),
     };
@@ -356,6 +532,58 @@ export default function AddBusiness() {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Payment Modal */}
+      {showPayment && clientSecret && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px',
+            overflowY: 'auto',
+          }}
+        >
+          <div 
+            style={{
+              background: '#fff',
+              border: '3px solid #fbbf24',
+              padding: '32px',
+              maxWidth: '600px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
+              borderRadius: '8px',
+            }}
+          >
+            <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <PaymentFormInline 
+                tier={formData.pricingTier}
+                formData={formData}
+                onSuccess={() => {
+                  window.location.href = '/profile/edit';
+                }}
+                onError={(err) => {
+                  setPaymentError(err);
+                  alert(err);
+                }}
+                onCancel={() => {
+                  setShowPayment(false);
+                  setClientSecret("");
+                }}
+              />
+            </Elements>
           </div>
         </div>
       )}
