@@ -72,11 +72,17 @@ function CheckoutForm({ tier, onSuccess, onError }: { tier: string; onSuccess: (
         {tier === 'professional' ? '$10/month' : '$49/month'} - Cancel anytime
       </p>
       
-      <div style={{ marginBottom: '24px' }}>
+      <div style={{ marginBottom: '24px', minHeight: '200px' }}>
+        {!stripe && <p>Loading Stripe...</p>}
+        {stripe && !isReady && <p>Loading payment form...</p>}
         <PaymentElement 
           onReady={() => {
             console.log('PaymentElement ready');
             setIsReady(true);
+          }}
+          onLoadError={(error) => {
+            console.error('PaymentElement load error:', error);
+            onError(`Failed to load payment form: ${error.message}`);
           }}
         />
       </div>
