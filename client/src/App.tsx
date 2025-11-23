@@ -2210,7 +2210,7 @@ function BlogPostPage({ slug }: { slug: string }) {
               margin: 0,
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}>
-              FindJunkPros.com
+              FindLocalJunkPros.com
             </h1>
           </a>
           
