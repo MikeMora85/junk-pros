@@ -944,6 +944,26 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             Blog
           </a>
 
+          {/* Add Your Business - CTA */}
+          <a
+            href="/add-business"
+            style={{
+              display: 'block',
+              padding: '16px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '18px',
+              fontWeight: '700',
+              borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              background: '#fbbf24',
+              margin: '8px 0',
+            }}
+            data-testid="link-add-business"
+          >
+            ✨ Add Your Business
+          </a>
+
           {/* Login/Profile/Logout */}
           {user ? (
             <>
