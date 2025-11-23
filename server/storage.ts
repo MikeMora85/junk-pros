@@ -685,7 +685,7 @@ export class DbStorage implements IStorage {
   }
 
   async getApprovedCompanies(): Promise<Company[]> {
-    return await db.select().from(companies).where(eq(companies.status, 'approved'));
+    return await db.select().from(companies).where(eq(companies.status, 'approved')).orderBy(desc(companies.id));
   }
 
   async getPendingCompanies(): Promise<Company[]> {

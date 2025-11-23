@@ -163,7 +163,7 @@ export default function AdminDashboard() {
 
   const allCompanies = [...pendingCompanies, ...activeCompanies];
   const unclaimedCompanies = allCompanies.filter(c => !c.claimed);
-  const featuredCompanies = allCompanies.filter(c => c.subscriptionTier === 'featured');
+  const featuredCompanies = allCompanies.filter(c => c.subscriptionTier === 'premium');
   const states = Array.from(new Set(allCompanies.map(c => c.state))).sort();
   const cities = stateFilter !== 'all' 
     ? Array.from(new Set(allCompanies.filter(c => c.state === stateFilter).map(c => c.city))).sort()
