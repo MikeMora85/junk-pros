@@ -8,6 +8,18 @@ I want iterative development.
 Ask before making major changes.
 I prefer detailed explanations.
 
+## SEO Strategy
+**Primary Target Keywords:**
+- "junk removal near me" - Main keyword for local search intent
+- "same day junk removal" - Secondary keyword targeting urgency/speed
+
+These keywords should be prioritized in future SEO optimization efforts including:
+- Page titles and meta descriptions
+- Header tags (H1, H2) on landing pages
+- City and state page content
+- Blog post optimization
+- Internal linking anchor text
+
 ## System Architecture
 
 ### UI/UX Decisions
