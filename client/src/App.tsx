@@ -1761,6 +1761,19 @@ function LandingPage() {
         </div>
 
         {/* Why Choose Independent - Full Width */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .why-choose-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+          @media (min-width: 768px) {
+            .why-choose-grid {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+        `}} />
         <div style={{
           backgroundColor: '#fff',
           border: '2px solid #fbbf24',
@@ -1781,37 +1794,33 @@ function LandingPage() {
           }}>
             Why Choose Independent Junk Removal Companies
           </h3>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '16px',
-          }}>
+          <div className="why-choose-grid">
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
               <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Better Pricing</strong> — Independent companies don't pay franchise fees, which means lower prices for you
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
               <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Local Ownership</strong> — Talk directly to the owner who lives in your community and cares about reputation
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
               <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Flexible Service</strong> — Get personalized solutions and flexible scheduling that big franchises can't offer
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
               <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Support Your Community</strong> — Keep your money local and support small business owners in your area
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
               <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>No Platform Fees</strong> — Contact companies directly without paying middleman booking fees or commissions
               </p>
