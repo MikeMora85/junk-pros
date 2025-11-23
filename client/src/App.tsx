@@ -1025,6 +1025,59 @@ function BlogPage() {
             ))}
           </div>
         </div>
+
+        {/* Footer Section */}
+        <div style={{
+          background: '#fbbf24',
+          color: '#000',
+          padding: '40px 16px',
+          marginTop: '40px',
+          borderTop: '3px solid #000',
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}>
+            <h3 style={{
+              fontSize: 'clamp(22px, 6vw, 28px)',
+              fontWeight: '700',
+              marginBottom: '16px',
+              color: '#000',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Ready to Find Your Local Hauler?
+            </h3>
+            <p style={{
+              fontSize: 'clamp(16px, 4vw, 18px)',
+              marginBottom: '24px',
+              color: '#000',
+              padding: '0 8px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Search by city to find vetted junk removal companies near you
+            </p>
+            <a
+              href="/"
+              style={{
+                display: 'inline-block',
+                background: '#000',
+                color: '#fbbf24',
+                padding: '14px 28px',
+                borderRadius: '8px',
+                border: '2px solid #000',
+                fontSize: 'clamp(16px, 4vw, 18px)',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              data-testid="link-blog-to-home"
+            >
+              Start Your Search
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
