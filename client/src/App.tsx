@@ -267,7 +267,7 @@ function InteractiveFooter() {
       boxSizing: 'border-box',
       position: 'relative',
     }}>
-      {/* Drop-Up Sections */}
+      {/* Drop-Up Sections - Light Yellow Background */}
       {expandedSection && (
         <div style={{
           backgroundColor: '#fef3c7',
