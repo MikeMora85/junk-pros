@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showAddUnclaimed, setShowAddUnclaimed] = useState(false);
   const [expandedCompany, setExpandedCompany] = useState<number | null>(null);
+  const [showRecentOnly, setShowRecentOnly] = useState(false);
   
   // Add Unclaimed Business Form State
   const [unclaimedForm, setUnclaimedForm] = useState({
@@ -194,6 +195,11 @@ export default function AdminDashboard() {
     return matchesSearch && matchesState && matchesCity;
   });
 
+  // Show only recent if toggle is on
+  if (showRecentOnly) {
+    displayCompanies = displayCompanies.slice(0, 20);
+  }
+
   const stats = {
     total: allCompanies.length,
     active: activeCompanies.length,
@@ -202,15 +208,12 @@ export default function AdminDashboard() {
   };
 
   const handleRefresh = async () => {
-    console.log('Refresh button clicked');
-    console.log('User:', user);
-    console.log('Active companies before refresh:', activeCompanies.length);
     const results = await Promise.all([
       refetchActive(),
       refetchPending()
     ]);
-    console.log('Refresh complete');
-    console.log('Active companies after refresh:', results[0].data?.length);
+    // Show toast notification
+    alert(`Refreshed! ${results[0].data?.length || 0} companies loaded.`);
   };
 
   return (
@@ -452,6 +455,25 @@ export default function AdminDashboard() {
                 data-testid="input-search"
               />
             </div>
+
+            {/* Show Recent Toggle */}
+            <button
+              onClick={() => setShowRecentOnly(!showRecentOnly)}
+              style={{
+                width: '100%',
+                padding: '12px',
+                background: showRecentOnly ? '#fbbf24' : '#fff',
+                color: '#000',
+                border: '2px solid #fbbf24',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '700',
+                cursor: 'pointer',
+              }}
+              data-testid="button-show-recent"
+            >
+              {showRecentOnly ? '✓ Showing 20 Newest' : 'Show 20 Newest Only'}
+            </button>
             
             {/* State Filter */}
             <select
