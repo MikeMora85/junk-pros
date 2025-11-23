@@ -1409,7 +1409,7 @@ function LandingPage() {
             }}
             data-testid="button-profile"
           >
-            <UserCircle size={24} />
+            <UserCircle size={28} />
           </button>
         )}
       </div>
@@ -2347,7 +2347,7 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
             }}
             data-testid="button-profile-state"
           >
-            <UserCircle size={24} />
+            <UserCircle size={28} />
           </button>
         )}
         </div>
@@ -3556,7 +3556,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
               }}
               data-testid="button-profile-city"
             >
-              <UserCircle size={24} />
+              <UserCircle size={28} />
             </button>
           )}
           
