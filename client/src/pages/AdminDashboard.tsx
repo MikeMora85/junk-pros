@@ -26,12 +26,12 @@ export default function AdminDashboard() {
     address: "",
   });
 
-  const { data: pendingCompanies = [], isLoading: pendingLoading } = useQuery<Company[]>({
+  const { data: pendingCompanies = [], isLoading: pendingLoading, refetch: refetchPending } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/pending'],
     enabled: !!user?.isAdmin,
   });
 
-  const { data: activeCompanies = [], isLoading: activeLoading } = useQuery<Company[]>({
+  const { data: activeCompanies = [], isLoading: activeLoading, refetch: refetchActive } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/active'],
     enabled: !!user?.isAdmin,
   });
@@ -201,9 +201,11 @@ export default function AdminDashboard() {
     featured: featuredCompanies.length,
   };
 
-  const handleRefresh = () => {
-    queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
-    queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/pending'] });
+  const handleRefresh = async () => {
+    await Promise.all([
+      refetchActive(),
+      refetchPending()
+    ]);
   };
 
   return (
