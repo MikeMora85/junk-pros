@@ -164,7 +164,17 @@ export default function AdminDashboard() {
   const allCompanies = [...pendingCompanies, ...activeCompanies];
   const unclaimedCompanies = allCompanies.filter(c => !c.claimed);
   const featuredCompanies = allCompanies.filter(c => c.subscriptionTier === 'premium');
-  const states = Array.from(new Set(allCompanies.map(c => c.state))).sort();
+  
+  // Get unique states (case-insensitive) - preserve the properly capitalized version
+  const stateMap = new Map<string, string>();
+  allCompanies.forEach(c => {
+    const lowerState = c.state.toLowerCase();
+    if (!stateMap.has(lowerState)) {
+      // Use the first properly capitalized version we encounter
+      stateMap.set(lowerState, c.state);
+    }
+  });
+  const states = Array.from(stateMap.values()).sort();
   const cities = stateFilter !== 'all' 
     ? Array.from(new Set(allCompanies.filter(c => c.state === stateFilter).map(c => c.city))).sort()
     : [];
