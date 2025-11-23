@@ -1653,15 +1653,15 @@ function LandingPage() {
           ))}
         </div>
 
-        {/* Calculator + How It Works - Side by Side on Desktop */}
+        {/* Calculator + How It Works + Popular Cities - Side by Side on Desktop */}
         <style dangerouslySetInnerHTML={{__html: `
           @media (min-width: 900px) {
-            .calculator-how-it-works-grid {
+            .calculator-right-column-grid {
               grid-template-columns: 1fr 1fr !important;
             }
           }
         `}} />
-        <div className="calculator-how-it-works-grid" style={{
+        <div className="calculator-right-column-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
           gap: '30px',
@@ -1672,14 +1672,16 @@ function LandingPage() {
             <EstimateBuilderInline />
           </div>
 
-          {/* How It Works */}
-          <div style={{
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            padding: '24px',
-            boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-            transform: 'translateY(-1px)',
-          }}>
+          {/* Right Column: How It Works + Popular Cities */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            {/* How It Works */}
+            <div style={{
+              backgroundColor: '#fff',
+              borderRadius: '12px',
+              padding: '24px',
+              boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+              transform: 'translateY(-1px)',
+            }}>
             <h3 style={{
               fontSize: '19px',
               fontWeight: '700',
@@ -1758,6 +1760,72 @@ function LandingPage() {
               </div>
             </div>
           </div>
+
+          {/* Popular Cities */}
+          <div>
+            <h3 style={{
+              fontSize: '19px',
+              fontWeight: '700',
+              margin: 0,
+              marginBottom: '20px',
+              color: '#1a1a1a',
+              letterSpacing: '-0.01em',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              textAlign: 'center',
+            }}>
+              Popular Cities
+            </h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+              gap: '12px',
+            }}>
+              {[
+                { city: 'New York', state: 'New York', stateSlug: 'ny' },
+                { city: 'Los Angeles', state: 'California', stateSlug: 'ca' },
+                { city: 'Chicago', state: 'Illinois', stateSlug: 'il' },
+                { city: 'Houston', state: 'Texas', stateSlug: 'tx' },
+                { city: 'Phoenix', state: 'Arizona', stateSlug: 'az' },
+                { city: 'Philadelphia', state: 'Pennsylvania', stateSlug: 'pa' },
+              ].map(({ city, state, stateSlug }) => (
+                <a
+                  key={city}
+                  href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                  style={{
+                    backgroundColor: '#fff',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    textDecoration: 'none',
+                    color: '#1a1a1a',
+                    transition: 'all 0.2s',
+                    cursor: 'pointer',
+                    boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                    transform: 'translateY(-1px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  data-testid={`link-city-${city.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <h4 style={{
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    textAlign: 'center',
+                    margin: 0,
+                  }}>{city}</h4>
+                </a>
+              ))}
+            </div>
+          </div>
+          </div>
         </div>
 
         {/* Why Choose Independent - Full Width */}
@@ -1825,74 +1893,6 @@ function LandingPage() {
                 <strong>No Platform Fees</strong> — Contact companies directly without paying middleman booking fees or commissions
               </p>
             </div>
-          </div>
-        </div>
-
-        {/* Popular Cities */}
-        <div style={{ marginBottom: '60px' }}>
-          <h3 style={{
-            fontSize: '19px',
-            fontWeight: '700',
-            margin: 0,
-            marginBottom: '20px',
-            color: '#1a1a1a',
-            letterSpacing: '-0.01em',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-            textAlign: 'center',
-          }}>
-            Popular Cities
-          </h3>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '12px',
-          }}>
-            {[
-              { city: 'New York', state: 'New York', stateSlug: 'ny' },
-              { city: 'Los Angeles', state: 'California', stateSlug: 'ca' },
-              { city: 'Chicago', state: 'Illinois', stateSlug: 'il' },
-              { city: 'Houston', state: 'Texas', stateSlug: 'tx' },
-              { city: 'Phoenix', state: 'Arizona', stateSlug: 'az' },
-              { city: 'Philadelphia', state: 'Pennsylvania', stateSlug: 'pa' },
-              { city: 'San Antonio', state: 'Texas', stateSlug: 'tx' },
-              { city: 'San Diego', state: 'California', stateSlug: 'ca' },
-              { city: 'Scottsdale', state: 'Arizona', stateSlug: 'az' },
-            ].map(({ city, state, stateSlug }) => (
-              <a
-                key={city}
-                href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
-                style={{
-                  backgroundColor: '#fff',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  textDecoration: 'none',
-                  color: '#1a1a1a',
-                  transition: 'all 0.2s',
-                  cursor: 'pointer',
-                  boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
-                  transform: 'translateY(-1px)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
-                  e.currentTarget.style.transform = 'translateY(-1px)';
-                }}
-                data-testid={`link-city-${city.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                <h4 style={{
-                  fontSize: '14px',
-                  fontWeight: '700',
-                  textAlign: 'center',
-                  margin: 0,
-                }}>{city}</h4>
-              </a>
-            ))}
           </div>
         </div>
 
