@@ -1675,79 +1675,83 @@ function LandingPage() {
           {/* How It Works */}
           <div style={{
             backgroundColor: '#fff',
-            border: '2px solid #000',
-            borderRadius: '12px',
-            padding: '30px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            border: '2px solid #fbbf24',
+            borderRadius: '0',
+            padding: '24px',
+            boxShadow: 'none',
           }}>
-            <h2 style={{
-              fontSize: '28px',
-              fontWeight: 'bold',
-              marginBottom: '25px',
-              color: '#000',
+            <h3 style={{
+              fontSize: '19px',
+              fontWeight: '700',
+              margin: 0,
+              marginBottom: '16px',
+              color: '#1a1a1a',
+              letterSpacing: '-0.01em',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              textAlign: 'center',
             }}>
               How It Works
-            </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                 <div style={{
                   backgroundColor: '#fbbf24',
                   color: '#000',
-                  width: '40px',
-                  height: '40px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  fontWeight: '700',
                   flexShrink: 0,
                 }}>1</div>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Search Your City</h3>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', margin: 0, color: '#1a1a1a' }}>Search Your City</h4>
+                  <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                     Enter your city name to discover independent junk removal companies serving your area.
                   </p>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                 <div style={{
                   backgroundColor: '#fbbf24',
                   color: '#000',
-                  width: '40px',
-                  height: '40px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  fontWeight: '700',
                   flexShrink: 0,
                 }}>2</div>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Compare Companies</h3>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', margin: 0, color: '#1a1a1a' }}>Compare Companies</h4>
+                  <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                     Browse detailed profiles, read reviews, check pricing, and compare services from local haulers.
                   </p>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                 <div style={{
                   backgroundColor: '#fbbf24',
                   color: '#000',
-                  width: '40px',
-                  height: '40px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '20px',
-                  fontWeight: 'bold',
+                  fontSize: '16px',
+                  fontWeight: '700',
                   flexShrink: 0,
                 }}>3</div>
                 <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Connect Directly</h3>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', margin: 0, color: '#1a1a1a' }}>Connect Directly</h4>
+                  <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                     Call or email the company directly. No middleman, no service fees—just local service.
                   </p>
                 </div>
@@ -1759,74 +1763,80 @@ function LandingPage() {
         {/* Why Choose Independent - Full Width */}
         <div style={{
           backgroundColor: '#fff',
-          border: '2px solid #000',
-          borderRadius: '12px',
-          padding: '40px 30px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          border: '2px solid #fbbf24',
+          borderRadius: '0',
+          padding: '24px',
+          boxShadow: 'none',
           marginBottom: '60px',
         }}>
-          <h2 style={{
-            fontSize: '32px',
-            fontWeight: 'bold',
-            marginBottom: '30px',
+          <h3 style={{
+            fontSize: '19px',
+            fontWeight: '700',
+            margin: 0,
+            marginBottom: '16px',
+            color: '#1a1a1a',
+            letterSpacing: '-0.01em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
             textAlign: 'center',
-            color: '#000',
           }}>
             Why Choose Independent Junk Removal Companies
-          </h2>
+          </h3>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '25px',
+            gap: '16px',
           }}>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Better Pricing</strong> — Independent companies don't pay franchise fees, which means lower prices for you
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Local Ownership</strong> — Talk directly to the owner who lives in your community and cares about reputation
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Flexible Service</strong> — Get personalized solutions and flexible scheduling that big franchises can't offer
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>Support Your Community</strong> — Keep your money local and support small business owners in your area
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700' }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
                 <strong>No Platform Fees</strong> — Contact companies directly without paying middleman booking fees or commissions
               </p>
             </div>
           </div>
         </div>
 
-        {/* Top Cities We Serve */}
+        {/* Popular Cities */}
         <div style={{ marginBottom: '60px' }}>
-          <h2 style={{
-            fontSize: '32px',
-            fontWeight: 'bold',
-            marginBottom: '30px',
+          <h3 style={{
+            fontSize: '19px',
+            fontWeight: '700',
+            margin: 0,
+            marginBottom: '20px',
+            color: '#1a1a1a',
+            letterSpacing: '-0.01em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
             textAlign: 'center',
-            color: '#000',
           }}>
             Popular Cities
-          </h2>
+          </h3>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '20px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '12px',
           }}>
             {[
               { city: 'New York', state: 'ny' },
@@ -1845,13 +1855,13 @@ function LandingPage() {
                 style={{
                   backgroundColor: '#fff',
                   border: '2px solid #000',
-                  borderRadius: '12px',
-                  padding: '25px',
+                  borderRadius: '0',
+                  padding: '16px',
                   textDecoration: 'none',
-                  color: '#000',
-                  transition: 'all 0.3s',
+                  color: '#1a1a1a',
+                  transition: 'all 0.2s',
                   cursor: 'pointer',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  boxShadow: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1859,22 +1869,19 @@ function LandingPage() {
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = '#fbbf24';
                   e.currentTarget.style.backgroundColor = '#fffef0';
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.15)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = '#000';
                   e.currentTarget.style.backgroundColor = '#fff';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
                 }}
                 data-testid={`link-city-${city.toLowerCase().replace(/\s+/g, '-')}`}
               >
-                <h3 style={{
-                  fontSize: '22px',
-                  fontWeight: 'bold',
+                <h4 style={{
+                  fontSize: '14px',
+                  fontWeight: '700',
                   textAlign: 'center',
-                }}>{city}</h3>
+                  margin: 0,
+                }}>{city}</h4>
               </a>
             ))}
           </div>
