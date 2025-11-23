@@ -1082,6 +1082,209 @@ function BlogPage() {
   );
 }
 
+// Blog Post Page Component
+function BlogPostPage({ slug }: { slug: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { user, isAuthenticated } = useAuth();
+
+  // Convert slug back to title for display
+  const title = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      {/* Header */}
+      <div style={{
+        background: '#fbbf24',
+        padding: '12px 16px',
+        borderBottom: '3px solid #000',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+      }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <a href="/" style={{ textDecoration: 'none' }}>
+            <h1 style={{
+              fontSize: '20px',
+              fontWeight: '700',
+              color: '#000',
+              margin: 0,
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              FindJunkPros.com
+            </h1>
+          </a>
+          
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <button
+              onClick={() => setMenuOpen(true)}
+              style={{
+                backgroundColor: 'transparent',
+                color: '#000',
+                padding: '0',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              data-testid="button-menu"
+            >
+              <Menu size={18} color="#000" />
+            </button>
+            
+            {isAuthenticated && user && (
+              <button
+                onClick={() => {
+                  if ((user as any)?.isAdmin) {
+                    window.location.href = '/admin';
+                  } else {
+                    window.location.href = '/profile/edit';
+                  }
+                }}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#000',
+                  padding: '0',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                data-testid="button-profile"
+              >
+                <UserCircle size={28} />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Blog Post Content */}
+      <div style={{
+        maxWidth: '800px',
+        margin: '0 auto',
+        padding: '40px 16px',
+      }}>
+        <a 
+          href="/blog"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#000',
+            textDecoration: 'none',
+            fontSize: '14px',
+            fontWeight: '600',
+            marginBottom: '24px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+          data-testid="link-back-to-blog"
+        >
+          ← Back to Blog
+        </a>
+
+        <article style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '32px',
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(28px, 6vw, 42px)',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '16px',
+            lineHeight: '1.2',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            {title}
+          </h1>
+          
+          <p style={{
+            fontSize: '16px',
+            color: '#666',
+            marginBottom: '32px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Published on March 15, 2024
+          </p>
+
+          <div style={{
+            fontSize: '18px',
+            lineHeight: '1.8',
+            color: '#333',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            <p style={{ marginBottom: '20px' }}>
+              This blog post is coming soon. We're working on creating helpful content about junk removal services, tips for homeowners, and industry insights.
+            </p>
+            <p style={{ marginBottom: '20px' }}>
+              In the meantime, you can browse our directory of local junk removal companies or check out other blog posts for helpful information.
+            </p>
+          </div>
+        </article>
+
+        {/* CTA Section */}
+        <div style={{
+          background: '#fbbf24',
+          border: '2px solid #000',
+          borderRadius: '12px',
+          padding: '32px',
+          marginTop: '40px',
+          textAlign: 'center',
+        }}>
+          <h3 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            marginBottom: '16px',
+            color: '#000',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Ready to Find Your Local Hauler?
+          </h3>
+          <p style={{
+            fontSize: '16px',
+            marginBottom: '24px',
+            color: '#000',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Search by city to find vetted junk removal companies near you
+          </p>
+          <a
+            href="/"
+            style={{
+              display: 'inline-block',
+              background: '#000',
+              color: '#fbbf24',
+              padding: '14px 28px',
+              borderRadius: '8px',
+              border: '2px solid #000',
+              fontSize: '18px',
+              fontWeight: '700',
+              textDecoration: 'none',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}
+            data-testid="link-blogpost-to-home"
+          >
+            Start Your Search
+          </a>
+        </div>
+      </div>
+      
+      {/* Interactive Footer */}
+      <InteractiveFooter />
+    </div>
+  );
+}
+
 // Landing Page Component
 function LandingPage() {
   const { user, isAuthenticated } = useAuth();
@@ -5830,6 +6033,9 @@ function App() {
         <Route path="/profile/edit" component={ProfileEditor} />
         <Route path="/admin" component={AdminDashboard} />
         <Route path="/example-profile" component={ExampleProfile} />
+        <Route path="/blog/:slug">
+          {(params) => <BlogPostPage slug={params.slug} />}
+        </Route>
         <Route path="/blog" component={BlogPage} />
         <Route path="/items/:item" component={ItemRemovalPage} />
         <Route path="/services/:service" component={ServicePage} />
