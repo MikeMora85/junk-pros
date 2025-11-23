@@ -223,7 +223,16 @@ export default function AddBusiness() {
     onSuccess: (response: any) => {
       queryClient.invalidateQueries({ queryKey: ['/api/companies'] });
       
-      // If we got a token back, save it
+      // Check if this is a paid tier that needs payment
+      const isPaidTier = formData.pricingTier === 'professional' || formData.pricingTier === 'featured';
+      
+      if (isPaidTier && response.user?.ownerId) {
+        // Redirect to Stripe checkout for paid tiers
+        window.location.href = `/stripe-checkout?tier=${formData.pricingTier}&businessOwnerId=${response.user.ownerId}`;
+        return;
+      }
+      
+      // For free tier, save token and redirect to profile
       if (response.token) {
         localStorage.setItem('auth_token', response.token);
       }
