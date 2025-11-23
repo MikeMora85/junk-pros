@@ -1498,7 +1498,7 @@ function LandingPage() {
             marginRight: 'auto',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}>
-            No National Franchises, Local Junk Pros Only.
+            No National Franchises, Local Junk Pros Closest to You.
           </p>
 
           <form onSubmit={handleSearch} style={{
