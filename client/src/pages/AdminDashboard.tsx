@@ -227,6 +227,7 @@ export default function AdminDashboard() {
         top: 0,
         zIndex: 100,
       }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <h1 style={{ 
@@ -337,9 +338,11 @@ export default function AdminDashboard() {
             </button>
           </div>
         )}
+        </div>
       </div>
 
       {/* Stats Cards */}
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 16px' }}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
@@ -392,17 +395,22 @@ export default function AdminDashboard() {
           <div style={{ fontSize: '12px', color: '#000', fontWeight: '600' }}>States</div>
         </div>
       </div>
+      </div>
 
       {/* Tabs */}
       <div style={{
         background: '#fbbf24',
-        display: 'flex',
-        gap: '0',
-        padding: '0',
-        overflowX: 'auto',
-        WebkitOverflowScrolling: 'touch',
         borderBottom: '2px solid #e5e7eb',
       }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          display: 'flex',
+          gap: '0',
+          padding: '0',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch',
+        }}>
         {[
           { id: 'active', label: 'Active', count: stats.active },
           { id: 'unclaimed', label: 'Unclaimed', count: stats.unclaimed },
@@ -429,12 +437,19 @@ export default function AdminDashboard() {
             {tab.label} {tab.count !== null && `(${tab.count})`}
           </button>
         ))}
+        </div>
       </div>
 
       {/* Filters & Search */}
       {activeTab !== 'analytics' && (
         <div style={{ padding: '16px', background: '#fff', borderBottom: '2px solid #fbbf24' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '16px' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: window.innerWidth >= 768 ? 'repeat(auto-fit, minmax(250px, 1fr))' : '1fr',
+            gap: '12px', 
+            marginBottom: '16px' 
+          }}>
             {/* Search */}
             <div style={{ position: 'relative', width: '100%' }}>
               <Search size={20} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#666' }} />
@@ -549,10 +564,12 @@ export default function AdminDashboard() {
             <Plus size={20} />
             Add Unclaimed Business
           </button>
+          </div>
         </div>
       )}
 
       {/* Add Unclaimed Form */}
+      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 16px' }}>
       {showAddUnclaimed && (
         <div style={{
           padding: '20px',
@@ -676,10 +693,12 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+      </div>
 
       {/* Companies List */}
       {activeTab !== 'analytics' && (
         <div style={{ padding: '20px', background: '#f9fafb', minHeight: 'calc(100vh - 300px)' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#000' }}>
             Showing {displayCompanies.length} businesses
           </div>
@@ -1092,12 +1111,14 @@ export default function AdminDashboard() {
               ))}
             </div>
           )}
+          </div>
         </div>
       )}
 
       {/* Analytics Tab */}
       {activeTab === 'analytics' && (
         <div style={{ padding: '20px', background: '#f9fafb', minHeight: 'calc(100vh - 300px)' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{
             background: '#fff',
             border: '2px solid #fbbf24',
@@ -1161,6 +1182,7 @@ export default function AdminDashboard() {
                 );
               })}
             </div>
+          </div>
           </div>
         </div>
       )}
