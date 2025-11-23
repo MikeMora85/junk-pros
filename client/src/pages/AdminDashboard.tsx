@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Company } from "@shared/schema";
-import { Menu, X, Search, Plus, Building2, MapPin, Phone, Mail, Star, DollarSign, AlertCircle, CheckCircle, Eye, Trash2, Edit3 } from "lucide-react";
+import { Menu, X, Search, Plus, Building2, MapPin, Phone, Mail, Star, DollarSign, AlertCircle, CheckCircle, Eye, Trash2, Edit3, RefreshCw } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function AdminDashboard() {
@@ -201,6 +201,11 @@ export default function AdminDashboard() {
     featured: featuredCompanies.length,
   };
 
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+    queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/pending'] });
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
       {/* Header - Yellow/Black */}
@@ -228,23 +233,41 @@ export default function AdminDashboard() {
               {stats.total} businesses
             </p>
           </div>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            style={{
-              background: '#f59e0b',
-              color: '#000',
-              padding: '10px',
-              borderRadius: '8px',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              flexShrink: 0,
-            }}
-            data-testid="button-menu"
-          >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+            <button
+              onClick={handleRefresh}
+              style={{
+                background: '#f59e0b',
+                color: '#000',
+                padding: '10px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              title="Refresh data"
+              data-testid="button-refresh"
+            >
+              <RefreshCw size={20} />
+            </button>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              style={{
+                background: '#f59e0b',
+                color: '#000',
+                padding: '10px',
+                borderRadius: '8px',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              data-testid="button-menu"
+            >
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
