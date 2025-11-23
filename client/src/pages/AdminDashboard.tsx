@@ -202,10 +202,15 @@ export default function AdminDashboard() {
   };
 
   const handleRefresh = async () => {
-    await Promise.all([
+    console.log('Refresh button clicked');
+    console.log('User:', user);
+    console.log('Active companies before refresh:', activeCompanies.length);
+    const results = await Promise.all([
       refetchActive(),
       refetchPending()
     ]);
+    console.log('Refresh complete');
+    console.log('Active companies after refresh:', results[0].data?.length);
   };
 
   return (
