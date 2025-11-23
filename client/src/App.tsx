@@ -2202,6 +2202,23 @@ function BlogPostPage({ slug }: { slug: string }) {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
+          <button
+            onClick={() => setMenuOpen(true)}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            data-testid="button-menu"
+          >
+            <Menu size={18} color="#000" />
+          </button>
+          
           <a href="/" style={{ textDecoration: 'none' }}>
             <h1 style={{
               fontSize: '20px',
@@ -2214,9 +2231,15 @@ function BlogPostPage({ slug }: { slug: string }) {
             </h1>
           </a>
           
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {isAuthenticated && user ? (
             <button
-              onClick={() => setMenuOpen(true)}
+              onClick={() => {
+                if ((user as any)?.isAdmin) {
+                  window.location.href = '/admin';
+                } else {
+                  window.location.href = '/profile/edit';
+                }
+              }}
               style={{
                 backgroundColor: 'transparent',
                 color: '#000',
@@ -2227,36 +2250,13 @@ function BlogPostPage({ slug }: { slug: string }) {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
-              data-testid="button-menu"
+              data-testid="button-profile"
             >
-              <Menu size={18} color="#000" />
+              <UserCircle size={28} />
             </button>
-            
-            {isAuthenticated && user && (
-              <button
-                onClick={() => {
-                  if ((user as any)?.isAdmin) {
-                    window.location.href = '/admin';
-                  } else {
-                    window.location.href = '/profile/edit';
-                  }
-                }}
-                style={{
-                  backgroundColor: 'transparent',
-                  color: '#000',
-                  padding: '0',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                data-testid="button-profile"
-              >
-                <UserCircle size={28} />
-              </button>
-            )}
-          </div>
+          ) : (
+            <div style={{ width: '28px' }} />
+          )}
         </div>
       </div>
 
