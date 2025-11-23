@@ -1675,10 +1675,10 @@ function LandingPage() {
           {/* How It Works */}
           <div style={{
             backgroundColor: '#fff',
-            border: '2px solid #000',
-            borderRadius: '8px',
+            borderRadius: '12px',
             padding: '24px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+            transform: 'translateY(-1px)',
           }}>
             <h3 style={{
               fontSize: '19px',
@@ -1776,10 +1776,10 @@ function LandingPage() {
         `}} />
         <div style={{
           backgroundColor: '#fff',
-          border: '2px solid #000',
-          borderRadius: '8px',
+          borderRadius: '12px',
           padding: '24px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+          transform: 'translateY(-1px)',
           marginBottom: '60px',
         }}>
           <h3 style={{
@@ -1863,25 +1863,25 @@ function LandingPage() {
                 href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
                 style={{
                   backgroundColor: '#fff',
-                  border: '2px solid #000',
-                  borderRadius: '8px',
+                  borderRadius: '12px',
                   padding: '16px',
                   textDecoration: 'none',
                   color: '#1a1a1a',
                   transition: 'all 0.2s',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                  boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                  transform: 'translateY(-1px)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#fbbf24';
-                  e.currentTarget.style.backgroundColor = '#fffef0';
+                  e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#000';
-                  e.currentTarget.style.backgroundColor = '#fff';
+                  e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                  e.currentTarget.style.transform = 'translateY(-1px)';
                 }}
                 data-testid={`link-city-${city.toLowerCase().replace(/\s+/g, '-')}`}
               >

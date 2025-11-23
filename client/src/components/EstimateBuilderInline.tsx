@@ -48,11 +48,11 @@ export default function EstimateBuilderInline({ companyPrices, showDisclaimers =
   return (
     <div style={{
       background: '#ffffff',
-      border: '2px solid #fbbf24',
-      borderRadius: '0',
+      borderRadius: '12px',
       padding: '24px',
       marginBottom: '20px',
-      boxShadow: 'none',
+      boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+      transform: 'translateY(-1px)',
       position: 'relative',
       overflow: 'hidden',
     }}>
