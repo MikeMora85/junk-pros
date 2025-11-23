@@ -1848,19 +1848,19 @@ function LandingPage() {
             gap: '12px',
           }}>
             {[
-              { city: 'New York', state: 'ny' },
-              { city: 'Los Angeles', state: 'ca' },
-              { city: 'Chicago', state: 'il' },
-              { city: 'Houston', state: 'tx' },
-              { city: 'Phoenix', state: 'az' },
-              { city: 'Philadelphia', state: 'pa' },
-              { city: 'San Antonio', state: 'tx' },
-              { city: 'San Diego', state: 'ca' },
-              { city: 'Scottsdale', state: 'az' },
-            ].map(({ city, state }) => (
+              { city: 'New York', state: 'New York', stateSlug: 'ny' },
+              { city: 'Los Angeles', state: 'California', stateSlug: 'ca' },
+              { city: 'Chicago', state: 'Illinois', stateSlug: 'il' },
+              { city: 'Houston', state: 'Texas', stateSlug: 'tx' },
+              { city: 'Phoenix', state: 'Arizona', stateSlug: 'az' },
+              { city: 'Philadelphia', state: 'Pennsylvania', stateSlug: 'pa' },
+              { city: 'San Antonio', state: 'Texas', stateSlug: 'tx' },
+              { city: 'San Diego', state: 'California', stateSlug: 'ca' },
+              { city: 'Scottsdale', state: 'Arizona', stateSlug: 'az' },
+            ].map(({ city, state, stateSlug }) => (
               <a
                 key={city}
-                href={`/${state}/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
                 style={{
                   backgroundColor: '#fff',
                   border: '2px solid #000',
@@ -3493,9 +3493,11 @@ function CityPage({ city, state }: { city: string; state: string }) {
   const [videoModalUrl, setVideoModalUrl] = useState<string | null>(null);
   const { user, isAuthenticated } = useAuth();
   
+  // Convert state abbreviation to full state name for database query
+  const fullStateName = stateAbbreviations[state.toLowerCase()] || stateNames[state] || state;
+  
   // SEO
-  const stateName = stateNames[state] || state;
-  useSEO(buildCityPageSEO(city, state, stateName));
+  useSEO(buildCityPageSEO(city, state, fullStateName));
   
   // Fetch user's company profile if authenticated
   const { data: userCompany } = useQuery<Company>({
@@ -3521,9 +3523,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
   };
   
   const { data: companies = [], isLoading } = useQuery<Company[]>({
-    queryKey: ["/api/companies", { city: formattedCity, state }],
+    queryKey: ["/api/companies", { city: formattedCity, state: fullStateName }],
     queryFn: async () => {
-      const response = await fetch(`/api/companies?city=${encodeURIComponent(formattedCity)}&state=${encodeURIComponent(state)}`);
+      const response = await fetch(`/api/companies?city=${encodeURIComponent(formattedCity)}&state=${encodeURIComponent(fullStateName)}`);
       if (!response.ok) throw new Error('Failed to fetch');
       return response.json();
     },
@@ -6180,6 +6182,21 @@ function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }
   );
 }
 
+// State abbreviation to full name mapping
+const stateAbbreviations: Record<string, string> = {
+  'al': 'Alabama', 'ak': 'Alaska', 'az': 'Arizona', 'ar': 'Arkansas', 'ca': 'California',
+  'co': 'Colorado', 'ct': 'Connecticut', 'de': 'Delaware', 'fl': 'Florida', 'ga': 'Georgia',
+  'hi': 'Hawaii', 'id': 'Idaho', 'il': 'Illinois', 'in': 'Indiana', 'ia': 'Iowa',
+  'ks': 'Kansas', 'ky': 'Kentucky', 'la': 'Louisiana', 'me': 'Maine', 'md': 'Maryland',
+  'ma': 'Massachusetts', 'mi': 'Michigan', 'mn': 'Minnesota', 'ms': 'Mississippi', 'mo': 'Missouri',
+  'mt': 'Montana', 'ne': 'Nebraska', 'nv': 'Nevada', 'nh': 'New Hampshire', 'nj': 'New Jersey',
+  'nm': 'New Mexico', 'ny': 'New York', 'nc': 'North Carolina', 'nd': 'North Dakota', 'oh': 'Ohio',
+  'ok': 'Oklahoma', 'or': 'Oregon', 'pa': 'Pennsylvania', 'ri': 'Rhode Island', 'sc': 'South Carolina',
+  'sd': 'South Dakota', 'tn': 'Tennessee', 'tx': 'Texas', 'ut': 'Utah', 'vt': 'Vermont',
+  'va': 'Virginia', 'wa': 'Washington', 'wv': 'West Virginia', 'wi': 'Wisconsin', 'wy': 'Wyoming',
+};
+
+// State slug to proper name mapping (for SEO)
 const stateNames: Record<string, string> = {
   'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
   'california': 'California', 'colorado': 'Colorado', 'connecticut': 'Connecticut', 'delaware': 'Delaware',
