@@ -1787,6 +1787,16 @@ function LandingPage() {
                 { city: 'Houston', state: 'Texas', stateSlug: 'tx' },
                 { city: 'Phoenix', state: 'Arizona', stateSlug: 'az' },
                 { city: 'Philadelphia', state: 'Pennsylvania', stateSlug: 'pa' },
+                { city: 'San Antonio', state: 'Texas', stateSlug: 'tx' },
+                { city: 'San Diego', state: 'California', stateSlug: 'ca' },
+                { city: 'Dallas', state: 'Texas', stateSlug: 'tx' },
+                { city: 'San Jose', state: 'California', stateSlug: 'ca' },
+                { city: 'Austin', state: 'Texas', stateSlug: 'tx' },
+                { city: 'Jacksonville', state: 'Florida', stateSlug: 'fl' },
+                { city: 'Seattle', state: 'Washington', stateSlug: 'wa' },
+                { city: 'Denver', state: 'Colorado', stateSlug: 'co' },
+                { city: 'Boston', state: 'Massachusetts', stateSlug: 'ma' },
+                { city: 'Portland', state: 'Oregon', stateSlug: 'or' },
               ].map(({ city, state, stateSlug }) => (
                 <a
                   key={city}
