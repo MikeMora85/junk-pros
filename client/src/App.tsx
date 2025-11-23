@@ -1398,16 +1398,14 @@ function LandingPage() {
               }
             }}
             style={{
-              backgroundColor: '#000',
-              color: '#fff',
-              padding: '8px',
-              borderRadius: '6px',
-              border: '1px solid #000',
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
             }}
             data-testid="button-profile"
           >
@@ -2338,30 +2336,18 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
               }
             }}
             style={{
-              backgroundColor: '#000',
-              color: '#fff',
-              padding: '8px',
-              borderRadius: '6px',
-              border: '1px solid #000',
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-              transform: 'translateY(-2px)',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-              e.currentTarget.style.transform = 'translateY(-3px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             data-testid="button-profile-state"
           >
-            <UserCircle size={18} />
+            <UserCircle size={24} />
           </button>
         )}
         </div>
@@ -3559,30 +3545,18 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 }
               }}
               style={{
-                backgroundColor: '#000',
-                color: '#fff',
-                padding: '8px',
-                borderRadius: '6px',
-                border: '1px solid #000',
+                backgroundColor: 'transparent',
+                color: '#000',
+                padding: '0',
+                border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
-                transform: 'translateY(-2px)',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
-                e.currentTarget.style.transform = 'translateY(-3px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               data-testid="button-profile-city"
             >
-              <UserCircle size={18} />
+              <UserCircle size={24} />
             </button>
           )}
           
