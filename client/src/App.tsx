@@ -949,27 +949,34 @@ function BlogPage() {
             gap: '24px',
           }}>
             {blogPosts.map((post) => (
-              <article
+              <a
                 key={post.id}
+                href={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
                 style={{
-                  background: '#fff',
-                  border: '2px solid #000',
-                  borderRadius: '8px',
-                  padding: '24px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                  textDecoration: 'none',
+                  display: 'block',
                 }}
                 data-testid={`article-blog-${post.id}`}
               >
+                <article
+                  style={{
+                    background: '#fff',
+                    border: '2px solid #000',
+                    borderRadius: '8px',
+                    padding: '24px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                  }}
+                >
                 <div style={{
                   display: 'inline-block',
                   background: '#fbbf24',
@@ -1014,6 +1021,7 @@ function BlogPage() {
                   {post.date}
                 </div>
               </article>
+              </a>
             ))}
           </div>
         </div>
