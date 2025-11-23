@@ -1675,10 +1675,10 @@ function LandingPage() {
           {/* How It Works */}
           <div style={{
             backgroundColor: '#fff',
-            border: '2px solid #fbbf24',
-            borderRadius: '0',
+            border: '2px solid #000',
+            borderRadius: '8px',
             padding: '24px',
-            boxShadow: 'none',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           }}>
             <h3 style={{
               fontSize: '19px',
@@ -1776,10 +1776,10 @@ function LandingPage() {
         `}} />
         <div style={{
           backgroundColor: '#fff',
-          border: '2px solid #fbbf24',
-          borderRadius: '0',
+          border: '2px solid #000',
+          borderRadius: '8px',
           padding: '24px',
-          boxShadow: 'none',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           marginBottom: '60px',
         }}>
           <h3 style={{
@@ -1864,13 +1864,13 @@ function LandingPage() {
                 style={{
                   backgroundColor: '#fff',
                   border: '2px solid #000',
-                  borderRadius: '0',
+                  borderRadius: '8px',
                   padding: '16px',
                   textDecoration: 'none',
                   color: '#1a1a1a',
                   transition: 'all 0.2s',
                   cursor: 'pointer',
-                  boxShadow: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
