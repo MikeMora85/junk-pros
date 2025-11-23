@@ -1062,7 +1062,7 @@ function BlogPage() {
               style={{
                 display: 'inline-block',
                 background: '#000',
-                color: '#fbbf24',
+                color: '#fff',
                 padding: '14px 28px',
                 borderRadius: '8px',
                 border: '2px solid #000',
