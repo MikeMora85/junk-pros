@@ -452,7 +452,7 @@ function InteractiveFooter() {
           <button
             onClick={() => toggleSection('areas')}
             style={{
-              backgroundColor: expandedSection === 'areas' ? '#000' : '#fff',
+              backgroundColor: expandedSection === 'areas' ? '#000' : '#fef3c7',
               color: expandedSection === 'areas' ? '#fbbf24' : '#000',
               border: '2px solid #000',
               borderRadius: '8px',
@@ -475,7 +475,7 @@ function InteractiveFooter() {
           <button
             onClick={() => toggleSection('services')}
             style={{
-              backgroundColor: expandedSection === 'services' ? '#000' : '#fff',
+              backgroundColor: expandedSection === 'services' ? '#000' : '#fef3c7',
               color: expandedSection === 'services' ? '#fbbf24' : '#000',
               border: '2px solid #000',
               borderRadius: '8px',
@@ -498,7 +498,7 @@ function InteractiveFooter() {
           <button
             onClick={() => toggleSection('items')}
             style={{
-              backgroundColor: expandedSection === 'items' ? '#000' : '#fff',
+              backgroundColor: expandedSection === 'items' ? '#000' : '#fef3c7',
               color: expandedSection === 'items' ? '#fbbf24' : '#000',
               border: '2px solid #000',
               borderRadius: '8px',
