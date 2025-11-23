@@ -1653,164 +1653,161 @@ function LandingPage() {
           ))}
         </div>
 
-        {/* How Much Is Junk Removal Section */}
-        <div style={{
-          maxWidth: '600px',
-          margin: '0 auto 60px auto',
-        }}>
-          <EstimateBuilderInline />
-        </div>
-
-        {/* How It Works + Why Choose Independent - Side by Side */}
-        <div style={{
+        {/* Calculator + How It Works - Side by Side on Desktop */}
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 900px) {
+            .calculator-how-it-works-grid {
+              grid-template-columns: 1fr 1fr !important;
+            }
+          }
+        `}} />
+        <div className="calculator-how-it-works-grid" style={{
           display: 'grid',
           gridTemplateColumns: '1fr',
           gap: '30px',
           marginBottom: '60px',
         }}>
-          <style dangerouslySetInnerHTML={{__html: `
-            @media (min-width: 768px) {
-              .how-it-works-grid {
-                grid-template-columns: 1fr 1fr !important;
-              }
-            }
-          `}} />
-          <div className="how-it-works-grid" style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: '30px',
+          {/* How Much Is Junk Removal Section */}
+          <div>
+            <EstimateBuilderInline />
+          </div>
+
+          {/* How It Works */}
+          <div style={{
+            backgroundColor: '#fff',
+            border: '2px solid #000',
+            borderRadius: '12px',
+            padding: '30px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
           }}>
-            {/* How It Works */}
-            <div style={{
-              backgroundColor: '#fff',
-              border: '2px solid #000',
-              borderRadius: '12px',
-              padding: '30px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            <h2 style={{
+              fontSize: '28px',
+              fontWeight: 'bold',
+              marginBottom: '25px',
+              color: '#000',
             }}>
-              <h2 style={{
-                fontSize: '28px',
-                fontWeight: 'bold',
-                marginBottom: '25px',
-                color: '#000',
-              }}>
-                How It Works
-              </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
-                  <div style={{
-                    backgroundColor: '#fbbf24',
-                    color: '#000',
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px',
-                    fontWeight: 'bold',
-                    flexShrink: 0,
-                  }}>1</div>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Search Your City</h3>
-                    <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
-                      Find vetted junk removal pros in your area
-                    </p>
-                  </div>
+              How It Works
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
+                <div style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                }}>1</div>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Search Your City</h3>
+                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
+                    Find vetted junk removal pros in your area
+                  </p>
                 </div>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
-                  <div style={{
-                    backgroundColor: '#fbbf24',
-                    color: '#000',
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px',
-                    fontWeight: 'bold',
-                    flexShrink: 0,
-                  }}>2</div>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Compare Local Pros</h3>
-                    <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
-                      Review ratings, pricing, and services offered
-                    </p>
-                  </div>
+              </div>
+              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
+                <div style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                }}>2</div>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Compare Local Pros</h3>
+                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
+                    Review ratings, pricing, and services offered
+                  </p>
                 </div>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
-                  <div style={{
-                    backgroundColor: '#fbbf24',
-                    color: '#000',
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px',
-                    fontWeight: 'bold',
-                    flexShrink: 0,
-                  }}>3</div>
-                  <div>
-                    <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Book Directly</h3>
-                    <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
-                      Contact companies directly—no middleman fees
-                    </p>
-                  </div>
+              </div>
+              <div style={{ display: 'flex', gap: '15px', alignItems: 'flex-start' }}>
+                <div style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  flexShrink: 0,
+                }}>3</div>
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '5px' }}>Book Directly</h3>
+                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.5' }}>
+                    Contact companies directly—no middleman fees
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Why Choose Independent */}
-            <div style={{
-              backgroundColor: '#fff',
-              border: '2px solid #000',
-              borderRadius: '12px',
-              padding: '30px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            }}>
-              <h2 style={{
-                fontSize: '28px',
-                fontWeight: 'bold',
-                marginBottom: '25px',
-                color: '#000',
-              }}>
-                Why Choose Independent Companies
-              </h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
-                    <strong>Better Prices</strong> — No franchise fees means savings for you
-                  </p>
-                </div>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
-                    <strong>Local Owners</strong> — Your neighbors who care about their reputation
-                  </p>
-                </div>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
-                    <strong>Personalized Service</strong> — Flexible scheduling and custom solutions
-                  </p>
-                </div>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
-                    <strong>Support Small Business</strong> — Keep money in your community
-                  </p>
-                </div>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                  <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
-                  <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
-                    <strong>No Middleman</strong> — Book directly with the company owner
-                  </p>
-                </div>
-              </div>
+        {/* Why Choose Independent - Full Width */}
+        <div style={{
+          backgroundColor: '#fff',
+          border: '2px solid #000',
+          borderRadius: '12px',
+          padding: '40px 30px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          marginBottom: '60px',
+        }}>
+          <h2 style={{
+            fontSize: '32px',
+            fontWeight: 'bold',
+            marginBottom: '30px',
+            textAlign: 'center',
+            color: '#000',
+          }}>
+            Why Choose Independent Companies
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '25px',
+          }}>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
+              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+                <strong>Better Prices</strong> — No franchise fees means savings for you
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
+              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+                <strong>Local Owners</strong> — Your neighbors who care about their reputation
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
+              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+                <strong>Personalized Service</strong> — Flexible scheduling and custom solutions
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
+              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+                <strong>Support Small Business</strong> — Keep money in your community
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '24px', lineHeight: '1' }}>✓</div>
+              <p style={{ fontSize: '15px', color: '#333', lineHeight: '1.6' }}>
+                <strong>No Middleman</strong> — Book directly with the company owner
+              </p>
             </div>
           </div>
         </div>
