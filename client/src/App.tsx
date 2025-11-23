@@ -270,7 +270,7 @@ function InteractiveFooter() {
       {/* Drop-Up Sections */}
       {expandedSection && (
         <div style={{
-          backgroundColor: '#fff',
+          backgroundColor: '#fef3c7',
           borderTop: '3px solid #000',
           maxHeight: '400px',
           overflowY: 'auto',
