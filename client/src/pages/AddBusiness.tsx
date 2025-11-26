@@ -319,8 +319,18 @@ export default function AddBusiness() {
         setShowPayment(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (error: any) {
-        alert('Failed to initialize payment. Please try again.');
         console.error('Payment setup error:', error);
+        // Try to parse error message from server response
+        let errorMessage = 'Failed to initialize payment. Please try again.';
+        try {
+          if (error.message) {
+            const parsed = JSON.parse(error.message);
+            errorMessage = parsed.error || parsed.details || error.message;
+          }
+        } catch {
+          errorMessage = error.message || errorMessage;
+        }
+        alert(errorMessage);
       }
       return;
     }

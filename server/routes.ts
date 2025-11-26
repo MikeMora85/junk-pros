@@ -1382,34 +1382,56 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     try {
       const { tier } = req.body;
       
+      console.log('=== CREATE PAYMENT SETUP ===');
+      console.log('Tier:', tier);
+      
       if (!tier) {
         return res.status(400).json({ error: "tier is required" });
       }
 
+      // Check Stripe configuration
+      const stripeKey = process.env.STRIPE_SECRET_KEY;
+      const proPriceId = process.env.STRIPE_PROFESSIONAL_PRICE_ID;
+      const featPriceId = process.env.STRIPE_FEATURED_PRICE_ID;
+      
+      console.log('Stripe Key exists:', !!stripeKey);
+      console.log('Professional Price ID:', proPriceId);
+      console.log('Featured Price ID:', featPriceId);
+      
+      if (!stripeKey) {
+        console.error('Missing STRIPE_SECRET_KEY');
+        return res.status(500).json({ error: "Stripe not configured - missing API key" });
+      }
+
       // Import Stripe
       const Stripe = await import('stripe');
-      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+      const stripe = new Stripe.default(stripeKey, {
         apiVersion: '2024-06-20' as any,
       });
 
       // Define price IDs based on tier
       const priceIds: Record<string, string | undefined> = {
-        professional: process.env.STRIPE_PROFESSIONAL_PRICE_ID,
-        featured: process.env.STRIPE_FEATURED_PRICE_ID,
+        professional: proPriceId,
+        featured: featPriceId,
       };
 
       const priceId = priceIds[tier];
+      console.log('Selected price ID for tier', tier, ':', priceId);
+      
       if (!priceId) {
+        console.error('Missing price ID for tier:', tier);
         return res.status(400).json({ 
-          error: "Invalid tier or missing price ID configuration",
+          error: `Missing price ID for ${tier} tier. Please configure STRIPE_${tier.toUpperCase()}_PRICE_ID`,
           tier,
-          hasProfessionalPrice: !!process.env.STRIPE_PROFESSIONAL_PRICE_ID,
-          hasFeaturedPrice: !!process.env.STRIPE_FEATURED_PRICE_ID
+          hasProfessionalPrice: !!proPriceId,
+          hasFeaturedPrice: !!featPriceId
         });
       }
 
       // Get price to determine amount
+      console.log('Retrieving price from Stripe:', priceId);
       const price = await stripe.prices.retrieve(priceId);
+      console.log('Price retrieved:', price.unit_amount);
       const amount = price.unit_amount!;
 
       // Create a payment intent (no customer yet since account doesn't exist)
