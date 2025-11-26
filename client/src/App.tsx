@@ -5291,14 +5291,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
 
                     {/* Quote Request Form - Desktop Inline */}
                     {expandedQuote === c.id && hasFullFeatures && (
-                      <div style={{
-                        marginTop: '16px',
-                        backgroundColor: '#fffbeb',
-                        padding: '16px',
-                        borderRadius: '12px',
-                        border: '3px solid #fbbf24',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                      }}>
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                          marginTop: '16px',
+                          backgroundColor: '#fffbeb',
+                          padding: '16px',
+                          borderRadius: '12px',
+                          border: '3px solid #fbbf24',
+                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                        }}>
                         <QuoteRequestForm
                           companyId={c.id}
                           companyName={c.name}
