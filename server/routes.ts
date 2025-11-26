@@ -1389,7 +1389,7 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       // Import Stripe
       const Stripe = await import('stripe');
       const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: '2025-11-17.clover',
+        apiVersion: '2024-06-20' as any,
       });
 
       // Define price IDs based on tier
@@ -1464,7 +1464,7 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       // Import Stripe (lazy load to avoid initialization issues)
       const Stripe = await import('stripe');
       const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: '2025-11-17.clover',
+        apiVersion: '2024-06-20' as any,
       });
 
       // Define price IDs based on tier
@@ -1559,7 +1559,7 @@ Sitemap: https://findjunkpros.com/sitemap.xml
 
       const Stripe = await import('stripe');
       const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
-        apiVersion: '2025-11-17.clover',
+        apiVersion: '2024-06-20' as any,
       });
 
       const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
