@@ -3,13 +3,49 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import type { Company } from "@shared/schema";
-import { Menu, X, Search, Plus, Building2, MapPin, Phone, Mail, Star, DollarSign, AlertCircle, CheckCircle, Eye, Trash2, Edit3, RefreshCw } from "lucide-react";
+import { Menu, X, Search, Plus, Building2, MapPin, Phone, Mail, Star, DollarSign, AlertCircle, CheckCircle, Eye, Trash2, Edit3, RefreshCw, CreditCard, Users, Send, XCircle } from "lucide-react";
 import { useLocation } from "wouter";
+
+interface Subscriber {
+  id: number;
+  email: string;
+  companyId: number | null;
+  companyName: string | null;
+  companyPhone: string | null;
+  companyCity: string | null;
+  companyState: string | null;
+  subscriptionTier: string;
+  subscriptionStatus: string;
+  stripeCustomerId: string | null;
+  stripeSubscriptionId: string | null;
+  createdAt: string | null;
+  stripeData: {
+    customerEmail: string | null;
+    customerPhone: string | null;
+    customerName: string | null;
+    subscription: {
+      id: string;
+      status: string;
+      currentPeriodStart: number;
+      currentPeriodEnd: number;
+      cancelAtPeriodEnd: boolean;
+      canceledAt: number | null;
+    } | null;
+    paymentMethod: {
+      brand: string;
+      last4: string;
+      expMonth: number;
+      expYear: number;
+    } | null;
+    lifetimeValue: number;
+    invoiceCount: number;
+  } | null;
+}
 
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<'active' | 'unclaimed' | 'featured' | 'analytics'>('active');
+  const [activeTab, setActiveTab] = useState<'active' | 'unclaimed' | 'featured' | 'analytics' | 'subscribers'>('active');
   const [searchQuery, setSearchQuery] = useState("");
   const [stateFilter, setStateFilter] = useState<string>("all");
   const [cityFilter, setCityFilter] = useState<string>("all");
@@ -17,6 +53,10 @@ export default function AdminDashboard() {
   const [showAddUnclaimed, setShowAddUnclaimed] = useState(false);
   const [expandedCompany, setExpandedCompany] = useState<number | null>(null);
   const [showRecentOnly, setShowRecentOnly] = useState(false);
+  const [subscriberFilter, setSubscriberFilter] = useState<string>("all");
+  const [expandedSubscriber, setExpandedSubscriber] = useState<number | null>(null);
+  const [showEmailBlast, setShowEmailBlast] = useState(false);
+  const [emailBlastForm, setEmailBlastForm] = useState({ subject: "", message: "", recipientFilter: "all" });
   
   // Add Unclaimed Business Form State
   const [unclaimedForm, setUnclaimedForm] = useState({
@@ -35,6 +75,42 @@ export default function AdminDashboard() {
   const { data: activeCompanies = [], isLoading: activeLoading, refetch: refetchActive } = useQuery<Company[]>({
     queryKey: ['/api/admin/companies/active'],
     enabled: !!user?.isAdmin,
+  });
+
+  const { data: subscribers = [], isLoading: subscribersLoading, refetch: refetchSubscribers } = useQuery<Subscriber[]>({
+    queryKey: ['/api/admin/subscribers'],
+    enabled: !!user?.isAdmin,
+  });
+
+  const cancelSubscriptionMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await apiRequest(`/api/admin/subscribers/${id}/cancel`, { method: 'POST' });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/subscribers'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+      alert('Subscription cancelled successfully!');
+    },
+    onError: (error: any) => {
+      alert(`Failed to cancel subscription: ${error.message || 'Unknown error'}`);
+    },
+  });
+
+  const emailBlastMutation = useMutation({
+    mutationFn: async (data: { subject: string; message: string; recipientFilter: string }) => {
+      return await apiRequest('/api/admin/email-blast', {
+        method: 'POST',
+        body: data,
+      });
+    },
+    onSuccess: (result: any) => {
+      alert(`Email blast sent! ${result.sent} emails sent, ${result.failed} failed.`);
+      setShowEmailBlast(false);
+      setEmailBlastForm({ subject: "", message: "", recipientFilter: "all" });
+    },
+    onError: (error: any) => {
+      alert(`Failed to send email blast: ${error.message || 'Unknown error'}`);
+    },
   });
 
   const addUnclaimedMutation = useMutation({
@@ -415,6 +491,7 @@ export default function AdminDashboard() {
           { id: 'active', label: 'Active', count: stats.active },
           { id: 'unclaimed', label: 'Unclaimed', count: stats.unclaimed },
           { id: 'featured', label: 'Featured', count: stats.featured },
+          { id: 'subscribers', label: 'Subscribers', count: subscribers.length },
           { id: 'analytics', label: 'Analytics', count: null },
         ].map((tab) => (
           <button
@@ -1183,6 +1260,487 @@ export default function AdminDashboard() {
               })}
             </div>
           </div>
+          </div>
+        </div>
+      )}
+
+      {/* Subscribers Tab */}
+      {activeTab === 'subscribers' && (
+        <div style={{ padding: '20px', background: '#f9fafb', minHeight: 'calc(100vh - 300px)' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            
+            {/* Subscriber Stats */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+              gap: '12px',
+              marginBottom: '20px',
+            }}>
+              <div style={{
+                background: '#fff',
+                border: '2px solid #fbbf24',
+                borderRadius: '8px',
+                padding: '16px',
+                textAlign: 'center',
+              }}>
+                <Users size={24} color="#000" style={{ margin: '0 auto 8px' }} />
+                <div style={{ fontSize: '28px', fontWeight: '800', color: '#000' }}>{subscribers.length}</div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: '600' }}>Total Subscribers</div>
+              </div>
+              <div style={{
+                background: '#fff',
+                border: '2px solid #16a34a',
+                borderRadius: '8px',
+                padding: '16px',
+                textAlign: 'center',
+              }}>
+                <Star size={24} color="#16a34a" style={{ margin: '0 auto 8px' }} />
+                <div style={{ fontSize: '28px', fontWeight: '800', color: '#16a34a' }}>
+                  {subscribers.filter(s => s.subscriptionTier === 'premium').length}
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: '600' }}>Featured ($49)</div>
+              </div>
+              <div style={{
+                background: '#fff',
+                border: '2px solid #2563eb',
+                borderRadius: '8px',
+                padding: '16px',
+                textAlign: 'center',
+              }}>
+                <CheckCircle size={24} color="#2563eb" style={{ margin: '0 auto 8px' }} />
+                <div style={{ fontSize: '28px', fontWeight: '800', color: '#2563eb' }}>
+                  {subscribers.filter(s => s.subscriptionTier === 'standard').length}
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: '600' }}>Professional ($10)</div>
+              </div>
+              <div style={{
+                background: '#fff',
+                border: '2px solid #dc2626',
+                borderRadius: '8px',
+                padding: '16px',
+                textAlign: 'center',
+              }}>
+                <XCircle size={24} color="#dc2626" style={{ margin: '0 auto 8px' }} />
+                <div style={{ fontSize: '28px', fontWeight: '800', color: '#dc2626' }}>
+                  {subscribers.filter(s => s.subscriptionStatus === 'cancelled' || s.subscriptionStatus === 'past_due').length}
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: '600' }}>Cancelled/Past Due</div>
+              </div>
+              <div style={{
+                background: '#fff',
+                border: '2px solid #fbbf24',
+                borderRadius: '8px',
+                padding: '16px',
+                textAlign: 'center',
+              }}>
+                <DollarSign size={24} color="#000" style={{ margin: '0 auto 8px' }} />
+                <div style={{ fontSize: '28px', fontWeight: '800', color: '#000' }}>
+                  ${subscribers.reduce((sum, s) => sum + (s.stripeData?.lifetimeValue || 0), 0).toFixed(0)}
+                </div>
+                <div style={{ fontSize: '12px', color: '#666', fontWeight: '600' }}>Total Revenue</div>
+              </div>
+            </div>
+
+            {/* Filters and Email Blast Button */}
+            <div style={{
+              display: 'flex',
+              gap: '12px',
+              marginBottom: '20px',
+              flexWrap: 'wrap',
+            }}>
+              <select
+                value={subscriberFilter}
+                onChange={(e) => setSubscriberFilter(e.target.value)}
+                style={{
+                  padding: '12px',
+                  border: '2px solid #fbbf24',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  background: '#fff',
+                }}
+                data-testid="select-subscriber-filter"
+              >
+                <option value="all">All Subscribers</option>
+                <option value="premium">Featured Only ($49)</option>
+                <option value="standard">Professional Only ($10)</option>
+                <option value="basic">Basic Only (Free)</option>
+                <option value="active">Active Only</option>
+                <option value="cancelled">Cancelled</option>
+                <option value="past_due">Past Due</option>
+              </select>
+              <button
+                onClick={() => setShowEmailBlast(!showEmailBlast)}
+                style={{
+                  background: '#fbbf24',
+                  color: '#000',
+                  padding: '12px 24px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+                data-testid="button-email-blast"
+              >
+                <Send size={18} />
+                Send Email Blast
+              </button>
+              <button
+                onClick={() => refetchSubscribers()}
+                style={{
+                  background: '#fff',
+                  color: '#000',
+                  padding: '12px',
+                  border: '2px solid #fbbf24',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}
+                data-testid="button-refresh-subscribers"
+              >
+                <RefreshCw size={18} />
+              </button>
+            </div>
+
+            {/* Email Blast Form */}
+            {showEmailBlast && (
+              <div style={{
+                background: '#fff',
+                border: '3px solid #fbbf24',
+                borderRadius: '12px',
+                padding: '20px',
+                marginBottom: '20px',
+              }}>
+                <h3 style={{ margin: '0 0 16px 0', fontSize: '20px', fontWeight: '800', color: '#000' }}>
+                  Send Email Blast
+                </h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <select
+                    value={emailBlastForm.recipientFilter}
+                    onChange={(e) => setEmailBlastForm(prev => ({ ...prev, recipientFilter: e.target.value }))}
+                    style={{
+                      padding: '12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                    }}
+                    data-testid="select-email-recipient-filter"
+                  >
+                    <option value="all">All Subscribers</option>
+                    <option value="premium">Featured Only ($49)</option>
+                    <option value="standard">Professional Only ($10)</option>
+                    <option value="basic">Basic Only (Free)</option>
+                    <option value="active">Active Only</option>
+                    <option value="cancelled">Cancelled Only</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Email Subject"
+                    value={emailBlastForm.subject}
+                    onChange={(e) => setEmailBlastForm(prev => ({ ...prev, subject: e.target.value }))}
+                    style={{
+                      padding: '12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                    }}
+                    data-testid="input-email-subject"
+                  />
+                  <textarea
+                    placeholder="Email Message..."
+                    value={emailBlastForm.message}
+                    onChange={(e) => setEmailBlastForm(prev => ({ ...prev, message: e.target.value }))}
+                    style={{
+                      padding: '12px',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      minHeight: '150px',
+                      resize: 'vertical',
+                    }}
+                    data-testid="input-email-message"
+                  />
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <button
+                      onClick={() => emailBlastMutation.mutate(emailBlastForm)}
+                      disabled={emailBlastMutation.isPending || !emailBlastForm.subject || !emailBlastForm.message}
+                      style={{
+                        flex: 1,
+                        background: emailBlastMutation.isPending ? '#ccc' : '#fbbf24',
+                        color: '#000',
+                        padding: '12px',
+                        border: 'none',
+                        borderRadius: '8px',
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        cursor: emailBlastMutation.isPending ? 'not-allowed' : 'pointer',
+                      }}
+                      data-testid="button-send-email"
+                    >
+                      {emailBlastMutation.isPending ? 'Sending...' : 'Send Email Blast'}
+                    </button>
+                    <button
+                      onClick={() => setShowEmailBlast(false)}
+                      style={{
+                        background: '#fff',
+                        color: '#000',
+                        padding: '12px 24px',
+                        border: '2px solid #e5e7eb',
+                        borderRadius: '8px',
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                      }}
+                      data-testid="button-cancel-email"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Subscribers List */}
+            {subscribersLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>Loading subscribers...</div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {subscribers
+                  .filter(sub => {
+                    if (subscriberFilter === 'all') return true;
+                    if (subscriberFilter === 'premium') return sub.subscriptionTier === 'premium';
+                    if (subscriberFilter === 'standard') return sub.subscriptionTier === 'standard';
+                    if (subscriberFilter === 'basic') return sub.subscriptionTier === 'basic';
+                    if (subscriberFilter === 'active') return sub.subscriptionStatus === 'active';
+                    if (subscriberFilter === 'cancelled') return sub.subscriptionStatus === 'cancelled';
+                    if (subscriberFilter === 'past_due') return sub.subscriptionStatus === 'past_due';
+                    return true;
+                  })
+                  .map(subscriber => (
+                    <div
+                      key={subscriber.id}
+                      style={{
+                        background: '#fff',
+                        border: expandedSubscriber === subscriber.id ? '3px solid #fbbf24' : '2px solid #e5e7eb',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {/* Subscriber Header */}
+                      <div
+                        onClick={() => setExpandedSubscriber(expandedSubscriber === subscriber.id ? null : subscriber.id)}
+                        style={{
+                          padding: '16px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          flexWrap: 'wrap',
+                          gap: '12px',
+                        }}
+                      >
+                        <div style={{ flex: 1, minWidth: '200px' }}>
+                          <div style={{ fontWeight: '700', fontSize: '16px', color: '#000' }}>
+                            {subscriber.companyName || 'No Company'}
+                          </div>
+                          <div style={{ fontSize: '14px', color: '#666', marginTop: '4px' }}>
+                            {subscriber.email}
+                          </div>
+                          {subscriber.companyCity && (
+                            <div style={{ fontSize: '12px', color: '#999', marginTop: '2px' }}>
+                              {subscriber.companyCity}, {subscriber.companyState}
+                            </div>
+                          )}
+                        </div>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                          {/* Tier Badge */}
+                          <span style={{
+                            padding: '4px 12px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                            background: subscriber.subscriptionTier === 'premium' ? '#16a34a' :
+                                        subscriber.subscriptionTier === 'standard' ? '#2563eb' : '#9ca3af',
+                            color: '#fff',
+                          }}>
+                            {subscriber.subscriptionTier === 'premium' ? 'FEATURED $49' :
+                             subscriber.subscriptionTier === 'standard' ? 'PRO $10' : 'BASIC'}
+                          </span>
+                          {/* Status Badge */}
+                          <span style={{
+                            padding: '4px 12px',
+                            borderRadius: '20px',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                            background: subscriber.subscriptionStatus === 'active' ? '#dcfce7' :
+                                        subscriber.subscriptionStatus === 'past_due' ? '#fef3c7' : '#fee2e2',
+                            color: subscriber.subscriptionStatus === 'active' ? '#16a34a' :
+                                   subscriber.subscriptionStatus === 'past_due' ? '#d97706' : '#dc2626',
+                          }}>
+                            {subscriber.subscriptionStatus.toUpperCase()}
+                          </span>
+                          {/* Card Info */}
+                          {subscriber.stripeData?.paymentMethod && (
+                            <span style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              padding: '4px 12px',
+                              borderRadius: '20px',
+                              fontSize: '12px',
+                              fontWeight: '600',
+                              background: '#f3f4f6',
+                              color: '#374151',
+                            }}>
+                              <CreditCard size={14} />
+                              {subscriber.stripeData.paymentMethod.brand?.toUpperCase()} ****{subscriber.stripeData.paymentMethod.last4}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Expanded Details */}
+                      {expandedSubscriber === subscriber.id && (
+                        <div style={{
+                          padding: '16px',
+                          borderTop: '2px solid #fbbf24',
+                          background: '#fefce8',
+                        }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                            {/* Contact Info */}
+                            <div>
+                              <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#000' }}>Contact Info</h4>
+                              <div style={{ fontSize: '14px', color: '#374151' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                                  <Mail size={14} />
+                                  {subscriber.email}
+                                </div>
+                                {subscriber.companyPhone && (
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <Phone size={14} />
+                                    {subscriber.companyPhone}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Payment Details */}
+                            <div>
+                              <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#000' }}>Payment Details</h4>
+                              <div style={{ fontSize: '14px', color: '#374151' }}>
+                                {subscriber.stripeData?.paymentMethod ? (
+                                  <>
+                                    <div>Card: {subscriber.stripeData.paymentMethod.brand?.toUpperCase()} ****{subscriber.stripeData.paymentMethod.last4}</div>
+                                    <div>Expires: {subscriber.stripeData.paymentMethod.expMonth}/{subscriber.stripeData.paymentMethod.expYear}</div>
+                                  </>
+                                ) : (
+                                  <div style={{ color: '#999' }}>No card on file</div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Subscription Details */}
+                            <div>
+                              <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#000' }}>Subscription</h4>
+                              <div style={{ fontSize: '14px', color: '#374151' }}>
+                                {subscriber.stripeData?.subscription ? (
+                                  <>
+                                    <div>Status: {subscriber.stripeData.subscription.status}</div>
+                                    <div>Next Billing: {new Date(subscriber.stripeData.subscription.currentPeriodEnd * 1000).toLocaleDateString()}</div>
+                                    {subscriber.stripeData.subscription.cancelAtPeriodEnd && (
+                                      <div style={{ color: '#dc2626' }}>Cancels at period end</div>
+                                    )}
+                                  </>
+                                ) : (
+                                  <div style={{ color: '#999' }}>No subscription</div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Lifetime Value */}
+                            <div>
+                              <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '700', color: '#000' }}>Lifetime Value</h4>
+                              <div style={{ fontSize: '24px', fontWeight: '800', color: '#16a34a' }}>
+                                ${(subscriber.stripeData?.lifetimeValue || 0).toFixed(2)}
+                              </div>
+                              <div style={{ fontSize: '12px', color: '#666' }}>
+                                {subscriber.stripeData?.invoiceCount || 0} payments
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Actions */}
+                          <div style={{ display: 'flex', gap: '12px', marginTop: '16px', flexWrap: 'wrap' }}>
+                            {subscriber.companyId && (
+                              <button
+                                onClick={() => setLocation(`/company/${subscriber.companyId}`)}
+                                style={{
+                                  background: '#fff',
+                                  color: '#000',
+                                  padding: '10px 20px',
+                                  border: '2px solid #fbbf24',
+                                  borderRadius: '8px',
+                                  fontSize: '14px',
+                                  fontWeight: '700',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '8px',
+                                }}
+                                data-testid={`button-view-company-${subscriber.id}`}
+                              >
+                                <Eye size={16} />
+                                View Company
+                              </button>
+                            )}
+                            {subscriber.stripeData?.subscription && subscriber.subscriptionStatus === 'active' && (
+                              <button
+                                onClick={() => {
+                                  if (confirm(`Cancel subscription for ${subscriber.companyName || subscriber.email}? This will downgrade them to Basic tier.`)) {
+                                    cancelSubscriptionMutation.mutate(subscriber.id);
+                                  }
+                                }}
+                                style={{
+                                  background: '#dc2626',
+                                  color: '#fff',
+                                  padding: '10px 20px',
+                                  border: 'none',
+                                  borderRadius: '8px',
+                                  fontSize: '14px',
+                                  fontWeight: '700',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '8px',
+                                }}
+                                data-testid={`button-cancel-subscription-${subscriber.id}`}
+                              >
+                                <XCircle size={16} />
+                                Cancel Subscription
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Stripe IDs (for debugging) */}
+                          <div style={{ marginTop: '16px', padding: '12px', background: '#f3f4f6', borderRadius: '8px', fontSize: '11px', color: '#666' }}>
+                            <div>Stripe Customer: {subscriber.stripeCustomerId || 'N/A'}</div>
+                            <div>Stripe Subscription: {subscriber.stripeSubscriptionId || 'N/A'}</div>
+                            <div>Joined: {subscriber.createdAt ? new Date(subscriber.createdAt).toLocaleDateString() : 'Unknown'}</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       )}
