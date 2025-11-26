@@ -813,32 +813,34 @@ export default function AddBusiness() {
               style={{
                 background: formData.pricingTier === 'basic' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'basic' ? '#fbbf24' : '#e5e5e5'}`,
-                padding: '16px',
+                borderRadius: '8px',
+                padding: '24px 16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 position: 'relative',
+                textAlign: 'center',
               }}
               data-testid="tier-basic"
             >
               <div style={{
-                position: 'absolute',
-                top: '16px',
-                left: '16px',
+                display: 'inline-block',
                 background: '#fbbf24',
                 color: '#000',
-                padding: '4px 10px',
+                padding: '4px 12px',
                 fontSize: '14px',
                 fontWeight: '700',
+                borderRadius: '4px',
+                marginBottom: '12px',
               }}>
                 1
               </div>
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px', marginTop: '32px' }}>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Basic Listing - FREE
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Get discovered by local customers searching for junk removal
               </p>
-              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '16px' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '0', lineHeight: '1.8', marginBottom: '16px', listStyle: 'none', textAlign: 'center' }}>
                 <li>Profile page with business details</li>
                 <li>Contact information display</li>
                 <li>Service area coverage</li>
@@ -872,26 +874,15 @@ export default function AddBusiness() {
               style={{
                 background: formData.pricingTier === 'professional' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'professional' ? '#fbbf24' : '#e5e5e5'}`,
-                padding: '16px',
+                borderRadius: '8px',
+                padding: '24px 16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 position: 'relative',
-                marginTop: '16px',
+                textAlign: 'center',
               }}
               data-testid="tier-professional"
             >
-              <div style={{
-                position: 'absolute',
-                top: '16px',
-                left: '16px',
-                background: '#fbbf24',
-                color: '#000',
-                padding: '4px 10px',
-                fontSize: '14px',
-                fontWeight: '700',
-              }}>
-                2
-              </div>
               <div style={{
                 position: 'absolute',
                 top: '-12px',
@@ -901,16 +892,29 @@ export default function AddBusiness() {
                 padding: '4px 12px',
                 fontSize: '11px',
                 fontWeight: '700',
+                borderRadius: '4px',
               }}>
                 RECOMMENDED
               </div>
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px', marginTop: '32px' }}>
+              <div style={{
+                display: 'inline-block',
+                background: '#fbbf24',
+                color: '#000',
+                padding: '4px 12px',
+                fontSize: '14px',
+                fontWeight: '700',
+                borderRadius: '4px',
+                marginBottom: '12px',
+              }}>
+                2
+              </div>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Professional Profile - $10/month
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Full landing page experience with booking and quoting tools
               </p>
-              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '16px' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '0', lineHeight: '1.8', marginBottom: '16px', listStyle: 'none', textAlign: 'center' }}>
                 <li>Everything in Basic</li>
                 <li>Full-blown landing page profile</li>
                 <li>Integrated quoting tool</li>
@@ -949,32 +953,34 @@ export default function AddBusiness() {
               style={{
                 background: formData.pricingTier === 'featured' ? '#fef3c7' : '#fff',
                 border: `2px solid ${formData.pricingTier === 'featured' ? '#fbbf24' : '#e5e5e5'}`,
-                padding: '16px',
+                borderRadius: '8px',
+                padding: '24px 16px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 position: 'relative',
+                textAlign: 'center',
               }}
               data-testid="tier-featured"
             >
               <div style={{
-                position: 'absolute',
-                top: '16px',
-                left: '16px',
+                display: 'inline-block',
                 background: '#fbbf24',
                 color: '#000',
-                padding: '4px 10px',
+                padding: '4px 12px',
                 fontSize: '14px',
                 fontWeight: '700',
+                borderRadius: '4px',
+                marginBottom: '12px',
               }}>
                 3
               </div>
-              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px', marginTop: '32px' }}>
+              <h3 style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '20px', fontWeight: '700', color: '#000', marginBottom: '8px' }}>
                 Featured Listing - $49/month
               </h3>
               <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', marginBottom: '12px' }}>
                 Maximum visibility and all professional tools combined
               </p>
-              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '20px', lineHeight: '1.8', marginBottom: '20px' }}>
+              <ul style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '14px', color: '#000', paddingLeft: '0', lineHeight: '1.8', marginBottom: '20px', listStyle: 'none', textAlign: 'center' }}>
                 <li>Everything in Professional</li>
                 <li>Top placement in search results</li>
                 <li>Featured badge on your profile</li>
