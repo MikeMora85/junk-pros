@@ -548,12 +548,12 @@ export default function ProfileEditor() {
 
   const sectionHeaderStyle = {
     backgroundColor: "#fbbf24",
-    padding: "16px 20px",
+    padding: "10px 16px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "8px",
-    marginBottom: "16px",
+    borderRadius: "6px",
+    marginBottom: "12px",
   };
 
   const sectionContentStyle = {
