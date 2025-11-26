@@ -1893,14 +1893,9 @@ export default function ProfileEditor() {
 
         {/* Section 6: FAQs */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
-          <div style={sectionHeaderStyle}>
-            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-              FAQs
-            </h2>
-          </div>
-          
           <div style={sectionContentStyle}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <label style={labelStyle}>FAQs</label>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               
               {formData.faqs.map((faq, index) => (
                 <div key={index} style={{
@@ -1991,12 +1986,6 @@ export default function ProfileEditor() {
 
         {/* Section 7: Amenities & Items Not Taken */}
         <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
-          <div style={sectionHeaderStyle}>
-            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-              Amenities & Restrictions
-            </h2>
-          </div>
-          
           <div style={sectionContentStyle}>
             {/* Amenities */}
             <div style={{ marginBottom: "24px" }}>
