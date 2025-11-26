@@ -449,7 +449,7 @@ export default function AddBusiness() {
           {isClaiming ? 'Claim Your Profile' : 'Join the Premier Junk Removal Directory'}
         </h1>
         <p style={{
-          fontSize: '18px',
+          fontSize: '14px',
           color: '#000',
           maxWidth: '800px',
           margin: '0 auto',
