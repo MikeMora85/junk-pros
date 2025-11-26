@@ -1117,7 +1117,7 @@ export default function AddBusiness() {
             Create Your Account
           </h2>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Business Name *
             </label>
@@ -1129,20 +1129,20 @@ export default function AddBusiness() {
               placeholder="e.g., Quick Junk Removal LLC"
               style={{
                 width: '100%',
-                maxWidth: '400px',
-                margin: '0 auto',
-                display: 'block',
-                padding: '12px',
+                boxSizing: 'border-box',
+                padding: '14px 16px',
                 border: '2px solid #e5e5e5',
+                borderRadius: '25px',
                 fontSize: '16px',
                 color: '#000',
                 textAlign: 'center',
+                background: '#fff',
               }}
               data-testid="input-business-name"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Email *
             </label>
@@ -1154,20 +1154,20 @@ export default function AddBusiness() {
               placeholder="your@email.com"
               style={{
                 width: '100%',
-                maxWidth: '400px',
-                margin: '0 auto',
-                display: 'block',
-                padding: '12px',
+                boxSizing: 'border-box',
+                padding: '14px 16px',
                 border: '2px solid #e5e5e5',
+                borderRadius: '25px',
                 fontSize: '16px',
                 color: '#000',
                 textAlign: 'center',
+                background: '#fff',
               }}
               data-testid="input-email"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Password *
             </label>
@@ -1179,20 +1179,20 @@ export default function AddBusiness() {
               placeholder="Create a secure password"
               style={{
                 width: '100%',
-                maxWidth: '400px',
-                margin: '0 auto',
-                display: 'block',
-                padding: '12px',
+                boxSizing: 'border-box',
+                padding: '14px 16px',
                 border: '2px solid #e5e5e5',
+                borderRadius: '25px',
                 fontSize: '16px',
                 color: '#000',
                 textAlign: 'center',
+                background: '#fff',
               }}
               data-testid="input-password"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Phone Number *
             </label>
@@ -1204,20 +1204,20 @@ export default function AddBusiness() {
               placeholder="(555) 123-4567"
               style={{
                 width: '100%',
-                maxWidth: '400px',
-                margin: '0 auto',
-                display: 'block',
-                padding: '12px',
+                boxSizing: 'border-box',
+                padding: '14px 16px',
                 border: '2px solid #e5e5e5',
+                borderRadius: '25px',
                 fontSize: '16px',
                 color: '#000',
                 textAlign: 'center',
+                background: '#fff',
               }}
               data-testid="input-phone"
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               State *
             </label>
@@ -1227,14 +1227,21 @@ export default function AddBusiness() {
               onChange={(e) => setFormData({ ...formData, state: e.target.value })}
               style={{
                 width: '100%',
-                maxWidth: '400px',
-                margin: '0 auto',
-                display: 'block',
-                padding: '12px',
+                boxSizing: 'border-box',
+                padding: '14px 16px',
                 border: '2px solid #e5e5e5',
+                borderRadius: '25px',
                 fontSize: '16px',
-                color: '#000',
+                color: formData.state ? '#000' : '#9ca3af',
                 textAlign: 'center',
+                background: '#fff',
+                appearance: 'none',
+                WebkitAppearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 16px center',
+                backgroundSize: '16px',
+                paddingRight: '40px',
               }}
               data-testid="select-state"
             >
@@ -1247,7 +1254,7 @@ export default function AddBusiness() {
             </select>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Primary City *
             </label>
@@ -1259,58 +1266,60 @@ export default function AddBusiness() {
               placeholder="City where you operate"
               style={{
                 width: '100%',
-                maxWidth: '400px',
-                margin: '0 auto',
-                display: 'block',
-                padding: '12px',
+                boxSizing: 'border-box',
+                padding: '14px 16px',
                 border: '2px solid #e5e5e5',
+                borderRadius: '25px',
                 fontSize: '16px',
                 color: '#000',
                 textAlign: 'center',
+                background: '#fff',
               }}
               data-testid="input-city"
             />
-            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '12px', color: '#000', marginTop: '4px', textAlign: 'center' }}>
+            <p style={{ fontFamily: "'Helvetica Neue', Arial, sans-serif", fontSize: '12px', color: '#666', marginTop: '8px', textAlign: 'center' }}>
               You can add more cities after signup
             </p>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
+          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
             <label style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
+              alignItems: 'flex-start',
+              gap: '12px',
               fontSize: '14px',
               color: '#000',
               cursor: 'pointer',
+              lineHeight: '1.4',
             }}>
               <input
                 type="checkbox"
                 required
                 checked={formData.confirmPricing}
                 onChange={(e) => setFormData({ ...formData, confirmPricing: e.target.checked })}
-                style={{ width: '18px', height: '18px' }}
+                style={{ width: '20px', height: '20px', flexShrink: 0, marginTop: '2px' }}
                 data-testid="checkbox-pricing"
               />
               I confirm my pricing meets the $38/cubic yard minimum standard
             </label>
           </div>
 
-          <div style={{ marginBottom: '24px' }}>
+          <div style={{ marginBottom: '24px', padding: '0 16px' }}>
             <label style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
+              alignItems: 'flex-start',
+              gap: '12px',
               fontSize: '14px',
               color: '#000',
               cursor: 'pointer',
+              lineHeight: '1.4',
             }}>
               <input
                 type="checkbox"
                 required
                 checked={formData.confirmNoFranchise}
                 onChange={(e) => setFormData({ ...formData, confirmNoFranchise: e.target.checked })}
-                style={{ width: '18px', height: '18px' }}
+                style={{ width: '20px', height: '20px', flexShrink: 0, marginTop: '2px' }}
                 data-testid="checkbox-franchise"
               />
               I confirm this is an independent business, not a franchise
