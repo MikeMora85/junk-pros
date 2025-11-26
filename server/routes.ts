@@ -1611,6 +1611,47 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     }
   });
 
+  // Stripe Customer Portal - for managing subscriptions (upgrade/downgrade/cancel)
+  app.post("/api/create-portal-session", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader?.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      
+      const token = authHeader.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any;
+      const owner = await storage.getBusinessOwnerById(decoded.businessOwnerId);
+      
+      if (!owner) {
+        return res.status(404).json({ error: "Business owner not found" });
+      }
+      
+      if (!owner.stripeCustomerId) {
+        return res.status(400).json({ error: "No subscription found. You're on the free plan." });
+      }
+
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      // Create a portal session for the customer
+      const session = await stripe.billingPortal.sessions.create({
+        customer: owner.stripeCustomerId,
+        return_url: `${req.headers.origin || 'https://' + req.headers.host}/profile/edit`,
+      });
+
+      res.json({ url: session.url });
+    } catch (error: any) {
+      console.error("Error creating portal session:", error);
+      res.status(500).json({ 
+        error: "Failed to create portal session",
+        details: error.message 
+      });
+    }
+  });
+
   // Stripe Webhook Handler
   app.post("/api/stripe-webhook", async (req, res) => {
     try {
