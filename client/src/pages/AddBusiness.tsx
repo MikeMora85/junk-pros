@@ -660,14 +660,15 @@ export default function AddBusiness() {
         }}>
           <div style={{
             background: '#fbbf24',
-            padding: '16px',
+            padding: '12px 16px',
             textAlign: 'center',
           }}>
             <span style={{ 
-              fontSize: '20px', 
+              fontSize: '16px', 
               fontWeight: '700', 
               color: '#000',
               textTransform: 'uppercase',
+              letterSpacing: '0.5px',
             }}>
               Platform Standards
             </span>
