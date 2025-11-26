@@ -1451,13 +1451,14 @@ Sitemap: https://findjunkpros.com/sitemap.xml
 
       // Create a subscription with payment_behavior: 'default_incomplete'
       // This creates the subscription but waits for payment
+      // Don't specify payment_method_types - let Stripe use Dashboard settings
+      // Apple Pay and Google Pay are included in 'card' and will show automatically
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
         items: [{ price: priceId }],
         payment_behavior: 'default_incomplete',
         payment_settings: {
           save_default_payment_method: 'on_subscription',
-          payment_method_types: ['card', 'link', 'cashapp'],
         },
         expand: ['latest_invoice.payment_intent'],
         metadata: {
