@@ -1,5 +1,5 @@
 // Referenced from blueprint:javascript_object_storage
-import { useState } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import type { ReactNode } from "react";
 import Uppy from "@uppy/core";
 import { DashboardModal } from "@uppy/react";
@@ -29,8 +29,17 @@ export function ObjectUploader({
   children,
 }: ObjectUploaderProps) {
   const [showModal, setShowModal] = useState(false);
-  const [uppy] = useState(() =>
-    new Uppy({
+  const onGetUploadParametersRef = useRef(onGetUploadParameters);
+  const onCompleteRef = useRef(onComplete);
+  
+  // Keep refs up to date
+  useEffect(() => {
+    onGetUploadParametersRef.current = onGetUploadParameters;
+    onCompleteRef.current = onComplete;
+  }, [onGetUploadParameters, onComplete]);
+  
+  const uppy = useMemo(() => {
+    const instance = new Uppy({
       restrictions: {
         maxNumberOfFiles,
         maxFileSize,
@@ -39,24 +48,46 @@ export function ObjectUploader({
     })
       .use(AwsS3, {
         shouldUseMultipart: false,
-        getUploadParameters: onGetUploadParameters,
+        getUploadParameters: (file) => onGetUploadParametersRef.current(file),
       })
       .on("complete", (result) => {
-        onComplete?.(result);
+        onCompleteRef.current?.(result);
+        // Clear all files after upload to prevent memory buildup
+        setTimeout(() => {
+          instance.cancelAll();
+        }, 100);
         setShowModal(false);
-      })
-  );
+      });
+    
+    return instance;
+  }, [maxNumberOfFiles, maxFileSize]);
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      uppy.cancelAll();
+    };
+  }, [uppy]);
+
+  const handleOpenModal = () => {
+    // Clear any previous files before opening
+    uppy.cancelAll();
+    setShowModal(true);
+  };
 
   return (
     <div>
-      <button onClick={() => setShowModal(true)} className={buttonClassName} type="button" data-testid="button-upload-logo">
+      <button onClick={handleOpenModal} className={buttonClassName} type="button" data-testid="button-upload-logo">
         {children}
       </button>
 
       <DashboardModal
         uppy={uppy}
         open={showModal}
-        onRequestClose={() => setShowModal(false)}
+        onRequestClose={() => {
+          uppy.cancelAll();
+          setShowModal(false);
+        }}
         proudlyDisplayPoweredByUppy={false}
       />
     </div>
