@@ -195,6 +195,25 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
       >
         Cancel
       </button>
+      
+      <p style={{
+        fontSize: '12px',
+        color: '#666',
+        textAlign: 'center',
+        marginTop: '16px',
+        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+      }}>
+        By completing payment, you agree to our{' '}
+        <a 
+          href="/terms" 
+          target="_blank"
+          style={{ color: '#fbbf24', textDecoration: 'underline' }}
+          data-testid="link-terms"
+        >
+          Terms of Service
+        </a>
+        {' '}including monthly recurring billing.
+      </p>
     </form>
   );
 }
