@@ -993,7 +993,7 @@ export default function AdminDashboard() {
                         <div style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
                           Lower numbers appear first within the same tier
                         </div>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                           <input
                             type="number"
                             value={company.displayOrder ?? 999}
@@ -1002,12 +1002,13 @@ export default function AdminDashboard() {
                               updateDisplayOrderMutation.mutate({ id: company.id, displayOrder: newOrder });
                             }}
                             style={{
-                              flex: 1,
-                              padding: '8px',
+                              width: '100%',
+                              padding: '10px',
                               border: '2px solid #fbbf24',
                               borderRadius: '6px',
                               fontSize: '16px',
                               fontWeight: '600',
+                              boxSizing: 'border-box',
                             }}
                             data-testid={`input-order-${company.id}`}
                           />
@@ -1024,19 +1025,19 @@ export default function AdminDashboard() {
                               updateDisplayOrderMutation.mutate({ id: company.id, displayOrder: topOrder });
                             }}
                             style={{
+                              width: '100%',
                               background: '#16a34a',
                               color: '#fff',
-                              padding: '8px 16px',
+                              padding: '10px 16px',
                               border: 'none',
                               borderRadius: '6px',
                               fontSize: '14px',
                               fontWeight: '700',
                               cursor: 'pointer',
-                              whiteSpace: 'nowrap',
                             }}
                             data-testid={`button-top-${company.id}`}
                           >
-                            Top in City
+                            Move to Top in City
                           </button>
                         </div>
                       </div>
