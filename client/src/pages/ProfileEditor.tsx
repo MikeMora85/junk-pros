@@ -1971,18 +1971,18 @@ export default function ProfileEditor() {
                 }}
                 data-testid="button-add-faq"
                 style={{
-                  padding: "12px",
-                  backgroundColor: "#fbbf24",
+                  padding: "10px 16px",
+                  backgroundColor: "#fff",
                   color: "#000",
-                  border: "2px solid #000",
-                  borderRadius: "8px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "6px",
                   cursor: "pointer",
                   fontSize: "14px",
-                  fontWeight: "700",
+                  fontWeight: "600",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  gap: "8px"
+                  gap: "6px"
                 }}
               >
                 <Plus size={16} />
@@ -1996,7 +1996,7 @@ export default function ProfileEditor() {
         <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-              ✨ Amenities & Restrictions
+              Amenities & Restrictions
             </h2>
           </div>
           
