@@ -5072,10 +5072,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   {/* Admin-assigned Badge */}
                   {c.badge && !isUnclaimed && (
                     <div style={{
-                      background: c.badge === 'TOP RATED' ? '#16a34a' : 
-                                  c.badge === 'FASTEST' ? '#2563eb' :
-                                  c.badge === 'BEST VALUE' ? '#7c3aed' :
-                                  c.badge === 'VERIFIED' ? '#059669' : '#fbbf24',
+                      background: '#16a34a',
                       color: '#fff',
                       padding: '6px 12px',
                       borderRadius: '6px',
