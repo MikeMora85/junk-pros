@@ -758,7 +758,7 @@ function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
             }}
             data-testid="link-add-business"
           >
-            Add Your Business ✨
+            Add Your Business
           </a>
 
           {/* Login/Profile/Logout */}
