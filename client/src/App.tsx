@@ -5068,6 +5068,32 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       Free Listing
                     </div>
                   )}
+
+                  {/* Admin-assigned Badge */}
+                  {c.badge && !isUnclaimed && (
+                    <div style={{
+                      background: c.badge === 'TOP RATED' ? '#16a34a' : 
+                                  c.badge === 'FASTEST' ? '#2563eb' :
+                                  c.badge === 'BEST VALUE' ? '#7c3aed' :
+                                  c.badge === 'VERIFIED' ? '#059669' : '#fbbf24',
+                      color: '#fff',
+                      padding: '6px 12px',
+                      borderRadius: '6px',
+                      fontSize: '12px',
+                      fontWeight: '700',
+                      marginBottom: '12px',
+                      textAlign: 'center',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '6px',
+                      width: 'fit-content',
+                      margin: '0 auto 12px auto',
+                    }}>
+                      <CheckCircle size={14} />
+                      {c.badge}
+                    </div>
+                  )}
                   
                   {isUnclaimed ? (
                     // Simplified unclaimed business display
