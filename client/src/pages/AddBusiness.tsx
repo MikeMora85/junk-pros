@@ -804,8 +804,8 @@ export default function AddBusiness() {
           </h2>
 
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr',
+            display: 'flex',
+            flexDirection: 'column',
             gap: '16px',
           }}>
             <div
@@ -819,6 +819,7 @@ export default function AddBusiness() {
                 transition: 'all 0.2s',
                 position: 'relative',
                 textAlign: 'center',
+                boxSizing: 'border-box',
               }}
               data-testid="tier-basic"
             >
@@ -880,6 +881,7 @@ export default function AddBusiness() {
                 transition: 'all 0.2s',
                 position: 'relative',
                 textAlign: 'center',
+                boxSizing: 'border-box',
               }}
               data-testid="tier-professional"
             >
@@ -959,6 +961,7 @@ export default function AddBusiness() {
                 transition: 'all 0.2s',
                 position: 'relative',
                 textAlign: 'center',
+                boxSizing: 'border-box',
               }}
               data-testid="tier-featured"
             >
