@@ -111,9 +111,9 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto' }}>
       <h2 style={{
-        fontSize: '24px',
+        fontSize: '20px',
         fontWeight: '700',
         marginBottom: '8px',
         color: '#000',
@@ -122,15 +122,15 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
         Complete Your {tier === 'professional' ? 'Professional' : 'Featured'} Subscription
       </h2>
       <p style={{
-        fontSize: '16px',
-        marginBottom: '24px',
+        fontSize: '14px',
+        marginBottom: '20px',
         color: '#666',
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
       }}>
         {tier === 'professional' ? '$10/month' : '$49/month'} - Cancel anytime
       </p>
 
-      <div style={{ marginBottom: '24px' }}>
+      <div style={{ marginBottom: '20px' }}>
         <PaymentElement 
           onReady={() => {
             console.log('PaymentElement ready');
@@ -143,47 +143,47 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
         />
       </div>
 
-      <div style={{ display: 'flex', gap: '12px' }}>
-        <button
-          type="button"
-          onClick={onCancel}
-          disabled={isProcessing}
-          style={{
-            flex: 1,
-            padding: '16px',
-            background: '#fff',
-            color: '#000',
-            border: '2px solid #000',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontWeight: '700',
-            cursor: isProcessing ? 'not-allowed' : 'pointer',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}
-          data-testid="button-cancel-payment"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          disabled={!stripe || !isReady || isProcessing}
-          style={{
-            flex: 2,
-            padding: '16px',
-            background: isProcessing || !isReady ? '#ccc' : '#fbbf24',
-            color: '#000',
-            border: '2px solid #000',
-            borderRadius: '8px',
-            fontSize: '18px',
-            fontWeight: '700',
-            cursor: isProcessing || !isReady ? 'not-allowed' : 'pointer',
-            fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          }}
-          data-testid="button-complete-payment"
-        >
-          {isProcessing ? 'Processing...' : !isReady ? 'Loading...' : 'Complete Payment'}
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={!stripe || !isReady || isProcessing}
+        style={{
+          width: '100%',
+          padding: '14px',
+          background: isProcessing || !isReady ? '#ccc' : '#fbbf24',
+          color: '#000',
+          border: '2px solid #000',
+          borderRadius: '8px',
+          fontSize: '16px',
+          fontWeight: '700',
+          cursor: isProcessing || !isReady ? 'not-allowed' : 'pointer',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          marginBottom: '12px',
+        }}
+        data-testid="button-complete-payment"
+      >
+        {isProcessing ? 'Processing...' : !isReady ? 'Loading...' : 'Complete Payment'}
+      </button>
+      
+      <button
+        type="button"
+        onClick={onCancel}
+        disabled={isProcessing}
+        style={{
+          width: '100%',
+          padding: '12px',
+          background: '#fff',
+          color: '#666',
+          border: '1px solid #e5e5e5',
+          borderRadius: '8px',
+          fontSize: '14px',
+          fontWeight: '600',
+          cursor: isProcessing ? 'not-allowed' : 'pointer',
+          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+        }}
+        data-testid="button-cancel-payment"
+      >
+        Cancel
+      </button>
     </form>
   );
 }
