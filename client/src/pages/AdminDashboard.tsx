@@ -175,6 +175,10 @@ export default function AdminDashboard() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/companies/active'] });
+      alert('Badge saved!');
+    },
+    onError: (error: any) => {
+      alert(`Failed to save badge: ${error.message || 'Unknown error'}`);
     },
   });
 
