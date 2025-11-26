@@ -29,6 +29,7 @@ export interface IStorage {
   getBusinessOwnerByStripeCustomerId(stripeCustomerId: string): Promise<BusinessOwner | null>;
   updateBusinessOwnerCompany(id: number, companyId: number): Promise<BusinessOwner | null>;
   updateBusinessOwner(id: number, data: Partial<InsertBusinessOwner>): Promise<BusinessOwner | null>;
+  getAllBusinessOwners(): Promise<BusinessOwner[]>;
   
   // Business event tracking
   trackEvent(data: Omit<InsertBusinessEvent, 'id'>): Promise<BusinessEvent>;
@@ -577,6 +578,10 @@ export class MemStorage implements IStorage {
     return this.businessOwners[index];
   }
 
+  async getAllBusinessOwners(): Promise<BusinessOwner[]> {
+    return this.businessOwners;
+  }
+
   async createNotification(data: Omit<InsertNotification, 'id' | 'createdAt'>): Promise<Notification> {
     const newId = Math.max(...this.notifications.map(n => n.id), 0) + 1;
     const notification: Notification = {
@@ -935,6 +940,10 @@ export class DbStorage implements IStorage {
       .where(eq(businessOwners.id, id))
       .returning();
     return updated || null;
+  }
+
+  async getAllBusinessOwners(): Promise<BusinessOwner[]> {
+    return await db.select().from(businessOwners);
   }
 
   // Business event tracking

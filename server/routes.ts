@@ -1744,6 +1744,203 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     }
   });
 
+  // Admin Subscribers API - Get all subscribers with Stripe info
+  app.get("/api/admin/subscribers", requireSimpleAdmin, async (req, res) => {
+    try {
+      const businessOwners = await storage.getAllBusinessOwners();
+      const allCompanies = await storage.getCompanies();
+      
+      // Build subscriber data with company and Stripe info
+      const subscribers = await Promise.all(businessOwners.map(async (owner) => {
+        const company = allCompanies.find(c => c.id === owner.companyId);
+        
+        // Get Stripe subscription details if available
+        let stripeData: any = null;
+        if (owner.stripeCustomerId && stripe) {
+          try {
+            const customer = await stripe.customers.retrieve(owner.stripeCustomerId);
+            if (customer && !customer.deleted) {
+              // Get subscriptions
+              const subscriptions = await stripe.subscriptions.list({
+                customer: owner.stripeCustomerId,
+                limit: 1,
+              });
+              
+              // Get payment methods
+              const paymentMethods = await stripe.paymentMethods.list({
+                customer: owner.stripeCustomerId,
+                type: 'card',
+              });
+              
+              // Get invoices to calculate lifetime value
+              const invoices = await stripe.invoices.list({
+                customer: owner.stripeCustomerId,
+                status: 'paid',
+              });
+              
+              const lifetimeValue = invoices.data.reduce((sum, inv) => sum + (inv.amount_paid || 0), 0) / 100;
+              
+              stripeData = {
+                customerEmail: (customer as any).email,
+                customerPhone: (customer as any).phone,
+                customerName: (customer as any).name,
+                subscription: subscriptions.data[0] ? {
+                  id: subscriptions.data[0].id,
+                  status: subscriptions.data[0].status,
+                  currentPeriodStart: subscriptions.data[0].current_period_start,
+                  currentPeriodEnd: subscriptions.data[0].current_period_end,
+                  cancelAtPeriodEnd: subscriptions.data[0].cancel_at_period_end,
+                  canceledAt: subscriptions.data[0].canceled_at,
+                } : null,
+                paymentMethod: paymentMethods.data[0] ? {
+                  brand: paymentMethods.data[0].card?.brand,
+                  last4: paymentMethods.data[0].card?.last4,
+                  expMonth: paymentMethods.data[0].card?.exp_month,
+                  expYear: paymentMethods.data[0].card?.exp_year,
+                } : null,
+                lifetimeValue,
+                invoiceCount: invoices.data.length,
+              };
+            }
+          } catch (stripeError) {
+            console.error('Error fetching Stripe data for customer:', owner.stripeCustomerId, stripeError);
+          }
+        }
+        
+        return {
+          id: owner.id,
+          email: owner.email,
+          companyId: owner.companyId,
+          companyName: company?.name || null,
+          companyPhone: company?.phone || null,
+          companyCity: company?.city || null,
+          companyState: company?.state || null,
+          subscriptionTier: company?.subscriptionTier || 'basic',
+          subscriptionStatus: company?.subscriptionStatus || 'active',
+          stripeCustomerId: owner.stripeCustomerId,
+          stripeSubscriptionId: owner.stripeSubscriptionId,
+          createdAt: owner.createdAt,
+          stripeData,
+        };
+      }));
+      
+      res.json(subscribers);
+    } catch (error) {
+      console.error("Error fetching subscribers:", error);
+      res.status(500).json({ error: "Failed to fetch subscribers" });
+    }
+  });
+
+  // Admin Email Blast API
+  app.post("/api/admin/email-blast", requireSimpleAdmin, async (req, res) => {
+    try {
+      const { subject, message, recipientFilter } = req.body;
+      
+      if (!subject || !message) {
+        return res.status(400).json({ error: "Subject and message are required" });
+      }
+      
+      const businessOwners = await storage.getAllBusinessOwners();
+      const allCompanies = await storage.getCompanies();
+      
+      // Filter recipients based on criteria
+      let recipients = businessOwners.map(owner => {
+        const company = allCompanies.find(c => c.id === owner.companyId);
+        return {
+          email: owner.email,
+          companyName: company?.name || 'Business Owner',
+          tier: company?.subscriptionTier || 'basic',
+          status: company?.subscriptionStatus || 'active',
+        };
+      });
+      
+      // Apply filter if specified
+      if (recipientFilter) {
+        if (recipientFilter === 'premium') {
+          recipients = recipients.filter(r => r.tier === 'premium');
+        } else if (recipientFilter === 'standard') {
+          recipients = recipients.filter(r => r.tier === 'standard');
+        } else if (recipientFilter === 'basic') {
+          recipients = recipients.filter(r => r.tier === 'basic');
+        } else if (recipientFilter === 'active') {
+          recipients = recipients.filter(r => r.status === 'active');
+        } else if (recipientFilter === 'cancelled') {
+          recipients = recipients.filter(r => r.status === 'cancelled');
+        }
+      }
+      
+      // Send emails using Resend
+      const sentEmails: string[] = [];
+      const failedEmails: string[] = [];
+      
+      for (const recipient of recipients) {
+        try {
+          if (resend) {
+            await resend.emails.send({
+              from: 'FindLocalJunkPros <onboarding@resend.dev>',
+              to: recipient.email,
+              subject: subject,
+              html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <div style="background: #fbbf24; padding: 20px; text-align: center;">
+                    <h1 style="color: #000; margin: 0;">FindLocalJunkPros</h1>
+                  </div>
+                  <div style="padding: 20px;">
+                    <p>Hi ${recipient.companyName},</p>
+                    <div>${message.replace(/\n/g, '<br>')}</div>
+                    <p style="margin-top: 20px;">Best regards,<br>The FindLocalJunkPros Team</p>
+                  </div>
+                </div>
+              `,
+            });
+            sentEmails.push(recipient.email);
+          }
+        } catch (emailError) {
+          console.error('Failed to send email to:', recipient.email, emailError);
+          failedEmails.push(recipient.email);
+        }
+      }
+      
+      res.json({
+        success: true,
+        sent: sentEmails.length,
+        failed: failedEmails.length,
+        details: { sentEmails, failedEmails }
+      });
+    } catch (error) {
+      console.error("Error sending email blast:", error);
+      res.status(500).json({ error: "Failed to send email blast" });
+    }
+  });
+
+  // Cancel subscription from admin
+  app.post("/api/admin/subscribers/:id/cancel", requireSimpleAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const owner = await storage.getBusinessOwnerById(id);
+      
+      if (!owner) {
+        return res.status(404).json({ error: "Subscriber not found" });
+      }
+      
+      if (owner.stripeSubscriptionId && stripe) {
+        await stripe.subscriptions.cancel(owner.stripeSubscriptionId);
+      }
+      
+      if (owner.companyId) {
+        await storage.updateCompany(owner.companyId, {
+          subscriptionTier: 'basic',
+          subscriptionStatus: 'cancelled',
+        } as any);
+      }
+      
+      res.json({ success: true, message: "Subscription cancelled" });
+    } catch (error) {
+      console.error("Error cancelling subscription:", error);
+      res.status(500).json({ error: "Failed to cancel subscription" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
