@@ -1502,89 +1502,77 @@ export default function ProfileEditor() {
           
           <div style={sectionContentStyle}>
             <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              {/* Minimum Price */}
-              <div>
-                <label style={labelStyle}>Minimum Price</label>
-                <input
-                  data-testid="input-minimum-price"
-                  style={inputStyle}
-                  value={formData.minimumPrice}
-                  onChange={(e) => setFormData(prev => ({ ...prev, minimumPrice: e.target.value }))}
-                  placeholder="e.g., $150"
-                />
-              </div>
-
-              {/* Truck Load Pricing */}
-              <div>
-                <label style={labelStyle}>Truck Load Pricing</label>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "12px" }}>
-                  <div>
-                    <label style={{ ...labelStyle, fontSize: "13px" }}>1/4 Load</label>
-                    <input
-                      data-testid="input-quarter-load"
-                      style={inputStyle}
-                      value={formData.quarterLoadPrice}
-                      onChange={(e) => setFormData(prev => ({ ...prev, quarterLoadPrice: e.target.value }))}
-                      placeholder="$200"
-                    />
-                  </div>
-                  <div>
-                    <label style={{ ...labelStyle, fontSize: "13px" }}>1/2 Load</label>
-                    <input
-                      data-testid="input-half-load"
-                      style={inputStyle}
-                      value={formData.halfLoadPrice}
-                      onChange={(e) => setFormData(prev => ({ ...prev, halfLoadPrice: e.target.value }))}
-                      placeholder="$350"
-                    />
-                  </div>
-                  <div>
-                    <label style={{ ...labelStyle, fontSize: "13px" }}>3/4 Load</label>
-                    <input
-                      data-testid="input-three-quarter-load"
-                      style={inputStyle}
-                      value={formData.threeQuarterLoadPrice}
-                      onChange={(e) => setFormData(prev => ({ ...prev, threeQuarterLoadPrice: e.target.value }))}
-                      placeholder="$500"
-                    />
-                  </div>
-                  <div>
-                    <label style={{ ...labelStyle, fontSize: "13px" }}>Full Load</label>
-                    <input
-                      data-testid="input-full-load"
-                      style={inputStyle}
-                      value={formData.fullLoadPrice}
-                      onChange={(e) => setFormData(prev => ({ ...prev, fullLoadPrice: e.target.value }))}
-                      placeholder="$650"
-                    />
-                  </div>
+              {/* All Pricing in 2-column grid */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "12px" }}>
+                <div>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>Minimum</label>
+                  <input
+                    data-testid="input-minimum-price"
+                    style={inputStyle}
+                    value={formData.minimumPrice}
+                    onChange={(e) => setFormData(prev => ({ ...prev, minimumPrice: e.target.value }))}
+                    placeholder="$150"
+                  />
                 </div>
-              </div>
-
-              {/* Single Item Minimum */}
-              <div>
-                <label style={labelStyle}>Single Item Minimum</label>
-                <input
-                  data-testid="input-single-item-minimum"
-                  style={inputStyle}
-                  value={formData.singleItemMinimum}
-                  onChange={(e) => setFormData(prev => ({ ...prev, singleItemMinimum: e.target.value }))}
-                  placeholder="e.g., $75 per item"
-                />
-              </div>
-
-              {/* Truck Capacity */}
-              <div>
-                <label style={labelStyle}>Truck/Trailer Capacity (Cubic Yards)</label>
-                <input
-                  data-testid="input-trailer-size"
-                  style={inputStyle}
-                  value={formData.trailerSize}
-                  onChange={(e) => setFormData(prev => ({ ...prev, trailerSize: e.target.value }))}
-                  placeholder="e.g., 13 cubic yards"
-                />
-                <div style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>
-                  This displays to customers in your price estimator
+                <div>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>1/4 Load</label>
+                  <input
+                    data-testid="input-quarter-load"
+                    style={inputStyle}
+                    value={formData.quarterLoadPrice}
+                    onChange={(e) => setFormData(prev => ({ ...prev, quarterLoadPrice: e.target.value }))}
+                    placeholder="$200"
+                  />
+                </div>
+                <div>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>1/2 Load</label>
+                  <input
+                    data-testid="input-half-load"
+                    style={inputStyle}
+                    value={formData.halfLoadPrice}
+                    onChange={(e) => setFormData(prev => ({ ...prev, halfLoadPrice: e.target.value }))}
+                    placeholder="$350"
+                  />
+                </div>
+                <div>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>3/4 Load</label>
+                  <input
+                    data-testid="input-three-quarter-load"
+                    style={inputStyle}
+                    value={formData.threeQuarterLoadPrice}
+                    onChange={(e) => setFormData(prev => ({ ...prev, threeQuarterLoadPrice: e.target.value }))}
+                    placeholder="$500"
+                  />
+                </div>
+                <div>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>Full Load</label>
+                  <input
+                    data-testid="input-full-load"
+                    style={inputStyle}
+                    value={formData.fullLoadPrice}
+                    onChange={(e) => setFormData(prev => ({ ...prev, fullLoadPrice: e.target.value }))}
+                    placeholder="$650"
+                  />
+                </div>
+                <div>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>Single Item</label>
+                  <input
+                    data-testid="input-single-item-minimum"
+                    style={inputStyle}
+                    value={formData.singleItemMinimum}
+                    onChange={(e) => setFormData(prev => ({ ...prev, singleItemMinimum: e.target.value }))}
+                    placeholder="$75"
+                  />
+                </div>
+                <div style={{ gridColumn: "span 2" }}>
+                  <label style={{ ...labelStyle, fontSize: "13px" }}>Truck Capacity (Cubic Yards)</label>
+                  <input
+                    data-testid="input-trailer-size"
+                    style={inputStyle}
+                    value={formData.trailerSize}
+                    onChange={(e) => setFormData(prev => ({ ...prev, trailerSize: e.target.value }))}
+                    placeholder="e.g., 13 cubic yards"
+                  />
                 </div>
               </div>
             </div>
