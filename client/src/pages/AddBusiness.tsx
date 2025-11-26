@@ -651,144 +651,119 @@ export default function AddBusiness() {
         padding: '24px 16px',
       }}>
         
-        {/* Combined Platform Standards & Requirements - Collapsible */}
-        <div style={{ marginBottom: '24px' }}>
-          <button
-            onClick={() => setIsWhyUsOpen(!isWhyUsOpen)}
-            style={{
-              width: '100%',
-              background: '#fbbf24',
-              border: '2px solid #000',
-              padding: '20px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              cursor: 'pointer',
-              fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              transition: 'all 0.2s',
-              position: 'sticky',
-              top: '0',
-              zIndex: 50,
-              gap: '12px',
-            }}
-            data-testid="button-toggle-requirements"
-          >
-            {(hasReadWhyUs && hasReadRequirements) && (
-              <CheckCircle size={24} color="#16a34a" fill="#16a34a" />
-            )}
+        {/* Platform Standards & Requirements */}
+        <div style={{ 
+          marginBottom: '24px',
+          border: '2px solid #fbbf24',
+          borderRadius: '8px',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            background: '#fbbf24',
+            padding: '16px',
+            textAlign: 'center',
+          }}>
             <span style={{ 
-              fontSize: '22px', 
+              fontSize: '20px', 
               fontWeight: '700', 
-              color: '#dc2626',
+              color: '#000',
               textTransform: 'uppercase',
             }}>
-              Required Read
+              Platform Standards
             </span>
-            {isWhyUsOpen ? (
-              <ChevronUp size={28} color="#000" />
-            ) : (
-              <ChevronDown size={28} color="#000" />
-            )}
-          </button>
+          </div>
           
-          {isWhyUsOpen && (
-            <div style={{
-              border: '2px solid #000',
-              borderTop: 'none',
-              padding: '24px',
-              background: '#fff',
+          <div style={{
+            padding: '24px',
+            background: '#fff',
+          }}>
+            <h3 style={{ 
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+              fontSize: '16px', 
+              fontWeight: '700', 
+              color: '#000', 
+              marginBottom: '12px' 
             }}>
-              <h3 style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '16px', 
-                fontWeight: '700', 
-                color: '#000', 
-                marginBottom: '12px' 
-              }}>
-                Why Join:
-              </h3>
-              <ul style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '15px', 
-                color: '#000', 
-                paddingLeft: '20px', 
-                lineHeight: '2',
-                marginBottom: '24px',
-              }}>
-                <li><strong>High-intent traffic</strong> — Customers ready to hire, not just browsing</li>
-                <li><strong>No franchise competition</strong> — Independent operators only</li>
-                <li><strong>Quality standards</strong> — Verified pricing protects the industry</li>
-                <li><strong>Local SEO</strong> — Optimized for city-specific searches</li>
-              </ul>
+              Why Join:
+            </h3>
+            <ul style={{ 
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+              fontSize: '15px', 
+              color: '#000', 
+              paddingLeft: '20px', 
+              lineHeight: '2',
+              marginBottom: '24px',
+            }}>
+              <li><strong>High-intent traffic</strong> — Customers ready to hire, not just browsing</li>
+              <li><strong>No franchise competition</strong> — Independent operators only</li>
+              <li><strong>Quality standards</strong> — Verified pricing protects the industry</li>
+              <li><strong>Local SEO</strong> — Optimized for city-specific searches</li>
+            </ul>
 
-              <h3 style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '16px', 
-                fontWeight: '700', 
-                color: '#000', 
-                marginBottom: '12px' 
-              }}>
-                Requirements:
-              </h3>
-              <ul style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '15px', 
-                color: '#000', 
-                paddingLeft: '20px', 
-                lineHeight: '2',
-                marginBottom: '20px',
-              }}>
-                <li><strong>Independent operators only</strong> — No franchises</li>
-                <li><strong>Minimum $38/cubic yard</strong> — Industry standard is $45-$65/cubic yard</li>
-                <li><strong>Must be physically located in your listed city</strong> — Hyperlocal only</li>
-                <li><strong>Licensed and insured</strong></li>
-              </ul>
+            <h3 style={{ 
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+              fontSize: '16px', 
+              fontWeight: '700', 
+              color: '#000', 
+              marginBottom: '12px' 
+            }}>
+              Requirements:
+            </h3>
+            <ul style={{ 
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+              fontSize: '15px', 
+              color: '#000', 
+              paddingLeft: '20px', 
+              lineHeight: '2',
+              marginBottom: '20px',
+            }}>
+              <li><strong>Independent operators only</strong> — No franchises</li>
+              <li><strong>Minimum $38/cubic yard</strong> — Industry standard is $45-$65/cubic yard</li>
+              <li><strong>Must be physically located in your listed city</strong> — Hyperlocal only</li>
+              <li><strong>Licensed and insured</strong></li>
+            </ul>
 
-              {/* Required Agreement Checkbox */}
-              <div style={{
-                background: '#fef3c7',
-                padding: '16px',
-                borderRadius: '6px',
-                border: '2px solid #fbbf24',
+            {/* Required Agreement Checkbox */}
+            <div style={{
+              background: '#fef3c7',
+              padding: '16px',
+              borderRadius: '6px',
+              border: '2px solid #fbbf24',
+            }}>
+              <label style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                cursor: 'pointer',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
               }}>
-                <label style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '12px',
-                  cursor: 'pointer',
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                <input
+                  type="checkbox"
+                  checked={hasReadWhyUs && hasReadRequirements}
+                  onChange={(e) => {
+                    setHasReadWhyUs(e.target.checked);
+                    setHasReadRequirements(e.target.checked);
+                  }}
+                  style={{
+                    width: '20px',
+                    height: '20px',
+                    cursor: 'pointer',
+                    flexShrink: 0,
+                    marginTop: '2px',
+                  }}
+                  data-testid="checkbox-read-requirements"
+                />
+                <span style={{
+                  fontSize: '15px',
+                  fontWeight: '600',
+                  color: '#000',
+                  lineHeight: '1.4',
                 }}>
-                  <input
-                    type="checkbox"
-                    checked={hasReadWhyUs && hasReadRequirements}
-                    onChange={(e) => {
-                      setHasReadWhyUs(e.target.checked);
-                      setHasReadRequirements(e.target.checked);
-                      if (e.target.checked) {
-                        setIsWhyUsOpen(false);
-                      }
-                    }}
-                    style={{
-                      width: '20px',
-                      height: '20px',
-                      cursor: 'pointer',
-                      flexShrink: 0,
-                      marginTop: '2px',
-                    }}
-                    data-testid="checkbox-read-requirements"
-                  />
-                  <span style={{
-                    fontSize: '15px',
-                    fontWeight: '600',
-                    color: '#000',
-                    lineHeight: '1.4',
-                  }}>
-                    I understand the benefits and meet all requirements
-                  </span>
-                </label>
-              </div>
+                  I understand the benefits and meet all requirements
+                </span>
+              </label>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Pricing Tiers */}
