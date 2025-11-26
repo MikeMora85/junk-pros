@@ -5300,6 +5300,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                           borderRadius: '12px',
                           border: '3px solid #fbbf24',
                           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                          maxHeight: '400px',
+                          overflowY: 'auto',
                         }}>
                         <QuoteRequestForm
                           companyId={c.id}
