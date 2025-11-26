@@ -2530,32 +2530,30 @@ function LandingPage() {
           <Menu size={24} color="#000" />
         </button>
         
-        <button
-          onClick={() => {
-            if (isAuthenticated && user) {
+        {isAuthenticated && user && (
+          <button
+            onClick={() => {
               if ((user as any)?.isAdmin) {
                 window.location.href = '/admin';
               } else {
                 window.location.href = '/profile/edit';
               }
-            } else {
-              window.location.href = '/login';
-            }
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            color: '#000',
-            padding: '0',
-            border: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          data-testid="button-profile"
-        >
-          <UserCircle size={28} />
-        </button>
+            }}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            data-testid="button-profile"
+          >
+            <UserCircle size={28} />
+          </button>
+        )}
       </div>
       </div>
 
@@ -3510,32 +3508,30 @@ function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: str
           <Menu size={18} color="#000" />
         </button>
         
-        <button
-          onClick={() => {
-            if (isAuthenticated && user) {
+        {isAuthenticated && user && (
+          <button
+            onClick={() => {
               if ((user as any)?.isAdmin) {
                 window.location.href = '/admin';
               } else {
                 window.location.href = '/profile/edit';
               }
-            } else {
-              window.location.href = '/login';
-            }
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            color: '#000',
-            padding: '0',
-            border: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          data-testid="button-profile-state"
-        >
-          <UserCircle size={28} />
-        </button>
+            }}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            data-testid="button-profile-state"
+          >
+            <UserCircle size={28} />
+          </button>
+        )}
         </div>
       </div>
 
@@ -4718,9 +4714,9 @@ function CityPage({ city, state }: { city: string; state: string }) {
         </button>
 
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <button
-            onClick={() => {
-              if (isAuthenticated && user) {
+          {isAuthenticated && user && (
+            <button
+              onClick={() => {
                 // Check if user is admin first
                 if ((user as any)?.isAdmin) {
                   window.location.href = '/admin';
@@ -4731,24 +4727,22 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 } else {
                   window.location.href = '/profile/edit';
                 }
-              } else {
-                window.location.href = '/login';
-              }
-            }}
-            style={{
-              backgroundColor: 'transparent',
-              color: '#000',
-              padding: '0',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-            data-testid="button-profile-city"
-          >
-            <UserCircle size={28} />
-          </button>
+              }}
+              style={{
+                backgroundColor: 'transparent',
+                color: '#000',
+                padding: '0',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              data-testid="button-profile-city"
+            >
+              <UserCircle size={28} />
+            </button>
+          )}
           
           <button
             onClick={() => window.location.href = '/add-business'}
