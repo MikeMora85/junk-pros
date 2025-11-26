@@ -648,11 +648,11 @@ export default function AddBusiness() {
       <div style={{
         maxWidth: '900px',
         margin: '0 auto',
-        padding: '40px 12px',
+        padding: '24px 16px',
       }}>
         
         {/* Combined Platform Standards & Requirements - Collapsible */}
-        <div style={{ marginBottom: '48px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <button
             onClick={() => setIsWhyUsOpen(!isWhyUsOpen)}
             style={{
@@ -792,7 +792,7 @@ export default function AddBusiness() {
         </div>
 
         {/* Pricing Tiers */}
-        <div style={{ marginBottom: '48px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <h2 style={{
             fontSize: '24px',
             fontWeight: '700',
@@ -1105,7 +1105,8 @@ export default function AddBusiness() {
         <form onSubmit={handleSubmit} style={{
           background: '#fff',
           border: '2px solid #fbbf24',
-          padding: '32px',
+          borderRadius: '8px',
+          padding: '24px 16px',
         }}>
           <h2 style={{
             fontSize: '24px',
@@ -1117,7 +1118,7 @@ export default function AddBusiness() {
             Create Your Account
           </h2>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Business Name *
             </label>
@@ -1142,7 +1143,7 @@ export default function AddBusiness() {
             />
           </div>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Email *
             </label>
@@ -1167,7 +1168,7 @@ export default function AddBusiness() {
             />
           </div>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Password *
             </label>
@@ -1192,7 +1193,7 @@ export default function AddBusiness() {
             />
           </div>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Phone Number *
             </label>
@@ -1217,7 +1218,7 @@ export default function AddBusiness() {
             />
           </div>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               State *
             </label>
@@ -1254,7 +1255,7 @@ export default function AddBusiness() {
             </select>
           </div>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: '#000', marginBottom: '8px', textAlign: 'center' }}>
               Primary City *
             </label>
@@ -1282,7 +1283,7 @@ export default function AddBusiness() {
             </p>
           </div>
 
-          <div style={{ marginBottom: '20px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <label style={{
               display: 'flex',
               alignItems: 'flex-start',
@@ -1304,7 +1305,7 @@ export default function AddBusiness() {
             </label>
           </div>
 
-          <div style={{ marginBottom: '24px', padding: '0 16px' }}>
+          <div style={{ marginBottom: '24px' }}>
             <label style={{
               display: 'flex',
               alignItems: 'flex-start',
@@ -1429,10 +1430,11 @@ export default function AddBusiness() {
 
         {/* Trust Signals */}
         <div style={{
-          marginTop: '48px',
+          marginTop: '24px',
           textAlign: 'center',
-          padding: '32px 16px',
+          padding: '24px 16px',
           background: '#f5f5f5',
+          borderRadius: '8px',
           border: '1px solid #e5e5e5',
         }}>
           <Award size={32} color="#fbbf24" style={{ margin: '0 auto 16px' }} />
