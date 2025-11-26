@@ -1439,37 +1439,50 @@ Sitemap: https://findjunkpros.com/sitemap.xml
         });
       }
 
-      // Get price to determine amount
-      console.log('Retrieving price from Stripe:', priceId);
-      const price = await stripe.prices.retrieve(priceId);
-      console.log('Price retrieved:', price.unit_amount);
-      const amount = price.unit_amount!;
-
-      // Create a payment intent (no customer yet since account doesn't exist)
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount,
-        currency: 'usd',
-        automatic_payment_methods: {
-          enabled: true,
-        },
+      // Create a temporary customer for the subscription
+      // We'll update the customer with real details after account creation
+      const customer = await stripe.customers.create({
         metadata: {
           tier,
-          priceId,
+          pending_signup: 'true',
+        },
+      });
+      console.log('Created temporary customer:', customer.id);
+
+      // Create a subscription with payment_behavior: 'default_incomplete'
+      // This creates the subscription but waits for payment
+      const subscription = await stripe.subscriptions.create({
+        customer: customer.id,
+        items: [{ price: priceId }],
+        payment_behavior: 'default_incomplete',
+        payment_settings: {
+          save_default_payment_method: 'on_subscription',
+          payment_method_types: ['card', 'link', 'cashapp'],
+        },
+        expand: ['latest_invoice.payment_intent'],
+        metadata: {
+          tier,
         },
       });
 
-      console.log('Payment Intent created for new signup:', paymentIntent.id);
+      console.log('Subscription created:', subscription.id);
 
-      if (!paymentIntent.client_secret) {
-        console.error('Missing client secret');
+      // Get the client secret from the invoice's payment intent
+      const invoice = subscription.latest_invoice as any;
+      const paymentIntent = invoice?.payment_intent;
+      
+      if (!paymentIntent?.client_secret) {
+        console.error('Missing client secret from subscription');
         return res.status(500).json({ 
-          error: "Failed to create payment intent",
-          paymentIntentId: paymentIntent.id
+          error: "Failed to create subscription payment",
+          subscriptionId: subscription.id
         });
       }
 
       res.json({
         clientSecret: paymentIntent.client_secret,
+        customerId: customer.id,
+        subscriptionId: subscription.id,
       });
     } catch (error: any) {
       console.error("Error creating payment setup:", error);

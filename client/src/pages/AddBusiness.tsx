@@ -10,12 +10,14 @@ if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
 }
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: { 
+function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, stripeCustomerId, stripeSubscriptionId }: { 
   tier: string; 
   formData: any; 
   onSuccess: () => void; 
   onError: (message: string) => void;
   onCancel: () => void;
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -82,6 +84,8 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel }: {
           agreedToPlatformStandards: new Date(),
           agreedToRequirements: new Date(),
           stripePaymentIntentId: paymentIntent.id,
+          stripeCustomerId: stripeCustomerId,
+          stripeSubscriptionId: stripeSubscriptionId,
         };
 
         // Create account after successful payment
@@ -212,6 +216,8 @@ export default function AddBusiness() {
   const [showPayment, setShowPayment] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [paymentError, setPaymentError] = useState("");
+  const [stripeCustomerId, setStripeCustomerId] = useState("");
+  const [stripeSubscriptionId, setStripeSubscriptionId] = useState("");
 
   const createBusinessMutation = useMutation({
     mutationFn: async (data: any) => {
@@ -316,6 +322,8 @@ export default function AddBusiness() {
         } as any);
         
         setClientSecret(response.clientSecret);
+        setStripeCustomerId(response.customerId || '');
+        setStripeSubscriptionId(response.subscriptionId || '');
         setShowPayment(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (error: any) {
@@ -611,6 +619,8 @@ export default function AddBusiness() {
                 <PaymentFormInline 
                   tier={formData.pricingTier}
                   formData={formData}
+                  stripeCustomerId={stripeCustomerId}
+                  stripeSubscriptionId={stripeSubscriptionId}
                   onSuccess={() => {
                     console.log('Payment success, redirecting to profile editor');
                     window.location.href = '/profile/edit';
@@ -624,6 +634,8 @@ export default function AddBusiness() {
                     console.log('Payment cancelled');
                     setShowPayment(false);
                     setClientSecret("");
+                    setStripeCustomerId("");
+                    setStripeSubscriptionId("");
                   }}
                 />
               </Elements>
