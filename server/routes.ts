@@ -31,6 +31,17 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     },
   });
 
+  // Apple Pay domain verification endpoint
+  // The verification content will be provided by Stripe when you register your domain
+  app.get('/.well-known/apple-developer-merchantid-domain-association', (req, res) => {
+    const applePayVerification = process.env.APPLE_PAY_DOMAIN_VERIFICATION;
+    if (applePayVerification) {
+      res.type('text/plain').send(applePayVerification);
+    } else {
+      res.status(404).send('Apple Pay verification not configured');
+    }
+  });
+
   // Diagnostic endpoint to check auth state
   app.get('/api/auth/debug', async (req: any, res) => {
     res.json({
