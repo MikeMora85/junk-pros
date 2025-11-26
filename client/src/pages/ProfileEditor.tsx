@@ -1038,8 +1038,8 @@ export default function ProfileEditor() {
                 <label style={labelStyle}>Payment Methods Accepted</label>
                 <div style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-                  gap: "12px",
+                  gridTemplateColumns: "repeat(4, 1fr)",
+                  gap: "8px",
                   marginTop: "12px"
                 }}>
                   {[
@@ -1047,9 +1047,10 @@ export default function ProfileEditor() {
                     { id: 'Card', label: 'Card', icon: '💳' },
                     { id: 'Zelle', label: 'Zelle', icon: 'Z' },
                     { id: 'Venmo', label: 'Venmo', icon: 'V' },
-                    { id: 'Apple Pay', label: 'Apple Pay', icon: '' },
-                    { id: 'Cash App', label: 'Cash App', icon: '$' },
+                    { id: 'Apple Pay', label: 'Apple', icon: '' },
+                    { id: 'Cash App', label: 'CashApp', icon: '$' },
                     { id: 'Check', label: 'Check', icon: '📝' },
+                    { id: 'PayPal', label: 'PayPal', icon: 'P' },
                   ].map(({ id, label, icon }) => {
                     const isSelected = formData.paymentMethods.includes(id);
                     return (
@@ -1063,21 +1064,21 @@ export default function ProfileEditor() {
                         }))}
                         data-testid={`payment-${id.toLowerCase().replace(' ', '-')}`}
                         style={{
-                          padding: "16px",
-                          border: `3px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
-                          borderRadius: "12px",
+                          padding: "8px 4px",
+                          border: `2px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
+                          borderRadius: "8px",
                           backgroundColor: isSelected ? "#fef3c7" : "#fff",
                           cursor: "pointer",
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
-                          gap: "8px",
+                          gap: "4px",
                           transition: "all 0.2s"
                         }}
                       >
-                        <span style={{ fontSize: "28px" }}>{icon}</span>
+                        <span style={{ fontSize: "20px" }}>{icon}</span>
                         <span style={{
-                          fontSize: "13px",
+                          fontSize: "11px",
                           fontWeight: isSelected ? "600" : "500",
                           color: "#000",
                           textAlign: "center"
@@ -1085,7 +1086,7 @@ export default function ProfileEditor() {
                           {label}
                         </span>
                         {isSelected && (
-                          <CheckCircle size={20} color="#16a34a" style={{ marginTop: "-4px" }} />
+                          <CheckCircle size={14} color="#16a34a" />
                         )}
                       </button>
                     );
