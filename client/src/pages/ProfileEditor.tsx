@@ -1147,8 +1147,8 @@ export default function ProfileEditor() {
                 <label style={labelStyle}>Select Your Services</label>
                 <div style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
-                  gap: "12px",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "8px",
                   marginTop: "12px"
                 }}>
                   {SERVICE_ICONS.map(({ id, icon: Icon, label }) => {
@@ -1159,21 +1159,21 @@ export default function ProfileEditor() {
                         onClick={() => toggleService(id)}
                         data-testid={`service-${id}`}
                         style={{
-                          padding: "16px",
-                          border: `3px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
-                          borderRadius: "12px",
+                          padding: "12px 8px",
+                          border: `2px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
+                          borderRadius: "8px",
                           backgroundColor: isSelected ? "#fef3c7" : "#fff",
                           cursor: "pointer",
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
-                          gap: "8px",
+                          gap: "4px",
                           transition: "all 0.2s"
                         }}
                       >
-                        <Icon size={32} color={isSelected ? "#000" : "#666"} />
+                        <Icon size={24} color={isSelected ? "#000" : "#666"} />
                         <span style={{
-                          fontSize: "13px",
+                          fontSize: "11px",
                           fontWeight: isSelected ? "600" : "500",
                           color: "#000",
                           textAlign: "center"
@@ -1181,7 +1181,7 @@ export default function ProfileEditor() {
                           {label}
                         </span>
                         {isSelected && (
-                          <CheckCircle size={20} color="#16a34a" style={{ marginTop: "-4px" }} />
+                          <CheckCircle size={14} color="#16a34a" />
                         )}
                       </button>
                     );
