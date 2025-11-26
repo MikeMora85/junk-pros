@@ -5017,7 +5017,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   data-testid={`card-company-${c.id}`}
                 >
                   {/* Top Right Badge - sits on top of card border */}
-                  {isPremium && !isUnclaimed && (
+                  {c.badge && !isUnclaimed && (
                     <div style={{
                       position: 'absolute',
                       top: '-12px',
@@ -5035,7 +5035,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
                     }}>
                       <CheckCircle size={14} color="#fff" fill="#16a34a" />
-                      Top Rated
+                      {c.badge}
                     </div>
                   )}
                   
@@ -5069,28 +5069,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     </div>
                   )}
 
-                  {/* Admin-assigned Badge */}
-                  {c.badge && !isUnclaimed && (
-                    <div style={{
-                      background: '#16a34a',
-                      color: '#fff',
-                      padding: '6px 12px',
-                      borderRadius: '6px',
-                      fontSize: '12px',
-                      fontWeight: '700',
-                      marginBottom: '12px',
-                      textAlign: 'center',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '6px',
-                      width: 'fit-content',
-                      margin: '0 auto 12px auto',
-                    }}>
-                      <CheckCircle size={14} />
-                      {c.badge}
-                    </div>
-                  )}
                   
                   {isUnclaimed ? (
                     // Simplified unclaimed business display
