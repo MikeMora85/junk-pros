@@ -294,40 +294,37 @@ export default function AdminDashboard() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
-      {/* Header - Yellow/Black */}
+      {/* Header - Yellow/Black - Compact */}
       <div style={{
         background: '#fbbf24',
         borderBottom: '2px solid #e5e7eb',
-        padding: '16px',
+        padding: '10px 16px',
         position: 'sticky',
         top: 0,
         zIndex: 100,
       }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <h1 style={{ 
               margin: 0, 
-              fontSize: 'clamp(18px, 5vw, 24px)',
+              fontSize: '18px',
               fontWeight: '800', 
               color: '#000',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              lineHeight: 1.2,
+              lineHeight: 1,
             }}>
-              Admin
+              Admin <span style={{ fontWeight: '400', fontSize: '14px', opacity: 0.8 }}>({stats.total})</span>
             </h1>
-            <p style={{ margin: '2px 0 0 0', fontSize: 'clamp(11px, 3vw, 13px)', color: '#000', opacity: 0.8 }}>
-              {stats.total} businesses
-            </p>
           </div>
-          <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: '6px', flexShrink: 0 }}>
             <button
               onClick={handleRefresh}
               style={{
                 background: '#f59e0b',
                 color: '#000',
-                padding: '10px',
-                borderRadius: '8px',
+                padding: '8px',
+                borderRadius: '6px',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
@@ -336,15 +333,15 @@ export default function AdminDashboard() {
               title="Refresh data"
               data-testid="button-refresh"
             >
-              <RefreshCw size={20} />
+              <RefreshCw size={18} />
             </button>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               style={{
                 background: '#f59e0b',
                 color: '#000',
-                padding: '10px',
-                borderRadius: '8px',
+                padding: '8px',
+                borderRadius: '6px',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
@@ -352,7 +349,7 @@ export default function AdminDashboard() {
               }}
               data-testid="button-menu"
             >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
+              {menuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
