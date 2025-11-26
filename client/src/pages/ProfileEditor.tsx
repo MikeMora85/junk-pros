@@ -66,6 +66,7 @@ export default function ProfileEditor() {
   const [, navigate] = useLocation();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [isOpeningPortal, setIsOpeningPortal] = useState(false);
   
   const logoPathRef = useRef<string>('');
   const teamPhotoPathRef = useRef<string>('');
@@ -282,6 +283,39 @@ export default function ProfileEditor() {
       setTimeout(() => setShowToast(false), 5000);
     },
   });
+
+  const handleManageSubscription = async () => {
+    setIsOpeningPortal(true);
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch('/api/create-portal-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        setToastMessage(data.error);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 3000);
+        return;
+      }
+      
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error: any) {
+      setToastMessage('Failed to open subscription portal');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } finally {
+      setIsOpeningPortal(false);
+    }
+  };
 
   const handleSave = () => {
     console.log('🔵 SAVE BUTTON CLICKED - Handler executing');
@@ -2117,6 +2151,68 @@ export default function ProfileEditor() {
         </>
         )}
         
+        {/* Subscription Management Section */}
+        <section style={{
+          marginTop: "24px",
+          padding: "20px",
+          backgroundColor: "#f9f9f9",
+          border: "2px solid #e5e5e5",
+          borderRadius: "8px",
+        }}>
+          <h3 style={{ fontSize: "18px", fontWeight: "700", marginBottom: "12px", color: "#000" }}>
+            Subscription
+          </h3>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "12px" }}>
+            <div>
+              <p style={{ fontSize: "16px", fontWeight: "600", color: "#000", marginBottom: "4px" }}>
+                Current Plan: {subscriptionTier === 'basic' ? 'Basic (FREE)' : subscriptionTier === 'standard' ? 'Professional ($10/month)' : 'Featured ($49/month)'}
+              </p>
+              <p style={{ fontSize: "13px", color: "#666" }}>
+                {subscriptionTier === 'basic' 
+                  ? 'Upgrade for galleries, pricing tools, reviews, and more!'
+                  : 'Manage your subscription, update payment method, or cancel anytime.'}
+              </p>
+            </div>
+            {subscriptionTier === 'basic' ? (
+              <a 
+                href="/add-business"
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#fbbf24",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+                data-testid="button-upgrade-subscription"
+              >
+                Upgrade Plan
+              </a>
+            ) : (
+              <button
+                onClick={handleManageSubscription}
+                disabled={isOpeningPortal}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: isOpeningPortal ? "#ccc" : "#fff",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  cursor: isOpeningPortal ? "not-allowed" : "pointer",
+                }}
+                data-testid="button-manage-subscription"
+              >
+                {isOpeningPortal ? "Opening..." : "Manage Subscription"}
+              </button>
+            )}
+          </div>
+        </section>
+
         {/* Basic Tier Message */}
         {subscriptionTier === 'basic' && (
           <div style={{
@@ -2134,7 +2230,7 @@ export default function ProfileEditor() {
               You can edit: Logo, Name, Phone, Address, and Website
             </p>
             <p style={{ fontSize: "14px", color: "#666" }}>
-              Upgrade to <strong>Standard ($10/month)</strong> or <strong>Premium ($49/month)</strong> for full features including galleries, pricing tools, reviews, and more!
+              Upgrade to <strong>Professional ($10/month)</strong> or <strong>Featured ($49/month)</strong> for full features including galleries, pricing tools, reviews, and more!
             </p>
           </div>
         )}
