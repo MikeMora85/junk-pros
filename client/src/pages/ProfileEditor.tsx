@@ -1972,9 +1972,9 @@ export default function ProfileEditor() {
                 data-testid="button-add-faq"
                 style={{
                   padding: "10px 16px",
-                  backgroundColor: "#fff",
+                  backgroundColor: "#fbbf24",
                   color: "#000",
-                  border: "2px solid #e5e7eb",
+                  border: "none",
                   borderRadius: "6px",
                   cursor: "pointer",
                   fontSize: "14px",
