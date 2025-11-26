@@ -6537,39 +6537,38 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
         `}} />
         <div className="expanded-two-column">
           <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
-            <div style={{ marginBottom: '32px' }}>
-              <h2 style={{
-                fontSize: '24px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Reviews
-              </h2>
-              {[
-                { name: 'Michael D.', location: 'Downtown Phoenix', text: "Great experience! The team was on time, worked quickly, and left the area spotless. Highly recommend!" },
-                { name: 'Sarah M.', location: 'Tempe', text: "Very professional and reasonably priced. Will definitely use them again for future junk removal projects." },
-                { name: 'John R.', location: 'Old Town Scottsdale', text: "Excellent service from start to finish! The crew was courteous and efficient." }
-              ].map((review, i) => (
-                <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < 2 ? '1px solid #e5e7eb' : 'none', maxWidth: '100%', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.name}</div>
-                      <div style={{ fontSize: '13px', color: '#6b7280', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.location}</div>
+            {/* Reviews - only show if company has googleFeaturedReviews */}
+            {company.googleFeaturedReviews && Array.isArray(company.googleFeaturedReviews) && company.googleFeaturedReviews.length > 0 && (
+              <div style={{ marginBottom: '32px' }}>
+                <h2 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Reviews
+                </h2>
+                {company.googleFeaturedReviews.map((review: any, i: number) => (
+                  <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < company.googleFeaturedReviews.length - 1 ? '1px solid #e5e7eb' : 'none', maxWidth: '100%', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.reviewerName || 'Anonymous'}</div>
+                        <div style={{ fontSize: '13px', color: '#6b7280', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.reviewerLocation || ''}</div>
+                      </div>
+                      <div style={{ display: 'flex', flexShrink: 0 }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span key={star} style={{ color: star <= (review.rating || 5) ? '#fbbf24' : '#e5e7eb', fontSize: '14px' }}>★</span>
+                        ))}
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', flexShrink: 0 }}>
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <span key={star} style={{ color: '#fbbf24', fontSize: '14px' }}>★</span>
-                      ))}
-                    </div>
+                    <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
+                      {review.reviewText}
+                    </p>
                   </div>
-                  <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
-                    {review.text}
-                  </p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             {/* Meet the Team */}
             {company.teamMembers && Array.isArray(company.teamMembers) && company.teamMembers.length > 0 && (
@@ -6689,41 +6688,44 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             </div>
 
             {/* Amenities */}
-            <div style={{ marginBottom: '24px' }}>
-              <h2 style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Amenities
-              </h2>
-              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                <div>• Free Estimates</div>
-                <div>• Same-Day Service</div>
-                <div>• Eco-Friendly</div>
+            {company.amenities && Array.isArray(company.amenities) && company.amenities.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Amenities
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.amenities.map((amenity: string, i: number) => (
+                    <div key={i}>• {amenity}</div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Items We Don't Take */}
-            <div style={{ marginBottom: '24px' }}>
-              <h2 style={{
-                fontSize: '20px',
-                fontWeight: '700',
-                marginBottom: '12px',
-                color: '#000',
-                fontFamily: 'system-ui, -apple-system, sans-serif',
-              }}>
-                Items We Don't Take
-              </h2>
-              <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                <div>• Hazardous Materials</div>
-                <div>• Chemicals & Paint</div>
-                <div>• Asbestos</div>
-                <div>• Medical Waste</div>
+            {company.itemsNotTaken && Array.isArray(company.itemsNotTaken) && company.itemsNotTaken.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Items We Don't Take
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.itemsNotTaken.map((item: string, i: number) => (
+                    <div key={i}>• {item}</div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Payment Methods */}
             {company.paymentMethods && company.paymentMethods.length > 0 && (

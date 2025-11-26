@@ -98,6 +98,8 @@ export const companies = pgTable("companies", {
   googleRanking: decimal("google_ranking", { precision: 2, scale: 1 }),
   googleReviewCount: integer("google_review_count"),
   googleFeaturedReviews: jsonb("google_featured_reviews"),
+  amenities: text("amenities").array(),
+  itemsNotTaken: text("items_not_taken").array(),
   offersInPersonEstimates: boolean("offers_in_person_estimates").notNull().default(true),
   videoUrl: text("video_url"),
   createdAt: timestamp("created_at").defaultNow(),
@@ -160,6 +162,8 @@ export const insertCompanySchema = createInsertSchema(companies, {
   googleRanking: z.string().nullable().optional(),
   googleReviewCount: z.number().nullable().optional(),
   googleFeaturedReviews: z.any().nullable().optional(),
+  amenities: z.array(z.string()).nullable().optional(),
+  itemsNotTaken: z.array(z.string()).nullable().optional(),
 });
 
 export type InsertCompany = z.infer<typeof insertCompanySchema>;

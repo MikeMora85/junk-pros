@@ -129,6 +129,8 @@ export default function ProfileEditor() {
     showYoutube: false,
     showGmb: false,
     offersInPersonEstimates: true,
+    amenities: [] as string[],
+    itemsNotTaken: [] as string[],
   });
 
   const { data: company, isLoading } = useQuery<Company>({
@@ -187,6 +189,8 @@ export default function ProfileEditor() {
         showYoutube: !!company.youtubeUrl,
         showGmb: !!company.gmbUrl,
         offersInPersonEstimates: company.offersInPersonEstimates ?? true,
+        amenities: (company as any).amenities || [],
+        itemsNotTaken: (company as any).itemsNotTaken || [],
       });
       setFormInitialized(true);
     }
@@ -378,6 +382,8 @@ export default function ProfileEditor() {
       instagramUrl: formData.showInstagram && formData.instagramUrl ? formData.instagramUrl : null,
       youtubeUrl: formData.showYoutube && formData.youtubeUrl ? formData.youtubeUrl : null,
       gmbUrl: formData.showGmb && formData.gmbUrl ? formData.gmbUrl : null,
+      amenities: (formData.amenities || []).filter(a => a.trim()).length > 0 ? (formData.amenities || []).filter(a => a.trim()) : null,
+      itemsNotTaken: (formData.itemsNotTaken || []).filter(i => i.trim()).length > 0 ? (formData.itemsNotTaken || []).filter(i => i.trim()) : null,
     };
     
     // Use appropriate payload based on subscription tier
@@ -459,6 +465,8 @@ export default function ProfileEditor() {
       instagramUrl: formData.showInstagram && formData.instagramUrl ? formData.instagramUrl : null,
       youtubeUrl: formData.showYoutube && formData.youtubeUrl ? formData.youtubeUrl : null,
       gmbUrl: formData.showGmb && formData.gmbUrl ? formData.gmbUrl : null,
+      amenities: (formData.amenities || []).filter(a => a.trim()).length > 0 ? (formData.amenities || []).filter(a => a.trim()) : null,
+      itemsNotTaken: (formData.itemsNotTaken || []).filter(i => i.trim()).length > 0 ? (formData.itemsNotTaken || []).filter(i => i.trim()) : null,
     };
     
     const payload = subscriptionTier === 'basic' ? basicPayload : fullPayload;
@@ -2003,7 +2011,156 @@ export default function ProfileEditor() {
           </div>
         </section>
 
-        {/* Section 7: Visibility Settings */}
+        {/* Section 7: Amenities & Items Not Taken */}
+        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+          <div style={sectionHeaderStyle}>
+            <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
+              ✨ Amenities & Restrictions
+            </h2>
+          </div>
+          
+          <div style={sectionContentStyle}>
+            {/* Amenities */}
+            <div style={{ marginBottom: "24px" }}>
+              <label style={{...labelStyle, fontSize: "16px", fontWeight: "700", marginBottom: "12px", display: "block"}}>
+                Amenities (What You Offer)
+              </label>
+              <p style={{ fontSize: "14px", color: "#666", marginBottom: "12px" }}>
+                Add features and benefits you offer customers (e.g., Free Estimates, Same-Day Service, Eco-Friendly Disposal)
+              </p>
+              
+              {(formData.amenities || []).map((amenity, index) => (
+                <div key={index} style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+                  <input
+                    data-testid={`input-amenity-${index}`}
+                    style={{...inputStyle, flex: 1}}
+                    value={amenity}
+                    onChange={(e) => {
+                      const newAmenities = [...formData.amenities];
+                      newAmenities[index] = e.target.value;
+                      setFormData(prev => ({ ...prev, amenities: newAmenities }));
+                    }}
+                    placeholder="e.g., Free Estimates"
+                  />
+                  <button
+                    onClick={() => {
+                      const newAmenities = formData.amenities.filter((_, i) => i !== index);
+                      setFormData(prev => ({ ...prev, amenities: newAmenities }));
+                    }}
+                    data-testid={`button-remove-amenity-${index}`}
+                    style={{
+                      padding: "8px 12px",
+                      backgroundColor: "#dc2626",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ))}
+              
+              <button
+                onClick={() => {
+                  setFormData(prev => ({ 
+                    ...prev, 
+                    amenities: [...prev.amenities, ""] 
+                  }));
+                }}
+                data-testid="button-add-amenity"
+                style={{
+                  padding: "10px 16px",
+                  backgroundColor: "#fbbf24",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}
+              >
+                <Plus size={16} />
+                Add Amenity
+              </button>
+            </div>
+            
+            {/* Items Not Taken */}
+            <div>
+              <label style={{...labelStyle, fontSize: "16px", fontWeight: "700", marginBottom: "12px", display: "block"}}>
+                Items We Don't Take
+              </label>
+              <p style={{ fontSize: "14px", color: "#666", marginBottom: "12px" }}>
+                List items you cannot accept (e.g., Hazardous Materials, Chemicals, Medical Waste)
+              </p>
+              
+              {(formData.itemsNotTaken || []).map((item, index) => (
+                <div key={index} style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+                  <input
+                    data-testid={`input-items-not-taken-${index}`}
+                    style={{...inputStyle, flex: 1}}
+                    value={item}
+                    onChange={(e) => {
+                      const newItems = [...formData.itemsNotTaken];
+                      newItems[index] = e.target.value;
+                      setFormData(prev => ({ ...prev, itemsNotTaken: newItems }));
+                    }}
+                    placeholder="e.g., Hazardous Materials"
+                  />
+                  <button
+                    onClick={() => {
+                      const newItems = formData.itemsNotTaken.filter((_, i) => i !== index);
+                      setFormData(prev => ({ ...prev, itemsNotTaken: newItems }));
+                    }}
+                    data-testid={`button-remove-items-not-taken-${index}`}
+                    style={{
+                      padding: "8px 12px",
+                      backgroundColor: "#dc2626",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "6px",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ))}
+              
+              <button
+                onClick={() => {
+                  setFormData(prev => ({ 
+                    ...prev, 
+                    itemsNotTaken: [...prev.itemsNotTaken, ""] 
+                  }));
+                }}
+                data-testid="button-add-items-not-taken"
+                style={{
+                  padding: "10px 16px",
+                  backgroundColor: "#fbbf24",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}
+              >
+                <Plus size={16} />
+                Add Item
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 8: Visibility Settings */}
         <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
