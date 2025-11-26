@@ -4720,10 +4720,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                 // Check if user is admin first
                 if ((user as any)?.isAdmin) {
                   window.location.href = '/admin';
-                } else if (userCompany) {
-                  const citySlug = userCompany.city.toLowerCase().replace(/\s+/g, '-');
-                  const stateSlug = userCompany.state.toLowerCase().trim();
-                  window.location.href = `/${stateSlug}/${citySlug}#company-${userCompany.id}`;
                 } else {
                   window.location.href = '/profile/edit';
                 }
