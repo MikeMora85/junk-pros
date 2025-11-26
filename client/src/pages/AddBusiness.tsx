@@ -586,26 +586,17 @@ export default function AddBusiness() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            backgroundColor: '#fff',
             zIndex: 1000,
-            padding: '20px',
             overflowY: 'auto',
           }}
         >
           <div 
             style={{
               background: '#fff',
-              border: '3px solid #fbbf24',
-              padding: '32px',
-              maxWidth: '600px',
+              padding: '24px 16px',
               width: '100%',
-              maxHeight: '90vh',
-              overflowY: 'auto',
-              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.5)',
-              borderRadius: '8px',
+              minHeight: '100vh',
             }}
           >
             {!clientSecret ? (
