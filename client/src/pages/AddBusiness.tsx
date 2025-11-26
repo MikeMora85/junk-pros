@@ -439,10 +439,10 @@ export default function AddBusiness() {
           }
         `}} />
         <h1 style={{
-          fontSize: '36px',
+          fontSize: '24px',
           fontWeight: '700',
           color: '#000',
-          marginBottom: '16px',
+          marginBottom: '12px',
           letterSpacing: '-0.02em',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
         }}>
