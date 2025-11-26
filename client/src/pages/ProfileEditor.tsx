@@ -2003,11 +2003,9 @@ export default function ProfileEditor() {
           <div style={sectionContentStyle}>
             {/* Amenities */}
             <div style={{ marginBottom: "24px" }}>
-              <label style={{...labelStyle, fontSize: "16px", fontWeight: "700", marginBottom: "12px", display: "block"}}>
-                Amenities (What You Offer)
-              </label>
-              <p style={{ fontSize: "14px", color: "#666", marginBottom: "12px" }}>
-                Add features and benefits you offer customers (e.g., Free Estimates, Same-Day Service, Eco-Friendly Disposal)
+              <label style={labelStyle}>Amenities (What You Offer)</label>
+              <p style={{ fontSize: "12px", color: "#666", marginBottom: "8px", marginTop: "4px" }}>
+                e.g., Free Estimates, Same-Day Service
               </p>
               
               {(formData.amenities || []).map((amenity, index) => (
@@ -2072,11 +2070,9 @@ export default function ProfileEditor() {
             
             {/* Items Not Taken */}
             <div>
-              <label style={{...labelStyle, fontSize: "16px", fontWeight: "700", marginBottom: "12px", display: "block"}}>
-                Items We Don't Take
-              </label>
-              <p style={{ fontSize: "14px", color: "#666", marginBottom: "12px" }}>
-                List items you cannot accept (e.g., Hazardous Materials, Chemicals, Medical Waste)
+              <label style={labelStyle}>Items We Don't Take</label>
+              <p style={{ fontSize: "12px", color: "#666", marginBottom: "8px", marginTop: "4px" }}>
+                e.g., Hazardous Materials, Chemicals
               </p>
               
               {(formData.itemsNotTaken || []).map((item, index) => (
