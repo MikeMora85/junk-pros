@@ -2146,57 +2146,35 @@ export default function ProfileEditor() {
           </div>
           
           <div style={sectionContentStyle}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               {/* Show Pricing */}
               <div style={{
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                padding: "16px",
-                backgroundColor: "#f9fafb",
-                borderRadius: "8px",
+                padding: "12px",
+                backgroundColor: "#fff",
+                borderRadius: "6px",
                 border: "2px solid #e5e7eb"
               }}>
-                <div>
-                  <div style={{ fontWeight: "600", fontSize: "16px", marginBottom: "4px" }}>
-                    Show Pricing on Profile
-                  </div>
-                  <div style={{ fontSize: "14px", color: "#666" }}>
-                    Display your pricing information to customers
-                  </div>
-                </div>
-                <label style={{ position: "relative", display: "inline-block", width: "56px", height: "28px" }}>
-                  <input
-                    data-testid="toggle-pricing-visible"
-                    type="checkbox"
-                    checked={formData.priceSheetVisible}
-                    onChange={(e) => setFormData(prev => ({ ...prev, priceSheetVisible: e.target.checked }))}
-                    style={{ opacity: 0, width: 0, height: 0 }}
-                  />
-                  <span style={{
-                    position: "absolute",
+                <label style={{ ...labelStyle, marginBottom: 0, flex: 1 }}>Show Pricing</label>
+                <button
+                  data-testid="toggle-pricing-visible"
+                  onClick={() => setFormData(prev => ({ ...prev, priceSheetVisible: !prev.priceSheetVisible }))}
+                  style={{
+                    padding: "6px 16px",
+                    backgroundColor: formData.priceSheetVisible ? "#fbbf24" : "#e5e7eb",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "4px",
                     cursor: "pointer",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: formData.priceSheetVisible ? "#16a34a" : "#ccc",
-                    borderRadius: "28px",
-                    transition: "0.3s"
-                  }}>
-                    <span style={{
-                      position: "absolute",
-                      content: "",
-                      height: "22px",
-                      width: "22px",
-                      left: formData.priceSheetVisible ? "30px" : "3px",
-                      bottom: "3px",
-                      backgroundColor: "white",
-                      borderRadius: "50%",
-                      transition: "0.3s"
-                    }} />
-                  </span>
-                </label>
+                    fontSize: "13px",
+                    fontWeight: "600",
+                    minWidth: "60px"
+                  }}
+                >
+                  {formData.priceSheetVisible ? "ON" : "OFF"}
+                </button>
               </div>
 
               {/* Show Add-on Costs */}
@@ -2204,51 +2182,29 @@ export default function ProfileEditor() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                padding: "16px",
-                backgroundColor: "#f9fafb",
-                borderRadius: "8px",
+                padding: "12px",
+                backgroundColor: "#fff",
+                borderRadius: "6px",
                 border: "2px solid #e5e7eb"
               }}>
-                <div>
-                  <div style={{ fontWeight: "600", fontSize: "16px", marginBottom: "4px" }}>
-                    Show Additional Costs Section
-                  </div>
-                  <div style={{ fontSize: "14px", color: "#666" }}>
-                    Display potential additional charges to customers
-                  </div>
-                </div>
-                <label style={{ position: "relative", display: "inline-block", width: "56px", height: "28px" }}>
-                  <input
-                    data-testid="toggle-addon-costs-visible"
-                    type="checkbox"
-                    checked={formData.addOnCostsVisible}
-                    onChange={(e) => setFormData(prev => ({ ...prev, addOnCostsVisible: e.target.checked }))}
-                    style={{ opacity: 0, width: 0, height: 0 }}
-                  />
-                  <span style={{
-                    position: "absolute",
+                <label style={{ ...labelStyle, marginBottom: 0, flex: 1 }}>Show Additional Costs</label>
+                <button
+                  data-testid="toggle-addon-costs-visible"
+                  onClick={() => setFormData(prev => ({ ...prev, addOnCostsVisible: !prev.addOnCostsVisible }))}
+                  style={{
+                    padding: "6px 16px",
+                    backgroundColor: formData.addOnCostsVisible ? "#fbbf24" : "#e5e7eb",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "4px",
                     cursor: "pointer",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: formData.addOnCostsVisible ? "#16a34a" : "#ccc",
-                    borderRadius: "28px",
-                    transition: "0.3s"
-                  }}>
-                    <span style={{
-                      position: "absolute",
-                      content: "",
-                      height: "22px",
-                      width: "22px",
-                      left: formData.addOnCostsVisible ? "30px" : "3px",
-                      bottom: "3px",
-                      backgroundColor: "white",
-                      borderRadius: "50%",
-                      transition: "0.3s"
-                    }} />
-                  </span>
-                </label>
+                    fontSize: "13px",
+                    fontWeight: "600",
+                    minWidth: "60px"
+                  }}
+                >
+                  {formData.addOnCostsVisible ? "ON" : "OFF"}
+                </button>
               </div>
 
               {/* Offer In-Person Estimates */}
@@ -2256,51 +2212,29 @@ export default function ProfileEditor() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                padding: "16px",
-                backgroundColor: "#f9fafb",
-                borderRadius: "8px",
+                padding: "12px",
+                backgroundColor: "#fff",
+                borderRadius: "6px",
                 border: "2px solid #e5e7eb"
               }}>
-                <div>
-                  <div style={{ fontWeight: "600", fontSize: "16px", marginBottom: "4px" }}>
-                    Offer In-Person Estimates
-                  </div>
-                  <div style={{ fontSize: "14px", color: "#666" }}>
-                    Allow customers to request on-site estimates (calendar integration coming soon)
-                  </div>
-                </div>
-                <label style={{ position: "relative", display: "inline-block", width: "56px", height: "28px" }}>
-                  <input
-                    data-testid="toggle-in-person-estimates"
-                    type="checkbox"
-                    checked={formData.offersInPersonEstimates ?? true}
-                    onChange={(e) => setFormData(prev => ({ ...prev, offersInPersonEstimates: e.target.checked }))}
-                    style={{ opacity: 0, width: 0, height: 0 }}
-                  />
-                  <span style={{
-                    position: "absolute",
+                <label style={{ ...labelStyle, marginBottom: 0, flex: 1 }}>In-Person Estimates</label>
+                <button
+                  data-testid="toggle-in-person-estimates"
+                  onClick={() => setFormData(prev => ({ ...prev, offersInPersonEstimates: !(prev.offersInPersonEstimates ?? true) }))}
+                  style={{
+                    padding: "6px 16px",
+                    backgroundColor: (formData.offersInPersonEstimates ?? true) ? "#fbbf24" : "#e5e7eb",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "4px",
                     cursor: "pointer",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: (formData.offersInPersonEstimates ?? true) ? "#16a34a" : "#ccc",
-                    borderRadius: "28px",
-                    transition: "0.3s"
-                  }}>
-                    <span style={{
-                      position: "absolute",
-                      content: "",
-                      height: "22px",
-                      width: "22px",
-                      left: (formData.offersInPersonEstimates ?? true) ? "30px" : "3px",
-                      bottom: "3px",
-                      backgroundColor: "white",
-                      borderRadius: "50%",
-                      transition: "0.3s"
-                    }} />
-                  </span>
-                </label>
+                    fontSize: "13px",
+                    fontWeight: "600",
+                    minWidth: "60px"
+                  }}
+                >
+                  {(formData.offersInPersonEstimates ?? true) ? "ON" : "OFF"}
+                </button>
               </div>
             </div>
           </div>
