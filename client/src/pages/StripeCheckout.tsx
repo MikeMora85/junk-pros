@@ -80,9 +80,9 @@ function CheckoutForm({ tier, onSuccess, onError }: { tier: string; onSuccess: (
             console.log('PaymentElement ready');
             setIsReady(true);
           }}
-          onLoadError={(error) => {
-            console.error('PaymentElement load error:', error);
-            onError(`Failed to load payment form: ${error.message}`);
+          onLoadError={(event) => {
+            console.error('PaymentElement load error:', event);
+            onError(`Failed to load payment form: ${event.error?.message || 'Unknown error'}`);
           }}
         />
       </div>
