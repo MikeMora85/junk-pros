@@ -397,8 +397,17 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       
       // For paid tiers, set subscription status to 'pending' until payment succeeds
       const isPaidTier = companyData.subscriptionTier === 'standard' || companyData.subscriptionTier === 'premium';
-      const data = insertCompanySchema.parse({
+      
+      // Trim city, state, and name to prevent whitespace issues with URL matching
+      const cleanedCompanyData = {
         ...companyData,
+        city: companyData.city?.trim(),
+        state: companyData.state?.trim(),
+        name: companyData.name?.trim(),
+      };
+      
+      const data = insertCompanySchema.parse({
+        ...cleanedCompanyData,
         userId,
         subscriptionStatus: isPaidTier ? 'pending' : 'active',
       });
@@ -1032,7 +1041,13 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       if (req.body.googleFeaturedReviews) console.log("✓ googleFeaturedReviews:", req.body.googleFeaturedReviews.length, "items");
       if (req.body.businessHours) console.log("✓ businessHours:", JSON.stringify(req.body.businessHours));
       
-      const updatedCompany = await storage.updateCompany(owner.companyId, req.body as any);
+      // Trim city and state to prevent whitespace issues with URL matching
+      const updateData = { ...req.body };
+      if (updateData.city) updateData.city = updateData.city.trim();
+      if (updateData.state) updateData.state = updateData.state.trim();
+      if (updateData.name) updateData.name = updateData.name.trim();
+      
+      const updatedCompany = await storage.updateCompany(owner.companyId, updateData as any);
       console.log(`[PERF] Total PATCH took ${Date.now() - startTime}ms`);
       res.json(updatedCompany);
     } catch (error) {
