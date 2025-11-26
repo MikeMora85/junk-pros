@@ -1451,6 +1451,8 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     try {
       const { tier, businessOwnerId } = req.body;
       
+      console.log('Create subscription request:', { tier, businessOwnerId });
+      
       if (!tier || !businessOwnerId) {
         return res.status(400).json({ error: "tier and businessOwnerId are required" });
       }
@@ -1459,6 +1461,20 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       const owner = await storage.getBusinessOwnerById(businessOwnerId);
       if (!owner) {
         return res.status(404).json({ error: "Business owner not found" });
+      }
+
+      // Check environment variables
+      const hasStripeKey = !!process.env.STRIPE_SECRET_KEY;
+      const hasProPrice = !!process.env.STRIPE_PROFESSIONAL_PRICE_ID;
+      const hasFeatPrice = !!process.env.STRIPE_FEATURED_PRICE_ID;
+      
+      console.log('Stripe config check:', { hasStripeKey, hasProPrice, hasFeatPrice });
+
+      if (!hasStripeKey || !hasProPrice || !hasFeatPrice) {
+        return res.status(500).json({ 
+          error: "Stripe configuration incomplete",
+          details: `Missing: ${!hasStripeKey ? 'API Key ' : ''}${!hasProPrice ? 'Professional Price ID ' : ''}${!hasFeatPrice ? 'Featured Price ID' : ''}`.trim()
+        });
       }
 
       // Import Stripe (lazy load to avoid initialization issues)
