@@ -1147,7 +1147,7 @@ export default function ProfileEditor() {
                 <label style={labelStyle}>Select Your Services</label>
                 <div style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gridTemplateColumns: "repeat(2, 1fr)",
                   gap: "8px",
                   marginTop: "12px"
                 }}>
