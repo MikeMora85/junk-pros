@@ -442,80 +442,90 @@ function InteractiveFooter() {
         margin: '0 auto',
         padding: '20px',
       }}>
-        {/* Interactive Buttons */}
+        {/* Interactive Buttons - Subtle Footer Links */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '12px',
+          display: 'flex',
+          gap: '24px',
           marginBottom: '20px',
+          flexWrap: 'wrap',
+          alignItems: 'center',
         }}>
           <button
             onClick={() => toggleSection('areas')}
             style={{
-              backgroundColor: expandedSection === 'areas' ? '#000' : '#fef3c7',
-              color: expandedSection === 'areas' ? '#fbbf24' : '#000',
-              border: '2px solid #000',
-              borderRadius: '8px',
-              padding: '14px',
-              fontSize: '16px',
-              fontWeight: '700',
+              backgroundColor: 'transparent',
+              color: '#000',
+              border: 'none',
+              padding: '0',
+              fontSize: '13px',
+              fontWeight: '500',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: '6px',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               transition: 'all 0.2s',
+              textDecoration: expandedSection === 'areas' ? 'underline' : 'none',
+              opacity: 0.8,
             }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
             data-testid="button-footer-areas"
           >
             <span>Areas Served</span>
-            <ChevronDown size={20} style={{ transform: expandedSection === 'areas' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            <ChevronDown size={14} style={{ transform: expandedSection === 'areas' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
           </button>
 
           <button
             onClick={() => toggleSection('services')}
             style={{
-              backgroundColor: expandedSection === 'services' ? '#000' : '#fef3c7',
-              color: expandedSection === 'services' ? '#fbbf24' : '#000',
-              border: '2px solid #000',
-              borderRadius: '8px',
-              padding: '14px',
-              fontSize: '16px',
-              fontWeight: '700',
+              backgroundColor: 'transparent',
+              color: '#000',
+              border: 'none',
+              padding: '0',
+              fontSize: '13px',
+              fontWeight: '500',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: '6px',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               transition: 'all 0.2s',
+              textDecoration: expandedSection === 'services' ? 'underline' : 'none',
+              opacity: 0.8,
             }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
             data-testid="button-footer-services"
           >
             <span>Services</span>
-            <ChevronDown size={20} style={{ transform: expandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            <ChevronDown size={14} style={{ transform: expandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
           </button>
 
           <button
             onClick={() => toggleSection('items')}
             style={{
-              backgroundColor: expandedSection === 'items' ? '#000' : '#fef3c7',
-              color: expandedSection === 'items' ? '#fbbf24' : '#000',
-              border: '2px solid #000',
-              borderRadius: '8px',
-              padding: '14px',
-              fontSize: '16px',
-              fontWeight: '700',
+              backgroundColor: 'transparent',
+              color: '#000',
+              border: 'none',
+              padding: '0',
+              fontSize: '13px',
+              fontWeight: '500',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              gap: '6px',
               fontFamily: "'Helvetica Neue', Arial, sans-serif",
               transition: 'all 0.2s',
+              textDecoration: expandedSection === 'items' ? 'underline' : 'none',
+              opacity: 0.8,
             }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
             data-testid="button-footer-items"
           >
             <span>Items We Remove</span>
-            <ChevronDown size={20} style={{ transform: expandedSection === 'items' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            <ChevronDown size={14} style={{ transform: expandedSection === 'items' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
           </button>
         </div>
 
