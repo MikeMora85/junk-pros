@@ -111,11 +111,16 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto' }}>
+    <form onSubmit={handleSubmit} style={{ 
+      maxWidth: '400px', 
+      margin: '0 auto',
+      width: '100%',
+      boxSizing: 'border-box',
+    }}>
       <h2 style={{
-        fontSize: '20px',
+        fontSize: '18px',
         fontWeight: '700',
-        marginBottom: '8px',
+        marginBottom: '6px',
         color: '#000',
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
       }}>
@@ -123,14 +128,18 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
       </h2>
       <p style={{
         fontSize: '14px',
-        marginBottom: '20px',
+        marginBottom: '16px',
         color: '#666',
         fontFamily: "'Helvetica Neue', Arial, sans-serif",
       }}>
         {tier === 'professional' ? '$10/month' : '$49/month'} - Cancel anytime
       </p>
 
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ 
+        marginBottom: '16px',
+        width: '100%',
+        boxSizing: 'border-box',
+      }}>
         <PaymentElement 
           onReady={() => {
             console.log('PaymentElement ready');
@@ -157,7 +166,8 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
           fontWeight: '700',
           cursor: isProcessing || !isReady ? 'not-allowed' : 'pointer',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
-          marginBottom: '12px',
+          marginBottom: '10px',
+          boxSizing: 'border-box',
         }}
         data-testid="button-complete-payment"
       >
@@ -179,6 +189,7 @@ function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, strip
           fontWeight: '600',
           cursor: isProcessing ? 'not-allowed' : 'pointer',
           fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          boxSizing: 'border-box',
         }}
         data-testid="button-cancel-payment"
       >
@@ -588,15 +599,19 @@ export default function AddBusiness() {
             bottom: 0,
             backgroundColor: '#fff',
             zIndex: 1000,
+            overflowX: 'hidden',
             overflowY: 'auto',
           }}
         >
           <div 
             style={{
               background: '#fff',
-              padding: '24px 16px',
+              padding: '20px 16px',
               width: '100%',
+              maxWidth: '100vw',
+              boxSizing: 'border-box',
               minHeight: '100vh',
+              overflowX: 'hidden',
             }}
           >
             {!clientSecret ? (
