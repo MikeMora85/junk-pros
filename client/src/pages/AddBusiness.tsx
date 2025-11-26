@@ -426,7 +426,7 @@ export default function AddBusiness() {
         background: 'transparent',
         border: '3px solid #fbbf24',
         borderRadius: '8px',
-        padding: '48px 16px',
+        padding: '24px 16px',
         textAlign: 'center',
         margin: '16px',
       }}>
