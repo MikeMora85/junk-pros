@@ -1645,10 +1645,19 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       res.json({ url: session.url });
     } catch (error: any) {
       console.error("Error creating portal session:", error);
-      res.status(500).json({ 
-        error: "Failed to create portal session",
-        details: error.message 
-      });
+      
+      // Check if it's a portal not configured error
+      if (error.message?.includes('portal') || error.message?.includes('configuration')) {
+        res.status(500).json({ 
+          error: "Please configure Customer Portal in Stripe Dashboard first",
+          details: error.message 
+        });
+      } else {
+        res.status(500).json({ 
+          error: "Failed to create portal session",
+          details: error.message 
+        });
+      }
     }
   });
 

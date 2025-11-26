@@ -299,9 +299,13 @@ export default function ProfileEditor() {
       const data = await response.json();
       
       if (data.error) {
-        setToastMessage(data.error);
+        if (data.error.includes('configure') || data.details?.includes('portal')) {
+          setToastMessage('Stripe Customer Portal not configured. Please set it up in Stripe Dashboard.');
+        } else {
+          setToastMessage(data.error);
+        }
         setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
+        setTimeout(() => setShowToast(false), 5000);
         return;
       }
       
