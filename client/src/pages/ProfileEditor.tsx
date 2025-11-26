@@ -548,15 +548,16 @@ export default function ProfileEditor() {
 
   const sectionHeaderStyle = {
     backgroundColor: "#fbbf24",
-    padding: "20px",
+    padding: "16px 20px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderBottom: "3px solid #000",
+    borderRadius: "8px",
+    marginBottom: "16px",
   };
 
   const sectionContentStyle = {
-    padding: "24px",
+    padding: "0",
     backgroundColor: "#fff",
   };
 
@@ -654,7 +655,7 @@ export default function ProfileEditor() {
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 16px" }}>
         
         {/* Section 1: Basic Information */}
-        <section style={{ marginTop: "20px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "20px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               Basic Information
@@ -1131,7 +1132,7 @@ export default function ProfileEditor() {
         {subscriptionTier !== 'basic' && (
         <>
         {/* Section 2: Services & Specialties */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               Services & Specialties
@@ -1253,7 +1254,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 3: About Your Business */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               About Your Business
@@ -1491,7 +1492,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 4: Pricing */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               Pricing
@@ -1590,7 +1591,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 5: Team & Gallery */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               Team & Gallery
@@ -1911,7 +1912,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 6: FAQs */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               ❓ Frequently Asked Questions
@@ -2012,7 +2013,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 7: Amenities & Items Not Taken */}
-        <section style={{ marginTop: "24px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               ✨ Amenities & Restrictions
@@ -2161,7 +2162,7 @@ export default function ProfileEditor() {
         </section>
 
         {/* Section 8: Visibility Settings */}
-        <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff", borderRadius: "12px", overflow: "hidden", border: "3px solid #fbbf24" }}>
+        <section style={{ marginTop: "24px", marginBottom: "40px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
               Visibility Settings
