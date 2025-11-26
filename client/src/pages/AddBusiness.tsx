@@ -1312,75 +1312,17 @@ export default function AddBusiness() {
             </label>
           </div>
 
-          {/* Amount Owed Display for Paid Tiers */}
+          {/* Stripe Note for Paid Tiers */}
           {(formData.pricingTier === 'professional' || formData.pricingTier === 'featured') && (
-            <div style={{
-              background: '#fef3c7',
-              border: '2px solid #fbbf24',
-              padding: '16px',
-              marginBottom: '24px',
+            <p style={{ 
+              fontFamily: "'Helvetica Neue', Arial, sans-serif", 
+              fontSize: '12px', 
+              color: '#666',
               textAlign: 'center',
+              marginBottom: '16px',
             }}>
-              <p style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '14px', 
-                color: '#000',
-                marginBottom: '8px',
-              }}>
-                Amount Owed:
-              </p>
-              <p style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '32px', 
-                fontWeight: '700',
-                color: '#000',
-                margin: 0,
-              }}>
-                ${formData.pricingTier === 'professional' ? '10' : '49'}/month
-              </p>
-            </div>
-          )}
-
-          {/* Payment Section for Paid Tiers */}
-          {(formData.pricingTier === 'professional' || formData.pricingTier === 'featured') && (
-            <div style={{
-              background: '#fff',
-              border: '2px solid #e5e5e5',
-              padding: '24px',
-              marginBottom: '24px',
-            }}>
-              <h3 style={{
-                fontSize: '18px',
-                fontWeight: '700',
-                color: '#000',
-                marginBottom: '16px',
-                fontFamily: "'Helvetica Neue', Arial, sans-serif",
-              }}>
-                Payment Information
-              </h3>
-              <p style={{ 
-                fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                fontSize: '14px', 
-                color: '#666',
-                marginBottom: '16px',
-              }}>
-                After creating your account, you'll be redirected to our secure payment page to complete your subscription. Your listing will be activated immediately upon successful payment.
-              </p>
-              <div style={{
-                background: '#f3f4f6',
-                padding: '12px',
-                borderRadius: '6px',
-              }}>
-                <p style={{ 
-                  fontFamily: "'Helvetica Neue', Arial, sans-serif", 
-                  fontSize: '12px', 
-                  color: '#000',
-                  margin: 0,
-                }}>
-                  💳 Secure payment processing powered by Stripe
-                </p>
-              </div>
-            </div>
+              Payments powered by Stripe
+            </p>
           )}
 
           <button
