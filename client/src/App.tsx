@@ -16,6 +16,7 @@ import ProfileEditor from "./pages/ProfileEditor";
 import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
 import StripeCheckout from "./pages/StripeCheckout";
+import TermsOfService from "./pages/TermsOfService";
 import { useAuth } from "./hooks/useAuth";
 import { trackBusinessEvent } from "./lib/tracking";
 import { useSEO, buildLandingPageSEO, buildStatePageSEO, buildCityPageSEO, buildBlogPageSEO, buildOrganizationSchema, buildWebPageSchema, buildBreadcrumbSchema } from "./lib/seo";
@@ -7146,6 +7147,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/login" component={Login} />
+        <Route path="/terms" component={TermsOfService} />
         <Route path="/add-business" component={AddBusiness} />
         <Route path="/stripe-checkout">
           {() => {
