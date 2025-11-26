@@ -621,7 +621,15 @@ export default function AddBusiness() {
                 </p>
               </div>
             ) : (
-              <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <Elements stripe={stripePromise} options={{ 
+                clientSecret,
+                appearance: {
+                  theme: 'stripe',
+                },
+                business: {
+                  name: 'FindLocalJunkPros.com'
+                },
+              }}>
                 <PaymentFormInline 
                   tier={formData.pricingTier}
                   formData={formData}
