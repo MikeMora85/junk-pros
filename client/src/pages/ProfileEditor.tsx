@@ -1775,73 +1775,64 @@ export default function ProfileEditor() {
 
               {/* Gallery Photos */}
               <div>
-                <label style={{...labelStyle, fontSize: "18px", fontWeight: "700", color: "#000", marginBottom: "16px", display: "block"}}>
-                  📸 Gallery Photos (Up to 10)
-                </label>
-                <div style={{ 
-                  marginBottom: "16px", 
-                  padding: "20px", 
-                  backgroundColor: "#fffbeb", 
-                  border: "3px solid #fbbf24", 
-                  borderRadius: "12px" 
-                }}>
-                  {formData.galleryImages.length >= 10 ? (
-                    <div style={{
-                      padding: "16px",
-                      backgroundColor: "#f3f4f6",
-                      borderRadius: "8px",
-                      textAlign: "center",
-                      color: "#6b7280",
-                      fontWeight: "600"
-                    }}>
-                      ✅ Maximum 10 photos reached. Remove some to add more.
-                    </div>
-                  ) : (
-                    <ObjectUploader
-                      maxNumberOfFiles={Math.max(1, 10 - formData.galleryImages.length)}
-                      maxFileSize={10485760}
-                      onGetUploadParameters={async (file) => {
-                        if (formData.galleryImages.length >= 10) {
-                          throw new Error("Maximum 10 photos allowed");
+                <label style={labelStyle}>Gallery Photos ({formData.galleryImages.length}/10)</label>
+                {formData.galleryImages.length >= 10 ? (
+                  <div style={{
+                    padding: "12px",
+                    backgroundColor: "#f3f4f6",
+                    borderRadius: "8px",
+                    textAlign: "center",
+                    color: "#6b7280",
+                    fontWeight: "500",
+                    fontSize: "14px"
+                  }}>
+                    Maximum 10 photos reached. Remove some to add more.
+                  </div>
+                ) : (
+                  <ObjectUploader
+                    maxNumberOfFiles={Math.max(1, 10 - formData.galleryImages.length)}
+                    maxFileSize={10485760}
+                    onGetUploadParameters={async (file) => {
+                      if (formData.galleryImages.length >= 10) {
+                        throw new Error("Maximum 10 photos allowed");
+                      }
+                      const token = localStorage.getItem('auth_token');
+                      const fileExt = file.name.split('.').pop() || 'jpg';
+                      const path = `/objects/gallery/${crypto.randomUUID()}.${fileExt}`;
+                      galleryPathsRef.current.push(path);
+                      const response = await fetch('/api/objects/upload', {
+                        method: 'POST',
+                        headers: {
+                          'Authorization': `Bearer ${token}`,
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ path }),
+                      });
+                      return await response.json();
+                    }}
+                    onComplete={(result: UploadResult<any, any>) => {
+                      console.log('GALLERY UPLOAD COMPLETE');
+                      if (result.successful && result.successful.length > 0 && galleryPathsRef.current.length > 0) {
+                        const remainingSlots = 10 - formData.galleryImages.length;
+                        const newImages = galleryPathsRef.current.slice(0, remainingSlots);
+                        if (newImages.length > 0) {
+                          setFormData(prev => ({
+                            ...prev,
+                            galleryImages: [...prev.galleryImages, ...newImages].slice(0, 10)
+                          }));
+                          setToastMessage(`${newImages.length} image(s) uploaded successfully!`);
+                          setShowToast(true);
+                          setTimeout(() => setShowToast(false), 3000);
                         }
-                        const token = localStorage.getItem('auth_token');
-                        const fileExt = file.name.split('.').pop() || 'jpg';
-                        const path = `/objects/gallery/${crypto.randomUUID()}.${fileExt}`;
-                        galleryPathsRef.current.push(path);
-                        const response = await fetch('/api/objects/upload', {
-                          method: 'POST',
-                          headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json',
-                          },
-                          body: JSON.stringify({ path }),
-                        });
-                        return await response.json();
-                      }}
-                      onComplete={(result: UploadResult<any, any>) => {
-                        console.log('GALLERY UPLOAD COMPLETE');
-                        if (result.successful && result.successful.length > 0 && galleryPathsRef.current.length > 0) {
-                          const remainingSlots = 10 - formData.galleryImages.length;
-                          const newImages = galleryPathsRef.current.slice(0, remainingSlots);
-                          if (newImages.length > 0) {
-                            setFormData(prev => ({
-                              ...prev,
-                              galleryImages: [...prev.galleryImages, ...newImages].slice(0, 10)
-                            }));
-                            setToastMessage(`${newImages.length} image(s) uploaded successfully!`);
-                            setShowToast(true);
-                            setTimeout(() => setShowToast(false), 3000);
-                          }
-                          galleryPathsRef.current = [];
-                        }
-                      }}
-                      buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-8 py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all w-full"
-                    >
-                      <Upload size={24} style={{ marginRight: "10px" }} />
-                      📤 UPLOAD GALLERY PHOTOS ({formData.galleryImages.length}/10)
-                    </ObjectUploader>
-                  )}
-                </div>
+                        galleryPathsRef.current = [];
+                      }
+                    }}
+                    buttonClassName="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-lg w-full"
+                  >
+                    <Upload size={18} style={{ marginRight: "8px" }} />
+                    Upload Photos
+                  </ObjectUploader>
+                )}
 
                 {formData.galleryImages.length > 0 && (
                   <div style={{
@@ -1904,7 +1895,7 @@ export default function ProfileEditor() {
         <section style={{ marginTop: "24px", backgroundColor: "#fff" }}>
           <div style={sectionHeaderStyle}>
             <h2 style={{ fontSize: "clamp(18px, 4vw, 22px)", fontWeight: "700", margin: 0, color: "#000" }}>
-              ❓ Frequently Asked Questions
+              FAQs
             </h2>
           </div>
           
