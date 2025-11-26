@@ -4984,8 +4984,8 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     const hasFullFeatures = isPremium || isStandard; // Both get all features
                     
                     return (
+                <div key={c.id} className={hasFullFeatures ? 'full-width-card' : ''} style={{ width: '100%', maxWidth: '100%' }}>
                 <div 
-                  key={c.id}
                   onClick={!hasFullFeatures ? undefined : (e) => {
                     // Don't open modal if clicking inside quote section
                     if ((e.target as HTMLElement).closest('[data-quote-section]')) {
@@ -4995,7 +4995,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     setSelectedCompanyId(c.id);
                   }} 
                   id={`company-${c.id}`}
-                  className={hasFullFeatures ? 'full-width-card' : ''}
                   style={{
                     position: 'relative',
                     backgroundColor: isUnclaimed ? '#f9f9f9' : '#fff',
@@ -5289,31 +5288,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </div>
                     )}
 
-                    {/* Quote Request Form - Desktop Inline */}
-                    {expandedQuote === c.id && hasFullFeatures && (
-                      <div
-                        onClick={(e) => e.stopPropagation()}
-                        style={{
-                          marginTop: '16px',
-                          backgroundColor: '#fffbeb',
-                          padding: '16px',
-                          borderRadius: '12px',
-                          border: '3px solid #fbbf24',
-                          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                          maxHeight: '400px',
-                          overflowY: 'auto',
-                        }}>
-                        <QuoteRequestForm
-                          companyId={c.id}
-                          companyName={c.name}
-                          onSuccess={() => {
-                            alert('Quote request sent successfully! The business will contact you soon.');
-                            setExpandedQuote(null);
-                          }}
-                          onCancel={() => setExpandedQuote(null)}
-                        />
-                      </div>
-                    )}
                   </div>
                   )}
                   
@@ -5553,27 +5527,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       </button>
                     </div>
 
-                    {/* Quote Request Form */}
-                    {expandedQuote === c.id && (
-                      <div style={{
-                        marginTop: '16px',
-                        backgroundColor: '#fffbeb',
-                        padding: '16px',
-                        borderRadius: '12px',
-                        border: '3px solid #fbbf24',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                      }}>
-                        <QuoteRequestForm
-                          companyId={c.id}
-                          companyName={c.name}
-                          onSuccess={() => {
-                            alert('Quote request sent successfully! The business will contact you soon.');
-                            setExpandedQuote(null);
-                          }}
-                          onCancel={() => setExpandedQuote(null)}
-                        />
-                      </div>
-                    )}
                   </div>
                   )}
                   
@@ -5594,6 +5547,30 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       />
                     </div>
                   )}
+                </div>
+                {/* Quote Request Form - OUTSIDE the bordered card */}
+                {expandedQuote === c.id && hasFullFeatures && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      backgroundColor: '#fffbeb',
+                      padding: '16px',
+                      borderRadius: '0',
+                      border: '3px solid #fbbf24',
+                      borderTop: 'none',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    }}>
+                    <QuoteRequestForm
+                      companyId={c.id}
+                      companyName={c.name}
+                      onSuccess={() => {
+                        alert('Quote request sent successfully! The business will contact you soon.');
+                        setExpandedQuote(null);
+                      }}
+                      onCancel={() => setExpandedQuote(null)}
+                    />
+                  </div>
+                )}
                 </div>
                   );
                   })
