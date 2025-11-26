@@ -1901,9 +1901,6 @@ export default function ProfileEditor() {
           
           <div style={sectionContentStyle}>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <p style={{ fontSize: "14px", color: "#666", marginBottom: "8px" }}>
-                Add common questions and answers to help customers learn more about your services
-              </p>
               
               {formData.faqs.map((faq, index) => (
                 <div key={index} style={{
@@ -2003,10 +2000,7 @@ export default function ProfileEditor() {
           <div style={sectionContentStyle}>
             {/* Amenities */}
             <div style={{ marginBottom: "24px" }}>
-              <label style={labelStyle}>Amenities (What You Offer)</label>
-              <p style={{ fontSize: "12px", color: "#666", marginBottom: "8px", marginTop: "4px" }}>
-                e.g., Free Estimates, Same-Day Service
-              </p>
+              <label style={labelStyle}>Amenities</label>
               
               {(formData.amenities || []).map((amenity, index) => (
                 <div key={index} style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
@@ -2071,9 +2065,6 @@ export default function ProfileEditor() {
             {/* Items Not Taken */}
             <div>
               <label style={labelStyle}>Items We Don't Take</label>
-              <p style={{ fontSize: "12px", color: "#666", marginBottom: "8px", marginTop: "4px" }}>
-                e.g., Hazardous Materials, Chemicals
-              </p>
               
               {(formData.itemsNotTaken || []).map((item, index) => (
                 <div key={index} style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
