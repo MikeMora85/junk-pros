@@ -10,6 +10,9 @@ import multer from "multer";
 import path from "path";
 import { Resend } from 'resend';
 
+// Initialize Resend client globally
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Setup auth but don't force it globally
   await setupAuth(app, storage);
@@ -460,38 +463,22 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ error: "Company not found" });
       }
 
-      // Upload photos to object storage
-      const photoUrls: string[] = [];
-      if (req.files && Array.isArray(req.files)) {
-        const objectStorage = new ObjectStorageService();
-        
-        for (const file of req.files) {
-          const filename = `quote-${Date.now()}-${Math.random().toString(36).substring(7)}${path.extname(file.originalname)}`;
-          const objectPath = `/.private/quotes/${filename}`;
-          
-          // Upload to object storage
-          await objectStorage.uploadObject(objectPath, file.buffer);
-          photoUrls.push(objectPath);
-        }
-      }
-
       // Create quote in database
-      const quoteData = insertQuoteSchema.parse({
+      const quoteData = {
         companyId: parseInt(companyId),
-        customerName,
-        customerEmail,
-        customerPhone,
-        message: message || null,
-        photoUrls: photoUrls.length > 0 ? photoUrls : null,
-      });
+        customerName: String(customerName),
+        customerEmail: String(customerEmail),
+        customerPhone: String(customerPhone),
+        message: message ? String(message) : null,
+        photoUrls: null,
+        status: 'new',
+      };
 
       const quote = await storage.createQuote(quoteData);
 
       // Send email to business
-      if (process.env.RESEND_API_KEY) {
+      if (resend) {
         try {
-          const resend = new Resend(process.env.RESEND_API_KEY);
-          
           // Get business email (use contactEmail or default)
           const businessEmail = company.contactEmail || 'noreply@example.com';
           
@@ -512,14 +499,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             emailHtml += `
               <h3>Customer Message:</h3>
               <p>${message}</p>
-            `;
-          }
-          
-          if (photoUrls.length > 0) {
-            emailHtml += `
-              <h3>Photos:</h3>
-              <p>The customer included ${photoUrls.length} photo(s) with their request.</p>
-              <p><em>Photos are stored securely and can be viewed in your business dashboard.</em></p>
             `;
           }
           
@@ -556,10 +535,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       });
     } catch (error) {
       console.error("Quote submission error:", error);
+      console.error("Error details:", (error as any)?.message || 'No message');
       if (error instanceof z.ZodError) {
         return res.status(400).json({ error: "Invalid quote data", details: error.issues });
       }
-      res.status(500).json({ error: "Failed to submit quote request" });
+      res.status(500).json({ error: "Failed to submit quote request", details: (error as any)?.message });
     }
   });
 

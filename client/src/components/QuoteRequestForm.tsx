@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
-import { Upload, X } from 'lucide-react';
+import { Upload, X, CheckCircle } from 'lucide-react';
 
 interface QuoteRequestFormProps {
   companyId: number;
@@ -19,6 +19,7 @@ export default function QuoteRequestForm({ companyId, companyName, onSuccess, on
   });
   const [photos, setPhotos] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
 
   const submitQuote = useMutation({
     mutationFn: async (data: FormData) => {
@@ -28,9 +29,60 @@ export default function QuoteRequestForm({ companyId, companyName, onSuccess, on
       });
     },
     onSuccess: () => {
+      setSubmitted(true);
       if (onSuccess) onSuccess();
     },
   });
+
+  if (submitted) {
+    return (
+      <div style={{
+        marginTop: '16px',
+        padding: '24px',
+        backgroundColor: '#fff',
+        borderRadius: '8px',
+        border: '2px solid #22c55e',
+        textAlign: 'center',
+      }}>
+        <CheckCircle size={48} color="#22c55e" style={{ marginBottom: '12px' }} />
+        <h4 style={{ 
+          fontSize: '18px', 
+          fontWeight: '700', 
+          color: '#166534',
+          margin: '0 0 8px 0' 
+        }}>
+          Quote Request Sent!
+        </h4>
+        <p style={{ 
+          fontSize: '14px', 
+          color: '#374151',
+          margin: '0 0 16px 0' 
+        }}>
+          {companyName} has received your request and will contact you shortly at {formData.customerPhone || formData.customerEmail}.
+        </p>
+        <button
+          onClick={() => {
+            setSubmitted(false);
+            setFormData({ customerName: '', customerEmail: '', customerPhone: '', message: '' });
+            setPhotos([]);
+          }}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#f3f4f6',
+            color: '#374151',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: '600',
+          }}
+          data-testid="button-send-another"
+        >
+          Send Another Request
+        </button>
+      </div>
+    );
+  }
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
