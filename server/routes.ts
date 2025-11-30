@@ -83,6 +83,138 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Debug endpoint to search Stripe customers
+  app.get('/api/debug/stripe-customers', async (req, res) => {
+    try {
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      // List recent customers
+      const customers = await stripe.customers.list({
+        limit: 20,
+      });
+
+      res.json({
+        count: customers.data.length,
+        customers: customers.data.map(c => ({
+          id: c.id,
+          email: c.email,
+          name: c.name,
+          created: new Date(c.created * 1000).toISOString(),
+          metadata: c.metadata,
+        })),
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Debug endpoint to list successful payments
+  app.get('/api/debug/stripe-payments', async (req, res) => {
+    try {
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      // List recent successful payment intents
+      const payments = await stripe.paymentIntents.list({
+        limit: 20,
+      });
+
+      res.json({
+        count: payments.data.length,
+        payments: payments.data.map(p => ({
+          id: p.id,
+          amount: p.amount / 100,
+          status: p.status,
+          customer: p.customer,
+          metadata: p.metadata,
+          created: new Date(p.created * 1000).toISOString(),
+          receipt_email: p.receipt_email,
+        })),
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Admin endpoint to manually link a Stripe customer to a company
+  app.post('/api/admin/link-stripe/:companyId', async (req, res) => {
+    try {
+      const companyId = parseInt(req.params.companyId);
+      const { stripeCustomerId } = req.body;
+      
+      if (!stripeCustomerId) {
+        return res.status(400).json({ error: 'stripeCustomerId is required' });
+      }
+      
+      const owner = await storage.getBusinessOwnerByCompanyId(companyId);
+      const company = await storage.getCompanyById(companyId);
+      
+      if (!owner) {
+        return res.status(404).json({ error: 'No business owner found for this company' });
+      }
+
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      // Verify the customer exists
+      const customer = await stripe.customers.retrieve(stripeCustomerId);
+      if (!customer || customer.deleted) {
+        return res.status(404).json({ error: 'Stripe customer not found' });
+      }
+
+      // Update the customer email in Stripe
+      await stripe.customers.update(stripeCustomerId, {
+        email: owner.email,
+        metadata: {
+          businessOwnerId: owner.id.toString(),
+          companyId: companyId.toString(),
+        },
+      });
+
+      // Check for active subscriptions
+      const subscriptions = await stripe.subscriptions.list({
+        customer: stripeCustomerId,
+        limit: 1,
+      });
+
+      let subscriptionId = null;
+      if (subscriptions.data.length > 0) {
+        subscriptionId = subscriptions.data[0].id;
+      }
+
+      // Update business owner with Stripe data
+      await storage.updateBusinessOwner(owner.id, {
+        stripeCustomerId: stripeCustomerId,
+        stripeSubscriptionId: subscriptionId,
+      } as any);
+
+      // Update company subscription status
+      if (company) {
+        await storage.updateCompany(companyId, {
+          subscriptionStatus: 'active',
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Stripe customer linked successfully',
+        customerId: stripeCustomerId,
+        subscriptionId,
+        email: owner.email,
+      });
+    } catch (error: any) {
+      console.error('Error linking Stripe customer:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Admin endpoint to sync Stripe data for a business owner
   app.post('/api/admin/sync-stripe/:companyId', async (req, res) => {
     try {
