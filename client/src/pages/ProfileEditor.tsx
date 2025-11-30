@@ -69,6 +69,8 @@ export default function ProfileEditor() {
   const [isOpeningPortal, setIsOpeningPortal] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [selectedUpgradeTier, setSelectedUpgradeTier] = useState<'standard' | 'premium'>('standard');
+  const [showDowngradeModal, setShowDowngradeModal] = useState(false);
+  const [isDowngrading, setIsDowngrading] = useState(false);
   const [isUpgrading, setIsUpgrading] = useState(false);
   
   const logoPathRef = useRef<string>('');
@@ -363,6 +365,44 @@ export default function ProfileEditor() {
     } finally {
       setIsUpgrading(false);
       setShowUpgradeModal(false);
+    }
+  };
+
+  const handleDowngrade = async (tier: 'standard' | 'basic') => {
+    setIsDowngrading(true);
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch('/api/downgrade-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ tier }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        setToastMessage(data.error);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
+        return;
+      }
+      
+      setToastMessage(`Successfully changed to ${tier === 'standard' ? 'Professional' : 'Basic'} plan! Changes will take effect at next billing cycle.`);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 5000);
+      
+      // Refresh the page to get updated subscription info
+      window.location.reload();
+    } catch (error: any) {
+      setToastMessage('Failed to change plan');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } finally {
+      setIsDowngrading(false);
+      setShowDowngradeModal(false);
     }
   };
 
@@ -2287,63 +2327,107 @@ export default function ProfileEditor() {
                     : 'Manage your subscription, update payment method, or cancel anytime.'}
               </p>
             </div>
-            {subscriptionTier === 'basic' ? (
-              <button 
-                onClick={() => setShowUpgradeModal(true)}
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: "#fbbf24",
-                  color: "#000",
-                  border: "2px solid #000",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-                data-testid="button-upgrade-subscription"
-              >
-                Upgrade Plan
-              </button>
-            ) : subscriptionStatus === 'pending' ? (
-              <button
-                onClick={() => {
-                  // Redirect to complete payment
-                  const tier = subscriptionTier === 'premium' ? 'premium' : 'standard';
-                  navigate(`/stripe-checkout?tier=${tier}&resumePayment=true`);
-                }}
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: "#fbbf24",
-                  color: "#000",
-                  border: "2px solid #000",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  cursor: "pointer",
-                }}
-                data-testid="button-complete-payment"
-              >
-                Complete Payment
-              </button>
-            ) : (
-              <button
-                onClick={handleManageSubscription}
-                disabled={isOpeningPortal}
-                style={{
-                  padding: "10px 20px",
-                  backgroundColor: isOpeningPortal ? "#ccc" : "#fff",
-                  color: "#000",
-                  border: "2px solid #000",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  fontWeight: "700",
-                  cursor: isOpeningPortal ? "not-allowed" : "pointer",
-                }}
-                data-testid="button-manage-subscription"
-              >
-                {isOpeningPortal ? "Opening..." : "Manage Subscription"}
-              </button>
-            )}
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+              {subscriptionTier === 'basic' ? (
+                <button 
+                  onClick={() => setShowUpgradeModal(true)}
+                  style={{
+                    padding: "10px 20px",
+                    backgroundColor: "#fbbf24",
+                    color: "#000",
+                    border: "2px solid #000",
+                    borderRadius: "8px",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                  data-testid="button-upgrade-subscription"
+                >
+                  Upgrade Plan
+                </button>
+              ) : subscriptionStatus === 'pending' ? (
+                <button
+                  onClick={() => {
+                    const tier = subscriptionTier === 'premium' ? 'premium' : 'standard';
+                    navigate(`/stripe-checkout?tier=${tier}&resumePayment=true`);
+                  }}
+                  style={{
+                    padding: "10px 20px",
+                    backgroundColor: "#fbbf24",
+                    color: "#000",
+                    border: "2px solid #000",
+                    borderRadius: "8px",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                  data-testid="button-complete-payment"
+                >
+                  Complete Payment
+                </button>
+              ) : (
+                <>
+                  {/* Upgrade button for standard tier */}
+                  {subscriptionTier === 'standard' && (
+                    <button
+                      onClick={() => {
+                        setSelectedUpgradeTier('premium');
+                        setShowUpgradeModal(true);
+                      }}
+                      style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#fbbf24",
+                        color: "#000",
+                        border: "2px solid #000",
+                        borderRadius: "8px",
+                        fontSize: "14px",
+                        fontWeight: "700",
+                        cursor: "pointer",
+                      }}
+                      data-testid="button-upgrade-to-featured"
+                    >
+                      Upgrade to Featured
+                    </button>
+                  )}
+                  {/* Downgrade button for premium tier */}
+                  {subscriptionTier === 'premium' && (
+                    <button
+                      onClick={() => setShowDowngradeModal(true)}
+                      style={{
+                        padding: "10px 20px",
+                        backgroundColor: "#fff",
+                        color: "#000",
+                        border: "2px solid #000",
+                        borderRadius: "8px",
+                        fontSize: "14px",
+                        fontWeight: "700",
+                        cursor: "pointer",
+                      }}
+                      data-testid="button-downgrade-subscription"
+                    >
+                      Downgrade Plan
+                    </button>
+                  )}
+                  <button
+                    onClick={handleManageSubscription}
+                    disabled={isOpeningPortal}
+                    style={{
+                      padding: "10px 20px",
+                      backgroundColor: isOpeningPortal ? "#ccc" : "#fff",
+                      color: "#000",
+                      border: "2px solid #000",
+                      borderRadius: "8px",
+                      fontSize: "14px",
+                      fontWeight: "700",
+                      cursor: isOpeningPortal ? "not-allowed" : "pointer",
+                    }}
+                    data-testid="button-manage-subscription"
+                  >
+                    {isOpeningPortal ? "Opening..." : "Billing & Cancel"}
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </section>
 
@@ -2481,6 +2565,142 @@ export default function ProfileEditor() {
                 data-testid="button-confirm-upgrade"
               >
                 {isUpgrading ? "Processing..." : `Upgrade to ${selectedUpgradeTier === 'standard' ? 'Professional' : 'Featured'}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Downgrade Modal */}
+      {showDowngradeModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0,0,0,0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+          padding: "20px",
+        }}>
+          <div style={{
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            padding: "24px",
+            maxWidth: "500px",
+            width: "100%",
+            border: "3px solid #fbbf24",
+          }}>
+            <h2 style={{ fontSize: "24px", fontWeight: "700", marginBottom: "16px", color: "#000" }}>
+              Change Your Plan
+            </h2>
+            <p style={{ fontSize: "14px", color: "#666", marginBottom: "20px" }}>
+              Select a plan to downgrade to. Changes take effect at your next billing cycle.
+            </p>
+
+            {/* Plan Options */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
+              {/* Professional Plan - only show if currently premium */}
+              {subscriptionTier === 'premium' && (
+                <div 
+                  onClick={() => {}}
+                  style={{
+                    padding: "16px",
+                    border: "3px solid #fbbf24",
+                    borderRadius: "8px",
+                    backgroundColor: "#fffbeb",
+                  }}
+                  data-testid="option-downgrade-professional"
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div>
+                      <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#000", margin: 0 }}>Professional</h3>
+                      <p style={{ fontSize: "14px", color: "#666", margin: "4px 0 0 0" }}>Keep gallery, pricing tools, reviews</p>
+                    </div>
+                    <span style={{ fontSize: "20px", fontWeight: "700", color: "#16a34a" }}>$10/mo</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Basic/Free Plan */}
+              <div 
+                style={{
+                  padding: "16px",
+                  border: "2px solid #e5e5e5",
+                  borderRadius: "8px",
+                  backgroundColor: "#fff",
+                }}
+                data-testid="option-downgrade-basic"
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#000", margin: 0 }}>Basic (FREE)</h3>
+                    <p style={{ fontSize: "14px", color: "#666", margin: "4px 0 0 0" }}>Name, phone, address only</p>
+                  </div>
+                  <span style={{ fontSize: "20px", fontWeight: "700", color: "#000" }}>$0/mo</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ display: "flex", gap: "12px" }}>
+              <button
+                onClick={() => setShowDowngradeModal(false)}
+                style={{
+                  flex: 1,
+                  padding: "12px",
+                  backgroundColor: "#f5f5f5",
+                  color: "#000",
+                  border: "2px solid #e5e5e5",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                }}
+                data-testid="button-cancel-downgrade"
+              >
+                Cancel
+              </button>
+              {subscriptionTier === 'premium' && (
+                <button
+                  onClick={() => handleDowngrade('standard')}
+                  disabled={isDowngrading}
+                  style={{
+                    flex: 1,
+                    padding: "12px",
+                    backgroundColor: isDowngrading ? "#ccc" : "#fbbf24",
+                    color: "#000",
+                    border: "2px solid #000",
+                    borderRadius: "8px",
+                    fontSize: "14px",
+                    fontWeight: "700",
+                    cursor: isDowngrading ? "not-allowed" : "pointer",
+                  }}
+                  data-testid="button-confirm-downgrade-standard"
+                >
+                  {isDowngrading ? "Processing..." : "Downgrade to Professional"}
+                </button>
+              )}
+              <button
+                onClick={() => handleDowngrade('basic')}
+                disabled={isDowngrading}
+                style={{
+                  flex: 1,
+                  padding: "12px",
+                  backgroundColor: isDowngrading ? "#ccc" : "#ef4444",
+                  color: "#fff",
+                  border: "2px solid #000",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  cursor: isDowngrading ? "not-allowed" : "pointer",
+                }}
+                data-testid="button-confirm-downgrade-basic"
+              >
+                {isDowngrading ? "Processing..." : "Cancel Subscription"}
               </button>
             </div>
           </div>

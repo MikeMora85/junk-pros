@@ -2005,6 +2005,101 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     }
   });
 
+  // Downgrade subscription
+  app.post("/api/downgrade-subscription", async (req, res) => {
+    try {
+      const { tier } = req.body;
+      
+      const authHeader = req.headers.authorization;
+      if (!authHeader?.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      
+      const token = authHeader.split(' ')[1];
+      const decodedToken = Buffer.from(token, 'base64').toString('utf-8');
+      const parts = decodedToken.split(':');
+      
+      if (parts.length < 3 || parts[0] !== 'business') {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+      
+      const ownerId = parseInt(parts[2]);
+      if (isNaN(ownerId)) {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+      
+      const owner = await storage.getBusinessOwnerById(ownerId);
+      
+      if (!owner) {
+        return res.status(404).json({ error: "Business owner not found" });
+      }
+
+      if (!tier || !['standard', 'basic'].includes(tier)) {
+        return res.status(400).json({ error: "Invalid tier. Must be 'standard' or 'basic'" });
+      }
+
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      if (tier === 'basic') {
+        // Cancel subscription entirely
+        if (owner.stripeSubscriptionId) {
+          await stripe.subscriptions.update(owner.stripeSubscriptionId, {
+            cancel_at_period_end: true,
+          });
+        }
+        
+        // Update company to basic tier (will take effect at period end)
+        if (owner.companyId) {
+          await storage.updateCompany(owner.companyId, {
+            subscriptionTier: 'basic',
+            subscriptionStatus: 'cancelled',
+          } as any);
+        }
+        
+        res.json({ success: true, message: "Subscription will be cancelled at end of billing period" });
+      } else {
+        // Downgrade from premium to standard
+        const priceId = process.env.STRIPE_PROFESSIONAL_PRICE_ID;
+        if (!priceId) {
+          return res.status(500).json({ error: "Professional price ID not configured" });
+        }
+
+        if (owner.stripeSubscriptionId) {
+          const subscription = await stripe.subscriptions.retrieve(owner.stripeSubscriptionId);
+          
+          // Update the subscription to the new price
+          await stripe.subscriptions.update(owner.stripeSubscriptionId, {
+            items: [{
+              id: subscription.items.data[0].id,
+              price: priceId,
+            }],
+            proration_behavior: 'none', // Don't prorate, just switch at next billing
+          });
+          
+          // Update company tier
+          if (owner.companyId) {
+            await storage.updateCompany(owner.companyId, {
+              subscriptionTier: 'standard',
+            } as any);
+          }
+          
+          res.json({ success: true, message: "Plan changed to Professional" });
+        } else {
+          res.status(400).json({ error: "No active subscription found" });
+        }
+      }
+    } catch (error: any) {
+      console.error("Error downgrading subscription:", error);
+      res.status(500).json({ 
+        error: "Failed to change plan",
+        details: error.message 
+      });
+    }
+  });
+
   // Stripe Webhook Handler
   app.post("/api/stripe-webhook", async (req, res) => {
     try {
