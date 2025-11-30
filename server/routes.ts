@@ -1615,8 +1615,20 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       }
       
       const token = authHeader.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any;
-      const owner = await storage.getBusinessOwnerById(decoded.businessOwnerId);
+      // Decode base64 token: format is "business:email:ownerId:timestamp"
+      const decodedToken = Buffer.from(token, 'base64').toString('utf-8');
+      const parts = decodedToken.split(':');
+      
+      if (parts.length < 3 || parts[0] !== 'business') {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+      
+      const ownerId = parseInt(parts[2]);
+      if (isNaN(ownerId)) {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+      
+      const owner = await storage.getBusinessOwnerById(ownerId);
       
       if (!owner) {
         return res.status(404).json({ error: "Business owner not found" });
@@ -1667,8 +1679,20 @@ Sitemap: https://findjunkpros.com/sitemap.xml
       }
       
       const token = authHeader.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any;
-      const owner = await storage.getBusinessOwnerById(decoded.businessOwnerId);
+      // Decode base64 token: format is "business:email:ownerId:timestamp"
+      const decodedToken = Buffer.from(token, 'base64').toString('utf-8');
+      const parts = decodedToken.split(':');
+      
+      if (parts.length < 3 || parts[0] !== 'business') {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+      
+      const ownerId = parseInt(parts[2]);
+      if (isNaN(ownerId)) {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+      
+      const owner = await storage.getBusinessOwnerById(ownerId);
       
       if (!owner) {
         return res.status(404).json({ error: "Business owner not found" });
