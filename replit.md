@@ -58,8 +58,13 @@ The platform integrates **Stripe** for subscription payment processing with the 
   - `/api/create-subscription` endpoint for subscription creation
   - `/api/stripe-webhook` endpoint for handling Stripe events
 
+## Email Configuration
+- **Provider**: Resend (API key stored in RESEND_API_KEY secret)
+- **Sender Address**: info@findlocaljunkpros.com
+- **Uses**: Quote request notifications, admin email blasts to business owners
+
 ## External Dependencies
-- **PostgreSQL**: Primary database.
+- **PostgreSQL**: Primary database (Neon-hosted, DATABASE_URL secret).
 - **Mapbox GL / react-map-gl**: Interactive maps.
 - **Google Maps Geocoding API**: Zip code to coordinate conversion.
 - **Drizzle ORM**: Database interactions.
@@ -69,3 +74,4 @@ The platform integrates **Stripe** for subscription payment processing with the 
 - **Replit Auth**: Admin authentication.
 - **bcrypt**: Password hashing.
 - **Stripe**: Subscription payment processing.
+- **Resend**: Transactional email delivery.

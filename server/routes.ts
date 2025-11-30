@@ -536,7 +536,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           `;
           
           await resend.emails.send({
-            from: 'Junk Removal Directory <onboarding@resend.dev>',
+            from: 'Find Local Junk Pros <info@findlocaljunkpros.com>',
             to: businessEmail,
             subject: `New Quote Request from ${customerName}`,
             html: emailHtml,
@@ -1942,7 +1942,7 @@ Sitemap: https://findjunkpros.com/sitemap.xml
         try {
           if (resend) {
             await resend.emails.send({
-              from: 'FindLocalJunkPros <onboarding@resend.dev>',
+              from: 'Find Local Junk Pros <info@findlocaljunkpros.com>',
               to: recipient.email,
               subject: subject,
               html: `
