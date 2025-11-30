@@ -846,10 +846,6 @@ export default function CompanyDetail() {
             <QuoteRequestForm
               companyId={company.id}
               companyName={company.name}
-              onSuccess={() => {
-                setShowQuoteForm(false);
-                alert('Quote request submitted successfully! The business will contact you soon.');
-              }}
               onCancel={() => setShowQuoteForm(false)}
             />
           </div>

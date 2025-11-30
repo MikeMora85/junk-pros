@@ -5561,10 +5561,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     <QuoteRequestForm
                       companyId={c.id}
                       companyName={c.name}
-                      onSuccess={() => {
-                        alert('Quote request sent successfully! The business will contact you soon.');
-                        setExpandedQuote(null);
-                      }}
                       onCancel={() => setExpandedQuote(null)}
                     />
                   </div>

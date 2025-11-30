@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { apiRequest } from '@/lib/queryClient';
 import { Upload, X, CheckCircle } from 'lucide-react';
 
 interface QuoteRequestFormProps {
@@ -23,14 +22,18 @@ export default function QuoteRequestForm({ companyId, companyName, onSuccess, on
 
   const submitQuote = useMutation({
     mutationFn: async (data: FormData) => {
-      return await apiRequest('/api/quotes', {
+      const response = await fetch('/api/quotes', {
         method: 'POST',
         body: data,
       });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to submit quote');
+      }
+      return response.json();
     },
     onSuccess: () => {
       setSubmitted(true);
-      if (onSuccess) onSuccess();
     },
   });
 
