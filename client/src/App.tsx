@@ -5614,7 +5614,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   fontWeight: '700',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
-                  morasjunk@gmail.com
+                  info@findlocaljunkpros.com
                 </p>
               </div>
 
@@ -5654,7 +5654,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                   fontWeight: '700',
                   fontFamily: "'Helvetica Neue', Arial, sans-serif",
                 }}>
-                  morasjunk@gmail.com
+                  info@findlocaljunkpros.com
                 </p>
               </div>
             </div>
