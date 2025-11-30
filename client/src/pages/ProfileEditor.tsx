@@ -67,6 +67,9 @@ export default function ProfileEditor() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [isOpeningPortal, setIsOpeningPortal] = useState(false);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [selectedUpgradeTier, setSelectedUpgradeTier] = useState<'standard' | 'premium'>('standard');
+  const [isUpgrading, setIsUpgrading] = useState(false);
   
   const logoPathRef = useRef<string>('');
   const teamPhotoPathRef = useRef<string>('');
@@ -322,6 +325,42 @@ export default function ProfileEditor() {
       setTimeout(() => setShowToast(false), 3000);
     } finally {
       setIsOpeningPortal(false);
+    }
+  };
+
+  const handleUpgrade = async (tier: 'standard' | 'premium') => {
+    setIsUpgrading(true);
+    try {
+      const token = localStorage.getItem('auth_token');
+      const response = await fetch('/api/upgrade-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ tier }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        setToastMessage(data.error);
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 5000);
+        return;
+      }
+      
+      if (data.clientSecret) {
+        // Redirect to Stripe checkout with the client secret
+        navigate(`/stripe-checkout?tier=${tier}&clientSecret=${encodeURIComponent(data.clientSecret)}`);
+      }
+    } catch (error: any) {
+      setToastMessage('Failed to start upgrade');
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } finally {
+      setIsUpgrading(false);
+      setShowUpgradeModal(false);
     }
   };
 
@@ -2245,8 +2284,8 @@ export default function ProfileEditor() {
               </p>
             </div>
             {subscriptionTier === 'basic' ? (
-              <a 
-                href="/add-business"
+              <button 
+                onClick={() => setShowUpgradeModal(true)}
                 style={{
                   padding: "10px 20px",
                   backgroundColor: "#fbbf24",
@@ -2255,13 +2294,12 @@ export default function ProfileEditor() {
                   borderRadius: "8px",
                   fontSize: "14px",
                   fontWeight: "700",
-                  textDecoration: "none",
                   cursor: "pointer",
                 }}
                 data-testid="button-upgrade-subscription"
               >
                 Upgrade Plan
-              </a>
+              </button>
             ) : (
               <button
                 onClick={handleManageSubscription}
@@ -2306,6 +2344,123 @@ export default function ProfileEditor() {
           </div>
         )}
       </div>
+
+      {/* Upgrade Modal */}
+      {showUpgradeModal && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0,0,0,0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+          padding: "20px",
+        }}>
+          <div style={{
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            padding: "24px",
+            maxWidth: "500px",
+            width: "100%",
+            border: "3px solid #fbbf24",
+          }}>
+            <h2 style={{ fontSize: "24px", fontWeight: "700", marginBottom: "16px", color: "#000" }}>
+              Upgrade Your Plan
+            </h2>
+            <p style={{ fontSize: "14px", color: "#666", marginBottom: "20px" }}>
+              Choose a plan to unlock more features for your business listing.
+            </p>
+
+            {/* Plan Options */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
+              {/* Professional Plan */}
+              <div 
+                onClick={() => setSelectedUpgradeTier('standard')}
+                style={{
+                  padding: "16px",
+                  border: selectedUpgradeTier === 'standard' ? "3px solid #fbbf24" : "2px solid #e5e5e5",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  backgroundColor: selectedUpgradeTier === 'standard' ? "#fffbeb" : "#fff",
+                }}
+                data-testid="option-professional"
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#000", margin: 0 }}>Professional</h3>
+                    <p style={{ fontSize: "14px", color: "#666", margin: "4px 0 0 0" }}>Gallery, pricing tools, reviews</p>
+                  </div>
+                  <span style={{ fontSize: "20px", fontWeight: "700", color: "#000" }}>$10/mo</span>
+                </div>
+              </div>
+
+              {/* Featured Plan */}
+              <div 
+                onClick={() => setSelectedUpgradeTier('premium')}
+                style={{
+                  padding: "16px",
+                  border: selectedUpgradeTier === 'premium' ? "3px solid #fbbf24" : "2px solid #e5e5e5",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  backgroundColor: selectedUpgradeTier === 'premium' ? "#fffbeb" : "#fff",
+                }}
+                data-testid="option-featured"
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "700", color: "#000", margin: 0 }}>Featured</h3>
+                    <p style={{ fontSize: "14px", color: "#666", margin: "4px 0 0 0" }}>Top placement + all Professional features</p>
+                  </div>
+                  <span style={{ fontSize: "20px", fontWeight: "700", color: "#000" }}>$49/mo</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div style={{ display: "flex", gap: "12px" }}>
+              <button
+                onClick={() => setShowUpgradeModal(false)}
+                style={{
+                  flex: 1,
+                  padding: "12px",
+                  backgroundColor: "#f5f5f5",
+                  color: "#000",
+                  border: "2px solid #e5e5e5",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                }}
+                data-testid="button-cancel-upgrade"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleUpgrade(selectedUpgradeTier)}
+                disabled={isUpgrading}
+                style={{
+                  flex: 1,
+                  padding: "12px",
+                  backgroundColor: isUpgrading ? "#ccc" : "#fbbf24",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  cursor: isUpgrading ? "not-allowed" : "pointer",
+                }}
+                data-testid="button-confirm-upgrade"
+              >
+                {isUpgrading ? "Processing..." : `Upgrade to ${selectedUpgradeTier === 'standard' ? 'Professional' : 'Featured'}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

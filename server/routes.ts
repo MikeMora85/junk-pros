@@ -1656,6 +1656,92 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     }
   });
 
+  // Upgrade subscription for existing users (from basic to paid tier)
+  app.post("/api/upgrade-subscription", async (req, res) => {
+    try {
+      const { tier } = req.body;
+      
+      const authHeader = req.headers.authorization;
+      if (!authHeader?.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+      
+      const token = authHeader.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as any;
+      const owner = await storage.getBusinessOwnerById(decoded.businessOwnerId);
+      
+      if (!owner) {
+        return res.status(404).json({ error: "Business owner not found" });
+      }
+
+      if (!tier || !['standard', 'premium'].includes(tier)) {
+        return res.status(400).json({ error: "Invalid tier. Must be 'standard' or 'premium'" });
+      }
+
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      const priceIds: Record<string, string | undefined> = {
+        standard: process.env.STRIPE_PROFESSIONAL_PRICE_ID,
+        premium: process.env.STRIPE_FEATURED_PRICE_ID,
+      };
+
+      const priceId = priceIds[tier];
+      if (!priceId) {
+        return res.status(500).json({ error: `Price ID not configured for ${tier} tier` });
+      }
+
+      // Create or get customer
+      let customerId = owner.stripeCustomerId;
+      if (!customerId) {
+        const customer = await stripe.customers.create({
+          email: owner.email,
+          metadata: {
+            businessOwnerId: owner.id.toString(),
+            companyId: owner.companyId?.toString() || '',
+          },
+        });
+        customerId = customer.id;
+        await storage.updateBusinessOwner(owner.id, { stripeCustomerId: customerId } as any);
+      }
+
+      // Create subscription with payment
+      const subscription = await stripe.subscriptions.create({
+        customer: customerId,
+        items: [{ price: priceId }],
+        payment_behavior: 'default_incomplete',
+        payment_settings: { save_default_payment_method: 'on_subscription' },
+        expand: ['latest_invoice.payment_intent'],
+      });
+
+      const invoice = subscription.latest_invoice as any;
+      const paymentIntent = invoice?.payment_intent;
+      const clientSecret = paymentIntent?.client_secret;
+
+      if (!clientSecret) {
+        return res.status(500).json({ error: "Failed to create payment intent" });
+      }
+
+      // Store subscription ID
+      await storage.updateBusinessOwner(owner.id, { 
+        stripeSubscriptionId: subscription.id 
+      } as any);
+
+      res.json({
+        subscriptionId: subscription.id,
+        clientSecret,
+      });
+    } catch (error: any) {
+      console.error("Error upgrading subscription:", error);
+      res.status(500).json({ 
+        error: "Failed to upgrade subscription",
+        details: error.message 
+      });
+    }
+  });
+
   // Stripe Webhook Handler
   app.post("/api/stripe-webhook", async (req, res) => {
     try {

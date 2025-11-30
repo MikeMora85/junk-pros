@@ -120,6 +120,18 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
   const hasCreatedPayment = useRef(false);
 
   useEffect(() => {
+    // Check if clientSecret is passed in URL (for upgrade flow)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlClientSecret = urlParams.get('clientSecret');
+    const urlTier = urlParams.get('tier');
+    
+    if (urlClientSecret) {
+      // Upgrade flow - use the client secret from URL
+      console.log('Using clientSecret from URL for upgrade');
+      setClientSecret(urlClientSecret);
+      return;
+    }
+    
     // Prevent double API calls in React strict mode
     if (hasCreatedPayment.current) {
       console.log('Payment already created, skipping...');
@@ -128,7 +140,7 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
     
     console.log('StripeCheckout mounted with:', { tier, businessOwnerId });
     
-    // Validate parameters
+    // Validate parameters (only for new signup flow)
     if (!tier || !businessOwnerId || businessOwnerId === 0) {
       const errorMsg = 'Invalid payment parameters. Please go back and try again.';
       setError(errorMsg);
