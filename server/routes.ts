@@ -2307,6 +2307,91 @@ Sitemap: https://findjunkpros.com/sitemap.xml
     }
   });
 
+  // Financial tracking for admin
+  app.get("/api/admin/financials", requireSimpleAdmin, async (req, res) => {
+    try {
+      const Stripe = await import('stripe');
+      const stripeClient = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      const now = new Date();
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - now.getDay());
+      startOfWeek.setHours(0, 0, 0, 0);
+      
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      const startOfYear = new Date(now.getFullYear(), 0, 1);
+
+      // Get all successful charges
+      const charges = await stripeClient.charges.list({
+        limit: 100,
+        created: {
+          gte: Math.floor(startOfYear.getTime() / 1000),
+        },
+      });
+
+      let weeklyRevenue = 0;
+      let monthlyRevenue = 0;
+      let yearlyRevenue = 0;
+      let totalTransactions = 0;
+      const recentTransactions: any[] = [];
+
+      for (const charge of charges.data) {
+        if (charge.status === 'succeeded' && charge.paid) {
+          const chargeDate = new Date(charge.created * 1000);
+          const amount = charge.amount / 100;
+          
+          yearlyRevenue += amount;
+          totalTransactions++;
+
+          if (chargeDate >= startOfMonth) {
+            monthlyRevenue += amount;
+          }
+          if (chargeDate >= startOfWeek) {
+            weeklyRevenue += amount;
+          }
+
+          // Track recent transactions (last 10)
+          if (recentTransactions.length < 10) {
+            recentTransactions.push({
+              id: charge.id,
+              amount,
+              date: chargeDate.toISOString(),
+              customerEmail: charge.billing_details?.email || charge.receipt_email || 'Unknown',
+              description: charge.description || 'Subscription payment',
+            });
+          }
+        }
+      }
+
+      // Get active subscriptions count
+      const subscriptions = await stripeClient.subscriptions.list({
+        status: 'active',
+        limit: 100,
+      });
+
+      const activeSubscriptions = subscriptions.data.length;
+      const mrr = subscriptions.data.reduce((sum, sub) => {
+        const amount = sub.items.data[0]?.price?.unit_amount || 0;
+        return sum + (amount / 100);
+      }, 0);
+
+      res.json({
+        weekly: weeklyRevenue,
+        monthly: monthlyRevenue,
+        yearly: yearlyRevenue,
+        totalTransactions,
+        activeSubscriptions,
+        mrr,
+        recentTransactions,
+      });
+    } catch (error: any) {
+      console.error("Error fetching financials:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Cancel subscription from admin
   app.post("/api/admin/subscribers/:id/cancel", requireSimpleAdmin, async (req, res) => {
     try {

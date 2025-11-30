@@ -45,7 +45,7 @@ interface Subscriber {
 export default function AdminDashboard() {
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<'active' | 'unclaimed' | 'featured' | 'analytics' | 'subscribers'>('active');
+  const [activeTab, setActiveTab] = useState<'active' | 'unclaimed' | 'featured' | 'analytics' | 'subscribers' | 'financials'>('active');
   const [searchQuery, setSearchQuery] = useState("");
   const [stateFilter, setStateFilter] = useState<string>("all");
   const [cityFilter, setCityFilter] = useState<string>("all");
@@ -80,6 +80,27 @@ export default function AdminDashboard() {
   const { data: subscribers = [], isLoading: subscribersLoading, refetch: refetchSubscribers } = useQuery<Subscriber[]>({
     queryKey: ['/api/admin/subscribers'],
     enabled: !!user?.isAdmin,
+  });
+
+  interface FinancialData {
+    weekly: number;
+    monthly: number;
+    yearly: number;
+    totalTransactions: number;
+    activeSubscriptions: number;
+    mrr: number;
+    recentTransactions: {
+      id: string;
+      amount: number;
+      date: string;
+      customerEmail: string;
+      description: string;
+    }[];
+  }
+
+  const { data: financials, isLoading: financialsLoading, refetch: refetchFinancials } = useQuery<FinancialData>({
+    queryKey: ['/api/admin/financials'],
+    enabled: !!user?.isAdmin && activeTab === 'financials',
   });
 
   const cancelSubscriptionMutation = useMutation({
@@ -493,6 +514,7 @@ export default function AdminDashboard() {
           { id: 'unclaimed', label: 'Unclaimed', count: stats.unclaimed },
           { id: 'featured', label: 'Featured', count: stats.featured },
           { id: 'subscribers', label: 'Subscribers', count: subscribers.length },
+          { id: 'financials', label: 'Financials', count: null },
           { id: 'analytics', label: 'Analytics', count: null },
         ].map((tab) => (
           <button
@@ -1190,6 +1212,171 @@ export default function AdminDashboard() {
               ))}
             </div>
           )}
+          </div>
+        </div>
+      )}
+
+      {/* Financials Tab */}
+      {activeTab === 'financials' && (
+        <div style={{ padding: '20px', background: '#f9fafb', minHeight: 'calc(100vh - 300px)' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ margin: 0, fontSize: '24px', fontWeight: '800', color: '#000' }}>
+                Financial Overview
+              </h2>
+              <button
+                onClick={() => refetchFinancials()}
+                style={{
+                  background: '#fbbf24',
+                  color: '#000',
+                  padding: '10px 20px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                }}
+              >
+                Refresh Data
+              </button>
+            </div>
+
+            {financialsLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px' }}>Loading financial data...</div>
+            ) : financials ? (
+              <>
+                {/* Revenue Cards */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+                  <div style={{
+                    background: '#fff',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>This Week</div>
+                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#16a34a' }}>
+                      ${financials.weekly.toFixed(2)}
+                    </div>
+                  </div>
+                  <div style={{
+                    background: '#fff',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>This Month</div>
+                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#16a34a' }}>
+                      ${financials.monthly.toFixed(2)}
+                    </div>
+                  </div>
+                  <div style={{
+                    background: '#fff',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>This Year</div>
+                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#16a34a' }}>
+                      ${financials.yearly.toFixed(2)}
+                    </div>
+                  </div>
+                  <div style={{
+                    background: '#fff',
+                    border: '2px solid #fbbf24',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>Monthly Recurring</div>
+                    <div style={{ fontSize: '32px', fontWeight: '800', color: '#16a34a' }}>
+                      ${financials.mrr.toFixed(2)}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stats Row */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
+                  <div style={{
+                    background: '#fff',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>Active Subscriptions</div>
+                    <div style={{ fontSize: '28px', fontWeight: '800', color: '#000' }}>
+                      {financials.activeSubscriptions}
+                    </div>
+                  </div>
+                  <div style={{
+                    background: '#fff',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '12px',
+                    padding: '20px',
+                    textAlign: 'center',
+                  }}>
+                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>Total Transactions</div>
+                    <div style={{ fontSize: '28px', fontWeight: '800', color: '#000' }}>
+                      {financials.totalTransactions}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent Transactions */}
+                <div style={{
+                  background: '#fff',
+                  border: '2px solid #fbbf24',
+                  borderRadius: '12px',
+                  padding: '20px',
+                }}>
+                  <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '700', color: '#000' }}>
+                    Recent Transactions
+                  </h3>
+                  {financials.recentTransactions.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '20px', color: '#666' }}>
+                      No transactions yet
+                    </div>
+                  ) : (
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <thead>
+                          <tr style={{ background: '#f9fafb' }}>
+                            <th style={{ textAlign: 'left', padding: '12px', borderBottom: '1px solid #e5e7eb', fontWeight: '600' }}>Date</th>
+                            <th style={{ textAlign: 'left', padding: '12px', borderBottom: '1px solid #e5e7eb', fontWeight: '600' }}>Customer</th>
+                            <th style={{ textAlign: 'left', padding: '12px', borderBottom: '1px solid #e5e7eb', fontWeight: '600' }}>Description</th>
+                            <th style={{ textAlign: 'right', padding: '12px', borderBottom: '1px solid #e5e7eb', fontWeight: '600' }}>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {financials.recentTransactions.map((tx) => (
+                            <tr key={tx.id}>
+                              <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
+                                {new Date(tx.date).toLocaleDateString()}
+                              </td>
+                              <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
+                                {tx.customerEmail}
+                              </td>
+                              <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb' }}>
+                                {tx.description}
+                              </td>
+                              <td style={{ padding: '12px', borderBottom: '1px solid #e5e7eb', textAlign: 'right', fontWeight: '700', color: '#16a34a' }}>
+                                ${tx.amount.toFixed(2)}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                Failed to load financial data. Please try refreshing.
+              </div>
+            )}
           </div>
         </div>
       )}
