@@ -57,6 +57,113 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     });
   });
 
+  // Debug endpoint to check business owner stripe status
+  app.get('/api/debug/business-owner/:companyId', async (req, res) => {
+    try {
+      const companyId = parseInt(req.params.companyId);
+      const owner = await storage.getBusinessOwnerByCompanyId(companyId);
+      const company = await storage.getCompanyById(companyId);
+      
+      if (!owner) {
+        return res.json({ error: 'No business owner found for this company', companyId });
+      }
+      
+      res.json({
+        ownerId: owner.id,
+        email: owner.email,
+        companyId: owner.companyId,
+        stripeCustomerId: owner.stripeCustomerId || null,
+        stripeSubscriptionId: owner.stripeSubscriptionId || null,
+        companyName: company?.name,
+        companyTier: company?.subscriptionTier,
+        companyStatus: company?.subscriptionStatus,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Admin endpoint to sync Stripe data for a business owner
+  app.post('/api/admin/sync-stripe/:companyId', async (req, res) => {
+    try {
+      const companyId = parseInt(req.params.companyId);
+      const owner = await storage.getBusinessOwnerByCompanyId(companyId);
+      const company = await storage.getCompanyById(companyId);
+      
+      if (!owner) {
+        return res.status(404).json({ error: 'No business owner found for this company' });
+      }
+
+      const Stripe = await import('stripe');
+      const stripe = new Stripe.default(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: '2024-06-20' as any,
+      });
+
+      // Search for customer by email
+      const customers = await stripe.customers.list({
+        email: owner.email,
+        limit: 1,
+      });
+
+      if (customers.data.length === 0) {
+        return res.status(404).json({ 
+          error: 'No Stripe customer found for this email',
+          email: owner.email 
+        });
+      }
+
+      const customer = customers.data[0];
+      
+      // Get active subscriptions for this customer
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customer.id,
+        status: 'active',
+        limit: 1,
+      });
+
+      let subscriptionId = null;
+      let subscriptionTier = 'basic';
+      
+      if (subscriptions.data.length > 0) {
+        const subscription = subscriptions.data[0];
+        subscriptionId = subscription.id;
+        
+        // Determine tier from price
+        const priceId = subscription.items.data[0]?.price?.id;
+        if (priceId === process.env.STRIPE_FEATURED_PRICE_ID) {
+          subscriptionTier = 'premium';
+        } else if (priceId === process.env.STRIPE_PROFESSIONAL_PRICE_ID) {
+          subscriptionTier = 'standard';
+        }
+      }
+
+      // Update business owner with Stripe data
+      await storage.updateBusinessOwner(owner.id, {
+        stripeCustomerId: customer.id,
+        stripeSubscriptionId: subscriptionId,
+      } as any);
+
+      // Update company subscription status if they have active subscription
+      if (subscriptionId && company) {
+        await storage.updateCompany(companyId, {
+          subscriptionStatus: 'active',
+          subscriptionTier: subscriptionTier,
+        });
+      }
+
+      res.json({
+        success: true,
+        customerId: customer.id,
+        subscriptionId,
+        subscriptionTier,
+        email: owner.email,
+      });
+    } catch (error: any) {
+      console.error('Error syncing Stripe data:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Simple login endpoint
   app.post('/api/auth/simple-login', async (req, res) => {
     try {

@@ -124,11 +124,63 @@ export default function StripeCheckout({ tier, businessOwnerId }: { tier: string
     const urlParams = new URLSearchParams(window.location.search);
     const urlClientSecret = urlParams.get('clientSecret');
     const urlTier = urlParams.get('tier');
+    const resumePayment = urlParams.get('resumePayment');
     
     if (urlClientSecret) {
       // Upgrade flow - use the client secret from URL
       console.log('Using clientSecret from URL for upgrade');
       setClientSecret(urlClientSecret);
+      return;
+    }
+    
+    // Resume payment flow - user is completing a pending payment
+    if (resumePayment === 'true' && urlTier) {
+      console.log('Resume payment flow for tier:', urlTier);
+      
+      if (hasCreatedPayment.current) {
+        console.log('Payment already created, skipping...');
+        return;
+      }
+      hasCreatedPayment.current = true;
+      
+      // Get auth token and create a new payment intent
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        const errorMsg = 'Please log in to complete your payment.';
+        setError(errorMsg);
+        setToastMessage(errorMsg);
+        setShowToast(true);
+        return;
+      }
+      
+      // Use the upgrade subscription endpoint which handles existing users
+      fetch('/api/upgrade-subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ tier: urlTier }),
+      })
+        .then(res => res.json())
+        .then((data) => {
+          console.log('Resume payment response:', data);
+          if (data.clientSecret) {
+            setClientSecret(data.clientSecret);
+          } else if (data.error) {
+            throw new Error(data.error);
+          } else {
+            throw new Error('No client secret returned');
+          }
+        })
+        .catch((error) => {
+          console.error('Resume payment error:', error);
+          const errorMsg = `Payment Error: ${error.message || 'Failed to initialize payment. Please try again.'}`;
+          setError(errorMsg);
+          setToastMessage(errorMsg);
+          setShowToast(true);
+          hasCreatedPayment.current = false;
+        });
       return;
     }
     

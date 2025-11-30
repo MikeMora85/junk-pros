@@ -75,8 +75,9 @@ export default function ProfileEditor() {
   const teamPhotoPathRef = useRef<string>('');
   const galleryPathsRef = useRef<string[]>([]);
   
-  // Check subscription tier to limit editing for Basic/FREE tier
+  // Check subscription tier and status to limit editing for Basic/FREE tier
   const [subscriptionTier, setSubscriptionTier] = useState<string>('basic');
+  const [subscriptionStatus, setSubscriptionStatus] = useState<string>('active');
 
   const getDefaultBusinessHours = (): BusinessHours => ({
     monday: { open: "09:00", close: "17:00", closed: false },
@@ -145,8 +146,9 @@ export default function ProfileEditor() {
 
   useEffect(() => {
     if (company && !formInitialized) {
-      // Set subscription tier for conditional rendering
+      // Set subscription tier and status for conditional rendering
       setSubscriptionTier(company.subscriptionTier || 'basic');
+      setSubscriptionStatus(company.subscriptionStatus || 'active');
       
       setFormData({
         name: company.name || "",
@@ -2280,7 +2282,9 @@ export default function ProfileEditor() {
               <p style={{ fontSize: "13px", color: "#666" }}>
                 {subscriptionTier === 'basic' 
                   ? 'Upgrade for galleries, pricing tools, reviews, and more!'
-                  : 'Manage your subscription, update payment method, or cancel anytime.'}
+                  : subscriptionStatus === 'pending'
+                    ? 'Your payment is pending. Complete it to activate your subscription.'
+                    : 'Manage your subscription, update payment method, or cancel anytime.'}
               </p>
             </div>
             {subscriptionTier === 'basic' ? (
@@ -2299,6 +2303,27 @@ export default function ProfileEditor() {
                 data-testid="button-upgrade-subscription"
               >
                 Upgrade Plan
+              </button>
+            ) : subscriptionStatus === 'pending' ? (
+              <button
+                onClick={() => {
+                  // Redirect to complete payment
+                  const tier = subscriptionTier === 'premium' ? 'premium' : 'standard';
+                  navigate(`/stripe-checkout?tier=${tier}&resumePayment=true`);
+                }}
+                style={{
+                  padding: "10px 20px",
+                  backgroundColor: "#fbbf24",
+                  color: "#000",
+                  border: "2px solid #000",
+                  borderRadius: "8px",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  cursor: "pointer",
+                }}
+                data-testid="button-complete-payment"
+              >
+                Complete Payment
               </button>
             ) : (
               <button
