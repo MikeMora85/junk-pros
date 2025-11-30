@@ -44,14 +44,14 @@ export default function QuoteRequestForm({ companyId, companyName, onSuccess, on
         padding: '24px',
         backgroundColor: '#fff',
         borderRadius: '8px',
-        border: '2px solid #22c55e',
+        border: '2px solid #fbbf24',
         textAlign: 'center',
       }}>
-        <CheckCircle size={48} color="#22c55e" style={{ marginBottom: '12px' }} />
+        <CheckCircle size={48} color="#fbbf24" style={{ marginBottom: '12px' }} />
         <h4 style={{ 
           fontSize: '18px', 
           fontWeight: '700', 
-          color: '#166534',
+          color: '#000',
           margin: '0 0 8px 0' 
         }}>
           Quote Request Sent!
