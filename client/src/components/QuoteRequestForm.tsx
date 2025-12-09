@@ -350,7 +350,10 @@ export default function QuoteRequestForm({ companyId, companyName, onSuccess, on
           {onCancel && (
             <button
               type="button"
-              onClick={onCancel}
+              onClick={(e) => {
+                e.stopPropagation();
+                onCancel();
+              }}
               style={{
                 padding: '12px 16px',
                 backgroundColor: '#f3f4f6',
