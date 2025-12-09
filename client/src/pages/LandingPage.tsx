@@ -195,6 +195,8 @@ function LandingPage() {
             <img 
               src={heroTruck} 
               alt="Junk removal truck with US map" 
+              loading="eager"
+              fetchPriority="high"
               style={{
                 width: '100%',
                 height: 'auto',

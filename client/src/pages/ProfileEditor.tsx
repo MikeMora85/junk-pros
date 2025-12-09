@@ -773,6 +773,7 @@ export default function ProfileEditor() {
                     <img
                       src={formData.logoUrl}
                       alt="Logo"
+                      loading="lazy"
                       style={{ width: "100%", height: "auto", borderRadius: "8px", border: "2px solid #e5e7eb" }}
                     />
                     <button
@@ -1682,6 +1683,7 @@ export default function ProfileEditor() {
                             <img
                               src={member.photoUrl}
                               alt={member.name}
+                              loading="lazy"
                               style={{ width: "100%", height: "150px", objectFit: "cover", borderRadius: "8px" }}
                             />
                             <button
@@ -1904,6 +1906,7 @@ export default function ProfileEditor() {
                         <img
                           src={url}
                           alt={`Gallery ${index + 1}`}
+                          loading="lazy"
                           style={{
                             position: "absolute",
                             width: "100%",
