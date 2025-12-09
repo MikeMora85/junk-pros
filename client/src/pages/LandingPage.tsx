@@ -4,7 +4,7 @@ import { useSEO, buildLandingPageSEO, buildOrganizationSchema } from "../lib/seo
 import { HamburgerMenu, RotatingBanner, InteractiveFooter } from "../components/SharedComponents";
 import { Search, Menu, UserCircle } from "lucide-react";
 import EstimateBuilderInline from "../components/EstimateBuilderInline";
-import heroTruck from "@assets/D7C214E3-66B6-4E91-AC55-328BC4C0447C_1763365748045.png";
+import heroTruck from "@assets/hero_truck.webp";
 
 const stateNames: Record<string, string> = {
   'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
