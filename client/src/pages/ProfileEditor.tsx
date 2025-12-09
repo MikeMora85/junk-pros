@@ -49,6 +49,32 @@ const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
   return `${hours.toString().padStart(2, "0")}:${minutes}`;
 });
 
+// Helper function to geocode an address
+async function geocodeAddress(address: string, city: string, state: string): Promise<{ lat: number; lng: number } | null> {
+  try {
+    const configResponse = await fetch('/api/config');
+    const config = await configResponse.json();
+    const apiKey = config.googleMapsApiKey;
+    
+    if (!apiKey) return null;
+    
+    const fullAddress = `${address}, ${city}, ${state}`;
+    const response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(fullAddress)}&key=${apiKey}`
+    );
+    const data = await response.json();
+    
+    if (data.results && data.results[0]) {
+      const location = data.results[0].geometry.location;
+      return { lat: location.lat, lng: location.lng };
+    }
+    return null;
+  } catch (error) {
+    console.error('Geocoding error:', error);
+    return null;
+  }
+}
+
 interface DaySchedule {
   open: string;
   close: string;
@@ -418,8 +444,15 @@ export default function ProfileEditor() {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     console.log('🔵 SAVE BUTTON CLICKED - Handler executing');
+    
+    // Geocode the address to get lat/lng
+    let coordinates: { lat: number; lng: number } | null = null;
+    if (formData.address && formData.city && formData.state) {
+      coordinates = await geocodeAddress(formData.address, formData.city, formData.state);
+      console.log('📍 Geocoded coordinates:', coordinates);
+    }
     
     // Basic tier: Only save logo, name, phone, website, address, city, state, contactEmail
     const basicPayload = {
@@ -432,6 +465,8 @@ export default function ProfileEditor() {
       state: formData.state,
       logoUrl: formData.logoUrl || null,
       claimed: true, // Mark as claimed when user edits profile
+      latitude: coordinates?.lat || null,
+      longitude: coordinates?.lng || null,
     };
     
     // Standard & Premium: Full payload
@@ -505,6 +540,13 @@ export default function ProfileEditor() {
   const handleGoLive = async () => {
     console.log('🟢 GO LIVE BUTTON CLICKED');
     
+    // Geocode the address to get lat/lng
+    let coordinates: { lat: number; lng: number } | null = null;
+    if (formData.address && formData.city && formData.state) {
+      coordinates = await geocodeAddress(formData.address, formData.city, formData.state);
+      console.log('📍 Geocoded coordinates for GoLive:', coordinates);
+    }
+    
     // Prepare the payload (same logic as handleSave)
     const basicPayload = {
       name: formData.name,
@@ -516,6 +558,8 @@ export default function ProfileEditor() {
       state: formData.state,
       logoUrl: formData.logoUrl || null,
       claimed: true,
+      latitude: coordinates?.lat || null,
+      longitude: coordinates?.lng || null,
     };
     
     const fullPayload = {
