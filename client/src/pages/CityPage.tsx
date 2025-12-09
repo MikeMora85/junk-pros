@@ -1477,8 +1477,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
 function CityPage({ city, state }: { city: string; state: string }) {
   const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
   const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
-  const [carouselOffsets] = useState<Record<number, number>>({});
-  const [carouselTransitions] = useState<Record<number, boolean>>({});
+  const [carouselTick, setCarouselTick] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [videoModalUrl, setVideoModalUrl] = useState<string | null>(null);
   const { user, isAuthenticated } = useAuth();
@@ -1522,6 +1521,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
       return (a.displayOrder || 999) - (b.displayOrder || 999);
     });
   }, [companies]);
+
+  // Carousel animation effect - simple tick counter
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselTick(t => t + 1);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
 
   const getVideoEmbedUrl = (url: string) => {
     if (url.includes('youtube.com/watch?v=')) {
@@ -2310,8 +2317,14 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     `}} />
                     <div style={{
                       display: 'flex',
-                      transition: carouselTransitions[c.id] !== false ? 'transform 1.5s ease-in-out' : 'none',
-                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5)}%)`,
+                      transition: 'transform 1.5s ease-in-out',
+                      transform: (() => {
+                        const hasGallery = c.galleryImages && c.galleryImages.length > 0;
+                        const imageCount = hasGallery ? c.galleryImages!.length : defaultImages.length;
+                        const offset = carouselTick % imageCount;
+                        const slideWidth = window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5;
+                        return `translateX(-${offset * slideWidth}%)`;
+                      })(),
                     }}>
                       {(() => {
                         const hasGallery = c.galleryImages && c.galleryImages.length > 0;
