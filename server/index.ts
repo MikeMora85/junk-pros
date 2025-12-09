@@ -41,8 +41,26 @@ app.use((req, res, next) => {
 (async () => {
   if (process.env.NODE_ENV === "production") {
     const httpServer = await registerRoutes(app, storage);
-    app.use(express.static("dist/client"));
+    
+    // Serve static assets with long cache headers (1 year for hashed assets)
+    app.use(express.static("dist/client", {
+      maxAge: '1y',
+      etag: true,
+      lastModified: true,
+      setHeaders: (res, filePath) => {
+        // Cache immutable assets with hashes for 1 year
+        if (filePath.match(/\.(js|css|woff2?|ttf|eot|svg|png|jpg|jpeg|webp|avif|gif|ico)$/)) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+        // HTML files should not be cached
+        if (filePath.endsWith('.html')) {
+          res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        }
+      }
+    }));
+    
     app.get(/.*/, (_req, res) => {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.sendFile(path.resolve("dist/client", "index.html"));
     });
     
