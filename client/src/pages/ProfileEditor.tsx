@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "../lib/queryClient";
 import { useAuth } from "../hooks/useAuth";
 import { useLocation } from "wouter";
-import { CheckCircle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell, X, Upload, Plus } from "lucide-react";
+import { CheckCircle, Truck, Home, Building2, Sofa, Refrigerator, Tv, Package, Trees, Dumbbell, X, Upload, Plus, Warehouse, Archive, Boxes, Hammer, Car, Bike, HardHat, Trash2, Recycle, Flame } from "lucide-react";
 import type { Company } from "@shared/schema";
 import { ObjectUploader } from "../components/ObjectUploader";
 import type { UploadResult } from "@uppy/core";
@@ -15,9 +15,21 @@ const SERVICE_ICONS = [
   { id: "appliances", icon: Refrigerator, label: "Appliances" },
   { id: "electronics", icon: Tv, label: "Electronics" },
   { id: "yard-waste", icon: Trees, label: "Yard Waste" },
-  { id: "construction", icon: Dumbbell, label: "Construction" },
+  { id: "construction", icon: HardHat, label: "Construction Debris" },
   { id: "moving", icon: Truck, label: "Moving/Hauling" },
   { id: "general", icon: Package, label: "General Junk" },
+  { id: "estate-cleanout", icon: Boxes, label: "Estate Cleanouts" },
+  { id: "hoarder-cleanout", icon: Archive, label: "Hoarder Cleanouts" },
+  { id: "foreclosure", icon: Home, label: "Foreclosure Cleanouts" },
+  { id: "storage-unit", icon: Warehouse, label: "Storage Unit Cleanouts" },
+  { id: "garage-cleanout", icon: Car, label: "Garage Cleanouts" },
+  { id: "demolition", icon: Hammer, label: "Light Demolition" },
+  { id: "hot-tub", icon: Flame, label: "Hot Tub Removal" },
+  { id: "mattress", icon: Sofa, label: "Mattress Disposal" },
+  { id: "recycling", icon: Recycle, label: "E-Waste/Recycling" },
+  { id: "trash-out", icon: Trash2, label: "Trash Outs" },
+  { id: "exercise-equipment", icon: Dumbbell, label: "Exercise Equipment" },
+  { id: "bicycle", icon: Bike, label: "Bicycle Removal" },
 ];
 
 const DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
@@ -1270,67 +1282,6 @@ export default function ProfileEditor() {
                 </div>
               </div>
 
-              {/* Specialties */}
-              <div>
-                <label style={labelStyle}>Specialties (Optional)</label>
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {formData.specialties.map((specialty, index) => (
-                    <div key={index} style={{ display: "flex", gap: "8px" }}>
-                      <input
-                        data-testid={`input-specialty-${index}`}
-                        style={{ ...inputStyle, flex: 1 }}
-                        value={specialty}
-                        onChange={(e) => {
-                          const newSpecialties = [...formData.specialties];
-                          newSpecialties[index] = e.target.value;
-                          setFormData(prev => ({ ...prev, specialties: newSpecialties }));
-                        }}
-                        placeholder="e.g., Estate Cleanouts"
-                      />
-                      <button
-                        onClick={() => {
-                          const newSpecialties = formData.specialties.filter((_, i) => i !== index);
-                          setFormData(prev => ({ ...prev, specialties: newSpecialties }));
-                        }}
-                        data-testid={`button-remove-specialty-${index}`}
-                        style={{
-                          padding: "8px 16px",
-                          backgroundColor: "#dc2626",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "8px",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                          fontWeight: "600"
-                        }}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                  <button
-                    onClick={() => setFormData(prev => ({ ...prev, specialties: [...prev.specialties, ""] }))}
-                    data-testid="button-add-specialty"
-                    style={{
-                      padding: "12px",
-                      backgroundColor: "#fbbf24",
-                      color: "#000",
-                      border: "none",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "8px"
-                    }}
-                  >
-                    <Plus size={16} />
-                    Add Specialty
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </section>
