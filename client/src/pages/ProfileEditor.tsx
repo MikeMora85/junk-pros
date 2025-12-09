@@ -599,13 +599,21 @@ export default function ProfileEditor() {
     window.location.href = '/';
   };
 
+  const MAX_SERVICES = 9;
+  
   const toggleService = (serviceId: string) => {
-    setFormData(prev => ({
-      ...prev,
-      selectedServices: prev.selectedServices.includes(serviceId)
-        ? prev.selectedServices.filter(s => s !== serviceId)
-        : [...prev.selectedServices, serviceId],
-    }));
+    setFormData(prev => {
+      const isCurrentlySelected = prev.selectedServices.includes(serviceId);
+      if (!isCurrentlySelected && prev.selectedServices.length >= MAX_SERVICES) {
+        return prev;
+      }
+      return {
+        ...prev,
+        selectedServices: isCurrentlySelected
+          ? prev.selectedServices.filter(s => s !== serviceId)
+          : [...prev.selectedServices, serviceId],
+      };
+    });
   };
 
   if (isAuthLoading || isLoading) {
@@ -1237,7 +1245,14 @@ export default function ProfileEditor() {
             <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
               {/* Service Icons */}
               <div>
-                <label style={labelStyle}>Select Your Services</label>
+                <label style={labelStyle}>
+                  Select Your Services ({formData.selectedServices.length}/{MAX_SERVICES})
+                </label>
+                {formData.selectedServices.length >= MAX_SERVICES && (
+                  <p style={{ fontSize: "13px", color: "#dc2626", margin: "4px 0 8px 0" }}>
+                    Maximum of {MAX_SERVICES} services reached. Deselect one to choose another.
+                  </p>
+                )}
                 <div style={{
                   display: "grid",
                   gridTemplateColumns: "repeat(2, 1fr)",
@@ -1246,22 +1261,25 @@ export default function ProfileEditor() {
                 }}>
                   {SERVICE_ICONS.map(({ id, icon: Icon, label }) => {
                     const isSelected = formData.selectedServices.includes(id);
+                    const isDisabled = !isSelected && formData.selectedServices.length >= MAX_SERVICES;
                     return (
                       <button
                         key={id}
                         onClick={() => toggleService(id)}
+                        disabled={isDisabled}
                         data-testid={`service-${id}`}
                         style={{
                           padding: "12px 8px",
                           border: `2px solid ${isSelected ? "#fbbf24" : "#e5e7eb"}`,
                           borderRadius: "8px",
-                          backgroundColor: isSelected ? "#fef3c7" : "#fff",
-                          cursor: "pointer",
+                          backgroundColor: isSelected ? "#fef3c7" : isDisabled ? "#f5f5f5" : "#fff",
+                          cursor: isDisabled ? "not-allowed" : "pointer",
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
                           gap: "4px",
-                          transition: "all 0.2s"
+                          transition: "all 0.2s",
+                          opacity: isDisabled ? 0.5 : 1,
                         }}
                       >
                         <Icon size={24} color={isSelected ? "#000" : "#666"} />
