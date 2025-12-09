@@ -4478,26 +4478,6 @@ function CityPage({ city, state }: { city: string; state: string }) {
     },
   });
 
-  useEffect(() => {
-    if (companies.length === 0) return;
-    
-    const interval = setInterval(() => {
-      setCarouselOffsets((prev) => {
-        const next: Record<number, number> = { ...prev };
-        companies.forEach((c) => {
-          const hasGallery = c.galleryImages && c.galleryImages.length > 0;
-          if (hasGallery) {
-            const imageCount = c.galleryImages!.length;
-            const currentOffset = prev[c.id] || 0;
-            next[c.id] = (currentOffset + 1) % imageCount;
-          }
-        });
-        return next;
-      });
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, [companies.length]);
 
   const selectedCompany = companies.find(c => c.id === selectedCompanyId);
 
