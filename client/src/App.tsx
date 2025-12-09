@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, Route, Router, Switch, useLocation } from "wouter";
 import { apiRequest, queryClient } from "./lib/queryClient";
@@ -4479,56 +4479,41 @@ function CityPage({ city, state }: { city: string; state: string }) {
   });
 
   useEffect(() => {
+    if (companies.length === 0) return;
+    
     const interval = setInterval(() => {
       setCarouselOffsets((prev) => {
-        const next: Record<number, number> = {};
+        const next: Record<number, number> = { ...prev };
         companies.forEach((c) => {
           const hasGallery = c.galleryImages && c.galleryImages.length > 0;
-          const hasImages = c.logoUrl || c.reviews > 0;
-          
           if (hasGallery) {
             const imageCount = c.galleryImages!.length;
             const currentOffset = prev[c.id] || 0;
-            const nextOffset = currentOffset + 1;
-            
-            // When we reach the end of the first set, reset to 0 without transition
-            if (nextOffset >= imageCount) {
-              next[c.id] = 0;
-              // Disable transition for this carousel
-              setCarouselTransitions(t => ({ ...t, [c.id]: false }));
-              // Re-enable transition after a brief moment
-              setTimeout(() => {
-                setCarouselTransitions(t => ({ ...t, [c.id]: true }));
-              }, 50);
-            } else {
-              next[c.id] = nextOffset;
-            }
-          } else if (hasImages) {
-            const imageCount = defaultImages.length;
-            const currentOffset = prev[c.id] || 0;
-            const nextOffset = currentOffset + 1;
-            
-            if (nextOffset >= imageCount) {
-              next[c.id] = 0;
-              setCarouselTransitions(t => ({ ...t, [c.id]: false }));
-              setTimeout(() => {
-                setCarouselTransitions(t => ({ ...t, [c.id]: true }));
-              }, 50);
-            } else {
-              next[c.id] = nextOffset;
-            }
-          } else {
-            next[c.id] = 0;
+            next[c.id] = (currentOffset + 1) % imageCount;
           }
         });
         return next;
       });
-    }, 4000);
+    }, 8000);
 
     return () => clearInterval(interval);
-  }, [companies]);
+  }, [companies.length]);
 
   const selectedCompany = companies.find(c => c.id === selectedCompanyId);
+
+  const sortedCompanies = useMemo(() => {
+    return [...companies].sort((a, b) => {
+      const getTierPriority = (company: any) => {
+        if (!company.claimed) return 4;
+        if (company.subscriptionTier === 'premium') return 1;
+        if (company.subscriptionTier === 'standard') return 2;
+        return 3;
+      };
+      const priorityDiff = getTierPriority(a) - getTierPriority(b);
+      if (priorityDiff !== 0) return priorityDiff;
+      return (a.displayOrder || 999) - (b.displayOrder || 999);
+    });
+  }, [companies]);
 
   // Helper function to convert YouTube URL to embed URL
   const getVideoEmbedUrl = (url: string) => {
@@ -4957,23 +4942,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                     Loading...
                   </div>
                 ) : (
-                  companies
-                    .sort((a, b) => {
-                      // Tier-based sorting: premium > standard > basic (claimed) > unclaimed
-                      const getTierPriority = (company: any) => {
-                        if (!company.claimed) return 4; // Unclaimed last
-                        if (company.subscriptionTier === 'premium') return 1; // Premium first
-                        if (company.subscriptionTier === 'standard') return 2; // Standard second
-                        return 3; // Basic (claimed) third
-                      };
-                      
-                      const priorityDiff = getTierPriority(a) - getTierPriority(b);
-                      if (priorityDiff !== 0) return priorityDiff;
-                      
-                      // Within same tier, sort by displayOrder
-                      return (a.displayOrder || 999) - (b.displayOrder || 999);
-                    })
-                    .map((c, index) => {
+                  sortedCompanies.map((c, index) => {
                     const isUnclaimed = !c.claimed;
                     const isPremium = c.subscriptionTier === 'premium';
                     const isStandard = c.subscriptionTier === 'standard';
