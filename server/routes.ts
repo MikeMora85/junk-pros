@@ -927,6 +927,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Compress all gallery images (admin only)
+  app.post("/api/admin/compress-gallery-images", requireSimpleAdmin, async (req, res) => {
+    try {
+      const { compressAllGalleryImages } = await import('./compressGalleryImages');
+      const result = await compressAllGalleryImages();
+      res.json(result);
+    } catch (error: any) {
+      console.error("Error compressing gallery images:", error);
+      res.status(500).json({ error: "Failed to compress images", details: error?.message });
+    }
+  });
+
   // Invite admin (admin only)
   app.post("/api/admin/invite", requireSimpleAdmin, async (req, res) => {
     try {
