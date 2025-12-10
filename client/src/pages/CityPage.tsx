@@ -864,13 +864,17 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
             >
               <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
               {(() => {
+                const hasGalleryThumbs = company.galleryThumbnails && company.galleryThumbnails.length > 0;
                 const hasGallery = company.galleryImages && company.galleryImages.length > 0;
                 const hasLogo = company.logoUrl;
                 const hasReviews = company.reviews > 0;
                 
                 let imagesToShow: (string | number)[] = [];
                 
-                if (hasGallery) {
+                if (hasGalleryThumbs) {
+                  const originalImages = company.galleryThumbnails!;
+                  imagesToShow = [...originalImages, ...originalImages, ...originalImages];
+                } else if (hasGallery) {
                   const originalImages = company.galleryImages!;
                   imagesToShow = [...originalImages, ...originalImages, ...originalImages];
                 } else if (hasLogo || hasReviews) {
@@ -886,7 +890,7 @@ function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: 
                       src={typeof img === 'string' ? img : `https://picsum.photos/200/300?random=${img}`}
                       alt={`Gallery ${idx + 1}`}
                       className="photo-gallery-img"
-                      loading="lazy"
+                      loading={idx === 0 ? "eager" : "lazy"}
                     />
                   </div>
                 ));
@@ -2115,7 +2119,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       }}>
                         {c.logoUrl ? (
                           <img
-                            src={c.logoUrl}
+                            src={c.logoThumbnailUrl || c.logoUrl}
                             alt={`${c.name} logo`}
                             loading="lazy"
                             style={{
@@ -2331,13 +2335,16 @@ function CityPage({ city, state }: { city: string; state: string }) {
                       })(),
                     }}>
                       {(() => {
+                        const hasGalleryThumbs = c.galleryThumbnails && c.galleryThumbnails.length > 0;
                         const hasGallery = c.galleryImages && c.galleryImages.length > 0;
                         const hasLogo = c.logoUrl;
                         const hasReviews = c.reviews > 0;
                         
                         let imagesToShow: (string | number)[] = [];
                         
-                        if (hasGallery) {
+                        if (hasGalleryThumbs) {
+                          imagesToShow = [...c.galleryThumbnails!, ...c.galleryThumbnails!, ...c.galleryThumbnails!];
+                        } else if (hasGallery) {
                           imagesToShow = [...c.galleryImages!, ...c.galleryImages!, ...c.galleryImages!];
                         } else if (hasLogo || hasReviews) {
                           imagesToShow = [...defaultImages, ...defaultImages, ...defaultImages];
@@ -2356,7 +2363,7 @@ function CityPage({ city, state }: { city: string; state: string }) {
                               <img
                                 src={item}
                                 alt="Service photo"
-                                loading="lazy"
+                                loading={i === 0 ? "eager" : "lazy"}
                                 style={{
                                   width: '100%',
                                   height: '100%',
