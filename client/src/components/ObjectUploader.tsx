@@ -2,9 +2,11 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import type { ReactNode } from "react";
 import Uppy from "@uppy/core";
-import { DashboardModal } from "@uppy/react";
+import { DashboardModal } from "@uppy/react/dashboard-modal";
 import AwsS3 from "@uppy/aws-s3";
 import type { UploadResult } from "@uppy/core";
+import "@uppy/core/dist/style.min.css";
+import "@uppy/dashboard/dist/style.min.css";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
