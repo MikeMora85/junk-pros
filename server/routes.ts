@@ -518,11 +518,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Public company routes
   app.get("/api/companies", async (req, res) => {
     try {
+      console.log('API /api/companies called with query:', req.query);
       const { local, city, state } = req.query;
       
       let companies;
       if (city && state) {
+        console.log('Getting companies by city:', city, state);
         companies = await storage.getCompaniesByCity(city as string, state as string);
+        console.log('Found', companies?.length || 0, 'companies');
       } else if (local === "true") {
         companies = await storage.getCompaniesByLocal(true);
       } else if (local === "false") {
@@ -547,8 +550,9 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       // }));
       
       res.json(companies);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to fetch companies" });
+    } catch (error: any) {
+      console.error('Error fetching companies:', error?.message, error?.stack);
+      res.status(500).json({ error: "Failed to fetch companies", details: error?.message });
     }
   });
 

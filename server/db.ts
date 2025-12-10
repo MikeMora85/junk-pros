@@ -20,9 +20,7 @@ console.log('Connecting to database...');
 // Single shared pool for all requests - prevents connection exhaustion
 const pool = new Pool({
   connectionString,
-  ssl: {
-    rejectUnauthorized: false, // Required for Neon
-  },
+  ssl: connectionString.includes('neon.tech') ? { rejectUnauthorized: false } : false,
   max: 10, // Maximum connections in pool
   idleTimeoutMillis: 30000, // Close idle connections after 30s
   connectionTimeoutMillis: 10000, // Timeout after 10s when connecting
