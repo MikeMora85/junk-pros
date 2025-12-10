@@ -6,7 +6,6 @@ import { insertCompanySchema, insertQuoteSchema } from "@shared/schema";
 import { setupAuth, isAuthenticated, isAdmin } from "./replitAuth";
 import bcrypt from "bcryptjs";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
-import { uploadOptimizedImage, uploadOptimizedImageFromUrl, isCloudinaryUrl, isLocalObjectStorageUrl } from "./cloudinaryService";
 import multer from "multer";
 import path from "path";
 import { Resend } from 'resend';
@@ -1456,7 +1455,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
-  // Save logo URL after upload (business owners only) - Legacy Object Storage
+  // Save logo URL after upload (business owners only)
   app.put("/api/companies/:id/logo", requireBusinessAuth, async (req, res) => {
     try {
       const companyId = parseInt(req.params.id);
@@ -1495,128 +1494,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     } catch (error) {
       console.error("Error saving logo:", error);
       res.status(500).json({ error: "Failed to save logo" });
-    }
-  });
-
-  // Cloudinary Image Upload Routes
-  // Upload and optimize image via Cloudinary (business owners only)
-  app.post("/api/cloudinary/upload", requireBusinessAuth, upload.single('image'), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: "No image file provided" });
-      }
-
-      const folder = req.body.folder || 'junk-pros/logos';
-      
-      const result = await uploadOptimizedImage(req.file.buffer, { folder });
-      
-      res.json({
-        success: true,
-        thumbnailUrl: result.thumbnailUrl,
-        fullUrl: result.fullUrl,
-        publicId: result.publicId
-      });
-    } catch (error: any) {
-      console.error("Cloudinary upload error:", error);
-      res.status(500).json({ error: error.message || "Failed to upload image" });
-    }
-  });
-
-  // Upload multiple gallery images via Cloudinary
-  app.post("/api/cloudinary/upload-gallery", requireBusinessAuth, upload.array('images', 10), async (req, res) => {
-    try {
-      const files = req.files as Express.Multer.File[];
-      if (!files || files.length === 0) {
-        return res.status(400).json({ error: "No image files provided" });
-      }
-
-      const folder = req.body.folder || 'junk-pros/gallery';
-      
-      const results = await Promise.all(
-        files.map(file => uploadOptimizedImage(file.buffer, { folder }))
-      );
-      
-      res.json({
-        success: true,
-        images: results.map(r => ({
-          thumbnailUrl: r.thumbnailUrl,
-          fullUrl: r.fullUrl,
-          publicId: r.publicId
-        }))
-      });
-    } catch (error: any) {
-      console.error("Cloudinary gallery upload error:", error);
-      res.status(500).json({ error: error.message || "Failed to upload images" });
-    }
-  });
-
-  // Save Cloudinary logo to company (business owners only)
-  app.put("/api/companies/:id/cloudinary-logo", requireBusinessAuth, async (req, res) => {
-    try {
-      const companyId = parseInt(req.params.id);
-      const { logoUrl, logoThumbnailUrl } = req.body;
-      
-      if (!logoUrl) {
-        return res.status(400).json({ error: "logoUrl is required" });
-      }
-
-      // Verify company ownership
-      const company = await storage.getCompanyById(companyId);
-      if (!company) {
-        return res.status(404).json({ error: "Company not found" });
-      }
-
-      const businessOwnerId = (req as any).businessOwnerId;
-      const owner = await storage.getBusinessOwnerById(businessOwnerId);
-      if (!owner || owner.companyId !== companyId) {
-        return res.status(403).json({ error: "Not authorized to update this company" });
-      }
-
-      // Update company logo with both full and thumbnail URLs
-      const updatedCompany = await storage.updateCompany(companyId, { 
-        logoUrl,
-        logoThumbnailUrl: logoThumbnailUrl || logoUrl
-      } as any);
-      
-      res.json({ success: true, company: updatedCompany });
-    } catch (error) {
-      console.error("Error saving Cloudinary logo:", error);
-      res.status(500).json({ error: "Failed to save logo" });
-    }
-  });
-
-  // Save Cloudinary gallery images to company (business owners only)
-  app.put("/api/companies/:id/cloudinary-gallery", requireBusinessAuth, async (req, res) => {
-    try {
-      const companyId = parseInt(req.params.id);
-      const { galleryImages, galleryThumbnails } = req.body;
-      
-      if (!galleryImages || !Array.isArray(galleryImages)) {
-        return res.status(400).json({ error: "galleryImages array is required" });
-      }
-
-      // Verify company ownership
-      const company = await storage.getCompanyById(companyId);
-      if (!company) {
-        return res.status(404).json({ error: "Company not found" });
-      }
-
-      const businessOwnerId = (req as any).businessOwnerId;
-      const owner = await storage.getBusinessOwnerById(businessOwnerId);
-      if (!owner || owner.companyId !== companyId) {
-        return res.status(403).json({ error: "Not authorized to update this company" });
-      }
-
-      // Update company gallery with both full and thumbnail URLs
-      const updatedCompany = await storage.updateCompany(companyId, { 
-        galleryImages,
-        galleryThumbnails: galleryThumbnails || galleryImages
-      } as any);
-      
-      res.json({ success: true, company: updatedCompany });
-    } catch (error) {
-      console.error("Error saving Cloudinary gallery:", error);
-      res.status(500).json({ error: "Failed to save gallery" });
     }
   });
 
