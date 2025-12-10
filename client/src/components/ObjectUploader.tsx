@@ -1,21 +1,15 @@
-// Referenced from blueprint:javascript_object_storage
-import { useState, useEffect, useRef, useMemo } from "react";
-import type { ReactNode } from "react";
-import Uppy from "@uppy/core";
-import { DashboardModal } from "@uppy/react";
-import AwsS3 from "@uppy/aws-s3";
-import type { UploadResult } from "@uppy/core";
+// Simple file uploader component for object storage
+import { useState, useRef } from "react";
+import type { ReactNode, ChangeEvent } from "react";
 
 interface ObjectUploaderProps {
   maxNumberOfFiles?: number;
   maxFileSize?: number;
-  onGetUploadParameters: (file: any) => Promise<{
+  onGetUploadParameters: (file: File) => Promise<{
     method: "PUT";
     url: string;
   }>;
-  onComplete?: (
-    result: UploadResult<Record<string, unknown>, Record<string, unknown>>
-  ) => void;
+  onComplete?: (result: { successful: Array<{ name: string }> }) => void;
   buttonClassName?: string;
   children: ReactNode;
 }
@@ -28,68 +22,73 @@ export function ObjectUploader({
   buttonClassName,
   children,
 }: ObjectUploaderProps) {
-  const [showModal, setShowModal] = useState(false);
-  const onGetUploadParametersRef = useRef(onGetUploadParameters);
-  const onCompleteRef = useRef(onComplete);
-  
-  // Keep refs up to date
-  useEffect(() => {
-    onGetUploadParametersRef.current = onGetUploadParameters;
-    onCompleteRef.current = onComplete;
-  }, [onGetUploadParameters, onComplete]);
-  
-  const uppy = useMemo(() => {
-    const instance = new Uppy({
-      restrictions: {
-        maxNumberOfFiles,
-        maxFileSize,
-      },
-      autoProceed: false,
-    })
-      .use(AwsS3, {
-        shouldUseMultipart: false,
-        getUploadParameters: (file) => onGetUploadParametersRef.current(file),
-      })
-      .on("complete", (result) => {
-        onCompleteRef.current?.(result);
-        // Clear all files after upload to prevent memory buildup
-        setTimeout(() => {
-          instance.cancelAll();
-        }, 100);
-        setShowModal(false);
-      });
-    
-    return instance;
-  }, [maxNumberOfFiles, maxFileSize]);
-  
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      uppy.cancelAll();
-    };
-  }, [uppy]);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleOpenModal = () => {
-    // Clear any previous files before opening
-    uppy.cancelAll();
-    setShowModal(true);
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    
+    if (file.size > maxFileSize) {
+      alert(`File is too large. Maximum size is ${Math.round(maxFileSize / 1024 / 1024)}MB`);
+      return;
+    }
+
+    setIsUploading(true);
+    
+    try {
+      const uploadParams = await onGetUploadParameters(file);
+      
+      const response = await fetch(uploadParams.url, {
+        method: uploadParams.method,
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Upload failed: ${response.statusText}`);
+      }
+
+      onComplete?.({ successful: [{ name: file.name }] });
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Failed to upload file. Please try again.');
+    } finally {
+      setIsUploading(false);
+      // Reset input so the same file can be selected again
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
   };
 
   return (
     <div>
-      <button onClick={handleOpenModal} className={buttonClassName} type="button" data-testid="button-upload-logo">
-        {children}
-      </button>
-
-      <DashboardModal
-        uppy={uppy}
-        open={showModal}
-        onRequestClose={() => {
-          uppy.cancelAll();
-          setShowModal(false);
-        }}
-        proudlyDisplayPoweredByUppy={false}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept="image/*"
+        style={{ display: 'none' }}
+        data-testid="input-file-upload"
       />
+      <button 
+        onClick={handleClick} 
+        className={buttonClassName} 
+        type="button" 
+        disabled={isUploading}
+        data-testid="button-upload-logo"
+      >
+        {isUploading ? 'Uploading...' : children}
+      </button>
     </div>
   );
 }
