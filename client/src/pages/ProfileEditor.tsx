@@ -319,6 +319,8 @@ export default function ProfileEditor() {
         showYoutube: !!updatedCompany.youtubeUrl,
         showGmb: !!updatedCompany.gmbUrl,
         offersInPersonEstimates: updatedCompany.offersInPersonEstimates ?? true,
+        amenities: updatedCompany.amenities || [],
+        itemsNotTaken: updatedCompany.itemsNotTaken || [],
       });
       
       setToastMessage("Profile updated successfully!");
