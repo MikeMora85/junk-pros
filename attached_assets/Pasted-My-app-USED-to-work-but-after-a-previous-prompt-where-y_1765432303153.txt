@@ -1,0 +1,63 @@
+My app USED to work, but after a previous prompt where you added Cloudinary image handling, the right-hand preview in Replit/Lovable only shows a blank white screen during development. HOWEVER, when I publish/deploy the app, the live site works. That means my production build is fine but the development/preview environment is broken.
+
+I do NOT know how to code, so you must fix this entirely yourself by editing the right files. Please follow these rules very carefully:
+
+1. DO NOT refactor or rewrite large parts of the app.
+2. DO NOT redesign the UI or change component structure.
+3. DO NOT simplify or "optimize" the whole codebase.
+4. ONLY fix what is necessary to:
+   - make the dev server / preview work again, and 
+   - make the Cloudinary integration stable in both dev and production.
+
+Your job:
+
+A) Detect the framework and environment:
+- Automatically detect if this is Vite, Next.js, CRA, or something else.
+- Inspect the dev server configuration (vite.config, next.config, package.json scripts, .replit, etc.).
+- Make sure the dev server is actually starting and binding to the correct host/port for Replit/Lovable preview.
+
+B) Fix the dev preview white screen:
+- Find whatever is causing the dev server or dev build to fail while production still works.
+- This may include HMR/WebSocket config, wrong host binding, CSP issues, or dev-only strictness.
+- Fix only the minimal configuration necessary to get the preview to show the running app again.
+- If this is Vite, ensure server config uses host:true or equivalent and the correct port for the Replit environment.
+
+C) Audit and repair Cloudinary integration:
+- Find all Cloudinary-related code that was added recently.
+- Check for:
+  - Client-side Cloudinary config that should only run on the server.
+  - Usage of environment variables that may be undefined in dev.
+  - Any code that would crash in dev mode but not in a built production bundle.
+- Make Cloudinary usage safe:
+  - Never crash the dev environment if env variables are missing.
+  - Guard Cloudinary code so it only runs where appropriate (e.g., only when window is defined or only on the server).
+  - If necessary, create a separate utility module for Cloudinary and ensure it is imported only in safe places.
+- If something is clearly wrong or too complex for dev, wrap it in try/catch and fail gracefully instead of crashing the app.
+
+D) Do NOT change my public UI or logic:
+- Keep all pages, components, routes, and UI behavior exactly as they are in the working production version.
+- Do NOT remove features, forms, or flows that already work.
+- Do NOT rename or move component files unless absolutely required to fix a hard error, and if you must, explain exactly what you changed.
+
+E) Use the WORKING production build as a reference:
+- Compare behavior: if the deployed version renders fine, treat that as the correct reference.
+- Make the dev environment match the working behavior as closely as possible.
+
+F) After you make changes:
+1. Start the dev server and confirm that:
+   - The app renders correctly in the right-hand preview.
+   - There is no blank white screen.
+2. Confirm that all existing core features of my junk removal directory still work in dev:
+   - Listing profiles
+   - Image displays
+   - Any forms or calculators I had before you added Cloudinary
+3. Confirm Cloudinary-related actions do NOT crash dev. If something can't be fully enabled safely, make it degrade gracefully with a clear message instead of a crash.
+
+G) VERY IMPORTANT: Explain clearly what you changed.
+- After you fix everything, give me a human-friendly summary in plain English:
+  - Which files you edited
+  - What the root cause of the white screen was
+  - How you fixed it
+  - Any limitations of the current Cloudinary setup I should know about
+
+Again: Do NOT do big refactors. Focus only on making the dev preview work again and making the Cloudinary integration safe, with minimal, targeted changes.
