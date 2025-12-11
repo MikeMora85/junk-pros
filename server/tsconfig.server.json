@@ -11,7 +11,6 @@
     "strict": false
   },
   "include": [
-    "server/**/*.ts",
-    "shared/**/*.ts"
+    "./**/*.ts"
   ]
 }
