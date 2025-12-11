@@ -4,9 +4,10 @@ import { useEffect, useState, useRef } from 'react';
 import { apiRequest } from "@/lib/queryClient";
 import { useLocation } from 'wouter';
 
-const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
-  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
-  : null;
+if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+}
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 function CheckoutForm({ tier, onSuccess, onError }: { tier: string; onSuccess: () => void; onError: (message: string) => void }) {
   const stripe = useStripe();

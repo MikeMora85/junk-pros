@@ -434,7 +434,6 @@ export default function CompanyDetail() {
                           key={i}
                           src={typeof img === 'string' ? img : `https://picsum.photos/400/300?random=${img}`}
                           alt={`Gallery ${i + 1}`}
-                          loading="lazy"
                           style={{
                             width: '100%',
                             height: '200px',

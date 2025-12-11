@@ -1,4 +1,12 @@
-import { Route, Router, Switch } from "wouter";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Link, Route, Router, Switch, useLocation } from "wouter";
+import { apiRequest, queryClient } from "./lib/queryClient";
+import { MapPin, Phone, Star, Plus, X, Camera, Calendar, Search, TrendingUp, Home, Truck, Recycle, Dumbbell, DollarSign, Building2, TreeDeciduous, HardHat, Briefcase, Users, Clock, Shield, FileText, CheckCircle, LogIn, LogOut, UserCircle, Menu, ChevronDown, ChevronUp, Trash2, Globe, Mail, Refrigerator, Sofa, Package, Trees, Tv, CreditCard, Smartphone } from "lucide-react";
+import { FaFacebook, FaInstagram, FaYoutube, FaGoogle } from "react-icons/fa";
+import type { Company } from "@shared/schema";
+import EstimateBuilderInline from "./components/EstimateBuilderInline";
+import QuoteRequestForm from "./components/QuoteRequestForm";
 import AddBusiness from "./pages/AddBusiness";
 import AdminDashboard from "./pages/AdminDashboard";
 import Login from "./pages/Login";
@@ -9,12 +17,7109 @@ import ItemRemovalPage from "./pages/ItemRemovalPage";
 import ServicePage from "./pages/ServicePage";
 import StripeCheckout from "./pages/StripeCheckout";
 import TermsOfService from "./pages/TermsOfService";
-import LandingPage from "./pages/LandingPage";
-import StatePage from "./pages/StatePage";
-import CityPage from "./pages/CityPage";
-import { BlogPage, BlogPostPage } from "./pages/BlogPages";
+import { useAuth } from "./hooks/useAuth";
+import { trackBusinessEvent } from "./lib/tracking";
+import { useSEO, buildLandingPageSEO, buildStatePageSEO, buildCityPageSEO, buildBlogPageSEO, buildOrganizationSchema, buildWebPageSchema, buildBreadcrumbSchema } from "./lib/seo";
+import img1 from "@assets/stock_images/junk_removal_truck_s_8d89f5e0.jpg";
+import img2 from "@assets/stock_images/junk_removal_truck_s_08e95c57.jpg";
+import img3 from "@assets/stock_images/junk_removal_truck_s_6100f5f9.jpg";
+import img4 from "@assets/stock_images/junk_removal_truck_s_20fde47d.jpg";
+import img5 from "@assets/stock_images/junk_removal_truck_s_8e2ece45.jpg";
+import img6 from "@assets/stock_images/junk_removal_truck_s_7e78a264.jpg";
+import heroTruck from "@assets/D7C214E3-66B6-4E91-AC55-328BC4C0447C_1763365748045.png";
+import arizonaHero from "@assets/stock_images/grand_canyon_arizona_c5218ef2.jpg";
+import californiaHero from "@assets/stock_images/golden_gate_bridge_s_7e39867c.jpg";
+import texasHero from "@assets/stock_images/texas_state_capitol__62bb1fcf.jpg";
+import floridaHero from "@assets/stock_images/miami_beach_south_be_3f10b0ca.jpg";
+import newYorkHero from "@assets/stock_images/statue_of_liberty_ne_70f49b5f.jpg";
+import washingtonHero from "@assets/stock_images/space_needle_seattle_e0d9ac78.jpg";
+import coloradoHero from "@assets/stock_images/rocky_mountains_colo_f5782bd2.jpg";
+import illinoisHero from "@assets/stock_images/willis_tower_chicago_08709be4.jpg";
+import massachusettsHero from "@assets/stock_images/boston_massachusetts_495b1661.jpg";
+import pennsylvaniaHero from "@assets/stock_images/liberty_bell_philade_94af1290.jpg";
+import nevadaHero from "@assets/stock_images/las_vegas_strip_neva_9810840d.jpg";
+import tennesseeHero from "@assets/stock_images/great_smoky_mountain_04319b2a.jpg";
+import georgiaHero from "@assets/stock_images/atlanta_georgia_skyl_42af1e19.jpg";
+import louisianaHero from "@assets/stock_images/french_quarter_new_o_97be723e.jpg";
+import oregonHero from "@assets/stock_images/crater_lake_oregon_s_dbd956cd.jpg";
+import wyomingHero from "@assets/stock_images/old_faithful_geyser__6269315a.jpg";
+import montanaHero from "@assets/stock_images/glacier_national_par_ca533513.jpg";
+import utahHero from "@assets/stock_images/arches_national_park_c92ce949.jpg";
+import indianaHero from "@assets/stock_images/indianapolis_motor_s_076178bf.jpg";
+import michiganHero from "@assets/stock_images/mackinac_bridge_mich_70f90f84.jpg";
+import kentuckyHero from "@assets/stock_images/churchill_downs_kent_993eabc9.jpg";
+import northCarolinaHero from "@assets/stock_images/blue_ridge_parkway_n_536d613b.jpg";
+import southCarolinaHero from "@assets/stock_images/fort_sumter_charlest_156df300.jpg";
+import alabamaHero from "@assets/stock_images/uss_alabama_battlesh_57cdea2a.jpg";
+import arkansasHero from "@assets/stock_images/hot_springs_national_148b5220.jpg";
+import mississippiHero from "@assets/stock_images/mississippi_river_de_f2f97e59.jpg";
+import oklahomaHero from "@assets/stock_images/oklahoma_city_nation_f762f0dd.jpg";
+import missouriHero from "@assets/stock_images/gateway_arch_st_loui_fd4c11b6.jpg";
+import southDakotaHero from "@assets/stock_images/mount_rushmore_south_6dd9fb61.jpg";
+import minnesotaHero from "@assets/stock_images/mall_of_america_minn_c6b98b05.jpg";
+import iowaHero from "@assets/stock_images/iowa_state_capitol_d_03687da2.jpg";
+import wisconsinHero from "@assets/stock_images/wisconsin_state_capi_f9c6451e.jpg";
+import idahoHero from "@assets/stock_images/boise_idaho_state_ca_f5997fd7.jpg";
+import alaskaHero from "@assets/stock_images/denali_national_park_280a8832.jpg";
+import hawaiiHero from "@assets/stock_images/diamond_head_waikiki_2fdf0db0.jpg";
+import newMexicoHero from "@assets/stock_images/carlsbad_caverns_new_5adf76a1.jpg";
+import northDakotaHero from "@assets/stock_images/fargo_north_dakota_d_760e03a9.jpg";
+import nebraskaHero from "@assets/stock_images/omaha_nebraska_old_m_16e3ae04.jpg";
+import rhodeIslandHero from "@assets/stock_images/providence_rhode_isl_fd73a38e.jpg";
+import connecticutHero from "@assets/stock_images/mystic_seaport_conne_0a29993f.jpg";
+import delawareHero from "@assets/stock_images/dover_delaware_state_8f01671f.jpg";
+import marylandHero from "@assets/stock_images/annapolis_maryland_s_2fc6a27b.jpg";
+import westVirginiaHero from "@assets/stock_images/charleston_west_virg_ddca95e8.jpg";
+import vermontHero from "@assets/stock_images/burlington_vermont_l_4c114d59.jpg";
+import newHampshireHero from "@assets/stock_images/portsmouth_new_hamps_6e40cb8c.jpg";
+import curbsideJunkHero from "@assets/662A4A2C-FCD0-43E0-9DC4-2ABCD8C1DC69_1759626202147.png";
+import profilePhoto1 from "@assets/stock_images/junk_removal_truck_l_09aca246.jpg";
+import profilePhoto2 from "@assets/stock_images/junk_removal_truck_l_d830abe1.jpg";
+import profilePhoto3 from "@assets/stock_images/junk_removal_truck_l_edd9160e.jpg";
+import profilePhoto4 from "@assets/stock_images/junk_removal_truck_l_163f0dce.jpg";
 
-// State slug to proper name mapping (for routing)
+const defaultImages = [img1, img2, img3, img4, img5, img6];
+
+// Format phone number to (XXX) XXX-XXXX
+const formatPhoneNumber = (phone: string) => {
+  const cleaned = phone.replace(/\D/g, '');
+  if (cleaned.length === 10) {
+    return `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6)}`;
+  }
+  return phone;
+};
+
+// Grey placeholder component for companies without images
+const PlaceholderImage = ({ index }: { index: number }) => (
+  <div style={{
+    width: '100%',
+    height: '140px',
+    backgroundColor: '#e5e7eb',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#9ca3af',
+    fontSize: '14px',
+    fontWeight: '600',
+  }}>
+    <div style={{ textAlign: 'center' }}>
+      <Camera size={32} style={{ margin: '0 auto 8px' }} />
+      <div>Photo {index + 1}</div>
+    </div>
+  </div>
+);
+
+// Rotating Banner Component
+function RotatingBanner() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const messages = [
+    'All 50 States • Local Independent Companies Only • No Franchises',
+    'Find Trusted Local Pros',
+    'Same Day Service Available',
+    'Licensed & Insured Professionals',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % messages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ position: 'relative', height: '28px', overflow: 'hidden' }}>
+      {messages.map((message, index) => (
+        <p
+          key={index}
+          style={{
+            color: '#000',
+            fontSize: '24px',
+            margin: '0',
+            fontWeight: '600',
+            position: 'absolute',
+            width: '100%',
+            top: '0',
+            transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out',
+            transform: `translateY(${(index - currentIndex) * 100}%)`,
+            opacity: index === currentIndex ? 1 : 0,
+          }}
+        >
+          {message}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+// Interactive Footer Component with Drop-Up Sections
+function InteractiveFooter() {
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+  const allStates = [
+    { name: 'Alabama', slug: 'alabama' },
+    { name: 'Alaska', slug: 'alaska' },
+    { name: 'Arizona', slug: 'arizona' },
+    { name: 'Arkansas', slug: 'arkansas' },
+    { name: 'California', slug: 'california' },
+    { name: 'Colorado', slug: 'colorado' },
+    { name: 'Connecticut', slug: 'connecticut' },
+    { name: 'Delaware', slug: 'delaware' },
+    { name: 'Florida', slug: 'florida' },
+    { name: 'Georgia', slug: 'georgia' },
+    { name: 'Hawaii', slug: 'hawaii' },
+    { name: 'Idaho', slug: 'idaho' },
+    { name: 'Illinois', slug: 'illinois' },
+    { name: 'Indiana', slug: 'indiana' },
+    { name: 'Iowa', slug: 'iowa' },
+    { name: 'Kansas', slug: 'kansas' },
+    { name: 'Kentucky', slug: 'kentucky' },
+    { name: 'Louisiana', slug: 'louisiana' },
+    { name: 'Maine', slug: 'maine' },
+    { name: 'Maryland', slug: 'maryland' },
+    { name: 'Massachusetts', slug: 'massachusetts' },
+    { name: 'Michigan', slug: 'michigan' },
+    { name: 'Minnesota', slug: 'minnesota' },
+    { name: 'Mississippi', slug: 'mississippi' },
+    { name: 'Missouri', slug: 'missouri' },
+    { name: 'Montana', slug: 'montana' },
+    { name: 'Nebraska', slug: 'nebraska' },
+    { name: 'Nevada', slug: 'nevada' },
+    { name: 'New Hampshire', slug: 'new-hampshire' },
+    { name: 'New Jersey', slug: 'new-jersey' },
+    { name: 'New Mexico', slug: 'new-mexico' },
+    { name: 'New York', slug: 'new-york' },
+    { name: 'North Carolina', slug: 'north-carolina' },
+    { name: 'North Dakota', slug: 'north-dakota' },
+    { name: 'Ohio', slug: 'ohio' },
+    { name: 'Oklahoma', slug: 'oklahoma' },
+    { name: 'Oregon', slug: 'oregon' },
+    { name: 'Pennsylvania', slug: 'pennsylvania' },
+    { name: 'Rhode Island', slug: 'rhode-island' },
+    { name: 'South Carolina', slug: 'south-carolina' },
+    { name: 'South Dakota', slug: 'south-dakota' },
+    { name: 'Tennessee', slug: 'tennessee' },
+    { name: 'Texas', slug: 'texas' },
+    { name: 'Utah', slug: 'utah' },
+    { name: 'Vermont', slug: 'vermont' },
+    { name: 'Virginia', slug: 'virginia' },
+    { name: 'Washington', slug: 'washington' },
+    { name: 'West Virginia', slug: 'west-virginia' },
+    { name: 'Wisconsin', slug: 'wisconsin' },
+    { name: 'Wyoming', slug: 'wyoming' },
+  ];
+
+  const popularCities = [
+    'New York, NY', 'Los Angeles, CA', 'Chicago, IL', 'Houston, TX',
+    'Phoenix, AZ', 'Philadelphia, PA', 'San Antonio, TX', 'San Diego, CA',
+    'Dallas, TX', 'San Jose, CA', 'Austin, TX', 'Jacksonville, FL',
+    'Fort Worth, TX', 'Columbus, OH', 'Charlotte, NC', 'San Francisco, CA',
+    'Indianapolis, IN', 'Seattle, WA', 'Denver, CO', 'Boston, MA'
+  ];
+
+  const serviceCategories = [
+    'Residential Junk Removal',
+    'Commercial Junk Removal',
+    'Construction Debris Removal',
+    'Estate Cleanouts',
+    'Foreclosure Cleanouts',
+    'Garage Cleanouts',
+    'Basement Cleanouts',
+    'Attic Cleanouts',
+    'Office Cleanouts',
+    'Storage Unit Cleanouts',
+    'Hoarding Cleanup',
+    'Yard Waste Removal',
+    'Hot Tub Removal',
+    'Shed Demolition',
+    'Deck Removal',
+    'Fence Removal'
+  ];
+
+  const commonItems = [
+    'Furniture Removal',
+    'Appliance Removal',
+    'Mattress Removal',
+    'E-Waste Recycling',
+    'TV Disposal',
+    'Refrigerator Removal',
+    'Couch Removal',
+    'Washer & Dryer Removal',
+    'Hot Tub Removal',
+    'Piano Removal',
+    'Treadmill Removal',
+    'Carpet Removal',
+    'Tire Disposal',
+    'Yard Waste',
+    'Construction Debris',
+    'Office Equipment'
+  ];
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  return (
+    <footer style={{
+      backgroundColor: '#fbbf24',
+      color: '#000',
+      padding: '0',
+      width: '100%',
+      margin: 0,
+      boxSizing: 'border-box',
+      position: 'relative',
+    }}>
+      {/* Drop-Up Sections - Light Yellow Background */}
+      {expandedSection && (
+        <div style={{
+          backgroundColor: '#fef3c7',
+          borderTop: '3px solid #000',
+          maxHeight: '400px',
+          overflowY: 'auto',
+          padding: '20px',
+        }}>
+          {expandedSection === 'areas' && (
+            <div>
+              <h4 style={{
+                fontSize: '18px',
+                fontWeight: '700',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                color: '#000',
+              }}>
+                Browse by State
+              </h4>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                gap: '8px',
+              }}>
+                {allStates.map(state => (
+                  <a
+                    key={state.slug}
+                    href={`/${state.slug}`}
+                    style={{
+                      color: '#000',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      padding: '6px',
+                      borderRadius: '4px',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    data-testid={`link-footer-state-${state.slug}`}
+                  >
+                    {state.name}
+                  </a>
+                ))}
+              </div>
+
+              <h4 style={{
+                fontSize: '18px',
+                fontWeight: '700',
+                marginTop: '24px',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                color: '#000',
+              }}>
+                Popular Cities
+              </h4>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                gap: '8px',
+              }}>
+                {popularCities.map(city => {
+                  const [cityName, stateAbbr] = city.split(', ');
+                  const stateName = allStates.find(s => s.name.startsWith(stateAbbr))?.slug || stateAbbr.toLowerCase();
+                  const citySlug = cityName.toLowerCase().replace(/\s+/g, '-');
+                  return (
+                    <a
+                      key={city}
+                      href={`/${stateName}/${citySlug}`}
+                      style={{
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontSize: '14px',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        padding: '6px',
+                        borderRadius: '4px',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      data-testid={`link-footer-city-${city.toLowerCase().replace(/[,\s]+/g, '-')}`}
+                    >
+                      {city}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {expandedSection === 'services' && (
+            <div>
+              <h4 style={{
+                fontSize: '18px',
+                fontWeight: '700',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                color: '#000',
+              }}>
+                Our Services
+              </h4>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: '8px',
+              }}>
+                {serviceCategories.map(service => (
+                  <a
+                    key={service}
+                    href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
+                    style={{
+                      color: '#000',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      padding: '6px',
+                      borderRadius: '4px',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    data-testid={`link-footer-service-${service.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
+                    {service}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {expandedSection === 'items' && (
+            <div>
+              <h4 style={{
+                fontSize: '18px',
+                fontWeight: '700',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                color: '#000',
+              }}>
+                Items We Remove
+              </h4>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+                gap: '8px',
+              }}>
+                {commonItems.map(item => (
+                  <a
+                    key={item}
+                    href={`/items/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                    style={{
+                      color: '#000',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      padding: '6px',
+                      borderRadius: '4px',
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#fef3c7'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                    data-testid={`link-footer-item-${item.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Main Footer Content */}
+      <div style={{
+        maxWidth: '1400px',
+        margin: '0 auto',
+        padding: '20px',
+      }}>
+        {/* Interactive Buttons - Subtle Footer Links */}
+        <div style={{
+          display: 'flex',
+          gap: '24px',
+          marginBottom: '20px',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+        }}>
+          <button
+            onClick={() => toggleSection('areas')}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              border: 'none',
+              padding: '0',
+              fontSize: '13px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              transition: 'all 0.2s',
+              textDecoration: expandedSection === 'areas' ? 'underline' : 'none',
+              opacity: 0.8,
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
+            data-testid="button-footer-areas"
+          >
+            <span>Areas Served</span>
+            <ChevronDown size={14} style={{ transform: expandedSection === 'areas' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          </button>
+
+          <button
+            onClick={() => toggleSection('services')}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              border: 'none',
+              padding: '0',
+              fontSize: '13px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              transition: 'all 0.2s',
+              textDecoration: expandedSection === 'services' ? 'underline' : 'none',
+              opacity: 0.8,
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
+            data-testid="button-footer-services"
+          >
+            <span>Services</span>
+            <ChevronDown size={14} style={{ transform: expandedSection === 'services' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          </button>
+
+          <button
+            onClick={() => toggleSection('items')}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              border: 'none',
+              padding: '0',
+              fontSize: '13px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              transition: 'all 0.2s',
+              textDecoration: expandedSection === 'items' ? 'underline' : 'none',
+              opacity: 0.8,
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+            onMouseLeave={(e) => e.currentTarget.style.opacity = '0.8'}
+            data-testid="button-footer-items"
+          >
+            <span>Items We Remove</span>
+            <ChevronDown size={14} style={{ transform: expandedSection === 'items' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          </button>
+        </div>
+
+        {/* Static Footer Info */}
+        <div style={{
+          borderTop: '2px solid #000',
+          paddingTop: '16px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '20px',
+          marginBottom: '16px',
+        }}>
+          <div>
+            <h4 style={{
+              fontSize: '16px',
+              fontWeight: '700',
+              marginBottom: '8px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              color: '#000',
+            }}>
+              About Us
+            </h4>
+            <p style={{
+              fontSize: '13px',
+              color: '#000',
+              lineHeight: '1.4',
+              margin: '0',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Connecting you with trusted local junk removal professionals across all 50 states. 
+              No national franchises, just quality independent companies.
+            </p>
+          </div>
+
+          <div>
+            <h4 style={{
+              fontSize: '16px',
+              fontWeight: '700',
+              marginBottom: '8px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              color: '#000',
+            }}>
+              Quick Links
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <a href="/" style={{
+                color: '#000',
+                textDecoration: 'none',
+                fontSize: '13px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+              onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+              data-testid="link-footer-home">
+                Home
+              </a>
+              <a href="/add-business" style={{
+                color: '#000',
+                textDecoration: 'none',
+                fontSize: '13px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+              onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+              data-testid="link-footer-add-business">
+                Add Your Business
+              </a>
+              <a href="/blog" style={{
+                color: '#000',
+                textDecoration: 'none',
+                fontSize: '13px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+              onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+              data-testid="link-footer-blog">
+                Blog
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright */}
+        <div style={{
+          borderTop: '1px solid #000',
+          paddingTop: '10px',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontSize: '12px',
+            color: '#000',
+            margin: '0',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            © {new Date().getFullYear()} Junk Removal Directory. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// Hamburger Menu Component
+function HamburgerMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const { user, logout } = useAuth();
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 10000,
+        }}
+        onClick={onClose}
+        data-testid="menu-overlay"
+      />
+
+      {/* Side Menu */}
+      <div
+        className="hamburger-menu-panel"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: '75%',
+          maxWidth: '600px',
+          backgroundColor: '#ffffff',
+          zIndex: 10001,
+          overflowY: 'auto',
+          boxShadow: '4px 0 16px rgba(0,0,0,0.2)',
+        }}
+        data-testid="side-menu"
+      >
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .hamburger-menu-panel {
+              width: 37.5% !important;
+              max-width: 300px !important;
+            }
+          }
+        `}} />
+        {/* Header */}
+        <div style={{
+          padding: '20px',
+          borderBottom: '2px solid #fbbf24',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          position: 'sticky',
+          top: 0,
+          backgroundColor: '#ffffff',
+          zIndex: 10,
+        }}>
+          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '700', color: '#000', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>Menu</h2>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '4px',
+            }}
+            data-testid="button-close-menu"
+          >
+            <X size={24} color="#000" />
+          </button>
+        </div>
+
+        {/* Menu Content */}
+        <div style={{ padding: '20px' }}>
+          {/* Home */}
+          <a
+            href="/"
+            style={{
+              display: 'block',
+              padding: '16px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '18px',
+              fontWeight: '600',
+              borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}
+            data-testid="link-home"
+          >
+            Home
+          </a>
+
+          {/* Blog */}
+          <a
+            href="/blog"
+            style={{
+              display: 'block',
+              padding: '16px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '18px',
+              fontWeight: '600',
+              borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}
+            data-testid="link-blog"
+          >
+            Blog
+          </a>
+
+          {/* Add Your Business - CTA */}
+          <a
+            href="/add-business"
+            style={{
+              display: 'block',
+              padding: '16px',
+              color: '#000',
+              textDecoration: 'none',
+              fontSize: '18px',
+              fontWeight: '700',
+              borderBottom: '1px solid #e5e5e5',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              background: '#fbbf24',
+              margin: '8px 0',
+            }}
+            data-testid="link-add-business"
+          >
+            Add Your Business
+          </a>
+
+          {/* Login/Profile/Logout */}
+          {user ? (
+            <>
+              <Link
+                href="/profile/edit"
+                style={{
+                  display: 'block',
+                  padding: '16px',
+                  color: '#000',
+                  textDecoration: 'none',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  borderBottom: '1px solid #e5e5e5',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}
+                data-testid="link-menu-profile"
+              >
+                My Profile
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  onClose();
+                }}
+                style={{
+                  width: '100%',
+                  textAlign: 'left',
+                  display: 'block',
+                  padding: '16px',
+                  color: '#000',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  fontSize: '18px',
+                  fontWeight: '600',
+                  borderBottom: '1px solid #e5e5e5',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  cursor: 'pointer',
+                }}
+                data-testid="button-menu-logout"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              style={{
+                display: 'block',
+                padding: '16px',
+                color: '#000',
+                textDecoration: 'none',
+                fontSize: '18px',
+                fontWeight: '600',
+                borderBottom: '1px solid #e5e5e5',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              data-testid="link-menu-login"
+            >
+              Login
+            </Link>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// Blog Page Component
+function BlogPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  
+  // SEO
+  useSEO(buildBlogPageSEO());
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: "How to Choose the Right Junk Removal Company",
+      excerpt: "Finding a reliable junk removal service doesn't have to be difficult. Learn the key factors to consider when selecting a company for your needs.",
+      date: "March 15, 2024",
+      category: "Tips & Guides"
+    },
+    {
+      id: 2,
+      title: "What Can and Cannot Be Removed by Junk Haulers",
+      excerpt: "Understanding what items junk removal companies can legally and safely haul away will help you prepare for your appointment and avoid surprises.",
+      date: "March 10, 2024",
+      category: "Industry Info"
+    },
+    {
+      id: 3,
+      title: "Preparing Your Home for Junk Removal Service",
+      excerpt: "Get the most out of your junk removal service with these simple preparation tips that will save you time and money.",
+      date: "March 5, 2024",
+      category: "Tips & Guides"
+    },
+    {
+      id: 4,
+      title: "The Environmental Benefits of Professional Junk Removal",
+      excerpt: "Learn how professional junk removal companies help reduce landfill waste through responsible recycling and donation practices.",
+      date: "February 28, 2024",
+      category: "Sustainability"
+    },
+    {
+      id: 5,
+      title: "Estate Cleanouts: A Complete Guide",
+      excerpt: "Estate cleanouts can be overwhelming. This comprehensive guide walks you through the process and helps you find the right assistance.",
+      date: "February 20, 2024",
+      category: "Services"
+    },
+    {
+      id: 6,
+      title: "Commercial vs. Residential Junk Removal: Key Differences",
+      excerpt: "Understanding the differences between commercial and residential junk removal services will help you choose the right provider for your project.",
+      date: "February 15, 2024",
+      category: "Industry Info"
+    }
+  ];
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: '#d3d3d3',
+    }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      <div style={{
+        maxWidth: '1400px',
+        margin: '0 auto',
+        background: '#ffffff',
+        minHeight: '100vh',
+      }}>
+        {/* Header with Menu */}
+        <div style={{
+          position: 'relative',
+          background: '#ffffff',
+          padding: '16px',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}>
+          <button
+            onClick={() => setMenuOpen(true)}
+            style={{
+              backgroundColor: '#fbbf24',
+              color: '#000',
+              padding: '8px',
+              borderRadius: '6px',
+              border: '1px solid #000',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            }}
+            data-testid="button-menu"
+          >
+            <Menu size={24} color="#000" />
+          </button>
+        </div>
+
+        {/* Yellow Banner */}
+        <header style={{
+          background: 'linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%)',
+          padding: '32px 16px',
+          textAlign: 'center',
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(32px, 8vw, 48px)',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '12px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Blog
+          </h1>
+          <p style={{
+            fontSize: 'clamp(16px, 4vw, 20px)',
+            color: '#333',
+            maxWidth: '700px',
+            margin: '0 auto',
+            padding: '0 8px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Expert advice, industry insights, and helpful tips for all your junk removal needs
+          </p>
+        </header>
+
+        {/* Blog Posts Grid */}
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '40px 16px',
+        }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+            gap: '24px',
+          }}>
+            {blogPosts.map((post) => (
+              <a
+                key={post.id}
+                href={`/blog/${post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
+                style={{
+                  textDecoration: 'none',
+                  display: 'block',
+                }}
+                data-testid={`article-blog-${post.id}`}
+              >
+                <article
+                  style={{
+                    background: '#fff',
+                    border: '2px solid #000',
+                    borderRadius: '8px',
+                    padding: '24px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                  }}
+                >
+                <div style={{
+                  display: 'inline-block',
+                  background: '#fbbf24',
+                  color: '#000',
+                  padding: '6px 12px',
+                  borderRadius: '4px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  marginBottom: '16px',
+                  border: '1px solid #000',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {post.category}
+                </div>
+                <h2 style={{
+                  fontSize: 'clamp(20px, 5vw, 24px)',
+                  fontWeight: '700',
+                  color: '#000',
+                  marginBottom: '12px',
+                  lineHeight: '1.3',
+                  wordWrap: 'break-word',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {post.title}
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(14px, 3.5vw, 16px)',
+                  color: '#666',
+                  marginBottom: '16px',
+                  lineHeight: '1.6',
+                  wordWrap: 'break-word',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {post.excerpt}
+                </p>
+                <div style={{
+                  fontSize: '14px',
+                  color: '#999',
+                  fontWeight: '500',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {post.date}
+                </div>
+              </article>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer Section */}
+        <div style={{
+          background: '#fbbf24',
+          color: '#000',
+          padding: '40px 16px',
+          marginTop: '40px',
+          borderTop: '3px solid #000',
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            textAlign: 'center',
+          }}>
+            <h3 style={{
+              fontSize: 'clamp(22px, 6vw, 28px)',
+              fontWeight: '700',
+              marginBottom: '16px',
+              color: '#000',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Ready to Find Your Local Hauler?
+            </h3>
+            <p style={{
+              fontSize: 'clamp(16px, 4vw, 18px)',
+              marginBottom: '24px',
+              color: '#000',
+              padding: '0 8px',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              Search by city to find vetted junk removal companies near you
+            </p>
+            <a
+              href="/"
+              style={{
+                display: 'inline-block',
+                background: '#000',
+                color: '#fff',
+                padding: '14px 28px',
+                borderRadius: '8px',
+                border: '2px solid #000',
+                fontSize: 'clamp(16px, 4vw, 18px)',
+                fontWeight: '700',
+                textDecoration: 'none',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              data-testid="link-blog-to-home"
+            >
+              Start Your Search
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Blog Post Data
+const blogPostContent: Record<string, { title: string; date: string; category: string; content: string }> = {
+  'how-to-choose-the-right-junk-removal-company': {
+    title: 'How to Choose the Right Junk Removal Company',
+    date: 'March 15, 2024',
+    category: 'Tips & Guides',
+    content: `
+      <p>Finding the right junk removal company can make the difference between a smooth, stress-free experience and a frustrating waste of time and money. With so many options available, it's important to know what to look for when selecting a service provider for your needs.</p>
+
+      <h2>1. Check for Proper Licensing and Insurance</h2>
+      <p>The first thing you should verify is that the company is properly licensed to operate in your area. A legitimate junk removal company will have all necessary business licenses and be happy to provide proof. More importantly, they should carry both liability insurance and workers' compensation insurance.</p>
+      <p>Why does this matter? If a worker gets injured on your property or your property is damaged during the removal process, insurance protects you from being held liable. Never hire a company that can't provide proof of insurance.</p>
+
+      <h2>2. Read Reviews and Check References</h2>
+      <p>Online reviews are one of your best tools for vetting a junk removal company. Look for consistent patterns in reviews across multiple platforms like Google, Yelp, and Facebook. Pay attention to how companies respond to negative reviews - professional, courteous responses show they care about customer satisfaction.</p>
+      <p>Don't just look at the star rating. Read what people are actually saying about their experience. Were the crews professional? Did they show up on time? Were there any hidden fees?</p>
+
+      <h2>3. Get Multiple Quotes</h2>
+      <p>Prices can vary significantly between companies, so it's worth getting at least three quotes. Most reputable companies offer free estimates, either over the phone, via email with photos, or with an in-person visit.</p>
+      <p>Be wary of quotes that seem too good to be true - they often are. Extremely low prices might indicate the company dumps items illegally instead of properly disposing of them, or they might add surprise fees after loading your junk.</p>
+
+      <h2>4. Understand Their Pricing Structure</h2>
+      <p>Junk removal companies typically charge based on volume - how much space your items take up in their truck. Common pricing models include:</p>
+      <ul>
+        <li><strong>Volume-based pricing:</strong> Charged by how much truck space you use (1/8 truck, 1/4 truck, 1/2 truck, full truck)</li>
+        <li><strong>Item-based pricing:</strong> Flat fees for specific items like mattresses, appliances, or furniture</li>
+        <li><strong>Weight-based pricing:</strong> Less common, but some companies charge by weight for very heavy items</li>
+      </ul>
+      <p>Make sure you understand exactly what's included in the price. Does it cover labor, disposal fees, and cleanup? Are there extra charges for stairs, long carries, or specific items?</p>
+
+      <h2>5. Ask About Their Disposal Practices</h2>
+      <p>Responsible junk removal companies don't just dump everything in a landfill. Ask what percentage of items they recycle or donate. Many companies recycle 60-80% of what they collect, which is better for the environment and your community.</p>
+      <p>Items that can often be recycled or donated include:</p>
+      <ul>
+        <li>Furniture in good condition</li>
+        <li>Working appliances</li>
+        <li>Electronics</li>
+        <li>Scrap metal</li>
+        <li>Cardboard and paper</li>
+      </ul>
+
+      <h2>6. Verify Their Availability and Scheduling</h2>
+      <p>Do they offer same-day or next-day service? Can they accommodate your schedule? Reliable companies will provide clear scheduling and actually show up when they say they will. Ask about their typical timeframe and whether they provide appointment windows or specific times.</p>
+
+      <h2>7. Look for Professional Communication</h2>
+      <p>From your first contact, pay attention to how the company communicates. Are they responsive to phone calls and emails? Do they answer your questions clearly? Professional communication is usually a good indicator of the overall service quality you'll receive.</p>
+
+      <h2>8. Compare Services Offered</h2>
+      <p>Not all junk removal companies offer the same services. Some specialize in certain types of jobs. Make sure the company you choose can handle your specific needs:</p>
+      <ul>
+        <li>Residential vs. commercial services</li>
+        <li>Estate cleanouts</li>
+        <li>Hoarding situations</li>
+        <li>Construction debris</li>
+        <li>Hazardous materials (note: many companies cannot legally remove hazardous waste)</li>
+      </ul>
+
+      <h2>Red Flags to Watch Out For</h2>
+      <p>Be cautious if a company:</p>
+      <ul>
+        <li>Refuses to provide proof of insurance</li>
+        <li>Only accepts cash payments</li>
+        <li>Doesn't provide written estimates</li>
+        <li>Has consistently terrible reviews</li>
+        <li>Pressures you to make an immediate decision</li>
+        <li>Can't explain where they dispose of items</li>
+      </ul>
+
+      <h2>The Bottom Line</h2>
+      <p>Choosing a junk removal company doesn't have to be complicated. Focus on finding a licensed, insured, and well-reviewed company that offers transparent pricing and responsible disposal practices. Take the time to get multiple quotes and ask questions - a good company will be happy to answer them.</p>
+      <p>Remember, the cheapest option isn't always the best option. Pay a little more for a reputable company, and you'll get better service, proper disposal, and peace of mind.</p>
+    `
+  },
+  'what-can-and-cannot-be-removed-by-junk-haulers': {
+    title: 'What Can and Cannot Be Removed by Junk Haulers',
+    date: 'March 10, 2024',
+    category: 'Industry Info',
+    content: `
+      <p>Understanding what junk removal companies can and cannot legally haul away will help you prepare for your appointment and avoid surprises on the day of service. While most household items can be removed, there are important restrictions you need to know about.</p>
+
+      <h2>What Junk Haulers CAN Remove</h2>
+      <p>Most junk removal companies can handle a wide variety of items. Here's a comprehensive list of what's typically acceptable:</p>
+
+      <h3>Furniture</h3>
+      <ul>
+        <li>Couches and sofas</li>
+        <li>Mattresses and box springs</li>
+        <li>Tables and chairs</li>
+        <li>Dressers and cabinets</li>
+        <li>Desks and office furniture</li>
+        <li>Bed frames</li>
+        <li>Bookshelves</li>
+      </ul>
+
+      <h3>Appliances</h3>
+      <ul>
+        <li>Refrigerators and freezers (properly drained)</li>
+        <li>Washing machines and dryers</li>
+        <li>Dishwashers</li>
+        <li>Stoves and ovens</li>
+        <li>Microwaves</li>
+        <li>Water heaters</li>
+        <li>Air conditioning units</li>
+      </ul>
+
+      <h3>Electronics</h3>
+      <ul>
+        <li>TVs and monitors</li>
+        <li>Computers and laptops</li>
+        <li>Printers and copiers</li>
+        <li>Stereo equipment</li>
+        <li>Game consoles</li>
+        <li>Small kitchen appliances</li>
+      </ul>
+
+      <h3>Yard Waste</h3>
+      <ul>
+        <li>Branches and tree limbs</li>
+        <li>Leaves and grass clippings</li>
+        <li>Bushes and shrubs</li>
+        <li>Dirt and soil (in limited quantities)</li>
+        <li>Rocks and stones</li>
+      </ul>
+
+      <h3>Construction Debris</h3>
+      <ul>
+        <li>Drywall</li>
+        <li>Wood and lumber</li>
+        <li>Carpeting and flooring</li>
+        <li>Doors and windows</li>
+        <li>Cabinets and countertops</li>
+        <li>Fencing materials</li>
+        <li>Concrete and bricks (usually limited amounts)</li>
+      </ul>
+
+      <h3>Miscellaneous Items</h3>
+      <ul>
+        <li>Boxes and packing materials</li>
+        <li>Books and paper</li>
+        <li>Clothing and textiles</li>
+        <li>Sports equipment</li>
+        <li>Toys and games</li>
+        <li>Household clutter</li>
+        <li>Holiday decorations</li>
+      </ul>
+
+      <h2>What Junk Haulers CANNOT Remove</h2>
+      <p>There are certain items that junk removal companies cannot legally or safely haul away. These restrictions are in place for safety and environmental reasons.</p>
+
+      <h3>Hazardous Materials</h3>
+      <p>Hazardous waste requires special handling and disposal. Most junk removal companies are not licensed to handle:</p>
+      <ul>
+        <li>Paint (wet paint - dried paint cans are usually acceptable)</li>
+        <li>Motor oil and automotive fluids</li>
+        <li>Gasoline and other fuels</li>
+        <li>Pesticides and herbicides</li>
+        <li>Cleaning chemicals</li>
+        <li>Batteries (car batteries)</li>
+        <li>Propane tanks</li>
+        <li>Asbestos-containing materials</li>
+        <li>Medical waste</li>
+        <li>Biological waste</li>
+      </ul>
+      <p><strong>Where to dispose of hazardous materials:</strong> Contact your local waste management facility or household hazardous waste collection center. Many communities hold periodic collection events for these materials.</p>
+
+      <h3>Items Requiring Special Permits or Handling</h3>
+      <ul>
+        <li><strong>Tires:</strong> Many companies won't take tires, or charge extra fees. Tire shops often accept old tires for recycling.</li>
+        <li><strong>Large amounts of dirt or concrete:</strong> Small quantities might be acceptable, but large amounts require specialized disposal.</li>
+        <li><strong>Railroad ties:</strong> Often treated with creosote, making them hazardous waste.</li>
+        <li><strong>Industrial equipment:</strong> Heavy machinery may be too large or specialized.</li>
+      </ul>
+
+      <h3>Prohibited for Liability Reasons</h3>
+      <p>Some items aren't inherently dangerous but are typically excluded for legal or practical reasons:</p>
+      <ul>
+        <li>Safes (unless you know the combination and can open them)</li>
+        <li>Piano removal (some companies offer this as a specialty service)</li>
+        <li>Hot tubs and spas (some companies handle these with advance notice)</li>
+        <li>Items containing freon that haven't been properly drained</li>
+      </ul>
+
+      <h2>Items That May Require Additional Fees</h2>
+      <p>Some items are removable but come with extra charges:</p>
+      <ul>
+        <li><strong>Mattresses:</strong> Often require special recycling, leading to additional fees</li>
+        <li><strong>Appliances with freon:</strong> Must be drained by a certified technician</li>
+        <li><strong>TVs and monitors:</strong> E-waste recycling fees may apply</li>
+        <li><strong>Large items requiring extra labor:</strong> Piano, hot tubs, above-ground pools</li>
+      </ul>
+
+      <h2>How to Prepare for Junk Removal</h2>
+      <p>To ensure a smooth removal process:</p>
+      <ol>
+        <li><strong>Sort items in advance:</strong> Separate hazardous materials from regular junk</li>
+        <li><strong>Ask questions:</strong> Call ahead if you're unsure whether something can be removed</li>
+        <li><strong>Drain appliances:</strong> Empty refrigerators and disconnect water lines</li>
+        <li><strong>Be present:</strong> You should be there to point out what goes and what stays</li>
+        <li><strong>Take photos:</strong> Document valuable items you're disposing of for tax deduction purposes</li>
+      </ol>
+
+      <h2>Alternatives for Prohibited Items</h2>
+      <p>If you have items that junk haulers can't take:</p>
+      <ul>
+        <li><strong>Hazardous Waste Centers:</strong> Most counties have facilities that accept household hazardous waste for free</li>
+        <li><strong>Retailer Take-Back Programs:</strong> Stores like Home Depot and Best Buy often accept specific items for recycling</li>
+        <li><strong>Specialized Services:</strong> Some companies specialize in piano removal, hot tub disposal, or appliance recycling</li>
+        <li><strong>Donation Centers:</strong> Working items in good condition can often be donated</li>
+      </ul>
+
+      <h2>Final Tips</h2>
+      <p>Always communicate with your junk removal company in advance about what you need removed. Take photos and send them via email or text if you're unsure about specific items. A reputable company will be upfront about what they can and cannot handle, and they'll help you find alternatives for items they can't take.</p>
+      <p>Remember, just because a company can't remove something doesn't mean you're stuck with it - there's almost always a proper disposal solution available.</p>
+    `
+  },
+  'preparing-your-home-for-junk-removal-service': {
+    title: 'Preparing Your Home for Junk Removal Service',
+    date: 'March 5, 2024',
+    category: 'Tips & Guides',
+    content: `
+      <p>Proper preparation before your junk removal appointment can save you time, money, and headaches. A little advance planning ensures the job goes smoothly and you get the most value from your service. Here's everything you need to know to prepare your home for junk removal.</p>
+
+      <h2>1. Sort and Organize Before the Appointment</h2>
+      <p>The more organized you are, the faster the removal will go - and since many companies charge by volume or time, better organization can mean lower costs.</p>
+
+      <h3>Create Three Piles</h3>
+      <ul>
+        <li><strong>Junk (to be removed):</strong> Items you want hauled away</li>
+        <li><strong>Keep:</strong> Items that are staying</li>
+        <li><strong>Donate:</strong> Usable items in good condition (ask if the company donates items)</li>
+      </ul>
+      <p>Move everything you want removed to one area if possible. This prevents confusion and speeds up the job. Some people use colored tape or signs to mark items clearly.</p>
+
+      <h2>2. Make Items Accessible</h2>
+      <p>Help the crew do their job efficiently by making items easy to access:</p>
+      <ul>
+        <li>Clear pathways from items to the exit</li>
+        <li>Move fragile or valuable items out of the way</li>
+        <li>Remove obstacles from doorways and hallways</li>
+        <li>Ensure there's room for the truck to park (ideally within 30 feet of the items)</li>
+        <li>If items are upstairs, make sure stairways are clear</li>
+      </ul>
+
+      <h2>3. Separate Hazardous Materials</h2>
+      <p>As mentioned in our guide about what can and cannot be removed, hazardous materials need special handling. Before the crew arrives:</p>
+      <ul>
+        <li>Set aside any paint, chemicals, or hazardous waste</li>
+        <li>Empty gasoline from lawn equipment</li>
+        <li>Drain fluids from appliances</li>
+        <li>Remove any items you're unsure about and ask the crew upon arrival</li>
+      </ul>
+
+      <h2>4. Prepare Appliances</h2>
+      <p>If you're removing appliances, preparation is crucial:</p>
+
+      <h3>Refrigerators and Freezers</h3>
+      <ul>
+        <li>Empty all contents</li>
+        <li>Unplug at least 24 hours in advance</li>
+        <li>Leave doors open to prevent mold and odors</li>
+        <li>Remove water lines and ice makers</li>
+        <li>Clean out any spills or residue</li>
+      </ul>
+
+      <h3>Washing Machines</h3>
+      <ul>
+        <li>Run a final cycle to drain remaining water</li>
+        <li>Disconnect water lines</li>
+        <li>Secure the drum if possible</li>
+      </ul>
+
+      <h3>Stoves and Ovens</h3>
+      <ul>
+        <li>Disconnect gas lines (call a professional if needed)</li>
+        <li>Unplug electric models</li>
+        <li>Remove oven racks if they're staying</li>
+      </ul>
+
+      <h2>5. Disassemble Large Items (If Possible)</h2>
+      <p>While crews can usually disassemble items, doing some work yourself can save time and money:</p>
+      <ul>
+        <li>Remove table legs</li>
+        <li>Disassemble bed frames</li>
+        <li>Take apart shelving units</li>
+        <li>Remove doors from large furniture (if it helps them fit through doorways)</li>
+      </ul>
+      <p><strong>Important:</strong> Only disassemble items if you can do so safely. Never put yourself at risk - the crew has tools and experience to handle difficult items.</p>
+
+      <h2>6. Protect Your Property</h2>
+      <p>Take precautions to protect your home during the removal:</p>
+      <ul>
+        <li>Roll up rugs in high-traffic areas</li>
+        <li>Place floor protectors or cardboard on hardwood floors</li>
+        <li>Move valuable or fragile items to a safe room</li>
+        <li>Protect walls and doorframes in tight spaces</li>
+        <li>Secure pets in a separate room or outdoors</li>
+      </ul>
+
+      <h2>7. Document Everything</h2>
+      <p>Before the crew arrives, take photos or videos of:</p>
+      <ul>
+        <li>Items being removed (for tax deduction records if donating)</li>
+        <li>Your property condition (in case of disputes)</li>
+        <li>Valuable items you're keeping (so you can prove they weren't removed)</li>
+      </ul>
+
+      <h2>8. Prepare Payment and Paperwork</h2>
+      <p>Have ready:</p>
+      <ul>
+        <li>Your estimate or quote</li>
+        <li>Payment method (check which payment types they accept)</li>
+        <li>Any special instructions or requests in writing</li>
+        <li>HOA or building permits if required</li>
+      </ul>
+
+      <h2>9. Plan Parking and Access</h2>
+      <p>The removal truck needs space:</p>
+      <ul>
+        <li>Clear your driveway if possible</li>
+        <li>Check if street parking is allowed and available</li>
+        <li>Notify neighbors if the truck might block their access</li>
+        <li>Reserve parking spots if you're in a busy area</li>
+        <li>Check apartment building loading dock schedules</li>
+      </ul>
+
+      <h2>10. Be Present for the Appointment</h2>
+      <p>You should be home during the removal to:</p>
+      <ul>
+        <li>Point out exactly what goes and what stays</li>
+        <li>Answer questions about access</li>
+        <li>Handle any unexpected situations</li>
+        <li>Inspect the work before the crew leaves</li>
+        <li>Sign off on the job completion</li>
+      </ul>
+
+      <h2>Day-Of Checklist</h2>
+      <p>On the day of your appointment:</p>
+      <ol>
+        <li>Confirm the appointment time</li>
+        <li>Do a final walkthrough to ensure everything is ready</li>
+        <li>Secure pets</li>
+        <li>Have payment ready</li>
+        <li>Clear the path one more time</li>
+        <li>Turn on lights in basements, garages, or dark areas</li>
+        <li>Unlock gates or exterior doors they'll need to access</li>
+      </ol>
+
+      <h2>What to Expect During Service</h2>
+      <p>When the crew arrives:</p>
+      <ul>
+        <li>They'll introduce themselves and review the items</li>
+        <li>They'll provide a firm quote after seeing everything</li>
+        <li>You'll approve the price before work begins</li>
+        <li>They'll load items onto their truck</li>
+        <li>They'll sweep the area and remove any debris</li>
+        <li>You'll do a final walkthrough together</li>
+        <li>Payment is typically collected after the job is complete</li>
+      </ul>
+
+      <h2>After the Removal</h2>
+      <p>Once the crew leaves:</p>
+      <ul>
+        <li>Inspect your property for any damage</li>
+        <li>Report issues immediately (take photos)</li>
+        <li>Keep your receipt and any paperwork</li>
+        <li>Leave a review to help future customers</li>
+        <li>Save donation receipts for tax purposes</li>
+      </ul>
+
+      <h2>Common Mistakes to Avoid</h2>
+      <ul>
+        <li><strong>Not asking about additional fees:</strong> Know the pricing structure upfront</li>
+        <li><strong>Failing to sort items:</strong> Keeps vs. junk should be clearly separated</li>
+        <li><strong>Assuming they'll clean:</strong> Most companies remove junk but don't deep clean</li>
+        <li><strong>Not checking disposal practices:</strong> Ask where items end up</li>
+        <li><strong>Leaving valuables mixed with junk:</strong> Always double-check before they start loading</li>
+      </ul>
+
+      <h2>Final Tips for Success</h2>
+      <p>The key to a successful junk removal experience is communication and preparation. Contact the company in advance if you have questions about specific items or access issues. Most companies are happy to work with you to ensure a smooth process.</p>
+      <p>Remember, a little preparation goes a long way. By following these steps, you'll save time and money while ensuring your junk removal goes exactly as planned.</p>
+    `
+  },
+  'the-environmental-benefits-of-professional-junk-removal': {
+    title: 'The Environmental Benefits of Professional Junk Removal',
+    date: 'February 28, 2024',
+    category: 'Sustainability',
+    content: `
+      <p>When you think about junk removal, you might picture everything going straight to a landfill. But responsible junk removal companies are doing much more than just dumping your unwanted items. Professional haulers are playing a crucial role in environmental conservation through recycling, donation, and responsible disposal practices.</p>
+
+      <h2>The Landfill Problem</h2>
+      <p>Americans generate over 250 million tons of trash annually, and much of it ends up in landfills. Traditional waste disposal comes with serious environmental costs:</p>
+      <ul>
+        <li><strong>Land consumption:</strong> Landfills require vast amounts of space</li>
+        <li><strong>Groundwater contamination:</strong> Toxic leachate can seep into soil and water</li>
+        <li><strong>Greenhouse gas emissions:</strong> Decomposing organic waste produces methane</li>
+        <li><strong>Resource waste:</strong> Valuable materials are buried instead of reused</li>
+      </ul>
+      <p>Professional junk removal companies help address these problems by diverting items from landfills through various sustainable practices.</p>
+
+      <h2>How Responsible Junk Removal Companies Make a Difference</h2>
+
+      <h3>1. Recycling Programs</h3>
+      <p>Many junk removal companies partner with recycling facilities to process materials that would otherwise end up in landfills. Common recyclable items include:</p>
+      <ul>
+        <li><strong>Metals:</strong> Scrap metal, appliances, furniture frames</li>
+        <li><strong>Electronics:</strong> Computers, TVs, phones (e-waste recycling)</li>
+        <li><strong>Cardboard and paper:</strong> Boxes, documents, packaging</li>
+        <li><strong>Plastics:</strong> Containers, packaging materials</li>
+        <li><strong>Wood:</strong> Furniture, construction debris, pallets</li>
+        <li><strong>Glass:</strong> Windows, bottles, mirrors</li>
+      </ul>
+      <p>Top-tier junk removal companies recycle 60-80% of what they collect. This means that most of your junk gets a second life instead of taking up space in a landfill.</p>
+
+      <h3>2. Donation of Usable Items</h3>
+      <p>Items in good condition don't need to be waste at all. Professional junk removal companies typically partner with local charities and donation centers to give usable items new homes:</p>
+      <ul>
+        <li>Furniture in good condition goes to families in need</li>
+        <li>Working appliances are donated to community programs</li>
+        <li>Clothing and household goods support local charities</li>
+        <li>Building materials help Habitat for Humanity projects</li>
+      </ul>
+      <p>This practice has a double benefit: it keeps items out of landfills AND helps people in your community.</p>
+
+      <h3>3. Proper Hazardous Waste Handling</h3>
+      <p>While most junk removal companies can't handle hazardous waste directly, reputable companies will:</p>
+      <ul>
+        <li>Identify hazardous materials</li>
+        <li>Direct you to proper disposal facilities</li>
+        <li>Ensure items don't end up contaminating landfills</li>
+        <li>Follow environmental regulations strictly</li>
+      </ul>
+
+      <h3>4. E-Waste Recycling</h3>
+      <p>Electronic waste is one of the fastest-growing waste streams and contains both valuable materials and toxic substances. Professional junk removal companies ensure electronics are:</p>
+      <ul>
+        <li>Taken to certified e-waste recyclers</li>
+        <li>Disassembled to recover valuable metals (gold, silver, copper)</li>
+        <li>Properly processed to prevent toxic substances from leaching into soil</li>
+        <li>Data-wiped for security (where applicable)</li>
+      </ul>
+
+      <h2>The Environmental Impact: Real Numbers</h2>
+      <p>The recycling and donation practices of professional junk removal companies create measurable environmental benefits:</p>
+
+      <h3>Carbon Footprint Reduction</h3>
+      <ul>
+        <li>Recycling aluminum saves 95% of the energy needed to make new aluminum</li>
+        <li>Recycling steel saves 74% of the energy used in production</li>
+        <li>One ton of recycled paper saves 17 trees, 7,000 gallons of water, and 463 gallons of oil</li>
+      </ul>
+
+      <h3>Waste Diversion Statistics</h3>
+      <ul>
+        <li>Professional haulers divert an average of 1.5 million tons of material from landfills annually</li>
+        <li>Recycled materials reduce greenhouse gas emissions equivalent to removing thousands of cars from roads</li>
+        <li>Donated items support over 100,000 families nationwide each year</li>
+      </ul>
+
+      <h2>Comparing DIY vs. Professional Disposal</h2>
+
+      <h3>DIY Disposal</h3>
+      <ul>
+        <li>Most people simply haul everything to the dump</li>
+        <li>Limited knowledge of what can be recycled</li>
+        <li>No donation partnerships</li>
+        <li>Higher likelihood of improper disposal</li>
+      </ul>
+
+      <h3>Professional Junk Removal</h3>
+      <ul>
+        <li>Sorting process identifies recyclables and donations</li>
+        <li>Established relationships with recycling centers</li>
+        <li>Partnerships with charities for donations</li>
+        <li>Compliance with environmental regulations</li>
+      </ul>
+
+      <h2>How to Choose an Environmentally Responsible Company</h2>
+      <p>Not all junk removal companies are equally committed to sustainability. Here's what to look for:</p>
+
+      <h3>Questions to Ask</h3>
+      <ul>
+        <li>What percentage of collected items do you recycle or donate?</li>
+        <li>Which recycling facilities do you work with?</li>
+        <li>Do you have partnerships with local charities?</li>
+        <li>How do you handle electronics and appliances?</li>
+        <li>Are you certified by any environmental organizations?</li>
+      </ul>
+
+      <h3>Green Certifications to Look For</h3>
+      <ul>
+        <li>e-Stewards certification for electronics recycling</li>
+        <li>R2 (Responsible Recycling) certification</li>
+        <li>Local environmental compliance certifications</li>
+        <li>Partnerships with recognized environmental organizations</li>
+      </ul>
+
+      <h2>The Circular Economy Connection</h2>
+      <p>Professional junk removal companies are part of the larger circular economy - a system that aims to eliminate waste by keeping products and materials in use. Here's how they contribute:</p>
+      <ul>
+        <li><strong>Recovery:</strong> Extracting valuable materials from junk</li>
+        <li><strong>Reuse:</strong> Donating usable items for continued use</li>
+        <li><strong>Recycling:</strong> Processing materials into new products</li>
+        <li><strong>Reduction:</strong> Helping people be more conscious of consumption</li>
+      </ul>
+
+      <h2>Beyond Junk Removal: Additional Environmental Benefits</h2>
+
+      <h3>Reduced Transportation Impact</h3>
+      <p>Professional services make fewer trips than multiple DIY hauls, reducing overall fuel consumption and emissions.</p>
+
+      <h3>Proper Disposal Knowledge</h3>
+      <p>Professionals know regulations and proper channels for disposing of items that require special handling, preventing environmental contamination.</p>
+
+      <h3>Community Education</h3>
+      <p>Many companies educate customers about recycling and donation options, spreading environmental awareness.</p>
+
+      <h2>What You Can Do</h2>
+      <p>As a consumer, you can maximize the environmental benefits of junk removal:</p>
+      <ul>
+        <li><strong>Choose green companies:</strong> Ask about their practices before hiring</li>
+        <li><strong>Sort before service:</strong> Separate recyclables and donations</li>
+        <li><strong>Clean items:</strong> Clean furniture and appliances increase donation chances</li>
+        <li><strong>Ask questions:</strong> Where will your items go?</li>
+        <li><strong>Request documentation:</strong> Some companies provide recycling/donation receipts</li>
+      </ul>
+
+      <h2>The Future of Junk Removal</h2>
+      <p>The industry is moving toward even more sustainable practices:</p>
+      <ul>
+        <li>Advanced sorting technology to identify more recyclables</li>
+        <li>Partnerships with upcycling businesses</li>
+        <li>Zero-waste goals from leading companies</li>
+        <li>Electric truck fleets to reduce emissions</li>
+        <li>AI-powered routing for efficient service</li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>Professional junk removal isn't just about convenience - it's an environmentally responsible choice. By working with companies committed to recycling and donation, you're helping:</p>
+      <ul>
+        <li>Reduce landfill waste</li>
+        <li>Conserve natural resources</li>
+        <li>Lower carbon emissions</li>
+        <li>Support local communities</li>
+        <li>Build a more sustainable future</li>
+      </ul>
+      <p>The next time you need junk removal, remember that choosing a responsible company means your unwanted items can become someone else's treasure or valuable recycled materials - not just landfill waste. That's a choice worth making.</p>
+    `
+  },
+  'estate-cleanouts-a-complete-guide': {
+    title: 'Estate Cleanouts: A Complete Guide',
+    date: 'February 20, 2024',
+    category: 'Services',
+    content: `
+      <p>Estate cleanouts are among the most emotionally challenging tasks families face. Whether you're dealing with the loss of a loved one, preparing a property for sale, or managing an estate as an executor, the process can feel overwhelming. This comprehensive guide will help you navigate estate cleanouts with sensitivity, efficiency, and less stress.</p>
+
+      <h2>What is an Estate Cleanout?</h2>
+      <p>An estate cleanout is the process of clearing out a home or property after a death, downsizing, or major life transition. It involves sorting through belongings, identifying valuable items, disposing of unwanted items, and preparing the property for its next chapter.</p>
+      <p>Unlike regular junk removal, estate cleanouts require more sensitivity, thoroughness, and time. Families must balance practical concerns with emotional attachments while managing legal and financial considerations.</p>
+
+      <h2>Common Reasons for Estate Cleanouts</h2>
+      <ul>
+        <li><strong>Death of a family member:</strong> The most common reason</li>
+        <li><strong>Moving to assisted living:</strong> Downsizing from a house to an apartment</li>
+        <li><strong>Divorce settlements:</strong> Dividing property and belongings</li>
+        <li><strong>Foreclosure:</strong> Clearing property before bank repossession</li>
+        <li><strong>Hoarding situations:</strong> Addressing accumulated items</li>
+        <li><strong>Preparing property for sale:</strong> Clearing an inherited home</li>
+      </ul>
+
+      <h2>The Estate Cleanout Timeline</h2>
+      <p>Estate cleanouts typically take longer than people expect. Here's a realistic timeline:</p>
+      <ul>
+        <li><strong>Small apartment (under 1,000 sq ft):</strong> 2-5 days</li>
+        <li><strong>Average home (1,500-2,500 sq ft):</strong> 1-2 weeks</li>
+        <li><strong>Large home (over 3,000 sq ft):</strong> 2-4 weeks</li>
+        <li><strong>Property with outbuildings:</strong> Add 1-2 weeks</li>
+      </ul>
+      <p>These timelines assume regular working hours. If family members can only work weekends, extend these estimates significantly.</p>
+
+      <h2>Step-by-Step Estate Cleanout Process</h2>
+
+      <h3>Step 1: Legal Considerations First</h3>
+      <p>Before touching anything:</p>
+      <ul>
+        <li>Verify you have legal authority to clean out the property</li>
+        <li>Review the will and estate documents</li>
+        <li>Consult with the executor or estate attorney</li>
+        <li>Understand any specific bequests in the will</li>
+        <li>Get permission from all relevant parties</li>
+      </ul>
+      <p><strong>Important:</strong> Removing items without proper authority can lead to legal problems.</p>
+
+      <h3>Step 2: Assemble Your Team</h3>
+      <p>Estate cleanouts are easier with help:</p>
+      <ul>
+        <li><strong>Family members:</strong> Coordinate schedules for sorting days</li>
+        <li><strong>Professional organizers:</strong> Especially helpful for large estates</li>
+        <li><strong>Estate sale companies:</strong> If selling valuable items</li>
+        <li><strong>Appraisers:</strong> For valuable collections or antiques</li>
+        <li><strong>Junk removal services:</strong> For final hauling</li>
+        <li><strong>Cleaning services:</strong> For final property cleaning</li>
+      </ul>
+
+      <h3>Step 3: Create a Plan and Categories</h3>
+      <p>Establish clear categories for items:</p>
+      <ul>
+        <li><strong>Keep/Family members want:</strong> Items with sentimental or actual value</li>
+        <li><strong>Sell:</strong> Valuable items for estate sale or consignment</li>
+        <li><strong>Donate:</strong> Usable items in good condition</li>
+        <li><strong>Recycle:</strong> Paper, electronics, metals</li>
+        <li><strong>Trash:</strong> Broken, unusable items</li>
+        <li><strong>Needs sorting:</strong> Unsure items (minimize this category)</li>
+      </ul>
+
+      <h3>Step 4: Start with Easy Decisions</h3>
+      <p>Build momentum by starting with straightforward items:</p>
+      <ul>
+        <li>Obviously broken or damaged items</li>
+        <li>Expired food and medications</li>
+        <li>Old magazines and newspapers</li>
+        <li>Clear junk and debris</li>
+      </ul>
+      <p>This creates workspace and gives family members a sense of progress.</p>
+
+      <h3>Step 5: Sort Room by Room</h3>
+      <p>Tackle one room at a time to avoid feeling overwhelmed:</p>
+
+      <h4>Priority Order</h4>
+      <ol>
+        <li><strong>Home office/study:</strong> Important documents need immediate attention</li>
+        <li><strong>Master bedroom:</strong> Personal items and valuables</li>
+        <li><strong>Living areas:</strong> Furniture and decorative items</li>
+        <li><strong>Kitchen:</strong> Appliances and household goods</li>
+        <li><strong>Bathrooms:</strong> Usually quickest rooms</li>
+        <li><strong>Garage/basement/attic:</strong> Often the most time-consuming</li>
+      </ol>
+
+      <h3>Step 6: Handle Important Documents</h3>
+      <p>Look for and secure:</p>
+      <ul>
+        <li>Wills and trust documents</li>
+        <li>Life insurance policies</li>
+        <li>Property deeds</li>
+        <li>Vehicle titles</li>
+        <li>Tax returns (last 7 years)</li>
+        <li>Bank and investment statements</li>
+        <li>Birth certificates and passports</li>
+        <li>Contracts and warranties</li>
+        <li>Medical records</li>
+      </ul>
+      <p><strong>Pro tip:</strong> Set up a specific area or box for important documents as you find them.</p>
+
+      <h3>Step 7: Identify Valuable Items</h3>
+      <p>Items that might be worth more than you think:</p>
+      <ul>
+        <li>Jewelry and watches</li>
+        <li>Artwork and sculptures</li>
+        <li>Antique furniture</li>
+        <li>Collections (coins, stamps, etc.)</li>
+        <li>Vintage electronics</li>
+        <li>Designer clothing and accessories</li>
+        <li>Musical instruments</li>
+        <li>Power tools and equipment</li>
+      </ul>
+      <p>When in doubt, get an appraisal before discarding or donating.</p>
+
+      <h2>Managing Family Dynamics</h2>
+      <p>Estate cleanouts can create family tension. Here's how to minimize conflict:</p>
+
+      <h3>Set Ground Rules Early</h3>
+      <ul>
+        <li>Agree on the process before starting</li>
+        <li>Establish a "claiming" system for desired items</li>
+        <li>Set deadlines for decision-making</li>
+        <li>Decide how to handle disagreements</li>
+      </ul>
+
+      <h3>Communication Strategies</h3>
+      <ul>
+        <li>Hold family meetings before major decisions</li>
+        <li>Take photos of items for remote family members</li>
+        <li>Use group texts or emails for updates</li>
+        <li>Document decisions in writing</li>
+        <li>Be patient with emotional reactions</li>
+      </ul>
+
+      <h3>Distributing Personal Items</h3>
+      <p>Methods for fair distribution:</p>
+      <ul>
+        <li><strong>Will directives:</strong> Follow specific bequests first</li>
+        <li><strong>Round-robin selection:</strong> Take turns choosing items</li>
+        <li><strong>Point system:</strong> Each person gets equal points to "spend"</li>
+        <li><strong>Auction among family:</strong> Bid using shares of estate</li>
+        <li><strong>Drawing names:</strong> For items multiple people want</li>
+      </ul>
+
+      <h2>Options for Unwanted Items</h2>
+
+      <h3>Estate Sales</h3>
+      <p><strong>Pros:</strong></p>
+      <ul>
+        <li>Professionals handle pricing and sales</li>
+        <li>Happens in one or two days</li>
+        <li>Usually sells 60-80% of items</li>
+      </ul>
+      <p><strong>Cons:</strong></p>
+      <ul>
+        <li>Companies take 30-50% commission</li>
+        <li>Strangers in the home</li>
+        <li>May require minimum value to be worthwhile</li>
+      </ul>
+
+      <h3>Donation Options</h3>
+      <ul>
+        <li><strong>Local charities:</strong> Goodwill, Salvation Army, St. Vincent de Paul</li>
+        <li><strong>Specialized organizations:</strong> Habitat for Humanity (building materials), women's shelters (household goods)</li>
+        <li><strong>Churches and community centers:</strong> Furniture and household items</li>
+        <li><strong>Schools and libraries:</strong> Books and supplies</li>
+      </ul>
+      <p>Get receipts for tax deductions!</p>
+
+      <h3>Professional Junk Removal</h3>
+      <p>Best for final cleanout after sorting:</p>
+      <ul>
+        <li>Handle heavy lifting and hauling</li>
+        <li>Work with donation centers</li>
+        <li>Recycle appropriate materials</li>
+        <li>Clear entire properties in one day</li>
+      </ul>
+
+      <h2>Emotional Aspects of Estate Cleanouts</h2>
+      <p>The emotional toll of estate cleanouts is real. Here are coping strategies:</p>
+
+      <h3>Give Yourself Time and Grace</h3>
+      <ul>
+        <li>Don't rush if you don't have to</li>
+        <li>Take breaks when emotions run high</li>
+        <li>Accept that it's okay to feel sad, angry, or overwhelmed</li>
+      </ul>
+
+      <h3>Preserve Memories</h3>
+      <ul>
+        <li>Take photos of rooms and special items before starting</li>
+        <li>Create digital archives of photos and documents</li>
+        <li>Keep small meaningful items rather than large furniture</li>
+        <li>Share memories as you find items</li>
+      </ul>
+
+      <h3>Know When to Seek Help</h3>
+      <p>Consider professional help if:</p>
+      <ul>
+        <li>The home is a hoarding situation</li>
+        <li>Family conflict is escalating</li>
+        <li>You're on a tight deadline</li>
+        <li>The task feels too overwhelming</li>
+        <li>You don't live near the property</li>
+      </ul>
+
+      <h2>Costs and Budgeting</h2>
+      <p>Estate cleanout costs vary widely based on:</p>
+      <ul>
+        <li><strong>DIY approach:</strong> $500-$2,000 (rental trucks, supplies, disposal fees)</li>
+        <li><strong>Professional estate sale:</strong> Commission on sales (30-50%)</li>
+        <li><strong>Professional junk removal:</strong> $400-$800 per truckload</li>
+        <li><strong>Professional organizer:</strong> $50-$150 per hour</li>
+        <li><strong>Deep cleaning after:</strong> $200-$600</li>
+      </ul>
+      <p><strong>Total estimated cost:</strong> $2,000-$10,000 depending on size and method</p>
+
+      <h2>Final Steps</h2>
+      <p>Once items are cleared:</p>
+      <ul>
+        <li>Deep clean the entire property</li>
+        <li>Make any necessary repairs</li>
+        <li>Document the property condition</li>
+        <li>Cancel utilities if appropriate</li>
+        <li>Change locks</li>
+        <li>Prepare for sale or rental</li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>Estate cleanouts are challenging, but with proper planning, clear communication, and the right help, the process becomes manageable. Remember that you're not just clearing a property - you're honoring a life and creating space for new beginnings.</p>
+      <p>Take your time, be kind to yourself and family members, and don't hesitate to seek professional help when needed. There's no shame in admitting the task is too big to handle alone.</p>
+    `
+  },
+  'commercial-vs-residential-junk-removal-key-differences': {
+    title: 'Commercial vs. Residential Junk Removal: Key Differences',
+    date: 'February 15, 2024',
+    category: 'Industry Info',
+    content: `
+      <p>While the basic concept is the same - hauling away unwanted items - commercial and residential junk removal services differ significantly in scope, timing, pricing, and execution. Understanding these differences will help you choose the right service for your needs and avoid paying for services you don't need.</p>
+
+      <h2>What is Residential Junk Removal?</h2>
+      <p>Residential junk removal focuses on homeowners and renters removing household items, furniture, appliances, and general clutter from private properties. Common scenarios include:</p>
+      <ul>
+        <li>Home cleanouts and decluttering</li>
+        <li>Furniture removal during moves</li>
+        <li>Appliance disposal</li>
+        <li>Garage and basement clearouts</li>
+        <li>Estate cleanouts</li>
+        <li>Post-renovation debris</li>
+      </ul>
+
+      <h2>What is Commercial Junk Removal?</h2>
+      <p>Commercial junk removal serves businesses, property managers, and commercial properties. It handles larger volumes, specialized equipment, and business-specific waste. Common uses include:</p>
+      <ul>
+        <li>Office furniture and equipment removal</li>
+        <li>Retail store clearouts</li>
+        <li>Restaurant equipment disposal</li>
+        <li>Construction site cleanup</li>
+        <li>Property management bulk removals</li>
+        <li>Warehouse cleanouts</li>
+      </ul>
+
+      <h2>Key Differences</h2>
+
+      <h3>1. Volume and Scale</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Typically smaller loads (1/4 to full truck)</li>
+        <li>Single-family homes or apartments</li>
+        <li>One-time or occasional service</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Often multiple truckloads</li>
+        <li>Entire buildings or floors</li>
+        <li>May require multiple trips or dumpster services</li>
+        <li>Potential for ongoing service contracts</li>
+      </ul>
+
+      <h3>2. Types of Materials</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Household furniture</li>
+        <li>Personal belongings</li>
+        <li>Home appliances</li>
+        <li>Yard waste</li>
+        <li>General household clutter</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Office furniture and cubicles</li>
+        <li>Commercial-grade equipment</li>
+        <li>Industrial machinery</li>
+        <li>Retail fixtures and displays</li>
+        <li>Electronic waste (servers, computers in bulk)</li>
+        <li>Construction and renovation debris</li>
+        <li>Specialized materials (medical waste, chemical disposal - requires licensed handling)</li>
+      </ul>
+
+      <h3>3. Scheduling and Timeline</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Flexible scheduling, often same-day or next-day</li>
+        <li>Jobs completed in hours</li>
+        <li>Work during regular business hours or weekends</li>
+        <li>Customer usually present during service</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Often needs to work around business operations</li>
+        <li>May require after-hours or weekend work</li>
+        <li>Jobs may span multiple days</li>
+        <li>Advance scheduling is common</li>
+        <li>Minimal disruption to business is priority</li>
+      </ul>
+
+      <h3>4. Pricing Structure</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Volume-based pricing (portion of truck used)</li>
+        <li>On-site estimates</li>
+        <li>Single payment at completion</li>
+        <li>Average cost: $150-$600 per job</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Often bid-based or contract pricing</li>
+        <li>May include per-item pricing for large equipment</li>
+        <li>Volume discounts for ongoing service</li>
+        <li>Payment terms may include net-30 or invoicing</li>
+        <li>Average cost: $500-$5,000+ depending on scope</li>
+      </ul>
+
+      <h3>5. Regulations and Compliance</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Fewer regulatory requirements</li>
+        <li>Standard disposal regulations apply</li>
+        <li>Hazardous waste follows residential rules</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Must comply with OSHA standards</li>
+        <li>Commercial waste disposal regulations</li>
+        <li>Documentation requirements for disposal</li>
+        <li>Specialized handling for certain materials</li>
+        <li>Liability considerations</li>
+        <li>Certificate of insurance often required</li>
+      </ul>
+
+      <h3>6. Equipment and Manpower</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Standard box trucks</li>
+        <li>2-person crews are typical</li>
+        <li>Basic equipment (dollies, hand tools)</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Larger trucks or multiple vehicles</li>
+        <li>3+ person crews</li>
+        <li>Specialized equipment (forklifts, pallet jacks)</li>
+        <li>May include dumpsters for multi-day jobs</li>
+      </ul>
+
+      <h3>7. Documentation</h3>
+      <p><strong>Residential:</strong></p>
+      <ul>
+        <li>Simple receipt</li>
+        <li>Optional donation receipts</li>
+        <li>Basic invoicing</li>
+      </ul>
+      <p><strong>Commercial:</strong></p>
+      <ul>
+        <li>Detailed invoices with itemization</li>
+        <li>Certificates of disposal/recycling</li>
+        <li>Compliance documentation</li>
+        <li>Manifests for certain materials</li>
+        <li>Insurance certificates</li>
+      </ul>
+
+      <h2>Pricing Comparison Examples</h2>
+
+      <h3>Residential Job: Single-Family Home Cleanout</h3>
+      <ul>
+        <li>Furniture removal: 1/2 truck load</li>
+        <li>Crew: 2 people</li>
+        <li>Time: 2 hours</li>
+        <li><strong>Cost: $400-$500</strong></li>
+      </ul>
+
+      <h3>Commercial Job: Office Relocation</h3>
+      <ul>
+        <li>100 cubicles, desks, and chairs</li>
+        <li>Electronics recycling</li>
+        <li>Crew: 4 people</li>
+        <li>Time: 2 days (after hours)</li>
+        <li><strong>Cost: $3,000-$5,000</strong></li>
+      </ul>
+
+      <h2>When Residential Companies Can Handle Commercial Jobs</h2>
+      <p>Some commercial needs can be served by residential companies:</p>
+      <ul>
+        <li>Small office cleanouts (under 1,000 sq ft)</li>
+        <li>Individual business equipment removal</li>
+        <li>Retail shop closeouts (small spaces)</li>
+        <li>One-time removal needs</li>
+      </ul>
+
+      <h2>When You Need a Commercial-Specific Company</h2>
+      <p>You should specifically seek commercial services for:</p>
+      <ul>
+        <li>Multi-floor office buildings</li>
+        <li>Warehouse cleanouts</li>
+        <li>Construction sites</li>
+        <li>Manufacturing facilities</li>
+        <li>Large retail or restaurant spaces</li>
+        <li>Ongoing service contracts</li>
+        <li>Specialized equipment removal</li>
+        <li>Jobs requiring after-hours work</li>
+      </ul>
+
+      <h2>Insurance and Liability Considerations</h2>
+
+      <h3>Residential Coverage</h3>
+      <ul>
+        <li>General liability insurance (standard)</li>
+        <li>Workers' compensation</li>
+        <li>Coverage typically $500,000-$1 million</li>
+      </ul>
+
+      <h3>Commercial Coverage</h3>
+      <ul>
+        <li>Higher liability limits (often $2-5 million)</li>
+        <li>Additional insured endorsements</li>
+        <li>Specialized coverage for equipment</li>
+        <li>Pollution liability for certain jobs</li>
+        <li>Bonds may be required for large contracts</li>
+      </ul>
+
+      <h2>Environmental Practices: Similarities and Differences</h2>
+      <p>Both types of services should prioritize:</p>
+      <ul>
+        <li>Recycling metals, plastics, and paper</li>
+        <li>Donating usable items</li>
+        <li>Proper disposal of hazardous materials</li>
+      </ul>
+
+      <p><strong>Commercial-specific considerations:</strong></p>
+      <ul>
+        <li>Bulk electronics require certified e-waste recycling</li>
+        <li>Commercial waste may have stricter regulations</li>
+        <li>Documentation of proper disposal is often required</li>
+        <li>Sustainability reports may be needed for corporate clients</li>
+      </ul>
+
+      <h2>Contract Structures</h2>
+
+      <h3>Residential</h3>
+      <ul>
+        <li>One-time agreements</li>
+        <li>Simple payment on completion</li>
+        <li>Verbal agreements often sufficient</li>
+      </ul>
+
+      <h3>Commercial</h3>
+      <ul>
+        <li>Written contracts standard</li>
+        <li>Service level agreements (SLAs)</li>
+        <li>Terms for ongoing service</li>
+        <li>Payment terms (net-30 common)</li>
+        <li>Cancellation clauses</li>
+        <li>Minimum service requirements</li>
+      </ul>
+
+      <h2>Questions to Ask When Hiring</h2>
+
+      <h3>For Residential Jobs</h3>
+      <ul>
+        <li>What's included in your pricing?</li>
+        <li>Do you recycle and donate?</li>
+        <li>Can you provide same-day service?</li>
+        <li>Are you licensed and insured?</li>
+      </ul>
+
+      <h3>For Commercial Jobs</h3>
+      <ul>
+        <li>Do you have experience with commercial properties?</li>
+        <li>Can you work after hours/weekends?</li>
+        <li>What are your insurance limits?</li>
+        <li>Can you provide certificate of insurance?</li>
+        <li>Do you offer ongoing service contracts?</li>
+        <li>What documentation will you provide?</li>
+        <li>How do you handle specialized equipment?</li>
+        <li>What's your typical crew size for this type of job?</li>
+      </ul>
+
+      <h2>Cost-Saving Tips</h2>
+
+      <h3>For Residential Customers</h3>
+      <ul>
+        <li>Consolidate items in one area</li>
+        <li>Remove items you can handle yourself</li>
+        <li>Be flexible with scheduling</li>
+        <li>Get multiple quotes</li>
+      </ul>
+
+      <h3>For Commercial Customers</h3>
+      <ul>
+        <li>Plan ahead for better rates</li>
+        <li>Consider ongoing contracts for better pricing</li>
+        <li>Break large jobs into phases</li>
+        <li>Provide clear access and staging areas</li>
+        <li>Remove items employees can handle</li>
+        <li>Combine services (multiple locations at once)</li>
+      </ul>
+
+      <h2>The Bottom Line</h2>
+      <p>While both residential and commercial junk removal involve hauling unwanted items, the similarities end there. Commercial jobs require more planning, larger crews, specialized equipment, and different pricing structures. They also come with increased regulatory requirements and documentation needs.</p>
+
+      <p>When seeking junk removal services:</p>
+      <ul>
+        <li><strong>Residential needs:</strong> Most standard junk removal companies can help</li>
+        <li><strong>Small commercial needs:</strong> Many residential companies can handle these</li>
+        <li><strong>Large commercial needs:</strong> Seek companies with specific commercial experience</li>
+      </ul>
+
+      <p>Always verify that the company you choose has the appropriate licensing, insurance, and experience for your specific needs. A company that's perfect for cleaning out your garage might not be equipped to handle clearing out your five-story office building.</p>
+
+      <p>Understanding these differences will help you find the right service provider, get accurate quotes, and ensure your junk removal project goes smoothly - whether you're clearing out a spare bedroom or an entire warehouse.</p>
+    `
+  }
+};
+
+// Blog Post Page Component
+function BlogPostPage({ slug }: { slug: string }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { user, isAuthenticated } = useAuth();
+
+  // Get blog post content or use default
+  const post = blogPostContent[slug] || {
+    title: slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+    date: 'March 15, 2024',
+    category: 'Tips & Guides',
+    content: '<p>This blog post content is coming soon. Check back later for helpful tips and information about junk removal services.</p>'
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      {/* Header */}
+      <div style={{
+        background: '#fbbf24',
+        padding: '12px 16px',
+        borderBottom: '3px solid #000',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+      }}>
+        <div style={{
+          maxWidth: '1400px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}>
+          <button
+            onClick={() => setMenuOpen(true)}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            data-testid="button-menu"
+          >
+            <Menu size={18} color="#000" />
+          </button>
+          
+          <a href="/" style={{ textDecoration: 'none' }}>
+            <h1 style={{
+              fontSize: '20px',
+              fontWeight: '700',
+              color: '#000',
+              margin: 0,
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}>
+              FindLocalJunkPros.com
+            </h1>
+          </a>
+          
+          {isAuthenticated && user ? (
+            <button
+              onClick={() => {
+                if ((user as any)?.isAdmin) {
+                  window.location.href = '/admin';
+                } else {
+                  window.location.href = '/profile/edit';
+                }
+              }}
+              style={{
+                backgroundColor: 'transparent',
+                color: '#000',
+                padding: '0',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              data-testid="button-profile"
+            >
+              <UserCircle size={28} />
+            </button>
+          ) : (
+            <div style={{ width: '28px' }} />
+          )}
+        </div>
+      </div>
+
+      {/* Blog Post Content */}
+      <div style={{
+        maxWidth: '800px',
+        margin: '0 auto',
+        padding: '40px 16px',
+      }}>
+        <a 
+          href="/blog"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#000',
+            textDecoration: 'none',
+            fontSize: '14px',
+            fontWeight: '600',
+            marginBottom: '24px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+          data-testid="link-back-to-blog"
+        >
+          ← Back to Blog
+        </a>
+
+        <article style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '32px',
+        }}>
+          <h1 style={{
+            fontSize: 'clamp(28px, 6vw, 42px)',
+            fontWeight: '700',
+            color: '#000',
+            marginBottom: '16px',
+            lineHeight: '1.2',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            {post.title}
+          </h1>
+          
+          <p style={{
+            fontSize: '16px',
+            color: '#666',
+            marginBottom: '32px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Published on {post.date} • {post.category}
+          </p>
+
+          <style>
+            {`
+              article h2 {
+                font-size: 28px;
+                font-weight: 700;
+                color: #000;
+                margin-top: 32px;
+                margin-bottom: 16px;
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+              }
+              article h3 {
+                font-size: 22px;
+                font-weight: 700;
+                color: #000;
+                margin-top: 24px;
+                margin-bottom: 12px;
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+              }
+              article h4 {
+                font-size: 18px;
+                font-weight: 700;
+                color: #000;
+                margin-top: 20px;
+                margin-bottom: 10px;
+                font-family: 'Helvetica Neue', Arial, sans-serif;
+              }
+              article p {
+                margin-bottom: 16px;
+                line-height: 1.8;
+              }
+              article ul, article ol {
+                margin-bottom: 20px;
+                padding-left: 24px;
+              }
+              article li {
+                margin-bottom: 8px;
+                line-height: 1.6;
+              }
+              article strong {
+                font-weight: 700;
+                color: #000;
+              }
+            `}
+          </style>
+          <div 
+            style={{
+              fontSize: '18px',
+              lineHeight: '1.8',
+              color: '#333',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+        </article>
+
+        {/* CTA Section */}
+        <div style={{
+          background: '#fbbf24',
+          border: '2px solid #000',
+          borderRadius: '12px',
+          padding: '32px',
+          marginTop: '40px',
+          textAlign: 'center',
+        }}>
+          <h3 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            marginBottom: '16px',
+            color: '#000',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Ready to Find Your Local Hauler?
+          </h3>
+          <p style={{
+            fontSize: '16px',
+            marginBottom: '24px',
+            color: '#000',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Search by city to find vetted junk removal companies near you
+          </p>
+          <a
+            href="/"
+            style={{
+              display: 'inline-block',
+              background: '#000',
+              color: '#fbbf24',
+              padding: '14px 28px',
+              borderRadius: '8px',
+              border: '2px solid #000',
+              fontSize: '18px',
+              fontWeight: '700',
+              textDecoration: 'none',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            }}
+            data-testid="link-blogpost-to-home"
+          >
+            Start Your Search
+          </a>
+        </div>
+      </div>
+      
+      {/* Interactive Footer */}
+      <InteractiveFooter />
+    </div>
+  );
+}
+
+// Landing Page Component
+function LandingPage() {
+  const { user, isAuthenticated } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  // SEO
+  useSEO(buildLandingPageSEO());
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    
+    const query = searchQuery.trim().toLowerCase();
+    const slug = query.replace(/\s+/g, '-');
+    
+    // Check if it's a state name
+    const isState = Object.keys(stateNames).includes(slug) || 
+                    Object.values(stateNames).map(s => s.toLowerCase()).includes(query);
+    
+    if (isState) {
+      // Navigate to state page
+      const stateSlug = Object.keys(stateNames).find(key => 
+        key === slug || stateNames[key].toLowerCase() === query
+      );
+      window.location.href = `/${stateSlug}`;
+    } else {
+      // It's a city - search across all states to find which one has it
+      try {
+        // Pass the original query (with spaces) to the API, not the slug
+        const response = await fetch(`/api/search-city?city=${encodeURIComponent(query)}`);
+        const result = await response.json();
+        
+        if (result.state) {
+          // Found the city in a specific state
+          window.location.href = `/${result.state}/${slug}`;
+        } else {
+          // City not found, default to Arizona for now
+          window.location.href = `/arizona/${slug}`;
+        }
+      } catch (error) {
+        // On error, default to Arizona
+        window.location.href = `/arizona/${slug}`;
+      }
+    }
+  };
+
+  return (
+    <div style={{ width: '100%', overflowX: 'hidden' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema()) }}
+      />
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      <div style={{
+        background: '#ffffff',
+      }}>
+      {/* Header Buttons */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: 'rgba(251, 191, 36, 0.15)',
+        backdropFilter: 'blur(10px)',
+        padding: '8px 16px',
+      }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-header-buttons {
+              max-width: 1400px !important;
+            }
+          }
+        `}} />
+      <div className="homepage-header-buttons" style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        display: 'flex',
+        gap: '12px',
+      }}>
+        <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          }}
+          data-testid="button-menu"
+        >
+          <Menu size={24} color="#000" />
+        </button>
+        
+        {isAuthenticated && user && (
+          <button
+            onClick={() => {
+              if ((user as any)?.isAdmin) {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/profile/edit';
+              }
+            }}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            data-testid="button-profile"
+          >
+            <UserCircle size={28} />
+          </button>
+        )}
+      </div>
+      </div>
+
+      <div className="homepage-content" style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '0 20px 30px 20px',
+      }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 1024px) {
+            .homepage-content {
+              max-width: 1400px !important;
+              padding: 0 40px 30px 40px !important;
+            }
+            
+            .state-grid {
+              grid-template-columns: repeat(4, 1fr) !important;
+              max-width: 100% !important;
+              gap: 16px !important;
+            }
+            
+            .homepage-hero h2 {
+              font-size: 48px !important;
+            }
+            
+            .homepage-hero p {
+              font-size: 24px !important;
+            }
+          }
+        `}} />
+        <div className="homepage-hero" style={{
+          textAlign: 'center',
+          marginBottom: '48px',
+          marginTop: '60px',
+        }}>
+          {/* Hero Image */}
+          <div className="hero-image-container" style={{
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginBottom: '0',
+          }}>
+            <style dangerouslySetInnerHTML={{__html: `
+              @media (min-width: 1024px) {
+                .hero-image-container img {
+                  max-height: 400px !important;
+                  width: auto !important;
+                  margin: 0 auto !important;
+                }
+                .hero-image-container {
+                  display: flex !important;
+                  justify-content: center !important;
+                  width: 100% !important;
+                  margin-left: 0 !important;
+                }
+              }
+            `}} />
+            <img 
+              src={heroTruck} 
+              alt="Junk removal truck with US map" 
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+              }}
+            />
+          </div>
+          
+          <h2 style={{
+            fontSize: '36px',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            margin: '0 0 16px 0',
+            letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Search By City
+          </h2>
+          <p style={{
+            fontSize: '20px',
+            color: '#6b7280',
+            margin: '0 0 24px 0',
+            maxWidth: '700px',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            No National Franchises, Local Junk Pros Closest to You.
+          </p>
+
+          <form onSubmit={handleSearch} style={{
+            width: '100%',
+            maxWidth: '500px',
+            margin: '0 auto',
+            display: 'flex',
+            gap: '6px',
+            backgroundColor: '#fff',
+            padding: '5px',
+            borderRadius: '10px',
+            boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+            transform: 'translateY(-1px)',
+            border: '2px solid transparent',
+            boxSizing: 'border-box',
+          }}
+          onFocus={(e) => {
+            e.currentTarget.style.border = '2px solid #fbbf24';
+          }}
+          onBlur={(e) => {
+            e.currentTarget.style.border = '2px solid transparent';
+          }}
+          >
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter your city"
+              style={{
+                flex: 1,
+                minWidth: '0',
+                width: '1px',
+                padding: '10px 8px',
+                border: 'none',
+                outline: 'none',
+                fontSize: '16px',
+                borderRadius: '8px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                backgroundColor: 'transparent',
+                WebkitTextSizeAdjust: '100%',
+                touchAction: 'manipulation',
+              }}
+              data-testid="input-homepage-search"
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '10px 14px',
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}
+              data-testid="button-homepage-search"
+            >
+              <Search size={18} />
+            </button>
+          </form>
+          
+          {/* Rotating message below search */}
+          <div style={{
+            marginTop: '24px',
+            textAlign: 'center',
+          }}>
+            <RotatingBanner />
+          </div>
+        </div>
+
+        <style dangerouslySetInnerHTML={{__html: `
+          .feature-card {
+            padding: 20px 28px !important;
+          }
+          .feature-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+          }
+          @media (max-width: 640px) {
+            .feature-card {
+              padding: 20px 24px !important;
+            }
+            .feature-cards-grid {
+              grid-template-columns: 1fr !important;
+            }
+          }
+        `}} />
+        <div className="feature-cards-grid" style={{
+          marginTop: '48px',
+          marginBottom: '60px',
+        }}>
+          {[
+            {
+              title: 'Local & Independent',
+              description: 'Only locally-owned companies based in your city - no franchises',
+            },
+            {
+              title: 'Instant Quotes',
+              description: 'Get free estimates from multiple local companies in minutes',
+            },
+            {
+              title: 'Your Neighborhood Crew',
+              description: 'Support independent businesses located right in your community',
+            },
+          ].map((feature, i) => (
+            <div
+              key={i}
+              className="feature-card"
+              style={{
+                backgroundColor: '#fff',
+                borderRadius: '12px',
+                textAlign: 'center',
+                boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                transform: 'translateY(-1px)',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+            >
+              <h4 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                color: '#374151',
+                margin: '0 0 8px 0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                {feature.title}
+              </h4>
+              <p style={{
+                fontSize: '15px',
+                color: '#6b7280',
+                margin: '0',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Calculator + How It Works + Popular Cities - Side by Side on Desktop */}
+        <style dangerouslySetInnerHTML={{__html: `
+          @media (min-width: 900px) {
+            .calculator-right-column-grid {
+              grid-template-columns: 1fr 1fr !important;
+            }
+          }
+        `}} />
+        <div className="calculator-right-column-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          gap: '30px',
+          marginBottom: '60px',
+        }}>
+          {/* How Much Is Junk Removal Section */}
+          <div>
+            <EstimateBuilderInline />
+          </div>
+
+          {/* Right Column: How It Works + Popular Cities */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+            {/* How It Works */}
+            <div style={{
+              backgroundColor: '#fff',
+              borderRadius: '12px',
+              padding: '24px',
+              boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+              transform: 'translateY(-1px)',
+            }}>
+            <h3 style={{
+              fontSize: '19px',
+              fontWeight: '700',
+              margin: 0,
+              marginBottom: '16px',
+              color: '#1a1a1a',
+              letterSpacing: '-0.01em',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              textAlign: 'center',
+            }}>
+              How It Works
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  flexShrink: 0,
+                }}>1</div>
+                <div>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', margin: 0, color: '#1a1a1a' }}>Search Your City</h4>
+                  <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                    Enter your city name to discover independent junk removal companies serving your area.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  flexShrink: 0,
+                }}>2</div>
+                <div>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', margin: 0, color: '#1a1a1a' }}>Compare Companies</h4>
+                  <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                    Browse detailed profiles, read reviews, check pricing, and compare services from local haulers.
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                <div style={{
+                  backgroundColor: '#fbbf24',
+                  color: '#000',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  flexShrink: 0,
+                }}>3</div>
+                <div>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px', margin: 0, color: '#1a1a1a' }}>Connect Directly</h4>
+                  <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                    Call or email the company directly. No middleman, no service fees—just local service.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Popular Cities */}
+          <div>
+            <h3 style={{
+              fontSize: '19px',
+              fontWeight: '700',
+              margin: 0,
+              marginBottom: '20px',
+              color: '#1a1a1a',
+              letterSpacing: '-0.01em',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              textAlign: 'center',
+            }}>
+              Popular Cities
+            </h3>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+              gap: '12px',
+            }}>
+              {[
+                { city: 'New York', state: 'New York', stateSlug: 'ny' },
+                { city: 'Los Angeles', state: 'California', stateSlug: 'ca' },
+                { city: 'Chicago', state: 'Illinois', stateSlug: 'il' },
+                { city: 'Houston', state: 'Texas', stateSlug: 'tx' },
+                { city: 'Phoenix', state: 'Arizona', stateSlug: 'az' },
+                { city: 'Philadelphia', state: 'Pennsylvania', stateSlug: 'pa' },
+                { city: 'San Antonio', state: 'Texas', stateSlug: 'tx' },
+                { city: 'San Diego', state: 'California', stateSlug: 'ca' },
+                { city: 'Dallas', state: 'Texas', stateSlug: 'tx' },
+                { city: 'San Jose', state: 'California', stateSlug: 'ca' },
+                { city: 'Austin', state: 'Texas', stateSlug: 'tx' },
+                { city: 'Jacksonville', state: 'Florida', stateSlug: 'fl' },
+                { city: 'Seattle', state: 'Washington', stateSlug: 'wa' },
+                { city: 'Denver', state: 'Colorado', stateSlug: 'co' },
+                { city: 'Boston', state: 'Massachusetts', stateSlug: 'ma' },
+                { city: 'Portland', state: 'Oregon', stateSlug: 'or' },
+              ].map(({ city, state, stateSlug }) => (
+                <a
+                  key={city}
+                  href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                  style={{
+                    backgroundColor: '#fff',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    textDecoration: 'none',
+                    color: '#1a1a1a',
+                    transition: 'all 0.2s',
+                    cursor: 'pointer',
+                    boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+                    transform: 'translateY(-1px)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 5px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.12)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  data-testid={`link-city-${city.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <h4 style={{
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    textAlign: 'center',
+                    margin: 0,
+                  }}>{city}</h4>
+                </a>
+              ))}
+            </div>
+          </div>
+          </div>
+        </div>
+
+        {/* Why Choose Independent - Full Width */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .why-choose-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          }
+          @media (min-width: 768px) {
+            .why-choose-grid {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+            }
+          }
+        `}} />
+        <div style={{
+          backgroundColor: '#fff',
+          borderRadius: '12px',
+          padding: '24px',
+          boxShadow: '0 3px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.1)',
+          transform: 'translateY(-1px)',
+          marginBottom: '60px',
+        }}>
+          <h3 style={{
+            fontSize: '19px',
+            fontWeight: '700',
+            margin: 0,
+            marginBottom: '16px',
+            color: '#1a1a1a',
+            letterSpacing: '-0.01em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+            textAlign: 'center',
+          }}>
+            Why Choose Independent Junk Removal Companies
+          </h3>
+          <div className="why-choose-grid">
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                <strong>Better Pricing</strong> — Independent companies don't pay franchise fees, which means lower prices for you
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                <strong>Local Ownership</strong> — Talk directly to the owner who lives in your community and cares about reputation
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                <strong>Flexible Service</strong> — Get personalized solutions and flexible scheduling that big franchises can't offer
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                <strong>Support Your Community</strong> — Keep your money local and support small business owners in your area
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+              <div style={{ color: '#fbbf24', fontSize: '18px', lineHeight: '1', fontWeight: '700', flexShrink: 0 }}>✓</div>
+              <p style={{ fontSize: '14px', color: '#333333', lineHeight: '1.5', margin: 0 }}>
+                <strong>No Platform Fees</strong> — Contact companies directly without paying middleman booking fees or commissions
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      </div>
+      
+      {/* Interactive Footer */}
+      <InteractiveFooter />
+    </div>
+  );
+}
+
+// State Page Component
+function StatePage({ stateName, stateSlug }: { stateName: string; stateSlug: string }) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState('overview');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+  const { user, isAuthenticated } = useAuth();
+  
+  // SEO
+  useSEO(buildStatePageSEO(stateName, stateSlug));
+
+  const stateData: Record<string, { 
+    cities: string[];
+    heroImage: string;
+    landmark: string;
+    population: string;
+    fact: string;
+    climate: string;
+  }> = {
+    'arizona': {
+      cities: ['Phoenix', 'Tucson', 'Mesa', 'Chandler', 'Scottsdale', 'Glendale', 'Gilbert', 'Tempe', 'Peoria', 'Surprise', 'Flagstaff', 'Yuma', 'Avondale', 'Goodyear', 'Lake Havasu City'],
+      heroImage: arizonaHero,
+      landmark: 'Grand Canyon',
+      population: '7.3 million',
+      fact: 'Arizona has one of the highest rates of junk removal due to frequent home renovations in the growing Phoenix metro area.',
+      climate: 'Hot desert climate with mild winters - ideal for year-round junk removal services',
+    },
+    'california': {
+      cities: ['Los Angeles', 'San Diego', 'San Jose', 'San Francisco', 'Fresno', 'Sacramento', 'Long Beach', 'Oakland', 'Bakersfield', 'Anaheim', 'Santa Ana', 'Riverside', 'Irvine', 'Stockton', 'Chula Vista'],
+      heroImage: californiaHero,
+      landmark: 'Golden Gate Bridge',
+      population: '39.5 million',
+      fact: 'California leads the nation in eco-friendly junk removal with over 75% of waste diverted from landfills.',
+      climate: 'Mediterranean climate with year-round service availability',
+    },
+    'texas': {
+      cities: ['Houston', 'San Antonio', 'Dallas', 'Austin', 'Fort Worth', 'El Paso', 'Arlington', 'Corpus Christi', 'Plano', 'Laredo', 'Lubbock', 'Garland', 'Irving', 'Amarillo', 'Grand Prairie'],
+      heroImage: texasHero,
+      landmark: 'State Capitol',
+      population: '30.3 million',
+      fact: 'Texas has the second-largest junk removal market in the US, driven by rapid population growth.',
+      climate: 'Varied climate from humid subtropical to semi-arid - services available year-round',
+    },
+    'florida': {
+      cities: ['Jacksonville', 'Miami', 'Tampa', 'Orlando', 'St. Petersburg', 'Hialeah', 'Port St. Lucie', 'Cape Coral', 'Tallahassee', 'Fort Lauderdale', 'Pembroke Pines', 'Hollywood', 'Gainesville', 'Coral Springs', 'Clearwater'],
+      heroImage: floridaHero,
+      landmark: 'Miami Beach',
+      population: '22.6 million',
+      fact: 'Florida\'s hurricane preparedness drives high demand for debris removal and storm cleanup services.',
+      climate: 'Tropical and subtropical climate with peak service season after hurricane season',
+    },
+    'new-york': {
+      cities: ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse', 'Albany', 'New Rochelle', 'Mount Vernon', 'Schenectady', 'Utica', 'White Plains', 'Hempstead', 'Troy', 'Niagara Falls', 'Binghamton'],
+      heroImage: newYorkHero,
+      landmark: 'Statue of Liberty',
+      population: '19.8 million',
+      fact: 'NYC alone generates over 12,000 tons of residential waste daily, making junk removal essential.',
+      climate: 'Four-season climate with peak demand during spring cleaning and fall preparation',
+    },
+    'washington': {
+      cities: ['Seattle', 'Spokane', 'Tacoma', 'Vancouver', 'Bellevue', 'Kent', 'Everett', 'Renton', 'Spokane Valley', 'Federal Way', 'Yakima', 'Bellingham', 'Kennewick', 'Auburn', 'Pasco'],
+      heroImage: washingtonHero,
+      landmark: 'Space Needle',
+      population: '7.7 million',
+      fact: 'Washington leads in eco-conscious junk removal with strict recycling and composting requirements.',
+      climate: 'Temperate oceanic climate - year-round services available',
+    },
+    'colorado': {
+      cities: ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Lakewood', 'Thornton', 'Arvada', 'Westminster', 'Pueblo', 'Centennial', 'Boulder', 'Greeley', 'Longmont', 'Loveland', 'Grand Junction'],
+      heroImage: coloradoHero,
+      landmark: 'Rocky Mountains',
+      population: '5.8 million',
+      fact: 'Colorado\'s outdoor lifestyle creates high demand for estate and garage cleanout services.',
+      climate: 'Semi-arid climate with four distinct seasons',
+    },
+    'illinois': {
+      cities: ['Chicago', 'Aurora', 'Naperville', 'Joliet', 'Rockford', 'Springfield', 'Elgin', 'Peoria', 'Champaign', 'Waukegan', 'Cicero', 'Bloomington', 'Decatur', 'Evanston', 'Des Plaines'],
+      heroImage: illinoisHero,
+      landmark: 'Willis Tower',
+      population: '12.6 million',
+      fact: 'Chicago is the third-largest junk removal market in the US after NYC and LA.',
+      climate: 'Humid continental climate with peak demand in spring and fall',
+    },
+    'massachusetts': {
+      cities: ['Boston', 'Worcester', 'Springfield', 'Cambridge', 'Lowell', 'Brockton', 'New Bedford', 'Quincy', 'Lynn', 'Fall River', 'Newton', 'Lawrence', 'Somerville', 'Framingham', 'Haverhill'],
+      heroImage: massachusettsHero,
+      landmark: 'Freedom Trail',
+      population: '7 million',
+      fact: 'Massachusetts has some of the strictest waste disposal regulations in the nation.',
+      climate: 'Humid continental with distinct four seasons',
+    },
+    'pennsylvania': {
+      cities: ['Philadelphia', 'Pittsburgh', 'Allentown', 'Reading', 'Erie', 'Scranton', 'Bethlehem', 'Lancaster', 'Harrisburg', 'Altoona', 'York', 'State College', 'Wilkes-Barre', 'Chester', 'Williamsport'],
+      heroImage: pennsylvaniaHero,
+      landmark: 'Liberty Bell',
+      population: '12.9 million',
+      fact: 'Pennsylvania\'s renovation boom has increased junk removal demand by 40% in recent years.',
+      climate: 'Humid continental with moderate seasonal changes',
+    },
+    'nevada': {
+      cities: ['Las Vegas', 'Henderson', 'Reno', 'North Las Vegas', 'Sparks', 'Carson City', 'Fernley', 'Elko', 'Mesquite', 'Boulder City', 'Fallon', 'Winnemucca', 'West Wendover', 'Ely', 'Yerington'],
+      heroImage: nevadaHero,
+      landmark: 'Las Vegas Strip',
+      population: '3.1 million',
+      fact: 'Las Vegas generates massive commercial junk removal needs from hotels and casinos.',
+      climate: 'Desert climate - services available year-round',
+    },
+    'tennessee': {
+      cities: ['Nashville', 'Memphis', 'Knoxville', 'Chattanooga', 'Clarksville', 'Murfreesboro', 'Franklin', 'Jackson', 'Johnson City', 'Bartlett', 'Hendersonville', 'Kingsport', 'Collierville', 'Cleveland', 'Smyrna'],
+      heroImage: tennesseeHero,
+      landmark: 'Great Smoky Mountains',
+      population: '7 million',
+      fact: 'Tennessee\'s growing population drives consistent demand for residential junk removal.',
+      climate: 'Humid subtropical with mild winters',
+    },
+    'georgia': {
+      cities: ['Atlanta', 'Columbus', 'Augusta', 'Macon', 'Savannah', 'Athens', 'Sandy Springs', 'Roswell', 'Albany', 'Johns Creek', 'Warner Robins', 'Alpharetta', 'Marietta', 'Valdosta', 'Smyrna'],
+      heroImage: georgiaHero,
+      landmark: 'Atlanta Skyline',
+      population: '10.9 million',
+      fact: 'Atlanta\'s booming construction industry creates high demand for debris removal services.',
+      climate: 'Humid subtropical - services peak in spring and summer',
+    },
+    'louisiana': {
+      cities: ['New Orleans', 'Baton Rouge', 'Shreveport', 'Lafayette', 'Lake Charles', 'Kenner', 'Bossier City', 'Monroe', 'Alexandria', 'Houma', 'New Iberia', 'Slidell', 'Prairieville', 'Central', 'Ruston'],
+      heroImage: louisianaHero,
+      landmark: 'French Quarter',
+      population: '4.6 million',
+      fact: 'Storm cleanup and hurricane debris removal are essential services in Louisiana.',
+      climate: 'Humid subtropical with hurricane season considerations',
+    },
+    'oregon': {
+      cities: ['Portland', 'Eugene', 'Salem', 'Gresham', 'Hillsboro', 'Beaverton', 'Bend', 'Medford', 'Springfield', 'Corvallis', 'Albany', 'Tigard', 'Lake Oswego', 'Keizer', 'Grants Pass'],
+      heroImage: oregonHero,
+      landmark: 'Crater Lake',
+      population: '4.2 million',
+      fact: 'Oregon requires eco-friendly disposal practices with emphasis on recycling and donation.',
+      climate: 'Marine west coast climate - services available year-round',
+    },
+    'wyoming': {
+      cities: ['Cheyenne', 'Casper', 'Laramie', 'Gillette', 'Rock Springs', 'Sheridan', 'Green River', 'Evanston', 'Riverton', 'Jackson', 'Cody', 'Rawlins', 'Lander', 'Torrington', 'Powell'],
+      heroImage: wyomingHero,
+      landmark: 'Yellowstone',
+      population: '580,000',
+      fact: 'Wyoming\'s rural landscape requires specialized long-distance junk removal services.',
+      climate: 'Semi-arid and continental - services year-round',
+    },
+    'montana': {
+      cities: ['Billings', 'Missoula', 'Great Falls', 'Bozeman', 'Butte', 'Helena', 'Kalispell', 'Havre', 'Anaconda', 'Miles City', 'Belgrade', 'Livingston', 'Laurel', 'Whitefish', 'Lewistown'],
+      heroImage: montanaHero,
+      landmark: 'Glacier National Park',
+      population: '1.1 million',
+      fact: 'Montana\'s outdoor recreation economy creates unique junk removal needs for lodges and resorts.',
+      climate: 'Continental climate with cold winters',
+    },
+    'utah': {
+      cities: ['Salt Lake City', 'West Valley City', 'Provo', 'West Jordan', 'Orem', 'Sandy', 'Ogden', 'St. George', 'Layton', 'Taylorsville', 'South Jordan', 'Lehi', 'Logan', 'Murray', 'Draper'],
+      heroImage: utahHero,
+      landmark: 'Arches National Park',
+      population: '3.3 million',
+      fact: 'Utah\'s rapid growth makes it one of the fastest-growing junk removal markets.',
+      climate: 'Semi-arid climate - services available year-round',
+    },
+    'indiana': {
+      cities: ['Indianapolis', 'Fort Wayne', 'Evansville', 'South Bend', 'Carmel', 'Fishers', 'Bloomington', 'Hammond', 'Gary', 'Muncie', 'Lafayette', 'Terre Haute', 'Kokomo', 'Anderson', 'Noblesville'],
+      heroImage: indianaHero,
+      landmark: 'Indianapolis Motor Speedway',
+      population: '6.8 million',
+      fact: 'Indiana\'s manufacturing sector creates high demand for commercial cleanout services.',
+      climate: 'Humid continental with four distinct seasons',
+    },
+    'michigan': {
+      cities: ['Detroit', 'Grand Rapids', 'Warren', 'Sterling Heights', 'Ann Arbor', 'Lansing', 'Flint', 'Dearborn', 'Livonia', 'Troy', 'Westland', 'Farmington Hills', 'Kalamazoo', 'Wyoming', 'Southfield'],
+      heroImage: michiganHero,
+      landmark: 'Mackinac Bridge',
+      population: '10 million',
+      fact: 'Michigan\'s renovation boom drives strong demand for construction debris removal.',
+      climate: 'Humid continental - services peak in spring through fall',
+    },
+    'kentucky': {
+      cities: ['Louisville', 'Lexington', 'Bowling Green', 'Owensboro', 'Covington', 'Richmond', 'Georgetown', 'Florence', 'Elizabethtown', 'Nicholasville', 'Henderson', 'Jeffersontown', 'Frankfort', 'Paducah', 'Hopkinsville'],
+      heroImage: kentuckyHero,
+      landmark: 'Churchill Downs',
+      population: '4.5 million',
+      fact: 'Kentucky\'s horse country estates require specialized large-property cleanout services.',
+      climate: 'Humid subtropical with mild winters',
+    },
+    'north-carolina': {
+      cities: ['Charlotte', 'Raleigh', 'Greensboro', 'Durham', 'Winston-Salem', 'Fayetteville', 'Cary', 'Wilmington', 'High Point', 'Concord', 'Asheville', 'Gastonia', 'Greenville', 'Jacksonville', 'Chapel Hill'],
+      heroImage: northCarolinaHero,
+      landmark: 'Blue Ridge Parkway',
+      population: '10.6 million',
+      fact: 'The Research Triangle drives high demand for office and commercial cleanouts.',
+      climate: 'Humid subtropical with mountain and coastal variations',
+    },
+    'south-carolina': {
+      cities: ['Charleston', 'Columbia', 'North Charleston', 'Mount Pleasant', 'Rock Hill', 'Greenville', 'Summerville', 'Goose Creek', 'Hilton Head Island', 'Florence', 'Spartanburg', 'Myrtle Beach', 'Sumter', 'Anderson', 'Greer'],
+      heroImage: southCarolinaHero,
+      landmark: 'Fort Sumter',
+      population: '5.2 million',
+      fact: 'Coastal hurricane preparedness makes storm debris removal essential in South Carolina.',
+      climate: 'Humid subtropical - services peak after storm season',
+    },
+    'alabama': {
+      cities: ['Birmingham', 'Montgomery', 'Mobile', 'Huntsville', 'Tuscaloosa', 'Hoover', 'Dothan', 'Auburn', 'Decatur', 'Madison', 'Florence', 'Gadsden', 'Vestavia Hills', 'Prattville', 'Phenix City'],
+      heroImage: alabamaHero,
+      landmark: 'USS Alabama',
+      population: '5 million',
+      fact: 'Alabama\'s growing economy increases demand for residential and commercial junk removal.',
+      climate: 'Humid subtropical - services available year-round',
+    },
+    'arkansas': {
+      cities: ['Little Rock', 'Fort Smith', 'Fayetteville', 'Springdale', 'Jonesboro', 'North Little Rock', 'Conway', 'Rogers', 'Pine Bluff', 'Bentonville', 'Hot Springs', 'Benton', 'Texarkana', 'Sherwood', 'Jacksonville'],
+      heroImage: arkansasHero,
+      landmark: 'Hot Springs National Park',
+      population: '3 million',
+      fact: 'Arkansas\'s expanding retail sector drives commercial cleanout demand.',
+      climate: 'Humid subtropical with hot summers',
+    },
+    'mississippi': {
+      cities: ['Jackson', 'Gulfport', 'Southaven', 'Hattiesburg', 'Biloxi', 'Meridian', 'Tupelo', 'Olive Branch', 'Greenville', 'Horn Lake', 'Clinton', 'Pearl', 'Madison', 'Ridgeland', 'Starkville'],
+      heroImage: mississippiHero,
+      landmark: 'Mississippi River Delta',
+      population: '2.9 million',
+      fact: 'Coastal properties require specialized hurricane debris removal services.',
+      climate: 'Humid subtropical - services peak post-hurricane season',
+    },
+    'oklahoma': {
+      cities: ['Oklahoma City', 'Tulsa', 'Norman', 'Broken Arrow', 'Edmond', 'Lawton', 'Moore', 'Midwest City', 'Enid', 'Stillwater', 'Muskogee', 'Bartlesville', 'Owasso', 'Shawnee', 'Ponca City'],
+      heroImage: oklahomaHero,
+      landmark: 'Oklahoma City National Memorial',
+      population: '4 million',
+      fact: 'Oklahoma\'s energy sector creates demand for commercial and industrial cleanouts.',
+      climate: 'Humid subtropical to semi-arid',
+    },
+    'missouri': {
+      cities: ['Kansas City', 'St. Louis', 'Springfield', 'Columbia', 'Independence', 'Lee\'s Summit', 'O\'Fallon', 'St. Joseph', 'St. Charles', 'St. Peters', 'Blue Springs', 'Florissant', 'Joplin', 'Chesterfield', 'Jefferson City'],
+      heroImage: missouriHero,
+      landmark: 'Gateway Arch',
+      population: '6.2 million',
+      fact: 'Missouri\'s two major metros drive strong commercial junk removal demand.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+    'south-dakota': {
+      cities: ['Sioux Falls', 'Rapid City', 'Aberdeen', 'Brookings', 'Watertown', 'Mitchell', 'Yankton', 'Pierre', 'Huron', 'Vermillion', 'Spearfish', 'Box Elder', 'Brandon', 'Harrisburg', 'Sturgis'],
+      heroImage: southDakotaHero,
+      landmark: 'Mount Rushmore',
+      population: '900,000',
+      fact: 'Tourism-driven economy creates seasonal junk removal needs around national parks.',
+      climate: 'Continental - services peak spring through fall',
+    },
+    'minnesota': {
+      cities: ['Minneapolis', 'St. Paul', 'Rochester', 'Duluth', 'Bloomington', 'Brooklyn Park', 'Plymouth', 'Woodbury', 'Maple Grove', 'St. Cloud', 'Eagan', 'Eden Prairie', 'Coon Rapids', 'Burnsville', 'Blaine'],
+      heroImage: minnesotaHero,
+      landmark: 'Mall of America',
+      population: '5.7 million',
+      fact: 'Minnesota\'s harsh winters create spring cleanout surges for junk removal services.',
+      climate: 'Continental with cold winters - peak demand in spring',
+    },
+    'iowa': {
+      cities: ['Des Moines', 'Cedar Rapids', 'Davenport', 'Sioux City', 'Iowa City', 'Waterloo', 'Council Bluffs', 'Ames', 'West Des Moines', 'Dubuque', 'Ankeny', 'Urbandale', 'Cedar Falls', 'Marion', 'Bettendorf'],
+      heroImage: iowaHero,
+      landmark: 'Iowa State Capitol',
+      population: '3.2 million',
+      fact: 'Iowa\'s agricultural sector creates unique farm and estate cleanout needs.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+    'wisconsin': {
+      cities: ['Milwaukee', 'Madison', 'Green Bay', 'Kenosha', 'Racine', 'Appleton', 'Waukesha', 'Eau Claire', 'Oshkosh', 'Janesville', 'West Allis', 'La Crosse', 'Sheboygan', 'Wauwatosa', 'Fond du Lac'],
+      heroImage: wisconsinHero,
+      landmark: 'Wisconsin State Capitol',
+      population: '5.9 million',
+      fact: 'Wisconsin\'s manufacturing heritage creates demand for industrial cleanout services.',
+      climate: 'Humid continental - services peak in spring',
+    },
+    'idaho': {
+      cities: ['Boise', 'Meridian', 'Nampa', 'Idaho Falls', 'Pocatello', 'Caldwell', 'Coeur d\'Alene', 'Twin Falls', 'Post Falls', 'Lewiston', 'Rexburg', 'Eagle', 'Kuna', 'Ammon', 'Chubbuck'],
+      heroImage: idahoHero,
+      landmark: 'Boise State Capitol',
+      population: '1.9 million',
+      fact: 'Idaho\'s rapid growth makes it one of America\'s fastest-growing junk removal markets.',
+      climate: 'Continental - services available year-round',
+    },
+    'alaska': {
+      cities: ['Anchorage', 'Fairbanks', 'Juneau', 'Sitka', 'Ketchikan', 'Wasilla', 'Kenai', 'Kodiak', 'Bethel', 'Palmer', 'Homer', 'Soldotna', 'Barrow', 'Nome', 'Valdez'],
+      heroImage: alaskaHero,
+      landmark: 'Denali',
+      population: '730,000',
+      fact: 'Alaska\'s remote locations require specialized logistics for junk removal services.',
+      climate: 'Subarctic - services peak in short summer months',
+    },
+    'hawaii': {
+      cities: ['Honolulu', 'East Honolulu', 'Pearl City', 'Hilo', 'Kailua', 'Waipahu', 'Kaneohe', 'Mililani Town', 'Kahului', 'Ewa Gentry', 'Mililani Mauka', 'Kihei', 'Makakilo', 'Wahiawa', 'Schofield Barracks'],
+      heroImage: hawaiiHero,
+      landmark: 'Diamond Head',
+      population: '1.4 million',
+      fact: 'Island logistics make eco-friendly waste disposal especially important in Hawaii.',
+      climate: 'Tropical - services available year-round',
+    },
+    'new-mexico': {
+      cities: ['Albuquerque', 'Las Cruces', 'Rio Rancho', 'Santa Fe', 'Roswell', 'Farmington', 'South Valley', 'Clovis', 'Hobbs', 'Alamogordo', 'Carlsbad', 'Gallup', 'Deming', 'Los Lunas', 'Chaparral'],
+      heroImage: newMexicoHero,
+      landmark: 'Carlsbad Caverns',
+      population: '2.1 million',
+      fact: 'New Mexico\'s desert climate requires specialized handling of certain materials.',
+      climate: 'Semi-arid and arid - services available year-round',
+    },
+    'north-dakota': {
+      cities: ['Fargo', 'Bismarck', 'Grand Forks', 'Minot', 'West Fargo', 'Williston', 'Dickinson', 'Mandan', 'Jamestown', 'Wahpeton', 'Devils Lake', 'Valley City', 'Grafton', 'Watford City', 'Lincoln'],
+      heroImage: northDakotaHero,
+      landmark: 'Fargo Downtown',
+      population: '780,000',
+      fact: 'North Dakota\'s energy boom creates commercial junk removal opportunities.',
+      climate: 'Continental with harsh winters - services peak in warmer months',
+    },
+    'nebraska': {
+      cities: ['Omaha', 'Lincoln', 'Bellevue', 'Grand Island', 'Kearney', 'Fremont', 'Hastings', 'Norfolk', 'Columbus', 'Papillion', 'North Platte', 'La Vista', 'Scottsbluff', 'South Sioux City', 'Beatrice'],
+      heroImage: nebraskaHero,
+      landmark: 'Old Market Omaha',
+      population: '2 million',
+      fact: 'Nebraska\'s agricultural economy creates unique rural junk removal needs.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+    'rhode-island': {
+      cities: ['Providence', 'Warwick', 'Cranston', 'Pawtucket', 'East Providence', 'Woonsocket', 'Coventry', 'Cumberland', 'North Providence', 'South Kingstown', 'West Warwick', 'Johnston', 'North Kingstown', 'Newport', 'Bristol'],
+      heroImage: rhodeIslandHero,
+      landmark: 'WaterFire Providence',
+      population: '1.1 million',
+      fact: 'Rhode Island\'s dense population creates high demand for residential cleanouts.',
+      climate: 'Humid continental - services available year-round',
+    },
+    'connecticut': {
+      cities: ['Bridgeport', 'New Haven', 'Stamford', 'Hartford', 'Waterbury', 'Norwalk', 'Danbury', 'New Britain', 'Bristol', 'Meriden', 'Milford', 'West Haven', 'Middletown', 'Norwich', 'Shelton'],
+      heroImage: connecticutHero,
+      landmark: 'Mystic Seaport',
+      population: '3.6 million',
+      fact: 'Connecticut\'s affluent communities drive demand for estate cleanout services.',
+      climate: 'Humid continental with four seasons',
+    },
+    'delaware': {
+      cities: ['Wilmington', 'Dover', 'Newark', 'Middletown', 'Smyrna', 'Milford', 'Seaford', 'Georgetown', 'Elsmere', 'New Castle', 'Millsboro', 'Bear', 'Pike Creek', 'Brookside', 'Hockessin'],
+      heroImage: delawareHero,
+      landmark: 'Delaware State Capitol',
+      population: '1 million',
+      fact: 'Delaware\'s small size enables efficient statewide junk removal services.',
+      climate: 'Humid subtropical - services available year-round',
+    },
+    'maryland': {
+      cities: ['Baltimore', 'Frederick', 'Rockville', 'Gaithersburg', 'Bowie', 'Hagerstown', 'Annapolis', 'College Park', 'Salisbury', 'Laurel', 'Greenbelt', 'Cumberland', 'Westminster', 'Hyattsville', 'Takoma Park'],
+      heroImage: marylandHero,
+      landmark: 'Annapolis State House',
+      population: '6.2 million',
+      fact: 'Maryland\'s proximity to DC creates high demand for government facility cleanouts.',
+      climate: 'Humid subtropical - services available year-round',
+    },
+    'west-virginia': {
+      cities: ['Charleston', 'Huntington', 'Morgantown', 'Parkersburg', 'Wheeling', 'Weirton', 'Fairmont', 'Beckley', 'Martinsburg', 'Clarksburg', 'South Charleston', 'St. Albans', 'Vienna', 'Bluefield', 'Moundsville'],
+      heroImage: westVirginiaHero,
+      landmark: 'West Virginia State Capitol',
+      population: '1.8 million',
+      fact: 'West Virginia\'s mountainous terrain requires specialized hauling equipment.',
+      climate: 'Humid subtropical to humid continental',
+    },
+    'vermont': {
+      cities: ['Burlington', 'South Burlington', 'Rutland', 'Barre', 'Montpelier', 'Winooski', 'St. Albans', 'Newport', 'Vergennes', 'Brattleboro', 'Hartford', 'Springfield', 'Bennington', 'Colchester', 'Essex'],
+      heroImage: vermontHero,
+      landmark: 'Lake Champlain',
+      population: '645,000',
+      fact: 'Vermont\'s environmental focus requires eco-friendly junk removal practices.',
+      climate: 'Humid continental with cold winters',
+    },
+    'new-hampshire': {
+      cities: ['Manchester', 'Nashua', 'Concord', 'Derry', 'Rochester', 'Salem', 'Dover', 'Merrimack', 'Londonderry', 'Hudson', 'Keene', 'Bedford', 'Portsmouth', 'Goffstown', 'Laconia'],
+      heroImage: newHampshireHero,
+      landmark: 'Portsmouth Harbor',
+      population: '1.4 million',
+      fact: 'New Hampshire\'s "Live Free or Die" spirit extends to flexible junk removal options.',
+      climate: 'Humid continental - services peak in spring and fall',
+    },
+  };
+
+  const currentState = stateData[stateSlug] || {
+    cities: [],
+    heroImage: '',
+    landmark: stateName,
+    population: 'N/A',
+    fact: 'Professional junk removal services available throughout the state.',
+    climate: 'Services available year-round',
+  };
+
+  // Use the hardcoded cities list for the state
+  const cities = currentState.cities;
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/${stateSlug}/${searchQuery.toLowerCase().replace(/\s+/g, '-')}`;
+    }
+  };
+
+  return (
+    <div style={{
+      minHeight: '100vh',
+      background: '#ffffff',
+    }}>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      {/* Sticky Navigation Header */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '10px 16px',
+          display: 'flex',
+          gap: '12px',
+        }}>
+          <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          data-testid="button-menu-state"
+        >
+          <Menu size={18} color="#000" />
+        </button>
+        
+        {isAuthenticated && user && (
+          <button
+            onClick={() => {
+              if ((user as any)?.isAdmin) {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/profile/edit';
+              }
+            }}
+            style={{
+              backgroundColor: 'transparent',
+              color: '#000',
+              padding: '0',
+              border: 'none',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            data-testid="button-profile-state"
+          >
+            <UserCircle size={28} />
+          </button>
+        )}
+        </div>
+      </div>
+
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '16px 16px 40px 16px',
+      }}>
+        {/* Search Bar */}
+        <div style={{
+          backgroundColor: '#fff',
+          padding: '32px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+          marginBottom: '32px',
+        }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            color: '#1a1a1a',
+            marginBottom: '16px',
+            textAlign: 'center',
+            letterSpacing: '-0.02em',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}>
+            Find Junk Removal Services in {stateName}
+          </h2>
+          <form onSubmit={handleSearch} style={{
+            width: '100%',
+            maxWidth: '500px',
+            margin: '0 auto',
+            display: 'flex',
+            gap: '6px',
+            backgroundColor: '#f9fafb',
+            padding: '5px',
+            borderRadius: '10px',
+          }}>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Enter your city"
+              style={{
+                flex: 1,
+                minWidth: '0',
+                padding: '10px 12px',
+                border: 'none',
+                outline: 'none',
+                fontSize: '14px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+              }}
+              data-testid="input-state-search"
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '10px 14px',
+                background: '#fbbf24',
+                color: '#000',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: '700',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+              }}
+              data-testid="button-state-search"
+            >
+              <Search size={18} />
+            </button>
+          </form>
+        </div>
+
+        {/* Tabs */}
+        <div style={{
+          display: 'flex',
+          gap: '8px',
+          marginBottom: '24px',
+          borderBottom: '2px solid #cccccc',
+          overflowX: 'auto',
+        }}>
+          {[
+            { id: 'overview', label: 'Overview' },
+            { id: 'cities', label: 'Cities' },
+            { id: 'tips', label: 'Tips & Advice' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: '12px 20px',
+                background: activeTab === tab.id ? '#e5e7eb' : 'transparent',
+                border: 'none',
+                borderBottom: activeTab === tab.id ? '3px solid #fbbf24' : '3px solid transparent',
+                color: activeTab === tab.id ? '#1a1a1a' : '#6b7280',
+                fontSize: '15px',
+                fontWeight: activeTab === tab.id ? '700' : '600',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.2s',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                borderRadius: '8px 8px 0 0',
+              }}
+              onMouseEnter={(e) => {
+                if (activeTab !== tab.id) {
+                  e.currentTarget.style.backgroundColor = '#f9fafb';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeTab !== tab.id) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <section style={{ marginBottom: '48px' }}>
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                About Junk Removal Services in {stateName}
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: '#000',
+                lineHeight: '1.8',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                {stateName} residents and businesses rely on professional junk removal services for efficient, eco-friendly disposal. Whether you're doing a home cleanout, office renovation, or construction project, local junk removal companies provide same-day service with upfront pricing.
+              </p>
+              <p style={{
+                fontSize: '16px',
+                color: '#000',
+                lineHeight: '1.8',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Most {stateName} junk removal companies recycle or donate 60-80% of collected items, helping reduce landfill waste while giving back to local communities.
+              </p>
+              <div style={{
+                padding: '20px',
+                backgroundColor: '#f5f5f5',
+                borderRadius: '10px',
+                marginTop: '16px',
+              }}>
+                <h4 style={{
+                  fontSize: '16px',
+                  fontWeight: '700',
+                  color: '#000',
+                  marginBottom: '8px',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  {stateName} Junk Removal Facts
+                </h4>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#000',
+                  margin: '0 0 8px 0',
+                  lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <strong>Population:</strong> {currentState.population}
+                </p>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#000',
+                  margin: '0 0 8px 0',
+                  lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <strong>Climate:</strong> {currentState.climate}
+                </p>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#000',
+                  margin: '0',
+                  lineHeight: '1.6',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  <strong>Local Insight:</strong> {currentState.fact}
+                </p>
+              </div>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '20px',
+              marginBottom: '32px',
+            }}>
+              {[
+                {
+                  title: 'Same-Day Service',
+                  description: 'Most companies offer same-day or next-day pickup throughout ' + stateName,
+                  Icon: Truck,
+                },
+                {
+                  title: 'Eco-Friendly',
+                  description: 'Items are sorted for recycling, donation, or proper disposal',
+                  Icon: Recycle,
+                },
+                {
+                  title: 'Full-Service',
+                  description: 'Teams handle all loading and hauling - you don\'t lift a finger',
+                  Icon: Dumbbell,
+                },
+                {
+                  title: 'Upfront Pricing',
+                  description: 'Get free estimates with transparent, volume-based pricing',
+                  Icon: DollarSign,
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    backgroundColor: '#fff',
+                    padding: '24px',
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  }}
+                >
+                  <item.Icon size={32} style={{ color: '#fbbf24', marginBottom: '12px' }} />
+                  <h4 style={{
+                    fontSize: '18px',
+                    fontWeight: '700',
+                    color: '#374151',
+                    marginBottom: '8px',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    {item.title}
+                  </h4>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#000',
+                    margin: '0',
+                    lineHeight: '1.6',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Common Junk Removal Services */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '20px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Common Junk Removal Services in {stateName}
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                gap: '12px',
+              }}>
+                {/* Furniture Removal */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/items/furniture" style={{ textDecoration: 'none' }} data-testid="link-furniture-removal">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Furniture Removal
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Appliance Disposal */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/items/appliances" style={{ textDecoration: 'none' }} data-testid="link-appliance-disposal">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Appliance Disposal
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Electronics Recycling */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/items/electronics" style={{ textDecoration: 'none' }} data-testid="link-electronics-recycling">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Electronics Recycling
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Yard Waste Removal */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/items/yard-waste" style={{ textDecoration: 'none' }} data-testid="link-yard-waste">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Yard Waste Removal
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Garage Cleanouts */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/services/garage-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-garage-cleanouts">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Garage Cleanouts
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Estate Cleanouts */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/services/estate-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-estate-cleanouts">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Estate Cleanouts
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Office Cleanouts */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/services/office-cleanouts" style={{ textDecoration: 'none' }} data-testid="link-office-cleanouts">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Office Cleanouts
+                    </h4>
+                  </Link>
+                </div>
+
+                {/* Construction Debris */}
+                <div style={{
+                  padding: '14px',
+                  backgroundColor: '#fff',
+                  borderRadius: '12px',
+                  border: '1px solid #e5e7eb',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  textAlign: 'center',
+                }}>
+                  <Link href="/services/construction-debris" style={{ textDecoration: 'none' }} data-testid="link-construction-debris">
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#000',
+                      margin: '0',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      cursor: 'pointer',
+                    }}>
+                      Construction Debris
+                    </h4>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Common Items Junk Haulers Remove */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '20px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Common Items Junk Haulers Remove
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+                gap: '12px',
+              }}>
+                {[
+                  { name: 'Sofa', href: '/items/sofa' },
+                  { name: 'Bed', href: '/items/bed' },
+                  { name: 'Dresser', href: '/items/dresser' },
+                  { name: 'Table', href: '/items/table' },
+                  { name: 'Desk', href: '/items/desk' },
+                  { name: 'Recliner', href: '/items/recliner' },
+                  { name: 'Refrigerator', href: '/items/refrigerator' },
+                  { name: 'Washer', href: '/items/washer' },
+                  { name: 'Dryer', href: '/items/dryer' },
+                  { name: 'Stove', href: '/items/stove' },
+                  { name: 'Dishwasher', href: '/items/dishwasher' },
+                  { name: 'Freezer', href: '/items/freezer' },
+                  { name: 'TV', href: '/items/tv' },
+                  { name: 'Computer', href: '/items/computer' },
+                  { name: 'Laptop', href: '/items/laptop' },
+                  { name: 'Monitor', href: '/items/monitor' },
+                  { name: 'Printer', href: '/items/printer' },
+                  { name: 'Phone', href: '/items/phone' },
+                  { name: 'Branches', href: '/items/branches' },
+                  { name: 'Leaves', href: '/items/leaves' },
+                  { name: 'Grass', href: '/items/grass' },
+                  { name: 'Tree Stumps', href: '/items/tree-stumps' },
+                  { name: 'Bushes', href: '/items/bushes' },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    style={{ textDecoration: 'none' }}
+                    data-testid={`link-item-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
+                    <div style={{
+                      padding: '12px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '8px',
+                      border: '1px solid #e5e7eb',
+                      textAlign: 'center',
+                      transition: 'all 0.2s',
+                      cursor: 'pointer',
+                    }}>
+                      <span style={{
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        color: '#000',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        {item.name}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Environmental Impact */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '16px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Environmental Impact & Sustainability
+              </h3>
+              <p style={{
+                fontSize: '16px',
+                color: '#000',
+                lineHeight: '1.8',
+                marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Professional junk removal companies in {stateName} are committed to reducing landfill waste through recycling and donation programs. Here's how they make a difference:
+              </p>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '16px',
+              }}>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    fontSize: '32px',
+                    fontWeight: '800',
+                    color: '#000',
+                    marginBottom: '8px',
+                  }}>
+                    60-80%
+                  </div>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#000',
+                    margin: '0',
+                    fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    Items Recycled or Donated
+                  </p>
+                </div>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    fontSize: '32px',
+                    fontWeight: '800',
+                    color: '#000',
+                    marginBottom: '8px',
+                  }}>
+                    100+
+                  </div>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#000',
+                    margin: '0',
+                    fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    Local Charities Supported
+                  </p>
+                </div>
+                <div style={{
+                  padding: '20px',
+                  backgroundColor: '#f5f5f5',
+                  borderRadius: '10px',
+                  textAlign: 'center',
+                }}>
+                  <div style={{
+                    fontSize: '32px',
+                    fontWeight: '800',
+                    color: '#000',
+                    marginBottom: '8px',
+                  }}>
+                    90%
+                  </div>
+                  <p style={{
+                    fontSize: '14px',
+                    color: '#000',
+                    margin: '0',
+                    fontWeight: '600',
+                    fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                  }}>
+                    Customer Satisfaction
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Cities Tab */}
+        {activeTab === 'cities' && (
+          <section style={{ marginBottom: '48px' }}>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: '700',
+              color: '#374151',
+              marginBottom: '20px',
+            }}>
+              Popular Cities in {stateName}
+            </h2>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: '12px',
+            }}>
+              {cities.map((city) => (
+                <a
+                  key={city}
+                  href={`/${stateSlug}/${city.toLowerCase().replace(/\s+/g, '-')}`}
+                  style={{
+                    padding: '16px',
+                    backgroundColor: '#fff',
+                    borderRadius: '10px',
+                    textDecoration: 'none',
+                    color: '#374151',
+                    fontWeight: '600',
+                    fontSize: '15px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    transition: 'all 0.2s',
+                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  data-testid={`link-city-${city.toLowerCase()}`}
+                >
+                  {city}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Tips Tab */}
+        {activeTab === 'tips' && (
+          <section style={{ marginBottom: '48px' }}>
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+              marginBottom: '24px',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Expert Tips for Hiring Junk Removal in {stateName}
+              </h3>
+              <div style={{
+                display: 'grid',
+                gap: '20px',
+              }}>
+                {[
+                  {
+                    title: '1. Sort Before They Arrive',
+                    description: 'Separate items you want removed from keepers. This speeds up the process and may reduce costs.',
+                  },
+                  {
+                    title: '2. Get Multiple Quotes',
+                    description: 'Contact 2-3 companies for estimates. Most offer free quotes and same-day service in ' + stateName + '.',
+                  },
+                  {
+                    title: '3. Ask About Recycling',
+                    description: 'Choose companies that donate usable items and recycle materials rather than sending everything to landfills.',
+                  },
+                  {
+                    title: '4. Check Insurance & Licensing',
+                    description: 'Verify the company is licensed and insured to protect yourself from liability.',
+                  },
+                  {
+                    title: '5. Read Reviews',
+                    description: 'Check online reviews from other ' + stateName + ' customers to gauge reliability and service quality.',
+                  },
+                  {
+                    title: '6. Understand Pricing',
+                    description: 'Most companies charge by volume (truck space), not weight. Get clarity on final costs before work begins.',
+                  },
+                  {
+                    title: '7. Schedule Smart',
+                    description: 'Book early morning or weekday appointments for potentially better rates and availability.',
+                  },
+                  {
+                    title: '8. Know What They Won\'t Take',
+                    description: 'Most companies can\'t accept hazardous materials like paint, chemicals, or asbestos. Ask beforehand.',
+                  },
+                ].map((tip, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      padding: '20px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '10px',
+                      borderLeft: '4px solid #fbbf24',
+                    }}
+                  >
+                    <h4 style={{
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      color: '#374151',
+                      marginBottom: '8px',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      {tip.title}
+                    </h4>
+                    <p style={{
+                      fontSize: '14px',
+                      color: '#000',
+                      margin: '0',
+                      lineHeight: '1.6',
+                      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                    }}>
+                      {tip.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* FAQs */}
+            <div style={{
+              backgroundColor: '#fff',
+              padding: '32px',
+              borderRadius: '12px',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            }}>
+              <h3 style={{
+                fontSize: '22px',
+                fontWeight: '700',
+                color: '#374151',
+                marginBottom: '20px',
+                fontFamily: "'Helvetica Neue', Arial, sans-serif",
+              }}>
+                Frequently Asked Questions
+              </h3>
+              <div style={{ display: 'grid', gap: '16px' }}>
+                {[
+                  {
+                    q: 'How much does junk removal cost in ' + stateName + '?',
+                    a: 'Prices typically range from $100-$800 depending on the volume of junk. Most companies charge by how much space your items take up in their truck. A single item costs $100-$200, while a full truck load runs $550-$800.',
+                  },
+                  {
+                    q: 'Do I need to be home during junk removal?',
+                    a: 'Not necessarily. As long as the items are accessible and you\'ve provided clear instructions, many companies can complete the job without you present. However, it\'s recommended to be available for any questions.',
+                  },
+                  {
+                    q: 'What items cannot be removed?',
+                    a: 'Most companies cannot accept hazardous materials including paint, chemicals, asbestos, medical waste, or anything considered toxic. Check with your local provider for their specific restrictions.',
+                  },
+                  {
+                    q: 'How quickly can junk be removed?',
+                    a: 'Many ' + stateName + ' junk removal companies offer same-day or next-day service. During busy seasons, you may need to book 2-3 days in advance.',
+                  },
+                  {
+                    q: 'Is junk removal eco-friendly?',
+                    a: 'Most professional companies recycle 60-80% of collected items and donate usable goods to local charities. Only non-recyclable waste goes to landfills.',
+                  },
+                ].map((faq, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <button
+                      onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
+                      style={{
+                        width: '100%',
+                        padding: '20px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '12px',
+                        textAlign: 'left',
+                      }}
+                      data-testid={`button-faq-${i}`}
+                    >
+                      <h4 style={{
+                        fontSize: '16px',
+                        fontWeight: '700',
+                        color: '#374151',
+                        margin: '0',
+                        fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                      }}>
+                        {faq.q}
+                      </h4>
+                      <ChevronDown
+                        size={20}
+                        color="#fbbf24"
+                        style={{
+                          flexShrink: 0,
+                          transform: expandedFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.2s',
+                        }}
+                      />
+                    </button>
+                    {expandedFaq === i && (
+                      <div style={{
+                        padding: '0 20px 20px 20px',
+                      }}>
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#000',
+                          margin: '0',
+                          lineHeight: '1.6',
+                          fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                        }}>
+                          {faq.a}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// City Page Component
+function CityPage({ city, state }: { city: string; state: string }) {
+  const [selectedCompanyId, setSelectedCompanyId] = useState<number | null>(null);
+  const [expandedQuote, setExpandedQuote] = useState<number | null>(null);
+  const [carouselOffsets, setCarouselOffsets] = useState<Record<number, number>>({});
+  const [carouselTransitions, setCarouselTransitions] = useState<Record<number, boolean>>({});
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [videoModalUrl, setVideoModalUrl] = useState<string | null>(null);
+  const { user, isAuthenticated } = useAuth();
+  
+  // Convert state abbreviation to full state name for database query
+  const fullStateName = stateAbbreviations[state.toLowerCase()] || stateNames[state] || state;
+  
+  // SEO
+  useSEO(buildCityPageSEO(city, state, fullStateName));
+  
+  // Fetch user's company profile if authenticated
+  const { data: userCompany } = useQuery<Company>({
+    queryKey: ["/api/business/profile"],
+    enabled: !!user && isAuthenticated,
+    retry: false,
+  });
+  
+  // Helper function to format city name: remove dashes and capitalize each word
+  const formatCityName = (citySlug: string) => {
+    return citySlug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+  
+  const displayCityName = formatCityName(city);
+  const formattedCity = formatCityName(city);
+  
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    window.location.href = '/';
+  };
+  
+  const { data: companies = [], isLoading } = useQuery<Company[]>({
+    queryKey: ["/api/companies", { city: formattedCity, state: fullStateName }],
+    queryFn: async () => {
+      const response = await fetch(`/api/companies?city=${encodeURIComponent(formattedCity)}&state=${encodeURIComponent(fullStateName)}`);
+      if (!response.ok) throw new Error('Failed to fetch');
+      return response.json();
+    },
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselOffsets((prev) => {
+        const next: Record<number, number> = {};
+        companies.forEach((c) => {
+          const hasGallery = c.galleryImages && c.galleryImages.length > 0;
+          const hasImages = c.logoUrl || c.reviews > 0;
+          
+          if (hasGallery) {
+            const imageCount = c.galleryImages!.length;
+            const currentOffset = prev[c.id] || 0;
+            const nextOffset = currentOffset + 1;
+            
+            // When we reach the end of the first set, reset to 0 without transition
+            if (nextOffset >= imageCount) {
+              next[c.id] = 0;
+              // Disable transition for this carousel
+              setCarouselTransitions(t => ({ ...t, [c.id]: false }));
+              // Re-enable transition after a brief moment
+              setTimeout(() => {
+                setCarouselTransitions(t => ({ ...t, [c.id]: true }));
+              }, 50);
+            } else {
+              next[c.id] = nextOffset;
+            }
+          } else if (hasImages) {
+            const imageCount = defaultImages.length;
+            const currentOffset = prev[c.id] || 0;
+            const nextOffset = currentOffset + 1;
+            
+            if (nextOffset >= imageCount) {
+              next[c.id] = 0;
+              setCarouselTransitions(t => ({ ...t, [c.id]: false }));
+              setTimeout(() => {
+                setCarouselTransitions(t => ({ ...t, [c.id]: true }));
+              }, 50);
+            } else {
+              next[c.id] = nextOffset;
+            }
+          } else {
+            next[c.id] = 0;
+          }
+        });
+        return next;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [companies]);
+
+  const selectedCompany = companies.find(c => c.id === selectedCompanyId);
+
+  // Helper function to convert YouTube URL to embed URL
+  const getVideoEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/watch?v=')) {
+      const videoId = url.split('v=')[1]?.split('&')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1]?.split('?')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    if (url.includes('vimeo.com/')) {
+      const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
+      return `https://player.vimeo.com/video/${videoId}`;
+    }
+    return url; // Return as-is if format not recognized
+  };
+
+  return (
+    <>
+      <HamburgerMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      
+      {/* Video Modal */}
+      {videoModalUrl && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            zIndex: 999999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+          }} 
+          onClick={() => setVideoModalUrl(null)}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              width: '100%',
+              maxWidth: '1200px',
+              aspectRatio: '16/9',
+            }}
+          >
+            <button
+              onClick={() => setVideoModalUrl(null)}
+              style={{
+                position: 'absolute',
+                top: '-40px',
+                right: '0',
+                background: 'transparent',
+                border: 'none',
+                color: '#fff',
+                fontSize: '32px',
+                cursor: 'pointer',
+                padding: '8px',
+                zIndex: 1,
+              }}
+              data-testid="button-close-video"
+            >
+              ×
+            </button>
+            <iframe
+              src={getVideoEmbedUrl(videoModalUrl)}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                borderRadius: '8px',
+              }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
+      
+      {selectedCompany && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          zIndex: 99999,
+          overflow: 'auto',
+        }} onClick={() => setSelectedCompanyId(null)}>
+          <div>
+            <CompanyDetailInline company={selectedCompany} onClose={() => setSelectedCompanyId(null)} setVideoModalUrl={setVideoModalUrl} />
+          </div>
+        </div>
+      )}
+    
+    <div style={{ 
+      minHeight: '100vh', 
+      background: '#ffffff',
+      fontFamily: "'Helvetica Neue', Arial, sans-serif",
+      margin: '0',
+      padding: '0',
+      width: '100%',
+    }}>
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes breatheGlow {
+          0%, 100% { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+          50% { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        }
+        .breathing-button {
+          animation: breatheGlow 2s ease-in-out infinite;
+        }
+        .header-title-responsive {
+          font-size: 20px;
+        }
+        .main-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+        @media (min-width: 1024px) {
+          .main-grid {
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+          }
+          .city-nav-header {
+            padding-left: calc((100vw - 1400px) / 2 + 24px) !important;
+            padding-right: calc((100vw - 1400px) / 2 + 24px) !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .header-title-responsive {
+            font-size: 18px;
+            word-break: break-word;
+            max-width: 100%;
+          }
+        }
+      `}} />
+      {/* Sticky Navigation Header */}
+      <div className="city-nav-header" style={{
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10002,
+        background: 'rgba(251, 191, 36, 0.15)',
+        backdropFilter: 'blur(10px)',
+        padding: '10px 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}>
+        <button
+          onClick={() => setMenuOpen(true)}
+          style={{
+            backgroundColor: '#fbbf24',
+            color: '#000',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #000',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+            transform: 'translateY(-2px)',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+            e.currentTarget.style.transform = 'translateY(-3px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          data-testid="button-menu-city"
+        >
+          <Menu size={18} color="#000" />
+        </button>
+
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          {isAuthenticated && user && (
+            <button
+              onClick={() => {
+                // Check if user is admin first
+                if ((user as any)?.isAdmin) {
+                  window.location.href = '/admin';
+                } else {
+                  window.location.href = '/profile/edit';
+                }
+              }}
+              style={{
+                backgroundColor: 'transparent',
+                color: '#000',
+                padding: '0',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              data-testid="button-profile-city"
+            >
+              <UserCircle size={28} />
+            </button>
+          )}
+          
+          <button
+            onClick={() => window.location.href = '/add-business'}
+            className="breathing-button"
+            style={{
+              background: '#fbbf24',
+              color: '#000',
+              padding: '8px',
+              borderRadius: '6px',
+              border: '1px solid #000',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)',
+              transform: 'translateY(-2px)',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(0,0,0,0.18)';
+              e.currentTarget.style.transform = 'translateY(-3px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.15)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            data-testid="button-add-business"
+          >
+            <Plus size={18} />
+          </button>
+
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div style={{ padding: '20px 0 0 0', margin: '0', width: '100%' }}>
+        {/* Page Title */}
+        <div className="page-title-container" style={{ marginBottom: '12px', padding: '0 16px', margin: '0 0 12px 0' }}>
+          <h2 className="city-title" style={{
+            fontSize: '28px',
+            fontWeight: '700',
+            margin: '0 0 8px 0',
+            color: '#1a1a1a',
+            letterSpacing: '-0.02em',
+            lineHeight: '1.2',
+          }} data-testid="text-page-title">
+            {displayCityName}<br className="mobile-break" /> Junk Removal
+          </h2>
+          <p className="city-subtitle" style={{ fontSize: '15px', color: '#000', margin: 0 }}>
+            {companies.length} local independent pro{companies.length !== 1 ? 's' : ''} based in {displayCityName}
+          </p>
+        </div>
+
+        {/* Two Column Layout - Stacks on Mobile */}
+        <div className="city-page-layout">
+          {/* Main Content - Company Listings */}
+          <div className="city-main">
+            <div className="company-listings-container" style={{ width: '100%', maxWidth: '100%', overflow: 'visible', margin: '0 auto', padding: '0' }}>
+                <style dangerouslySetInnerHTML={{__html: `
+                  * {
+                    box-sizing: border-box;
+                  }
+                  
+                  .city-page-layout {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    padding: 0;
+                    margin: 0;
+                  }
+                  
+                  .company-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 12px;
+                    padding-left: 0;
+                    padding-right: 0;
+                  }
+                  
+                  .city-sidebar {
+                    width: 100%;
+                    padding-left: 0;
+                    padding-right: 0;
+                    margin-top: 24px;
+                  }
+                  
+                  @media (min-width: 1024px) {
+                    .page-title-container {
+                      max-width: 1400px;
+                      margin-left: auto !important;
+                      margin-right: auto !important;
+                      padding-left: 40px !important;
+                      padding-right: 24px !important;
+                    }
+                    
+                    .city-title {
+                      font-size: 42px !important;
+                    }
+                    
+                    .city-subtitle {
+                      font-size: 18px !important;
+                    }
+                    
+                    .mobile-break {
+                      display: none;
+                    }
+                    
+                    .city-page-layout {
+                      display: grid;
+                      grid-template-columns: 1fr 380px;
+                      gap: 24px;
+                      max-width: 1400px;
+                      margin: 0 auto;
+                      padding: 0 24px;
+                    }
+                    
+                    .city-main {
+                      min-width: 0;
+                    }
+                    
+                    .company-grid {
+                      grid-template-columns: 1fr 1fr;
+                      gap: 16px;
+                      padding-left: 16px;
+                      padding-right: 16px;
+                    }
+                    
+                    .full-width-card {
+                      grid-column: span 2;
+                    }
+                    
+                    .city-sidebar {
+                      position: sticky;
+                      top: 20px;
+                      height: fit-content;
+                      max-height: calc(100vh - 40px);
+                      overflow-y: auto;
+                      margin-top: 0;
+                      padding-left: 16px;
+                      padding-right: 16px;
+                    }
+                    
+                    .video-thumbnail-desktop {
+                      display: block !important;
+                    }
+                    
+                    .company-header-section {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: flex-end;
+                      gap: 24px;
+                      margin-bottom: 24px !important;
+                    }
+                    
+                    .logo-info-section {
+                      margin-bottom: 0 !important;
+                      display: flex;
+                      gap: 16px;
+                      height: 120px;
+                    }
+                    
+                    .company-logo {
+                      width: 120px !important;
+                      height: 120px !important;
+                      font-size: 48px !important;
+                      flex-shrink: 0 !important;
+                    }
+                    
+                    .logo-info-section > div:last-child {
+                      height: 120px !important;
+                      justify-content: space-between !important;
+                      display: flex !important;
+                      flex-direction: column !important;
+                      padding-bottom: 10px;
+                    }
+                    
+                    .logo-info-section h3 {
+                      font-size: 24px !important;
+                    }
+                    
+                    .logo-info-section span {
+                      font-size: 18px !important;
+                    }
+                    
+                    .logo-info-section svg {
+                      width: 20px !important;
+                      height: 20px !important;
+                    }
+                    
+                    .quote-buttons-inline {
+                      display: flex !important;
+                      gap: 12px;
+                      flex-shrink: 0;
+                      margin-bottom: 10px;
+                    }
+                    
+                    .quote-buttons-inline .quote-button {
+                      width: 100px !important;
+                      height: 100px !important;
+                      flex-shrink: 0 !important;
+                    }
+                    
+                    .quote-buttons-inline .quote-icon {
+                      width: 40px !important;
+                      height: 40px !important;
+                    }
+                    
+                    .quote-section {
+                      display: none !important;
+                    }
+                  }
+                `}} />
+                <div className="company-grid">
+                {isLoading ? (
+                  <div style={{ textAlign: 'center', padding: '40px 0', color: '#6b7280', gridColumn: 'span 2' }} data-testid="text-loading">
+                    Loading...
+                  </div>
+                ) : (
+                  companies
+                    .sort((a, b) => {
+                      // Tier-based sorting: premium > standard > basic (claimed) > unclaimed
+                      const getTierPriority = (company: any) => {
+                        if (!company.claimed) return 4; // Unclaimed last
+                        if (company.subscriptionTier === 'premium') return 1; // Premium first
+                        if (company.subscriptionTier === 'standard') return 2; // Standard second
+                        return 3; // Basic (claimed) third
+                      };
+                      
+                      const priorityDiff = getTierPriority(a) - getTierPriority(b);
+                      if (priorityDiff !== 0) return priorityDiff;
+                      
+                      // Within same tier, sort by displayOrder
+                      return (a.displayOrder || 999) - (b.displayOrder || 999);
+                    })
+                    .map((c, index) => {
+                    const isUnclaimed = !c.claimed;
+                    const isPremium = c.subscriptionTier === 'premium';
+                    const isStandard = c.subscriptionTier === 'standard';
+                    const isBasic = c.claimed && c.subscriptionTier === 'basic';
+                    const hasFullFeatures = isPremium || isStandard; // Both get all features
+                    
+                    return (
+                <div key={c.id} className={hasFullFeatures ? 'full-width-card' : ''} style={{ width: '100%', maxWidth: '100%' }}>
+                <div 
+                  onClick={!hasFullFeatures ? undefined : (e) => {
+                    // Don't open modal if clicking inside quote section
+                    if ((e.target as HTMLElement).closest('[data-quote-section]')) {
+                      return;
+                    }
+                    trackBusinessEvent(c.id, 'click');
+                    setSelectedCompanyId(c.id);
+                  }} 
+                  id={`company-${c.id}`}
+                  style={{
+                    position: 'relative',
+                    backgroundColor: isUnclaimed ? '#f9f9f9' : '#fff',
+                    borderRadius: '0',
+                    padding: '16px',
+                    marginBottom: '0',
+                    marginLeft: '0',
+                    marginRight: '0',
+                    boxShadow: 'none',
+                    border: isUnclaimed ? '1px solid #e5e5e5' : '1px solid #fbbf24',
+                    borderBottom: '2px solid #000',
+                    width: '100%',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box',
+                    overflow: 'visible',
+                    cursor: hasFullFeatures ? 'pointer' : 'default',
+                    transition: 'background-color 0.2s',
+                    opacity: isUnclaimed ? 0.7 : 1,
+                  }}
+                  data-testid={`card-company-${c.id}`}
+                >
+                  {/* Top Right Badge - sits on top of card border */}
+                  {c.badge && !isUnclaimed && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '-12px',
+                      right: '16px',
+                      background: '#16a34a',
+                      color: '#fff',
+                      padding: '4px 10px',
+                      borderRadius: '4px',
+                      fontSize: '11px',
+                      fontWeight: '700',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      zIndex: 10,
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.15)',
+                    }}>
+                      <CheckCircle size={14} color="#fff" fill="#16a34a" />
+                      {c.badge}
+                    </div>
+                  )}
+                  
+                  {isUnclaimed && (
+                    <div style={{
+                      background: '#f5f5f5',
+                      color: '#666',
+                      padding: '8px 12px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      marginBottom: '16px',
+                      textAlign: 'center',
+                    }}>
+                      Unclaimed Listing - Basic Info Only
+                    </div>
+                  )}
+                  
+                  {isBasic && (
+                    <div style={{
+                      background: '#fff3cd',
+                      color: '#856404',
+                      padding: '8px 12px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      marginBottom: '16px',
+                      textAlign: 'center',
+                    }}>
+                      Free Listing
+                    </div>
+                  )}
+
+                  
+                  {isUnclaimed ? (
+                    // Simplified unclaimed business display
+                    <div style={{ textAlign: 'center' }}>
+                      <h3 style={{
+                        fontSize: '18px',
+                        fontWeight: '700',
+                        margin: '0 0 12px 0',
+                        color: '#111827',
+                      }} data-testid={`text-company-name-${c.id}`}>
+                        {c.name}
+                      </h3>
+                      <div style={{ fontSize: '16px', color: '#666', marginBottom: '16px', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
+                        <Phone size={16} style={{ display: 'inline', marginRight: '6px', verticalAlign: 'middle' }} />
+                        {formatPhoneNumber(c.phone)}
+                      </div>
+                      
+                      <Link 
+                        href={`/add-business?claim=true&name=${encodeURIComponent(c.name)}&phone=${encodeURIComponent(c.phone)}`}
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <button
+                          style={{
+                            width: '100%',
+                            background: '#fbbf24',
+                            color: '#000',
+                            padding: '12px 20px',
+                            borderRadius: '8px',
+                            border: '2px solid #000',
+                            cursor: 'pointer',
+                            fontSize: '15px',
+                            fontWeight: '700',
+                            marginBottom: '12px',
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                          }}
+                          data-testid={`button-claim-${c.id}`}
+                        >
+                          Claim Your Profile
+                        </button>
+                      </Link>
+                      
+                      <div style={{
+                        background: '#f5f5f5',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        color: '#666',
+                      }}>
+                        Is this your business? Claim your profile to add photos, pricing, and get more customers!
+                      </div>
+                    </div>
+                  ) : (
+                  <div className="company-header-section">
+                    <div className="logo-info-section" style={{ display: 'flex', gap: '16px', marginBottom: '16px', padding: '0' }}>
+                      <div className="company-logo" style={{
+                        width: '60px',
+                        height: '60px',
+                        borderRadius: '10px',
+                        background: c.logoUrl ? '#fff' : '#9ca3af',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px',
+                        fontWeight: '800',
+                        color: '#fff',
+                        flexShrink: 0,
+                        boxShadow: c.logoUrl ? 'none' : '0 2px 6px rgba(0,0,0,0.1)',
+                        padding: c.logoUrl ? '4px' : '0',
+                        border: c.logoUrl ? 'none' : '2px solid #fbbf24',
+                        overflow: 'hidden',
+                      }}>
+                        {c.logoUrl ? (
+                          <img
+                            src={c.logoUrl}
+                            alt={`${c.name} logo`}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'contain',
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              const parent = e.currentTarget.parentElement;
+                              if (parent) {
+                                parent.style.background = '#fbbf24';
+                                parent.style.boxShadow = '0 4px 12px rgba(168,85,247,0.3)';
+                                parent.style.border = '2px solid #fbbf24';
+                                parent.style.padding = '0';
+                                parent.textContent = c.name.charAt(0);
+                              }
+                            }}
+                          />
+                        ) : (
+                          c.name.charAt(0)
+                        )}
+                      </div>
+                      
+                      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '60px' }}>
+                        <h3 style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          margin: '0',
+                          color: '#111827',
+                        }} data-testid={`text-company-name-${c.id}`}>
+                          {c.name}
+                        </h3>
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                size={16}
+                                fill={i < Math.floor(parseFloat(isBasic && (!c.reviews || c.reviews === 0) ? "5" : (c.rating || "0"))) ? "#fbbf24" : "none"}
+                                stroke="#fbbf24"
+                              />
+                            ))}
+                          </div>
+                          <span style={{ fontWeight: '600', fontSize: '16px' }}>{isBasic && (!c.reviews || c.reviews === 0) ? "5.0" : (c.rating || "0")}</span>
+                          <span style={{ color: '#000', fontSize: '15px' }}>({isBasic && (!c.reviews || c.reviews === 0) ? 1 : c.reviews})</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Quote buttons inline for desktop */}
+                    {hasFullFeatures && (
+                      <div className="quote-buttons-inline" style={{ display: 'none' }}>
+                        <a
+                          href={`tel:${c.phone}`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('CALL BUTTON CLICKED!', c.phone);
+                            window.location.href = `tel:${c.phone}`;
+                          }}
+                          onTouchStart={(e) => {
+                            e.stopPropagation();
+                            console.log('CALL BUTTON TOUCHED!', c.phone);
+                            e.preventDefault();
+                            window.location.href = `tel:${c.phone}`;
+                          }}
+                          className="quote-button"
+                          style={{
+                            width: '75px',
+                            height: '75px',
+                            background: '#fbbf24',
+                            color: '#000',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textDecoration: 'none',
+                            position: 'relative',
+                            zIndex: 1,
+                          }}
+                          data-testid={`button-call-inline-${c.id}`}
+                        >
+                          <Phone className="quote-icon" size={26} />
+                        </a>
+
+                        <a
+                          href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('SMS BUTTON CLICKED!', c.phone);
+                            window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                          }}
+                          onTouchStart={(e) => {
+                            e.stopPropagation();
+                            console.log('SMS BUTTON TOUCHED!', c.phone);
+                            e.preventDefault();
+                            window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                          }}
+                          className="quote-button"
+                          style={{
+                            width: '75px',
+                            height: '75px',
+                            background: '#fbbf24',
+                            color: '#000',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            textDecoration: 'none',
+                            position: 'relative',
+                            zIndex: 1,
+                          }}
+                          data-testid={`button-send-photos-inline-${c.id}`}
+                        >
+                          <Camera className="quote-icon" size={26} />
+                        </a>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            trackBusinessEvent(c.id, 'book_quote');
+                            setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                          }}
+                          className="quote-button"
+                          style={{
+                            width: '75px',
+                            height: '75px',
+                            background: '#fbbf24',
+                            color: '#000',
+                            borderRadius: '8px',
+                            border: 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 0,
+                          }}
+                          data-testid={`button-in-person-inline-${c.id}`}
+                        >
+                          <FileText className="quote-icon" size={26} />
+                        </button>
+                      </div>
+                    )}
+
+                  </div>
+                  )}
+                  
+                  {/* CTA Button for Basic Tier - matches unclaimed height */}
+                  {isBasic && (
+                    <div style={{ marginTop: '16px' }}>
+                      <a href={`tel:${c.phone}`} style={{ textDecoration: 'none' }}>
+                        <button
+                          style={{
+                            width: '100%',
+                            background: '#fbbf24',
+                            color: '#000',
+                            padding: '12px 20px',
+                            borderRadius: '8px',
+                            border: '2px solid #000',
+                            cursor: 'pointer',
+                            fontSize: '15px',
+                            fontWeight: '700',
+                            marginBottom: '12px',
+                            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                          }}
+                          data-testid={`button-call-${c.id}`}
+                        >
+                          <Phone size={18} />
+                          Call Now
+                        </button>
+                      </a>
+                      <div style={{
+                        background: '#f5f5f5',
+                        padding: '12px',
+                        borderRadius: '6px',
+                        fontSize: '13px',
+                        color: '#666',
+                        textAlign: 'center',
+                      }}>
+                        Upgrade to show photos, videos, and get more leads!
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Image Carousel - Premium & Standard only (moved below contact info) */}
+                  {hasFullFeatures && ((c.galleryImages && c.galleryImages.length > 0) || c.logoUrl || c.reviews > 0) && (
+                  <div style={{
+                    marginBottom: '16px',
+                    marginTop: '0',
+                    overflow: 'hidden',
+                    borderRadius: '0',
+                    border: '2px solid #fbbf24',
+                  }}>
+                    <style dangerouslySetInnerHTML={{__html: `
+                      .carousel-item-${c.id} {
+                        min-width: calc(100% / 5.6);
+                      }
+                      @media (max-width: 768px) {
+                        .carousel-item-${c.id} {
+                          min-width: calc(100% / 3.5);
+                        }
+                      }
+                    `}} />
+                    <div style={{
+                      display: 'flex',
+                      transition: carouselTransitions[c.id] !== false ? 'transform 1.5s ease-in-out' : 'none',
+                      transform: `translateX(-${(carouselOffsets[c.id] || 0) * (window.innerWidth > 768 ? 100 / 5.6 : 100 / 3.5)}%)`,
+                    }}>
+                      {(() => {
+                        // Priority: Use gallery images if available, otherwise use logo or defaults
+                        const hasGallery = c.galleryImages && c.galleryImages.length > 0;
+                        const hasLogo = c.logoUrl;
+                        const hasReviews = c.reviews > 0;
+                        
+                        let imagesToShow: (string | number)[] = [];
+                        
+                        if (hasGallery) {
+                          // Duplicate 3x for endless loop
+                          imagesToShow = [...c.galleryImages!, ...c.galleryImages!, ...c.galleryImages!];
+                        } else if (hasLogo || hasReviews) {
+                          // Use default images 3x
+                          imagesToShow = [...defaultImages, ...defaultImages, ...defaultImages];
+                        }
+                        
+                        return imagesToShow.map((item, i) => (
+                          <div
+                            key={i}
+                            className={`carousel-item-${c.id}`}
+                            style={{
+                              padding: '0',
+                              aspectRatio: '1',
+                            }}
+                          >
+                            {typeof item === 'string' ? (
+                              <img
+                                src={item}
+                                alt="Service photo"
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover',
+                                  borderRadius: '0',
+                                  border: '2px solid #fbbf24',
+                                }}
+                              />
+                            ) : (
+                              <PlaceholderImage index={item} />
+                            )}
+                          </div>
+                        ));
+                      })()}
+                    </div>
+                  </div>
+                  )}
+                  
+                  {/* Quote Section - Premium & Standard only */}
+                  {hasFullFeatures && (
+                  <div 
+                    data-quote-section="true"
+                    className="quote-section"
+                    style={{
+                      backgroundColor: '#f5f5f5',
+                      borderRadius: '0',
+                      padding: '16px 0',
+                      marginLeft: '0',
+                      marginRight: '0',
+                      marginBottom: '0',
+                      border: 'none',
+                      borderTop: '1px solid #e5e5e5',
+                    }}>
+                    <h4 className="quote-title" style={{
+                      fontSize: '22px',
+                      fontWeight: '700',
+                      margin: '0 0 16px 0',
+                      color: '#374151',
+                      width: '100%',
+                      textAlign: 'center',
+                    }}>
+                      Ways To Get A Quote
+                    </h4>
+                    
+                    <div 
+                      style={{ 
+                        display: 'flex', 
+                        gap: '10px',
+                        justifyContent: 'center',
+                        padding: '0',
+                      }}>
+                      {/* Call Now Icon */}
+                      <a
+                        href={`tel:${c.phone}`}
+                        onClick={(e) => {
+                          console.log('CALL BUTTON CLICKED!', c.phone);
+                          window.location.href = `tel:${c.phone}`;
+                        }}
+                        onTouchStart={(e) => {
+                          console.log('CALL BUTTON TOUCHED!', c.phone);
+                          e.preventDefault();
+                          window.location.href = `tel:${c.phone}`;
+                        }}
+                        className="quote-button"
+                        style={{
+                          width: '75px',
+                          height: '75px',
+                          background: '#fbbf24',
+                          color: '#000',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          textDecoration: 'none',
+                          position: 'relative',
+                          zIndex: 9999,
+                        }}
+                        data-testid={`button-call-${c.id}`}
+                      >
+                        <Phone className="quote-icon" size={26} />
+                      </a>
+
+                      {/* Send Photos Icon */}
+                      <a
+                        href={`sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`}
+                        onClick={(e) => {
+                          console.log('SMS BUTTON CLICKED!', c.phone);
+                          window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                        }}
+                        onTouchStart={(e) => {
+                          console.log('SMS BUTTON TOUCHED!', c.phone);
+                          e.preventDefault();
+                          window.location.href = `sms:${c.phone}?body=Hi! I'd like to get a quote for junk removal. Here are some photos:`;
+                        }}
+                        className="quote-button"
+                        style={{
+                          width: '75px',
+                          height: '75px',
+                          background: '#fbbf24',
+                          color: '#000',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          textDecoration: 'none',
+                          position: 'relative',
+                          zIndex: 9999,
+                        }}
+                        data-testid={`button-send-photos-${c.id}`}
+                      >
+                        <Camera className="quote-icon" size={26} />
+                      </a>
+                      
+                      {/* In Person Estimate Icon */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackBusinessEvent(c.id, 'book_quote');
+                          setExpandedQuote(expandedQuote === c.id ? null : c.id);
+                        }}
+                        className="quote-button"
+                        style={{
+                          width: '75px',
+                          height: '75px',
+                          background: '#fbbf24',
+                          color: '#000',
+                          borderRadius: '8px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          padding: 0,
+                        }}
+                        data-testid={`button-in-person-${c.id}`}
+                      >
+                        <FileText className="quote-icon" size={26} />
+                      </button>
+                    </div>
+
+                  </div>
+                  )}
+                  
+                  {/* Expand Indicator - Premium & Standard only */}
+                  {hasFullFeatures && (
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      padding: '12px 0 8px 0',
+                      marginTop: '8px',
+                    }}>
+                      <ChevronDown 
+                        size={24} 
+                        color="#000"
+                        style={{ opacity: 0.5 }}
+                        data-testid={`icon-expand-${c.id}`}
+                      />
+                    </div>
+                  )}
+                </div>
+                {/* Quote Request Form - OUTSIDE the bordered card */}
+                {expandedQuote === c.id && hasFullFeatures && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      backgroundColor: '#fffbeb',
+                      padding: '16px',
+                      borderRadius: '0',
+                      border: '3px solid #fbbf24',
+                      borderTop: 'none',
+                      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    }}>
+                    <QuoteRequestForm
+                      companyId={c.id}
+                      companyName={c.name}
+                      onCancel={() => setExpandedQuote(null)}
+                    />
+                  </div>
+                )}
+                </div>
+                  );
+                  })
+                )}
+                </div>
+            </div>
+          </div>
+
+          {/* Sidebar - Estimator and Ads */}
+          <aside className="city-sidebar">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '0' }}>
+              <EstimateBuilderInline />
+                  
+              {/* Ad Placeholder 1 */}
+              <div style={{
+                backgroundColor: '#f5f5f5',
+                border: '2px solid #fbbf24',
+                borderRadius: '0',
+                padding: '40px 20px',
+                textAlign: 'center',
+                borderTop: '2px solid #000',
+                paddingTop: '56px',
+              }}>
+                <h3 style={{ 
+                  fontSize: '24px', 
+                  fontWeight: '700', 
+                  margin: '0 0 16px 0',
+                  color: '#1a1a1a',
+                  letterSpacing: '-0.02em',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  ADVERTISE HERE
+                </h3>
+                <p style={{ 
+                  fontSize: '16px', 
+                  margin: '0 0 12px 0', 
+                  lineHeight: '1.5', 
+                  color: '#333333',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Reach thousands of customers looking for junk removal services
+                </p>
+                <p style={{ 
+                  fontSize: '14px', 
+                  margin: 0, 
+                  color: '#fbbf24',
+                  fontWeight: '700',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  info@findlocaljunkpros.com
+                </p>
+              </div>
+
+              {/* Ad Placeholder 2 */}
+              <div style={{
+                backgroundColor: '#f5f5f5',
+                border: '2px solid #fbbf24',
+                borderRadius: '0',
+                padding: '40px 20px',
+                textAlign: 'center',
+                borderTop: '2px solid #000',
+                paddingTop: '56px',
+              }}>
+                <h3 style={{ 
+                  fontSize: '24px', 
+                  fontWeight: '700', 
+                  margin: '0 0 16px 0',
+                  color: '#1a1a1a',
+                  letterSpacing: '-0.02em',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  ADVERTISE HERE
+                </h3>
+                <p style={{ 
+                  fontSize: '16px', 
+                  margin: '0 0 12px 0', 
+                  lineHeight: '1.5', 
+                  color: '#333333',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  Promote your business to local customers
+                </p>
+                <p style={{ 
+                  fontSize: '14px', 
+                  margin: 0, 
+                  color: '#fbbf24',
+                  fontWeight: '700',
+                  fontFamily: "'Helvetica Neue', Arial, sans-serif",
+                }}>
+                  info@findlocaljunkpros.com
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    </>
+  );
+}
+
+// Google Map Component
+function GoogleMapEmbed({ address, lat, lng }: { address: string; lat?: number | null; lng?: number | null }) {
+  const [mapElement, setMapElement] = useState<HTMLDivElement | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (!mapElement) return;
+    
+    const initMap = async () => {
+      try {
+        // Fetch API key
+        const configResponse = await fetch('/api/config');
+        const config = await configResponse.json();
+        const apiKey = config.googleMapsApiKey;
+        
+        if (!apiKey) {
+          setError('Map unavailable');
+          setIsLoading(false);
+          return;
+        }
+        
+        // Load Google Maps using dynamic script injection (only if not already loaded)
+        if (!window.google?.maps) {
+          const script = document.createElement('script');
+          script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+          script.async = true;
+          script.defer = true;
+          
+          await new Promise<void>((resolve, reject) => {
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load Google Maps'));
+            document.head.appendChild(script);
+          });
+        }
+        
+        // Use provided coordinates or geocode address
+        let coordinates = { lat: lat || 0, lng: lng || 0 };
+        
+        if (!lat || !lng) {
+          // Geocode the address
+          const geocoder = new google.maps.Geocoder();
+          const result = await geocoder.geocode({ address });
+          if (result.results[0]) {
+            coordinates = {
+              lat: result.results[0].geometry.location.lat(),
+              lng: result.results[0].geometry.location.lng(),
+            };
+          }
+        }
+        
+        // Create map
+        const map = new google.maps.Map(mapElement, {
+          center: coordinates,
+          zoom: 15,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false,
+        });
+        
+        // Add marker
+        new google.maps.Marker({
+          position: coordinates,
+          map,
+          title: address,
+        });
+        
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Map error:', err);
+        console.error('Error details:', err instanceof Error ? err.message : JSON.stringify(err));
+        setError('Failed to load map');
+        setIsLoading(false);
+      }
+    };
+    
+    initMap();
+  }, [mapElement, address, lat, lng]);
+  
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {isLoading && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '14px',
+          color: '#6b7280',
+        }}>
+          Loading map...
+        </div>
+      )}
+      {error && (
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          fontSize: '14px',
+          color: '#6b7280',
+        }}>
+          {error}
+        </div>
+      )}
+      <div
+        ref={setMapElement}
+        style={{ width: '100%', height: '100%', borderRadius: '12px' }}
+      />
+    </div>
+  );
+}
+
+function CompanyDetailInline({ company, onClose, setVideoModalUrl }: { company: Company; onClose: () => void; setVideoModalUrl: (url: string | null) => void }) {
+  const [socialTabOpen, setSocialTabOpen] = useState(false);
+  
+  return (
+    <div 
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: '#fff',
+        zIndex: 100000,
+        overflowY: 'auto',
+        overflowX: 'hidden',
+      }}>
+      {/* Floating X Close Button */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .close-button-profile {
+          position: fixed;
+          top: 12px;
+          right: 12px;
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          background: #000;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 100;
+          font-weight: 300;
+        }
+        @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+          .close-button-profile {
+            right: calc((100vw - 1200px) / 2 + 16px);
+          }
+        }
+      `}} />
+      <button
+        onClick={onClose}
+        data-testid="button-close-profile"
+        className="close-button-profile"
+      >
+        ×
+      </button>
+
+      <div style={{ 
+        maxWidth: '1200px', 
+        margin: '0 auto', 
+        padding: '100px 16px 80px',
+      }}>
+        <style dangerouslySetInnerHTML={{__html: `
+          .company-header-logo {
+            position: 'absolute';
+            top: '50%';
+            left: '50%';
+            transform: 'translate(-50%, -50%)';
+            width: 160px;
+            height: 160px;
+            opacity: 0.15;
+            z-index: 0;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .company-header-logo {
+              width: 300px;
+              height: 300px;
+            }
+          }
+          .company-name-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            color: #000;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .company-name-title {
+              font-size: 64px;
+            }
+          }
+          .rating-star {
+            color: #fbbf24;
+            font-size: 20px;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .rating-star {
+              font-size: 32px;
+            }
+          }
+          .rating-number {
+            font-weight: 700;
+            font-size: 18px;
+            color: #000;
+            font-family: system-ui, -apple-system, sans-serif;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .rating-number {
+              font-size: 28px;
+            }
+          }
+          .rating-reviews {
+            color: #6b7280;
+            font-size: 14px;
+            font-family: system-ui, -apple-system, sans-serif;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .rating-reviews {
+              font-size: 22px;
+            }
+          }
+          .company-header-container {
+            position: relative;
+            margin-bottom: 16px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .company-header-container {
+              padding-top: 60px;
+            }
+          }
+        `}} />
+        {/* Header with watermark logo */}
+        <div className="company-header-container">
+          {/* Watermark Logo Background */}
+          {company.logoUrl && (
+            <div className="company-header-logo" style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              opacity: 0.15,
+              zIndex: 0,
+            }}>
+              <img 
+                src={company.logoUrl} 
+                alt={`${company.name} logo watermark`}
+                style={{ 
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'contain' 
+                }} 
+              />
+            </div>
+          )}
+          
+          {/* Company name */}
+          <h1 className="company-name-title" data-testid="text-company-name">
+            {company.name}
+          </h1>
+        </div>
+
+        {/* Rating */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span key={star} className="rating-star">★</span>
+          ))}
+          <span className="rating-number">
+            {company.rating}
+          </span>
+          <span className="rating-reviews">
+            {company.reviews} reviews
+          </span>
+        </div>
+
+        {/* CTA Buttons Container */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .cta-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .cta-buttons-container {
+              flex-direction: row;
+              max-width: none;
+              gap: 20px;
+            }
+          }
+        `}} />
+        <div className="cta-buttons-container">
+          {/* Call Now Button */}
+          <button
+            style={{
+              width: '100%',
+              padding: '16px 24px',
+              background: '#fbbf24',
+              color: '#000',
+              border: '2px solid #000',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '18px',
+              fontWeight: '700',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              display: 'block',
+            }}
+            onClick={() => {
+              trackBusinessEvent(company.id, 'call');
+              window.open(`tel:${company.phone}`, '_self');
+            }}
+            data-testid="button-call-now"
+          >
+            Call Now
+          </button>
+
+          {/* View on Google Button */}
+          {company.gmbUrl && (
+            <a
+              href={company.gmbUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                width: '100%',
+                padding: '12px 24px',
+                backgroundColor: '#fff',
+                color: '#000',
+                border: '2px solid #000',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                textDecoration: 'none',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}
+              onClick={() => trackBusinessEvent(company.id, 'google_reviews')}
+              data-testid="button-view-on-google"
+            >
+              <FaGoogle size={18} />
+              View Reviews on Google
+            </a>
+          )}
+        </div>
+
+        {/* Social Media Bottom Tab */}
+        {(company.website || company.facebookUrl || company.instagramUrl || company.gmbUrl || company.youtubeUrl) && (
+          <div style={{
+            position: 'fixed',
+            bottom: 0,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 999,
+          }}>
+            {/* Collapsible Icons Row */}
+            {socialTabOpen && (
+              <div style={{
+                display: 'flex',
+                gap: '12px',
+                padding: '12px 20px',
+                backgroundColor: '#fbbf24',
+                borderRadius: '12px 12px 0 0',
+                marginBottom: '-2px',
+              }}>
+                {company.website && (
+                  <a
+                    href={company.website.startsWith('http') ? company.website : `https://${company.website}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-website-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <Globe size={24} />
+                  </a>
+                )}
+                {company.facebookUrl && (
+                  <a
+                    href={company.facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-facebook-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaFacebook size={24} />
+                  </a>
+                )}
+                {company.instagramUrl && (
+                  <a
+                    href={company.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-instagram-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaInstagram size={24} />
+                  </a>
+                )}
+                {company.gmbUrl && (
+                  <a
+                    href={company.gmbUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-gmb-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaGoogle size={24} />
+                  </a>
+                )}
+                {company.youtubeUrl && (
+                  <a
+                    href={company.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`link-youtube-modal-${company.id}`}
+                    style={{ color: '#000' }}
+                  >
+                    <FaYoutube size={24} />
+                  </a>
+                )}
+              </div>
+            )}
+            
+            {/* Tab Button with Arrow */}
+            <button
+              onClick={() => setSocialTabOpen(!socialTabOpen)}
+              data-testid="button-social-tab"
+              style={{
+                backgroundColor: '#fbbf24',
+                border: 'none',
+                borderRadius: socialTabOpen ? '0' : '12px 12px 0 0',
+                padding: '8px 24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+              }}
+            >
+              <ChevronUp size={20} color="#000" style={{
+                transform: socialTabOpen ? 'rotate(0deg)' : 'rotate(180deg)',
+                transition: 'transform 0.2s',
+              }} />
+            </button>
+          </div>
+        )}
+
+        {/* Services Icons */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .service-icons-container {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding: 0 12px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 32px;
+          }
+          @media (max-width: 1023px) {
+            .service-icons-container {
+              grid-template-columns: repeat(3, 1fr);
+              max-width: 400px;
+              gap: 12px;
+            }
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .service-icons-container {
+              grid-template-columns: repeat(5, 1fr);
+              max-width: none;
+              padding: 0;
+              gap: 20px;
+            }
+          }
+          .service-icon-circle {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #000;
+            border-radius: 50%;
+          }
+          .service-icon-svg {
+            transform: scale(1.4);
+          }
+          @media (max-width: 1023px) {
+            .service-icon-circle {
+              width: 75px;
+              height: 75px;
+            }
+            .service-icon-svg {
+              transform: scale(1.2);
+            }
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .service-icon-circle {
+              width: 130px;
+              height: 130px;
+            }
+            .service-icon-svg {
+              transform: scale(2);
+            }
+          }
+        `}} />
+        {company.services && company.services.length > 0 && (
+          <div className="service-icons-container">
+            {company.services.map((serviceId, i) => {
+              // Map service IDs to icons and labels
+              const serviceMap: Record<string, { icon: any; label: string }> = {
+                'residential': { icon: <Home size={32} />, label: 'Residential' },
+                'commercial': { icon: <Building2 size={32} />, label: 'Commercial' },
+                'furniture': { icon: <Sofa size={32} />, label: 'Furniture Removal' },
+                'appliances': { icon: <Refrigerator size={32} />, label: 'Appliance Removal' },
+                'electronics': { icon: <Tv size={32} />, label: 'Electronics' },
+                'yard-waste': { icon: <Trees size={32} />, label: 'Yard Waste' },
+                'construction': { icon: <Dumbbell size={32} />, label: 'Construction' },
+                'moving': { icon: <Truck size={32} />, label: 'Moving/Hauling' },
+                'general': { icon: <Package size={32} />, label: 'General Junk' },
+              };
+              
+              const service = serviceMap[serviceId] || { icon: <Trash2 size={32} />, label: serviceId };
+              
+              return (
+                <div key={i}>
+                  <div className="service-icon-circle">
+                    <div className="service-icon-svg">
+                      {service.icon}
+                    </div>
+                  </div>
+                  <div style={{ 
+                    fontSize: '13px', 
+                    fontWeight: '500', 
+                    color: '#000', 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    hyphens: 'auto',
+                    lineHeight: '1.3',
+                  }}>
+                    {service.label}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* About Us - Full Width Above Gallery */}
+        {company.description && (
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: '700',
+              marginBottom: '12px',
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}>
+              About Us
+            </h2>
+            <p style={{
+              fontSize: '16px',
+              color: '#000',
+              lineHeight: '1.6',
+              margin: 0,
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}>
+              {company.description}
+            </p>
+          </div>
+        )}
+
+        {/* Video Section - Premium & Standard only */}
+        {company.videoUrl && (
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{
+              fontSize: '24px',
+              fontWeight: '700',
+              marginBottom: '12px',
+              color: '#000',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+            }}>
+              Watch Our Video
+            </h2>
+            <div 
+              onClick={(e) => {
+                e.stopPropagation();
+                setVideoModalUrl(company.videoUrl || null);
+              }}
+              style={{
+                position: 'relative',
+                width: '100%',
+                paddingBottom: '56.25%',
+                backgroundColor: '#000',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                cursor: 'pointer',
+                border: '2px solid #fbbf24',
+              }}
+              data-testid="button-play-video"
+            >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                background: company.videoUrl.includes('youtube') || company.videoUrl.includes('youtu.be')
+                  ? `url(https://img.youtube.com/vi/${company.videoUrl.split('v=')[1]?.split('&')[0] || company.videoUrl.split('youtu.be/')[1]?.split('?')[0]}/maxresdefault.jpg) center/cover`
+                  : '#1a1a1a',
+                pointerEvents: 'none',
+              }} />
+              
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '80px',
+                height: '80px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(251, 191, 36, 0.9)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'transform 0.2s',
+                pointerEvents: 'none',
+              }}
+              >
+                <div style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: '28px solid #000',
+                  borderTop: '16px solid transparent',
+                  borderBottom: '16px solid transparent',
+                  marginLeft: '6px',
+                }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Full Width Photo Gallery with Navigation */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .photo-gallery-container {
+            position: relative;
+            margin-bottom: 32px !important;
+            margin-top: 32px !important;
+          }
+          .photo-gallery-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0 16px;
+          }
+          .photo-gallery-item {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f3f4f6;
+            border: 2px solid #fbbf24;
+            scroll-snap-align: start;
+          }
+          .photo-gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+          @media (max-width: 1023px) {
+            .photo-gallery-container {
+              margin-bottom: 12px !important;
+              margin-top: 12px !important;
+            }
+            .photo-gallery-item {
+              height: 300px;
+            }
+            .photo-gallery-img {
+              object-fit: cover;
+            }
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .photo-gallery-scroll {
+              display: flex;
+              gap: 16px;
+              overflow-x: auto;
+              padding: 0;
+            }
+            .photo-gallery-item {
+              flex: 0 0 calc(25% - 12px);
+              width: calc(25% - 12px);
+              height: 300px;
+            }
+            .photo-gallery-img {
+              object-fit: cover;
+            }
+          }
+        `}} />
+        {((company.galleryImages && company.galleryImages.length > 0) || company.logoUrl || company.reviews > 0) && (
+          <div className="photo-gallery-container">
+            <div 
+              ref={(el) => {
+                if (el) (el as any).carouselScroll = el;
+              }}
+              className="photo-gallery-scroll hide-scrollbar"
+            >
+              <style dangerouslySetInnerHTML={{__html: `.hide-scrollbar::-webkit-scrollbar { display: none; }`}} />
+              {(() => {
+                const hasGallery = company.galleryImages && company.galleryImages.length > 0;
+                const hasLogo = company.logoUrl;
+                const hasReviews = company.reviews > 0;
+                
+                let imagesToShow: (string | number)[] = [];
+                
+                if (hasGallery) {
+                  const originalImages = company.galleryImages!;
+                  imagesToShow = [...originalImages, ...originalImages, ...originalImages];
+                } else if (hasLogo || hasReviews) {
+                  imagesToShow = [1, 2, 3, 1, 2, 3, 1, 2, 3];
+                }
+                
+                return imagesToShow.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="photo-gallery-item"
+                  >
+                    <img
+                      src={typeof img === 'string' ? img : `https://picsum.photos/200/300?random=${img}`}
+                      alt={`Gallery ${idx + 1}`}
+                      className="photo-gallery-img"
+                    />
+                  </div>
+                ));
+              })()}
+            </div>
+            
+            {/* Navigation Arrows */}
+            <button
+              onClick={(e) => {
+                const carousel = e.currentTarget.parentElement?.querySelector('.photo-gallery-scroll') as HTMLElement;
+                if (carousel) {
+                  const firstItem = carousel.querySelector('.photo-gallery-item') as HTMLElement;
+                  if (firstItem) {
+                    const computed = getComputedStyle(carousel);
+                    const gapValue = computed.columnGap || computed.gap;
+                    const gap = gapValue && gapValue !== 'normal' ? parseFloat(gapValue) : 0;
+                    const scrollAmount = firstItem.offsetWidth + (Number.isFinite(gap) ? gap : 0);
+                    carousel.scrollLeft -= scrollAmount;
+                  } else {
+                    carousel.scrollLeft -= carousel.clientWidth;
+                  }
+                }
+              }}
+              style={{
+                position: 'absolute',
+                left: '8px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'rgba(0, 0, 0, 0.6)',
+                border: 'none',
+                color: '#fff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '18px',
+                zIndex: 10,
+              }}
+              data-testid="button-carousel-prev"
+            >
+              ‹
+            </button>
+            
+            <button
+              onClick={(e) => {
+                const carousel = e.currentTarget.parentElement?.querySelector('.photo-gallery-scroll') as HTMLElement;
+                if (carousel) {
+                  const firstItem = carousel.querySelector('.photo-gallery-item') as HTMLElement;
+                  if (firstItem) {
+                    const computed = getComputedStyle(carousel);
+                    const gapValue = computed.columnGap || computed.gap;
+                    const gap = gapValue && gapValue !== 'normal' ? parseFloat(gapValue) : 0;
+                    const scrollAmount = firstItem.offsetWidth + (Number.isFinite(gap) ? gap : 0);
+                    carousel.scrollLeft += scrollAmount;
+                  } else {
+                    carousel.scrollLeft += carousel.clientWidth;
+                  }
+                }
+              }}
+              style={{
+                position: 'absolute',
+                right: '8px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'rgba(0, 0, 0, 0.6)',
+                border: 'none',
+                color: '#fff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '18px',
+                zIndex: 10,
+              }}
+              data-testid="button-carousel-next"
+            >
+              ›
+            </button>
+          </div>
+        )}
+
+        {/* Continue with Two Column Layout */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .expanded-two-column {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 100%;
+          }
+          @media (min-width: 1024px) {
+            .expanded-two-column {
+              grid-template-columns: 1fr 350px;
+              gap: 40px;
+            }
+          }
+        `}} />
+        <div className="expanded-two-column">
+          <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+            {/* Reviews - only show if company has googleFeaturedReviews */}
+            {company.googleFeaturedReviews && Array.isArray(company.googleFeaturedReviews) && company.googleFeaturedReviews.length > 0 && (
+              <div style={{ marginBottom: '32px' }}>
+                <h2 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Reviews
+                </h2>
+                {company.googleFeaturedReviews.map((review: any, i: number) => (
+                  <div key={i} style={{ marginBottom: '16px', paddingBottom: '16px', borderBottom: i < company.googleFeaturedReviews.length - 1 ? '1px solid #e5e7eb' : 'none', maxWidth: '100%', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: '600', fontSize: '14px', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.reviewerName || 'Anonymous'}</div>
+                        <div style={{ fontSize: '13px', color: '#6b7280', fontFamily: 'system-ui, -apple-system, sans-serif' }}>{review.reviewerLocation || ''}</div>
+                      </div>
+                      <div style={{ display: 'flex', flexShrink: 0 }}>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <span key={star} style={{ color: star <= (review.rating || 5) ? '#fbbf24' : '#e5e7eb', fontSize: '14px' }}>★</span>
+                        ))}
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '14px', color: '#000', margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif', overflowWrap: 'break-word', wordWrap: 'break-word' }}>
+                      {review.reviewText}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Meet the Team */}
+            {company.teamMembers && Array.isArray(company.teamMembers) && company.teamMembers.length > 0 && (
+              <div style={{ marginBottom: '32px' }}>
+                <h2 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  marginBottom: '16px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Meet the Team
+                </h2>
+                <div style={{
+                  display: 'grid',
+                  gap: '20px',
+                }}>
+                  {company.teamMembers.map((member: any, i: number) => (
+                    <div key={i} style={{
+                      display: 'flex',
+                      gap: '16px',
+                      padding: '16px',
+                      backgroundColor: '#f9fafb',
+                      borderRadius: '12px',
+                    }}>
+                      <div style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        backgroundColor: '#e5e7eb',
+                        flexShrink: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                      }}>
+                        {(member.photoUrl || member.imageUrl) ? (
+                          <img 
+                            src={member.photoUrl || member.imageUrl} 
+                            alt={member.name}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                            }}
+                          />
+                        ) : (
+                          <UserCircle size={48} color="#9ca3af" />
+                        )}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <h3 style={{
+                          fontSize: '18px',
+                          fontWeight: '700',
+                          margin: '0 0 4px 0',
+                          color: '#000',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                        }}>
+                          {member.name}
+                        </h3>
+                        <p style={{
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          margin: '0 0 8px 0',
+                          color: '#fbbf24',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                        }}>
+                          {member.role}
+                        </p>
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#4b5563',
+                          margin: 0,
+                          lineHeight: '1.5',
+                          fontFamily: 'system-ui, -apple-system, sans-serif',
+                        }}>
+                          {member.bio}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* FAQs */}
+            {company.faqs && Array.isArray(company.faqs) && company.faqs.length > 0 && (
+              <FAQSection faqs={company.faqs} />
+            )}
+          </div>
+
+          {/* Right Column */}
+          <div style={{ maxWidth: '100%', overflowX: 'hidden' }}>
+            {/* Pricing Estimator */}
+            <div style={{ marginBottom: '24px' }}>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Get Your Estimate
+              </h2>
+              <EstimateBuilderInline 
+                companyPrices={{
+                  minimum: company.minimumPrice ? parseFloat(company.minimumPrice) : 75,
+                  quarterLoad: company.quarterLoadPrice ? parseFloat(company.quarterLoadPrice) : 150,
+                  halfLoad: company.halfLoadPrice ? parseFloat(company.halfLoadPrice) : 500,
+                  threeQuarterLoad: company.threeQuarterLoadPrice ? parseFloat(company.threeQuarterLoadPrice) : 750,
+                  fullLoad: company.fullLoadPrice ? parseFloat(company.fullLoadPrice) : 1000,
+                }}
+                showDisclaimers={false}
+                vehicleCapacity={company.trailerSize || undefined}
+                singleItemMinimum={company.singleItemMinimum ? parseFloat(company.singleItemMinimum) : undefined}
+              />
+            </div>
+
+            {/* Amenities */}
+            {company.amenities && Array.isArray(company.amenities) && company.amenities.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Amenities
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.amenities.map((amenity: string, i: number) => (
+                    <div key={i}>• {amenity}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Items We Don't Take */}
+            {company.itemsNotTaken && Array.isArray(company.itemsNotTaken) && company.itemsNotTaken.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Items We Don't Take
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.itemsNotTaken.map((item: string, i: number) => (
+                    <div key={i}>• {item}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Payment Methods */}
+            {company.paymentMethods && company.paymentMethods.length > 0 && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Payment Methods
+                </h2>
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                  {company.paymentMethods.map((method) => {
+                    const getMethodIcon = () => {
+                      switch(method.toLowerCase()) {
+                        case 'cash':
+                          return <DollarSign size={20} />;
+                        case 'card':
+                          return <CreditCard size={20} />;
+                        case 'zelle':
+                          return <span style={{ fontSize: '18px', fontWeight: '700' }}>Z</span>;
+                        case 'venmo':
+                          return <span style={{ fontSize: '18px', fontWeight: '700' }}>V</span>;
+                        case 'apple pay':
+                          return <Smartphone size={20} />;
+                        case 'cash app':
+                          return <span style={{ fontSize: '18px', fontWeight: '700' }}>$</span>;
+                        case 'check':
+                          return <FileText size={20} />;
+                        default:
+                          return <DollarSign size={20} />;
+                      }
+                    };
+                    
+                    return (
+                      <div key={method} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '8px 14px',
+                        background: '#f3f4f6',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#374151',
+                        fontFamily: 'system-ui, -apple-system, sans-serif',
+                      }}>
+                        {getMethodIcon()}
+                        {method}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Business Hours */}
+            {(company.businessHours || company.hours) && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Business Hours
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.8', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  {company.businessHours ? (
+                    (() => {
+                      const formatTime = (time: string) => {
+                        const [h, m] = time.split(':');
+                        const hour = parseInt(h);
+                        const ampm = hour >= 12 ? 'PM' : 'AM';
+                        const hour12 = hour % 12 || 12;
+                        return `${hour12}:${m} ${ampm}`;
+                      };
+                      
+                      const bh = company.businessHours as Record<string, { open: string; close: string; closed: boolean }>;
+                      const mon = bh.monday;
+                      const tue = bh.tuesday;
+                      const wed = bh.wednesday;
+                      const thu = bh.thursday;
+                      const fri = bh.friday;
+                      const sat = bh.saturday;
+                      const sun = bh.sunday;
+                      
+                      const isSame = (a: any, b: any) => 
+                        a && b && a.open === b.open && a.close === b.close && a.closed === b.closed;
+                      
+                      const weekdaysSame = mon && tue && wed && thu && fri &&
+                        isSame(mon, tue) && isSame(mon, wed) && isSame(mon, thu) && isSame(mon, fri);
+                      
+                      return (
+                        <>
+                          {weekdaysSame && mon && (
+                            <div style={{ marginBottom: '4px' }}>
+                              <strong>Monday - Friday:</strong> {mon.closed ? 'Closed' : `${formatTime(mon.open)} - ${formatTime(mon.close)}`}
+                            </div>
+                          )}
+                          {!weekdaysSame && (
+                            <>
+                              {mon && <div style={{ marginBottom: '4px' }}><strong>Monday:</strong> {mon.closed ? 'Closed' : `${formatTime(mon.open)} - ${formatTime(mon.close)}`}</div>}
+                              {tue && <div style={{ marginBottom: '4px' }}><strong>Tuesday:</strong> {tue.closed ? 'Closed' : `${formatTime(tue.open)} - ${formatTime(tue.close)}`}</div>}
+                              {wed && <div style={{ marginBottom: '4px' }}><strong>Wednesday:</strong> {wed.closed ? 'Closed' : `${formatTime(wed.open)} - ${formatTime(wed.close)}`}</div>}
+                              {thu && <div style={{ marginBottom: '4px' }}><strong>Thursday:</strong> {thu.closed ? 'Closed' : `${formatTime(thu.open)} - ${formatTime(thu.close)}`}</div>}
+                              {fri && <div style={{ marginBottom: '4px' }}><strong>Friday:</strong> {fri.closed ? 'Closed' : `${formatTime(fri.open)} - ${formatTime(fri.close)}`}</div>}
+                            </>
+                          )}
+                          {sat && (
+                            <div style={{ marginBottom: '4px' }}>
+                              <strong>Saturday:</strong> {sat.closed ? 'Closed' : `${formatTime(sat.open)} - ${formatTime(sat.close)}`}
+                            </div>
+                          )}
+                          {sun && (
+                            <div style={{ marginBottom: '4px' }}>
+                              <strong>Sunday:</strong> {sun.closed ? 'Closed' : `${formatTime(sun.open)} - ${formatTime(sun.close)}`}
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()
+                  ) : (
+                    company.hours
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Location */}
+            {company.address && (
+              <div style={{ marginBottom: '24px' }}>
+                <h2 style={{
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  marginBottom: '12px',
+                  color: '#000',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  Location
+                </h2>
+                <div style={{ fontSize: '14px', color: '#000', lineHeight: '1.6', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+                  <div>{company.address}</div>
+                  <div>{company.city}, {company.state}</div>
+                </div>
+              </div>
+            )}
+
+            {/* Contact Information */}
+            <div>
+              <h2 style={{
+                fontSize: '20px',
+                fontWeight: '700',
+                marginBottom: '12px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                Contact Information
+              </h2>
+              <button
+                onClick={() => window.location.href = `tel:${company.phone}`}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  marginBottom: '8px',
+                  fontSize: '14px', 
+                  color: '#000', 
+                  textDecoration: 'none',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  cursor: 'pointer',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                }}
+                data-testid="button-call-phone"
+              >
+                <Phone size={16} color="#000" />
+                <span>{company.phone}</span>
+              </button>
+              {company.contactEmail && (
+                <button
+                  onClick={() => window.location.href = `mailto:${company.contactEmail}`}
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    marginBottom: '8px',
+                    fontSize: '14px', 
+                    color: '#000', 
+                    textDecoration: 'none',
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    cursor: 'pointer',
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                  }}
+                  data-testid="button-email"
+                >
+                  <Mail size={16} color="#000" />
+                  <span>{company.contactEmail}</span>
+                </button>
+              )}
+              {company.website && (
+                <a 
+                  href={company.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    marginBottom: '16px',
+                    fontSize: '14px', 
+                    color: '#000', 
+                    textDecoration: 'none', 
+                    fontFamily: 'system-ui, -apple-system, sans-serif',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Globe size={16} color="#000" />
+                  <span>Visit Website</span>
+                </a>
+              )}
+              <button
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: '#fbbf24',
+                  color: '#000',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                  boxSizing: 'border-box',
+                }}
+                onClick={() => {
+                  trackBusinessEvent(company.id, 'call');
+                  window.open(`tel:${company.phone}`, '_self');
+                }}
+                data-testid="button-request-quote-bottom"
+              >
+                Request a Quote
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Map Location */}
+        <style dangerouslySetInnerHTML={{__html: `
+          .map-container {
+            width: 100%;
+            height: 250px;
+            background: #e8f0e3;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #d1d5db;
+          }
+          @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+            .map-container {
+              height: 500px;
+            }
+          }
+        `}} />
+        <div style={{ marginTop: '32px' }}>
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '700',
+            marginBottom: '12px',
+            color: '#000',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+          }}>
+            Map
+          </h2>
+          <div className="map-container">
+            <GoogleMapEmbed 
+              address={company.address || `${company.city}, ${company.state}`}
+              lat={company.latitude}
+              lng={company.longitude}
+            />
+            
+            {/* Address label */}
+            <div style={{
+              position: 'absolute',
+              bottom: '12px',
+              left: '12px',
+              background: 'rgba(255, 255, 255, 0.95)',
+              padding: '8px 12px',
+              borderRadius: '6px',
+              fontSize: '12px',
+              fontWeight: '600',
+              color: '#374151',
+              fontFamily: 'system-ui, -apple-system, sans-serif',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              zIndex: 10,
+            }}>
+              {company.address || `${company.city}, ${company.state}`}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQSection({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <div>
+      <h2 style={{
+        fontSize: '24px',
+        fontWeight: '700',
+        marginBottom: '12px',
+        color: '#000',
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+      }}>
+        Frequently Asked Questions
+      </h2>
+      {faqs.map((faq, i) => {
+        const isOpen = openIndex === i;
+        return (
+          <div key={i} style={{
+            marginBottom: '12px',
+            border: '1px solid #e5e7eb',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            boxSizing: 'border-box',
+          }}>
+            <button
+              onClick={() => setOpenIndex(isOpen ? null : i)}
+              style={{
+                width: '100%',
+                padding: '16px',
+                background: isOpen ? '#f9fafb' : '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                textAlign: 'left',
+                boxSizing: 'border-box',
+              }}
+              data-testid={`button-faq-${i}`}
+            >
+              <span style={{
+                fontWeight: '600',
+                fontSize: '14px',
+                color: '#000',
+                fontFamily: 'system-ui, -apple-system, sans-serif',
+              }}>
+                {faq.question}
+              </span>
+              <ChevronDown
+                size={20}
+                color="#fbbf24"
+                style={{
+                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                }}
+              />
+            </button>
+            {isOpen && (
+              <div style={{
+                padding: '16px',
+                backgroundColor: '#f9fafb',
+                borderTop: '1px solid #e5e7eb',
+                boxSizing: 'border-box',
+              }}>
+                <p style={{
+                  margin: 0,
+                  fontSize: '14px',
+                  color: '#374151',
+                  lineHeight: '1.6',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}>
+                  {faq.answer}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// State abbreviation to full name mapping
+const stateAbbreviations: Record<string, string> = {
+  'al': 'Alabama', 'ak': 'Alaska', 'az': 'Arizona', 'ar': 'Arkansas', 'ca': 'California',
+  'co': 'Colorado', 'ct': 'Connecticut', 'de': 'Delaware', 'fl': 'Florida', 'ga': 'Georgia',
+  'hi': 'Hawaii', 'id': 'Idaho', 'il': 'Illinois', 'in': 'Indiana', 'ia': 'Iowa',
+  'ks': 'Kansas', 'ky': 'Kentucky', 'la': 'Louisiana', 'me': 'Maine', 'md': 'Maryland',
+  'ma': 'Massachusetts', 'mi': 'Michigan', 'mn': 'Minnesota', 'ms': 'Mississippi', 'mo': 'Missouri',
+  'mt': 'Montana', 'ne': 'Nebraska', 'nv': 'Nevada', 'nh': 'New Hampshire', 'nj': 'New Jersey',
+  'nm': 'New Mexico', 'ny': 'New York', 'nc': 'North Carolina', 'nd': 'North Dakota', 'oh': 'Ohio',
+  'ok': 'Oklahoma', 'or': 'Oregon', 'pa': 'Pennsylvania', 'ri': 'Rhode Island', 'sc': 'South Carolina',
+  'sd': 'South Dakota', 'tn': 'Tennessee', 'tx': 'Texas', 'ut': 'Utah', 'vt': 'Vermont',
+  'va': 'Virginia', 'wa': 'Washington', 'wv': 'West Virginia', 'wi': 'Wisconsin', 'wy': 'Wyoming',
+};
+
+// State slug to proper name mapping (for SEO)
 const stateNames: Record<string, string> = {
   'alabama': 'Alabama', 'alaska': 'Alaska', 'arizona': 'Arizona', 'arkansas': 'Arkansas',
   'california': 'California', 'colorado': 'Colorado', 'connecticut': 'Connecticut', 'delaware': 'Delaware',

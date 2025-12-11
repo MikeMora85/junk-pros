@@ -5,9 +5,10 @@ import { CheckCircle, XCircle, Award, Search, X, ArrowLeft, ChevronDown, Chevron
 import { useStripe, Elements, PaymentElement, useElements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = import.meta.env.VITE_STRIPE_PUBLIC_KEY 
-  ? loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
-  : null;
+if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+}
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 function PaymentFormInline({ tier, formData, onSuccess, onError, onCancel, stripeCustomerId, stripeSubscriptionId }: { 
   tier: string; 

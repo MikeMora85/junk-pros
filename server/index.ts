@@ -3,7 +3,6 @@ import path from "path";
 import { registerRoutes } from "./routes";
 import { storage } from "./storage";
 import { createServer as createViteServer } from "vite";
-import react from "@vitejs/plugin-react";
 
 const app = express();
 app.use(express.json({ limit: '10mb' }));
@@ -42,26 +41,8 @@ app.use((req, res, next) => {
 (async () => {
   if (process.env.NODE_ENV === "production") {
     const httpServer = await registerRoutes(app, storage);
-    
-    // Serve static assets with long cache headers (1 year for hashed assets)
-    app.use(express.static("dist/client", {
-      maxAge: '1y',
-      etag: true,
-      lastModified: true,
-      setHeaders: (res, filePath) => {
-        // Cache immutable assets with hashes for 1 year
-        if (filePath.match(/\.(js|css|woff2?|ttf|eot|svg|png|jpg|jpeg|webp|avif|gif|ico)$/)) {
-          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-        }
-        // HTML files should not be cached
-        if (filePath.endsWith('.html')) {
-          res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-        }
-      }
-    }));
-    
+    app.use(express.static("dist/client"));
     app.get(/.*/, (_req, res) => {
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.sendFile(path.resolve("dist/client", "index.html"));
     });
     
@@ -71,21 +52,10 @@ app.use((req, res, next) => {
     });
   } else {
     // Register API routes FIRST, before Vite middleware
-    console.log("Registering API routes...");
     const httpServer = await registerRoutes(app, storage);
-    console.log("API routes registered successfully");
     
-    const projectRoot = process.cwd();
     const vite = await createViteServer({
-      root: path.join(projectRoot, "client"),
-      plugins: [react()],
-      resolve: {
-        alias: {
-          "@": path.join(projectRoot, "client/src"),
-          "@shared": path.join(projectRoot, "shared"),
-          "@assets": path.join(projectRoot, "attached_assets"),
-        },
-      },
+      configFile: false,
       server: { 
         middlewareMode: true,
         host: true,
@@ -101,6 +71,21 @@ app.use((req, res, next) => {
         ],
       },
       appType: "spa",
+      root: "client",
+      resolve: {
+        alias: {
+          "@": path.resolve(process.cwd(), "./client/src"),
+          "@shared": path.resolve(process.cwd(), "./shared"),
+          "@assets": path.resolve(process.cwd(), "./attached_assets"),
+        },
+        dedupe: ['react', 'react-dom'],
+      },
+      optimizeDeps: {
+        include: ['react', 'react-dom'],
+      },
+      plugins: [
+        (await import("@vitejs/plugin-react")).default(),
+      ],
     });
     app.use(vite.middlewares);
     
