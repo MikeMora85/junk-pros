@@ -3,6 +3,7 @@ import path from "path";
 import { registerRoutes } from "./routes";
 import { storage } from "./storage";
 import { createServer as createViteServer } from "vite";
+import react from "@vitejs/plugin-react";
 
 const app = express();
 app.use(express.json({ limit: '10mb' }));
@@ -74,8 +75,17 @@ app.use((req, res, next) => {
     const httpServer = await registerRoutes(app, storage);
     console.log("API routes registered successfully");
     
+    const projectRoot = process.cwd();
     const vite = await createViteServer({
-      configFile: false,
+      root: path.join(projectRoot, "client"),
+      plugins: [react()],
+      resolve: {
+        alias: {
+          "@": path.join(projectRoot, "client/src"),
+          "@shared": path.join(projectRoot, "shared"),
+          "@assets": path.join(projectRoot, "attached_assets"),
+        },
+      },
       server: { 
         middlewareMode: true,
         host: true,
@@ -91,21 +101,6 @@ app.use((req, res, next) => {
         ],
       },
       appType: "spa",
-      root: "client",
-      resolve: {
-        alias: {
-          "@": path.resolve(process.cwd(), "./client/src"),
-          "@shared": path.resolve(process.cwd(), "./shared"),
-          "@assets": path.resolve(process.cwd(), "./attached_assets"),
-        },
-        dedupe: ['react', 'react-dom'],
-      },
-      optimizeDeps: {
-        include: ['react', 'react-dom'],
-      },
-      plugins: [
-        (await import("@vitejs/plugin-react")).default(),
-      ],
     });
     app.use(vite.middlewares);
     
