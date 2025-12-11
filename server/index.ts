@@ -70,7 +70,9 @@ app.use((req, res, next) => {
     });
   } else {
     // Register API routes FIRST, before Vite middleware
+    console.log("Registering API routes...");
     const httpServer = await registerRoutes(app, storage);
+    console.log("API routes registered successfully");
     
     const vite = await createViteServer({
       configFile: false,
