@@ -1,4 +1,4 @@
-import express from "express";
+//import express from "express";
 import path from "path";
 import { registerRoutes } from "./routes";
 import { storage } from "./storage";
@@ -54,40 +54,40 @@ app.use((req, res, next) => {
     // Register API routes FIRST, before Vite middleware
     const httpServer = await registerRoutes(app, storage);
     
-    const vite = await createViteServer({
-      configFile: false,
-      server: { 
-        middlewareMode: true,
-        host: true,
-        hmr: {
-          protocol: 'wss',
-          clientPort: 443,
-        },
-        allowedHosts: [
-          '.replit.dev',
-          '.repl.co',
-          'localhost',
-          '.spock.replit.dev'
-        ],
-      },
-      appType: "spa",
-      root: "client",
-      resolve: {
-        alias: {
-          "@": path.resolve(process.cwd(), "./client/src"),
-          "@shared": path.resolve(process.cwd(), "./shared"),
-          "@assets": path.resolve(process.cwd(), "./attached_assets"),
-        },
-        dedupe: ['react', 'react-dom'],
-      },
-      optimizeDeps: {
-        include: ['react', 'react-dom'],
-      },
-      plugins: [
-        (await import("@vitejs/plugin-react")).default(),
-      ],
-    });
-    app.use(vite.middlewares);
+    //const vite = await createViteServer({
+      //configFile: false,
+      //server: { 
+        //middlewareMode: true,
+        //host: true,
+        //hmr: {
+          //protocol: 'wss',
+          //clientPort: 443,
+        //},
+        //allowedHosts: [
+          //'.replit.dev',
+          //'.repl.co',
+          //'localhost',
+          //'.spock.replit.dev'
+        //],
+      //},
+      //appType: "spa",
+      //root: "client",
+      //resolve: {
+        //alias: {
+          //"@": path.resolve(process.cwd(), "./client/src"),
+          //"@shared": path.resolve(process.cwd(), "./shared"),
+          //"@assets": path.resolve(process.cwd(), "./attached_assets"),
+        //},
+        //dedupe: ['react', 'react-dom'],
+      //},
+      //optimizeDeps: {
+        //include: ['react', 'react-dom'],
+     // },
+      //plugins: [
+        //(await import("@vitejs/plugin-react")).default(),
+      //],
+    //});
+    //app.use(vite.middlewares);
     
     const PORT = parseInt(process.env.PORT || "5000", 10);
     httpServer.listen(PORT, "0.0.0.0", () => {
