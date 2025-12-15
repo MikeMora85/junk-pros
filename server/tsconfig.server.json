@@ -9,7 +9,7 @@
     "strict": false,
     "skipLibCheck": true
   },
-  "include": ["index.ts", "routes/**/*.ts", "storage/**/*.ts"],
+  "include": ["index.ts"],
   "exclude": [
   "node_modules",
   "dist",
