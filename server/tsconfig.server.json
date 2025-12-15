@@ -10,5 +10,15 @@
     "skipLibCheck": true
   },
   "include": ["index.ts", "routes/**/*.ts", "storage/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+  "node_modules",
+  "dist",
+  "**/*.test.ts",
+  "**/*.spec.ts",
+  "**/replicAuth.ts",
+  "**/replicateAuth.ts",
+  "**/vite.config.ts",
+  "**/shared/**",
+  "**/client/**"
+]
 }
